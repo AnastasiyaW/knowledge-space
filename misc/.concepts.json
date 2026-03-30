@@ -1,0 +1,96 @@
+{
+  "domain": "misc",
+  "title": "Miscellaneous",
+  "generated_from": "misc.json",
+  "entry_count": 11,
+  "concepts": [
+    {
+      "id": "ai-ide-rules-and-context",
+      "title": "AI IDE Rules and Context Configuration",
+      "file": "ai-ide-rules-and-context.md",
+      "category": "ai-coding-tools",
+      "tags": ["ai-ide", "rules", "context-engineering", "claude-code", "antigravity", "cursor", "workspace-config"],
+      "links_to": ["ai-coding-skills", "ai-ide-workflow-modes"]
+    },
+    {
+      "id": "ai-coding-skills",
+      "title": "AI Coding Skills and Extensibility",
+      "file": "ai-coding-skills.md",
+      "category": "ai-coding-tools",
+      "tags": ["skills", "ai-agents", "extensibility", "skill-marketplace", "claude-code", "antigravity", "openclaw"],
+      "links_to": ["ai-ide-rules-and-context", "ai-ide-workflow-modes"]
+    },
+    {
+      "id": "ai-ide-workflow-modes",
+      "title": "AI IDE Workflow Modes",
+      "file": "ai-ide-workflow-modes.md",
+      "category": "ai-coding-tools",
+      "tags": ["planning", "execution", "code-review", "ai-workflow", "implementation-plan", "artifacts"],
+      "links_to": ["ai-ide-rules-and-context", "ai-coding-skills", "ai-assistant-security"]
+    },
+    {
+      "id": "ai-ide-artifacts",
+      "title": "AI IDE Artifacts and Outputs",
+      "file": "ai-ide-artifacts.md",
+      "category": "ai-coding-tools",
+      "tags": ["artifacts", "implementation-plan", "screenshots", "video-recording", "conversation-export"],
+      "links_to": ["ai-ide-workflow-modes", "ai-code-review-workflow"]
+    },
+    {
+      "id": "ai-context-prompt-engineering",
+      "title": "Context Engineering for AI Coding",
+      "file": "ai-context-prompt-engineering.md",
+      "category": "ai-coding-tools",
+      "tags": ["context-engineering", "prompt-engineering", "file-tagging", "image-attachment", "context-window"],
+      "links_to": ["ai-ide-rules-and-context", "ai-coding-skills", "llm-model-selection-for-coding"]
+    },
+    {
+      "id": "ai-code-review-workflow",
+      "title": "AI-Assisted Code Review Workflow",
+      "file": "ai-code-review-workflow.md",
+      "category": "ai-coding-tools",
+      "tags": ["code-review", "pull-request", "ai-review", "diff-review", "accept-reject"],
+      "links_to": ["ai-ide-workflow-modes", "ai-ide-rules-and-context"]
+    },
+    {
+      "id": "llm-model-selection-for-coding",
+      "title": "LLM Model Selection for Coding Tasks",
+      "file": "llm-model-selection-for-coding.md",
+      "category": "ai-coding-tools",
+      "tags": ["model-selection", "reasoning", "context-window", "cost-optimization", "coding-agent", "benchmarks"],
+      "links_to": ["ai-ide-workflow-modes", "ai-assistant-security"]
+    },
+    {
+      "id": "browser-sub-agents",
+      "title": "Browser Sub-Agents for Verification",
+      "file": "browser-sub-agents.md",
+      "category": "ai-coding-tools",
+      "tags": ["browser-automation", "sub-agent", "visual-verification", "testing", "screenshots"],
+      "links_to": ["ai-ide-workflow-modes", "ai-coding-skills"]
+    },
+    {
+      "id": "ai-assistant-automation",
+      "title": "Personal AI Assistant Automation",
+      "file": "ai-assistant-automation.md",
+      "category": "ai-automation",
+      "tags": ["ai-assistant", "cron-jobs", "proactive-ai", "openclaw", "scheduled-tasks", "telegram"],
+      "links_to": ["ai-assistant-security", "ai-coding-skills"]
+    },
+    {
+      "id": "ai-assistant-security",
+      "title": "AI Assistant Security Practices",
+      "file": "ai-assistant-security.md",
+      "category": "ai-security",
+      "tags": ["security", "ai-assistant", "vm-isolation", "api-keys", "credential-management"],
+      "links_to": ["ai-assistant-automation", "ai-ide-rules-and-context"]
+    },
+    {
+      "id": "web-browser-automation-groovy-geb",
+      "title": "Web Browser Automation with Groovy and Geb",
+      "file": "web-browser-automation-groovy-geb.md",
+      "category": "test-automation",
+      "tags": ["groovy", "geb", "browser-automation", "web-testing", "chromedriver", "selenium"],
+      "links_to": ["browser-sub-agents", "ai-ide-workflow-modes"]
+    }
+  ]
+}
