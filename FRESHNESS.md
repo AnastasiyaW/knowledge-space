@@ -45,7 +45,7 @@ Active development, frequent breaking changes, new tools replacing old ones.
 |--------|----------|-----------|
 | `web-frontend/` | React 19+, new CSS features, build tool churn | React Server Components, CSS nesting adoption |
 | `devops/` | K8s releases quarterly, Terraform licensing shifts | OpenTofu, K8s Gateway API replacing Ingress |
-| `llm-agents/` | Frameworks rewrite monthly. Models obsolete in weeks | LangChain v0.3+, new agent frameworks, model releases |
+| `llm-agents/` (RAG, embeddings, prompting) | Techniques evolve but core ideas hold | New retrieval patterns, embedding models |
 | `ios-mobile/` | SwiftUI changes every WWDC, yearly iOS updates | WWDC 2026, Swift 6 concurrency |
 | `security/` | New CVEs daily, anti-fraud arms race | New attack vectors, browser privacy changes |
 | `seo-marketing/` | Google algorithm updates, AI Overviews disruption | Core updates, SGE/AI Overviews expansion |
@@ -57,6 +57,7 @@ Built from cutting-edge material that may already be outdated.
 | Domain | Status | Action needed |
 |--------|--------|---------------|
 | `image-generation/` | Models release weekly. FLUX Kontext, Step1X-Edit - some already superseded | Re-generate quarterly from latest papers |
+| `llm-agents/` (agents, frameworks) | LangChain/LangGraph/CrewAI rewrite constantly. Agent patterns from 3 months ago are already legacy | Re-generate when major framework versions drop |
 | `misc/` (OpenClaw) | OpenClaw is pre-1.0, API unstable | Re-generate when OpenClaw hits stable release |
 | `misc/` (Google Antigravity) | Novelty course, low long-term value | Low priority, skip re-generation |
 
@@ -66,8 +67,8 @@ Built from cutting-edge material that may already be outdated.
 |-----------|---------|
 | **Never** (until fundamentals change) | algorithms, data-science (math), architecture, linux-cli |
 | **Yearly** | sql-databases, kafka, rust, java-spring, php, nodejs, testing-qa, bi-analytics, data-engineering |
-| **Every 6 months** | web-frontend, devops, llm-agents, ios-mobile, security, seo-marketing |
-| **Quarterly** | image-generation |
+| **Every 6 months** | web-frontend, devops, llm-agents (RAG, embeddings, prompting), ios-mobile, security, seo-marketing |
+| **Quarterly** | image-generation, llm-agents (agent frameworks, function calling, multi-agent) |
 | **On-demand** | misc (when specific content becomes relevant) |
 
 ## How to Update a Domain
