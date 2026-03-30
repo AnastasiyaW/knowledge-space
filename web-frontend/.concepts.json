@@ -1,0 +1,186 @@
+{
+  "topic": "web-frontend",
+  "title": "Web & Frontend",
+  "generated": "2026-03-30",
+  "entry_count": 18,
+  "concepts": [
+    {
+      "id": "html-semantics-and-document-structure",
+      "title": "HTML Semantics and Document Structure",
+      "category": "html",
+      "file": "html-semantics-and-document-structure.md",
+      "tags": ["html", "semantic-html", "accessibility", "document-structure"]
+    },
+    {
+      "id": "css-box-model-and-display",
+      "title": "CSS Box Model and Display",
+      "category": "css",
+      "file": "css-box-model-and-display.md",
+      "tags": ["css", "box-model", "display", "margin", "border-box"]
+    },
+    {
+      "id": "css-selectors-and-specificity",
+      "title": "CSS Selectors and Specificity",
+      "category": "css",
+      "file": "css-selectors-and-specificity.md",
+      "tags": ["css", "selectors", "specificity", "cascade", "pseudo-classes"]
+    },
+    {
+      "id": "css-custom-properties-and-animations",
+      "title": "CSS Custom Properties and Animations",
+      "category": "css",
+      "file": "css-custom-properties-and-animations.md",
+      "tags": ["css", "custom-properties", "animations", "transitions", "keyframes"]
+    },
+    {
+      "id": "css-flexbox",
+      "title": "CSS Flexbox",
+      "category": "css",
+      "file": "css-flexbox.md",
+      "tags": ["css", "flexbox", "layout", "alignment"]
+    },
+    {
+      "id": "css-grid-layout",
+      "title": "CSS Grid Layout",
+      "category": "css",
+      "file": "css-grid-layout.md",
+      "tags": ["css", "grid", "layout", "two-dimensional"]
+    },
+    {
+      "id": "css-positioning-and-z-index",
+      "title": "CSS Positioning and Z-Index",
+      "category": "css",
+      "file": "css-positioning-and-z-index.md",
+      "tags": ["css", "position", "z-index", "stacking-context", "sticky"]
+    },
+    {
+      "id": "responsive-design-and-media-queries",
+      "title": "Responsive Design and Media Queries",
+      "category": "css",
+      "file": "responsive-design-and-media-queries.md",
+      "tags": ["responsive", "media-queries", "mobile-first", "breakpoints", "clamp"]
+    },
+    {
+      "id": "javascript-fundamentals",
+      "title": "JavaScript Fundamentals",
+      "category": "javascript",
+      "file": "javascript-fundamentals.md",
+      "tags": ["javascript", "variables", "types", "closures", "es6"]
+    },
+    {
+      "id": "javascript-array-methods",
+      "title": "JavaScript Array Methods",
+      "category": "javascript",
+      "file": "javascript-array-methods.md",
+      "tags": ["javascript", "array", "map", "filter", "reduce"]
+    },
+    {
+      "id": "javascript-async-and-promises",
+      "title": "JavaScript Async and Promises",
+      "category": "javascript",
+      "file": "javascript-async-and-promises.md",
+      "tags": ["javascript", "async", "await", "promise", "event-loop", "fetch"]
+    },
+    {
+      "id": "javascript-dom-and-events",
+      "title": "JavaScript DOM and Events",
+      "category": "javascript",
+      "file": "javascript-dom-and-events.md",
+      "tags": ["javascript", "dom", "events", "event-delegation", "dom-manipulation"]
+    },
+    {
+      "id": "typescript-type-system",
+      "title": "TypeScript Type System",
+      "category": "typescript",
+      "file": "typescript-type-system.md",
+      "tags": ["typescript", "types", "interfaces", "generics", "utility-types"]
+    },
+    {
+      "id": "typescript-advanced-patterns",
+      "title": "TypeScript Advanced Patterns",
+      "category": "typescript",
+      "file": "typescript-advanced-patterns.md",
+      "tags": ["typescript", "mapped-types", "conditional-types", "template-literals", "infer"]
+    },
+    {
+      "id": "react-components-and-jsx",
+      "title": "React Components and JSX",
+      "category": "react",
+      "file": "react-components-and-jsx.md",
+      "tags": ["react", "jsx", "components", "props", "composition"]
+    },
+    {
+      "id": "react-hooks",
+      "title": "React Hooks",
+      "category": "react",
+      "file": "react-hooks.md",
+      "tags": ["react", "hooks", "useState", "useEffect", "useRef", "custom-hooks"]
+    },
+    {
+      "id": "react-state-management",
+      "title": "React State Management",
+      "category": "react",
+      "file": "react-state-management.md",
+      "tags": ["react", "state", "redux", "context", "global-state"]
+    },
+    {
+      "id": "react-router-and-navigation",
+      "title": "React Router and Navigation",
+      "category": "react",
+      "file": "react-router-and-navigation.md",
+      "tags": ["react", "react-router", "routing", "navigation", "spa"]
+    },
+    {
+      "id": "tailwind-css",
+      "title": "Tailwind CSS",
+      "category": "css-framework",
+      "file": "tailwind-css.md",
+      "tags": ["tailwind", "utility-first", "responsive", "css-framework"]
+    },
+    {
+      "id": "webpack-and-vite",
+      "title": "Webpack and Vite - Frontend Build Tools",
+      "category": "build-tools",
+      "file": "webpack-and-vite.md",
+      "tags": ["webpack", "vite", "bundler", "code-splitting", "tree-shaking"]
+    },
+    {
+      "id": "figma-design-to-code",
+      "title": "Figma Design to Code",
+      "category": "design",
+      "file": "figma-design-to-code.md",
+      "tags": ["figma", "design", "ui-ux", "design-tokens", "auto-layout"]
+    }
+  ],
+  "categories": {
+    "html": ["html-semantics-and-document-structure"],
+    "css": [
+      "css-box-model-and-display",
+      "css-selectors-and-specificity",
+      "css-custom-properties-and-animations",
+      "css-flexbox",
+      "css-grid-layout",
+      "css-positioning-and-z-index",
+      "responsive-design-and-media-queries"
+    ],
+    "javascript": [
+      "javascript-fundamentals",
+      "javascript-array-methods",
+      "javascript-async-and-promises",
+      "javascript-dom-and-events"
+    ],
+    "typescript": [
+      "typescript-type-system",
+      "typescript-advanced-patterns"
+    ],
+    "react": [
+      "react-components-and-jsx",
+      "react-hooks",
+      "react-state-management",
+      "react-router-and-navigation"
+    ],
+    "css-framework": ["tailwind-css"],
+    "build-tools": ["webpack-and-vite"],
+    "design": ["figma-design-to-code"]
+  }
+}

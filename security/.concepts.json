@@ -1,0 +1,186 @@
+{
+  "domain": "security",
+  "total_entries": 21,
+  "generated_from": "security.json",
+  "source_courses": 3,
+  "source_chunks": 2892,
+  "concepts": [
+    {
+      "id": "anti-fraud-systems",
+      "title": "Anti-Fraud Systems",
+      "category": "fraud-prevention",
+      "file": "anti-fraud-systems.md",
+      "tags": ["anti-fraud", "antibot", "fraud-detection", "risk-scoring", "ecommerce"],
+      "links_to": ["browser-fingerprinting", "network-identifiers", "behavioral-analysis", "social-rating-identity", "geolocation-security"]
+    },
+    {
+      "id": "browser-fingerprinting",
+      "title": "Browser Fingerprinting",
+      "category": "identification",
+      "file": "browser-fingerprinting.md",
+      "tags": ["fingerprinting", "anti-fraud", "browser", "tracking", "privacy"],
+      "links_to": ["network-identifiers", "anti-fraud-systems"]
+    },
+    {
+      "id": "network-identifiers",
+      "title": "Network Identifiers and IP Security",
+      "category": "network-security",
+      "file": "network-identifiers.md",
+      "tags": ["ip-address", "ipv4", "ipv6", "proxy", "vpn", "network"],
+      "links_to": ["tls-fingerprinting", "anti-fraud-systems"]
+    },
+    {
+      "id": "tls-fingerprinting",
+      "title": "TLS Fingerprinting",
+      "category": "network-security",
+      "file": "tls-fingerprinting.md",
+      "tags": ["tls", "ssl", "ja3", "fingerprinting", "traffic-analysis"],
+      "links_to": ["anti-fraud-systems", "network-identifiers"]
+    },
+    {
+      "id": "os-identifiers-serial-numbers",
+      "title": "OS Identifiers and Serial Numbers",
+      "category": "identification",
+      "file": "os-identifiers-serial-numbers.md",
+      "tags": ["os-fingerprinting", "serial-numbers", "hardware-id", "machine-fingerprint"],
+      "links_to": ["browser-fingerprinting", "anti-fraud-systems"]
+    },
+    {
+      "id": "behavioral-analysis",
+      "title": "Behavioral Analysis in Security",
+      "category": "fraud-prevention",
+      "file": "behavioral-analysis.md",
+      "tags": ["behavioral-analysis", "mouse-tracking", "bot-detection", "biometrics"],
+      "links_to": ["browser-fingerprinting", "network-identifiers", "anti-fraud-systems"]
+    },
+    {
+      "id": "social-rating-identity",
+      "title": "Social Rating and Digital Identity",
+      "category": "identification",
+      "file": "social-rating-identity.md",
+      "tags": ["social-rating", "identity", "reputation", "account-age"],
+      "links_to": ["browser-fingerprinting", "network-identifiers", "anti-fraud-systems"]
+    },
+    {
+      "id": "geolocation-security",
+      "title": "Geolocation in Security Systems",
+      "category": "identification",
+      "file": "geolocation-security.md",
+      "tags": ["geolocation", "gps", "ip-geolocation", "timezone"],
+      "links_to": ["anti-fraud-systems", "network-identifiers"]
+    },
+    {
+      "id": "deepfake-detection",
+      "title": "Deepfake Detection and Image Forensics",
+      "category": "fraud-prevention",
+      "file": "deepfake-detection.md",
+      "tags": ["deepfake", "image-analysis", "computer-vision", "forensics"],
+      "links_to": ["anti-fraud-systems", "behavioral-analysis"]
+    },
+    {
+      "id": "image-forensics-antifraud",
+      "title": "Image Forensics for Anti-Fraud",
+      "category": "fraud-prevention",
+      "file": "image-forensics-antifraud.md",
+      "tags": ["image-forensics", "document-verification", "ocr", "manipulation-detection"],
+      "links_to": ["deepfake-detection", "anti-fraud-systems", "social-rating-identity"]
+    },
+    {
+      "id": "jwt-authentication",
+      "title": "JWT Authentication",
+      "category": "web-security",
+      "file": "jwt-authentication.md",
+      "tags": ["jwt", "authentication", "tokens", "access-token", "refresh-token"],
+      "links_to": ["cors-and-origin-security", "password-hashing"]
+    },
+    {
+      "id": "password-hashing",
+      "title": "Password Hashing and Storage",
+      "category": "cryptography",
+      "file": "password-hashing.md",
+      "tags": ["password", "hashing", "bcrypt", "argon2", "salt"],
+      "links_to": ["jwt-authentication", "linux-user-security"]
+    },
+    {
+      "id": "cors-and-origin-security",
+      "title": "CORS and Origin Security",
+      "category": "web-security",
+      "file": "cors-and-origin-security.md",
+      "tags": ["cors", "origin", "same-origin-policy", "csrf", "cross-origin"],
+      "links_to": ["jwt-authentication"]
+    },
+    {
+      "id": "rbac-authorization",
+      "title": "Role-Based Access Control (RBAC)",
+      "category": "web-security",
+      "file": "rbac-authorization.md",
+      "tags": ["rbac", "authorization", "roles", "permissions", "access-control"],
+      "links_to": ["jwt-authentication", "linux-user-security"]
+    },
+    {
+      "id": "file-upload-security",
+      "title": "File Upload Security",
+      "category": "web-security",
+      "file": "file-upload-security.md",
+      "tags": ["file-upload", "validation", "web-shell", "mime-type"],
+      "links_to": ["cors-and-origin-security", "jwt-authentication"]
+    },
+    {
+      "id": "nginx-reverse-proxy-security",
+      "title": "Nginx Reverse Proxy Security",
+      "category": "infrastructure-security",
+      "file": "nginx-reverse-proxy-security.md",
+      "tags": ["nginx", "reverse-proxy", "deployment", "ssl", "hardening"],
+      "links_to": ["cors-and-origin-security", "file-upload-security"]
+    },
+    {
+      "id": "linux-user-security",
+      "title": "Linux User Security and Access Control",
+      "category": "system-security",
+      "file": "linux-user-security.md",
+      "tags": ["linux", "users", "permissions", "sudo", "root", "access-control"],
+      "links_to": ["password-hashing", "disk-encryption-lvm"]
+    },
+    {
+      "id": "linux-kernel-security",
+      "title": "Linux Kernel Architecture and Security",
+      "category": "system-security",
+      "file": "linux-kernel-security.md",
+      "tags": ["linux", "kernel", "kernel-space", "user-space", "syscalls", "modules"],
+      "links_to": ["linux-user-security", "disk-encryption-lvm"]
+    },
+    {
+      "id": "linux-filesystem-security",
+      "title": "Linux Filesystem Security",
+      "category": "system-security",
+      "file": "linux-filesystem-security.md",
+      "tags": ["linux", "filesystem", "permissions", "ext4", "mounting", "fhs"],
+      "links_to": ["linux-user-security", "linux-kernel-security"]
+    },
+    {
+      "id": "linux-networking-sockets",
+      "title": "Linux Networking and Sockets",
+      "category": "network-security",
+      "file": "linux-networking-sockets.md",
+      "tags": ["linux", "sockets", "networking", "tcp", "udp", "firewall", "iptables"],
+      "links_to": ["linux-kernel-security", "network-identifiers"]
+    },
+    {
+      "id": "disk-encryption-lvm",
+      "title": "Disk Encryption with LVM and dm-crypt",
+      "category": "system-security",
+      "file": "disk-encryption-lvm.md",
+      "tags": ["encryption", "lvm", "dm-crypt", "luks", "full-disk-encryption"],
+      "links_to": ["linux-user-security"]
+    }
+  ],
+  "categories": {
+    "fraud-prevention": ["anti-fraud-systems", "behavioral-analysis", "deepfake-detection", "image-forensics-antifraud"],
+    "identification": ["browser-fingerprinting", "os-identifiers-serial-numbers", "social-rating-identity", "geolocation-security"],
+    "network-security": ["network-identifiers", "tls-fingerprinting", "linux-networking-sockets"],
+    "web-security": ["jwt-authentication", "cors-and-origin-security", "rbac-authorization", "file-upload-security"],
+    "cryptography": ["password-hashing"],
+    "system-security": ["linux-user-security", "linux-kernel-security", "linux-filesystem-security", "disk-encryption-lvm"],
+    "infrastructure-security": ["nginx-reverse-proxy-security"]
+  }
+}

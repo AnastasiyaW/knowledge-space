@@ -1,0 +1,126 @@
+{
+  "topic": "testing-qa",
+  "title": "Testing & QA",
+  "total_concepts": 17,
+  "concepts": [
+    {
+      "id": "pytest-fundamentals",
+      "title": "Pytest Fundamentals",
+      "category": "framework",
+      "tags": ["pytest", "test-runner", "python", "assertions", "markers", "conftest"],
+      "file": "pytest-fundamentals.md"
+    },
+    {
+      "id": "pytest-fixtures",
+      "title": "Pytest Fixtures",
+      "category": "framework",
+      "tags": ["pytest", "fixtures", "conftest", "setup", "teardown", "yield", "scope"],
+      "file": "pytest-fixtures.md"
+    },
+    {
+      "id": "pytest-parametrize",
+      "title": "Pytest Parametrize",
+      "category": "framework",
+      "tags": ["pytest", "parametrize", "data-driven", "test-matrix"],
+      "file": "pytest-parametrize.md"
+    },
+    {
+      "id": "pytest-plugins-and-parallel",
+      "title": "Pytest Plugins and Parallel Execution",
+      "category": "framework",
+      "tags": ["pytest", "xdist", "parallel", "plugins", "pytest-rerunfailures"],
+      "file": "pytest-plugins-and-parallel.md"
+    },
+    {
+      "id": "page-object-model",
+      "title": "Page Object Model",
+      "category": "pattern",
+      "tags": ["page-object", "design-pattern", "selenium", "playwright", "ui-testing"],
+      "file": "page-object-model.md"
+    },
+    {
+      "id": "selenium-webdriver",
+      "title": "Selenium WebDriver",
+      "category": "tool",
+      "tags": ["selenium", "webdriver", "browser-automation", "ui-testing", "waits"],
+      "file": "selenium-webdriver.md"
+    },
+    {
+      "id": "playwright-testing",
+      "title": "Playwright Testing",
+      "category": "tool",
+      "tags": ["playwright", "browser-automation", "ui-testing", "auto-wait", "codegen"],
+      "file": "playwright-testing.md"
+    },
+    {
+      "id": "css-xpath-selectors",
+      "title": "CSS and XPath Selectors",
+      "category": "technique",
+      "tags": ["selectors", "css", "xpath", "locators", "dom", "devtools"],
+      "file": "css-xpath-selectors.md"
+    },
+    {
+      "id": "api-testing-requests",
+      "title": "API Testing with Python",
+      "category": "technique",
+      "tags": ["api", "rest", "requests", "httpx", "json-schema", "http-methods"],
+      "file": "api-testing-requests.md"
+    },
+    {
+      "id": "test-data-management",
+      "title": "Test Data Management",
+      "category": "technique",
+      "tags": ["faker", "test-data", "fixtures", "factory", "data-generation"],
+      "file": "test-data-management.md"
+    },
+    {
+      "id": "allure-reporting",
+      "title": "Allure Reporting",
+      "category": "tool",
+      "tags": ["allure", "reporting", "test-report", "annotations", "steps", "attachments"],
+      "file": "allure-reporting.md"
+    },
+    {
+      "id": "ci-cd-test-automation",
+      "title": "CI/CD for Test Automation",
+      "category": "infrastructure",
+      "tags": ["ci-cd", "github-actions", "gitlab-ci", "pipeline", "workflow"],
+      "file": "ci-cd-test-automation.md"
+    },
+    {
+      "id": "pydantic-test-validation",
+      "title": "Pydantic for Test Validation",
+      "category": "technique",
+      "tags": ["pydantic", "validation", "models", "settings", "response-validation"],
+      "file": "pydantic-test-validation.md"
+    },
+    {
+      "id": "test-strategy-and-coverage",
+      "title": "Test Strategy and Coverage",
+      "category": "methodology",
+      "tags": ["test-strategy", "test-pyramid", "coverage", "smoke", "regression"],
+      "file": "test-strategy-and-coverage.md"
+    },
+    {
+      "id": "logging-in-tests",
+      "title": "Logging in Tests",
+      "category": "technique",
+      "tags": ["logging", "debugging", "python-logging", "test-output"],
+      "file": "logging-in-tests.md"
+    },
+    {
+      "id": "test-project-structure",
+      "title": "Test Project Structure",
+      "category": "methodology",
+      "tags": ["project-structure", "architecture", "dependencies", "gitignore", "requirements"],
+      "file": "test-project-structure.md"
+    },
+    {
+      "id": "test-identifiers",
+      "title": "Test Identifiers (data-testid)",
+      "category": "technique",
+      "tags": ["data-testid", "locators", "frontend", "react", "test-stability"],
+      "file": "test-identifiers.md"
+    }
+  ]
+}

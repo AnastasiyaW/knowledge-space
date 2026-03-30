@@ -1,0 +1,25 @@
+{
+  "topic": "kafka",
+  "topic_name": "Kafka & Message Queues",
+  "generated_at": "2026-03-30",
+  "entries": [
+    {"file": "broker-architecture.md", "title": "Broker Architecture", "category": "concepts"},
+    {"file": "topics-and-partitions.md", "title": "Topics and Partitions", "category": "concepts"},
+    {"file": "consumer-groups.md", "title": "Consumer Groups", "category": "concepts"},
+    {"file": "replication-and-fault-tolerance.md", "title": "Replication and Fault Tolerance", "category": "concepts"},
+    {"file": "kafka-streams.md", "title": "Kafka Streams", "category": "concepts"},
+    {"file": "ksqldb.md", "title": "ksqlDB", "category": "concepts"},
+    {"file": "kafka-connect.md", "title": "Kafka Connect", "category": "concepts"},
+    {"file": "schema-registry.md", "title": "Schema Registry", "category": "concepts"},
+    {"file": "producer-patterns.md", "title": "Producer Patterns", "category": "patterns"},
+    {"file": "kafka-transactions.md", "title": "Kafka Transactions", "category": "concepts"},
+    {"file": "kafka-cluster-operations.md", "title": "Kafka Cluster Operations", "category": "reference"},
+    {"file": "kafka-security.md", "title": "Kafka Security", "category": "reference"}
+  ],
+  "sources": {
+    "courses_count": 5,
+    "chunks_count": 430,
+    "languages": ["ru"],
+    "output_language": "en"
+  }
+}

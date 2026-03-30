@@ -1,0 +1,34 @@
+{
+  "topic": "sql-databases",
+  "topic_name": "SQL & Databases",
+  "generated_at": "2026-03-30",
+  "entries": [
+    {"file": "select-fundamentals.md", "title": "SELECT Fundamentals and Clause Ordering", "category": "syntax"},
+    {"file": "joins-and-set-operations.md", "title": "Joins and Set Operations", "category": "syntax"},
+    {"file": "common-table-expressions.md", "title": "Common Table Expressions (CTEs)", "category": "syntax"},
+    {"file": "subqueries-and-derived-tables.md", "title": "Subqueries and Derived Tables", "category": "syntax"},
+    {"file": "window-functions.md", "title": "Window Functions", "category": "syntax"},
+    {"file": "dml-insert-update-delete.md", "title": "DML - INSERT, UPDATE, DELETE, UPSERT", "category": "syntax"},
+    {"file": "schema-design-data-types.md", "title": "Schema Design and Data Types", "category": "concepts"},
+    {"file": "data-integrity-constraints.md", "title": "Data Integrity and Constraints", "category": "concepts"},
+    {"file": "views-and-materialized-views.md", "title": "Views and Materialized Views", "category": "syntax"},
+    {"file": "stored-procedures-functions.md", "title": "Stored Procedures, Functions, and Triggers", "category": "syntax"},
+    {"file": "indexes-and-btree.md", "title": "Indexes and B-Tree Internals", "category": "concepts"},
+    {"file": "query-optimization-explain.md", "title": "Query Optimization and EXPLAIN", "category": "concepts"},
+    {"file": "transactions-and-acid.md", "title": "Transactions and ACID Properties", "category": "concepts"},
+    {"file": "postgresql-vacuum-and-mvcc.md", "title": "PostgreSQL MVCC, VACUUM, and Dead Tuples", "category": "concepts"},
+    {"file": "postgresql-configuration-tuning.md", "title": "PostgreSQL Configuration and Performance Tuning", "category": "reference"},
+    {"file": "database-storage-internals.md", "title": "Database Storage Internals", "category": "concepts"},
+    {"file": "postgresql-replication-ha.md", "title": "PostgreSQL Replication and High Availability", "category": "concepts"},
+    {"file": "postgresql-backup-pitr.md", "title": "PostgreSQL Backup and Point-in-Time Recovery", "category": "reference"},
+    {"file": "postgresql-partitioning.md", "title": "PostgreSQL Table Partitioning", "category": "concepts"},
+    {"file": "mysql-innodb-specifics.md", "title": "MySQL InnoDB Specifics", "category": "reference"},
+    {"file": "database-security-roles.md", "title": "Database Security, Roles, and Access Control", "category": "reference"}
+  ],
+  "sources": {
+    "courses_count": 11,
+    "chunks_count": 2616,
+    "languages": ["ru", "en"],
+    "output_language": "en"
+  }
+}

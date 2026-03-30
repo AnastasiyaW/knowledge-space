@@ -1,0 +1,36 @@
+{
+  "topic": "data-science",
+  "topic_name": "Data Science & ML",
+  "generated_at": "2026-03-30",
+  "entries": [
+    {"file": "linear-algebra.md", "title": "Linear Algebra for ML", "category": "math-foundations"},
+    {"file": "probability-distributions.md", "title": "Probability Distributions", "category": "math-foundations"},
+    {"file": "descriptive-statistics.md", "title": "Descriptive Statistics", "category": "statistics"},
+    {"file": "hypothesis-testing.md", "title": "Hypothesis Testing", "category": "statistics"},
+    {"file": "regression-models.md", "title": "Regression Models", "category": "ml-algorithms"},
+    {"file": "classification-algorithms.md", "title": "Classification Algorithms", "category": "ml-algorithms"},
+    {"file": "ensemble-methods.md", "title": "Ensemble Methods", "category": "ml-algorithms"},
+    {"file": "clustering-and-unsupervised.md", "title": "Clustering and Unsupervised Learning", "category": "ml-algorithms"},
+    {"file": "dimensionality-reduction.md", "title": "Dimensionality Reduction", "category": "ml-algorithms"},
+    {"file": "feature-engineering.md", "title": "Feature Engineering", "category": "ml-fundamentals"},
+    {"file": "cross-validation-and-model-selection.md", "title": "Cross-Validation and Model Selection", "category": "ml-fundamentals"},
+    {"file": "model-evaluation-metrics.md", "title": "Model Evaluation Metrics", "category": "ml-fundamentals"},
+    {"file": "loss-functions-and-regularization.md", "title": "Loss Functions and Regularization", "category": "ml-fundamentals"},
+    {"file": "gradient-descent-and-optimization.md", "title": "Gradient Descent and Optimization", "category": "ml-fundamentals"},
+    {"file": "neural-network-fundamentals.md", "title": "Neural Network Fundamentals", "category": "deep-learning"},
+    {"file": "convolutional-neural-networks.md", "title": "Convolutional Neural Networks", "category": "deep-learning"},
+    {"file": "recurrent-networks-and-sequences.md", "title": "Recurrent Networks and Sequences", "category": "deep-learning"},
+    {"file": "object-detection.md", "title": "Object Detection", "category": "computer-vision"},
+    {"file": "image-segmentation.md", "title": "Image Segmentation", "category": "computer-vision"},
+    {"file": "transfer-learning.md", "title": "Transfer Learning", "category": "deep-learning"},
+    {"file": "generative-models.md", "title": "Generative Models", "category": "deep-learning"},
+    {"file": "pandas-data-manipulation.md", "title": "Pandas Data Manipulation", "category": "tools"},
+    {"file": "data-visualization.md", "title": "Data Visualization", "category": "tools"}
+  ],
+  "sources": {
+    "courses_count": 17,
+    "chunks_count": 12196,
+    "languages": ["ru"],
+    "output_language": "en"
+  }
+}

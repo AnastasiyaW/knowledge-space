@@ -1,0 +1,144 @@
+{
+  "vault": "devops",
+  "title": "DevOps & Infrastructure",
+  "generated": "2026-03-30",
+  "source_topic": "devops",
+  "entry_count": 18,
+  "concepts": [
+    {
+      "id": "docker-images-containers",
+      "title": "Docker Images & Containers",
+      "category": "containers",
+      "tags": ["docker", "images", "containers", "dockerfile", "multi-stage", "registry"],
+      "wiki_links": ["docker-networking", "kubernetes-pods", "docker-compose", "ci-cd-pipelines"]
+    },
+    {
+      "id": "docker-compose",
+      "title": "Docker Compose",
+      "category": "containers",
+      "tags": ["docker-compose", "multi-container", "services", "volumes", "networks"],
+      "wiki_links": ["docker-images-containers", "docker-networking", "kubernetes-pods", "helm-charts"]
+    },
+    {
+      "id": "docker-networking",
+      "title": "Docker Networking",
+      "category": "containers",
+      "tags": ["docker", "networking", "bridge", "overlay", "port-mapping", "dns"],
+      "wiki_links": ["docker-compose", "docker-images-containers", "kubernetes-services", "microservices-architecture"]
+    },
+    {
+      "id": "kubernetes-pods",
+      "title": "Kubernetes Pods & Workloads",
+      "category": "orchestration",
+      "tags": ["kubernetes", "pods", "deployment", "replicaset", "statefulset", "daemonset", "kubectl"],
+      "wiki_links": ["kubernetes-services", "helm-charts", "deployment-strategies", "monitoring-observability"]
+    },
+    {
+      "id": "kubernetes-services",
+      "title": "Kubernetes Services & Ingress",
+      "category": "orchestration",
+      "tags": ["kubernetes", "services", "ingress", "clusterip", "nodeport", "loadbalancer", "networking"],
+      "wiki_links": ["kubernetes-pods", "microservices-architecture", "deployment-strategies", "monitoring-observability"]
+    },
+    {
+      "id": "kubernetes-config-secrets",
+      "title": "Kubernetes ConfigMaps & Secrets",
+      "category": "orchestration",
+      "tags": ["kubernetes", "configmap", "secrets", "configuration", "environment-variables", "volumes"],
+      "wiki_links": ["kubernetes-pods", "helm-charts", "gitops", "ci-cd-pipelines"]
+    },
+    {
+      "id": "helm-charts",
+      "title": "Helm Charts",
+      "category": "orchestration",
+      "tags": ["helm", "charts", "kubernetes", "templating", "values", "releases"],
+      "wiki_links": ["kubernetes-pods", "kubernetes-services", "gitops", "ci-cd-pipelines"]
+    },
+    {
+      "id": "ci-cd-pipelines",
+      "title": "CI/CD Pipelines",
+      "category": "automation",
+      "tags": ["ci-cd", "jenkins", "gitlab-ci", "github-actions", "pipelines", "automation", "testing"],
+      "wiki_links": ["docker-images-containers", "helm-charts", "terraform-iac", "gitops"]
+    },
+    {
+      "id": "gitops",
+      "title": "GitOps",
+      "category": "automation",
+      "tags": ["gitops", "argocd", "fluxcd", "kubernetes", "declarative", "git", "reconciliation"],
+      "wiki_links": ["kubernetes-pods", "helm-charts", "ci-cd-pipelines", "deployment-strategies"]
+    },
+    {
+      "id": "deployment-strategies",
+      "title": "Deployment Strategies",
+      "category": "operations",
+      "tags": ["deployment", "rolling-update", "blue-green", "canary", "zero-downtime", "rollback"],
+      "wiki_links": ["kubernetes-pods", "kubernetes-services", "monitoring-observability", "gitops"]
+    },
+    {
+      "id": "terraform-iac",
+      "title": "Terraform & Infrastructure as Code",
+      "category": "iac",
+      "tags": ["terraform", "iac", "hcl", "providers", "state", "modules", "plan", "apply"],
+      "wiki_links": ["aws-core-services", "azure-aks", "ansible-configuration", "ci-cd-pipelines"]
+    },
+    {
+      "id": "ansible-configuration",
+      "title": "Ansible Configuration Management",
+      "category": "iac",
+      "tags": ["ansible", "playbooks", "roles", "inventory", "configuration-management", "automation"],
+      "wiki_links": ["terraform-iac", "ci-cd-pipelines", "monitoring-observability", "sre-sli-slo-sla"]
+    },
+    {
+      "id": "aws-core-services",
+      "title": "AWS Core Services",
+      "category": "cloud",
+      "tags": ["aws", "ec2", "s3", "iam", "vpc", "rds", "eks", "cloud-infrastructure"],
+      "wiki_links": ["terraform-iac", "kubernetes-pods", "azure-aks", "monitoring-observability"]
+    },
+    {
+      "id": "azure-aks",
+      "title": "Azure Kubernetes Service (AKS)",
+      "category": "cloud",
+      "tags": ["azure", "aks", "kubernetes", "acr", "azure-devops", "terraform"],
+      "wiki_links": ["kubernetes-pods", "kubernetes-services", "terraform-iac", "helm-charts"]
+    },
+    {
+      "id": "sre-sli-slo-sla",
+      "title": "SRE - SLI, SLO, SLA & Error Budgets",
+      "category": "operations",
+      "tags": ["sre", "sli", "slo", "sla", "error-budget", "reliability", "toil", "dora-metrics"],
+      "wiki_links": ["monitoring-observability", "incident-management", "deployment-strategies", "ci-cd-pipelines"]
+    },
+    {
+      "id": "monitoring-observability",
+      "title": "Monitoring & Observability",
+      "category": "operations",
+      "tags": ["monitoring", "observability", "prometheus", "grafana", "metrics", "logs", "traces", "alerting"],
+      "wiki_links": ["sre-sli-slo-sla", "kubernetes-pods", "incident-management", "microservices-architecture"]
+    },
+    {
+      "id": "incident-management",
+      "title": "Incident Management & On-Call",
+      "category": "operations",
+      "tags": ["incident", "on-call", "postmortem", "blameless", "escalation", "runbook", "severity"],
+      "wiki_links": ["monitoring-observability", "sre-sli-slo-sla", "deployment-strategies", "microservices-architecture"]
+    },
+    {
+      "id": "microservices-architecture",
+      "title": "Microservices Architecture",
+      "category": "architecture",
+      "tags": ["microservices", "service-mesh", "api-gateway", "distributed-systems", "spring-boot", "istio"],
+      "wiki_links": ["kubernetes-services", "monitoring-observability", "deployment-strategies", "docker-images-containers"]
+    }
+  ],
+  "categories": {
+    "containers": ["docker-images-containers", "docker-compose", "docker-networking"],
+    "orchestration": ["kubernetes-pods", "kubernetes-services", "kubernetes-config-secrets", "helm-charts"],
+    "automation": ["ci-cd-pipelines", "gitops"],
+    "iac": ["terraform-iac", "ansible-configuration"],
+    "cloud": ["aws-core-services", "azure-aks"],
+    "operations": ["sre-sli-slo-sla", "monitoring-observability", "incident-management", "deployment-strategies"],
+    "architecture": ["microservices-architecture"]
+  }
+}

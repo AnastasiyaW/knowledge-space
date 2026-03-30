@@ -1,0 +1,144 @@
+{
+  "topic": "Rust",
+  "description": "Systems programming language focused on safety, concurrency, and performance",
+  "total_entries": 16,
+  "entries": [
+    {
+      "file": "ownership-and-move-semantics.md",
+      "title": "Ownership and Move Semantics",
+      "category": "concepts",
+      "tags": ["ownership", "move", "memory", "RAII", "drop"],
+      "links_to": ["borrowing-and-references", "smart-pointers", "closures"]
+    },
+    {
+      "file": "borrowing-and-references.md",
+      "title": "Borrowing and References",
+      "category": "concepts",
+      "tags": ["borrowing", "references", "borrow-checker", "slices"],
+      "links_to": ["ownership-and-move-semantics", "lifetimes", "collections"]
+    },
+    {
+      "file": "lifetimes.md",
+      "title": "Lifetimes",
+      "category": "concepts",
+      "tags": ["lifetimes", "borrow-checker", "references", "annotations"],
+      "links_to": ["borrowing-and-references", "traits", "generics-and-monomorphization"]
+    },
+    {
+      "file": "structs-and-methods.md",
+      "title": "Structs and Methods",
+      "category": "concepts",
+      "tags": ["structs", "methods", "impl", "encapsulation", "newtype"],
+      "links_to": ["enums-and-pattern-matching", "traits", "modules-and-visibility"]
+    },
+    {
+      "file": "enums-and-pattern-matching.md",
+      "title": "Enums and Pattern Matching",
+      "category": "concepts",
+      "tags": ["enums", "match", "pattern-matching", "option", "if-let", "destructuring"],
+      "links_to": ["structs-and-methods", "error-handling", "traits"]
+    },
+    {
+      "file": "traits.md",
+      "title": "Traits",
+      "category": "concepts",
+      "tags": ["traits", "polymorphism", "derive", "orphan-rule", "associated-types", "supertraits"],
+      "links_to": ["generics-and-monomorphization", "dynamic-dispatch", "closures"]
+    },
+    {
+      "file": "generics-and-monomorphization.md",
+      "title": "Generics and Monomorphization",
+      "category": "concepts",
+      "tags": ["generics", "monomorphization", "type-parameters", "where-clause", "turbofish"],
+      "links_to": ["traits", "dynamic-dispatch", "closures"]
+    },
+    {
+      "file": "dynamic-dispatch.md",
+      "title": "Dynamic Dispatch",
+      "category": "concepts",
+      "tags": ["dyn", "trait-objects", "vtable", "polymorphism", "object-safety"],
+      "links_to": ["generics-and-monomorphization", "traits", "smart-pointers"]
+    },
+    {
+      "file": "error-handling.md",
+      "title": "Error Handling",
+      "category": "patterns",
+      "tags": ["result", "option", "error", "question-mark", "panic", "thiserror", "anyhow"],
+      "links_to": ["enums-and-pattern-matching", "traits", "closures"]
+    },
+    {
+      "file": "collections.md",
+      "title": "Collections",
+      "category": "reference",
+      "tags": ["vec", "hashmap", "string", "vecdeque", "btreemap", "collections"],
+      "links_to": ["borrowing-and-references", "iterators", "traits"]
+    },
+    {
+      "file": "closures.md",
+      "title": "Closures",
+      "category": "concepts",
+      "tags": ["closures", "fn", "fnmut", "fnonce", "move", "lambda", "capture"],
+      "links_to": ["traits", "iterators", "concurrency", "generics-and-monomorphization"]
+    },
+    {
+      "file": "smart-pointers.md",
+      "title": "Smart Pointers",
+      "category": "concepts",
+      "tags": ["box", "rc", "arc", "deref", "drop", "heap", "RAII", "interior-mutability"],
+      "links_to": ["ownership-and-move-semantics", "concurrency", "dynamic-dispatch", "borrowing-and-references"]
+    },
+    {
+      "file": "concurrency.md",
+      "title": "Concurrency",
+      "category": "concepts",
+      "tags": ["threads", "send", "sync", "mutex", "atomic", "channels", "rwlock", "threadpool"],
+      "links_to": ["smart-pointers", "closures", "async-await", "ownership-and-move-semantics"]
+    },
+    {
+      "file": "async-await.md",
+      "title": "Async/Await",
+      "category": "concepts",
+      "tags": ["async", "await", "future", "tokio", "runtime", "event-loop", "concurrency"],
+      "links_to": ["concurrency", "closures", "error-handling", "traits"]
+    },
+    {
+      "file": "modules-and-visibility.md",
+      "title": "Modules and Visibility",
+      "category": "reference",
+      "tags": ["modules", "pub", "crate", "visibility", "use", "re-export", "cargo"],
+      "links_to": ["structs-and-methods", "traits", "error-handling"]
+    },
+    {
+      "file": "iterators.md",
+      "title": "Iterators",
+      "category": "patterns",
+      "tags": ["iterators", "map", "filter", "collect", "iterator-trait", "lazy", "chaining"],
+      "links_to": ["closures", "collections", "traits", "error-handling"]
+    },
+    {
+      "file": "macros.md",
+      "title": "Macros",
+      "category": "concepts",
+      "tags": ["macros", "macro-rules", "procedural-macros", "derive", "metaprogramming"],
+      "links_to": ["traits", "modules-and-visibility", "structs-and-methods"]
+    },
+    {
+      "file": "rust-tooling.md",
+      "title": "Rust Tooling and Project Setup",
+      "category": "reference",
+      "tags": ["cargo", "rustup", "clippy", "rustfmt", "toolchain", "testing", "documentation"],
+      "links_to": ["modules-and-visibility", "macros", "error-handling"]
+    }
+  ],
+  "categories": {
+    "concepts": 12,
+    "patterns": 2,
+    "reference": 3,
+    "gotchas": 0
+  },
+  "source_stats": {
+    "total_chunks": 874,
+    "source_courses": 2,
+    "coverage": "Basic (syntax, ownership, types, collections, concurrency, async) + Professional (project structure, patterns, FFI, web, design patterns)"
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "topic": "bi-analytics",
+  "title": "BI & Product Analytics",
+  "generated": "2026-03-30",
+  "entry_count": 13,
+  "entries": [
+    {
+      "file": "unit-economics.md",
+      "title": "Unit Economics",
+      "category": "Product Analytics",
+      "tags": ["unit-economics", "CPA", "ARPU", "LTV", "CAC", "gross-profit", "metrics", "business-model"]
+    },
+    {
+      "file": "product-metrics-nsm.md",
+      "title": "Product Metrics & North Star Metric",
+      "category": "Product Analytics",
+      "tags": ["metrics", "NSM", "north-star", "vanity-metrics", "clarity-metrics", "KPI", "metrics-hierarchy", "HEART"]
+    },
+    {
+      "file": "cohort-analysis.md",
+      "title": "Cohort Analysis",
+      "category": "Product Analytics",
+      "tags": ["cohort", "segmentation", "comparison", "retention", "version-comparison", "growth-points"]
+    },
+    {
+      "file": "retention-ltv-roi.md",
+      "title": "Retention, LTV & ROI",
+      "category": "Product Analytics",
+      "tags": ["retention", "LTV", "lifetime-value", "ROI", "CAC", "payback-period", "profitability"]
+    },
+    {
+      "file": "funnel-analysis.md",
+      "title": "Funnel Analysis",
+      "category": "Product Analytics",
+      "tags": ["funnel", "conversion", "sales-funnel", "user-journey", "drop-off", "optimization"]
+    },
+    {
+      "file": "mobile-app-analytics.md",
+      "title": "Mobile App Analytics",
+      "category": "Product Analytics",
+      "tags": ["mobile", "app-analytics", "marketing-analytics", "ASO", "UX-analytics", "store-analytics", "attribution", "CPI"]
+    },
+    {
+      "file": "tableau-data-connections.md",
+      "title": "Tableau Data Connections",
+      "category": "BI Tools - Tableau",
+      "tags": ["tableau", "data-source", "join", "union", "relation", "blending", "extract", "live", "custom-sql", "ETL"]
+    },
+    {
+      "file": "lod-expressions-calculated-fields.md",
+      "title": "LOD Expressions & Calculated Fields",
+      "category": "BI Tools - Tableau",
+      "tags": ["tableau", "LOD", "FIXED", "INCLUDE", "EXCLUDE", "calculated-field", "table-calculation", "performance"]
+    },
+    {
+      "file": "tableau-geo-functions.md",
+      "title": "Tableau Geo Functions",
+      "category": "BI Tools - Tableau",
+      "tags": ["tableau", "geo", "spatial", "map", "MAKEPOINT", "MAKELINE", "BUFFER", "DISTANCE", "spatial-join"]
+    },
+    {
+      "file": "tableau-performance-optimization.md",
+      "title": "Tableau Performance Optimization",
+      "category": "BI Tools - Tableau",
+      "tags": ["tableau", "performance", "optimization", "extract", "query", "rendering", "performance-recording", "filters", "order-of-operations"]
+    },
+    {
+      "file": "tableau-row-level-security.md",
+      "title": "Tableau Row & Column Level Security",
+      "category": "BI Tools - Tableau",
+      "tags": ["tableau", "security", "RLS", "CLS", "row-level-security", "user-filter", "permissions", "tableau-server"]
+    },
+    {
+      "file": "visualization-principles.md",
+      "title": "Data Visualization Principles",
+      "category": "BI Tools - Visualization",
+      "tags": ["visualization", "tufte", "data-ink-ratio", "design", "information-design", "chart-selection", "lie-factor"]
+    },
+    {
+      "file": "color-in-visualization.md",
+      "title": "Color in Data Visualization",
+      "category": "BI Tools - Visualization",
+      "tags": ["color", "palette", "colorbrewer", "categorical", "sequential", "diverging", "accessibility", "color-blind"]
+    },
+    {
+      "file": "dashboard-design-patterns.md",
+      "title": "Dashboard Design Patterns",
+      "category": "BI Tools - Design",
+      "tags": ["dashboard", "design-pattern", "wireframe", "layout", "UX", "attention", "BI-analyst", "actionable"]
+    },
+    {
+      "file": "bi-analyst-skills.md",
+      "title": "BI Analyst Skills & Competencies",
+      "category": "BI Tools - Career",
+      "tags": ["BI-analyst", "skills", "competencies", "information-design", "UX", "storytelling", "web-analytics", "career"]
+    }
+  ],
+  "categories": [
+    "Product Analytics",
+    "BI Tools - Tableau",
+    "BI Tools - Visualization",
+    "BI Tools - Design",
+    "BI Tools - Career"
+  ],
+  "wiki_links": {
+    "unit-economics": "unit-economics.md",
+    "product-metrics-nsm": "product-metrics-nsm.md",
+    "cohort-analysis": "cohort-analysis.md",
+    "retention-ltv-roi": "retention-ltv-roi.md",
+    "funnel-analysis": "funnel-analysis.md",
+    "mobile-app-analytics": "mobile-app-analytics.md",
+    "tableau-data-connections": "tableau-data-connections.md",
+    "lod-expressions-calculated-fields": "lod-expressions-calculated-fields.md",
+    "tableau-geo-functions": "tableau-geo-functions.md",
+    "tableau-performance-optimization": "tableau-performance-optimization.md",
+    "tableau-row-level-security": "tableau-row-level-security.md",
+    "visualization-principles": "visualization-principles.md",
+    "color-in-visualization": "color-in-visualization.md",
+    "dashboard-design-patterns": "dashboard-design-patterns.md",
+    "bi-analyst-skills": "bi-analyst-skills.md",
+    "metrics-hierarchy": "product-metrics-nsm.md"
+  }
+}

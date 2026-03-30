@@ -1,0 +1,168 @@
+{
+  "topic": "algorithms",
+  "title": "Algorithms & Data Structures",
+  "generated": "2026-03-30",
+  "entry_count": 18,
+  "concepts": [
+    {
+      "id": "big-o-complexity-analysis",
+      "title": "Big-O and Complexity Analysis",
+      "category": "fundamentals",
+      "file": "big-o-complexity-analysis.md",
+      "tags": ["big-o", "time-complexity", "space-complexity", "asymptotic-analysis"]
+    },
+    {
+      "id": "arrays-and-strings",
+      "title": "Arrays and Strings",
+      "category": "data-structures",
+      "file": "arrays-and-strings.md",
+      "tags": ["array", "string", "two-pointers", "sliding-window", "prefix-sum"]
+    },
+    {
+      "id": "hash-tables",
+      "title": "Hash Tables",
+      "category": "data-structures",
+      "file": "hash-tables.md",
+      "tags": ["hash-table", "hash-map", "dictionary", "hash-set"]
+    },
+    {
+      "id": "linked-lists",
+      "title": "Linked Lists",
+      "category": "data-structures",
+      "file": "linked-lists.md",
+      "tags": ["linked-list", "fast-slow-pointer", "cycle-detection"]
+    },
+    {
+      "id": "stacks-and-queues",
+      "title": "Stacks and Queues",
+      "category": "data-structures",
+      "file": "stacks-and-queues.md",
+      "tags": ["stack", "queue", "deque", "monotonic-stack"]
+    },
+    {
+      "id": "binary-search",
+      "title": "Binary Search",
+      "category": "algorithms",
+      "file": "binary-search.md",
+      "tags": ["binary-search", "divide-and-conquer", "sorted-array", "logarithmic"]
+    },
+    {
+      "id": "sorting-algorithms",
+      "title": "Sorting Algorithms",
+      "category": "algorithms",
+      "file": "sorting-algorithms.md",
+      "tags": ["sorting", "merge-sort", "quick-sort", "heap-sort", "counting-sort"]
+    },
+    {
+      "id": "binary-tree-traversal",
+      "title": "Binary Trees and Traversal",
+      "category": "data-structures",
+      "file": "binary-tree-traversal.md",
+      "tags": ["binary-tree", "bst", "inorder", "preorder", "postorder", "level-order"]
+    },
+    {
+      "id": "priority-queue-and-heap",
+      "title": "Priority Queue and Heap",
+      "category": "data-structures",
+      "file": "priority-queue-and-heap.md",
+      "tags": ["priority-queue", "heap", "binary-heap", "min-heap", "max-heap"]
+    },
+    {
+      "id": "graph-representations",
+      "title": "Graph Representations",
+      "category": "data-structures",
+      "file": "graph-representations.md",
+      "tags": ["graph", "adjacency-list", "adjacency-matrix", "directed", "weighted"]
+    },
+    {
+      "id": "graph-bfs-dfs",
+      "title": "Graph BFS and DFS",
+      "category": "algorithms",
+      "file": "graph-bfs-dfs.md",
+      "tags": ["bfs", "dfs", "graph-traversal", "connected-components", "flood-fill"]
+    },
+    {
+      "id": "graph-shortest-path",
+      "title": "Graph Shortest Path Algorithms",
+      "category": "algorithms",
+      "file": "graph-shortest-path.md",
+      "tags": ["dijkstra", "bellman-ford", "shortest-path", "weighted-graph"]
+    },
+    {
+      "id": "topological-sort",
+      "title": "Topological Sort",
+      "category": "algorithms",
+      "file": "topological-sort.md",
+      "tags": ["topological-sort", "dag", "kahn", "dependency-resolution"]
+    },
+    {
+      "id": "dynamic-programming",
+      "title": "Dynamic Programming",
+      "category": "algorithms",
+      "file": "dynamic-programming.md",
+      "tags": ["dynamic-programming", "memoization", "tabulation", "knapsack", "lcs"]
+    },
+    {
+      "id": "recursion-and-backtracking",
+      "title": "Recursion and Backtracking",
+      "category": "algorithms",
+      "file": "recursion-and-backtracking.md",
+      "tags": ["recursion", "backtracking", "permutations", "combinations", "subsets"]
+    },
+    {
+      "id": "greedy-algorithms",
+      "title": "Greedy Algorithms",
+      "category": "algorithms",
+      "file": "greedy-algorithms.md",
+      "tags": ["greedy", "interval-scheduling", "fractional-knapsack"]
+    },
+    {
+      "id": "union-find",
+      "title": "Union-Find (Disjoint Set Union)",
+      "category": "data-structures",
+      "file": "union-find.md",
+      "tags": ["union-find", "disjoint-set", "path-compression", "connected-components"]
+    },
+    {
+      "id": "trie",
+      "title": "Trie (Prefix Tree)",
+      "category": "data-structures",
+      "file": "trie.md",
+      "tags": ["trie", "prefix-tree", "autocomplete", "word-search"]
+    },
+    {
+      "id": "minimum-spanning-tree",
+      "title": "Minimum Spanning Tree",
+      "category": "algorithms",
+      "file": "minimum-spanning-tree.md",
+      "tags": ["mst", "kruskal", "prim", "spanning-tree", "greedy"]
+    },
+    {
+      "id": "bit-manipulation",
+      "title": "Bit Manipulation",
+      "category": "algorithms",
+      "file": "bit-manipulation.md",
+      "tags": ["bitwise", "xor", "bitmask", "bit-shift"]
+    },
+    {
+      "id": "divide-and-conquer",
+      "title": "Divide and Conquer",
+      "category": "algorithms",
+      "file": "divide-and-conquer.md",
+      "tags": ["divide-and-conquer", "merge-sort", "master-theorem"]
+    }
+  ],
+  "categories": {
+    "fundamentals": ["big-o-complexity-analysis", "divide-and-conquer"],
+    "data-structures": [
+      "arrays-and-strings", "hash-tables", "linked-lists", "stacks-and-queues",
+      "binary-tree-traversal", "priority-queue-and-heap", "graph-representations",
+      "union-find", "trie"
+    ],
+    "algorithms": [
+      "binary-search", "sorting-algorithms", "graph-bfs-dfs", "graph-shortest-path",
+      "topological-sort", "dynamic-programming", "recursion-and-backtracking",
+      "greedy-algorithms", "minimum-spanning-tree", "bit-manipulation"
+    ]
+  }
+}
