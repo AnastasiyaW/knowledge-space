@@ -50,15 +50,15 @@ Active development, frequent breaking changes, new tools replacing old ones.
 | `security/` | New CVEs daily, anti-fraud arms race | New attack vectors, browser privacy changes |
 | `seo-marketing/` | Google algorithm updates, AI Overviews disruption | Core updates, SGE/AI Overviews expansion |
 
-### Tier 4: Ephemeral (needs update NOW or soon)
+### Tier 4: Ephemeral (monthly updates)
 
-Built from cutting-edge material that may already be outdated.
+Built from cutting-edge material. Already partially outdated by the time it's generated.
 
 | Domain | Status | Action needed |
 |--------|--------|---------------|
-| `image-generation/` | Models release weekly. FLUX Kontext, Step1X-Edit - some already superseded | Re-generate quarterly from latest papers |
-| `llm-agents/` (agents, frameworks) | LangChain/LangGraph/CrewAI rewrite constantly. Agent patterns from 3 months ago are already legacy | Re-generate when major framework versions drop |
-| `misc/` (OpenClaw) | OpenClaw is pre-1.0, API unstable | Re-generate when OpenClaw hits stable release |
+| `image-generation/` | Models release weekly. FLUX Kontext, Step1X-Edit - some already superseded | Monthly from latest papers/repos |
+| `llm-agents/` (agents, frameworks) | LangChain/LangGraph/CrewAI rewrite constantly. Agent patterns from 3 months ago are already legacy | Monthly - track framework releases |
+| `misc/` (OpenClaw) | OpenClaw is pre-1.0, API unstable | Monthly until stable release |
 | `misc/` (Google Antigravity) | Novelty course, low long-term value | Low priority, skip re-generation |
 
 ## Re-generation Schedule
@@ -68,7 +68,7 @@ Built from cutting-edge material that may already be outdated.
 | **Never** (until fundamentals change) | algorithms, data-science (math), architecture, linux-cli |
 | **Yearly** | sql-databases, kafka, rust, java-spring, php, nodejs, testing-qa, bi-analytics, data-engineering |
 | **Every 6 months** | web-frontend, devops, llm-agents (RAG, embeddings, prompting), ios-mobile, security, seo-marketing |
-| **Quarterly** | image-generation, llm-agents (agent frameworks, function calling, multi-agent) |
+| **Monthly** | image-generation, llm-agents (agent frameworks, function calling, multi-agent) |
 | **On-demand** | misc (when specific content becomes relevant) |
 
 ## How to Update a Domain
