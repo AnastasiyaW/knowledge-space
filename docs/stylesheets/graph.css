@@ -205,7 +205,7 @@
 }
 
 .ks-graph-stats__number {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 800;
   line-height: 1.2;
   letter-spacing: -0.02em;
@@ -220,11 +220,12 @@
 }
 
 .ks-graph-stats__label {
-  font-size: 0.7rem;
+  font-size: 0.58rem;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   opacity: 0.45;
+  white-space: nowrap;
 }
 
 .ks-graph-stats__divider {
