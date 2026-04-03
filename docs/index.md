@@ -81,7 +81,7 @@ Each article is a concentrated extract: code examples, configuration patterns, g
 
 **Browse** the sidebar to explore by domain. Each domain contains 9-85 focused articles.
 
-**For agents:** upload the repo into a [ConTree](https://contree.dev/) sandbox and query it via MCP tools - search, read, analyze articles in an isolated environment. Or clone the repo directly - each article is a standalone `.md` file, easy to retrieve and inject into context.
+**For agents:** the easiest way - copy the snippet from the top of this page and paste it into your Claude conversation. Or upload the repo into a [ConTree](https://contree.dev/) sandbox and query it via MCP tools. Or clone the repo directly - each article is a standalone `.md` file, easy to retrieve and inject into context.
 
 **Key conventions:**
 
