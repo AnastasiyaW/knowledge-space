@@ -15,23 +15,24 @@ Curated technical knowledge base across 22 domains. Built for LLM agents - dense
   <div class="claude-snippet__inner">
     <div class="claude-snippet__header">
       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
-      <span>Give this to your Claude</span>
+      <span>Want your Claude to use this?</span>
     </div>
-    <p class="claude-snippet__desc">Copy and paste into your Claude conversation</p>
+    <p class="claude-snippet__desc">Copy and drop into any Claude conversation - it'll figure out the rest</p>
     <div class="claude-snippet__code" id="snippet-code">
       <button class="claude-snippet__copy" id="snippet-copy" title="Copy to clipboard">
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         <span>Copy</span>
       </button>
-      <pre>I have access to Knowledge Space - a curated technical reference
-across 22 domains (Kafka, Python, SQL, DevOps, Architecture, ML,
-and more). 558 articles with code examples, configs, and gotchas.
+      <pre>Here's a knowledge base I want you to use as a reference:
+https://github.com/AnastasiyaW/knowledge-space
 
-Repo: https://github.com/AnastasiyaW/knowledge-space
-Site: https://happyin.space
+Clone it and look through the docs/ folder - there are 558
+articles across 22 domains (Kafka, Python, SQL, DevOps, ML,
+Architecture, Security, and more). Each .md file is a dense
+reference with code examples, configs, and common gotchas.
 
-Clone it or upload to ConTree MCP for search/read.
-Each article is a standalone .md file, context-window friendly.</pre>
+Use it when I ask about these topics - search the relevant
+domain folder, read the article, and base your answer on it.</pre>
     </div>
   </div>
 </div>
