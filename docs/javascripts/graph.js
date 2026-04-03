@@ -5,29 +5,15 @@
   const container = document.getElementById("knowledge-graph");
   if (!container) return;
 
-  const domains = [
-    { id: "Data Science", articles: 85, group: "data" },
-    { id: "Python", articles: 43, group: "code" },
-    { id: "Web Frontend", articles: 40, group: "code" },
-    { id: "DevOps", articles: 39, group: "infra" },
-    { id: "Architecture", articles: 39, group: "design" },
-    { id: "Data Engineering", articles: 38, group: "data" },
-    { id: "Kafka", articles: 33, group: "infra" },
-    { id: "SQL & Databases", articles: 27, group: "data" },
-    { id: "Linux CLI", articles: 25, group: "infra" },
-    { id: "LLM & Agents", articles: 24, group: "ai" },
-    { id: "Java & Spring", articles: 21, group: "code" },
-    { id: "BI & Analytics", articles: 21, group: "data" },
-    { id: "Algorithms", articles: 19, group: "design" },
-    { id: "Security", articles: 18, group: "infra" },
-    { id: "SEO & Marketing", articles: 16, group: "other" },
-    { id: "Testing & QA", articles: 15, group: "design" },
-    { id: "Rust", articles: 14, group: "code" },
-    { id: "PHP", articles: 12, group: "code" },
-    { id: "Node.js", articles: 10, group: "code" },
-    { id: "iOS & Mobile", articles: 10, group: "code" },
-    { id: "Misc", articles: 9, group: "other" },
-  ];
+  // Read domain stats from auto-generated stats.js (single source of truth)
+  const stats = window.KS_STATS || {};
+  const domainData = stats.domains || {};
+
+  const domains = Object.values(domainData)
+    .map((d) => ({ id: d.name, articles: d.articles, group: d.group }))
+    .sort((a, b) => b.articles - a.articles);
+
+  if (domains.length === 0) return; // stats.js not loaded yet
 
   const links = [
     { source: "Kafka", target: "Architecture", strength: 3 },
@@ -488,6 +474,18 @@
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(resize, 100);
   });
+})();
+
+// ── Auto-fill stats from KS_STATS ──
+(function () {
+  const s = window.KS_STATS;
+  if (!s) return;
+  const el = (id, val) => {
+    const e = document.getElementById(id);
+    if (e) e.textContent = val;
+  };
+  el("ks-total-articles", s.total_articles);
+  el("ks-total-domains", s.total_domains);
 })();
 
 // ── Claude Snippet: border particles + copy button ──

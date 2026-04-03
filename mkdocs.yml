@@ -59,7 +59,11 @@ extra_css:
   - stylesheets/graph.css
 
 extra_javascript:
+  - javascripts/stats.js
   - javascripts/graph.js
+
+hooks:
+  - hooks/stats.py
 
 markdown_extensions:
   - pymdownx.highlight:

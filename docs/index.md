@@ -6,7 +6,7 @@ title: Home
 
 Curated technical knowledge base across 22 domains. Built for LLM agents - dense, structured references that fit in a context window and give immediately actionable answers.
 
-**558 articles | 4.2 MB | 22 domains**
+**<span id="ks-total-articles">558</span> articles | <span id="ks-total-domains">22</span> domains**
 
 [:fontawesome-brands-github: **GitHub Repository**](https://github.com/AnastasiyaW/knowledge-space){ .md-button .md-button--primary }
 
@@ -138,10 +138,23 @@ Articles include version/date context where relevant (e.g., "PostgreSQL 17", "Re
 
 ---
 
-## Contributors
+## Made by people, for machines
 
-- [:fontawesome-brands-linkedin: **happyinhappy**](https://www.linkedin.com/in/happyinhappy/) - architecture, curation, AI/ML pipeline
-- [:fontawesome-brands-linkedin: **Anastasiya Ilukhina**](https://www.linkedin.com/in/anastasiya-ilukhina-09646a289/) - content, quality review
+<div class="ks-contributors" markdown>
+
+<div class="ks-contributor" markdown>
+[:fontawesome-brands-linkedin:](https://www.linkedin.com/in/happyinhappy/){ .ks-contributor__icon }
+**Anastasiia But**{ .ks-contributor__name }
+Architecture, curation, AI/ML pipeline{ .ks-contributor__role }
+</div>
+
+<div class="ks-contributor" markdown>
+[:fontawesome-brands-linkedin:](https://www.linkedin.com/in/anastasiya-ilukhina-09646a289/){ .ks-contributor__icon }
+**Anastasiya Ilukhina**{ .ks-contributor__name }
+Content, quality review{ .ks-contributor__role }
+</div>
+
+</div>
 
 Want to contribute? See the [Contributing guide](contributing/).
 
@@ -151,10 +164,4 @@ Want to contribute? See the [Contributing guide](contributing/).
 
 [:fontawesome-brands-github: **claude-code-skills**](https://github.com/AnastasiyaW/claude-code-skills){ .md-button }
 
-Open-source collection of skills, architectural patterns, and best practices for Claude Code. If you're building with AI agents, this might be useful:
-
-- **Multi-agent harness design** - Generator-Evaluator pattern, Sprint Contracts, context management
-- **Proof loop verification** - spec freeze -> build -> evidence -> fresh verify cycle
-- **Autoresearch** - iterative self-optimization with mechanical scoring
-- **Structured reasoning** - premises, execution trace, conclusions for complex debugging
-- **Context engineering** - surviving long sessions, post-compaction recovery, JIT retrieval
+Skills, architectural patterns, and best practices for Claude Code:

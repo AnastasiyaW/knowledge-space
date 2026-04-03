@@ -167,3 +167,70 @@
   background: rgba(3, 218, 198, 0.2) !important;
   color: #03dac6 !important;
 }
+
+/* ── Contributors ── */
+.ks-contributors {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+}
+
+.ks-contributor {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem 1.2rem;
+  border-radius: 12px;
+  flex: 1;
+  min-width: 240px;
+  transition: all 0.2s;
+}
+
+[data-md-color-scheme="slate"] .ks-contributor {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-md-color-scheme="default"] .ks-contributor {
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.ks-contributor:hover {
+  border-color: rgba(187, 134, 252, 0.4);
+}
+
+.ks-contributor__icon .twemoji,
+.ks-contributor__icon svg {
+  width: 28px !important;
+  height: 28px !important;
+  color: #0a66c2;
+  transition: transform 0.2s;
+}
+
+.ks-contributor__icon:hover .twemoji,
+.ks-contributor__icon:hover svg {
+  transform: scale(1.15);
+}
+
+.ks-contributor__name {
+  display: block;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.ks-contributor__role {
+  display: block;
+  font-size: 0.8rem;
+  opacity: 0.55;
+  font-weight: 400;
+}
+
+/* Fix paragraph nesting inside contributor cards */
+.ks-contributor > p {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
