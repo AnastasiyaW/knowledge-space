@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+  {{ super() }}
+
+  {% if page %}
+  {# Open Graph meta tags #}
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="{{ page.title }} - {{ config.site_name }}" />
+  <meta property="og:description" content="{{ (page.meta.description if page.meta and page.meta.description) | default(config.site_description) }}" />
+  <meta property="og:url" content="{{ page.canonical_url }}" />
+  <meta property="og:site_name" content="{{ config.site_name }}" />
+
+  {# Twitter Card #}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{ page.title }} - {{ config.site_name }}" />
+  <meta name="twitter:description" content="{{ (page.meta.description if page.meta and page.meta.description) | default(config.site_description) }}" />
+  {% endif %}
+
+  {# WebSite JSON-LD with availableLanguage - on homepage only #}
+  {% if page and page.is_homepage %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "{{ config.site_name }}",
+    "url": "{{ config.site_url }}",
+    "description": {{ config.site_description | tojson }},
+    "inLanguage": "en",
+    "availableLanguage": [
+      {"@type": "Language", "name": "English", "alternateName": "en"},
+      {"@type": "Language", "name": "Chinese", "alternateName": "zh"},
+      {"@type": "Language", "name": "Korean", "alternateName": "ko"},
+      {"@type": "Language", "name": "Spanish", "alternateName": "es"},
+      {"@type": "Language", "name": "German", "alternateName": "de"},
+      {"@type": "Language", "name": "French", "alternateName": "fr"}
+    ],
+    "author": {
+      "@type": "Person",
+      "name": "AnastasiyaW",
+      "url": "https://github.com/AnastasiyaW"
+    }
+  }
+  </script>
+  {% endif %}
+
+  {# TechArticle JSON-LD - only emitted when description exists (prevent partial schema penalty) #}
+  {% if page and page.meta and page.meta.description %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": {{ page.title | tojson }},
+    "description": {{ page.meta.description | tojson }},
+    "url": "{{ page.canonical_url }}",
+    {% if page.meta.date %}"datePublished": "{{ page.meta.date }}",{% endif %}
+    {% if page.meta.updated %}"dateModified": "{{ page.meta.updated }}",{% endif %}
+    "author": {
+      "@type": "Person",
+      "name": "AnastasiyaW",
+      "url": "https://github.com/AnastasiyaW"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "{{ config.site_name }}",
+      "url": "{{ config.site_url }}"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "{{ page.canonical_url }}"
+    },
+    "proficiencyLevel": "{{ page.meta.level | default('Intermediate') }}",
+    "inLanguage": "en"
+  }
+  </script>
+  {% endif %}
+{% endblock %}

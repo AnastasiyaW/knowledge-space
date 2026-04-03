@@ -1,0 +1,25 @@
+{
+  "topic": "seo-marketing",
+  "topic_name": "SEO & Digital Marketing",
+  "generated_at": "2026-03-30",
+  "entries": [
+    {"file": "search-engine-fundamentals.md", "title": "Search Engine Fundamentals", "category": "concepts"},
+    {"file": "keyword-research-semantic-core.md", "title": "Keyword Research and Semantic Core", "category": "concepts"},
+    {"file": "on-page-optimization.md", "title": "On-Page Text Optimization", "category": "concepts"},
+    {"file": "site-structure-architecture.md", "title": "Site Structure and URL Architecture", "category": "concepts"},
+    {"file": "technical-seo-audit.md", "title": "Technical SEO Audit", "category": "concepts"},
+    {"file": "html-css-for-seo.md", "title": "HTML, CSS, and JavaScript for SEO", "category": "reference"},
+    {"file": "seo-promotion-strategy.md", "title": "SEO Promotion Strategy", "category": "concepts"},
+    {"file": "seo-content-strategy.md", "title": "SEO Content Strategy", "category": "concepts"},
+    {"file": "link-building.md", "title": "Link Building and Backlink Strategy", "category": "concepts"},
+    {"file": "seo-analytics-tools.md", "title": "SEO Analytics Tools", "category": "reference"},
+    {"file": "seo-tools-and-workflow.md", "title": "SEO Tools and Daily Workflow", "category": "reference"},
+    {"file": "ai-for-seo.md", "title": "AI and Neural Networks for SEO", "category": "concepts"}
+  ],
+  "sources": {
+    "courses_count": 1,
+    "chunks_count": 514,
+    "languages": ["ru"],
+    "output_language": "en"
+  }
+}

@@ -1,0 +1,147 @@
+name: Validate Articles
+
+on:
+  pull_request:
+    paths:
+      - 'docs/**/*.md'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get changed files
+        id: changed
+        uses: tj-actions/changed-files@v44
+        with:
+          files: 'docs/**/*.md'
+
+      - name: Validate article format
+        if: steps.changed.outputs.any_changed == 'true'
+        run: |
+          errors=0
+
+          for file in ${{ steps.changed.outputs.all_changed_files }}; do
+            echo "--- Validating: $file ---"
+
+            # Skip index.md and non-article pages
+            if [[ "$file" == "docs/index.md" ]] || [[ "$file" == docs/contributing/* ]]; then
+              echo "  Skipping (not an article)"
+              continue
+            fi
+
+            # Check file exists and is not empty
+            if [ ! -s "$file" ]; then
+              echo "::error file=$file::File is empty"
+              errors=$((errors + 1))
+              continue
+            fi
+
+            lines=$(wc -l < "$file")
+
+            # Check minimum length
+            if [ "$lines" -lt 50 ]; then
+              echo "::warning file=$file::Article is very short ($lines lines, minimum 50 recommended)"
+            fi
+
+            # Check maximum length
+            if [ "$lines" -gt 500 ]; then
+              echo "::warning file=$file::Article is very long ($lines lines, consider splitting)"
+            fi
+
+            # Check has H1 title
+            if ! head -5 "$file" | grep -q "^# "; then
+              echo "::error file=$file::Missing H1 title (first line should be '# Title')"
+              errors=$((errors + 1))
+            fi
+
+            # Check has at least one H2 section
+            if ! grep -q "^## " "$file"; then
+              echo "::error file=$file::No H2 sections found"
+              errors=$((errors + 1))
+            fi
+
+            # Check file name is kebab-case
+            basename=$(basename "$file" .md)
+            if [[ ! "$basename" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]]; then
+              echo "::warning file=$file::File name '$basename' should be kebab-case"
+            fi
+
+            # Check for forbidden content - course/instructor references
+            forbidden_patterns=(
+              "Udemy" "Coursera" "Stepik" "OTUS" "Karpov" "Geekbrains"
+              "Skillbox" "Нетология" "Яндекс Практикум" "instructor"
+              "this course" "in the course" "the lecturer"
+            )
+            for pattern in "${forbidden_patterns[@]}"; do
+              if grep -qi "$pattern" "$file"; then
+                echo "::error file=$file::Contains forbidden content: '$pattern'"
+                errors=$((errors + 1))
+              fi
+            done
+
+            # Check code blocks have language tags
+            if grep -P "^\`\`\`$" "$file" > /dev/null 2>&1; then
+              count=$(grep -cP "^\`\`\`$" "$file" || true)
+              echo "::warning file=$file::$count code block(s) without language tag"
+            fi
+
+            # Check wiki-links syntax (should be [[Title]] not [Title])
+            if grep -P "\[\[[^\]]*\]\(" "$file" > /dev/null 2>&1; then
+              echo "::warning file=$file::Possible malformed wiki-link (found [[...]()"
+            fi
+
+            echo "  Lines: $lines | OK"
+          done
+
+          if [ $errors -gt 0 ]; then
+            echo ""
+            echo "::error::$errors validation error(s) found"
+            exit 1
+          fi
+
+          echo ""
+          echo "All articles passed validation."
+
+  check-domain:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get changed files
+        id: changed
+        uses: tj-actions/changed-files@v44
+        with:
+          files: 'docs/**/*.md'
+
+      - name: Check domain folders
+        if: steps.changed.outputs.any_changed == 'true'
+        run: |
+          valid_domains=(
+            "algorithms" "architecture" "bi-analytics" "data-engineering"
+            "data-science" "devops" "ios-mobile" "java-spring" "kafka"
+            "linux-cli" "llm-agents" "nodejs" "php" "python" "rust"
+            "security" "seo-marketing" "sql-databases" "testing-qa"
+            "web-frontend" "misc" "contributing"
+          )
+
+          for file in ${{ steps.changed.outputs.all_changed_files }}; do
+            # Skip root-level files
+            dir=$(dirname "$file" | sed 's|docs/||' | cut -d/ -f1)
+            if [ "$dir" = "docs" ] || [ "$dir" = "." ]; then
+              continue
+            fi
+
+            found=false
+            for domain in "${valid_domains[@]}"; do
+              if [ "$dir" = "$domain" ]; then
+                found=true
+                break
+              fi
+            done
+
+            if [ "$found" = false ]; then
+              echo "::warning file=$file::Unknown domain folder '$dir'. Valid domains: ${valid_domains[*]}"
+            fi
+          done

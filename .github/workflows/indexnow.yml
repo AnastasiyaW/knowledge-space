@@ -1,0 +1,73 @@
+name: IndexNow - Notify Search Engines
+
+# Runs after successful deploy to GitHub Pages
+# Submits changed URLs to Bing, Yandex, DuckDuckGo via IndexNow protocol
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yml'
+
+jobs:
+  indexnow:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Get changed documentation files
+        id: changed
+        run: |
+          # Get list of changed .md files in docs/
+          changed=$(git diff --name-only HEAD~1 HEAD -- 'docs/**/*.md' | head -50)
+          if [ -z "$changed" ]; then
+            echo "no_changes=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "no_changes=false" >> "$GITHUB_OUTPUT"
+            echo "files<<EOF" >> "$GITHUB_OUTPUT"
+            echo "$changed" >> "$GITHUB_OUTPUT"
+            echo "EOF" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Convert file paths to URLs
+        if: steps.changed.outputs.no_changes == 'false'
+        id: urls
+        run: |
+          base="https://happyin.space"
+          urls=""
+          while IFS= read -r file; do
+            # docs/kafka/consumer-groups.md -> /kafka/consumer-groups/
+            path="${file#docs/}"
+            path="${path%.md}/"
+            # index.md -> just the directory
+            path="${path%index/}"
+            urls="${urls}\"${base}/${path}\","
+          done <<< "${{ steps.changed.outputs.files }}"
+          # Remove trailing comma
+          urls="${urls%,}"
+          echo "url_list=[${urls}]" >> "$GITHUB_OUTPUT"
+
+      - name: Submit to IndexNow
+        if: steps.changed.outputs.no_changes == 'false'
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: |
+          if [ -z "$INDEXNOW_KEY" ]; then
+            echo "::warning::INDEXNOW_KEY secret not set. Skipping IndexNow submission."
+            echo "To enable: generate a key at https://www.bing.com/indexnow"
+            echo "Then add it as a repository secret named INDEXNOW_KEY"
+            exit 0
+          fi
+
+          curl -s -X POST "https://api.indexnow.org/IndexNow" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"host\": \"happyin.space\",
+              \"key\": \"${INDEXNOW_KEY}\",
+              \"keyLocation\": \"https://happyin.space/${INDEXNOW_KEY}.txt\",
+              \"urlList\": ${{ steps.urls.outputs.url_list }}
+            }"
+
+          echo "Submitted URLs to IndexNow"

@@ -1,0 +1,96 @@
+site_name: Knowledge Vault
+site_description: >-
+  Comprehensive technical knowledge base with 558+ curated articles
+  covering Kafka, Python, SQL, DevOps, Security, and 17 more domains.
+  Built for software engineers and LLM agents.
+site_url: https://happyin.space/
+site_author: AnastasiyaW
+
+theme:
+  name: material
+  custom_dir: overrides
+  language: en
+  palette:
+    - scheme: slate
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+    - scheme: default
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+  font:
+    text: Inter
+    code: JetBrains Mono
+  features:
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.tracking
+    - navigation.path
+    - navigation.indexes
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - toc.follow
+  icon:
+    repo: fontawesome/brands/github
+
+repo_url: https://github.com/AnastasiyaW/knowledge-space
+repo_name: knowledge-space
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/AnastasiyaW/knowledge-space
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/happyinhappy/
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/anastasiya-ilukhina-09646a289/
+
+extra_css:
+  - stylesheets/graph.css
+
+extra_javascript:
+  - javascripts/graph.js
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.details
+  - admonition
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - attr_list
+  - md_in_html
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+plugins:
+  - search
+  - privacy:
+      assets: true
+  - meta
+  - minify:
+      minify_html: true
+  - redirects:
+      redirect_maps: {}
+
+# nav: auto-generated from docs/ structure (558 articles across 22 domains)

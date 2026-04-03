@@ -1,0 +1,143 @@
+---
+title: Firewalls and IDS/IPS
+category: tools
+tags: [security, firewall, iptables, ids, ips, snort, suricata, waf]
+---
+
+# Firewalls and IDS/IPS
+
+Network and application-layer security controls: iptables/ufw for Linux firewalls, Windows Defender Firewall, Snort and Suricata for intrusion detection/prevention, and WAF (ModSecurity, cloud WAFs) for web application protection.
+
+## Key Facts
+- IDS detects and alerts; IPS detects and blocks inline
+- Signature-based detection is fast and accurate for known attacks but misses zero-days
+- Anomaly-based detection catches novel attacks but has higher false positive rates
+- Suricata is multi-threaded (faster than Snort) and compatible with Snort rules
+- WAF should start in detection mode before enabling blocking to tune false positives
+- iptables default policy should be DROP for INPUT, ACCEPT for OUTPUT
+
+## iptables (Linux)
+
+### Basic Setup
+```bash
+# Default policies
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
+
+# Allow established connections
+iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+# Allow SSH, HTTP, HTTPS
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+iptables -A INPUT -p tcp -m multiport --dports 80,443 -j ACCEPT
+
+# Allow loopback
+iptables -A INPUT -i lo -j ACCEPT
+
+# Drop invalid packets
+iptables -A INPUT -m conntrack --ctstate INVALID -j DROP
+
+# Rate limiting (SSH brute force protection)
+iptables -A INPUT -p tcp --dport 22 -m limit --limit 3/min --limit-burst 3 -j ACCEPT
+iptables -A INPUT -p tcp --dport 22 -j DROP
+
+# NAT masquerading
+iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+
+# Logging dropped packets
+iptables -A INPUT -j LOG --log-prefix "DROPPED: "
+
+# Save rules
+iptables-save > /etc/iptables/rules.v4
+```
+
+### ufw (Uncomplicated Firewall)
+```bash
+ufw enable
+ufw default deny incoming
+ufw default allow outgoing
+ufw allow 22/tcp
+ufw allow from 192.168.1.0/24 to any port 3306
+ufw status verbose
+```
+
+## Windows Firewall
+```powershell
+# View enabled rules
+Get-NetFirewallRule | Where-Object {$_.Enabled -eq 'True'} |
+    Select-Object DisplayName, Direction, Action
+
+# Create rule
+New-NetFirewallRule -DisplayName "Block Telnet" -Direction Inbound `
+    -Protocol TCP -LocalPort 23 -Action Block
+
+# Enable/disable
+Enable-NetFirewallRule -DisplayName "Block Telnet"
+Disable-NetFirewallRule -DisplayName "Block Telnet"
+```
+Profiles: Domain, Private, Public. Managed via `wf.msc` GUI or PowerShell.
+
+## IDS/IPS
+
+### Types
+- **NIDS/NIPS** - network-based, monitors traffic at strategic points
+- **HIDS/HIPS** - host-based, monitors activity on individual hosts
+- **Signature-based** - matches known attack patterns
+- **Anomaly-based** - baseline deviation detection
+- **Hybrid** - combines both approaches
+
+### Snort Rules
+```
+# Rule syntax: action protocol src_ip src_port -> dst_ip dst_port (options)
+alert tcp any any -> $HOME_NET 80 (msg:"SQL Injection Attempt"; \
+    content:"UNION SELECT"; nocase; sid:1000001; rev:1;)
+
+alert tcp any any -> $HOME_NET 22 (msg:"SSH Brute Force"; \
+    flow:to_server; threshold:type both, track by_src, count 5, seconds 60; \
+    sid:1000002; rev:1;)
+```
+
+Rule components: `alert`/`drop`/`log` action, protocol, source/destination, `content` string match, `pcre` regex, `flow` direction, `threshold` rate-based, `sid` unique identifier.
+
+### Suricata
+Modern multi-threaded alternative to Snort:
+- Compatible with Snort rules
+- EVE JSON logging (easier SIEM integration)
+- Built-in protocol parsing (HTTP, TLS, DNS, SMB)
+- File extraction capability
+- Better performance on multi-core systems
+
+## WAF (Web Application Firewall)
+
+### ModSecurity
+```
+# Rule examples
+SecRule REQUEST_URI "@contains /admin" \
+    "id:1001,phase:1,deny,status:403,msg:'Admin access blocked'"
+
+SecRule ARGS "@detectSQLi" \
+    "id:1002,phase:2,deny,status:403,msg:'SQL Injection detected'"
+```
+- **OWASP Core Rule Set (CRS)** - comprehensive default ruleset
+- Modes: detection only (log) vs blocking (deny)
+
+### Cloud WAFs
+- **AWS WAF** - integrates with CloudFront, ALB, API Gateway
+- **Cloudflare WAF** - edge-based, managed rulesets
+- **Azure Front Door WAF** - Microsoft cloud WAF
+- Features: managed rule updates, custom rules, rate limiting, bot detection
+
+## Gotchas
+- IPS false positives can block legitimate traffic - always start in detection mode
+- Snort is single-threaded - Suricata is better for high-throughput networks
+- WAF bypass techniques exist for most signatures (encoding, fragmentation, case variation)
+- iptables rules are processed in order - put most-matched rules first for performance
+- ufw is a frontend for iptables - both cannot be managed independently without conflicts
+- Cloud WAF adds latency but removes the burden of rule maintenance
+
+## See Also
+- [[network-security-and-protocols]] - underlying network fundamentals
+- [[network-traffic-analysis]] - tcpdump, Wireshark
+- [[web-application-security-fundamentals]] - attacks that WAFs protect against
+- [[siem-and-incident-response]] - alert correlation from IDS/IPS

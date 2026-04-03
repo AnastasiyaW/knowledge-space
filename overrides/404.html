@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  .kv-error-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+  }
+  .kv-error-page canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.35;
+  }
+  .kv-error-content {
+    position: relative;
+    z-index: 1;
+  }
+  .kv-error-code {
+    font-size: 6rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--md-primary-fg-color), var(--md-accent-fg-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .kv-error-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--md-default-fg-color);
+  }
+  .kv-error-desc {
+    font-size: 1rem;
+    color: var(--md-default-fg-color--light);
+    margin-bottom: 2rem;
+    max-width: 500px;
+  }
+  .kv-error-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .kv-error-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1.4rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .kv-btn-primary {
+    background: var(--md-primary-fg-color);
+    color: var(--md-primary-bg-color) !important;
+  }
+  .kv-btn-primary:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+  .kv-btn-secondary {
+    border: 1px solid var(--md-default-fg-color--lightest);
+    color: var(--md-default-fg-color) !important;
+  }
+  .kv-btn-secondary:hover {
+    border-color: var(--md-primary-fg-color);
+    color: var(--md-primary-fg-color) !important;
+  }
+</style>
+
+<div class="kv-error-page">
+  <canvas id="error-graph"></canvas>
+  <div class="kv-error-content">
+    <div class="kv-error-code">404</div>
+    <div class="kv-error-title">Page not found</div>
+    <div class="kv-error-desc">
+      This article doesn't exist yet - but with 558 articles across 22 domains, what you're looking for might be nearby.
+    </div>
+    <div class="kv-error-links">
+      <a href="{{ config.site_url }}" class="kv-btn-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        Knowledge Space
+      </a>
+      <a href="https://github.com/AnastasiyaW/knowledge-space" class="kv-btn-secondary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const canvas = document.getElementById('error-graph');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const parent = canvas.parentElement;
+
+  function resize() {
+    const w = parent.clientWidth;
+    const h = parent.clientHeight;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { w, h };
+  }
+  let { w, h } = resize();
+
+  const colors = ['#bb86fc','#03dac6','#ff7597','#ffd740','#82b1ff','#b0bec5'];
+  const nodes = [];
+  for (let i = 0; i < 30; i++) {
+    nodes.push({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: 3 + Math.random() * 8,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
+      phase: Math.random() * Math.PI * 2,
+    });
+  }
+
+  const edges = [];
+  for (let i = 0; i < nodes.length; i++) {
+    const count = 1 + Math.floor(Math.random() * 2);
+    for (let c = 0; c < count; c++) {
+      const j = Math.floor(Math.random() * nodes.length);
+      if (j !== i) edges.push([i, j]);
+    }
+  }
+
+  function frame() {
+    ({ w, h } = { w: parent.clientWidth, h: parent.clientHeight });
+    ctx.clearRect(0, 0, w, h);
+
+    edges.forEach(([i, j]) => {
+      const a = nodes[i], b = nodes[j];
+      const dist = Math.hypot(b.x - a.x, b.y - a.y);
+      if (dist < 250) {
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.strokeStyle = `rgba(150,150,200,${0.06 * (1 - dist/250)})`;
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+      }
+    });
+
+    nodes.forEach(n => {
+      n.phase += 0.01;
+      n.x += n.vx + Math.sin(n.phase) * 0.2;
+      n.y += n.vy + Math.cos(n.phase * 0.7) * 0.2;
+      if (n.x < 0 || n.x > w) n.vx *= -1;
+      if (n.y < 0 || n.y > h) n.vy *= -1;
+      n.x = Math.max(0, Math.min(w, n.x));
+      n.y = Math.max(0, Math.min(h, n.y));
+
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fillStyle = n.color + '60';
+      ctx.fill();
+    });
+
+    requestAnimationFrame(frame);
+  }
+  frame();
+  window.addEventListener('resize', resize);
+})();
+</script>
+{% endblock %}
