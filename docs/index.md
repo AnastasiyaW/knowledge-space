@@ -10,6 +10,21 @@ Curated technical knowledge base across 22 domains. Built for LLM agents - dense
 
 [:fontawesome-brands-github: **GitHub Repository**](https://github.com/AnastasiyaW/knowledge-space){ .md-button .md-button--primary }
 
+!!! tip "Give this to your Claude"
+    Copy the snippet below and paste it into your Claude conversation - it will know how to use the knowledge base.
+
+    ```text
+    I have access to Knowledge Space - a curated technical reference
+    across 22 domains (Kafka, Python, SQL, DevOps, Architecture, ML,
+    and more). 558 articles with code examples, configs, and gotchas.
+
+    Repo: https://github.com/AnastasiyaW/knowledge-space
+    Site: https://happyin.space
+
+    Clone it or upload to ConTree MCP for search/read.
+    Each article is a standalone .md file, context-window friendly.
+    ```
+
 <div id="knowledge-graph"></div>
 
 ---
