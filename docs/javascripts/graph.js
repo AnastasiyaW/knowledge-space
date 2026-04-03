@@ -489,3 +489,148 @@
     resizeTimer = setTimeout(resize, 100);
   });
 })();
+
+// ── Claude Snippet: border particles + copy button ──
+(function () {
+  const card = document.getElementById("claude-snippet");
+  const canvas = document.getElementById("snippet-particles");
+  const copyBtn = document.getElementById("snippet-copy");
+  const codeEl = document.querySelector("#snippet-code pre");
+  if (!card || !canvas) return;
+
+  // Copy button
+  if (copyBtn && codeEl) {
+    copyBtn.addEventListener("click", () => {
+      navigator.clipboard.writeText(codeEl.textContent).then(() => {
+        copyBtn.classList.add("copied");
+        copyBtn.querySelector("span").textContent = "Copied!";
+        setTimeout(() => {
+          copyBtn.classList.remove("copied");
+          copyBtn.querySelector("span").textContent = "Copy";
+        }, 2000);
+      });
+    });
+  }
+
+  // Particle animation along the border
+  const ctx = canvas.getContext("2d");
+  const dpr = window.devicePixelRatio || 1;
+  const colors = ["#bb86fc", "#03dac6", "#ff7597", "#ffd740", "#82b1ff"];
+
+  function resizeSnippet() {
+    const w = card.offsetWidth;
+    const h = card.offsetHeight;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    canvas.style.width = w + "px";
+    canvas.style.height = h + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { w, h };
+  }
+
+  let dims = resizeSnippet();
+  const r = 14; // border-radius
+
+  // Perimeter path: trace the rounded rectangle border
+  function getPerimeterPoint(t, w, h) {
+    // t is 0..1 around the perimeter
+    const straight = 2 * (w - 2 * r) + 2 * (h - 2 * r);
+    const corners = 2 * Math.PI * r;
+    const total = straight + corners;
+    let d = t * total;
+
+    // Top edge (left to right)
+    const topLen = w - 2 * r;
+    if (d < topLen) return { x: r + d, y: 0 };
+    d -= topLen;
+
+    // Top-right corner
+    const cLen = Math.PI * r / 2;
+    if (d < cLen) {
+      const a = -Math.PI / 2 + (d / cLen) * (Math.PI / 2);
+      return { x: w - r + Math.cos(a) * r, y: r + Math.sin(a) * r };
+    }
+    d -= cLen;
+
+    // Right edge (top to bottom)
+    const rightLen = h - 2 * r;
+    if (d < rightLen) return { x: w, y: r + d };
+    d -= rightLen;
+
+    // Bottom-right corner
+    if (d < cLen) {
+      const a = (d / cLen) * (Math.PI / 2);
+      return { x: w - r + Math.cos(a) * r, y: h - r + Math.sin(a) * r };
+    }
+    d -= cLen;
+
+    // Bottom edge (right to left)
+    if (d < topLen) return { x: w - r - d, y: h };
+    d -= topLen;
+
+    // Bottom-left corner
+    if (d < cLen) {
+      const a = Math.PI / 2 + (d / cLen) * (Math.PI / 2);
+      return { x: r + Math.cos(a) * r, y: h - r + Math.sin(a) * r };
+    }
+    d -= cLen;
+
+    // Left edge (bottom to top)
+    if (d < rightLen) return { x: 0, y: h - r - d };
+    d -= rightLen;
+
+    // Top-left corner
+    if (d < cLen) {
+      const a = Math.PI + (d / cLen) * (Math.PI / 2);
+      return { x: r + Math.cos(a) * r, y: r + Math.sin(a) * r };
+    }
+
+    return { x: r, y: 0 };
+  }
+
+  // Particles
+  const particles = [];
+  const NUM = 12;
+  for (let i = 0; i < NUM; i++) {
+    particles.push({
+      t: Math.random(),
+      speed: 0.0004 + Math.random() * 0.0006,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      size: 2 + Math.random() * 2.5,
+      alpha: 0.4 + Math.random() * 0.4,
+    });
+  }
+
+  function drawSnippetParticles() {
+    dims = { w: card.offsetWidth, h: card.offsetHeight };
+    ctx.clearRect(0, 0, dims.w, dims.h);
+
+    particles.forEach((p) => {
+      p.t = (p.t + p.speed) % 1;
+      const pos = getPerimeterPoint(p.t, dims.w, dims.h);
+
+      // Glow
+      const grad = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, p.size * 4);
+      grad.addColorStop(0, p.color + Math.round(p.alpha * 80).toString(16).padStart(2, "0"));
+      grad.addColorStop(1, p.color + "00");
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, p.size * 4, 0, Math.PI * 2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      // Dot
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = p.color + Math.round(p.alpha * 255).toString(16).padStart(2, "0");
+      ctx.fill();
+    });
+
+    requestAnimationFrame(drawSnippetParticles);
+  }
+
+  drawSnippetParticles();
+
+  window.addEventListener("resize", () => {
+    resizeSnippet();
+  });
+})();
