@@ -1,13 +1,14 @@
 """
 MkDocs hook: convert [[wiki-links]] to proper markdown links.
 Only converts links OUTSIDE code blocks and inline code.
-Resolves [[slug]] to the actual .md file path within docs/.
+Resolves [[slug]] to a relative path from the current page.
 """
 
+import os
 import re
 from pathlib import Path
 
-# Cache: slug -> relative path from docs root
+# Cache: slug -> relative path from docs root (with .md)
 _slug_map: dict[str, str] = {}
 _built = False
 
@@ -21,7 +22,6 @@ def _build_slug_map(docs_dir: Path):
     for md_file in docs_dir.rglob("*.md"):
         rel = md_file.relative_to(docs_dir)
         slug = md_file.stem  # e.g., "broker-architecture"
-        # Store the relative path without .md extension for MkDocs linking
         path_str = str(rel).replace("\\", "/")
         # Prefer domain articles over index files
         if slug not in _slug_map or md_file.name != "index.md":
@@ -30,28 +30,35 @@ def _build_slug_map(docs_dir: Path):
     _built = True
 
 
-def _replace_wikilink(match: re.Match) -> str:
-    """Replace a [[slug]] with [display name](path)."""
-    slug = match.group(1).strip()
+def _make_replacer(current_page_path: str):
+    """Create a replacer function that resolves paths relative to current page."""
+    current_dir = os.path.dirname(current_page_path)
 
-    # Skip if slug contains characters that suggest it's code, not a link
-    # e.g., ['value'], [1, 2], [cond1 && cond2]
-    if any(c in slug for c in ("'", '"', ",", "=", "&", "|", "(", ")", ":", "+")):
-        return match.group(0)  # Return unchanged
+    def _replace_wikilink(match: re.Match) -> str:
+        slug = match.group(1).strip()
 
-    # Look up in slug map
-    if slug in _slug_map:
-        path = _slug_map[slug]
-        # Display name: slug with hyphens replaced
-        display = slug.replace("-", " ").replace("_", " ")
-        return f"[{display}]({path})"
+        # Skip code-like patterns: ['value'], [1, 2], [cond1 && cond2]
+        if any(c in slug for c in ("'", '"', ",", "=", "&", "|", "(", ")", ":", "+")):
+            return match.group(0)
 
-    # Not found - leave as-is (will show as text)
-    return match.group(0)
+        if slug in _slug_map:
+            target_path = _slug_map[slug]
+            # Compute relative path from current page directory
+            if current_dir:
+                rel_path = os.path.relpath(target_path, current_dir).replace("\\", "/")
+            else:
+                rel_path = target_path
+            display = slug.replace("-", " ").replace("_", " ")
+            return f"[{display}]({rel_path})"
+
+        return match.group(0)
+
+    return _replace_wikilink
 
 
-def _process_markdown(content: str) -> str:
+def _process_markdown(content: str, page_path: str) -> str:
     """Convert [[wiki-links]] outside code blocks."""
+    replacer = _make_replacer(page_path)
     lines = content.split("\n")
     result = []
     in_code_block = False
@@ -59,7 +66,6 @@ def _process_markdown(content: str) -> str:
     for line in lines:
         stripped = line.strip()
 
-        # Track code fences
         if stripped.startswith("```"):
             in_code_block = not in_code_block
             result.append(line)
@@ -69,9 +75,7 @@ def _process_markdown(content: str) -> str:
             result.append(line)
             continue
 
-        # Outside code block: replace [[wiki-links]]
-        # But skip inline code: don't replace inside `...`
-        # Strategy: split by inline code spans, only replace in non-code parts
+        # Outside code block: replace [[wiki-links]] but skip inline code
         parts = re.split(r'(`[^`]+`)', line)
         processed_parts = []
         for part in parts:
@@ -79,7 +83,7 @@ def _process_markdown(content: str) -> str:
                 processed_parts.append(part)
             else:
                 processed_parts.append(
-                    re.sub(r'\[\[([^\]]+)\]\]', _replace_wikilink, part)
+                    re.sub(r'\[\[([^\]]+)\]\]', replacer, part)
                 )
         result.append("".join(processed_parts))
 
@@ -95,4 +99,5 @@ def on_pre_build(config, **kwargs):
 
 def on_page_markdown(markdown, page, config, **kwargs):
     """Process wiki-links in each page's markdown."""
-    return _process_markdown(markdown)
+    # page.file.src_path = e.g. "web-frontend/react-state-and-hooks.md"
+    return _process_markdown(markdown, page.file.src_path)
