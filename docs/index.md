@@ -107,6 +107,15 @@ Articles include version/date context where relevant (e.g., "PostgreSQL 17", "Re
 
 ---
 
+## Contributors
+
+- [:fontawesome-brands-linkedin: **happyinhappy**](https://www.linkedin.com/in/happyinhappy/) - architecture, curation, AI/ML pipeline
+- [:fontawesome-brands-linkedin: **Anastasiya Ilukhina**](https://www.linkedin.com/in/anastasiya-ilukhina-09646a289/) - content, quality review
+
+Want to contribute? See the [Contributing guide](contributing/).
+
+---
+
 ## Related Projects
 
 [:fontawesome-brands-github: **claude-code-skills**](https://github.com/AnastasiyaW/claude-code-skills){ .md-button }
