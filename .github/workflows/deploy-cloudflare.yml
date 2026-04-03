@@ -8,6 +8,7 @@ on:
       - 'mkdocs.yml'
       - 'overrides/**'
       - 'requirements.txt'
+      - 'hooks/**'
 
   workflow_dispatch:
 
