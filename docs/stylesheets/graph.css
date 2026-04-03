@@ -35,11 +35,11 @@
   margin: 1.8rem 0 1rem;
   border-radius: 14px;
   padding: 2px;
-  background: linear-gradient(135deg, #bb86fc, #03dac6, #ff7597, #ffd740, #82b1ff, #bb86fc) !important;
+  background: linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.4), rgba(255,255,255,0.7)) !important;
   background-size: 300% 300% !important;
   animation: snippet-gradient 8s ease infinite;
   overflow: hidden;
-  box-shadow: 0 0 20px rgba(187, 134, 252, 0.15), 0 0 40px rgba(3, 218, 198, 0.08);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.08), 0 0 40px rgba(255, 255, 255, 0.04);
 }
 
 @keyframes snippet-gradient {
