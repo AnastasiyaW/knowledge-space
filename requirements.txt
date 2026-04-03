@@ -1,0 +1,10 @@
+# Knowledge Space - MkDocs Material dependencies
+mkdocs>=1.6
+mkdocs-material>=9.5
+
+# SEO & optimization plugins
+mkdocs-minify-plugin>=0.8
+mkdocs-redirects>=1.2
+
+# Note: social plugin and privacy plugin are built into mkdocs-material
+# Note: meta plugin is built into mkdocs-material
