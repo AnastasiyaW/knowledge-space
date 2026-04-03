@@ -1,0 +1,38 @@
+# Knowledge Vault
+
+> A comprehensive technical knowledge base with 558+ curated articles across 22 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material.
+
+This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links. Content is in English, curated from multiple authoritative sources, and regularly updated.
+
+## Kafka & Message Queues
+- [Event Sourcing & CQRS](https://happyin.space/kafka/event-sourcing-and-cqrs/): Event-driven architecture patterns, CQRS implementation, event stores, and message replay strategies
+
+## Python
+- [FastAPI Introduction](https://happyin.space/python/fastapi-introduction/): FastAPI framework core concepts, async request handling, Pydantic validation, OpenAPI generation
+
+## SQL & Databases
+- [PostgreSQL 17 Architecture](https://happyin.space/sql-databases/postgresql-17-architecture-and-query-tuning/): PostgreSQL internals, query planner, MVCC, indexing strategies, performance tuning
+
+## DevOps & Infrastructure
+- [Docker Fundamentals](https://happyin.space/devops/docker-fundamentals/): Container lifecycle, Dockerfile best practices, multi-stage builds, networking, volumes
+
+## Security
+- [Web Application Security](https://happyin.space/security/web-application-security/): OWASP Top 10, XSS prevention, CSRF protection, SQL injection, authentication security
+
+## LLM & AI Agents
+- [RAG Fundamentals](https://happyin.space/llm-agents/rag-fundamentals/): Retrieval-Augmented Generation architecture, vector databases, chunking strategies, embedding models
+
+## Rust
+- [Ownership & Borrowing](https://happyin.space/rust/ownership-and-borrowing/): Rust ownership system, borrowing rules, lifetimes, memory safety without garbage collection
+
+## Web Frontend
+- [React State & Hooks](https://happyin.space/web-frontend/react-state-and-hooks/): React hooks API, state management patterns, useEffect lifecycle, custom hooks
+
+## SEO & Marketing
+- [Search Engine Mechanics](https://happyin.space/seo-marketing/search-engine-mechanics/): How search engines crawl, index, and rank content, PageRank, semantic search
+
+## iOS & Mobile
+- [SwiftUI Basics](https://happyin.space/ios-mobile/swiftui-basics-and-first-app/): SwiftUI declarative UI framework, views, modifiers, state management, navigation
+
+## Optional
+- [Contributing Guide](https://happyin.space/contributing/): How to contribute articles, style guide, quality standards

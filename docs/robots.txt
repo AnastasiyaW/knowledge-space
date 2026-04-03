@@ -1,0 +1,86 @@
+# Knowledge Vault - robots.txt
+# Strategy: allow search crawlers (traditional + AI), block AI training crawlers
+# Last updated: 2026-04-03
+
+# Traditional search engines - ALLOW
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Yandex
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# AI search crawlers - ALLOW (for citations and visibility)
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# AI training crawlers - BLOCK (content protection)
+User-agent: GPTBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: ImagesiftBot
+Disallow: /
+
+User-agent: Timpibot
+Disallow: /
+
+User-agent: omgili
+Disallow: /
+
+# Default - allow
+User-agent: *
+Allow: /
+
+Sitemap: https://happyin.space/sitemap.xml
+
+# LLM agent discovery files (multilingual)
+# llms.txt: https://happyin.space/llms.txt
+# llms-zh.txt: https://happyin.space/llms-zh.txt
+# llms-ko.txt: https://happyin.space/llms-ko.txt
+# llms-es.txt: https://happyin.space/llms-es.txt
+# llms-de.txt: https://happyin.space/llms-de.txt
+# llms-fr.txt: https://happyin.space/llms-fr.txt

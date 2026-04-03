@@ -1,0 +1,35 @@
+# Knowledge Vault - 技术知识库
+
+> 一个全面的技术知识库，包含558+篇精选文章，涵盖22个领域。覆盖软件工程、数据科学、DevOps、安全等方向。专为软件工程师和LLM智能体设计，提供可靠的结构化技术参考资料。所有文章内容为英文。
+
+本知识库包含按领域组织的深度技术文章。每篇文章遵循统一结构：定义、核心概念、代码示例、常见陷阱和相关链接。
+
+## Kafka 与消息队列
+- [事件溯源与CQRS](https://happyin.space/kafka/event-sourcing-and-cqrs/): 事件驱动架构模式、CQRS实现、事件存储、消息重放策略
+
+## Python
+- [FastAPI入门](https://happyin.space/python/fastapi-introduction/): FastAPI框架核心概念、异步请求处理、Pydantic验证、OpenAPI生成
+
+## SQL与数据库
+- [PostgreSQL 17架构](https://happyin.space/sql-databases/postgresql-17-architecture-and-query-tuning/): PostgreSQL内部原理、查询规划器、MVCC、索引策略、性能调优
+
+## DevOps与基础设施
+- [Docker基础](https://happyin.space/devops/docker-fundamentals/): 容器生命周期、Dockerfile最佳实践、多阶段构建、网络、存储卷
+
+## 安全
+- [Web应用安全](https://happyin.space/security/web-application-security/): OWASP十大漏洞、XSS防护、CSRF保护、SQL注入、认证安全
+
+## LLM与AI智能体
+- [RAG基础](https://happyin.space/llm-agents/rag-fundamentals/): 检索增强生成架构、向量数据库、分块策略、嵌入模型
+
+## Rust
+- [所有权与借用](https://happyin.space/rust/ownership-and-borrowing/): Rust所有权系统、借用规则、生命周期、无垃圾回收的内存安全
+
+## Web前端
+- [React状态与Hooks](https://happyin.space/web-frontend/react-state-and-hooks/): React Hooks API、状态管理模式、useEffect生命周期、自定义Hooks
+
+## SEO与营销
+- [搜索引擎机制](https://happyin.space/seo-marketing/search-engine-mechanics/): 搜索引擎爬取、索引和排名机制、PageRank、语义搜索
+
+## iOS与移动开发
+- [SwiftUI基础](https://happyin.space/ios-mobile/swiftui-basics-and-first-app/): SwiftUI声明式UI框架、视图、修饰符、状态管理、导航

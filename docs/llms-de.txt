@@ -1,0 +1,35 @@
+# Knowledge Vault - Technische Wissensdatenbank
+
+> Eine umfassende technische Wissensdatenbank mit ueber 558 kuratierten Artikeln in 22 Fachgebieten. Deckt Softwareentwicklung, Data Science, DevOps, Sicherheit und mehr ab. Entwickelt fuer Softwareingenieure und LLM-Agenten, die zuverlaessiges, strukturiertes technisches Referenzmaterial suchen. Alle Inhalte sind auf Englisch.
+
+Diese Wissensdatenbank enthaelt tiefgehende technische Artikel, organisiert nach Fachgebiet. Jeder Artikel folgt einer einheitlichen Struktur: Definition, Kernkonzepte, Codebeispiele, haeufige Fallstricke und verwandte Links.
+
+## Kafka und Nachrichtenwarteschlangen
+- [Event Sourcing und CQRS](https://happyin.space/kafka/event-sourcing-and-cqrs/): Ereignisgesteuerte Architekturmuster, CQRS-Implementierung, Event Stores, Strategien zur Nachrichtenwiedergabe
+
+## Python
+- [FastAPI Einfuehrung](https://happyin.space/python/fastapi-introduction/): FastAPI-Framework Kernkonzepte, asynchrone Anfrageverarbeitung, Pydantic-Validierung, OpenAPI-Generierung
+
+## SQL und Datenbanken
+- [PostgreSQL 17 Architektur](https://happyin.space/sql-databases/postgresql-17-architecture-and-query-tuning/): PostgreSQL-Interna, Abfrageplaner, MVCC, Indexierungsstrategien, Leistungsoptimierung
+
+## DevOps und Infrastruktur
+- [Docker Grundlagen](https://happyin.space/devops/docker-fundamentals/): Container-Lebenszyklus, Dockerfile Best Practices, mehrstufige Builds, Netzwerk, Volumes
+
+## Sicherheit
+- [Webanwendungssicherheit](https://happyin.space/security/web-application-security/): OWASP Top 10, XSS-Praevention, CSRF-Schutz, SQL-Injection, Authentifizierungssicherheit
+
+## LLM und KI-Agenten
+- [RAG Grundlagen](https://happyin.space/llm-agents/rag-fundamentals/): Retrieval-Augmented Generation Architektur, Vektordatenbanken, Chunking-Strategien, Embedding-Modelle
+
+## Rust
+- [Ownership und Borrowing](https://happyin.space/rust/ownership-and-borrowing/): Rust-Eigentuemersystem, Ausleihregeln, Lebenszeiten, Speichersicherheit ohne Garbage Collection
+
+## Web Frontend
+- [React State und Hooks](https://happyin.space/web-frontend/react-state-and-hooks/): React Hooks API, Zustandsverwaltungsmuster, useEffect-Lebenszyklus, benutzerdefinierte Hooks
+
+## SEO und Marketing
+- [Suchmaschinen-Mechanismen](https://happyin.space/seo-marketing/search-engine-mechanics/): Wie Suchmaschinen crawlen, indexieren und ranken, PageRank, semantische Suche
+
+## iOS und Mobile Entwicklung
+- [SwiftUI Grundlagen](https://happyin.space/ios-mobile/swiftui-basics-and-first-app/): Deklaratives SwiftUI UI-Framework, Views, Modifier, Zustandsverwaltung, Navigation

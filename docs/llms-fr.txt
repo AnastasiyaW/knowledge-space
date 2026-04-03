@@ -1,0 +1,35 @@
+# Knowledge Vault - Base de Connaissances Techniques
+
+> Une base de connaissances techniques complete avec plus de 558 articles selectionnes dans 22 domaines. Couvre le genie logiciel, la science des donnees, le DevOps, la securite et plus encore. Concue pour les ingenieurs logiciels et les agents LLM recherchant du materiel de reference technique fiable et structure. Tout le contenu est en anglais.
+
+Cette base de connaissances contient des articles techniques approfondis organises par domaine. Chaque article suit une structure coherente : definition, concepts cles, exemples de code, pieges courants et liens connexes.
+
+## Kafka et Files de Messages
+- [Event Sourcing et CQRS](https://happyin.space/kafka/event-sourcing-and-cqrs/): Patrons d'architecture evenementielle, implementation CQRS, magasins d'evenements, strategies de rejeu de messages
+
+## Python
+- [Introduction a FastAPI](https://happyin.space/python/fastapi-introduction/): Concepts fondamentaux de FastAPI, traitement asynchrone des requetes, validation Pydantic, generation OpenAPI
+
+## SQL et Bases de Donnees
+- [Architecture PostgreSQL 17](https://happyin.space/sql-databases/postgresql-17-architecture-and-query-tuning/): Fonctionnement interne de PostgreSQL, planificateur de requetes, MVCC, strategies d'indexation, optimisation des performances
+
+## DevOps et Infrastructure
+- [Fondamentaux Docker](https://happyin.space/devops/docker-fundamentals/): Cycle de vie des conteneurs, bonnes pratiques Dockerfile, constructions multi-etapes, reseau, volumes
+
+## Securite
+- [Securite des Applications Web](https://happyin.space/security/web-application-security/): OWASP Top 10, prevention XSS, protection CSRF, injection SQL, securite de l'authentification
+
+## LLM et Agents IA
+- [Fondamentaux RAG](https://happyin.space/llm-agents/rag-fundamentals/): Architecture de Generation Augmentee par Recuperation, bases de donnees vectorielles, strategies de decoupage, modeles d'embedding
+
+## Rust
+- [Propriete et Emprunt](https://happyin.space/rust/ownership-and-borrowing/): Systeme de propriete Rust, regles d'emprunt, durees de vie, securite memoire sans ramasse-miettes
+
+## Web Frontend
+- [Etat et Hooks React](https://happyin.space/web-frontend/react-state-and-hooks/): API React Hooks, patrons de gestion d'etat, cycle de vie useEffect, Hooks personnalises
+
+## SEO et Marketing
+- [Mecanismes des Moteurs de Recherche](https://happyin.space/seo-marketing/search-engine-mechanics/): Comment les moteurs explorent, indexent et classent le contenu, PageRank, recherche semantique
+
+## iOS et Developpement Mobile
+- [Fondamentaux SwiftUI](https://happyin.space/ios-mobile/swiftui-basics-and-first-app/): Framework d'interface declaratif SwiftUI, vues, modificateurs, gestion d'etat, navigation

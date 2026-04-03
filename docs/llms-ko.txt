@@ -1,0 +1,35 @@
+# Knowledge Vault - 기술 지식 베이스
+
+> 22개 도메인에 걸쳐 558개 이상의 엄선된 기술 문서를 포함한 종합 기술 지식 베이스입니다. 소프트웨어 엔지니어링, 데이터 사이언스, DevOps, 보안 등을 다룹니다. 소프트웨어 엔지니어와 LLM 에이전트를 위한 신뢰할 수 있는 구조화된 기술 레퍼런스입니다. 모든 문서는 영어로 작성되어 있습니다.
+
+각 문서는 일관된 구조를 따릅니다: 정의, 핵심 개념, 코드 예제, 주의사항, 관련 링크.
+
+## Kafka 및 메시지 큐
+- [이벤트 소싱과 CQRS](https://happyin.space/kafka/event-sourcing-and-cqrs/): 이벤트 기반 아키텍처 패턴, CQRS 구현, 이벤트 스토어, 메시지 리플레이 전략
+
+## Python
+- [FastAPI 소개](https://happyin.space/python/fastapi-introduction/): FastAPI 프레임워크 핵심 개념, 비동기 요청 처리, Pydantic 유효성 검사, OpenAPI 생성
+
+## SQL 및 데이터베이스
+- [PostgreSQL 17 아키텍처](https://happyin.space/sql-databases/postgresql-17-architecture-and-query-tuning/): PostgreSQL 내부 구조, 쿼리 플래너, MVCC, 인덱싱 전략, 성능 튜닝
+
+## DevOps 및 인프라
+- [Docker 기초](https://happyin.space/devops/docker-fundamentals/): 컨테이너 라이프사이클, Dockerfile 모범 사례, 멀티스테이지 빌드, 네트워킹, 볼륨
+
+## 보안
+- [웹 애플리케이션 보안](https://happyin.space/security/web-application-security/): OWASP Top 10, XSS 방지, CSRF 보호, SQL 인젝션, 인증 보안
+
+## LLM 및 AI 에이전트
+- [RAG 기초](https://happyin.space/llm-agents/rag-fundamentals/): 검색 증강 생성 아키텍처, 벡터 데이터베이스, 청킹 전략, 임베딩 모델
+
+## Rust
+- [소유권과 빌림](https://happyin.space/rust/ownership-and-borrowing/): Rust 소유권 시스템, 빌림 규칙, 라이프타임, 가비지 컬렉션 없는 메모리 안전성
+
+## 웹 프론트엔드
+- [React 상태와 Hooks](https://happyin.space/web-frontend/react-state-and-hooks/): React Hooks API, 상태 관리 패턴, useEffect 라이프사이클, 커스텀 Hooks
+
+## SEO 및 마케팅
+- [검색 엔진 메커니즘](https://happyin.space/seo-marketing/search-engine-mechanics/): 검색 엔진의 크롤링, 인덱싱, 랭킹 메커니즘, PageRank, 시맨틱 검색
+
+## iOS 및 모바일 개발
+- [SwiftUI 기초](https://happyin.space/ios-mobile/swiftui-basics-and-first-app/): SwiftUI 선언적 UI 프레임워크, 뷰, 수정자, 상태 관리, 내비게이션
