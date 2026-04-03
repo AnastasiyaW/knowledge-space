@@ -1,3 +1,7 @@
+---
+title: Home
+---
+
 # Knowledge Space
 
 Curated technical knowledge base across 22 domains. Built for LLM agents - dense, structured references that fit in a context window and give immediately actionable answers.
