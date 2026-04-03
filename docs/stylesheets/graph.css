@@ -1,7 +1,12 @@
+/* ── Reduce spacing between sections on homepage ── */
+.md-typeset hr {
+  margin: 1.2rem 0;
+}
+
 #knowledge-graph {
   width: 100%;
   height: 420px;
-  margin: 1.5rem 0 0.5rem;
+  margin: 1.2rem 0 0;
   border-radius: 12px;
   overflow: hidden;
   position: relative;
@@ -27,13 +32,14 @@
 /* .md-typeset prefix needed to override Material theme's div resets */
 .md-typeset .claude-snippet {
   position: relative;
-  margin: 1.8rem 0;
+  margin: 1.8rem 0 1rem;
   border-radius: 14px;
   padding: 2px;
   background: linear-gradient(135deg, #bb86fc, #03dac6, #ff7597, #ffd740, #82b1ff, #bb86fc) !important;
   background-size: 300% 300% !important;
   animation: snippet-gradient 8s ease infinite;
   overflow: hidden;
+  box-shadow: 0 0 20px rgba(187, 134, 252, 0.15), 0 0 40px rgba(3, 218, 198, 0.08);
 }
 
 @keyframes snippet-gradient {
@@ -169,20 +175,100 @@
   color: #03dac6 !important;
 }
 
-/* ── Contributors ── */
-.ks-contributors {
+/* ── Graph Stats Bar ── */
+.md-typeset .ks-graph-stats {
   display: flex;
-  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin: 0.8rem 0 2rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+}
+
+[data-md-color-scheme="slate"] .ks-graph-stats {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+[data-md-color-scheme="default"] .ks-graph-stats {
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.ks-graph-stats__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  flex: 1;
+}
+
+.ks-graph-stats__number {
+  font-size: 1.3rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+[data-md-color-scheme="slate"] .ks-graph-stats__number {
+  color: #bb86fc;
+}
+
+[data-md-color-scheme="default"] .ks-graph-stats__number {
+  color: #6200ea;
+}
+
+.ks-graph-stats__label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.45;
+}
+
+.ks-graph-stats__divider {
+  width: 1px;
+  height: 2rem;
+  margin: 0 0.5rem;
+  opacity: 0.12;
+}
+
+[data-md-color-scheme="slate"] .ks-graph-stats__divider {
+  background: #fff;
+}
+
+[data-md-color-scheme="default"] .ks-graph-stats__divider {
+  background: #000;
+}
+
+@media (max-width: 600px) {
+  .md-typeset .ks-graph-stats {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .ks-graph-stats__divider {
+    display: none;
+  }
+  .ks-graph-stats__item {
+    min-width: 40%;
+  }
+}
+
+/* ── Contributors ── */
+.md-typeset .ks-contributors {
+  display: flex;
+  gap: 0.8rem;
   flex-wrap: wrap;
   margin: 1rem 0;
 }
 
-.ks-contributor {
+.md-typeset .ks-contributor {
   display: flex;
   align-items: center;
-  gap: 0.9rem;
-  padding: 0.9rem 1.3rem;
-  border-radius: 12px;
+  gap: 0.8rem;
+  padding: 0.75rem 1.1rem;
+  border-radius: 10px;
   flex: 1;
   min-width: 240px;
   text-decoration: none !important;
@@ -204,23 +290,32 @@
   transform: translateY(-1px);
 }
 
-.ks-contributor__icon {
+.ks-contributor__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
   flex-shrink: 0;
+  background: #0a66c2;
+  color: #fff;
   transition: transform 0.2s;
 }
 
-.ks-contributor:hover .ks-contributor__icon {
-  transform: scale(1.1);
+.ks-contributor:hover .ks-contributor__avatar {
+  transform: scale(1.08);
 }
 
 .ks-contributor__info {
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  gap: 0.1rem;
+  min-width: 0;
 }
 
 .ks-contributor__name {
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   font-weight: 700;
   line-height: 1.2;
 }
@@ -234,16 +329,15 @@
 }
 
 .ks-contributor__role {
-  font-size: 0.78rem;
-  opacity: 0.5;
+  font-size: 0.72rem;
   font-weight: 400;
   line-height: 1.3;
 }
 
 [data-md-color-scheme="slate"] .ks-contributor__role {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.4);
 }
 
 [data-md-color-scheme="default"] .ks-contributor__role {
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0, 0.4);
 }

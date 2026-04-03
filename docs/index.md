@@ -37,7 +37,29 @@ domain folder, read the article, and base your answer on it.</pre>
   </div>
 </div>
 
----
+<div id="knowledge-graph"></div>
+
+<div class="ks-graph-stats" markdown="0">
+  <div class="ks-graph-stats__item">
+    <span class="ks-graph-stats__number" id="ks-graph-nodes">560</span>
+    <span class="ks-graph-stats__label">articles</span>
+  </div>
+  <div class="ks-graph-stats__divider"></div>
+  <div class="ks-graph-stats__item">
+    <span class="ks-graph-stats__number">2,100+</span>
+    <span class="ks-graph-stats__label">cross-references</span>
+  </div>
+  <div class="ks-graph-stats__divider"></div>
+  <div class="ks-graph-stats__item">
+    <span class="ks-graph-stats__number">68</span>
+    <span class="ks-graph-stats__label">topic communities</span>
+  </div>
+  <div class="ks-graph-stats__divider"></div>
+  <div class="ks-graph-stats__item">
+    <span class="ks-graph-stats__number">22</span>
+    <span class="ks-graph-stats__label">domains</span>
+  </div>
+</div>
 
 ## What is this?
 
@@ -53,8 +75,6 @@ Each article is a concentrated extract: code examples, configuration patterns, g
 - **Engineers** - quick lookup of patterns, commands, configurations across 22 domains
 - **Teams** - shared knowledge base accessible via ConTree sandbox or direct file access
 
----
-
 ## How to use
 
 **Search** (top bar) is the fastest way - find specific topics, commands, or patterns across all domains.
@@ -69,8 +89,6 @@ Each article is a concentrated extract: code examples, configuration patterns, g
 - `[[wiki-links]]` connect related concepts across domains (e.g., Kafka article links to Architecture patterns)
 - Code examples are copy-paste ready
 - Each article covers one focused topic - from a single CLI command to a complete system design pattern
-
----
 
 ## Domains
 
@@ -98,15 +116,7 @@ Each article is a concentrated extract: code examples, configuration patterns, g
 | **iOS & Mobile** | 10 | SwiftUI, Swift, Android/Kotlin fundamentals |
 | **Misc** | 9 | JavaScript, Go, competitive programming, interview prep |
 
----
-
-## Knowledge Graph
-
-<div id="knowledge-graph"></div>
-
-**<span id="ks-graph-nodes">560</span> nodes** (articles) with **2100+ edges** cross-references across **68 topic communities**.
-
-Queryable via [ConTree MCP](https://contree.dev/) - upload the repo into a sandbox and search/read/analyze articles with full isolation. Each article is a standalone `.md` file - easy to index, retrieve, and inject into LLM context.
+## Knowledge Graph Details
 
 ### Freshness Policy
 
@@ -120,8 +130,6 @@ Not all knowledge ages equally. Each domain has an update cycle based on how fas
 | **Monthly** | Image Generation, Agent Frameworks | Bleeding edge - new models and tools every week |
 
 Articles include version/date context where relevant (e.g., "PostgreSQL 17", "React 19", "Kubernetes 1.30").
-
----
 
 ## What makes this different
 
@@ -139,14 +147,18 @@ Articles include version/date context where relevant (e.g., "PostgreSQL 17", "Re
 
 <div class="ks-contributors" markdown="0">
   <a class="ks-contributor" href="https://www.linkedin.com/in/happyinhappy/" target="_blank" rel="noopener">
-    <svg class="ks-contributor__icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="#0a66c2"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    <div class="ks-contributor__avatar">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    </div>
     <div class="ks-contributor__info">
       <span class="ks-contributor__name">Anastasiia But</span>
       <span class="ks-contributor__role">Architecture, curation, AI/ML pipeline</span>
     </div>
   </a>
   <a class="ks-contributor" href="https://www.linkedin.com/in/anastasiya-ilukhina-09646a289/" target="_blank" rel="noopener">
-    <svg class="ks-contributor__icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="#0a66c2"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    <div class="ks-contributor__avatar">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    </div>
     <div class="ks-contributor__info">
       <span class="ks-contributor__name">Anastasiya Ilukhina</span>
       <span class="ks-contributor__role">Content, quality review</span>
