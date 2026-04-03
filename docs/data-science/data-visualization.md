@@ -1,127 +1,139 @@
 ---
 title: Data Visualization
 category: tools
-tags: [visualization, matplotlib, seaborn, plotly, eda, charts, python]
+tags: [data-science, visualization, matplotlib, seaborn, plotly]
 ---
 
 # Data Visualization
 
-Communicate patterns, distributions, and relationships through charts. Essential for EDA (exploratory data analysis), model diagnostics, and presenting results. Matplotlib is the foundation; Seaborn adds statistical plots; Plotly provides interactivity. Always visualize data before modeling -- see [[descriptive-statistics]].
+Visualization is both an analysis tool (EDA) and a communication tool (dashboards, reports). Python offers matplotlib for foundations, seaborn for statistical plots, and plotly for interactivity.
 
-## Key Facts
+## Matplotlib
 
-- **Matplotlib**: low-level, highly customizable; `plt.figure()` + `plt.plot()` + `plt.show()` pattern; two APIs: pyplot (procedural) and OOP (fig, ax)
-- **Seaborn**: built on matplotlib; statistical plots with less code; works directly with [[pandas-data-manipulation]] DataFrames
-- **Plotly**: interactive charts; hover tooltips, zoom, pan; `plotly.express` for quick plots
-- **Distribution plots**: histogram, KDE (kernel density estimate), box plot, violin plot
-- **Relationship plots**: scatter plot, line plot, heatmap (correlation matrix), pair plot
-- **Comparison plots**: bar chart, grouped bar, stacked bar
-- **Composition plots**: pie chart (avoid in most cases), stacked area
-- **Best practices**: label axes, title, legend; use color consistently; avoid 3D charts; minimize chart junk
-- **Pair plot**: scatterplot matrix of all feature pairs; quick way to spot relationships and outliers
-- **Correlation heatmap**: visualize `df.corr()` to identify multicollinearity and feature relationships
-- For ML: learning curves, confusion matrix heatmap, ROC curve, feature importance bar chart
-- Color: use colorblind-friendly palettes; sequential for continuous, diverging for centered data, qualitative for categories
-
-## Patterns
+Foundation plotting library. Everything else builds on top.
 
 ```python
 import matplotlib.pyplot as plt
+
+# Basic line plot
+plt.figure(figsize=(10, 6))
+plt.plot(x, y, label='line1', color='blue', linewidth=2)
+plt.xlabel('X axis')
+plt.ylabel('Y axis')
+plt.title('My Plot')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+# Subplots
+fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+axes[0, 0].plot(x, y)
+axes[0, 0].set_title('Plot 1')
+axes[0, 1].scatter(x, y)
+plt.tight_layout()
+plt.show()
+```
+
+**Dark theme**: `plt.style.use('dark_background')`
+
+### Plot Types
+
+```python
+# Histogram - distribution of continuous variable
+df['column'].hist(bins=30)
+
+# Bar plot - counts/values per category
+df['category'].value_counts().plot(kind='bar')
+
+# Scatter - relationship between two continuous
+plt.scatter(df['x'], df['y'], c=df['label'], alpha=0.5)
+
+# Box plot - distribution with quartiles and outliers
+df.boxplot(column='value', by='category')
+```
+
+## Seaborn
+
+High-level interface. Better defaults, statistical plots, automatic legends.
+
+```python
 import seaborn as sns
-import numpy as np
-import pandas as pd
-
-# Set style
-sns.set_theme(style='whitegrid')
-plt.rcParams['figure.figsize'] = (10, 6)
-
-# --- Distribution ---
-# Histogram + KDE
-fig, ax = plt.subplots()
-sns.histplot(df['price'], kde=True, bins=30, ax=ax)
-ax.set_title('Price Distribution')
-ax.set_xlabel('Price ($)')
-
-# Box plot (detect outliers)
-sns.boxplot(data=df, x='category', y='price')
-
-# Violin plot (distribution + density)
-sns.violinplot(data=df, x='category', y='price')
-
-# --- Relationships ---
-# Scatter plot
-sns.scatterplot(data=df, x='age', y='salary', hue='department', alpha=0.7)
 
 # Correlation heatmap
-corr = df.select_dtypes('number').corr()
-sns.heatmap(corr, annot=True, cmap='RdBu_r', center=0, fmt='.2f',
-            mask=np.triu(np.ones_like(corr, dtype=bool)))
+sns.heatmap(df.corr(), annot=True, fmt='.2f', cmap='coolwarm')
 
-# Pair plot (all pairwise relationships)
-sns.pairplot(df[['feat1', 'feat2', 'feat3', 'target']], hue='target', diag_kind='kde')
+# Distribution
+sns.histplot(df['col'], kde=True)     # histogram + density curve
+sns.kdeplot(df['col'])                 # density only
 
-# --- ML Diagnostics ---
-# Confusion matrix
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
-cm = confusion_matrix(y_true, y_pred)
-ConfusionMatrixDisplay(cm, display_labels=['Negative', 'Positive']).plot(cmap='Blues')
+# Categorical
+sns.boxplot(x='category', y='value', data=df)
+sns.violinplot(x='category', y='value', data=df)
+sns.countplot(x='category', data=df)
+sns.barplot(x='category', y='value', data=df)  # mean + CI
 
-# ROC curve
-from sklearn.metrics import roc_curve, auc
-fpr, tpr, _ = roc_curve(y_true, y_prob)
-roc_auc = auc(fpr, tpr)
-plt.plot(fpr, tpr, label=f'AUC = {roc_auc:.3f}')
-plt.plot([0, 1], [0, 1], 'k--')
-plt.xlabel('FPR'); plt.ylabel('TPR'); plt.legend()
+# Regression
+sns.regplot(x='feat1', y='feat2', data=df)
 
-# Feature importance
-importances = model.feature_importances_
-sorted_idx = np.argsort(importances)
-plt.barh(range(len(sorted_idx)), importances[sorted_idx])
-plt.yticks(range(len(sorted_idx)), np.array(feature_names)[sorted_idx])
-plt.xlabel('Importance')
+# Pair plot - all pairwise relationships
+sns.pairplot(df, hue='target')
 
-# Learning curve
-from sklearn.model_selection import learning_curve
-train_sizes, train_scores, val_scores = learning_curve(
-    model, X, y, cv=5, train_sizes=np.linspace(0.1, 1.0, 10)
-)
-plt.plot(train_sizes, train_scores.mean(axis=1), label='Train')
-plt.plot(train_sizes, val_scores.mean(axis=1), label='Validation')
-plt.xlabel('Training Set Size'); plt.ylabel('Score'); plt.legend()
+# FacetGrid - multiple plots split by category
+g = sns.FacetGrid(df, col='category', col_wrap=3)
+g.map(plt.hist, 'value')
+```
 
-# --- Subplots ---
-fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-sns.histplot(df['col1'], ax=axes[0, 0])
-sns.boxplot(data=df, y='col2', ax=axes[0, 1])
-sns.scatterplot(data=df, x='col1', y='col2', ax=axes[1, 0])
-sns.heatmap(corr, ax=axes[1, 1])
-plt.tight_layout()
+## Plotly (Interactive)
 
-# Save figure
-plt.savefig('plot.png', dpi=150, bbox_inches='tight')
-
-# Plotly interactive
+```python
 import plotly.express as px
-fig = px.scatter(df, x='age', y='salary', color='department',
-                 hover_data=['name'], title='Age vs Salary')
+
+fig = px.scatter(df, x='feat1', y='feat2', color='target',
+                 hover_data=['name'], title='Interactive Scatter')
+fig.show()
+
+fig = px.histogram(df, x='column', nbins=30, color='category')
 fig.show()
 ```
 
-## Gotchas
+## Choosing the Right Chart
 
-- `plt.show()` clears the figure; call `plt.savefig()` BEFORE `plt.show()` or the saved file will be blank
-- Seaborn `hue` parameter automatically splits data and adds legend; matplotlib requires manual loop
-- Matplotlib OOP API (`fig, ax = plt.subplots()`) is preferred over pyplot for complex plots; easier to manage multiple subplots
-- Heatmap `annot=True` with many cells creates clutter; for large correlation matrices, mask half with `mask=np.triu()`
-- Pie charts are almost never the right choice; bar charts are easier to read for comparisons
-- Seaborn functions return matplotlib Axes; you can further customize with matplotlib calls on the same ax
+| Data Type | Chart Type |
+|-----------|-----------|
+| One continuous variable | Histogram, KDE, box plot |
+| Two continuous variables | Scatter plot, regression plot |
+| Categorical vs continuous | Box plot, violin plot, bar plot |
+| Categorical vs categorical | Stacked bar, heatmap |
+| Time series | Line plot |
+| Correlation matrix | Heatmap |
+| High-dimensional overview | Pair plot, t-SNE/PCA scatter |
+
+## EDA Visualization Workflow
+
+1. **Missing values**: heatmap of nulls, bar chart of null percentages
+2. **Target distribution**: histogram/countplot
+3. **Feature distributions**: histograms (numeric), countplots (categorical)
+4. **Correlations**: heatmap of correlation matrix
+5. **Feature vs target**: groupby bar plots, box plots by target class
+6. **Outliers**: box plots, scatter plots with z-score coloring
+7. **Pair relationships**: pairplot for top features
+
+## Design Principles
+
+- **Title and axis labels**: always include with appropriate font sizes
+- **Legend**: include when multiple series
+- **Color**: sequential for continuous, qualitative for categories; consider colorblind-safe palettes
+- **Grid lines**: subtle, help read values
+- **Aspect ratio**: choose to avoid distortion
+
+## Gotchas
+- Pie charts with > 5 categories are unreadable - use bar charts instead
+- 3D plots add confusion without clarity - stick to 2D
+- Red-green color schemes fail for ~8% of males (colorblind)
+- Missing axis labels or title makes plots useless for communication
+- Too many series on one plot = visual noise
 
 ## See Also
-
-- [[descriptive-statistics]] - compute summary stats before visualizing
-- [[pandas-data-manipulation]] - data preparation for plotting
-- [[model-evaluation-metrics]] - confusion matrix, ROC curve visualization
-- [[cross-validation-and-model-selection]] - learning curve plots
-- seaborn gallery: https://seaborn.pydata.org/examples/index.html
-- matplotlib docs: https://matplotlib.org/stable/gallery/index.html
+- [[pandas-eda]] - data manipulation before visualization
+- [[descriptive-statistics]] - what to visualize
+- [[bi-dashboards]] - business intelligence visualization tools

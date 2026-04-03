@@ -1,51 +1,54 @@
 ---
-title: Text Optimization and Content Zones
+title: Text Optimization
 category: techniques
-tags: [seo-marketing, text-optimization, title, meta-description, seo-text, tf-idf, bm25]
+tags: [seo-marketing, text-optimization, meta-tags, title, h1, description, tf-idf, bm25, content-brief]
 ---
 
-# Text Optimization and Content Zones
+# Text Optimization
 
-How search engines evaluate text relevance (TF-IDF, BM25) and the practical methodology for optimizing every document text zone: Title, H1, Description, anchor text, SEO body text. Covers two distinct optimization strategies - traffic vs positional - and Text Analyzer workflows.
+Document text zones, meta tag rules, text relevance scoring (TF-IDF, BM25), text analyzer workflow, and content brief creation. Covers both traffic-oriented and positional optimization strategies.
 
 ## Text Relevance Calculation
 
 ### TF-IDF
-`TF-IDF = TF x IDF`
 - **TF (Term Frequency)** - ratio of word occurrences to total document words
-- **IDF (Inverse Document Frequency)** - inverse of how often a word appears across all documents
-
-Key principle: a word frequent in ONE document but rare across all documents has high significance for that document. Stop words (prepositions, conjunctions) appear everywhere and get very low weight.
+- **IDF (Inverse Document Frequency)** - inverse of how often word appears across all documents
+- High TF-IDF = word frequent in ONE document but rare across collection
+- Stop words (prepositions, conjunctions) appear everywhere -> very low TF-IDF
 
 ### BM25
 Improved ranking function actively used by Yandex:
 - Better relevance calculation for multi-word queries than TF-IDF
 - Does NOT account for word position relative to each other
-- Key in Yandex ranking algorithms
+- Actively used in Yandex ranking algorithms
 
-### Quorum and Word Order
-- Documents must contain enough passage coverage (quorum) to enter ranking
-- Pair word occurrences (AB) and full sets (ABC) counted separately
+### Quorum Filtering and Word Order
+- Documents must contain enough passage coverage (quorum) to enter main ranking
+- Pair word occurrences (AB) and full set (ABC) counted separately
 - Rarer words in query carry higher weight
 - Word order in document should match query structure
 
 ## Two Optimization Strategies
 
 ### Traffic Optimization
-**For**: E-commerce, aggregators, portals with wide semantic space.
+**For**: E-commerce, aggregators, portals
 
-- Targets maximum coverage of MF/LF queries, not specific HF positions
+- Maximum coverage of wide semantic core
+- Many MF/LF queries, not positions on specific HF queries
 - Growth driver: creation + optimization of new landing pages
-- Template-based optimization at scale
-- Iteration: build structure for main sections, apply templates, then deepen category by category
+- Mass-production character of SEO
+
+**Iteration**: First-approximation semantics -> structure for main sections -> create all possible pages -> template optimization -> detailed semantics per category -> manual optimization per category -> repeat.
 
 ### Positional Optimization
-**For**: Service sites, B2B, construction, legal - small keyword sets.
+**For**: Service sites, B2B, construction, transport, legal
 
-- Targets maximum positions on ALL queries (HF especially critical)
-- Growth driver: iterative improvement of a fixed page set
-- Manual, precise optimization
-- Iteration: full semantics -> full structure -> create pages -> optimize (iteration 1) -> monitor -> correct (iteration 2) -> repeat
+- Maximum position growth on small keyword set
+- HF queries especially critical
+- Growth driver: iterative improvement of fixed set of pages
+- Precise, targeted character of SEO
+
+**Iteration**: Full semantics -> full structure -> create all pages -> manual optimization iteration 1 -> deploy, wait, monitor -> corrections iteration 2 -> repeat.
 
 ## Document Text Zones
 
@@ -53,15 +56,15 @@ Improved ranking function actively used by Yandex:
 |------|-----|----------------|-------|
 | Title | `<title>` | Highest | Most important SEO zone |
 | H1 | `<h1>` | Very high | One per page, main query |
-| H2-H6 | `<h2>`-`<h6>` | High | Structural headings |
-| Description | `<meta description>` | CTR only (not text ranking) | Click-through optimization |
-| Anchor text | `<a>` | High for donor; counts for acceptor | Internal + external links |
-| Text fragments | Various | Medium | Tables, characteristics, navigation, banners |
-| SEO text | Body main text | Medium | Main copywritten content |
-| Keywords meta | `<meta keywords>` | None | Ignored by all engines; delete if spammy |
-| noindex | `<!--noindex-->` | Removal | Yandex only; hides content from indexation |
+| H2-H6 | `<h2>`, `<h3>` | High | Structural headings |
+| Description | `<meta description>` | CTR only (not ranking) | Click-through optimization |
+| Anchor text | `<a>` | High for donor + acceptor | Internal + external links |
+| Text fragments | Body small text | Medium | Tables, characteristics, navigation |
+| SEO text | Body main text | Medium | Main copywritten text |
+| Keywords meta | `<meta keywords>` | None | Ignored; delete if spammy |
+| noindex blocks | `<!--noindex-->` | Removal | Yandex only |
 
-## Title Tag
+## Title Tag Rules
 
 ### General Rules
 - Most important SEO zone
@@ -70,118 +73,168 @@ Improved ranking function actively used by Yandex:
 - One sentence, NOT split by period
 - Yandex: up to 20 words; Google: up to 12 words
 - Use synsets (synonym groups)
-- Add primary region toponym when relevant
+- Add primary region toponym
+- Only zone where grammatical agreement not critical
 
-### Traffic Title (Wide Coverage)
+### Traffic Title
+Cover maximum queries:
 ```
-Buy [Category.Singular] in [City], prices on [Category.Plural], store [Brand]
+Buy fridge in Moscow, prices for fridges, online store Brand
 ```
-Template variables with all inflection forms. 2 occurrences of main word in different morphological forms.
 
-### Positional Title (Max Rank)
-- Exact keyword occurrences entered "as is"
-- Almost no tail queries; pattern from TOP competitors
-- Usually shorter, 1 occurrence of main word
+**Template formula:**
+```
+Buy %Category.Nom.Sg% in %City.Prep% online, prices for %Category.Nom.Pl%.
+Sale of %Category.Gen.Pl%.
+```
+
+Rules: synonyms, transliterations, permutations; sacrifice exact keyword form for breadth; word order > word form; 2 occurrences of main word in different forms.
+
+### Positional Title
+Maximum position on specific queries:
+```
+PVC windows from manufacturer - Moscow
+```
+
+Rules: exact keyword occurrences entered "as is"; almost no tail queries; pattern from strong competitors; shorter than traffic title; 1 occurrence of main word.
 
 ### Article Title
-- Keywords + clickbait for informational intent
-- Attention-grabbing phrasing
+Clicks and information intent:
+```
+Simple recipe for cottage cheese pancakes with step-by-step photos
+```
+
+Rules: keyword inclusions + clickbait; attention-grabbing phrasing; look at competitor solutions.
 
 ## H1 Tag
-- ONE per page, placed above content
-- Only main query (preferably exact form)
+- Must be ONE per page, placed above content
+- Only main query (preferably in exact form)
 - Short, grammatically correct
-- Not polluted with other tags (no `<p>` inside H1)
+- Not polluted with other tags (`<p>` inside H1 = bad)
 
 ## Meta Description
-- Not visible in browser; does NOT participate in text ranking
+- NOT visible in browser (code only)
+- Does NOT participate in text ranking
 - Purpose: increase SERP snippet CTR
 - Length: 120-170 chars (Yandex), up to 300 chars (Google)
-- 2-3 sentences, 1 keyword per sentence
-- Commercially attractive, use special symbols: `http://unicode-table.com/`
+- Both key occurrences should fit in 170 chars
+- 2-3 sentences; 1 keyword per sentence
+- Special symbols: unicode-table.com
 
-## SEO Text Rules
+## noindex Tag (Yandex Only)
+```html
+<!--noindex-->content to hide<!--/noindex-->
+```
+Prohibits indexation of any page section. Does NOT work in Google.
 
-### Commercial Sites (Yandex)
-- Strictly follow Text Analyzer (TA) requirements
-- Match exact keyword occurrence counts
-- Even keyword density throughout text
-- Do NOT abuse commercial tails (buy, price, order)
-- NO nonsensical keyword insertions
-- Include thematic LSI words, minimize filler
-- **Without Text Analyzer analysis - do not write at all**
-
-### Writing for Both Engines
-Tension: Google rewards large optimized texts; Yandex may penalize ANY text on commercial pages.
-
-If Yandex TOP competitors have no text, you cannot use optimized text without risk.
-
-Workarounds for Google-only text:
-- Output via JavaScript `document.write`
-- Add via Google Tag Manager
-- Via GTM: canonical from page without text (closed from Yandex) to copy with text
-
-### Informational Articles
-- Table of contents, clear H1/H2/H3 structure
-- Cover ALL useful points from all competitors
-- Add extra paragraphs from semantics and unique insights
-- Size: longer than any single competitor
-- Rich media (images, video, for how-to: image per step)
-- Alternate between text, images, quotes, lists ("user sticks")
-
-### Product Listings (Baden-Baden Era)
-Only generated text survives on listings:
-- 1 occurrence of main query
-- 1-2 occurrences of individual query words (spread apart)
-- Do NOT write commercial words near the query
-- 2-3 sentences, up to 100 words, carrying useful information
-
-## Text Analyzer (TA) Workflow
+## Text Analyzer (TA)
 
 **Purpose**: Reference tool before writing ANY SEO text.
 
-### TA Configuration
+**What it does**:
+- Analyzes competitor texts in TOP
+- Determines safe number of keyword occurrences by type
+- Shows whether text is needed at all
+- Creates content brief almost automatically
+- Checks all document zones for keyword spam
+
+**Tool**: Rush Analytics text analyzer
+
+### TA Requirements
 - Clustering: HARD mode with threshold 3
 - Exclude sites of different type from analysis
 - Use synonyms; do NOT analyze single query
 - Up to 6 queries optimal (more dilutes results)
-- Do NOT include LF queries (they distort results)
+- Do NOT include LF queries - they distort results
 - Use SERP of target region
 
-### What TA Determines
-- Whether text is needed at all on this page type
-- Safe number of keyword occurrences by type
-- Content brief generation almost automatically
-- Keyword spam detection across all document zones
+## SEO Text on Commercial Sites
+
+- Strictly follow Text Analyzer requirements
+- Follow exact keyword occurrence count and text volume
+- Sometimes text is genuinely not needed
+- Even keyword density throughout text
+- Do not abuse commercial words (buy, price, order)
+- Include thematic LSI words, no filler
+- **WITHOUT TEXT ANALYZER ANALYSIS - DO NOT WRITE AT ALL**
+
+### Yandex vs Google Text Tension
+Google rewards large optimized texts; Yandex may penalize ANY text on commercial pages.
+
+**If competitors in Yandex TOP have no text -> you cannot use optimized text without risk.**
+
+Workarounds to show text only to Google:
+- Output text via JavaScript `document.write`
+- Add text via Google Tag Manager
+- Via GTM: set canonical from page without text to copy with text
+
+## Content Types by Page
+
+### Product Listings
+- Only write text if Text Analyzer recommends it
+- TA recommends <100 words -> text NOT needed
+- TA recommends ~100-150 words -> generation only
+- TA recommends >150 words -> can write full text
+- Track anchor zone `<a>` occurrences separately
+
+### Listing Generation Rules (Baden-Baden Era)
+- 1 occurrence of main query
+- 1-2 occurrences of individual words (spread apart)
+- Do NOT write commercial words near the query
+- 2-3 sentences, up to 100 words total
+- Connected, useful text
+
+### Product Cards
+- Text uniqueness NOT critical
+- Page uniqueness via: generated text, customer reviews, accessories section
+- Same generation rules as category pages
+
+### Service Pages
+- Only meaningful text by copywriter
+- Do NOT generate; mandatory: use Text Analyzer
+- Only write based on Content Audit
+
+### Informational Articles
+- Table of contents, clear H1/H2/H3 structure
+- Include LSI terms (no more than 50)
+- Cover ALL useful points from all competitors + extras
+- Size: longer than any single competitor
+- More images, video; alternate text/images/lists/quotes
 
 ## Copywriter Brief Structure
+
+Complete brief must contain:
 1. Heading structure (H2-H3 with target keywords)
 2. Instructions for each section
-3. LSI keywords per paragraph
-4. Word count and paragraph count per section
+3. LSI keywords for each paragraph
+4. Word/paragraph count per section
 5. Links to best competitor examples
-6. Text Analyzer output with highlighted required occurrences
+6. Text analyzer output with highlighted required occurrences
 
-## Optimization Checklist
+**Token count**: 1 word = 1.3 tokens; 1,000 words = 1,300 tokens.
 
-| Zone | Traffic Site | Positional Site | Info Site |
-|------|-------------|-----------------|-----------|
+## Optimization Checklist by Site Type
+
+| Zone | Traffic Site | Positional Site | Informational |
+|------|-------------|-----------------|---------------|
 | Title | Template, wide coverage | Exact match, short | Clickbait + query |
-| H1 | Template or manual, exact | Exact, short | Natural, question/phrase |
+| H1 | Template or manual, exact | Exact, short | Natural phrase |
 | Description | Template | Manual, CTR-focused | Manual, CTR-focused |
-| SEO text | By TA; generated if short | By TA; written manually | Full article, competitive |
-| Headings | Template H2/H3 | Manual semantic hierarchy | Rich H2-H4 with queries |
-| LSI | Auto-generated | By TA | Rich, ~50 relevant terms |
+| SEO text | By TA; generated if short | By TA; copywriter | Full article |
+| Heading structure | Template h2/h3 | Manual semantic | Rich h2/h3/h4 |
+| LSI words | Auto-generated | By TA | Rich, 50 LSI |
+| Content audit | Required | Required | Required |
 
 ## Gotchas
-- Keywords in `<b>`, `<strong>`, `<em>` signal keyword manipulation to search engines
-- Baden-Baden filter penalizes keyword density spam on commercial pages
-- Text on product listings should be generated, not hand-written (generation survives Yandex filters)
-- Copywriters must be trained on TA rules; those who cannot follow them must be replaced
-- Token count approximation: 1 word ~ 1.3 tokens; 1,000 words ~ 1,300 tokens
+- **Keywords meta tag does nothing** - delete if spammy, otherwise ignore
+- **Baden-Baden penalizes keyword density** - always check via text analyzer before writing
+- **Keywords in bold/strong tags signal manipulation** - do not use `<b>`, `<strong>`, `<em>` on keywords
+- **Description does not affect ranking** - only CTR; don't stuff keywords for ranking purposes
+- **Yandex vs Google text conflict is real** - the GTM/JS workaround is a standard practice, not a hack
+- **Commercial tail words hurt** - "buy", "price", "order" near keywords trigger spam detection
 
 ## See Also
-- [[keyword-research-semantic-core]] - Building the semantic core that drives text optimization
-- [[on-page-optimization]] - Content audit and page-type content blocks
-- [[search-engine-filters]] - Baden-Baden and text-related penalties
-- [[seo-tools-and-workflow]] - Rush Analytics Text Analyzer, content checking tools
+- [[keyword-research-semantic-core]] - Semantic core collection and clustering
+- [[behavioral-factors-ctr]] - CTR optimization via snippets
+- [[niche-content-audit]] - Content audit methodology
+- [[filters-and-penalties]] - Baden-Baden filter details

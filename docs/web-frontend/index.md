@@ -1,75 +1,73 @@
 ---
-title: Web & Frontend - Map of Content
-category: index
-tags: [moc, web, frontend, html, css, javascript, typescript, react, index]
+title: Web Frontend
+type: MOC
 ---
 
-# Web & Frontend
+# Web Frontend
 
-## HTML & CSS Fundamentals
+Reference knowledge base for HTML, CSS, JavaScript, TypeScript, React, build tooling, and Figma design.
 
-- [[html-semantics-and-document-structure]] - semantic elements, accessibility, ARIA, document structure, meta tags
-- [[css-box-model-and-display]] - box model, border-box reset, block/inline/inline-block, margin collapsing, logical properties
-- [[css-selectors-and-specificity]] - specificity calculation, cascade, :has(), :is(), :where(), pseudo-elements
-- [[css-custom-properties-and-animations]] - CSS variables, design tokens, transitions, @keyframes, prefers-reduced-motion
+## HTML
 
-## CSS Layout
+The structural foundation of web content, from document structure to forms and accessibility.
 
-- [[css-flexbox]] - one-dimensional layout, justify-content, align-items, flex-grow/shrink/basis, gap
-- [[css-grid-layout]] - two-dimensional layout, fr unit, auto-fit/auto-fill, grid-template-areas, subgrid
-- [[css-positioning-and-z-index]] - static/relative/absolute/fixed/sticky, stacking contexts, modals, tooltips
-- [[responsive-design-and-media-queries]] - mobile-first, breakpoints, clamp(), container queries, responsive images
+- [[html-fundamentals]] - Document structure, semantic elements, images, links, block vs inline
+- [[html-tables-and-forms]] - Tables, form inputs, validation, labels, accessibility patterns
+
+## CSS Core
+
+Styling, layout, and visual presentation of web content.
+
+- [[css-selectors-and-cascade]] - Selectors, specificity, inheritance, colors, typography, custom properties
+- [[css-box-model-and-layout]] - Box model, border-box, display, position, z-index, units, backgrounds
+- [[css-flexbox]] - 1D layout: direction, justify, align, grow/shrink/basis, common patterns
+- [[css-grid]] - 2D layout: template columns/rows, areas, auto-fit/fill, minmax, subgrid
+- [[css-responsive-design]] - Media queries, viewport units, clamp(), responsive images, mobile-first
+- [[css-animation-and-transforms]] - Transitions, transforms, keyframes, filters, GPU performance
+- [[css-sass-and-methodology]] - BEM naming, SMACSS, SASS/SCSS preprocessing, file organization
 
 ## JavaScript
 
-- [[javascript-fundamentals]] - let/const, types, destructuring, spread/rest, closures, optional chaining, arrow functions
-- [[javascript-array-methods]] - map/filter/reduce, find, sort, toSorted (ES2023), groupBy (ES2024), iteration patterns
-- [[javascript-async-and-promises]] - event loop, Promises, async/await, fetch, AbortController, Promise.all/allSettled
-- [[javascript-dom-and-events]] - DOM manipulation, event delegation, bubbling, IntersectionObserver, debounce/throttle
+Core language features from variables and types through async programming.
+
+- [[js-variables-and-types]] - let/const/var, primitives, typeof, coercion, truthy/falsy
+- [[js-control-flow]] - Conditions, strict equality, logical operators, optional chaining, loops
+- [[js-strings-and-numbers]] - String/Number methods, Math, floating point, regex basics
+- [[js-functions]] - Declarations, arrows, parameters, higher-order functions, callbacks, pure functions
+- [[js-scope-closures-this]] - Scope chain, hoisting, closures, this binding rules, strict mode
+- [[js-arrays]] - Mutating/non-mutating methods, map/filter/reduce, destructuring, spread, chaining
+- [[js-objects-and-data]] - Objects, destructuring, spread, JSON, Date, Symbol
+- [[js-dom-and-events]] - DOM selection/modification, events, delegation, localStorage, FormData
+- [[js-async-and-fetch]] - Event loop, Promises, async/await, Fetch API, error handling
 
 ## TypeScript
 
-- [[typescript-type-system]] - interfaces, types, generics, utility types, type guards, discriminated unions
-- [[typescript-advanced-patterns]] - mapped types, conditional types, template literals, infer, branded types, satisfies
+Static type system for JavaScript, from basics to advanced type-level programming.
 
-## React Ecosystem
+- [[typescript-fundamentals]] - Basic types, interfaces, unions, generics, narrowing, structural typing
+- [[typescript-advanced]] - Utility types, conditional types, mapped types, branded types, Zod, React typing
 
-- [[react-components-and-jsx]] - JSX, function components, props, children, composition, conditional rendering, lists
-- [[react-hooks]] - useState, useEffect, useRef, useMemo, useCallback, useReducer, custom hooks
-- [[react-state-management]] - local state, lifted state, Context, Redux Toolkit, state decision matrix
-- [[react-router-and-navigation]] - React Router v6, nested routes, params, protected routes, lazy loading
+## React
 
-## Tooling & Frameworks
+Component-based UI library with hooks for state management and side effects.
 
-- [[tailwind-css]] - utility-first CSS, responsive prefixes, dark mode, cn() helper, arbitrary values
-- [[webpack-and-vite]] - bundlers, code splitting, tree shaking, HMR, config, environment variables
+- [[react-components-and-jsx]] - JSX rules, components, props, children, composition, conditional rendering
+- [[react-state-and-hooks]] - useState, useEffect, useRef, custom hooks, event handling
+- [[react-rendering-internals]] - Virtual DOM, Fiber, re-render triggers, memo/useMemo/useCallback, keys
+- [[react-styling-approaches]] - CSS Modules (scoped styles), Tailwind CSS (utility-first)
 
-## Design
+## Build Tooling
 
-- [[figma-design-to-code]] - auto layout to flexbox, design tokens, component mapping, responsive breakpoints
+Package management, bundling, and optimization for production.
 
-## Quick Reference: CSS Property Selection
+- [[npm-and-task-runners]] - npm, package.json, node_modules, Gulp, SASS CLI
+- [[frontend-build-systems]] - Webpack/Vite/Rollup, transpilation, tree-shaking, code splitting, source maps
+- [[git-and-github]] - Version control, branching, merging, PRs, collaboration workflows
 
-| Goal | Property |
-|------|----------|
-| One-axis layout | `display: flex` |
-| Two-axis layout | `display: grid` |
-| Center anything | `display: grid; place-items: center` |
-| Responsive grid | `grid-template-columns: repeat(auto-fit, minmax(250px, 1fr))` |
-| Sticky header | `position: sticky; top: 0` |
-| Fluid text | `font-size: clamp(1rem, 2.5vw, 2rem)` |
-| Modal overlay | `position: fixed; inset: 0` |
-| Spacing system | CSS custom properties + rem |
+## Figma Design
 
-## Technology Stack Cheat Sheet
+UI/UX design tool for creating mockups, prototypes, and design systems.
 
-| Layer | Technology | Purpose |
-|-------|-----------|---------|
-| Markup | HTML5 | Semantic structure |
-| Styling | CSS3 / Tailwind | Visual presentation |
-| Language | TypeScript | Type-safe JavaScript |
-| UI Library | React 18+ | Component-based UI |
-| Routing | React Router v6 | Client-side navigation |
-| State | Redux Toolkit / Context | State management |
-| Build | Vite | Dev server + bundling |
-| Design | Figma | UI/UX design handoff |
+- [[figma-fundamentals]] - Interface, frames, grids, layers, shapes, export, sharing
+- [[figma-layout-and-components]] - AutoLayout, constraints, components, variants, design systems
+- [[figma-design-workflow]] - Typography, color, effects, prototyping, responsive design, wireframes

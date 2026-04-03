@@ -1,84 +1,110 @@
 ---
-title: Design Patterns (GoF) and SOLID Principles
+title: Design Patterns (GoF)
 category: concepts
-tags: [architecture, design-patterns, solid, oop, gof]
+tags: [design-patterns, gof, solid, oop, creational, structural, behavioral]
 ---
 
-# Design Patterns (GoF) and SOLID Principles
+# Design Patterns (GoF)
 
-The Gang of Four (GoF) design patterns are reusable solutions to common software design problems. Combined with SOLID principles, they form the foundation of maintainable object-oriented design.
-
-## OOP Foundations
-
-**Four pillars**: Abstraction (model relevant attributes only), Encapsulation (hide internals, expose interface), Inheritance (reuse code via hierarchy), Polymorphism (same interface, different behavior).
-
-**Object relationships**: Association (uses), Aggregation (has, can exist independently), Composition (owns, lifecycle dependent), Dependency (temporarily uses), Inheritance (is-a), Implementation (realizes interface).
-
-**Key principles**: Favor composition over inheritance. Program to interfaces, not implementations.
+Classic design patterns from the Gang of Four. A pattern describes a general concept for solving a common problem - use only when necessary, unnecessary patterns add complexity.
 
 ## SOLID Principles
 
-- **S** - Single Responsibility: one class = one reason to change
-- **O** - Open/Closed: open for extension, closed for modification
-- **L** - Liskov Substitution: subtypes must be substitutable for base types without breaking behavior
-- **I** - Interface Segregation: many specific interfaces > one general-purpose
-- **D** - Dependency Inversion: depend on abstractions, not concrete implementations
+| Principle | Rule | Violation Sign |
+|-----------|------|----------------|
+| **S**ingle Responsibility | One class = one reason to change | Class does logging AND business logic |
+| **O**pen/Closed | Open for extension, closed for modification | Modifying existing class for new behavior |
+| **L**iskov Substitution | Subtypes substitutable for base types | Override breaks base class contract |
+| **I**nterface Segregation | Many specific interfaces > one general | Implementing unused methods |
+| **D**ependency Inversion | Depend on abstractions, not implementations | Direct instantiation of dependencies |
+
+**Meta-principles:** favor composition over inheritance; program to interfaces, not implementations.
 
 ## Creational Patterns
 
 | Pattern | Purpose | When to Use |
 |---------|---------|-------------|
-| **Factory Method** | Interface for creating objects; subclasses decide which class | Class doesn't know in advance which objects to create |
-| **Abstract Factory** | Create families of related objects without concrete classes | Code must work with various families of related products |
-| **Builder** | Construct complex objects step by step | Object has many optional parameters; need different representations |
-| **Prototype** | Create objects by cloning existing ones | Creating objects is costly; avoid subclassing for configurations |
-| **Singleton** | Ensure one instance with global access | Need exactly one instance (DB pool, config). Warning: violates SRP, masks dependencies |
+| **Factory Method** | Interface for creating objects, subclasses decide type | Don't know types in advance, need extension point |
+| **Abstract Factory** | Create families of related objects | Multiple families of products |
+| **Builder** | Construct complex objects step by step | Many optional parameters, different representations |
+| **Prototype** | Create by cloning existing objects | Expensive construction, avoid subclassing |
+| **Singleton** | Exactly one instance, global access | DB pool, config. Warning: violates SRP, hides dependencies |
 
 ## Structural Patterns
 
 | Pattern | Purpose | When to Use |
 |---------|---------|-------------|
-| **Adapter** | Convert incompatible interface to expected one | Integrating legacy code or third-party libraries |
-| **Bridge** | Separate abstraction from implementation | Need to extend in multiple orthogonal dimensions |
-| **Composite** | Tree structures, treat individual/composite uniformly | Part-whole hierarchies (file system, UI, org structures) |
-| **Decorator** | Attach additional behavior dynamically by wrapping | Add responsibilities without subclassing; combine behaviors |
-| **Facade** | Simplified interface to complex subsystem | Reduce coupling; provide convenient defaults |
-| **Flyweight** | Share common state between many objects | Huge number of similar objects consuming too much memory |
-| **Proxy** | Surrogate controlling access to another object | Lazy loading, access control, caching, logging transparently |
-
-**Proxy types**: virtual (lazy loading), protection (access control), remote (network), caching, logging.
+| **Adapter** | Convert incompatible interface | Legacy/third-party integration |
+| **Bridge** | Separate abstraction from implementation | Multiple orthogonal dimensions, runtime switch |
+| **Composite** | Tree structures, uniform treatment | Part-whole hierarchies (file system, UI, org chart) |
+| **Decorator** | Attach behavior dynamically via wrapping | Add responsibilities without subclassing |
+| **Facade** | Simplified interface to complex subsystem | Reduce coupling, convenient defaults |
+| **Flyweight** | Share common state between many objects | Huge number of similar objects eating memory |
+| **Proxy** | Surrogate controlling access | Lazy loading, access control, caching, logging |
 
 ## Behavioral Patterns
 
 | Pattern | Purpose | When to Use |
 |---------|---------|-------------|
-| **Chain of Responsibility** | Pass request along chain of handlers | Multiple handlers in varying order; set determined at runtime |
-| **Command** | Encapsulate request as object | Parameterize actions, queue operations, support undo |
-| **Iterator** | Traverse collection without exposing internals | Complex structure (tree, graph) needs sequential access |
-| **Mediator** | Centralize communication between components | Components have many interdependencies |
-| **Memento** | Capture and restore object state | Undo/redo; save snapshots (editor history, game saves) |
-| **Observer** | Subscription mechanism for event notification | Changes in one object require updating others dynamically |
-| **State** | Object behavior changes based on internal state | Object behavior depends on state; many state conditionals |
-| **Strategy** | Family of interchangeable algorithms | Switch algorithms at runtime; many variants of same operation |
-| **Template Method** | Algorithm skeleton in base class, subclasses override steps | Several classes share algorithm structure, differ in steps |
-| **Visitor** | Add operations to class hierarchy without modifying classes | Operations change frequently but structure is stable |
+| **Chain of Responsibility** | Pass request along handler chain | Multiple handlers, varying order, runtime chain |
+| **Command** | Encapsulate request as object | Undo, queueing, logging of operations |
+| **Iterator** | Traverse collection without exposing internals | Complex structures (tree, graph) needing sequential access |
+| **Mediator** | Centralize communication | Many interdependencies between components |
+| **Memento** | Capture/restore state without violating encapsulation | Undo/redo, snapshots (editor history, game saves) |
+| **Observer** | Subscription-based event notification | Changes in one object require updating others |
+| **State** | Behavior changes based on internal state | Many conditionals based on state |
+| **Strategy** | Interchangeable algorithms | Switch algorithms at runtime, many variants |
+| **Template Method** | Algorithm skeleton, subclasses override steps | Shared structure, different specific steps |
+| **Visitor** | New operations without modifying classes | Operations change frequently, structure is stable |
 
 ## Pattern Selection Guide
 
-- **Creating objects**: Factory Method (one type), Abstract Factory (family), Builder (complex construction), Prototype (cloning)
-- **Structuring**: Adapter (incompatible interfaces), Decorator (dynamic behavior), Composite (trees), Facade (simplification)
-- **Communication**: Observer (events), Mediator (centralized), Chain of Responsibility (sequential), Command (encapsulated operations)
-- **Algorithm variation**: Strategy (interchangeable), Template Method (skeleton with hooks), State (behavior per state)
+```
+Creating objects:
+  One type           -> Factory Method
+  Family of types    -> Abstract Factory
+  Complex build      -> Builder
+  Clone existing     -> Prototype
+
+Structuring:
+  Incompatible APIs  -> Adapter
+  Dynamic behavior   -> Decorator
+  Tree structures    -> Composite
+  Simplify complex   -> Facade
+
+Communication:
+  Event notification -> Observer
+  Centralized comms  -> Mediator
+  Sequential handling -> Chain of Responsibility
+  Encapsulated ops   -> Command
+
+Algorithm variation:
+  Interchangeable    -> Strategy
+  Skeleton + hooks   -> Template Method
+  State-dependent    -> State
+```
+
+## OOP Relationships
+
+| Relationship | Meaning | Strength |
+|-------------|---------|----------|
+| **Dependency** | Temporarily uses | Weakest |
+| **Association** | Uses (has reference) | Weak |
+| **Aggregation** | Has, can exist independently | Medium |
+| **Composition** | Owns, lifecycle dependent | Strong |
+| **Inheritance** | Is-a | Strongest |
+| **Implementation** | Realizes interface | - |
 
 ## Gotchas
 
-- Use patterns only when necessary - unnecessary patterns add complexity
-- Singleton is the most misused pattern - consider dependency injection instead
-- Decorator chains can become hard to debug
-- Observer can create memory leaks if subscriptions are not cleaned up
-- Don't force a pattern where simple code would suffice
+- **Singleton** is the most misused pattern - often used where simple dependency injection suffices
+- **Pattern overuse** adds complexity. If code works cleanly without a pattern, don't force one
+- **Decorator vs Inheritance** - decorator is more flexible but creates many small objects. Inheritance is simpler when hierarchy is stable
+- **Observer memory leaks** - forgotten subscriptions keep objects alive. Always unsubscribe
+- **Strategy vs State** - Strategy client chooses algorithm; State transitions happen internally
 
 ## See Also
 
-- [[software-architecture-fundamentals]] - architectural principles
-- [[microservices-patterns]] - distributed system patterns (Saga, CQRS, Circuit Breaker)
+- [[architectural-styles]] - Architectural-level patterns
+- [[microservices-communication]] - Distributed system patterns
+- [[enterprise-integration]] - Enterprise integration patterns (EIP)

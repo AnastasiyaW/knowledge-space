@@ -1,116 +1,179 @@
 ---
-title: Feature Engineering
-category: ml-fundamentals
-tags: [feature-engineering, encoding, scaling, transformation, missing-values, sklearn, pandas]
+title: Feature Engineering and Preprocessing
+category: techniques
+tags: [data-science, feature-engineering, preprocessing, sklearn]
 ---
 
-# Feature Engineering
+# Feature Engineering and Preprocessing
 
-Transform raw data into features that make ML models work better. The most impactful activity in applied ML -- often more important than algorithm choice. Covers encoding, scaling, handling missing values, creating interaction features, and temporal features. Works hand-in-hand with [[pandas-data-manipulation]].
+The art of transforming raw data into features that ML models can use effectively. Often the single most impactful step in a DS project - good features beat complex models.
 
-## Key Facts
+## Feature Scaling
 
-- **Numerical scaling**: StandardScaler (zero mean, unit variance), MinMaxScaler (0-1 range), RobustScaler (uses IQR, robust to outliers)
-- **Log transform**: reduces right skew; apply to features with long tails (income, prices, counts); use `np.log1p()` for zero-safe
-- **Categorical encoding**: OneHotEncoder (creates binary columns per category), OrdinalEncoder (integer labels for ordinal data), TargetEncoder (mean target per category)
-- **High-cardinality categoricals**: target encoding or frequency encoding; one-hot creates too many columns
-- **Missing values**: SimpleImputer (mean/median/mode), KNNImputer, or indicator column + imputation; NEVER drop rows blindly on large datasets
-- **Polynomial features**: PolynomialFeatures creates x^2, x*y interactions; use with [[regression-models]]
-- **Binning**: discretize continuous features into buckets; useful for non-linear relationships with linear models
-- **Date/time features**: extract year, month, day_of_week, hour, is_weekend, days_since_event
-- **Text features**: TF-IDF, CountVectorizer, character n-grams; for deep models: embeddings
-- **Feature selection**: filter (correlation, mutual info), wrapper (recursive feature elimination), embedded (Lasso, tree importance)
-- Fit transformers on train data ONLY, then `.transform()` on test -- prevents [[cross-validation-and-model-selection]] leakage
-- sklearn `Pipeline` + `ColumnTransformer` = best practice for reproducible preprocessing
+Linear models and neural networks are sensitive to feature scales. Tree-based models (CatBoost, Random Forest) are NOT.
 
-## Patterns
+### StandardScaler (Z-score)
+
+Transforms to mean=0, std=1: z = (x - mean) / std
 
 ```python
-import pandas as pd
-import numpy as np
-from sklearn.preprocessing import (
-    StandardScaler, MinMaxScaler, RobustScaler,
-    OneHotEncoder, OrdinalEncoder, LabelEncoder,
-    PolynomialFeatures
-)
-from sklearn.impute import SimpleImputer, KNNImputer
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
-from sklearn.feature_selection import SelectKBest, mutual_info_classif
-
-# Identify feature types
-numeric_features = ['age', 'income', 'score']
-categorical_features = ['city', 'gender']
-
-# Full preprocessing pipeline
-preprocessor = ColumnTransformer(
-    transformers=[
-        ('num', Pipeline([
-            ('imputer', SimpleImputer(strategy='median')),
-            ('scaler', StandardScaler())
-        ]), numeric_features),
-        ('cat', Pipeline([
-            ('imputer', SimpleImputer(strategy='most_frequent')),
-            ('encoder', OneHotEncoder(handle_unknown='ignore', sparse_output=False))
-        ]), categorical_features)
-    ]
-)
-
-# Full pipeline with model
-from sklearn.ensemble import RandomForestClassifier
-full_pipe = Pipeline([
-    ('preprocess', preprocessor),
-    ('clf', RandomForestClassifier(n_estimators=100))
-])
-full_pipe.fit(X_train, y_train)
-
-# Log transform for skewed features
-df['log_income'] = np.log1p(df['income'])  # log(1 + x), handles zeros
-
-# Date features
-df['date'] = pd.to_datetime(df['date_str'])
-df['year'] = df['date'].dt.year
-df['month'] = df['date'].dt.month
-df['day_of_week'] = df['date'].dt.dayofweek  # 0=Monday
-df['is_weekend'] = df['day_of_week'].isin([5, 6]).astype(int)
-df['days_since_start'] = (df['date'] - df['date'].min()).dt.days
-
-# Target encoding (careful of leakage -- use within CV)
-from sklearn.preprocessing import TargetEncoder
-te = TargetEncoder(smooth=5.0)
-# te.fit(X_train[['city']], y_train)
-
-# Feature selection with mutual information
-selector = SelectKBest(mutual_info_classif, k=10)
-X_selected = selector.fit_transform(X_train, y_train)
-selected_mask = selector.get_support()
-
-# Recursive Feature Elimination
-from sklearn.feature_selection import RFECV
-rfecv = RFECV(estimator=RandomForestClassifier(n_estimators=50),
-              step=1, cv=5, scoring='f1')
-rfecv.fit(X_train, y_train)
-print(f"Optimal features: {rfecv.n_features_}")
-
-# Interaction features
-poly = PolynomialFeatures(degree=2, interaction_only=True, include_bias=False)
-X_interactions = poly.fit_transform(X_train[['feat1', 'feat2']])
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)  # fit on train ONLY
+X_test_scaled = scaler.transform(X_test)         # transform with train stats
 ```
 
-## Gotchas
+### MinMaxScaler
 
-- ALWAYS fit scaler/encoder on training data only; `fit_transform(X_train)` then `transform(X_test)` -- fitting on test leaks information
-- OneHotEncoder creates k columns for k categories; set `drop='first'` to avoid multicollinearity with linear models
-- `LabelEncoder` is for target variable only, NOT for features; use `OrdinalEncoder` for features
-- Mean imputation destroys variance; median is more robust; consider KNNImputer for better estimates
-- Log transform fails on negative values; use `np.log1p()` for zeros, but negative values need different treatment (e.g., shift)
-- Target encoding on full data causes massive leakage; always compute target statistics within cross-validation folds
-- `ColumnTransformer` reorders columns; use `remainder='passthrough'` to keep unspecified columns
+Scales to [0, 1]: x_scaled = (x - x_min) / (x_max - x_min)
+
+```python
+from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler()
+X_scaled = scaler.fit_transform(X_train)
+```
+
+**Critical rule**: fit scaler on training data ONLY, then transform both train and test. Fitting on test = data leakage.
+
+## Categorical Encoding
+
+### One-Hot Encoding
+N categories -> N binary columns. Use for nominal (unordered) categories.
+```python
+pd.get_dummies(df['col'], drop_first=True)  # drop_first avoids multicollinearity
+
+from sklearn.preprocessing import OneHotEncoder
+ohe = OneHotEncoder(drop='first', sparse_output=False)
+```
+
+### Label Encoding
+Maps categories to integers. Only for ordinal data (has natural order).
+```python
+from sklearn.preprocessing import LabelEncoder
+le = LabelEncoder()
+df['encoded'] = le.fit_transform(df['col'])
+```
+
+### Target Encoding
+Replace category with mean of target for that category. CatBoost does this internally with regularization. High risk of data leakage without proper CV-based encoding.
+
+## Missing Value Imputation
+
+```python
+from sklearn.impute import SimpleImputer
+
+# Numerical: median is robust to outliers
+imputer = SimpleImputer(strategy='median')
+X_imputed = imputer.fit_transform(X)
+
+# Categorical: most frequent or constant
+imputer_cat = SimpleImputer(strategy='most_frequent')
+```
+
+**Pro tip**: create binary indicator `is_missing` before imputing - missingness itself can be informative.
+
+## Feature Selection
+
+### Filter Methods (model-independent)
+```python
+from sklearn.feature_selection import VarianceThreshold, mutual_info_classif
+
+# Remove near-constant features
+sel = VarianceThreshold(threshold=0.01)
+X_filtered = sel.fit_transform(X)
+
+# Mutual information (captures non-linear relationships)
+mi_scores = mutual_info_classif(X, y)
+```
+
+### Wrapper Methods (model-dependent)
+```python
+from sklearn.feature_selection import RFE
+from sklearn.linear_model import LogisticRegression
+
+selector = RFE(LogisticRegression(), n_features_to_select=10)
+X_selected = selector.fit_transform(X, y)
+```
+
+### Embedded Methods (built into model)
+- **L1/Lasso**: pushes unimportant weights to exactly zero
+- **Tree-based importance**: `model.feature_importances_` from Random Forest, CatBoost
+
+## Regularization
+
+Prevents overfitting by penalizing large coefficients.
+
+| Type | Penalty | Effect | When to Use |
+|------|---------|--------|-------------|
+| L2 (Ridge) | sum(beta_j^2) | Shrinks all, never zero | Multicollinearity |
+| L1 (Lasso) | sum(\|beta_j\|) | Pushes some to exactly 0 | Feature selection |
+| Elastic Net | L1 + L2 | Combined | Groups of correlated features |
+
+**Why L1 produces zeros**: L1 ball has corners on axes - optimal point frequently at a corner. L2 ball is smooth - tangent point almost never on an axis.
+
+```python
+from sklearn.linear_model import Ridge, Lasso, ElasticNet
+ridge = Ridge(alpha=1.0)    # alpha = regularization strength
+lasso = Lasso(alpha=0.1)
+elastic = ElasticNet(alpha=0.1, l1_ratio=0.5)
+```
+
+## Sklearn Pipelines
+
+Chain preprocessing + model. Prevents data leakage.
+
+```python
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+
+preprocessor = ColumnTransformer([
+    ('num', StandardScaler(), numerical_cols),
+    ('cat', OneHotEncoder(drop='first'), categorical_cols)
+])
+
+pipe = Pipeline([
+    ('preprocess', preprocessor),
+    ('model', LogisticRegression())
+])
+pipe.fit(X_train, y_train)
+predictions = pipe.predict(X_test)
+```
+
+## Feature Engineering Techniques
+
+- **Domain-based**: use domain knowledge (lat/lon -> distance, date -> day_of_week)
+- **Interaction features**: x1 * x2 captures joint effects
+- **Polynomial features**: x^2, x^3 for non-linear relationships
+- **Aggregation features**: groupby statistics (mean, count, std) of related entities
+- **Time-based**: day_of_week, month, hour, is_weekend, days_since_event
+- **Text-based**: word count, TF-IDF features, n-grams
+
+```python
+from sklearn.preprocessing import PolynomialFeatures
+poly = PolynomialFeatures(degree=2, interaction_only=False)
+X_poly = poly.fit_transform(X)
+```
+
+## Non-linear Correlation Detection
+
+```python
+# phik - detects non-linear AND works with categoricals
+import phik
+corr_matrix = df.phik_matrix()
+df.phik_matrix()['target'].sort_values(ascending=False)
+```
+
+Always verify phik findings with pivot tables. Phik shows WHERE to look, pivot tables confirm.
+
+## Gotchas
+- **Data leakage** via preprocessing: fit scaler/encoder on test data, or compute target encoding without CV
+- **One-hot explosion**: 1000 categories = 1000 features. Use target encoding or embeddings instead
+- **Label encoding for nominal**: gives false ordinal relationship (model thinks category 3 > category 1)
+- **Polynomial features**: degree=3 with 100 features = millions of features. Use `interaction_only=True` or manually select
+- **Feature importance from single tree model is unreliable** - use permutation importance or average over ensemble
 
 ## See Also
-
-- [[pandas-data-manipulation]] - data wrangling operations that precede feature engineering
-- [[regression-models]] - linear models benefit most from feature engineering
-- [[ensemble-methods]] - tree models are less sensitive to scaling but benefit from good features
-- [[cross-validation-and-model-selection]] - prevent leakage in feature engineering
-- sklearn preprocessing: https://scikit-learn.org/stable/modules/preprocessing.html
+- [[pandas-eda]] - data exploration before engineering
+- [[linear-models]] - models most affected by feature engineering
+- [[gradient-boosting]] - models with built-in feature handling
+- [[model-evaluation]] - evaluating impact of features on performance

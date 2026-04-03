@@ -1,84 +1,66 @@
 ---
 title: MapReduce
 category: concepts
-tags: [mapreduce, hadoop, distributed-processing, batch, map, reduce, shuffle]
+tags: [data-engineering, mapreduce, hadoop, distributed-computing, batch]
 ---
 
 # MapReduce
 
-MapReduce is a programming model for processing large datasets in parallel across a distributed cluster. It breaks computation into two phases: Map (transform/filter) and Reduce (aggregate), with an implicit Shuffle-Sort step in between.
+MapReduce is a programming model for distributed data processing. Two user-defined operations: Map (transform/filter) and Reduce (aggregate). The framework guarantees all records with the same key arrive at the same Reducer.
 
-## Key Facts
-
-- Created at Google (2004 paper), implemented in [[hadoop-ecosystem]]
-- Processes data as **key-value pairs** throughout all phases
-- **Map phase**: each mapper receives an input split (not a full HDFS block; splits can differ from blocks), applies a function to each record, emits (key, value) pairs
-- **Shuffle-Sort phase** (between Map and Reduce): framework sorts mapper output by key, partitions keys across reducers, copies data from mappers to reducers. Often the most resource-intensive phase
-- **Reduce phase**: each reducer receives all values for a specific key group, applies aggregation function, writes output
-- **Guarantee**: all values with the same key go to the same reducer; data arrives at reducer pre-sorted by key
-- **Partitioner** determines which reducer gets which key (default: hash(key) % num_reducers). Custom partitioners enable skew-aware distribution
-- **Combiner**: optional local aggregation on the mapper side before shuffle (mini-reducer). Reduces network transfer. Must be commutative and associative (e.g., sum, count, max - but NOT average)
-- MapReduce writes intermediate results to disk after each phase, making it slow compared to [[apache-spark]] which keeps data in memory
-- Largely replaced by Spark for most workloads, but still runs under the hood in legacy Hive queries
-
-## Patterns
-
-### Word count (canonical example)
-
-```python
-# Mapper
-def mapper(key, value):
-    # key = line offset, value = line of text
-    for word in value.split():
-        emit(word.lower(), 1)
-
-# Reducer
-def reducer(key, values):
-    # key = word, values = iterator of counts
-    emit(key, sum(values))
-
-# Combiner (same as reducer for sum)
-combiner = reducer
-```
-
-### MapReduce execution flow
+## Paradigm
 
 ```
-Input Splits                                   Output
-    |                                             ^
-    v                                             |
-[Mapper 1] --+                           +-- [Reducer 1]
-[Mapper 2] --+--> Shuffle-Sort-Copy -->--+-- [Reducer 2]
-[Mapper 3] --+                           +-- [Reducer 3]
-
-Within Shuffle:
-  1. Mapper output partitioned by key (Partitioner)
-  2. Each partition sorted by key
-  3. Spilled to local disk (if memory exceeded)
-  4. Reducers copy their partitions from all mappers
-  5. Merge-sort on reducer side
+Map:    (K1, V1) -> list(K2, V2)    -- transform each record
+Reduce: (K2, list(V2)) -> list(K3, V3)  -- aggregate by key
 ```
 
-### Hadoop Streaming (Python)
+## Execution Pipeline
+
+```
+Input -> Split -> Map -> Spill -> Sort/Merge -> Shuffle -> Reduce -> Output
+```
+
+1. **Split:** InputFormat splits data into chunks. Each split -> one Mapper
+2. **Map:** Each Mapper processes split via RecordReader. Output to circular buffer
+3. **Spill:** Buffer fills -> data spilled to local disk (NOT HDFS). Partitioned by `hash(key) % numReducers`
+4. **Sort/Merge:** Mapper sorts and merge-sorts spill files per Reducer partition
+5. **Shuffle:** Reducers **pull** data from Mappers (v2 reversed direction from v1)
+6. **Reduce:** Merge-sort received files, process sorted key-value stream
+7. **Output:** One output file per Reducer on HDFS
+
+## Hadoop Streaming (Python)
 
 ```bash
-hadoop jar hadoop-streaming.jar \
-    -mapper "python3 mapper.py" \
-    -reducer "python3 reducer.py" \
-    -input /data/input/ \
-    -output /data/output/
+hadoop jar $HADOOP_MAPRED_HOME/hadoop-streaming.jar \
+  -mapper mapper.py \
+  -reducer reducer.py \
+  -file /local/path/mapper.py \
+  -file /local/path/reducer.py \
+  -input /hdfs/input/ \
+  -output /hdfs/output/
 ```
 
-## Gotchas
+## Key Details
+- **Split != HDFS block:** Splits are logical (can be from DB, S3); blocks are physical
+- **InputFormat types:** TextInputFormat (default), NLineInputFormat (N lines per mapper), DBInputFormat
+- **Number of Mappers:** determined by InputFormat split logic, not directly configurable
+- **Number of Reducers:** configurable via `mapreduce.job.reduces`
+- **`_SUCCESS` file:** empty marker indicating job completion. Files starting with `_` or `.` ignored by subsequent jobs
+- **Output directory must NOT exist** before job launch (safety against overwriting)
 
-- Combiner is NOT guaranteed to run. It is an optimization hint - the framework may skip it, run it once, or run it multiple times. Logic must be associative and commutative
-- MapReduce does NOT send mapper output to reducers. In Hadoop v2/YARN, reducers pull data from mappers (preventing DDoS of reducers that happened in v1)
-- Data skew: if one key has disproportionately many values, its reducer becomes a bottleneck. Solutions: salted keys, two-pass aggregation, custom partitioner
-- Intermediate disk I/O between stages is the primary reason MapReduce is 10-100x slower than [[apache-spark]] for iterative algorithms
+## MapReduce v1 vs v2
+- **v1:** Mappers pushed data to Reducers -> DDoS on Reducers
+- **v2:** Reducers pull from Mappers (reversed direction)
+
+## Gotchas
+- Container initialization overhead dominates for small datasets (40s for 100KB with 31 mappers vs 9s with 3)
+- Split is NOT the same as HDFS block - different abstraction layers
+- Hadoop Streaming (Python) lacks some Java MR features (no setup/cleanup hooks)
+- MapReduce is legacy - prefer Spark for new workloads
 
 ## See Also
-
-- [[hadoop-ecosystem]] - MapReduce within the broader Hadoop stack
-- [[apache-spark]] - in-memory replacement for MapReduce
-- [[hdfs]] - storage layer MapReduce reads from
-- https://hadoop.apache.org/docs/stable/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html
+- [[hadoop-hdfs]] - storage layer
+- [[yarn-resource-management]] - resource allocation
+- [[apache-hive]] - SQL interface to MapReduce
+- [[apache-spark-core]] - modern replacement

@@ -1,134 +1,126 @@
 ---
 title: Deployment Strategies
-category: operations
-tags: [deployment, rolling-update, blue-green, canary, zero-downtime, rollback]
+category: concepts
+tags: [devops, deployment, blue-green, canary, rolling-update, feature-flags, release-management]
 ---
+
 # Deployment Strategies
 
-Rolling updates, blue-green, canary deployments, and zero-downtime release patterns.
+Deployment strategies control how new application versions replace old ones. The choice affects downtime, rollback speed, resource cost, and risk exposure.
 
-## Key Facts
+## Rolling Update (Kubernetes Default)
 
-- **Rolling update** = gradually replace old pods with new; default K8s Deployment strategy
-- **Blue-Green** = two identical environments; switch traffic from blue (current) to green (new) at once
-- **Canary** = route small percentage of traffic to new version; expand if healthy, rollback if not
-- **Recreate** = stop all old instances, then start new; causes downtime but simplest
-- **A/B testing** = route specific users (by header, cookie, geo) to new version for feature testing
-- Rolling update params: `maxSurge` (extra pods during update), `maxUnavailable` (pods removed during update)
-- **Readiness probe** gates traffic to new pods; unready pods don't receive requests
-- **Argo Rollouts** = K8s controller for advanced canary/blue-green with automated analysis
-- **Progressive delivery** = canary + automated metrics analysis + auto-promote/rollback
-- [[kubernetes-pods]] liveness/readiness probes are critical for safe deployments
-- [[monitoring-observability]] signals drive canary promotion decisions
-- [[helm-charts]] `helm rollback` provides release-level rollback
-
-## Patterns
+Gradually replaces old pods with new. Zero-downtime if health checks configured.
 
 ```yaml
-# Kubernetes Rolling Update
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: web
-spec:
-  replicas: 4
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 1           # at most 5 pods during update
-      maxUnavailable: 0      # zero downtime
-  template:
-    spec:
-      containers:
-      - name: app
-        image: myapp:2.0.0
-        readinessProbe:
-          httpGet:
-            path: /health
-            port: 8080
-          initialDelaySeconds: 10
-          periodSeconds: 5
-```
-
-```yaml
-# Argo Rollouts - Canary with analysis
-apiVersion: argoproj.io/v1alpha1
-kind: Rollout
-metadata:
-  name: web
-spec:
-  replicas: 10
-  strategy:
-    canary:
-      steps:
-      - setWeight: 10
-      - pause: {duration: 5m}
-      - analysis:
-          templates:
-          - templateName: success-rate
-      - setWeight: 30
-      - pause: {duration: 5m}
-      - setWeight: 60
-      - pause: {duration: 5m}
-      - setWeight: 100
-      canaryService: web-canary
-      stableService: web-stable
-
----
-apiVersion: argoproj.io/v1alpha1
-kind: AnalysisTemplate
-metadata:
-  name: success-rate
-spec:
-  metrics:
-  - name: success-rate
-    interval: 60s
-    successCondition: result[0] >= 0.95
-    provider:
-      prometheus:
-        address: http://prometheus:9090
-        query: |
-          sum(rate(http_requests_total{status=~"2.."}[5m])) /
-          sum(rate(http_requests_total[5m]))
+strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxSurge: 25%         # max extra pods during update
+    maxUnavailable: 25%   # max pods unavailable during update
 ```
 
 ```bash
-# Kubernetes manual rollout operations
-kubectl set image deploy/web app=myapp:2.0.0
-kubectl rollout status deploy/web            # watch progress
-kubectl rollout pause deploy/web             # pause mid-rollout
-kubectl rollout resume deploy/web            # resume
-kubectl rollout undo deploy/web              # rollback to previous
-kubectl rollout undo deploy/web --to-revision=3  # rollback to specific
-kubectl rollout history deploy/web           # show revision history
+kubectl set image deployment/app app=app:2.0
+kubectl rollout status deployment/app
+kubectl rollout undo deployment/app         # rollback
 ```
 
+## Blue-Green Deployment
+
+Two identical environments. Deploy to inactive, switch traffic after validation.
+
+- **Blue** = current stable
+- **Green** = new version
+- Rollback = redirect traffic back
+- In K8s: two Deployments, Service selector switches between them
+
+**Pros**: instant rollback, full testing before switch
+**Cons**: double infrastructure cost
+
+## Canary Deployment
+
+Route small percentage of traffic to new version. Monitor, then gradually increase.
+
+With Kubernetes + Istio:
+```yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+spec:
+  http:
+  - route:
+    - destination:
+        host: app
+        subset: v1
+      weight: 90
+    - destination:
+        host: app
+        subset: v2
+      weight: 10
 ```
-# Strategy comparison
-Strategy        | Downtime | Rollback | Resource cost | Risk
-----------------|----------|----------|---------------|------
-Recreate        | Yes      | Slow     | 1x            | High
-Rolling Update  | No       | Fast     | 1-2x          | Medium
-Blue-Green      | No       | Instant  | 2x            | Low
-Canary          | No       | Fast     | 1.1x          | Lowest
-```
+
+Without service mesh: use multiple Deployments with different replica counts under same Service.
+
+**Pros**: low risk, gradual validation
+**Cons**: requires traffic splitting capability
+
+## Feature Flags
+
+Deploy code with features toggled off. Enable gradually by user segment.
+
+- Decouple deployment from release
+- Kill switch for problematic features
+- Progressive rollout per user segment
+- No extra infrastructure needed
+
+## Release Checklist
+
+- **Capacity planning**: expected load, can infrastructure handle it
+- **Integration**: load balancers configured, monitoring ready
+- **Failure handling**: per-component impact assessment
+- **Rollback plan**: defined and tested
+- **Communication**: stakeholder notification, status pages
+
+## Release and Error Budget
+
+From SRE perspective:
+- Error budget remaining -> can deploy faster, take more risks
+- Error budget exhausted -> freeze releases, focus on reliability
+- Smaller changes = lower risk (smaller blast radius)
+- Automated rollback mechanisms mandatory
+
+## Cloud-Native 15-Factor Methodology
+
+Extension of 12-Factor App for cloud-native services:
+
+1. One Codebase per service
+2. API First - contract before implementation
+3. Explicit Dependencies (pom.xml, package.json)
+4. Strict Design/Build/Release/Run separation
+5. Externalized Configuration (env vars, config server)
+6. Logs as event streams (stdout)
+7. Fast startup, graceful shutdown (Disposability)
+8. Backing Services as attached resources
+9. Environment Parity (dev ~ staging ~ prod)
+10. Admin Processes as one-off tasks
+11. Port Binding for service export
+12. Stateless Processes (share-nothing)
+13. Scale via process model (Concurrency)
+14. Telemetry (health, performance, business metrics)
+15. Authentication/Authorization as first-class concern
 
 ## Gotchas
 
-- Rolling update with `maxUnavailable: 0` and `maxSurge: 1` is safest but slowest (one pod at a time)
-- Blue-green requires double the resources during deployment; clean up old environment after validation
-- Canary with database schema changes is tricky - new code must work with both old and new schemas
-- `kubectl rollout undo` only works for Deployments, not Helm releases; use `helm rollback` for Helm
-- Readiness probe must accurately reflect app readiness; a pod that's "ready" but not serving = errors
-- Session affinity (sticky sessions) can prevent canary traffic from spreading evenly
-- Database migrations must be backward-compatible for zero-downtime deployments (expand-and-contract pattern)
-- PodDisruptionBudget prevents K8s from evicting too many pods during node maintenance
+- Rolling updates can cause mixed-version traffic during transition - ensure backward compatibility
+- Blue-green requires database migration strategy if schema changes
+- Canary requires good observability to detect issues at low traffic percentages
+- Feature flags accumulate technical debt if not cleaned up after rollout
+- Config rollback is as important as code rollback
 
 ## See Also
 
-- [[kubernetes-pods]] - pod lifecycle and probes
-- [[kubernetes-services]] - traffic routing to deployment versions
-- [[monitoring-observability]] - metrics for canary analysis
-- [[gitops]] - Argo Rollouts for GitOps-native progressive delivery
-- K8s Deployments: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
-- Argo Rollouts: https://argoproj.github.io/argo-rollouts/
+- [[sre-principles]] - error budgets driving deployment velocity
+- [[kubernetes-workloads]] - K8s deployment strategies
+- [[service-mesh-istio]] - traffic splitting for canary
+- [[helm-package-manager]] - versioned releases and rollbacks
+- [[gitops-and-argocd]] - automated deployments

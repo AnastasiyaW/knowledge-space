@@ -120,10 +120,10 @@ jobs:
         run: |
           valid_domains=(
             "algorithms" "architecture" "bi-analytics" "data-engineering"
-            "data-science" "devops" "ios-mobile" "java-spring" "kafka"
-            "linux-cli" "llm-agents" "nodejs" "php" "python" "rust"
-            "security" "seo-marketing" "sql-databases" "testing-qa"
-            "web-frontend" "misc" "contributing"
+            "data-science" "devops" "image-generation" "ios-mobile"
+            "java-spring" "kafka" "linux-cli" "llm-agents" "nodejs"
+            "php" "python" "rust" "security" "seo-marketing"
+            "sql-databases" "testing-qa" "web-frontend" "misc" "contributing"
           )
 
           for file in ${{ steps.changed.outputs.all_changed_files }}; do

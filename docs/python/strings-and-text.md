@@ -1,161 +1,128 @@
 ---
 title: Strings and Text Processing
-category: fundamentals
-tags: [python, strings, formatting, regex, encoding]
+category: concepts
+tags: [python, strings, formatting, encoding, bytes, unicode]
 ---
 
 # Strings and Text Processing
 
-Strings are immutable sequences of Unicode characters. Created with single `'hello'`, double `"hello"`, or triple `'''multiline'''` quotes.
+Python strings are immutable sequences of Unicode characters. They support indexing, slicing, and a rich set of methods for text manipulation. Understanding the distinction between `str` (text) and `bytes` (binary data) is essential for file I/O and network programming.
 
-## Indexing and Slicing
+## Key Facts
 
+- Strings are immutable - cannot do `s[0] = 'h'`, must create new string
+- Single `'hello'`, double `"hello"`, and triple `'''multi\nline'''` quotes all create strings
+- f-strings (Python 3.6+) are the recommended formatting method
+- `str` is Unicode text; `bytes` is raw binary data prefixed with `b"..."`
+- UTF-8 is the modern standard encoding; always specify encoding explicitly in file I/O
+
+## Patterns
+
+### Indexing and Slicing
 ```python
 s = "Hello World"
-s[0]        # 'H' (first character)
-s[-1]       # 'd' (last character)
-s[0:5]      # 'Hello' (start:stop, stop exclusive)
-s[6:]       # 'World' (from index 6 to end)
-s[:5]       # 'Hello' (from start to index 5)
-s[::2]      # 'HloWrd' (every 2nd character)
+s[0]        # 'H' (first)
+s[-1]       # 'd' (last)
+s[0:5]      # 'Hello' (stop exclusive)
+s[6:]       # 'World'
+s[:5]       # 'Hello'
+s[::2]      # 'HloWrd' (every 2nd)
 s[::-1]     # 'dlroW olleH' (reversed)
 ```
 
-Slice syntax: `s[start:stop:step]`. Start defaults to 0, stop to len, step to 1.
-
-## Essential Methods
-
+### Essential String Methods
 ```python
-s.upper() / s.lower() / s.title()
-s.strip() / s.lstrip() / s.rstrip()     # remove whitespace
-s.split()                                # ['Hello', 'World']
-s.split(',')                             # split by delimiter
-','.join(['a', 'b'])                     # 'a,b'
-s.replace('o', '0')                      # 'Hell0 W0rld'
-s.find('World')                          # 6 (-1 if not found)
-s.count('l')                             # 3
-s.startswith('He') / s.endswith('ld')    # True
-s.isdigit() / s.isalpha() / s.isalnum()
-len(s)                                   # 11
+s.upper()              # 'HELLO WORLD'
+s.lower()              # 'hello world'
+s.strip()              # remove whitespace both ends
+s.split()              # ['Hello', 'World']
+s.split(',')           # split by delimiter
+','.join(['a','b'])    # 'a,b'
+s.replace('o', '0')    # 'Hell0 W0rld'
+s.find('World')        # 6 (-1 if not found)
+s.count('l')           # 3
+s.startswith('He')     # True
+s.endswith('ld')       # True
+s.isdigit()            # False
+len(s)                 # 11
 ```
 
-## String Formatting
-
+### String Formatting
 ```python
 name, age = "Alice", 30
 
-# f-strings (recommended, Python 3.6+)
+# f-strings (recommended)
 f"Name: {name}, Age: {age}"
 f"Price: {19.99:.2f}"         # 'Price: 19.99'
 f"{'centered':^20}"           # '      centered      '
 f"{1000000:,}"                # '1,000,000'
 
-# .format() method
+# .format()
 "Name: {}, Age: {}".format(name, age)
 
 # % formatting (legacy)
 "Name: %s, Age: %d" % (name, age)
 ```
 
-## String Checking
-
+### Checking Methods
 ```python
 s.isdigit()    # all characters are digits
-s.isnumeric()  # broader (includes unicode numerals)
-s.isalpha()    # all alphabetic
+s.isalpha()    # all characters are alphabetic
 s.isalnum()    # all alphanumeric
 s.isspace()    # all whitespace
+s.islower()    # all lowercase
+s.isupper()    # all uppercase
 ```
 
-## Encodings
-
+### Bytes and Encoding
 ```python
 text = "Hello"
 encoded = text.encode('utf-8')     # b'Hello'
 decoded = encoded.decode('utf-8')  # 'Hello'
 
-# Cyrillic
-"Привет".encode('utf-8')   # 2 bytes per char
-"Привет".encode('cp1251')  # 1 byte per char
+# Cyrillic: UTF-8 uses 2 bytes/char, CP1251 uses 1 byte/char
+cyrillic = "Привет"
+cyrillic.encode('utf-8')    # b'\xd0\x9f\xd1\x80...'
+cyrillic.encode('cp1251')   # b'\xcf\xf0...'
 ```
 
-**Common encodings**: ASCII (7-bit, 128 chars), CP1251 (Cyrillic, 1 byte/char), UTF-8 (1-4 bytes, universal). UTF-8 is the modern standard.
-
-`UnicodeDecodeError` means wrong encoding - try `encoding='cp1251'` or `encoding='latin-1'`.
-
-## Regular Expressions
-
+### Input and Command-Line Arguments
 ```python
-import re
+# Interactive input
+name = input("Enter name: ")       # always returns str
+age = int(input("Enter age: "))    # must convert manually
 
-re.search(r'\d+', 'abc 123')        # finds '123' anywhere
-re.match(r'\d+', '123 abc')         # match at beginning only
-re.fullmatch(r'\d+', '123')         # entire string must match
-re.findall(r'\d+', 'a1 b22 c333')   # ['1', '22', '333']
-re.sub(r'\s+', ' ', 'a  b   c')     # 'a b c'
-re.split(r'[,;.]', 'a,b;c.d')       # ['a', 'b', 'c', 'd']
+# Command-line arguments
+import sys
+sys.argv[0]  # script name
+sys.argv[1]  # first argument (always str!)
 ```
 
-### Pattern Syntax
-
-| Pattern | Matches |
-|---------|---------|
-| `.` | Any char except newline |
-| `\d` / `\D` | Digit / non-digit |
-| `\w` / `\W` | Word char / non-word |
-| `\s` / `\S` | Whitespace / non-whitespace |
-| `\b` | Word boundary |
-| `[abc]` | Character set |
-| `[^abc]` | Negated set |
-| `*` / `+` / `?` | 0+, 1+, 0-1 (greedy) |
-| `*?` / `+?` | Lazy versions |
-| `{n,m}` | Between n and m |
-| `^` / `$` | Start / end of string |
-| `(...)` | Capturing group |
-| `(?:...)` | Non-capturing group |
-
-### Greedy vs Lazy
-
+### Input Validation
 ```python
-re.findall(r'<B>.*</B>', '<B>a</B> and <B>b</B>')    # greedy: one match
-re.findall(r'<B>.*?</B>', '<B>a</B> and <B>b</B>')   # lazy: two matches
+# EAFP approach (preferred)
+try:
+    num = int(input("Number: "))
+except ValueError:
+    print("Not a valid number")
+
+# Check before converting
+text = input("Number: ")
+if text.isnumeric():   # digits only, no negatives/floats
+    num = int(text)
 ```
-
-### Match Object
-
-```python
-m = re.search(r'(\d+)-(\d+)', 'tel: 555-1234')
-m.group()    # '555-1234'
-m.group(1)   # '555'
-m.group(2)   # '1234'
-m.span()     # (5, 13)
-```
-
-### Flags
-
-`re.I` (case-insensitive), `re.M` (multiline `^`/`$`), `re.S` (`.` matches newline), `re.X` (verbose with comments). Combine with `|`.
-
-### Common Patterns
-
-```python
-r'[\w.-]+@[\w.-]+\.\w+'           # email (simplified)
-r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'  # IP address
-r'https?://[\w./\-?=&#]+'        # URL
-r'#[0-9A-Fa-f]{6}'               # hex color
-```
-
-Always use raw strings `r'...'` for regex patterns. Pre-compile with `re.compile()` when reusing patterns.
 
 ## Gotchas
 
-- Strings are immutable - `s[0] = 'h'` raises TypeError
-- `"10" * 4` = `"10101010"` (repetition, not multiplication)
-- Always use `r'...'` raw strings for regex to avoid double-escaping
-- `str.split()` with no args splits on any whitespace and strips empty strings; `str.split(' ')` splits only on spaces and keeps empty strings
-- `re.findall()` with groups returns groups, not full matches
+- `"10" * 4` produces `"10101010"`, not `40` - string repetition vs arithmetic
+- `sys.argv` values are always strings - must convert with `int()`/`float()`
+- `str.split()` with no args splits on any whitespace and strips empties; `str.split(' ')` splits on single space only
+- `isnumeric()` doesn't handle negatives or floats - use try/except for robust validation
+- `UnicodeDecodeError` means wrong encoding - try `'cp1252'` or `'latin-1'` as alternatives
+- String concatenation with `+=` in a loop is O(n^2) - use `''.join(parts)` instead
 
 ## See Also
 
-- [[variables-types-operators]] - type conversion, truthiness
-- [[file-io-and-serialization]] - reading/writing text files
-- [[stdlib-essentials]] - collections.Counter for string analysis
+- [[variables-types-operators]] - type system basics
+- [[regular-expressions]] - pattern matching with re module
+- [[file-io]] - text file encoding

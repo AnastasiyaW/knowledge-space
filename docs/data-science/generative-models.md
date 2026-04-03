@@ -1,141 +1,84 @@
 ---
 title: Generative Models
-category: deep-learning
-tags: [gan, vae, autoencoder, diffusion, generative, pytorch, deep-learning]
+category: models
+tags: [data-science, deep-learning, gan, vae, diffusion, generative]
 ---
 
 # Generative Models
 
-Learn to generate new data samples that resemble the training distribution. GANs use adversarial training (generator vs. discriminator); VAEs use variational inference with encoder-decoder; diffusion models iteratively denoise random noise. Foundation of modern image generation, data augmentation, and anomaly detection.
+Models that learn to generate new data samples from a learned distribution. From GANs to diffusion models - the technology behind image generation, style transfer, and data augmentation.
 
-## Key Facts
+## GANs (Generative Adversarial Networks)
 
-- **Autoencoder**: encoder compresses input to latent vector, decoder reconstructs; learns compressed representation; not truly generative (latent space not continuous)
-- **VAE** (Variational Autoencoder): encoder outputs distribution parameters (mu, sigma), sample from it; regularized latent space enables generation; loss = reconstruction + KL divergence
-- **GAN** (Generative Adversarial Network): generator creates fake data, discriminator tries to distinguish real from fake; zero-sum game; when equilibrium reached, generator creates realistic data
-- **GAN training instability**: mode collapse (generator produces limited variety), vanishing gradients, oscillating loss; mitigations: WGAN-GP, spectral normalization, progressive growing
-- **Conditional GAN (cGAN)**: condition generation on class label or other input; enables controlled generation (pix2pix for image-to-image)
-- **Latent space**: compressed representation where each dimension captures a meaningful factor of variation; interpolation in latent space produces smooth transitions
-- **Diffusion models**: forward process adds noise step by step; reverse process learns to denoise; currently state-of-the-art for image generation (Stable Diffusion, DALL-E)
-- **FID** (Frechet Inception Distance): metric for generated image quality; lower is better; compares feature statistics of real vs generated images
-- **Reconstruction loss**: MSE (blurry) or perceptual loss (VGG features, sharper); choice affects output quality
-- VAE generates blurrier images than GAN but has stable training and meaningful latent space
-- Diffusion models produce highest quality but are slow (many denoising steps); speed improvements: DDIM, distillation, latent diffusion
+Two networks competing:
+- **Generator** G: creates fake samples from random noise
+- **Discriminator** D: distinguishes real from fake
 
-## Patterns
+Training: D tries to correctly classify, G tries to fool D. Adversarial game drives both to improve.
 
-```python
-import torch
-import torch.nn as nn
+### GAN Variants
 
-# Simple Autoencoder
-class Autoencoder(nn.Module):
-    def __init__(self, input_dim=784, latent_dim=32):
-        super().__init__()
-        self.encoder = nn.Sequential(
-            nn.Linear(input_dim, 256),
-            nn.ReLU(),
-            nn.Linear(256, latent_dim)
-        )
-        self.decoder = nn.Sequential(
-            nn.Linear(latent_dim, 256),
-            nn.ReLU(),
-            nn.Linear(256, input_dim),
-            nn.Sigmoid()
-        )
+| Variant | Key Idea |
+|---------|----------|
+| **Conditional GAN** | Generator and discriminator conditioned on class label |
+| **CycleGAN** | Unpaired image-to-image translation (A->B and B->A) |
+| **StyleGAN** | Style-based generator for high-quality face synthesis |
+| **Pix2Pix** | Paired image-to-image translation |
 
-    def forward(self, x):
-        z = self.encoder(x)
-        return self.decoder(z)
+### CycleGAN
+Learns bidirectional mapping without paired data. Applications: age progression, style transfer, domain adaptation.
 
-# VAE
-class VAE(nn.Module):
-    def __init__(self, input_dim=784, latent_dim=32):
-        super().__init__()
-        self.encoder = nn.Sequential(nn.Linear(input_dim, 256), nn.ReLU())
-        self.fc_mu = nn.Linear(256, latent_dim)
-        self.fc_logvar = nn.Linear(256, latent_dim)
-        self.decoder = nn.Sequential(
-            nn.Linear(latent_dim, 256), nn.ReLU(),
-            nn.Linear(256, input_dim), nn.Sigmoid()
-        )
+### GAN Challenges
+- **Mode collapse**: generator produces limited variety
+- **Training instability**: oscillations, failure to converge
+- **Catastrophic forgetting**: learning new categories erases old ones
+  - **Fix**: Generative Replay (replay old generated samples during training)
+  - **Fix**: EWC (Elastic Weight Consolidation) - penalize changes to important weights
 
-    def reparameterize(self, mu, logvar):
-        std = torch.exp(0.5 * logvar)
-        eps = torch.randn_like(std)
-        return mu + eps * std
+## VAE (Variational Autoencoder)
 
-    def forward(self, x):
-        h = self.encoder(x)
-        mu, logvar = self.fc_mu(h), self.fc_logvar(h)
-        z = self.reparameterize(mu, logvar)
-        recon = self.decoder(z)
-        return recon, mu, logvar
+Encoder maps input to latent distribution (mean + variance), sample from it, decoder reconstructs.
 
-def vae_loss(recon_x, x, mu, logvar):
-    recon_loss = nn.functional.binary_cross_entropy(recon_x, x, reduction='sum')
-    kl_loss = -0.5 * torch.sum(1 + logvar - mu.pow(2) - logvar.exp())
-    return recon_loss + kl_loss
+**Loss** = reconstruction loss + KL divergence (keeps latent space close to N(0,1))
 
-# Simple GAN
-class Generator(nn.Module):
-    def __init__(self, noise_dim=100, output_dim=784):
-        super().__init__()
-        self.net = nn.Sequential(
-            nn.Linear(noise_dim, 256), nn.ReLU(),
-            nn.Linear(256, 512), nn.ReLU(),
-            nn.Linear(512, output_dim), nn.Tanh()
-        )
-    def forward(self, z):
-        return self.net(z)
+**Advantages over GAN**: stable training, smooth latent space interpolation, explicit density model.
+**Disadvantage**: outputs tend to be blurrier than GANs.
 
-class Discriminator(nn.Module):
-    def __init__(self, input_dim=784):
-        super().__init__()
-        self.net = nn.Sequential(
-            nn.Linear(input_dim, 512), nn.LeakyReLU(0.2),
-            nn.Linear(512, 256), nn.LeakyReLU(0.2),
-            nn.Linear(256, 1), nn.Sigmoid()
-        )
-    def forward(self, x):
-        return self.net(x)
+## Diffusion Models
 
-# GAN training loop (simplified)
-G = Generator()
-D = Discriminator()
-opt_G = torch.optim.Adam(G.parameters(), lr=2e-4, betas=(0.5, 0.999))
-opt_D = torch.optim.Adam(D.parameters(), lr=2e-4, betas=(0.5, 0.999))
-criterion = nn.BCELoss()
+Iteratively denoise from pure Gaussian noise to generate samples. Current state-of-the-art for image quality.
 
-for epoch in range(epochs):
-    for real_data in dataloader:
-        batch_size = real_data.size(0)
-        # Train Discriminator
-        z = torch.randn(batch_size, 100)
-        fake = G(z).detach()
-        d_loss = criterion(D(real_data), torch.ones(batch_size, 1)) + \
-                 criterion(D(fake), torch.zeros(batch_size, 1))
-        opt_D.zero_grad(); d_loss.backward(); opt_D.step()
+**Forward process**: gradually add noise to data over T steps.
+**Reverse process**: learn to denoise at each step. Neural network predicts noise to subtract.
 
-        # Train Generator
-        z = torch.randn(batch_size, 100)
-        g_loss = criterion(D(G(z)), torch.ones(batch_size, 1))
-        opt_G.zero_grad(); g_loss.backward(); opt_G.step()
-```
+**Key models**: DDPM, Stable Diffusion, DALL-E, Midjourney.
+
+**Advantages**: superior sample quality, stable training, flexible conditioning.
+**Disadvantage**: slow generation (many denoising steps), though distillation methods help.
+
+## 3D Generative
+
+- **NeRF** (Neural Radiance Fields): learn 3D scene from 2D images, render novel views
+- **Point cloud generation**: PointNet-based generative models
+- **3D-aware GANs**: generate 3D-consistent images
+
+## Applications
+
+- **Image generation**: faces, art, product images
+- **Data augmentation**: generate training samples for rare classes
+- **Style transfer**: apply artistic style to photos
+- **Super-resolution**: upscale low-resolution images
+- **Inpainting**: fill missing regions in images
+- **Text-to-image**: generate images from text descriptions
 
 ## Gotchas
-
-- GAN discriminator loss should stay around 0.5 (roughly even game); if D loss drops to 0, generator gets no useful gradients
-- VAE `reparameterize` trick is necessary for backpropagation through sampling; sampling is not differentiable, but reparameterization is
-- GAN training: use Adam with betas=(0.5, 0.999), NOT default (0.9, 0.999); train D more often than G (1:1 or 2:1)
-- Autoencoder != generative model; interpolating in autoencoder latent space produces artifacts (gaps between training points)
-- KL divergence weight in VAE can be annealed: start with beta=0 (reconstruction focus), gradually increase to 1 (regularize latent space)
-- FID computation requires at minimum ~10K generated samples for reliable estimate
+- GAN training requires careful hyperparameter tuning and monitoring
+- Generated images can contain artifacts (extra fingers, text distortion)
+- Evaluation is hard - FID score is standard but imperfect
+- Copyright and ethical concerns with training data
+- Diffusion models need significant GPU memory and time for generation
 
 ## See Also
-
-- [[neural-network-fundamentals]] - generator and discriminator are neural networks
-- [[convolutional-neural-networks]] - convolutional generators (DCGAN) for image generation
-- [[loss-functions-and-regularization]] - adversarial loss, reconstruction loss, KL divergence
-- [[probability-distributions]] - VAEs explicitly model data distributions
-- PyTorch tutorials (DCGAN): https://pytorch.org/tutorials/beginner/dcgan_faces_tutorial.html
+- [[cnn-computer-vision]] - CNN architectures used in generators
+- [[neural-networks]] - training fundamentals
+- [[transfer-learning]] - fine-tuning generative models

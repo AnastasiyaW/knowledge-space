@@ -1,68 +1,72 @@
 ---
-title: DevOps & Infrastructure - Knowledge Base Index
+title: DevOps & Infrastructure
 type: MOC
 ---
-# DevOps & Infrastructure - Knowledge Base
 
-Reference knowledge base for containers, orchestration, CI/CD, cloud platforms, IaC, SRE, and observability.
+# DevOps & Infrastructure
 
-## Containers
+Comprehensive reference covering Docker, Kubernetes, CI/CD, Terraform, cloud platforms, monitoring, SRE practices, and data center networking.
 
-- [[docker-images-containers]] - Dockerfile, multi-stage builds, image layers, registries, runtime
-- [[docker-compose]] - multi-container YAML definition, services, volumes, healthchecks
-- [[docker-networking]] - bridge, host, overlay networks, port mapping, DNS resolution
+## Containers & Docker
+
+- [[docker-fundamentals]] - containers, images, volumes, networking, lifecycle
+- [[dockerfile-and-image-building]] - Dockerfile syntax, multi-stage builds, optimization
+- [[docker-compose]] - multi-container orchestration, service discovery
+- [[docker-for-ml]] - ML-specific Docker patterns, JupyterLab, MLflow, Model Runner
 
 ## Kubernetes
 
-- [[kubernetes-pods]] - Pods, Deployments, ReplicaSets, StatefulSets, DaemonSets, kubectl
-- [[kubernetes-services]] - ClusterIP, NodePort, LoadBalancer, Ingress, DNS, traffic routing
-- [[kubernetes-config-secrets]] - ConfigMaps, Secrets, env vars, volume mounts, encryption at rest
-- [[helm-charts]] - chart structure, values, templating, repositories, releases, rollback
+- [[kubernetes-architecture]] - control plane, worker nodes, CNI, cluster deployment
+- [[kubernetes-workloads]] - Pods, Deployments, StatefulSets, DaemonSets, ConfigMaps, Secrets
+- [[kubernetes-services-and-networking]] - Services, Ingress, TLS, cert-manager, DNS
+- [[kubernetes-storage]] - PV, PVC, StorageClass, CSI drivers, cloud storage
+- [[kubernetes-resource-management]] - requests, limits, QoS, namespaces, quotas, HPA, autoscaling
+- [[kubernetes-on-aks]] - Azure AKS, ACR, Azure AD, monitoring, virtual nodes
+- [[kubernetes-on-eks]] - AWS EKS, ECR, EBS/EFS, ALB Ingress Controller
 
-## CI/CD & GitOps
+## Package Management & Templating
 
-- [[ci-cd-pipelines]] - GitHub Actions, GitLab CI, Jenkins, pipeline-as-code, artifacts
-- [[gitops]] - ArgoCD, FluxCD, pull-based deployment, drift detection, App of Apps
-- [[deployment-strategies]] - rolling update, blue-green, canary, Argo Rollouts, zero-downtime
+- [[helm-package-manager]] - charts, templates, hooks, releases, repositories, secrets
+
+## CI/CD & Automation
+
+- [[cicd-pipelines]] - GitHub Actions, Azure DevOps, pipeline stages, multi-environment
+- [[jenkins-automation]] - Jenkinsfile, shared libraries, Docker agents, credentials
+- [[gitops-and-argocd]] - ArgoCD, sync waves, app-of-apps, Sealed Secrets, Crossplane
 
 ## Infrastructure as Code
 
-- [[terraform-iac]] - HCL, providers, state, modules, plan/apply, remote backends
-- [[ansible-configuration]] - playbooks, roles, inventory, modules, idempotency, Jinja2
+- [[terraform-iac]] - HCL, state, modules, workspaces, cloud providers
+- [[ansible-configuration-management]] - playbooks, roles, inventory, idempotency
 
 ## Cloud Platforms
 
-- [[aws-core-services]] - EC2, S3, IAM, VPC, RDS, EKS, ECR, ELB, Route53
-- [[azure-aks]] - AKS, ACR, managed identity, node pools, Azure DevOps
+- [[aws-cloud-fundamentals]] - IAM, VPC, EC2, S3, CloudWatch, ECR, App Runner
+- [[container-registries]] - Docker Hub, ECR, ACR, GAR, Nexus
 
-## SRE & Operations
+## Monitoring & Observability
 
-- [[sre-sli-slo-sla]] - SLI/SLO/SLA, error budgets, DORA metrics, toil
-- [[monitoring-observability]] - Prometheus, Grafana, PromQL, alerting, USE/RED/Golden Signals
-- [[incident-management]] - on-call, severity levels, postmortems, runbooks, MTTR
+- [[monitoring-and-observability]] - Golden Signals, Prometheus, Grafana, Loki, Tempo, SLI/SLO/SLA
 
-## Architecture
+## SRE Practices
 
-- [[microservices-architecture]] - service design, API gateway, service mesh, circuit breaker, saga
+- [[sre-principles]] - culture, error budgets, toil, team models
+- [[sre-incident-management]] - on-call, postmortems, escalation, diagnostics
+- [[sre-automation-and-toil]] - automation maturity, tools, workflow automation
+- [[chaos-engineering-and-testing]] - chaos engineering, load testing, game days, resilience patterns
 
-## Quick Reference by Task
+## Deployment & Release
 
-| Task | Entry | Key Tools |
-|------|-------|-----------|
-| Build container image | [[docker-images-containers]] | `docker build`, Dockerfile |
-| Run multi-container app | [[docker-compose]] | `docker compose up` |
-| Deploy to Kubernetes | [[kubernetes-pods]] | `kubectl apply`, Deployment YAML |
-| Expose service externally | [[kubernetes-services]] | Service, Ingress |
-| Manage K8s config/secrets | [[kubernetes-config-secrets]] | ConfigMap, Secret |
-| Package K8s manifests | [[helm-charts]] | `helm install/upgrade` |
-| Automate build/test/deploy | [[ci-cd-pipelines]] | GitHub Actions, GitLab CI |
-| Git-driven deployments | [[gitops]] | ArgoCD, FluxCD |
-| Safe rollouts | [[deployment-strategies]] | Rolling, canary, blue-green |
-| Provision infrastructure | [[terraform-iac]] | `terraform plan/apply` |
-| Configure servers | [[ansible-configuration]] | `ansible-playbook` |
-| AWS infrastructure | [[aws-core-services]] | `aws` CLI, EC2, S3, EKS |
-| Azure Kubernetes | [[azure-aks]] | `az aks`, ACR |
-| Define reliability targets | [[sre-sli-slo-sla]] | SLO, error budget |
-| Monitor and alert | [[monitoring-observability]] | Prometheus, Grafana |
-| Handle incidents | [[incident-management]] | On-call, postmortem |
-| Design distributed systems | [[microservices-architecture]] | API gateway, service mesh |
+- [[deployment-strategies]] - rolling update, blue-green, canary, feature flags, 15-factor methodology
+- [[service-mesh-istio]] - Istio, Envoy, traffic management, mTLS, observability
+
+## Architecture Patterns
+
+- [[microservices-patterns]] - Spring Cloud, API Gateway, service discovery, event-driven, OAuth2
+- [[datacenter-network-design]] - CLOS/leaf-spine, VXLAN, EVPN, BGP, multi-site
+
+## Foundations
+
+- [[devops-culture-and-sdlc]] - DevOps principles, Agile/Scrum, SDLC, tools landscape
+- [[git-version-control]] - Git workflow, branching strategies, monorepo vs multirepo
+- [[linux-server-administration]] - filesystem, processes, networking, SSH, systemd, scripting

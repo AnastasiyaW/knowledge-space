@@ -1,128 +1,192 @@
 ---
 title: React Components and JSX
-category: react
-tags: [react, jsx, components, props, children, composition, conditional-rendering]
+category: concepts
+tags: [web-frontend, react, jsx, components, props]
 ---
 
 # React Components and JSX
 
-## Key Facts
+React builds UIs from composable components. Each component is a function that returns JSX describing what to render.
 
-- **JSX** is syntactic sugar for `React.createElement(type, props, children)`; compiles to JavaScript
-- **Function components** are the standard; class components are legacy (still work but not recommended)
-- **Props** are read-only inputs passed from parent to child; destructure in function signature
-- `children` is a special prop for content between opening and closing tags
-- **Conditional rendering**: ternary `{cond ? <A/> : <B/>}`, short-circuit `{cond && <A/>}`, early return
-- **Lists**: `{items.map(item => <Item key={item.id} />)}` - `key` must be stable, unique identifier
-- **Fragment**: `<></>` or `<React.Fragment>` groups elements without adding a DOM node
-- Component names must be **PascalCase** (`MyComponent`); lowercase = HTML element
-- `className` instead of `class`; `htmlFor` instead of `for`; all event handlers are camelCase
-- Related: [[react-hooks]], [[react-state-management]], [[typescript-type-system]]
+## Project Setup (Vite)
 
-## Patterns
-
-### Function Component with TypeScript
-
-```tsx
-interface ButtonProps {
-  variant?: "primary" | "secondary";
-  size?: "sm" | "md" | "lg";
-  disabled?: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}
-
-function Button({
-  variant = "primary",
-  size = "md",
-  disabled = false,
-  onClick,
-  children,
-}: ButtonProps) {
-  return (
-    <button
-      className={`btn btn-${variant} btn-${size}`}
-      disabled={disabled}
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  );
-}
+```bash
+npm create vite@latest my-app -- --template react
+cd my-app && npm install && npm run dev
 ```
 
-### Conditional Rendering
-
-```tsx
-function UserProfile({ user }: { user: User | null }) {
-  // Early return
-  if (!user) return <p>Please log in</p>;
-
-  return (
-    <div>
-      <h2>{user.name}</h2>
-      {/* Short-circuit */}
-      {user.isAdmin && <Badge text="Admin" />}
-      {/* Ternary */}
-      {user.avatar ? (
-        <img src={user.avatar} alt={user.name} />
-      ) : (
-        <DefaultAvatar />
-      )}
-    </div>
-  );
-}
+```
+src/
+  components/     # Reusable components
+  pages/          # Page-level components
+  App.jsx         # Root component
+  main.jsx        # Entry (renders App into DOM)
 ```
 
-### List Rendering
+### Entry Point
+```jsx
+import ReactDOM from 'react-dom/client';
+import App from './App';
 
-```tsx
-function TodoList({ todos }: { todos: Todo[] }) {
-  return (
-    <ul>
-      {todos.map((todo) => (
-        <li key={todo.id} className={todo.done ? "completed" : ""}>
-          {todo.text}
-        </li>
-      ))}
-    </ul>
-  );
-}
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
 ```
 
-### Composition Patterns
+`StrictMode` double-renders in dev to detect side effects. No effect in production.
 
-```tsx
-// Slot pattern via props
-function Card({ header, children, footer }: {
-  header: React.ReactNode;
-  children: React.ReactNode;
-  footer?: React.ReactNode;
-}) {
+## JSX Rules
+
+```jsx
+// 1. Single root element (or Fragment)
+return (
+  <>
+    <h1>Title</h1>
+    <p>Text</p>
+  </>
+);
+
+// 2. All tags must close
+<img src="photo.jpg" alt="" />
+<input type="text" />
+
+// 3. HTML differences
+<div className="card">          {/* className, not class */}
+<label htmlFor="email">         {/* htmlFor, not for */}
+<div onClick={fn} tabIndex={0}> {/* camelCase attributes */}
+
+// 4. JS expressions in {}
+<h1>{user.name}</h1>
+<p>{isActive ? "Active" : "Inactive"}</p>
+<p>{items.length > 0 && "Has items"}</p>
+
+// 5. Inline styles as objects
+<div style={{ backgroundColor: "blue", fontSize: "16px" }}>
+```
+
+### Rendering Lists
+```jsx
+{items.map(item => (
+  <li key={item.id}>{item.name}</li>
+))}
+```
+
+**key prop**: must be unique among siblings. Use stable IDs, not array index (breaks on reorder). React uses keys for efficient DOM updates.
+
+## Functional Components
+
+```jsx
+function Card({ title, description }) {
   return (
     <div className="card">
-      <div className="card-header">{header}</div>
-      <div className="card-body">{children}</div>
-      {footer && <div className="card-footer">{footer}</div>}
+      <h2>{title}</h2>
+      <p>{description}</p>
+    </div>
+  );
+}
+```
+
+Rules: name starts uppercase, returns JSX (or null), one component per file (convention).
+
+## Props
+
+Props are read-only data passed parent -> child.
+
+```jsx
+// Parent
+<Card
+  title="React"
+  description="Learn components"
+  isNew={true}
+  tags={["react", "frontend"]}
+  onClick={() => console.log("clicked")}
+/>
+
+// Child (destructured)
+function Card({ title, description, isNew, tags, onClick }) {
+  return (
+    <div onClick={onClick}>
+      <h2>{title}</h2>
+      <p>{description}</p>
+      {isNew && <span className="badge">New</span>}
+    </div>
+  );
+}
+```
+
+### Default Props
+```jsx
+function Button({ variant = "primary", size = "md", children }) {
+  return <button className={`btn-${variant} btn-${size}`}>{children}</button>;
+}
+```
+
+### children Prop
+```jsx
+function Container({ children }) {
+  return <div className="container">{children}</div>;
+}
+
+<Container>
+  <h1>Title</h1>
+  <p>Content between tags becomes children</p>
+</Container>
+```
+
+### Props are Read-Only
+Never modify props. Data flows one direction: parent -> child. To change data, use state and pass callbacks.
+
+## Component Composition
+
+```jsx
+function PageLayout({ header, sidebar, children }) {
+  return (
+    <div className="layout">
+      <header>{header}</header>
+      <aside>{sidebar}</aside>
+      <main>{children}</main>
     </div>
   );
 }
 
-// Usage
-<Card header={<h3>Title</h3>} footer={<Button onClick={save}>Save</Button>}>
-  <p>Card content here</p>
-</Card>
+<PageLayout header={<Nav />} sidebar={<Filters />}>
+  <ProductList />
+</PageLayout>
 ```
+
+Composition over inheritance - React components compose by nesting, not extending.
+
+## Conditional Rendering
+
+```jsx
+// Ternary
+{isLoggedIn ? <Dashboard /> : <Login />}
+
+// Logical AND
+{hasItems && <ItemList items={items} />}
+
+// Early return
+function Profile({ user }) {
+  if (!user) return <p>Loading...</p>;
+  return <h1>{user.name}</h1>;
+}
+```
+
+**Gotcha with `&&`**: `{0 && <Component />}` renders `0`. Use `{count > 0 && ...}` or ternary.
 
 ## Gotchas
 
-- `{0 && <Component />}` renders `0` in the DOM; use `{items.length > 0 && ...}` or `{!!count && ...}`
-- `key` must be on the outermost element returned by `map`; using array index as key causes bugs with reordering/deletion
-- JSX expressions must return a single root element; wrap in `<>...</>` fragment
-- `style` prop takes an object, not a string: `style={{ color: "red", fontSize: "16px" }}`
-- React event handlers receive `SyntheticEvent`, not native DOM event; access native via `e.nativeEvent`
+- **Uppercase names required**: `<card />` is HTML element, `<Card />` is component
+- **key in lists**: missing or index-based keys cause rendering bugs
+- **`&&` with 0**: falsy number 0 renders in JSX, unlike other falsy values
+- **Props are immutable**: never `props.value = newValue`
+- **Spread props carefully**: `<div {...props}>` may pass unexpected attributes to DOM
 
 ## See Also
 
-- [React: Components and Props](https://react.dev/learn/passing-props-to-a-component)
-- [React: Conditional Rendering](https://react.dev/learn/conditional-rendering)
+- [[react-state-and-hooks]] - useState, useEffect, custom hooks
+- [[react-rendering-internals]] - Virtual DOM, reconciliation, keys
+- [[react-styling-approaches]] - CSS Modules, Tailwind in React
+- [[typescript-advanced]] - Typing React components

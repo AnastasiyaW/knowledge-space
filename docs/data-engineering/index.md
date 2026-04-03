@@ -5,35 +5,61 @@ type: MOC
 
 # Data Engineering
 
-## Pipeline Patterns
-- [[etl-and-elt]] - ETL vs ELT, incremental loads, CDC, idempotency, orchestrator integration
-- [[data-quality]] - Schema validation, row/aggregate tests, dbt tests, Great Expectations, observability
+Knowledge base covering ETL/ELT, data pipelines, data warehousing, distributed computing, and the modern data stack.
 
-## Storage & Architecture
-- [[data-warehouse]] - DWH concepts, OLAP vs OLTP, layered architecture, cloud vs on-prem
-- [[data-lake]] - Raw data storage, zones pattern, lakehouse (Delta/Iceberg), schema-on-read
-- [[data-platform-architecture]] - End-to-end platform design, Lambda/Kappa, ML lifecycle, technology stacks
+## Concepts and Architecture
 
-## Data Modeling
-- [[data-modeling]] - Star/snowflake schema, fact/dimension tables, SCD types, surrogate keys
-- [[normalization]] - Normal forms (1NF-3NF-BCNF), denormalization trade-offs, OLTP vs OLAP design
+- [[etl-elt-pipelines]] - ETL vs ELT, pipeline design, processing modes, idempotency
+- [[dwh-architecture]] - OLTP vs OLAP, DWH layers, Kimball vs Inmon, platform evolution
+- [[data-modeling]] - normalization (1NF-3NF), ER diagrams, keys, deduplication patterns
+- [[dimensional-modeling]] - star/snowflake schema, fact/dimension tables, Kimball design
+- [[data-vault]] - Hub/Link/Satellite, Data Vault 2.0, anchor modeling
+- [[scd-patterns]] - slowly changing dimensions, SCD2 merge logic
+- [[data-lake-lakehouse]] - data lake, lakehouse, Delta Lake, Iceberg, Hudi
+- [[data-quality]] - quality dimensions, observability, monitoring, alerting
+- [[data-governance-catalog]] - DAMA DMBOK, data catalog, GDPR compliance
+- [[data-lineage-metadata]] - lineage types, metadata categories, Prometheus+Grafana
+- [[file-formats]] - Parquet, ORC, Avro, CSV comparison
 
 ## Distributed Processing
-- [[hadoop-ecosystem]] - HDFS, YARN, MapReduce, Hive Metastore, ecosystem overview
-- [[hdfs]] - NameNode/DataNode, replication, block storage, HA architecture, small files problem
-- [[mapreduce]] - Map/Shuffle/Reduce phases, combiners, partitioners, key-value model
-- [[apache-spark]] - SparkSession, RDD, DataFrame, lazy evaluation, deploy modes, spark-submit
-- [[spark-sql-and-dataframes]] - SQL API, DataFrame operations, Catalyst optimizer, UDFs, window functions
-- [[spark-ml]] - Pipeline API, Transformer/Estimator, VectorAssembler, cross-validation, model persistence
 
-## Orchestration
-- [[apache-airflow]] - DAGs, operators, sensors, XCom, scheduling, Jinja templating, execution_date
+- [[apache-spark-core]] - Spark architecture, execution model, Catalyst optimizer
+- [[pyspark-dataframe-api]] - DataFrame operations, schemas, I/O, Spark SQL
+- [[spark-optimization]] - partitioning, skew handling, broadcast joins, AQE
+- [[spark-streaming]] - Structured Streaming, micro-batch, DStreams
+- [[apache-kafka]] - event streaming, PubSub, topics, consumer groups
+- [[mapreduce]] - Map/Reduce paradigm, shuffle, Hadoop Streaming
 
-## Databases for DE
-- [[clickhouse]] - Column-oriented OLAP, MergeTree engines, array functions, LowCardinality, batch inserts
-- [[postgresql-for-data-engineering]] - Indexes, partitioning, PL/pgSQL, COPY, query optimization, MERGE
-- [[greenplum-and-mpp]] - MPP architecture, distribution policies, gpfdist, resource management
+## Storage and Databases
 
-## Infrastructure
-- [[data-formats]] - Parquet, ORC, Avro, CSV, JSON - comparison, compression, predicate pushdown
-- [[partitioning-and-sharding]] - Range/list/hash partitioning, sharding strategies, replication, co-location
+- [[hadoop-hdfs]] - HDFS architecture, blocks, replication, small files problem
+- [[apache-hive]] - SQL-on-Hadoop, Metastore, join strategies (MapJoin, SMB)
+- [[hbase]] - columnar NoSQL, row key, column families, versioning
+- [[clickhouse]] - columnar OLAP, partitions, granules, primary key, functions
+- [[clickhouse-engines]] - MergeTree family, compression, skip indexes
+- [[greenplum-mpp]] - MPP architecture, distribution, motion operators
+- [[postgresql-administration]] - transactions, MVCC, PL/pgSQL, query optimization
+- [[mongodb-nosql]] - document store, CAP theorem, aggregation pipelines
+
+## Infrastructure and Tools
+
+- [[apache-airflow]] - DAG orchestration, operators, TaskFlow API, XCom
+- [[cloud-data-platforms]] - AWS/GCP/Azure, Snowflake, BigQuery, S3
+- [[docker-for-de]] - containers, Dockerfile, docker-compose
+- [[kubernetes-for-de]] - K8s architecture, Spark on K8s, Helm
+- [[yarn-resource-management]] - YARN vs JobTracker, queues, schedulers
+
+## Cross-Cutting
+
+- [[mlops-feature-store]] - MLflow, feature stores, model serving, CRISP-DM
+- [[sql-for-de]] - window functions, CTEs, recursive queries, optimization
+- [[python-for-de]] - database access, Pandas, functional programming, testing
+
+## Cross-Topic Links
+
+- [[sql-databases/index]] - deep SQL reference
+- [[python/index]] - Python language fundamentals
+- [[devops/index]] - CI/CD, infrastructure as code
+- [[architecture/index]] - system design patterns
+- [[data-science/index]] - ML and analytics
+- [[bi-analytics/index]] - BI tools and dashboards

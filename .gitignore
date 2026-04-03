@@ -3,3 +3,21 @@ site/
 __pycache__/
 *.pyc
 .env
+
+# Internal documentation (SEO strategy, internal plans, etc.)
+.internal/
+
+# Wrangler cache (Cloudflare Pages deploy tool)
+.wrangler/
+
+# Claude project memory (contains local paths)
+.claude/projects/
+.claude/HANDOFF.md
+.claude/handoff-history/
+
+# Old root-level article dirs (migrated to docs/)
+/architecture/
+/python/
+/seo-marketing/
+/sql-databases/
+/web-frontend/

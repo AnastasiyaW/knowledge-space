@@ -1,148 +1,270 @@
 ---
-title: Terraform & Infrastructure as Code
-category: iac
-tags: [terraform, iac, hcl, providers, state, modules, plan, apply]
+title: Terraform Infrastructure as Code
+category: concepts
+tags: [devops, terraform, iac, hcl, state, modules, providers]
 ---
-# Terraform & Infrastructure as Code
 
-HashiCorp Terraform: declarative infrastructure provisioning across cloud providers using HCL.
+# Terraform Infrastructure as Code
 
-## Key Facts
+Terraform is a declarative IaC tool using HCL (HashiCorp Configuration Language). It manages infrastructure across AWS, Azure, GCP, Kubernetes, and hundreds of other providers through a plan-before-apply workflow.
 
-- **IaC** = managing infrastructure through code files instead of manual processes
-- Terraform uses **HCL** (HashiCorp Configuration Language) - declarative, not imperative
-- Core workflow: `terraform init` -> `terraform plan` -> `terraform apply` -> `terraform destroy`
-- **State file** (`terraform.tfstate`) tracks real-world resource mapping; MUST be stored remotely for teams
-- **Providers** = plugins for each platform (AWS, Azure, GCP, K8s, Docker, etc.)
-- **Resources** = infrastructure objects (EC2 instance, S3 bucket, DNS record)
-- **Data sources** = read-only queries to existing infrastructure
-- **Modules** = reusable groups of resources; local or from Terraform Registry
-- **Variables** = inputs (`variable` block); **Outputs** = exported values (`output` block)
-- Plan shows diff before applying; `+` = create, `-` = destroy, `~` = modify
-- [[aws-core-services]] and [[azure-aks]] are common Terraform targets
-- [[ci-cd-pipelines]] automate Terraform plan/apply in CI
-- State locking prevents concurrent modifications (S3 + DynamoDB for AWS backend)
+## Core Workflow
 
-## Patterns
+```bash
+terraform init          # download providers, initialize backend
+terraform validate      # syntax check
+terraform fmt           # auto-format files
+terraform plan          # preview changes (CRUD without R)
+terraform apply         # execute changes
+terraform destroy       # teardown all resources
+```
+
+## HCL Syntax
+
+### Resources
 
 ```hcl
-# providers.tf
-terraform {
-  required_version = ">= 1.5.0"
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.0"
-    }
+resource "aws_instance" "web" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = var.instance_type
+  tags = merge(local.common_tags, { Name = "web-server" })
+}
+```
+
+### Variables
+
+```hcl
+variable "instance_type" {
+  type        = string
+  default     = "t2.micro"
+  description = "EC2 instance type"
+}
+
+variable "tags"    { type = map(string) }
+variable "cidrs"   { type = list(string) }
+variable "config"  { type = object({ name = string, port = number }) }
+```
+
+### Variable Input Priority (highest to lowest)
+
+1. `-var "name=value"` (CLI)
+2. `-var-file="dev.tfvars"` (explicit file)
+3. `terraform.tfvars` or `*.auto.tfvars` (auto-loaded)
+4. `TF_VAR_name` (environment variable)
+5. `default` value
+6. Interactive prompt
+
+### Outputs
+
+```hcl
+output "public_ip" {
+  value       = aws_instance.web.public_ip
+  description = "Public IP of web server"
+}
+```
+
+### Data Sources
+
+```hcl
+data "aws_ami" "ubuntu" {
+  most_recent = true
+  owners      = ["099720109477"]
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-*"]
   }
+}
+```
+
+### Locals
+
+```hcl
+locals {
+  common_tags = {
+    Environment = var.environment
+    Project     = "myproject"
+    ManagedBy   = "terraform"
+  }
+}
+```
+
+### Conditionals and Loops
+
+```hcl
+# Conditional
+instance_type = var.environment == "prod" ? "t3.large" : "t3.micro"
+
+# Count
+resource "aws_instance" "server" {
+  count         = 3
+  tags = { Name = "server-${count.index}" }
+}
+
+# For Each
+resource "aws_instance" "server" {
+  for_each = toset(["web", "api", "worker"])
+  tags = { Name = "server-${each.key}" }
+}
+```
+
+## File Structure
+
+```
+project/
+  main.tf              # resource definitions
+  variables.tf         # input variable declarations
+  outputs.tf           # output values
+  providers.tf         # provider + terraform block
+  terraform.tfvars     # default values (auto-loaded)
+  dev.tfvars           # environment-specific
+  modules/
+    vpc/
+      main.tf
+      variables.tf
+      outputs.tf
+```
+
+## State Management
+
+### Remote State (production)
+
+```hcl
+# AWS S3 backend
+terraform {
   backend "s3" {
-    bucket         = "my-tf-state"
+    bucket         = "my-terraform-state"
     key            = "prod/terraform.tfstate"
     region         = "us-east-1"
-    dynamodb_table = "tf-locks"
+    dynamodb_table = "terraform-locks"   # state locking
     encrypt        = true
   }
 }
 
-provider "aws" {
-  region = var.aws_region
-}
-
-# variables.tf
-variable "aws_region" {
-  type    = string
-  default = "us-east-1"
-}
-
-variable "instance_type" {
-  type    = string
-  default = "t3.micro"
-}
-
-variable "environment" {
-  type = string
-  validation {
-    condition     = contains(["dev", "staging", "prod"], var.environment)
-    error_message = "Environment must be dev, staging, or prod."
+# Azure Storage backend
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "terraform-state-rg"
+    storage_account_name = "tfstateaccount"
+    container_name       = "tfstate"
+    key                  = "prod.terraform.tfstate"
   }
 }
+```
 
-# main.tf
+### State Commands
+
+```bash
+terraform state list
+terraform state show aws_instance.web
+terraform state rm aws_instance.web       # remove from state only
+terraform state mv old_name new_name
+terraform import aws_instance.web i-12345 # import existing
+terraform refresh                         # sync state with reality
+```
+
+**Never commit `.tfstate` to Git** - contains sensitive data.
+
+## Modules
+
+### Creating
+
+```hcl
+# modules/vpc/main.tf
 resource "aws_vpc" "main" {
-  cidr_block           = "10.0.0.0/16"
-  enable_dns_hostnames = true
-  tags = {
-    Name        = "${var.environment}-vpc"
-    Environment = var.environment
-  }
+  cidr_block = var.vpc_cidr
+}
+resource "aws_subnet" "public" {
+  count  = length(var.public_subnets)
+  vpc_id = aws_vpc.main.id
+  cidr_block = var.public_subnets[count.index]
+}
+
+# modules/vpc/outputs.tf
+output "vpc_id"     { value = aws_vpc.main.id }
+output "subnet_ids" { value = aws_subnet.public[*].id }
+```
+
+### Using
+
+```hcl
+module "vpc" {
+  source         = "./modules/vpc"
+  vpc_cidr       = "10.0.0.0/16"
+  public_subnets = ["10.0.1.0/24", "10.0.2.0/24"]
 }
 
 resource "aws_instance" "web" {
-  count         = 3
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = var.instance_type
-  subnet_id     = aws_subnet.public[count.index].id
-  tags = {
-    Name = "${var.environment}-web-${count.index}"
-  }
-}
-
-data "aws_ami" "ubuntu" {
-  most_recent = true
-  owners      = ["099720109477"]  # Canonical
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-*-22.04-amd64-server-*"]
-  }
-}
-
-# outputs.tf
-output "instance_ips" {
-  value = aws_instance.web[*].public_ip
+  subnet_id = module.vpc.subnet_ids[0]
 }
 ```
+
+### Module Sources
+
+```hcl
+source = "./modules/vpc"                            # local
+source = "git::https://github.com/org/module.git"   # Git
+source = "hashicorp/consul/aws"                     # Registry
+```
+
+## Workspaces
 
 ```bash
-# Workflow
-terraform init                         # download providers, init backend
-terraform plan                         # preview changes
-terraform plan -out=tfplan             # save plan to file
-terraform apply tfplan                 # apply saved plan
-terraform apply -auto-approve          # skip confirmation (CI only)
-terraform destroy                      # remove all resources
-
-# State management
-terraform state list                   # list resources in state
-terraform state show aws_instance.web  # show resource details
-terraform state mv                     # rename resource in state
-terraform import aws_instance.web i-123  # import existing resource
-
-# Workspace management (environment isolation)
-terraform workspace new staging
+terraform workspace new dev
 terraform workspace select prod
 terraform workspace list
-
-# Module usage
-terraform init -upgrade                # update module versions
-terraform get                          # download modules
 ```
+
+```hcl
+instance_type = terraform.workspace == "prod" ? "t3.large" : "t3.micro"
+```
+
+## Terraform in CI/CD Pipelines
+
+```yaml
+# Azure DevOps example
+- task: TerraformTaskV4@4
+  displayName: Terraform Init
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    backendServiceArm: 'azure-service-connection'
+
+- task: TerraformTaskV4@4
+  displayName: Terraform Plan
+  inputs:
+    command: 'plan'
+    commandOptions: '-var-file="dev.tfvars" -out=dev.plan'
+
+- task: TerraformTaskV4@4
+  displayName: Terraform Apply
+  inputs:
+    command: 'apply'
+    commandOptions: 'dev.plan'
+```
+
+## Best Practices
+
+1. **Remote state** with locking for team work
+2. **Separate state per environment** (dev/qa/prod)
+3. **Pin provider versions**: `version = "~> 5.0"`
+4. **Use modules** for reusable patterns
+5. **Never hardcode secrets** - use variables or vault
+6. **Plan before apply** - always review
+7. **Tag everything** for cost tracking
+8. **.gitignore**: `terraform.tfstate`, `*.tfstate.*`, `.terraform/`, sensitive `*.tfvars`
 
 ## Gotchas
 
-- **Never edit state file manually**; use `terraform state` commands or `terraform import`
-- State file contains secrets in plaintext; encrypt at rest (S3 encryption, Terraform Cloud)
-- `terraform destroy` is irreversible; always run `plan -destroy` first to review
-- Changing a resource attribute that forces replacement (e.g., AMI) will destroy + recreate - check plan carefully
-- `count` vs `for_each`: count uses index (removing middle item shifts all); `for_each` uses keys (stable references)
-- Provider version constraints: `~> 5.0` allows 5.x but not 6.0; pin in production
-- `terraform apply` without saved plan re-plans (state may have changed between plan and apply)
-- Circular dependencies cause errors; use `depends_on` for implicit dependencies Terraform cannot detect
+- State is the source of truth for Terraform - losing state means Terraform doesn't know about your infrastructure
+- `terraform destroy` with no target deletes EVERYTHING managed by that state
+- `terraform import` only imports to state - you still need to write the HCL
+- Terraform is verbose - Terragrunt helps with DRY
+- Changing provider version can cause breaking changes - always pin versions
 
 ## See Also
 
-- [[aws-core-services]] - AWS resources managed by Terraform
-- [[azure-aks]] - Azure Kubernetes via Terraform
-- [[ansible-configuration]] - configuration management (complements Terraform)
-- [[ci-cd-pipelines]] - automated Terraform pipelines
-- Terraform docs: https://developer.hashicorp.com/terraform/docs
-- Terraform Registry: https://registry.terraform.io/
+- [[aws-cloud-fundamentals]] - AWS resources managed by Terraform
+- [[kubernetes-on-aks]] - AKS provisioning with Terraform
+- [[cicd-pipelines]] - Terraform in pipelines
+- [[gitops-and-argocd]] - GitOps-native Terraform workflow
+- [[ansible-configuration-management]] - complementary tool for configuration

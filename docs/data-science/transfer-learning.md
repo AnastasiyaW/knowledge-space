@@ -1,117 +1,124 @@
 ---
 title: Transfer Learning
-category: deep-learning
-tags: [transfer-learning, fine-tuning, pretrained, data-augmentation, pytorch, computer-vision]
+category: techniques
+tags: [data-science, deep-learning, transfer-learning, fine-tuning, pretrained]
 ---
 
 # Transfer Learning
 
-Use a model pretrained on a large dataset (ImageNet, COCO, etc.) as starting point for a new task. Transfer learning is the default approach for computer vision and NLP when you have limited data. Two strategies: feature extraction (freeze backbone, train new head) and fine-tuning (unfreeze some/all layers). Closely tied to [[convolutional-neural-networks]] and [[neural-network-fundamentals]].
+Use knowledge from one task (source) to improve learning on another (target). The dominant paradigm in modern deep learning - almost never train from scratch.
 
-## Key Facts
+## Core Idea
 
-- **Pretrained model**: trained on large dataset (ImageNet: 1.4M images, 1000 classes); early layers learn universal features (edges, textures)
-- **Feature extraction**: freeze pretrained layers, replace and train only the classification head; fast, works with very small datasets (100-1000 samples)
-- **Fine-tuning**: unfreeze some/all pretrained layers and train with small learning rate; better accuracy but needs more data; risk of catastrophic forgetting
-- **Progressive unfreezing**: start with head only, then gradually unfreeze layers from top to bottom; more stable than unfreezing everything at once
-- **Learning rate**: use smaller lr for pretrained layers (1e-5 to 1e-4) and larger lr for new head (1e-3); differential learning rates
-- **Data augmentation**: artificially expand dataset with random transformations; essential when fine-tuning with small data; see [[convolutional-neural-networks]]
-- **Domain shift**: pretrained on natural images (ImageNet) may not transfer well to medical/satellite images; fine-tune more aggressively
-- **Model zoo**: torchvision.models, timm (PyTorch Image Models), HuggingFace for NLP; hundreds of pretrained architectures
-- **Knowledge distillation**: train a smaller "student" model to mimic a larger "teacher" model's outputs; compress knowledge
-- **Augmentation strategies**: RandAugment (random augmentation policy), CutOut/CutMix (occlusion-based), MixUp (interpolate samples)
-- Rule of thumb: more similar domains + more data -> unfreeze more layers; different domains + little data -> use feature extraction only
+Pre-trained models learn general features on large datasets. Lower layers capture universal patterns (edges, textures, word frequencies). Higher layers become task-specific.
 
-## Patterns
+## Strategies
+
+### Feature Extraction
+Freeze all pre-trained layers. Replace and train only the final classification head.
 
 ```python
-import torch
+import torchvision.models as models
 import torch.nn as nn
-from torchvision import models, transforms
-from torch.utils.data import DataLoader
-from torchvision.datasets import ImageFolder
 
-# Strategy 1: Feature extraction (freeze backbone)
-model = models.resnet50(weights='IMAGENET1K_V2')
+model = models.resnet50(pretrained=True)
 for param in model.parameters():
-    param.requires_grad = False  # freeze all
-model.fc = nn.Linear(model.fc.in_features, num_classes)
-# Only model.fc parameters will be updated
+    param.requires_grad = False  # freeze everything
+model.fc = nn.Linear(2048, num_classes)  # replace head
+```
 
-# Strategy 2: Fine-tuning (unfreeze later layers)
-model = models.resnet50(weights='IMAGENET1K_V2')
-model.fc = nn.Linear(model.fc.in_features, num_classes)
-# Freeze early layers
-for name, param in model.named_parameters():
-    if 'layer4' not in name and 'fc' not in name:
-        param.requires_grad = False
+**Use when**: small dataset (< 1000 samples), target task similar to source.
 
-# Differential learning rates
+### Fine-Tuning
+Unfreeze some layers and train with low learning rate.
+
+```python
+# Unfreeze last block
+for param in model.layer4.parameters():
+    param.requires_grad = True
+
+# Lower LR for pre-trained layers, higher for new head
 optimizer = torch.optim.Adam([
-    {'params': model.layer4.parameters(), 'lr': 1e-4},
+    {'params': model.layer4.parameters(), 'lr': 1e-5},
     {'params': model.fc.parameters(), 'lr': 1e-3}
 ])
+```
 
-# Data augmentation for training
-train_transform = transforms.Compose([
-    transforms.RandomResizedCrop(224),
-    transforms.RandomHorizontalFlip(),
-    transforms.RandomRotation(15),
-    transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2),
-    transforms.ToTensor(),
-    transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
-])
+**Use when**: moderate dataset, target task somewhat different from source.
 
-val_transform = transforms.Compose([
+### Full Fine-Tuning
+Unfreeze all layers, very low learning rate throughout.
+
+**Use when**: large dataset, task significantly different from source.
+
+## Vision Transfer Learning
+
+**Source**: ImageNet (1.2M images, 1000 classes). Most torchvision models provide pre-trained weights.
+
+**Rule of thumb**: smaller target dataset = freeze more layers; larger = fine-tune more.
+
+**Standard normalization** (ImageNet stats):
+```python
+from torchvision import transforms
+transform = transforms.Compose([
     transforms.Resize(256),
     transforms.CenterCrop(224),
     transforms.ToTensor(),
-    transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+    transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                         std=[0.229, 0.224, 0.225])
 ])
-
-# ImageFolder expects: root/class_name/image.jpg
-train_dataset = ImageFolder('data/train', transform=train_transform)
-val_dataset = ImageFolder('data/val', transform=val_transform)
-train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True, num_workers=4)
-val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False, num_workers=4)
-
-# Using timm (PyTorch Image Models) for more architectures
-# pip install timm
-import timm
-model = timm.create_model('efficientnet_b0', pretrained=True, num_classes=num_classes)
-# timm handles head replacement automatically
-
-# Progressive unfreezing training schedule
-def unfreeze_layers(model, layer_names):
-    for name, param in model.named_parameters():
-        if any(ln in name for ln in layer_names):
-            param.requires_grad = True
-
-# Phase 1: train head only (5 epochs)
-# Phase 2: unfreeze_layers(model, ['layer4']) (5 epochs, lr=1e-4)
-# Phase 3: unfreeze_layers(model, ['layer3', 'layer4']) (10 epochs, lr=1e-5)
-
-# CutMix / MixUp augmentation
-# pip install torchvision  (built-in since v0.15)
-from torchvision.transforms.v2 import CutMix, MixUp
-cutmix = CutMix(num_classes=num_classes)
-mixup = MixUp(num_classes=num_classes)
 ```
 
-## Gotchas
+## NLP Transfer Learning
 
-- ALWAYS use the same normalization as the pretrained model (ImageNet: mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-- Input size matters: ResNet expects 224x224; some models (EfficientNet-B7) expect 600x600; check model docs
-- When fine-tuning, use much smaller learning rate (10-100x smaller) than training from scratch
-- `model.eval()` is required for inference even with transfer learning -- BatchNorm and Dropout behavior changes
-- Freezing BatchNorm layers during fine-tuning is often beneficial; running stats from pretrained data are more stable
-- Augmentation should only be applied to training data, NEVER to validation/test
+**Source**: large text corpora (Wikipedia, BooksCorpus, Common Crawl).
+
+**Pre-training objectives:**
+- BERT: Masked Language Model + Next Sentence Prediction
+- GPT: Autoregressive language modeling
+- T5: text-to-text (all tasks framed as generation)
+
+**Fine-tuning with HuggingFace:**
+```python
+from transformers import AutoModelForSequenceClassification, Trainer, TrainingArguments
+
+model = AutoModelForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=2)
+args = TrainingArguments(
+    output_dir='./results',
+    learning_rate=2e-5,  # much lower than training from scratch
+    num_train_epochs=3,
+    per_device_train_batch_size=16
+)
+trainer = Trainer(model=model, args=args, train_dataset=train_ds)
+trainer.train()
+```
+
+## When Transfer Learning Helps
+
+| Source/Target Similarity | Target Data Size | Strategy |
+|--------------------------|-----------------|----------|
+| Similar, small data | < 1K | Feature extraction |
+| Similar, moderate data | 1K-10K | Fine-tune last layers |
+| Different, large data | > 10K | Full fine-tuning |
+| Very different, small data | < 1K | May not help; try anyway |
+
+## Domain Adaptation
+
+When source and target domains differ (e.g., photos -> medical images):
+- **Gradual unfreezing**: unfreeze one layer at a time from top
+- **Discriminative LR**: lower LR for earlier layers
+- **Data augmentation**: bridge domain gap
+- **Domain-specific pre-training**: pre-train on in-domain unlabeled data first
+
+## Gotchas
+- Pre-trained model expects specific input format (size, normalization, tokenization)
+- Fine-tuning LR too high destroys pre-trained features ("catastrophic forgetting")
+- Always use the matching tokenizer for NLP models
+- Transfer from ImageNet may not help for non-natural images (medical, satellite)
+- For tabular data, transfer learning rarely helps - gradient boosting usually wins
 
 ## See Also
-
-- [[convolutional-neural-networks]] - backbone architectures used for transfer learning
-- [[object-detection]] - detection models use pretrained backbones
-- [[image-segmentation]] - pretrained encoders for segmentation (U-Net, DeepLab)
-- [[cross-validation-and-model-selection]] - evaluating fine-tuning strategies
-- timm library: https://huggingface.co/docs/timm/
-- torchvision models: https://pytorch.org/vision/stable/models.html
+- [[neural-networks]] - foundation architectures
+- [[cnn-computer-vision]] - vision architectures for transfer
+- [[nlp-text-processing]] - BERT and transformer fine-tuning
+- [[model-evaluation]] - evaluating fine-tuned models

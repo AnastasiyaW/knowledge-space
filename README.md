@@ -1,118 +1,149 @@
-# Knowledge Vault
+# Knowledge Space
 
-Reference knowledge base for Claude Code. 385 entries across 21 domains, built from 120+ courses and 52,000 source chunks.
+Curated technical knowledge base across 22 domains. Agent-first design - dense, structured references optimized for RAG retrieval, MCP tools, and context injection.
 
-Not docs. Not tutorials. Dense reference material - code, configs, gotchas - that Claude queries on demand through [obra/knowledge-graph](https://github.com/obra/knowledge-graph) MCP.
+**558 articles | 22 domains | 2100+ cross-references**
+
+**Live site:** [happyin.space](https://happyin.space/)
 
 ## What's inside
 
-| Domain | Entries | Covers |
-|--------|---------|--------|
-| `data-science/` | 23 | Linear algebra, ML algorithms, neural networks, pandas, sklearn, PyTorch |
-| `sql-databases/` | 21 | PostgreSQL internals, query optimization, MVCC, replication, MySQL/InnoDB |
-| `security/` | 21 | Anti-fraud systems, browser fingerprinting, web security, Linux hardening |
-| `algorithms/` | 21 | Sorting, graphs, DP, trees, binary search, bit manipulation |
-| `web-frontend/` | 21 | HTML/CSS, JavaScript, React, TypeScript, Tailwind, Webpack/Vite |
-| `llm-agents/` | 20 | RAG, embeddings, LangChain/LangGraph, function calling, fine-tuning |
-| `python/` | 19 | Async, decorators, FastAPI, SQLAlchemy, dataclasses, testing |
-| `nodejs/` | 19 | Event loop, streams, design patterns, dependency injection, V8 internals |
-| `data-engineering/` | 19 | Spark, Airflow, ClickHouse, data modeling, Hadoop, data quality |
-| `devops/` | 18 | Docker, Kubernetes, Terraform, CI/CD, GitOps, SRE, monitoring |
-| `java-spring/` | 18 | Spring Boot, Security, Data JPA, Kotlin, Android/Room/Retrofit |
-| `rust/` | 18 | Ownership, lifetimes, traits, async, macros, concurrency |
-| `testing-qa/` | 17 | pytest, Playwright, Selenium, API testing, Allure, CI integration |
-| `architecture/` | 16 | System design, CQRS, microservices, caching, CAP theorem, ADRs |
-| `linux-cli/` | 17 | Shell scripting, SSH, iptables, cron, process management, filesystems |
-| `php/` | 15 | PHP 8 OOP, Laravel (routing, Eloquent, Blade, auth, validation) |
-| `bi-analytics/` | 15 | Tableau LOD, product metrics, cohort analysis, unit economics |
-| `ios-mobile/` | 15 | Swift, SwiftUI, UIKit, App Store, Kotlin/Android basics |
-| `kafka/` | 12 | Brokers, Streams, Connect, Schema Registry, transactions, ksqlDB |
-| `seo-marketing/` | 13 | Technical SEO, keyword research, link building, AI for SEO |
+| Domain | Articles | Coverage |
+|--------|:--------:|----------|
+| `data-science/` | 85 | ML, statistics, neural networks, CV, NLP, math foundations |
+| `python/` | 43 | Core language, FastAPI, Django, async, testing, packaging |
+| `web-frontend/` | 40 | React, TypeScript, CSS, Figma, bundlers, accessibility |
+| `devops/` | 39 | Docker, Kubernetes, Terraform, CI/CD, monitoring, SRE |
+| `architecture/` | 39 | Microservices, DDD, system design, API patterns, CQRS |
+| `data-engineering/` | 38 | ETL/ELT, Spark, Airflow, data warehouses, streaming, CDC |
+| `kafka/` | 33 | Broker internals, consumers, producers, Streams, KSQL, Connect |
+| `sql-databases/` | 27 | PostgreSQL, MySQL, query optimization, migrations, indexing |
+| `linux-cli/` | 25 | Shell scripting, filesystem, systemd, permissions, networking |
+| `llm-agents/` | 24 | RAG, fine-tuning, agent frameworks, prompt engineering, embeddings |
+| `java-spring/` | 21 | Spring Boot, JPA, microservices, Kotlin, Android |
+| `bi-analytics/` | 21 | Tableau, Power BI, SQL analytics, dashboards, product analytics |
+| `algorithms/` | 19 | Sorting, graphs, DP, data structures, complexity analysis |
+| `security/` | 18 | Web security, penetration testing, Active Directory, anti-fraud |
+| `seo-marketing/` | 16 | Technical SEO, keyword research, link building, AI-driven SEO |
+| `testing-qa/` | 15 | Selenium, Playwright, API testing, CI integration, test design |
+| `rust/` | 14 | Ownership, lifetimes, async, error handling, unsafe |
+| `php/` | 12 | Laravel, MVC, ORM, testing, PHP 8 features |
+| `nodejs/` | 10 | Event loop, streams, clusters, performance, design patterns |
+| `ios-mobile/` | 10 | SwiftUI, Swift, Android/Kotlin fundamentals |
 | `image-generation/` | 27 | Diffusion models, flow matching, LoRA training, inpainting |
+| `misc/` | 9 | JavaScript, Go, competitive programming, interview prep |
 
-Every entry follows the same format:
+## For AI agents
+
+### Quick access via ConTree MCP
+
+Upload the repo into a [ConTree](https://contree.nebius.com/) sandbox and query it via MCP tools - search, read, and analyze articles in an isolated environment:
+
+```bash
+# Upload to ConTree sandbox
+contree upload --path ./docs
+
+# Search across all domains
+contree search "kafka consumer rebalancing"
+
+# Read specific article
+contree read docs/kafka/consumer-groups.md
+```
+
+### Direct file access
+
+Clone and point your agent at it:
+
+```bash
+git clone https://github.com/AnastasiyaW/knowledge-space.git
+```
+
+Each article is a standalone `.md` file - easy to index, retrieve, and inject into LLM context. Articles cross-reference each other with `[[wiki-links]]` forming a navigable knowledge graph.
+
+### Article format
+
+Every article follows a consistent structure optimized for machine consumption:
 
 ```markdown
----
-title: Consumer Groups
-category: concepts
-tags: [kafka, consumer, rebalance, offset]
----
 # Consumer Groups
-[What it is - one line]
+
 ## Key Facts
-[Bullets with [[wiki links]]]
+- Bullets with [[wiki links]]
+
 ## Patterns
 [Code. Configs. Commands. Runnable.]
+
 ## Gotchas
 [symptom -> cause -> fix]
+
 ## See Also
 [Cross-references + official docs]
 ```
 
-## Setup
+## Freshness policy
 
-Clone and point `obra/knowledge-graph` at it:
+Not all knowledge ages equally. Each domain has an update cycle:
 
-```bash
-git clone https://github.com/AnastasiyaW/knowledge-vault.git
-```
+| Cycle | Domains |
+|-------|---------|
+| **Stable** (fundamentals) | Algorithms, Architecture, Linux CLI |
+| **Yearly** | SQL, Kafka, Rust, Java/Spring, PHP, Node.js, Testing, BI, Data Engineering |
+| **Every 6 months** | Web Frontend, DevOps, LLM/RAG, iOS, Security, SEO |
+| **Monthly** | Image Generation, Agent Frameworks |
 
-Add to your `.mcp.json` (or `~/.claude/.mcp.json`):
-
-```json
-{
-  "mcpServers": {
-    "knowledge-graph": {
-      "command": "npx",
-      "args": ["tsx", "/path/to/knowledge-graph/src/mcp/index.ts"],
-      "env": {
-        "KG_VAULT_PATH": "/path/to/knowledge-vault",
-        "KG_DATA_DIR": "/path/to/knowledge-graph/data"
-      }
-    }
-  }
-}
-```
-
-First run builds the graph index (~30 seconds, downloads a 22MB embedding model):
-
-```
-kg_index
-```
-
-Then query:
-
-```
-kg_search "kafka consumer rebalancing"     # semantic search
-kg_neighbors "kafka/consumer-groups.md"     # graph traversal
-kg_paths "python/async-programming.md" "nodejs/async-patterns.md"  # cross-domain
-kg_central                                  # most connected nodes (PageRank)
-kg_communities                              # auto-detected topic clusters
-```
-
-## How it works
-
-Each entry is a standalone reference on one topic - code, configs, gotchas, patterns. Entries link to each other with `[[wiki links]]`, forming a navigable knowledge graph. `consumer-groups.md` links to `topics-and-partitions.md`, which links to `broker-architecture.md`.
-
-[obra/knowledge-graph](https://github.com/obra/knowledge-graph) indexes these links and runs PageRank, community detection, and path finding on top. 68 communities detected automatically - some expected (all Kafka entries cluster together), some interesting (Rust and Node.js error handling patterns end up in the same community).
-
-Entries reference official documentation, RFCs, and papers where they exist.
-
-## Entry counts
-
-```
-Total entries:     385
-Total domains:      21
-Wiki links:      2,100+
-Graph communities:  68
-Source courses:    120+
-Source chunks:  52,292
-```
+Articles include version context where relevant (e.g., "PostgreSQL 17", "React 19").
 
 ## Contributing
 
-Open an issue or PR. Entries should follow the format above - dense reference, not prose. Every entry needs at least two `[[wiki links]]` to other entries.
+We accept contributions from both AI agents and humans. See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide.
+
+**Quick version:**
+
+1. Fork the repo
+2. Create/update an article in `docs/{domain}/`
+3. Follow the article format (dense reference, not tutorial)
+4. Submit a PR
+
+### For agents submitting findings
+
+If you're an agent that discovered outdated or missing information:
+
+1. **Branch**: `update/{domain}/{topic-slug}`
+2. **Format**: follow the article structure above - compress, no filler
+3. **PR**: include what changed, why, and source links
+4. **Forbidden**: course names, instructor names, tutorial prose, marketing language
+
+Automated validation checks run on every PR.
+
+### What NOT to modify
+
+These files are infrastructure - do not modify without explicit maintainer request:
+
+- `mkdocs.yml` - site configuration
+- `overrides/` - Jinja2 templates, SEO, 404 page
+- `docs/javascripts/` - knowledge graph visualization
+- `docs/stylesheets/` - site styling
+- `docs/CNAME` - domain configuration
+- `.github/workflows/` - CI/CD pipelines
+- `.claude/rules/` - agent guardrails
+
+## Site
+
+The knowledge base is published as a searchable MkDocs Material site at [happyin.space](https://happyin.space/).
+
+- Auto-deploys to Cloudflare Pages on push to `master`
+- Interactive knowledge graph on the homepage
+- Full-text search across all 558 articles
+- Dark/light mode, SEO optimized
+
+## Stats
+
+```
+Total articles:     558
+Total domains:       22
+Wiki links:       2,100+
+Topic communities:   68
+```
 
 ## License
 

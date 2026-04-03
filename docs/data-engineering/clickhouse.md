@@ -1,101 +1,132 @@
 ---
 title: ClickHouse
-category: concepts
-tags: [clickhouse, olap, columnar, mergetree, analytics, column-oriented]
+category: tools
+tags: [data-engineering, clickhouse, olap, columnar, analytics, database]
 ---
 
 # ClickHouse
 
-ClickHouse is an open-source column-oriented OLAP database management system. It is designed for real-time analytical queries on large datasets (billions of rows), delivering sub-second response times through columnar storage, vectorized execution, and aggressive data compression.
+ClickHouse is a columnar DBMS for OLAP workloads. Created at Yandex for Yandex.Metrica (13 trillion records, 20 billion events/day). Optimized for throughput over latency - billions of rows/sec, ~50ms latency acceptable, ~100 queries/sec per server.
 
-## Key Facts
+## When to Use ClickHouse
 
-- **Column-oriented**: stores each column separately on disk. Analytical queries reading 5 out of 100 columns only scan 5% of data. Ideal for [[data-warehouse]] workloads
-- **MergeTree engine family**: the core table engine. Data is written in parts (sorted by primary key), merged in background. Variants:
-  - `MergeTree` - base engine with sorting, primary key index, TTL
-  - `ReplacingMergeTree` - deduplicates rows by sorting key (eventual, not immediate)
-  - `SummingMergeTree` - auto-aggregates numeric columns during merge
-  - `AggregatingMergeTree` - stores intermediate aggregation states
-  - `CollapsingMergeTree` / `VersionedCollapsingMergeTree` - handles updates via sign column
-- **Log engines**: SimpleLog, TinyLog, StripeLog. For small temporary tables, no indexing or merging
-- **Integration engines**: connect to external systems (MySQL, PostgreSQL, Kafka, S3, HDFS) as virtual tables
-- SQL syntax close to MySQL/PostgreSQL with extensions: `arrayJoin`, `groupArray`, `groupUniqArray`, `quantile`, `any`, `argMax`, `argMin`
-- **Sparse primary index**: not a B-tree. Stores one index entry per granule (8192 rows by default). Enables fast range scans but not single-row lookups
-- Compression: LZ4 (default, fast) or ZSTD (better ratio). Column homogeneity enables 5-10x compression vs row-oriented databases
-- Optimized for throughput, not latency. Batch inserts recommended (1000+ rows); single-row inserts create excessive parts
+| Profile | Fit |
+|---------|-----|
+| Log management (flat wide tables, append-only) | Excellent |
+| Time series (streaming inserts, simple aggregations) | Excellent |
+| Analytical DWH (star/snowflake, ETL inserts) | Good |
+| Highly normalized DWH (Data Vault, frequent changes) | Poor |
 
-## Patterns
+## What ClickHouse is NOT
+Not a full RDBMS: no transactions, no consistency guarantees, no cursors, no stored procedures, no UNIQUE/FOREIGN KEY constraints. PRIMARY KEY does NOT enforce uniqueness. Partial UPDATE/DELETE only (async mutations via ALTER TABLE).
 
-### Table creation with MergeTree
+## Columnar Storage
 
-```sql
-CREATE TABLE events (
-    event_date  Date,
-    event_time  DateTime,
-    user_id     UInt64,
-    event_type  LowCardinality(String),
-    platform    LowCardinality(String),
-    revenue     Float64
-)
-ENGINE = MergeTree()
-PARTITION BY toYYYYMM(event_date)
-ORDER BY (event_date, user_id)
-TTL event_date + INTERVAL 1 YEAR;
+Data stored column-by-column. Reading 3 columns from a wide table reads ~3% of data vs full row scan. Sorted columns compress dramatically via RLE.
+
+**Rule:** Fewer columns in SELECT = less I/O. Always specify needed columns, avoid `SELECT *`.
+
+## Physical Storage
+
+```
+Table
+  -> Partitions (independent file groups on disk)
+    -> Granules (default 8192 rows)
+      -> Files: primary.idx, [column].mrk2, [column].bin
 ```
 
-### Analytical queries
+### Partition Guidelines
+- Attribute MUST appear in queries - otherwise no partition pruning
+- Size: few GB to 150 GB per partition
+- Typical: `PARTITION BY toYYYYMM(date_column)`
 
 ```sql
--- CTR by platform
-SELECT
-    platform,
-    countIf(event_type = 'click') AS clicks,
-    countIf(event_type = 'view') AS views,
-    clicks / views AS ctr
-FROM events
-WHERE event_date >= '2026-03-01'
-GROUP BY platform
-ORDER BY ctr DESC;
-
--- Array aggregation: unique platforms per ad
-SELECT
-    ad_id,
-    arraySort(groupUniqArray(platform)) AS platforms,
-    uniqExact(platform) AS platform_count
-FROM ads_data
-GROUP BY ad_id;
-
--- Quantile
-SELECT quantile(0.95)(ctr) AS p95_ctr FROM ads_stats;
+SELECT partition, formatReadableSize(sum(bytes))
+FROM system.parts WHERE table = 'my_table'
+GROUP BY partition;
 ```
 
-### ReplacingMergeTree for deduplication
+## Primary Key and Granules
+
+**Critical rule:** Primary key works left-to-right. For `ORDER BY (a, b, c)`:
+- Filter by `a` - uses index
+- Filter by `a AND b` - uses index
+- Filter by `b` alone - **cannot use index**, reads all granules
+
+**PK in ClickHouse != PK in relational:** No uniqueness, no FK references. Purely an optimization for read performance.
+
+## DML
 
 ```sql
-CREATE TABLE users (
-    user_id   UInt64,
-    name      String,
-    updated_at DateTime
-)
-ENGINE = ReplacingMergeTree(updated_at)
-ORDER BY user_id;
+INSERT INTO table VALUES (...), (...);
+INSERT INTO table SELECT ... FROM other_table;
 
--- Query with forced dedup (before merge completes)
-SELECT * FROM users FINAL WHERE user_id = 123;
+-- Async mutations (not instant!)
+ALTER TABLE table UPDATE col = val WHERE condition;
+ALTER TABLE table DELETE WHERE condition;
+OPTIMIZE TABLE table FINAL;  -- force merge
 ```
+
+## ClickHouse-Specific Functions
+
+### Approximate vs Exact Counting
+
+| Function | Accuracy | Performance |
+|----------|----------|-------------|
+| `uniq()` | Approximate (HyperLogLog) | Fast |
+| `uniqExact()` | Exact | Slow, high memory |
+| `uniqCombined()` | Hybrid | Balanced |
+
+### Aggregate Suffixes
+
+```sql
+sumIf(amount, status = 'completed')   -- conditional sum
+countIf(id, type = 'click')           -- conditional count
+avgIf(score, score > 0)               -- conditional average
+```
+
+### Quantiles
+
+```sql
+SELECT quantile(0.5)(price) AS median_approx FROM prices;
+SELECT quantileExact(0.5)(salary) AS median_exact FROM employees;
+SELECT quantiles(0.25, 0.5, 0.75)(price) AS quartiles FROM prices;
+```
+
+## Extended JOINs
+
+| Type | Behavior |
+|------|----------|
+| LEFT SEMI JOIN | Left rows that have match (no right columns) |
+| LEFT ANTI JOIN | Left rows with NO match |
+| LEFT ANY JOIN | One random match from right |
+| ASOF JOIN | Match by nearest ordered value |
+
+### ASOF JOIN
+
+```sql
+SELECT m.time, m.value, e.event
+FROM metrics m
+ASOF LEFT JOIN events e
+  ON m.user_id = e.user_id AND m.time >= e.time;
+```
+
+## Query Analysis
+
+```sql
+EXPLAIN PLAN indexes = 1 SELECT ...;
+```
+
+**Optimal:** filter on BOTH partition key AND primary key for two-stage pruning.
 
 ## Gotchas
-
-- `SELECT *` without LIMIT on a table with millions of rows will transfer massive data to client. Always use `LIMIT` or filter on partition key
-- `FINAL` keyword forces deduplication for ReplacingMergeTree but is slow on large tables. Design queries to tolerate eventual deduplication when possible
-- ClickHouse JOINs load the right table into memory. For large-large joins, use `JOIN` with subqueries or dictionary tables. Physical joins (using sorted merge) available in newer versions
-- `LowCardinality(String)` dramatically reduces memory usage for columns with <10k distinct values (enums, categories). Always use it for categorical data
-- INSERT must be batched. Each INSERT creates a new data part; too many small inserts cause "Too many parts" error. Use Buffer engine or batch at application level
-- ClickHouse is NOT a replacement for OLTP databases. No row-level UPDATE/DELETE (only ALTER TABLE mutations, which are heavy background operations)
+- UPDATE/DELETE are async mutations - not designed for frequent single-row ops
+- ReplacingMergeTree dedup happens during merges - not immediate; use `SELECT ... FINAL`
+- Primary key does NOT enforce uniqueness
+- UDFs significantly slow down ClickHouse
+- Always use correct data types (UInt32 not String for IDs) for compression
 
 ## See Also
-
-- [[data-warehouse]] - ClickHouse as OLAP engine
-- [[data-formats]] - columnar storage benefits
-- [[postgresql-for-data-engineering]] - comparison with row-oriented OLTP
-- https://clickhouse.com/docs/en/ - ClickHouse documentation
+- [[clickhouse-engines]] - MergeTree family and engine selection
+- [[dwh-architecture]] - ClickHouse as OLAP layer
+- [[sql-for-de]] - SQL patterns

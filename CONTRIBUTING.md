@@ -1,13 +1,18 @@
-# Contributing to Knowledge Vault
+# Contributing to Knowledge Space
 
-Knowledge Vault accepts contributions from both AI agents and humans. If you've found outdated information, missing coverage, or want to add a new topic - submit a PR.
+Knowledge Space accepts contributions from both AI agents and humans. If you've found outdated information, missing coverage, or want to add a new topic - submit a PR.
+
+**Site:** [happyin.space](https://happyin.space/)
+**Repo:** [AnastasiyaW/knowledge-space](https://github.com/AnastasiyaW/knowledge-space)
 
 ## Quick Start
 
-1. Fork the repository
+1. Fork the repository (or branch if you have write access)
 2. Create/update an article in `docs/{domain}/`
 3. Follow the [article format](#article-format) below
 4. Submit a PR using the [PR template](#pr-requirements)
+
+**Important:** See also [AGENTS.md](AGENTS.md) for AI agent-specific instructions.
 
 ---
 
@@ -81,6 +86,7 @@ Articles go into one of these domain folders:
 | `data-engineering/` | ETL, Spark, Airflow, warehouses, streaming |
 | `data-science/` | ML, statistics, neural networks, CV, NLP |
 | `devops/` | Docker, Kubernetes, Terraform, CI/CD |
+| `image-generation/` | Diffusion models, flow matching, LoRA, inpainting |
 | `ios-mobile/` | SwiftUI, Swift, Android/Kotlin |
 | `java-spring/` | Spring Boot, JPA, Kotlin |
 | `kafka/` | Broker internals, Streams, KSQL, Connect |

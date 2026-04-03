@@ -1,111 +1,154 @@
 ---
 title: Apache Airflow
-category: concepts
-tags: [airflow, dag, orchestration, scheduling, operators, etl, pipeline]
+category: tools
+tags: [data-engineering, airflow, orchestration, dag, scheduling, pipelines]
 ---
 
 # Apache Airflow
 
-Apache Airflow is a workflow orchestration platform for authoring, scheduling, and monitoring data pipelines. Pipelines are defined as Python code (DAGs), executed on a schedule, and monitored through a web UI.
+Apache Airflow is an open-source platform for authoring, scheduling, and monitoring workflows as Directed Acyclic Graphs (DAGs). It is the de facto standard for data pipeline orchestration.
 
-## Key Facts
+## Architecture
 
-- **DAG (Directed Acyclic Graph)**: a collection of tasks with defined dependencies and execution order. No cycles allowed
-- DAGs are Python files placed in the `dags/` directory (DagBag). Airflow scans this directory periodically
-- **schedule_interval**: cron expression or preset (`@daily`, `@hourly`). Cron evaluated in the scheduler's timezone. Example: `0 0 * * 1-6` = Mon-Sat at midnight
-- **execution_date / logical_date**: the date the DAG run represents (not when it actually runs). A `@daily` DAG with execution_date 2026-03-29 runs on 2026-03-30
-- **Operators**: define individual tasks. Core types:
-  - `PythonOperator`: runs a Python callable
-  - `BashOperator`: runs a shell command
-  - `PostgresOperator` / `MySqlOperator`: executes SQL
-  - `BranchPythonOperator`: conditional branching based on return value
-  - `ShortCircuitOperator`: stops downstream tasks if condition is False
-- **Sensors**: wait for an external condition (file existence, partition availability, external DAG completion). `ExternalTaskSensor` waits for another DAG's task
-- **XCom**: cross-communication between tasks. Tasks push/pull small values. Return value from PythonOperator auto-pushes to XCom
-- **Connections**: stored credentials for external systems (databases, APIs). Managed via UI or CLI. Referenced by `conn_id` in hooks
-- **Hooks**: interfaces to external systems (PostgresHook, S3Hook, HttpHook). Used inside operators/sensors
-- **Trigger Rules**: control when a task runs based on upstream status. Default: `all_success`. Options: `all_failed`, `one_success`, `none_failed`, etc.
+| Component | Role |
+|-----------|------|
+| **Web Server** | HTTP interface, user UI (default port 8080) |
+| **Scheduler** | Periodically checks registered DAGs against schedule, creates DAG Runs |
+| **Worker** | Executes tasks from the queue |
+| **Queue** | Tasks waiting for execution (Redis, RabbitMQ) |
+| **Metastore** | Stores DAG definitions, run history, task states (PostgreSQL, MySQL) |
 
-## Patterns
+Scales horizontally by adding Workers and Web Servers.
 
-### DAG definition (three equivalent styles)
+## DAG Structure (Five Blocks)
 
 ```python
-# Style 1: context manager
+# 1. IMPORTS
 from airflow import DAG
 from airflow.operators.python import PythonOperator
-from datetime import datetime
+from datetime import datetime, timedelta
 
-with DAG('my_pipeline', schedule_interval='@daily',
-         start_date=datetime(2026, 1, 1), catchup=False) as dag:
+# 2. TASK FUNCTIONS
+def extract(): pass
+def transform(): pass
+def load(): pass
 
-    extract = PythonOperator(task_id='extract', python_callable=extract_fn)
-    transform = PythonOperator(task_id='transform', python_callable=transform_fn)
-    load = PythonOperator(task_id='load', python_callable=load_fn)
+# 3. DEFAULT ARGS + DAG
+default_args = {
+    'owner': 'data_team',
+    'depends_on_past': False,
+    'retries': 2,
+    'retry_delay': timedelta(minutes=5),
+    'start_date': datetime(2024, 1, 1),
+    'email_on_failure': True,
+    'retry_exponential_backoff': True,
+    'max_retry_delay': timedelta(minutes=30),
+}
 
-    extract >> transform >> load
+dag = DAG('etl_pipeline', default_args=default_args,
+          schedule_interval='0 12 * * *', catchup=False)
 
-# Style 2: decorator (TaskFlow API, Airflow 2.x)
+# 4. TASK INITIALIZATION
+t1 = PythonOperator(task_id='extract', python_callable=extract, dag=dag)
+t2 = PythonOperator(task_id='transform', python_callable=transform, dag=dag)
+t3 = PythonOperator(task_id='load', python_callable=load, dag=dag)
+
+# 5. DEPENDENCIES
+t1 >> t2 >> t3
+```
+
+## TaskFlow API (Airflow 2.0+)
+
+```python
 from airflow.decorators import dag, task
 
-@dag(schedule_interval='@daily', start_date=datetime(2026, 1, 1), catchup=False)
-def my_pipeline():
-    @task
-    def extract(): return data
-    @task
-    def transform(data): return result
-    @task
-    def load(result): ...
+@dag(schedule_interval='@daily', start_date=days_ago(1), catchup=False)
+def etl_pipeline():
+    @task(retries=3)
+    def extract():
+        return requests.get(URL).content
 
-    load(transform(extract()))
+    @task()
+    def transform(raw_data):
+        return pd.read_csv(StringIO(raw_data)).to_csv(index=False)
 
-my_pipeline()
+    @task()
+    def load(data):
+        print(f"Loading {len(data)} bytes")
+
+    raw = extract()
+    table = transform(raw)
+    load(table)
+
+etl_pipeline()
 ```
 
-### Using XCom and execution_date
+**Advantages:** XCom handled automatically, dependencies inferred from call chain, per-task retry overrides.
+
+## Schedule Options
+
+| Method | Example | Use Case |
+|--------|---------|----------|
+| Cron | `"0 2 * * *"` | Fixed calendar-based |
+| Presets | `@daily`, `@hourly`, `@weekly` | Common intervals |
+| timedelta | `timedelta(hours=2)` | Fixed interval from last run |
+| `@once` | Single execution | Manual triggers |
+| `None` | No schedule | Manual only |
+
+## Operators and Sensors
+
+| Type | Examples |
+|------|---------|
+| **PythonOperator** | Run Python functions |
+| **BashOperator** | Run shell commands |
+| **DummyOperator** | DAG flow structuring, join points |
+| **S3KeySensor** | Wait for file in S3 |
+| **ExternalTaskSensor** | Wait for task in another DAG |
+| **HttpSensor** | Wait for HTTP endpoint success |
+
+## Trigger Rules
+
+| Rule | Behavior |
+|------|----------|
+| `ALL_SUCCESS` | Default - all upstream succeeded |
+| `ONE_SUCCESS` | At least one upstream succeeded |
+| `ALL_FAILED` | All upstream failed |
+| `ALL_DONE` | All upstream completed (any status) |
+
+## XCom (Cross-Communication)
 
 ```python
-def get_article_for_today(**kwargs):
-    # Get logical execution date, NOT current date
-    ds = kwargs['ds']  # '2026-03-29' format
-    day_of_week = datetime.strptime(ds, '%Y-%m-%d').weekday() + 1
+def multiply(**context):
+    value = context['task_instance'].xcom_pull(
+        task_ids='load_task', key='return_value')
+    return value * value  # auto-pushed to XCom
 
-    pg_hook = PostgresHook(postgres_conn_id='conn_greenplum')
-    conn = pg_hook.get_conn()
-    cursor = conn.cursor()
-    cursor.execute(f'SELECT heading FROM articles WHERE id = {day_of_week}')
-    result = cursor.fetchone()[0]
-
-    return result  # auto-pushed to XCom
-
-task = PythonOperator(
-    task_id='get_article',
-    python_callable=get_article_for_today,
-    provide_context=True
-)
+# TaskFlow API: XCom is implicit via function params/returns
 ```
 
-### Jinja templating in operators
+## Key Parameters
 
-```python
-BashOperator(
-    task_id='echo_date',
-    bash_command='echo "Processing {{ ds }}, prev: {{ prev_ds }}"'
-)
-```
+- `catchup=True/False` - whether to backfill missed runs
+- `max_active_runs` - limit concurrent DAG runs
+- `execution_timeout` - kill task if too long
+- `depends_on_past` - task waits for previous run's success
+- `on_failure_callback` - alert function on failure
+
+## Built-in Context Variables
+
+- `ds` - execution date (YYYY-MM-DD string)
+- `execution_date` - execution datetime object
+- `dag` - DAG object
+- `task_instance` / `ti` - current TaskInstance
 
 ## Gotchas
-
-- `execution_date` is the **start of the interval**, not when the DAG actually runs. A daily DAG for 2026-03-29 runs at the end of that day (start of 2026-03-30). This is the #1 source of confusion
-- `catchup=True` (default) triggers backfill runs for all missed intervals since `start_date`. Set `catchup=False` for pipelines that should only process current data
-- XCom is for small values (metadata, file paths, row counts). Do NOT pass large DataFrames through XCom - write to storage and pass the path
-- Noncron schedules (`schedule_interval='0 0 * * 1-6'`) create confusion with ExternalTaskSensors. Consider using BranchPythonOperator with standard `@daily` schedule instead
-- DAG file is parsed by scheduler every 30s. Heavy imports or computation at module level slows the entire scheduler
-- Custom operators should be packaged as Airflow plugins (placed in `plugins/` directory) for reusability
+- `schedule_interval` defines interval between runs, not run time. `@daily` with `start_date=Jan 1` first runs on Jan 2
+- `catchup=True` (default) will backfill all missed intervals - can flood the system
+- `provide_context=True` required for XCom in classic API; TaskFlow handles automatically
+- When upstream fails with `ALL_SUCCESS`, downstream shows "upstream_failed" (not "failed")
+- DAG files go in configured `dags/` directory; deploy by pushing to Git
 
 ## See Also
-
-- [[etl-and-elt]] - Airflow as ETL/ELT orchestrator
-- [[apache-spark]] - Spark jobs triggered by Airflow
-- [[data-quality]] - validation tasks in Airflow pipelines
-- https://airflow.apache.org/docs/ - Apache Airflow documentation
+- [[etl-elt-pipelines]] - pipeline design patterns
+- [[apache-spark-core]] - common execution engine
+- [[data-quality]] - validation in pipelines

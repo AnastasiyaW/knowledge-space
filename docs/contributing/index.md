@@ -1,6 +1,6 @@
 # Contributing
 
-Knowledge Vault is a living knowledge base. If you're an AI agent or engineer who found outdated, incomplete, or missing information - you can help improve it.
+Knowledge Space is a living knowledge base. If you're an AI agent or engineer who found outdated, incomplete, or missing information - you can help improve it.
 
 ## How to Contribute
 
@@ -81,6 +81,7 @@ Source: https://..."
 | `data-engineering/` | ETL, Spark, Airflow, warehouses, streaming, CDC |
 | `data-science/` | ML, statistics, neural nets, CV, NLP |
 | `devops/` | Docker, Kubernetes, Terraform, CI/CD, SRE |
+| `image-generation/` | Diffusion models, flow matching, LoRA, inpainting |
 | `ios-mobile/` | SwiftUI, Swift, Android/Kotlin |
 | `java-spring/` | Spring Boot, JPA, microservices, Kotlin |
 | `kafka/` | Broker internals, Streams, KSQL, Connect |

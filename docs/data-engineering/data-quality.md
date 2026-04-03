@@ -1,106 +1,74 @@
 ---
 title: Data Quality
 category: concepts
-tags: [data-quality, testing, validation, great-expectations, dbt-tests, scd, observability]
+tags: [data-engineering, data-quality, validation, testing, observability]
 ---
 
 # Data Quality
 
-Data quality ensures that data is accurate, complete, consistent, timely, and valid throughout the [[etl-and-elt]] pipeline. Poor data quality cascades into incorrect analytics, broken models, and lost business trust.
+Data quality encompasses monitoring, defining, and maintaining data integrity. Critical in large organizations to prevent incorrect business decisions driven by bad data.
 
-## Key Facts
+## Quality Dimensions
 
-- **Data quality dimensions**: accuracy (matches reality), completeness (no missing values where required), consistency (no contradictions across tables), timeliness (fresh enough for use case), uniqueness (no duplicates), validity (conforms to schema/rules)
-- **Schema validation**: verify column types, nullability, allowed values at ingestion time. Catch drift before it propagates
-- **Row-level tests**: assertions on individual records (non-null, within range, format match)
-- **Aggregate tests**: assertions on dataset-level metrics (row count within expected range, uniqueness of key columns, referential integrity between tables)
-- **dbt tests**: built-in (`unique`, `not_null`, `accepted_values`, `relationships`) and custom SQL tests. Run as part of the transformation pipeline
-- **Great Expectations**: Python framework for declarative data validation. Creates "expectations" (assertions) organized in suites, generates data docs
-- **Data observability**: automated monitoring of data freshness, volume, schema changes, and distribution drift. Tools: Monte Carlo, Soda, Elementary
-- **SCD (Slowly Changing Dimensions)** testing: verify Type 2 dimension rows have non-overlapping validity ranges and exactly one `is_current=TRUE` row per natural key. See [[data-modeling]]
+| Dimension | Question |
+|-----------|----------|
+| **Completeness** | Are all required values present? |
+| **Accuracy** | Do values correctly represent real-world entities? |
+| **Consistency** | Same facts represented the same way across systems? |
+| **Timeliness** | Is data available when needed? Fresh enough? |
+| **Uniqueness** | Are there duplicate records? |
+| **Validity** | Does data conform to defined formats, types, ranges? |
 
-## Patterns
+## Data Quality Practices
+- Define quality rules and thresholds per dataset/column
+- Automated checks in pipelines (pre-load AND post-load)
+- Quality dashboards and alerting on SLA breaches
+- Root cause analysis for quality issues
+- Data profiling to discover anomalies
 
-### dbt built-in tests (schema.yml)
+## Tools
 
-```yaml
-models:
-  - name: fact_orders
-    columns:
-      - name: order_id
-        tests:
-          - unique
-          - not_null
-      - name: customer_id
-        tests:
-          - not_null
-          - relationships:
-              to: ref('dim_customer')
-              field: customer_id
-      - name: status
-        tests:
-          - accepted_values:
-              values: ['pending', 'shipped', 'delivered', 'cancelled']
-```
+| Tool | Type |
+|------|------|
+| **Great Expectations** | Open-source Python validation |
+| **dbt tests** | Built-in + custom assertions on models |
+| **Apache Griffin** | Open-source for big data |
+| **Monte Carlo, Bigeye, Soda** | Commercial observability platforms |
 
-### Custom dbt test (SQL)
+## Data Observability
 
-```sql
--- tests/assert_positive_revenue.sql
-SELECT order_id, revenue
-FROM {{ ref('fact_orders') }}
-WHERE revenue < 0
--- Test passes if query returns 0 rows
-```
+Goes beyond pipeline monitoring to detect:
+- Schema changes
+- Distribution shifts
+- Null rate changes
+- Volume anomalies
+- Freshness violations
 
-### Great Expectations (Python)
+## Pipeline Monitoring
 
-```python
-import great_expectations as gx
+| Category | Metrics |
+|----------|---------|
+| **Pipeline health** | DAG success/failure rate, task duration, retry count |
+| **Data freshness** | Time since last update, SLA compliance |
+| **Data volume** | Row count per load, deviation from expected |
+| **Infrastructure** | CPU/memory/disk on workers, scheduler lag |
+| **Data quality** | Failed validation count, null rate trends |
 
-context = gx.get_context()
-validator = context.sources.pandas_default.read_csv("orders.csv")
-
-validator.expect_column_values_to_not_be_null("order_id")
-validator.expect_column_values_to_be_between("quantity", min_value=1, max_value=10000)
-validator.expect_column_values_to_be_unique("order_id")
-validator.expect_table_row_count_to_be_between(min_value=1000, max_value=1_000_000)
-
-results = validator.validate()
-```
-
-### Airflow data quality task
-
-```python
-def validate_load(**kwargs):
-    hook = PostgresHook(postgres_conn_id='dwh')
-    count = hook.get_first("SELECT COUNT(*) FROM fact_orders WHERE dt = %(dt)s",
-                           parameters={'dt': kwargs['ds']})[0]
-    if count < 100:
-        raise ValueError(f"Only {count} rows loaded for {kwargs['ds']}, expected >100")
-
-validate = PythonOperator(
-    task_id='validate_load',
-    python_callable=validate_load,
-    provide_context=True
-)
-
-# DAG flow: extract >> transform >> load >> validate
-```
+## Alerting Best Practices
+- Alert on **SLA breaches**, not just failures
+- Use **anomaly detection** for row counts (sudden drop/spike)
+- Escalation tiers (warning -> critical -> pager)
+- Include **runbook links** in alert messages
+- Avoid alert fatigue - tune thresholds, group related alerts
 
 ## Gotchas
-
-- Data quality checks should run AFTER load but BEFORE downstream consumers (place between load and mart/dashboard refresh in [[apache-airflow]] DAGs)
-- Row count checks alone are insufficient. A pipeline can load the correct number of duplicate rows. Always include uniqueness tests on key columns
-- Schema validation at ingestion prevents silent type coercion (e.g., "123" becoming a string in a numeric column). Fail fast, not silently
-- Great Expectations suites should be version-controlled alongside pipeline code, not managed manually through the UI
-- Monitoring data distribution (mean, stddev, percentiles) catches subtle issues that pass hard-threshold tests (e.g., gradual drift in user demographics)
-- SCD Type 2 validity ranges must be contiguous and non-overlapping. A common bug: closing old row's `valid_to` as `CURRENT_DATE` and opening new row's `valid_from` as `CURRENT_DATE` creates a 1-day overlap
+- Data Lake without governance becomes "data swamp"
+- Row-level security must be tested with actual user accounts
+- Prometheus pull model requires all targets to be network-accessible
+- `_SUCCESS` file guarantees job completion, not data correctness
 
 ## See Also
-
-- [[etl-and-elt]] - where quality checks fit in the pipeline
-- [[apache-airflow]] - orchestrating validation tasks
-- [[data-modeling]] - SCD patterns that need quality enforcement
-- https://docs.getdbt.com/docs/build/data-tests - dbt tests documentation
-- https://docs.greatexpectations.io/ - Great Expectations documentation
+- [[data-governance-catalog]] - governance framework
+- [[data-lineage-metadata]] - tracing data issues
+- [[etl-elt-pipelines]] - where quality checks run
+- [[apache-airflow]] - orchestrating quality checks

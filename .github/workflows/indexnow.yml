@@ -4,7 +4,7 @@ name: IndexNow - Notify Search Engines
 # Submits changed URLs to Bing, Yandex, DuckDuckGo via IndexNow protocol
 on:
   push:
-    branches: [main]
+    branches: [master]
     paths:
       - 'docs/**'
       - 'mkdocs.yml'

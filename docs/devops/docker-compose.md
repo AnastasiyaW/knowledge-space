@@ -1,108 +1,235 @@
 ---
 title: Docker Compose
-category: containers
-tags: [docker-compose, multi-container, services, volumes, networks]
+category: concepts
+tags: [devops, docker, compose, multi-container, orchestration]
 ---
+
 # Docker Compose
 
-Declarative multi-container application definition and orchestration for development and simple production.
+Docker Compose defines and runs multi-container applications in a single declarative YAML file. It creates a shared network where services resolve each other by name, manages volumes, and handles startup ordering.
 
-## Key Facts
-
-- Compose file (`docker-compose.yml` / `compose.yaml`) defines services, networks, volumes as YAML
-- Each **service** maps to one container (or multiple replicas in Swarm mode)
-- `docker compose up -d` starts all services in detached mode; `docker compose down` stops and removes
-- **Depends_on** controls startup order but NOT readiness; use healthchecks for actual readiness
-- Services on same Compose network resolve each other by service name (built-in DNS)
-- **Volumes** persist data across container restarts; named volumes managed by Docker, bind mounts map host paths
-- `.env` file in same directory auto-loaded for variable substitution in compose file
-- Compose V2 is a Docker CLI plugin (`docker compose`); V1 was standalone binary (`docker-compose`)
-- [[docker-images-containers]] define the image each service runs
-- [[docker-networking]] Compose creates a default bridge network per project
-
-## Patterns
+## Core Structure
 
 ```yaml
-# docker-compose.yml
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
+  db:
+    image: mariadb:10
+    restart: always
     environment:
-      - DATABASE_URL=postgres://user:pass@db:5432/mydb
-      - REDIS_URL=redis://cache:6379
+      MYSQL_ROOT_PASSWORD: ${DB_PASS}
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  app:
+    build: ./app
+    ports:
+      - "8080:80"
     depends_on:
       db:
         condition: service_healthy
-      cache:
-        condition: service_started
-    volumes:
-      - ./src:/app/src          # bind mount for dev
-    restart: unless-stopped
+    env_file: .env
 
-  db:
-    image: postgres:16-alpine
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: pass
-      POSTGRES_DB: mydb
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U user"]
-      interval: 5s
-      timeout: 3s
-      retries: 5
-
-  cache:
-    image: redis:7-alpine
+  frontend:
+    build: ./ui
     ports:
-      - "6379:6379"
+      - "3000:3000"
+    environment:
+      - API_URL=http://app:8080    # service name as hostname
+    depends_on:
+      - app
 
 volumes:
-  pgdata:
+  db-data:
 ```
+
+## Key Commands
 
 ```bash
-# Lifecycle commands
-docker compose up -d                   # start all services
-docker compose up -d --build           # rebuild images then start
-docker compose down                    # stop and remove containers
-docker compose down -v                 # also remove named volumes
-docker compose restart app             # restart single service
-
-# Monitoring
-docker compose ps                      # list service status
-docker compose logs -f app             # follow logs for service
-docker compose top                     # show running processes
-
-# Scaling (Compose V2)
-docker compose up -d --scale app=3     # run 3 replicas of app
-
-# Execute command in running service
-docker compose exec app /bin/sh
-docker compose exec db psql -U user mydb
-
-# Override for dev/prod
-docker compose -f compose.yaml -f compose.prod.yaml up -d
+docker compose build         # build all images
+docker compose up -d         # start all services detached
+docker compose down          # stop and remove containers + networks
+docker compose down --volumes  # also remove volumes
+docker compose logs -f       # follow all logs
+docker compose logs -f app   # follow specific service
+docker compose ps            # list services
+docker compose exec app sh   # shell into running service
+docker compose restart app   # restart specific service
 ```
+
+## Service Discovery
+
+- Compose creates a default bridge network for all services
+- Services resolve each other by service name: `http://app:8080`
+- `localhost` inside a container refers to THAT container, not the host
+- This is the most common gotcha when connecting containers
+
+## Startup Ordering
+
+`depends_on` controls order but by default only waits for container start, not readiness:
+
+```yaml
+depends_on:
+  configserver:
+    condition: service_healthy   # wait for healthcheck to pass
+  db:
+    condition: service_started   # just wait for start (default)
+```
+
+## Environment Variables
+
+```yaml
+services:
+  app:
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+    env_file: .env              # load from file
+    env_file:
+      - .env
+      - .env.local              # override order
+```
+
+Variable substitution in compose file: `${VAR_NAME}` reads from shell or `.env` in project root.
+
+## Build Configuration
+
+```yaml
+services:
+  app:
+    build:
+      context: ./src/api        # build context path
+      dockerfile: Dockerfile    # custom Dockerfile name
+      args:
+        VERSION: "3.11"         # build arguments
+    image: myapp:latest         # tag the built image
+```
+
+## Volumes
+
+```yaml
+services:
+  db:
+    volumes:
+      - db-data:/var/lib/mysql        # named volume
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # bind mount
+      - /host/path:/container/path:ro  # read-only bind mount
+
+volumes:
+  db-data:                             # declare named volumes
+```
+
+## Patterns
+
+### ML Stack (JupyterLab + MLflow + API + Frontend)
+
+```yaml
+services:
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:latest
+    ports: ["5555:5000"]
+    command: mlflow server --host 0.0.0.0
+
+  api:
+    build: ./src/api
+    ports: ["8000:8000"]
+    depends_on: [mlflow]
+
+  streamlit:
+    build: ./src/streamlit
+    ports: ["8501:8501"]
+    environment:
+      - API_URL=http://api:8000
+    depends_on: [api]
+```
+
+### Reverse Proxy with Load Balancing (Caddy)
+
+```yaml
+services:
+  caddy:
+    image: caddy:latest
+    ports: ["80:80", "443:443"]
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+
+  app1:
+    build: ./app
+    expose: ["3000"]
+  app2:
+    build: ./app
+    expose: ["3000"]
+```
+
+Caddyfile:
+```
+:80 {
+    reverse_proxy app1:3000 app2:3000 {
+        lb_policy round_robin
+        health_uri /health
+        health_interval 10s
+    }
+}
+```
+
+### Microservices Stack (Spring Boot)
+
+```yaml
+services:
+  configserver:
+    image: myorg/configserver:latest
+    ports: ["8071:8071"]
+    healthcheck:
+      test: curl -f http://localhost:8071/actuator/health
+      interval: 10s
+      retries: 5
+
+  eurekaserver:
+    image: myorg/eurekaserver:latest
+    depends_on:
+      configserver: { condition: service_healthy }
+
+  accounts:
+    image: myorg/accounts:latest
+    depends_on:
+      configserver: { condition: service_healthy }
+      eurekaserver: { condition: service_healthy }
+    environment:
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071
+```
+
+### Docker Model Runner (Local LLM)
+
+```yaml
+services:
+  api:
+    build: ./app
+    ports: ["8000:8000"]
+
+  ai-runner:
+    provider:
+      type: model
+      options:
+        model: ai/smollm2
+```
+
+Providers extend Compose to connect to Docker plugins like Model Runner (Apple Silicon only).
 
 ## Gotchas
 
-- `depends_on` only waits for container start, not application readiness; always add `healthcheck` + `condition: service_healthy`
-- `docker compose down` removes containers but NOT volumes; use `-v` flag to also remove volumes
-- Port conflicts: if host port is already in use, compose fails silently on that service
-- Environment variables in `.env` are only for compose file interpolation; use `env_file` directive for container env
-- Volume data persists across `down`/`up` cycles; this is a feature, not a bug - but can cause stale data issues
-- Build context `.` sends entire directory; use `.dockerignore` to exclude large files
+- Port conflicts: multiple services cannot bind the same host port
+- `depends_on` without `condition: service_healthy` only waits for container start, not application readiness
+- Named volumes persist across `docker compose down` - use `--volumes` flag to also remove them
+- `.env` file is auto-loaded only from the project root directory
+- `docker compose` (v2) replaces `docker-compose` (v1) - different binary, same functionality
 
 ## See Also
 
-- [[docker-images-containers]] - Dockerfile and image building
-- [[docker-networking]] - network modes and service discovery
-- [[kubernetes-pods]] - for production orchestration beyond Compose
-- [[helm-charts]] - Kubernetes equivalent of Compose templating
-- Compose specification: https://docs.docker.com/compose/compose-file/
+- [[docker-fundamentals]] - container basics, networking, volumes
+- [[dockerfile-and-image-building]] - building custom images
+- [[docker-for-ml]] - ML-specific Docker workflows
+- [[kubernetes-architecture]] - when you outgrow Compose

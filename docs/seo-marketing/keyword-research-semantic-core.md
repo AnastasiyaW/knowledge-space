@@ -1,53 +1,69 @@
 ---
 title: Keyword Research and Semantic Core
 category: techniques
-tags: [seo-marketing, keywords, semantic-core, wordstat, clustering]
+tags: [seo-marketing, keywords, semantic-core, wordstat, clustering, search-demand]
 ---
 
 # Keyword Research and Semantic Core
 
-The complete process of building a semantic core: collecting marker queries, parsing search demand, cleaning and clustering, then mapping clusters to site pages. Covers Yandex Wordstat operators, SERP-based clustering, and AI-assisted workflows.
+Complete process of collecting, cleaning, clustering, and assigning keyword groups to pages. Covers Yandex Wordstat operators, collection methods, SERP-based clustering, and tools.
 
 ## Core Terminology
 
 - **Semantic core** - complete set of keyword groups covering all user search demand for a site
-- **Marker** - anchor query that most precisely describes a page's content; the base for expansion
-- **Cluster** - group of queries that should be served by a single page
+- **Marker** - anchor query most precisely describing a page's content; the base for expansion
+- **Cluster** - group of queries served by a single page
 - **Frequency** - number of times a query was searched per month (Wordstat data)
 - **Cloud of queries** - full expanded set of queries collected around markers
 
 ## Sources for Query Collection
 
-### Primary (Reliable)
-1. **Yandex Wordstat** - direct search demand data (most accurate for RU)
-2. **Search suggestion parsing** - autocomplete suggestions from Yandex/Google
-3. **Parsing tools** - Key Collector, Rush Analytics (automate collection)
+### Reliable Sources
+1. **Yandex Wordstat** - direct search demand data (most accurate for RU segment)
+2. **Search suggestion parsing** - tools collecting autocomplete suggestions
+3. **Parsing programs** - Key Collector, Rush Analytics (automate Wordstat/suggestion collection)
 
-### Secondary (Supplements)
-- **Keyword databases** - pre-collected query lists; quality unknown
-- **Competitor site parsing** - reflects competitor's structural decisions, not full demand
-- **Yandex Metrika** - queries that previously drove traffic
-- **Google Keyword Planner** - Google search volume estimates
+### Less Reliable (Supplementary)
+1. **Keyword databases** - pre-collected query lists; unclear origin/completeness; may contain garbage
+2. **Competitor site parsing** - reflects competitor's structural decisions, not full demand
 
-## Yandex Wordstat Operators
+### Supporting Data
+- Yandex Metrika - queries that previously drove traffic
+- Yandex Webmaster - search appearance statistics
+- Google Keyword Planner - Google equivalent of Wordstat
+
+## Yandex Wordstat Deep Dive
+
+### Left vs Right Column
+- **Left column** - N-gram frequency dictionary: sum of all queries containing the phrase in any form, any order, any length
+- **Right column** - "Similar queries" - unreliable; shows queries same users searched, not synonyms
+
+### Wordstat Operators
 
 | Operator | Effect | Example |
 |---------|--------|---------|
-| None | All queries containing the N-gram | `smartphone samsung` -> 1,250,000 |
-| `"phrase"` | Fixes word count (exact number of words) | `"smartphone samsung"` -> 12,000 |
+| None | All queries containing the N-gram | `phone samsung` -> 1,250,000 |
+| `"phrase"` | Fixes word count (exact number only) | `"phone samsung"` -> 12,000 |
 | `!word` | Fixes exact word form (no inflections) | `!mobile !phones` -> 61,000 |
 | `[phrase]` | Fixes word order | `[mobile phones]` -> 938,000 vs `[phones mobile]` -> 60 |
 | `+word` | Forces inclusion of stop words | `fridge +how` |
 | `-word` | Excludes queries containing word | `fridge -reviews` |
-| `(a\|b)` | OR operator for variants | `phone (samsung\|galaxy)` |
+| `(a\|b)` | OR operator for variants | `smartphone (samsung\|galaxy)` |
 
-### Operator Combinations
-Combine for precision:
-- **Collection**: `fridge (samsung\|lg) (buy\|price) -reviews`
-- **Exact measurement**: `"[!exact !query]"` - quotes + brackets + exclamation = most precise frequency
+### Combining Operators
+**For collecting queries:**
+```
+fridge (samsung|lg) (buy|price|order) -reviews
+```
+
+**For precise frequency:**
+```
+"[!fridge !samsung]"
+```
+Quotes + brackets + exclamation = most precise frequency (all three constraints).
 
 ### 7-Word Trick
-Repeat a word 7 times in quotes to find all 7-word queries containing it:
+Write the same word 7 times in quotes to find all queries of that exact length:
 ```
 "keyword keyword keyword keyword keyword keyword keyword"
 ```
@@ -55,8 +71,8 @@ Does NOT work for queries longer than 7 words.
 
 ## Frequency Types
 
-| Type | Operator | Use Case |
-|------|----------|----------|
+| Type | Operator | When to Use |
+|------|----------|-------------|
 | General | `query` | Abbreviated core, HF markers |
 | Phrase | `"query"` | Expanded core, frequency validation |
 | Exact | `"[!exact !query]"` | Most precise count, confirming demand |
@@ -64,36 +80,41 @@ Does NOT work for queries longer than 7 words.
 ## Standard Collection Process
 
 ### Step 1: Collect Markers
-**Manual** (dirty niches, small semantics <30 Wordstat pages): browser extensions like WordStatter.
-**Automated** (large catalogs, clean niches): Rush Analytics, Key Collector.
+**Manual** - for "dirty" niches or small semantics (<30 Wordstat pages). Tools: WordStatter, WordStat Assistant extensions.
 
-Expand markers before parsing: add Cyrillic/Latin variants, commercial prefixes (`buy`, `price`), different spellings.
+**Automated** - for large catalogs and clean niches. Tools: Rush Analytics, Key Collector.
+
+**Expand markers before collecting**: add Cyrillic/Latin variants, commercial prefixes, price indicators - each generates different suggestion sets.
 
 ### Step 2: Parse Wordstat Left Column
-For each expanded marker, collect all queries from the left column.
+For each expanded marker, collect all queries from left column.
 
 ### Step 3: Parse Search Suggestions
-Suggestions can 5-7x the query list. Each marker generates 600-700 unique queries.
+Suggestions can 5-7x the query list. Each of 100 markers can generate 600-700 unique queries.
 
 ### Step 4: Parse Competitor Structure (Optional)
-Crawl competitor category pages with Screaming Frog, extract H1 values as structured semantic decisions.
+Crawl competitor category pages with Screaming Frog, extract H1 values = competitor's structured semantic decisions.
 
-### Step 5: Clean
-Remove stop words: non-commercial terms (reviews, forum, DIY), competitor brands, geographic terms if irrelevant.
+**Example**: For a phone store, crawl a competitor's `/tag/` pages only (exclude pagination) to extract all filter/attribute pages as H1 values.
+
+### Step 5: Combine and Clean
+Remove stop words: non-commercial stops ("reviews", "forum", "DIY"), competitor brand names, geographic stops if not needed.
 
 ### Step 6: Check Frequency
-Remove zero-frequency queries before creating pages.
+Pull frequency for all collected queries. Remove zero-frequency queries before creating pages.
 
-### Step 7: Cluster (SERP-Based)
+### Step 7: Cluster
+**SERP-based clustering** (standard):
 - Service collects TOP-10 results for each query
-- If 2 queries share >= 8 TOP-10 pages -> same group (same intent)
-- Tools: Rush Analytics clustering module, Key Collector
-- **Manual refinement always required**: merge incorrectly split clusters, split incorrectly merged ones
+- If 2 queries share >=8 TOP-10 pages -> same group (same intent)
+- Principle: same documents in SERP = identical user intent
 
-### Step 8: Cross-Multiplication (Large E-commerce)
-Products x Brands x Attributes = generated query list. Pull frequency, remove zeros.
+**Manual refinement always required**: merge incorrectly separated clusters, split incorrectly merged ones, fix cluster names.
 
-## Cluster-to-Page Assignment
+### Step 8: Cross-Multiplication (Large Catalogs)
+Products x Brands x Attributes = generated query list. Pull frequency, remove zero-frequency results.
+
+## Cluster to Page Assignment
 
 | Page Type | Assignment Rule |
 |-----------|----------------|
@@ -103,58 +124,61 @@ Products x Brands x Attributes = generated query list. Pull frequency, remove ze
 | Product/service pages | Specific product clusters |
 | Blog/informational | Informational query clusters |
 
-Some queries can ONLY rank on the homepage - check SERP: if all top results are homepages, that query belongs there.
+Some queries can ONLY rank on the homepage - check SERP: if all top results are homepages, assign to homepage.
 
-## AI-Assisted Marker Generation
+## AI-Assisted Workflows
 
-**Iteration 1**: Describe site type, topic, base keywords, known characteristics. Ask AI to list ALL characteristic types for the niche.
+### Marker Generation with AI
+**Iteration 1**: Provide site type, topic, base keywords, known characteristics -> get ALL characteristic types.
 
-**Iteration 2**: For each characteristic type, list all possible values including synonyms, colloquial variants, common misspellings. Format as table with topic keyword appended.
+**Iteration 2**: For each characteristic type, list all values including synonyms, jargon, misspellings. Format as table.
 
-Result: characteristic x value matrix where each row becomes a parse marker.
+**Result**: [characteristic] x [value] combinations -> each row becomes a parse marker.
 
-## AI-Assisted Meta Tag Generation
+### Meta Tag Generation
+**Title rules**: most frequent query at beginning; each word once; up to 80 chars / 12 words; natural sentence, not keyword list; no discounting words.
 
-### Title Rules (via AI prompt)
-- Most frequent query at beginning in original word order
-- Each word used only once (including different inflections)
-- Use only words from cluster queries
-- Length: up to 80 characters / 12 words
-- Must read naturally (not keyword list)
+**Description rules**: 150-159 chars, max 18 words; call to action + USP; synonyms to keywords; 1-2 neutral emoji allowed.
 
-### Description Rules (via AI prompt)
-- 150-159 characters, max 18 words
-- Include call to action and USP
-- Use synonyms to keywords, read naturally
-- 1-2 neutral emoji in middle/end
+### Content Brief Generation via AI
+1. Run text analysis via Rush Analytics on target keywords
+2. Parse competitor pages - extract text with heading hierarchy and token counts
+3. Generate outline via AI: title, summary, target audience, H2-H3 structure
+4. Distribute keywords and LSI across outline sections with exact occurrence counts
 
-## Spreadsheet Tools for Semantic Work
+## Tools for Semantic Work
 
 ### SEOXL Excel Add-in
-- **Cluster coloring** - highlights rows when cluster group changes
-- **H1 propagation** - copies H1 to all rows in same cluster
-- **Sort within cluster** - by frequency inside each cluster
-- **Sort clusters** - by aggregate frequency
-- **Lemma dictionary** - most frequent word roots across all queries
-- **Cluster review (Razbor)** - separate sheet with first row per cluster, hover shows all queries
-- **Squeeze (Vyzhimka)** - strips specified word roots, exposes distinguishing modifiers for deduplication
+- **Color by cluster** - alternating colors for cluster boundaries
+- **Sort within cluster** - sorts by frequency inside each cluster
+- **Sort clusters by total frequency** - highest-traffic clusters first
+- **Lemma dictionary** - most frequent word roots across queries; find stop-word categories
+- **Cluster review** - separate sheet with first row per cluster; merge by dragging adjacent
+- **Squeeze** - strips specified word roots; exposes distinguishing modifiers for deduplication
 
-### Duplicate Cluster Workflow
-1. Apply squeeze to cluster-label column (strip product word + synonyms)
-2. Sort by squeezed column
-3. Conditional formatting to highlight duplicates
-4. In cluster review: drag duplicates adjacent, delete separator
-5. Complete review -> groups merged on main sheet
+### Key Collector (Desktop)
+- Mass Wordstat parsing, frequency collection, internal clustering
+- 4-pass frequency collection (base, phrase, exact phrase, [exact exact])
+- SERP-based clustering: hard (intersection) or soft (union), configurable
+- Task scheduler for overnight unattended runs
+- Multi-group mode: apply operations to all groups simultaneously
+
+### Rush Analytics (Cloud)
+Cloud-based parsing, frequency checking, SERP-based clustering.
+
+### Google Sheets Scripts
+All SEOXL functions replicable via Google Apps Script generated by AI. Prompt format: describe scope ("work with selected range") -> describe action per cell -> specify output location -> iterate with corrections.
 
 ## Gotchas
-- Wordstat left column shows N-gram sums, not exact query frequency - always use quotes for real numbers
-- SERP-based clustering is the standard method because it directly reflects search engine intent interpretation
-- Never create pages for zero-frequency queries
-- Competitor parsing reflects their structural decisions, not full demand - use as supplement only
-- AI-generated markers need frequency validation; many generated combinations will have zero search volume
+- **Right column of Wordstat is unreliable** - use only as supplementary; shows "queries same users searched" not synonyms
+- **Zero-frequency queries should not get pages** - creates thin content harming overall site quality
+- **SERP-based clustering requires manual review** - automatic clustering fails in 10-20% of cases
+- **Marker expansion is critical** - bare markers miss 5-7x queries that expanded variants capture
+- **Cross-multiplication generates garbage** - always validate with frequency data before creating pages
+- **Do not include LF queries in text analyzer** - they distort results; use up to 6 queries optimal
 
 ## See Also
-- [[text-optimization]] - Using semantic core for text briefs
-- [[site-structure-architecture]] - Mapping clusters to URL structure
-- [[seo-tools-and-workflow]] - Key Collector, Rush Analytics, Screaming Frog
-- [[seo-strategy-by-site-type]] - Different semantic strategies per site type
+- [[text-optimization]] - Using semantic core for content briefs and text analyzer
+- [[site-structure-urls]] - How clusters map to site structure
+- [[seo-tools-workflow]] - Tool setup and configuration details
+- [[seo-strategy-by-site-type]] - Strategy differences in semantic approach

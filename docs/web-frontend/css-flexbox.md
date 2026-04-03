@@ -1,96 +1,168 @@
 ---
 title: CSS Flexbox
-category: css
-tags: [css, flexbox, layout, alignment, flex-container, flex-item]
+category: concepts
+tags: [web-frontend, css, flexbox, layout]
 ---
 
 # CSS Flexbox
 
-## Key Facts
+Flexbox is a 1-dimensional layout system for distributing space and aligning items along a single axis (row or column). It replaced float-based layouts for component-level design.
 
-- Flexbox is a **one-dimensional** layout system (row OR column, not both simultaneously)
-- `display: flex` on parent makes children flex items; `display: inline-flex` for inline container
-- **Main axis** direction set by `flex-direction`: `row` (default), `row-reverse`, `column`, `column-reverse`
-- **Cross axis** is perpendicular to main axis
-- `justify-content` aligns items along main axis: `flex-start`, `center`, `flex-end`, `space-between`, `space-around`, `space-evenly`
-- `align-items` aligns items along cross axis: `stretch` (default), `center`, `flex-start`, `flex-end`, `baseline`
-- `flex-wrap: wrap` allows items to wrap to next line; default `nowrap` squeezes all items in one line
-- `gap` property adds spacing between flex items without margin hacks
-- `flex` shorthand: `flex: <grow> <shrink> <basis>` - default is `0 1 auto`
-- Related: [[css-grid-layout]], [[css-box-model-and-display]], [[responsive-design-and-media-queries]]
-
-## Patterns
-
-### Holy Grail Layout (Header/Main/Footer)
+## Enabling Flexbox
 
 ```css
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-main { flex: 1; } /* grows to fill remaining space */
-header, footer { flex-shrink: 0; }
+.container { display: flex; }         /* Block-level flex container */
+.container { display: inline-flex; }  /* Inline-level */
 ```
 
-### Centering (The Classic)
+All direct children become **flex items** automatically.
 
+## Container Properties
+
+### Direction and Wrapping
 ```css
-.center-both {
-  display: flex;
-  justify-content: center; /* main axis */
-  align-items: center;     /* cross axis */
-  min-height: 100vh;
-}
+flex-direction: row;             /* Default: left-to-right */
+flex-direction: row-reverse;     /* Right-to-left */
+flex-direction: column;          /* Top-to-bottom */
+flex-direction: column-reverse;
+
+flex-wrap: nowrap;       /* Default: single line, items shrink */
+flex-wrap: wrap;         /* Wrap to next line */
+
+flex-flow: row wrap;     /* Shorthand: direction + wrap */
 ```
 
-### Responsive Card Row
-
+### Main Axis Alignment (justify-content)
 ```css
-.cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-.card {
-  flex: 1 1 300px; /* grow, shrink, min-width basis */
-  /* Cards grow equally, wrap when < 300px each */
-}
+justify-content: flex-start;      /* Packed to start (default) */
+justify-content: flex-end;        /* Packed to end */
+justify-content: center;          /* Centered */
+justify-content: space-between;   /* First/last at edges, equal gaps */
+justify-content: space-around;    /* Equal space around each (edges half) */
+justify-content: space-evenly;    /* Equal space everywhere */
 ```
 
-### Navbar with Spacer
+### Cross Axis Alignment (align-items)
+```css
+align-items: stretch;     /* Default: fill container height */
+align-items: flex-start;  /* Top (for row) */
+align-items: flex-end;    /* Bottom */
+align-items: center;      /* Centered */
+align-items: baseline;    /* Text baseline alignment */
+```
+
+### Multi-line Cross Axis (align-content)
+Only applies with `flex-wrap: wrap` creating multiple lines:
+```css
+align-content: flex-start | flex-end | center | space-between | space-around | stretch;
+```
+
+### Gap
+```css
+gap: 16px;           /* Row and column gap */
+gap: 16px 24px;      /* Row | Column */
+```
+
+Modern replacement for margin hacks. No gap on outer edges.
+
+## Item Properties
+
+### flex-grow / flex-shrink / flex-basis
+```css
+flex-grow: 0;      /* Default: don't grow */
+flex-grow: 1;      /* Grow to fill available space (proportional) */
+
+flex-shrink: 1;    /* Default: shrink when needed */
+flex-shrink: 0;    /* Don't shrink (may overflow) */
+
+flex-basis: auto;  /* Default: use content/width */
+flex-basis: 200px; /* Starting size before grow/shrink */
+flex-basis: 0;     /* Ignore content, distribute ALL space via grow */
+```
+
+### Shorthand
+```css
+flex: 0 1 auto;     /* Default: no grow, shrink, auto basis */
+flex: 1;            /* flex: 1 1 0 - grow equally, ignore content */
+flex: auto;         /* flex: 1 1 auto - grow, respect content */
+flex: none;         /* flex: 0 0 auto - fixed size */
+flex: 0 0 200px;   /* Fixed 200px */
+```
+
+### Individual Item Overrides
+```css
+.item { align-self: center; }     /* Override align-items for this item */
+.item { order: -1; }              /* Move before items with order 0 */
+```
+
+`order` is visual only - screen readers follow DOM order.
+
+## auto Margin Trick
 
 ```css
-.nav {
+.nav-last  { margin-left: auto; }   /* Push to right in row */
+.centered  { margin: auto; }        /* Center both axes in flex */
+```
+
+`margin: auto` in flex absorbs remaining space in that direction.
+
+## Common Patterns
+
+### Centering (Holy Grail)
+```css
+.container {
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 1rem;
+  min-height: 100vh;
 }
-.nav-spacer { margin-left: auto; } /* pushes subsequent items to the right */
 ```
 
-### Flex Item Properties
-
+### Horizontal Navigation
 ```css
-.item {
-  flex-grow: 1;     /* proportion of remaining space to absorb */
-  flex-shrink: 0;   /* don't shrink below basis */
-  flex-basis: 200px; /* initial size before grow/shrink */
-  align-self: center; /* override parent's align-items */
-  order: -1;         /* move to front visually (default order: 0) */
-}
+nav { display: flex; justify-content: space-between; align-items: center; }
+.nav-links { display: flex; gap: 24px; list-style: none; }
 ```
+
+### Card Row (Equal Height)
+```css
+.cards { display: flex; gap: 24px; }
+.card { flex: 1; }  /* Equal width */
+```
+
+### Footer Sticks to Bottom
+```css
+body { display: flex; flex-direction: column; min-height: 100vh; }
+main { flex: 1; }       /* Takes remaining space */
+footer { flex-shrink: 0; }
+```
+
+### Responsive Wrapping
+```css
+.grid { display: flex; flex-wrap: wrap; gap: 16px; }
+.grid-item { flex: 1 1 300px; }  /* Min 300px, wraps when needed */
+```
+
+## Flexbox vs Grid
+
+| Feature | Flexbox | Grid |
+|---------|---------|------|
+| Dimension | 1D (row OR column) | 2D (rows AND columns) |
+| Best for | Components (nav, cards) | Page layout, complex grids |
+| Content-driven | Yes | No (grid defines cells) |
+
+**Rule**: Flexbox for component-level, Grid for page-level. They compose well together.
 
 ## Gotchas
 
-- `flex: 1` expands to `flex: 1 1 0%` (basis = 0), not `1 1 auto`; items ignore their content width and split space equally
-- `flex-basis` vs `width`: flex-basis takes priority in flex context; use `min-width: 0` to allow text truncation inside flex items
-- Flex items default to `min-width: auto` which prevents shrinking below content size; set `min-width: 0` or `overflow: hidden` to fix
-- `margin: auto` on a flex item absorbs all extra space in that direction (useful for alignment hacks)
-- `gap` in flexbox is well-supported (all modern browsers since 2021); no IE11 support
+- **`flex-basis` overrides `width`**: in a row direction, `flex-basis` takes priority over `width`
+- **`flex: 1` means `flex: 1 1 0`**: basis is 0, distributing ALL space, not just remaining
+- **Default `min-width: auto`**: flex items won't shrink below their content; override with `min-width: 0` or `overflow: hidden`
+- **`order` accessibility**: visual order changes don't affect tab/screen reader order
+- **`margin: auto` absorbs space**: can break `justify-content` if you don't expect it
 
 ## See Also
 
-- [MDN: Flexbox](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout)
-- [CSS Tricks: Complete Guide to Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+- [[css-grid]] - 2D layout system
+- [[css-box-model-and-layout]] - Display, position, box model
+- [[css-responsive-design]] - Media queries and fluid layouts

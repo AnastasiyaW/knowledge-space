@@ -1,88 +1,95 @@
 ---
-title: REST API Advanced Topics
-category: api
-tags: [architecture, rest, caching, versioning, rate-limiting, performance]
+title: REST API Advanced - Performance, Versioning, Caching
+category: reference
+tags: [rest, api, caching, rate-limiting, versioning, retry]
 ---
 
-# REST API Advanced Topics
+# REST API Advanced - Performance, Versioning, Caching
 
-Advanced REST API design covering caching strategies, versioning, rate limiting, compression, retry patterns, and batch requests for production-grade APIs.
+API performance depends on speed, data volume, and call frequency. Factors like mobile data costs, device battery drain, and serverless billing make efficiency critical.
+
+## Rate Limiting and Throttling
+
+### Request-Level Rate Limiting
+Limit requests per time window by IP, API key, or user. On exceeding:
+- **HTTP 429 Too Many Requests**
+- `X-Rate-Limit-Limit` - allowed requests in current period
+- `X-Rate-Limit-Remaining` - remaining requests
+- `X-Rate-Limit-Reset` - seconds until period resets
+
+### Rate Limiting Algorithms
+- **Fixed window** - simple counter per time window
+- **Sliding window** - more accurate, prevents burst at window boundary
+- **Token bucket** - allows short bursts while maintaining average rate (most common)
+- **Leaky bucket** - smooth output rate regardless of input
+
+### Application-Level Throttling
+Internal protection against surges. Prioritizes urgent requests. Implemented via delays or batch processing.
 
 ## HTTP Caching Strategies
 
 ### Four Caching Approaches
 
-1. **No cache** (confidential/dynamic data):
-   ```
-   Cache-Control: private, no-cache, no-store
-   ```
+| Strategy | Header | Use Case |
+|----------|--------|----------|
+| **No cache** | `Cache-Control: private, no-cache, no-store` | Confidential/dynamic data |
+| **Time-based** | `Cache-Control: max-age=3600, must-revalidate` | Known change interval |
+| **Validation-based** | `Cache-Control: no-cache` + `ETag` | Unknown change interval |
+| **Cache forever** | `Cache-Control: max-age=31536000, public, immutable` | Immutable content |
 
-2. **Time-based** (known change interval):
-   ```
-   Cache-Control: max-age=3600, must-revalidate
-   ```
-
-3. **Validation-based** (unknown change interval):
-   - Server sends `Cache-Control: no-cache` + `ETag: "hash"`
-   - Client sends conditional: `If-None-Match: "hash"`
-   - Server responds `304 Not Modified` or sends new data with new ETag
-
-4. **Cache forever** (immutable content):
-   ```
-   Cache-Control: max-age=31536000, public, immutable
-   ```
+### Validation Flow (ETag)
+```
+1. Server responds with: ETag: "abc123"
+2. Client conditional request: If-None-Match: "abc123"
+3. Server responds: 304 Not Modified (use cache)
+   OR sends new data with new ETag
+```
 
 ### Cache Management
-
 - Cache files forever with versioned names (`style1a.css`)
 - On update, rename to `style2b.css` - browser treats as new resource
-- Full invalidation: `Clear-Site-Data: "cache", "cookies", "storage", "executionContexts"`
+- Full invalidation: `Clear-Site-Data: "cache", "cookies", "storage"`
 
-## Rate Limiting and Throttling
+## Compression
 
-### Request-Level Rate Limiting
-
-Limit requests per time window by IP, API key, or user. Response headers:
-- `X-Rate-Limit-Limit` - allowed requests in current period
-- `X-Rate-Limit-Remaining` - remaining requests
-- `X-Rate-Limit-Reset` - seconds until period resets
-- **HTTP 429 Too Many Requests** when exceeded
-
-**Algorithms**: Fixed window, sliding window, token bucket, leaky bucket. Token bucket is most common - allows short bursts while maintaining average rate.
-
-### Application-Level Throttling
-
-Internal protection against sudden surges. Implemented via delays between processing or batch processing. Prioritizes urgent requests.
-
-## API Versioning
-
-### Versioning Approaches
-
-1. **URL path**: `/api/v1/users` (most common, explicit)
-2. **Query parameter**: `/api/users?version=1` (simple but messy)
-3. **Header**: `Accept: application/vnd.myapi.v1+json` (cleaner URLs)
-4. **Custom header**: `API-Version: 2`
-
-### Semantic Versioning Strategy
-
-- **Non-breaking changes** (new endpoints, new optional fields, new response fields): increment minor version (1.0 -> 1.1)
-- **Breaking changes** (removed/changed endpoints, changed required fields, changed error codes): increment major version (1.x -> 2.0)
-- Keep max 2 active versions; notify clients of deprecation
-- Real-world lesson: Keep old API versions longer than expected - some clients call APIs only once per year
-
-## Compression and Keep-Alive
-
-**Compression** (no API design change needed):
+No API design change needed:
 ```
-Client: Accept-Encoding: gzip, deflate, br
-Server: Content-Encoding: gzip
-```
+# Client
+Accept-Encoding: gzip, deflate, br
 
-**Keep-Alive**: Default in HTTP/1.1, no explicit header needed.
+# Server
+Content-Encoding: gzip
+```
 
 ## Batch Requests
 
-Combine multiple API requests into one. Reduces latency, saves bandwidth. All sub-requests packaged in a single request; responses returned together.
+Combine multiple API operations into one. Reduces latency, saves bandwidth. All sub-requests packaged in single request; responses returned together. See Google Drive API batch format as reference.
+
+## API Versioning
+
+### Why Version
+- Maintain backward compatibility for existing clients
+- Clear communication of available features
+- Allow clients to migrate at their own pace
+
+### Semantic Versioning
+- **Non-breaking** (new endpoints, new optional fields, new response fields): minor bump (1.0 -> 1.1)
+- **Breaking** (removed endpoints, changed required fields, changed error codes): major bump (1.x -> 2.0)
+- Keep max 2 active versions; notify clients of deprecation
+
+### Versioning Approaches
+
+| Approach | Example | Notes |
+|----------|---------|-------|
+| **URL path** | `/api/v1/users` | Most common, explicit |
+| **Query parameter** | `/api/users?version=1` | Simple but messy |
+| **Header** | `Accept: application/vnd.api.v1+json` | Cleaner URLs |
+
+### Zero-Downtime API Migration
+- Deprecation announcements with clear timeline
+- Monitor usage of old versions before removal
+- Keep old API versions longer than expected - some clients call APIs only once per year
+- Expand-contract pattern: add new alongside old, migrate, remove old
 
 ## Retry Patterns
 
@@ -96,30 +103,36 @@ Add randomness to retry delays to prevent thundering herd when multiple clients 
 - Only retry on transient errors (5xx, network timeouts)
 - Don't retry client errors (4xx) - they won't self-resolve
 - Set maximum retry count
-- Consider [[distributed-systems|circuit breaker]] for persistent failures
+- Consider circuit breaker for persistent failures
 
-## Performance Optimization
+## Error Response Format
 
-API performance depends on speed, data volume, and call frequency. Factors like roaming data costs, device battery drain, and serverless billing make efficiency critical.
+Standardized format across all APIs:
+```json
+{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Human-readable description",
+    "details": [
+      {"field": "email", "issue": "invalid format"}
+    ]
+  }
+}
+```
 
-Key techniques:
-- **Compression**: gzip/brotli for responses
-- **Connection reuse**: HTTP keep-alive
-- **Batch requests**: combine multiple operations
-- **Pagination**: limit response size
-- **Field selection**: return only needed fields (partial responses)
-- **Caching**: HTTP cache headers
+Never expose internal error details (stack traces, SQL queries) in production.
 
 ## Gotchas
 
-- Validation-based caching with timestamps (`If-Modified-Since`) is not precise enough under high load - use ETag versioning
-- Rate limiting must be applied per API key, not just per IP - shared IPs (NAT, corporate proxies) cause false positives
-- Versioning via URL is most discoverable but hardest to maintain in code
-- Batch endpoints must handle partial failures gracefully
+- **Caching + auth** - never cache responses with `Authorization` header unless explicitly `public`
+- **429 without headers** - always include rate limit headers so clients can self-throttle
+- **Retry on POST** - dangerous without idempotency keys, can create duplicate resources
+- **Cache stampede** - when popular key expires, many requests hit DB simultaneously. Use locking or probabilistic early expiration
+- **Compression CPU cost** - enable for text content (JSON, HTML) but not for already-compressed content (images, video)
 
 ## See Also
 
-- [[rest-api-design]] - HTTP fundamentals and REST constraints
-- [[api-authentication-security]] - auth methods for REST APIs
-- [[caching-strategies]] - in-depth caching patterns beyond HTTP
-- [[reliability-fault-tolerance]] - circuit breakers, timeouts, retries
+- [[http-rest-fundamentals]] - HTTP protocol, REST constraints, resource design
+- [[api-authentication-security]] - OAuth 2.0, JWT, TLS
+- [[caching-and-performance]] - Application-level caching patterns
+- [[api-documentation-specs]] - OpenAPI, Swagger, AsyncAPI

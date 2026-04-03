@@ -1,85 +1,123 @@
 ---
-title: Dimensional Data Modeling
+title: Data Modeling and Normalization
 category: concepts
-tags: [star-schema, snowflake-schema, scd, dimensions, facts, kimball, data-vault]
+tags: [data-engineering, data-modeling, normalization, er-diagrams, database-design]
 ---
 
-# Dimensional Data Modeling
+# Data Modeling and Normalization
 
-Dimensional modeling organizes [[data-warehouse]] tables into facts (measurable events) and dimensions (descriptive context). The goal is fast analytical queries and intuitive structure for business users.
+Data modeling is the process of analyzing requirements and creating data structures. Three stages: conceptual (business entities), logical (ER diagrams with attributes/keys), physical (DDL scripts with indexes/partitions). Normalization eliminates redundancy through functional dependencies.
 
-## Key Facts
+## Normal Forms
 
-- **Fact table** stores quantitative measures (revenue, quantity, clicks) plus foreign keys to dimension tables. Typically the largest table, append-heavy, partitioned by date
-- **Dimension table** stores descriptive attributes (customer name, product category, region). Changes slowly, usually small enough to fit in memory
-- **Star schema**: fact table at center, dimension tables around it with direct FK relationships. Simple, fast (fewer JOINs), most common in practice
-- **Snowflake schema**: dimensions further normalized into sub-dimensions (e.g., product -> category -> department). Saves storage but adds JOIN complexity
-- **SCD (Slowly Changing Dimensions)**: strategies for handling dimension attribute changes over time
-  - **Type 0**: Never change (e.g., date dimension)
-  - **Type 1**: Overwrite old value. Loses history
-  - **Type 2**: Add new row with version/validity dates. Preserves full history, most common
-  - **Type 3**: Add column for previous value. Tracks limited history
-- **Surrogate keys**: auto-increment integers replacing natural keys in dimensions. Required for SCD Type 2 (multiple rows per natural key)
-- **Degenerate dimension**: dimension attribute stored directly in the fact table (e.g., order_number) without a separate dimension table
-- **Conformed dimensions**: shared across multiple fact tables (e.g., date, customer) to enable cross-process analysis
+**Mnemonic:** "Data depends on the key [1NF], the whole key [2NF], and nothing but the key [3NF]."
 
-## Patterns
+### First Normal Form (1NF)
+- All values are **atomic** (no arrays, no composite values)
+- No duplicate rows
+- Has a primary key
 
-### Star schema DDL
+### Second Normal Form (2NF)
+- Satisfies 1NF
+- Every non-key attribute depends on the **entire** primary key
+- Only relevant for composite keys - if PK is simple, 2NF is automatic
+
+### Third Normal Form (3NF)
+- Satisfies 2NF
+- No **transitive dependencies**: non-key A depends on non-key B which depends on PK
+- **Fix:** extract the transitively dependent group into a separate table
+
+### Beyond 3NF
+- **BCNF, 4NF, 5NF** - rarely needed in practice
+- **6NF** - extreme decomposition, one attribute per table. Used in [[data-vault#anchor-modeling|anchor modeling]]
+
+## Functional Dependencies
+
+`{X} -> {Y}` means: if two tuples agree on X, they must agree on Y. Each X value determines exactly one Y value.
+
+### Anomalies (When Normalization is Insufficient)
+
+| Anomaly | Problem |
+|---------|---------|
+| **Update** | Changing info requires updating ALL rows containing that entity |
+| **Delete** | Deleting last related row loses the entity data entirely |
+| **Insert** | Cannot insert an entity that has no related records yet |
+
+## Keys
+
+| Key Type | Definition |
+|----------|-----------|
+| **Candidate key** | Unique + irreducible subset of attributes |
+| **Primary key** | Chosen candidate key |
+| **Alternative key** | Non-chosen candidate keys |
+| **Surrogate key** | System-generated ID (auto-increment, UUID) |
+| **Natural key** | Business attribute (email, SSN) |
+| **Composite key** | Multiple attributes forming a candidate key |
+
+**Prefer surrogate keys** when multiple candidates exist or natural key may change.
+
+## ER Diagrams
+
+### Cardinality Types
+
+| Type | Implementation |
+|------|---------------|
+| **1:1** | FK with UNIQUE constraint |
+| **1:M** | FK in the "many" table |
+| **M:M** | Junction table with FKs to both |
+
+### Notations
+
+**Martin (Crow's Foot)** - most practical, expected in interviews:
+- Rectangles = entities with attributes listed inside
+- Crow's foot (fork) = "many", single line = "one"
+- Circle = "zero" (optional), dash = "one" (mandatory)
+
+**Chen Notation** - academic: rectangles (entities), diamonds (relationships), ovals (attributes)
+
+## Normalization vs Denormalization
+
+| Criterion | Normalized (3NF) | Denormalized |
+|-----------|------------------|-------------|
+| Data integrity | Better (no anomalies) | Worse |
+| INSERT/UPDATE/DELETE | Faster (smaller tables) | Slower |
+| SELECT (reads) | Slower (many JOINs) | Faster (wide tables) |
+| Best for | OLTP (write integrity) | OLAP (read speed, marts) |
+
+## Deduplication Patterns
 
 ```sql
--- Fact table
-CREATE TABLE fact_sales (
-    sale_id      BIGSERIAL PRIMARY KEY,
-    date_key     INT REFERENCES dim_date(date_key),
-    product_key  INT REFERENCES dim_product(product_key),
-    customer_key INT REFERENCES dim_customer(customer_key),
-    quantity     INT NOT NULL,
-    revenue      NUMERIC(12,2) NOT NULL,
-    discount     NUMERIC(5,2) DEFAULT 0
-);
+-- Method 1: CTE + ROW_NUMBER (most common)
+WITH ranked AS (
+    SELECT *, ROW_NUMBER() OVER (
+        PARTITION BY key_col1, key_col2
+        ORDER BY load_date DESC
+    ) AS rn
+    FROM source_table
+)
+SELECT * FROM ranked WHERE rn = 1;
 
--- Dimension table
-CREATE TABLE dim_product (
-    product_key  SERIAL PRIMARY KEY,   -- surrogate key
-    product_id   VARCHAR(50) NOT NULL, -- natural key
-    name         VARCHAR(200),
-    category     VARCHAR(100),
-    brand        VARCHAR(100)
-);
-```
+-- Method 2: QUALIFY (Snowflake, BigQuery, DuckDB)
+SELECT * FROM source_table
+QUALIFY ROW_NUMBER() OVER (
+    PARTITION BY key_col1, key_col2
+    ORDER BY load_date DESC
+) = 1;
 
-### SCD Type 2 implementation
-
-```sql
-CREATE TABLE dim_customer (
-    customer_key   SERIAL PRIMARY KEY,
-    customer_id    VARCHAR(50) NOT NULL, -- natural key
-    name           VARCHAR(200),
-    segment        VARCHAR(50),
-    valid_from     DATE NOT NULL,
-    valid_to       DATE DEFAULT '9999-12-31',
-    is_current     BOOLEAN DEFAULT TRUE
-);
-
--- On attribute change: close old row, insert new
-UPDATE dim_customer SET valid_to = CURRENT_DATE - 1, is_current = FALSE
-    WHERE customer_id = 'C001' AND is_current = TRUE;
-
-INSERT INTO dim_customer (customer_id, name, segment, valid_from, is_current)
-    VALUES ('C001', 'Acme Corp', 'Enterprise', CURRENT_DATE, TRUE);
+-- Method 3: DISTINCT ON (PostgreSQL only)
+SELECT DISTINCT ON (key_col1, key_col2) *
+FROM source_table
+ORDER BY key_col1, key_col2, load_date DESC;
 ```
 
 ## Gotchas
-
-- Star schema seems "denormalized" vs 3NF, but this is intentional for OLAP. Do not normalize a DWH into 3NF - it kills query performance
-- SCD Type 2 requires JOINing on `is_current = TRUE` for latest state or on `valid_from <= event_date AND valid_to >= event_date` for historical analysis
-- Date dimension should always be a physical table, not computed on the fly. Pre-populate with holidays, fiscal periods, day-of-week flags
-- Fact tables with NULL FKs indicate a missing or unknown dimension row. Create explicit "Unknown" rows in each dimension (key = -1) instead of NULLs
+- Relations (mathematical) have no duplicate tuples and no ordering. Tables (physical) can violate both
+- A relation is automatically in 1NF by definition (set theory). Tables need explicit checking
+- In DWH, constraints (PK, FK) are often disabled for faster bulk loading
+- Most production DWHs are hybrids - Data Vault or 3NF in core, dimensional in marts
 
 ## See Also
-
-- [[data-warehouse]] - where dimensional models live
-- [[normalization]] - contrasting approach (3NF) for OLTP
-- [[postgresql-for-data-engineering]] - implementing dimensional models in PG
-- https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/ - Kimball techniques reference
+- [[dimensional-modeling]] - star/snowflake schemas
+- [[data-vault]] - Hub/Link/Satellite methodology
+- [[dwh-architecture]] - where models are applied
+- [[sql-for-de]] - SQL implementation of models
