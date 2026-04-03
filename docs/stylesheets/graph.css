@@ -153,12 +153,12 @@
 }
 
 [data-md-color-scheme="slate"] .claude-snippet__copy {
-  background: rgba(187, 134, 252, 0.15);
-  color: #bb86fc;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 [data-md-color-scheme="slate"] .claude-snippet__copy:hover {
-  background: rgba(187, 134, 252, 0.3);
+  background: rgba(255, 255, 255, 0.22);
 }
 
 [data-md-color-scheme="default"] .claude-snippet__copy {
@@ -173,6 +173,40 @@
 .claude-snippet__copy.copied {
   background: rgba(3, 218, 198, 0.2) !important;
   color: #03dac6 !important;
+}
+
+/* ── Inline snippet (no animated border) ── */
+.md-typeset .claude-snippet--inline {
+  margin: 0.8rem 0;
+  padding: 0;
+  background: none !important;
+  animation: none;
+  box-shadow: none;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.claude-snippet--inline .claude-snippet__inner {
+  padding: 0;
+  border-radius: 10px;
+}
+
+[data-md-color-scheme="slate"] .claude-snippet--inline .claude-snippet__inner {
+  background: transparent;
+}
+
+[data-md-color-scheme="default"] .claude-snippet--inline .claude-snippet__inner {
+  background: transparent;
+}
+
+[data-md-color-scheme="slate"] .claude-snippet--inline .claude-snippet__code {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-md-color-scheme="default"] .claude-snippet--inline .claude-snippet__code {
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* ── Graph Stats Bar ── */

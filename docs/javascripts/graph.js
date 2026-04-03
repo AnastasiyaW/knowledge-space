@@ -663,3 +663,20 @@
     resizeSnippet();
   });
 })();
+
+// ── Inline snippet copy button ──
+(function () {
+  const copyBtn2 = document.getElementById("snippet-copy-2");
+  const codeEl2 = document.querySelector("#snippet-code-2 pre");
+  if (!copyBtn2 || !codeEl2) return;
+  copyBtn2.addEventListener("click", () => {
+    navigator.clipboard.writeText(codeEl2.textContent).then(() => {
+      copyBtn2.classList.add("copied");
+      copyBtn2.querySelector("span").textContent = "Copied!";
+      setTimeout(() => {
+        copyBtn2.classList.remove("copied");
+        copyBtn2.querySelector("span").textContent = "Copy";
+      }, 2000);
+    });
+  });
+})();

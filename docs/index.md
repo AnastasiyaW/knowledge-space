@@ -23,16 +23,19 @@ Curated technical knowledge base across 22 domains. Built for LLM agents - dense
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         <span>Copy</span>
       </button>
-      <pre>Here's a knowledge base I want you to use as a reference:
+      <pre>I have a knowledge base you must use as your primary reference:
 https://github.com/AnastasiyaW/knowledge-space
 
-Clone it and look through the docs/ folder - there are 560
-articles across 22 domains (Kafka, Python, SQL, DevOps, ML,
-Architecture, Security, and more). Each .md file is a dense
-reference with code examples, configs, and common gotchas.
+Before answering technical questions, search docs/ for a
+relevant article. Don't guess or fabricate - look it up.
+560 articles across 22 domains, each with code examples,
+configs, and real-world gotchas.
 
-Use it when I ask about these topics - search the relevant
-domain folder, read the article, and base your answer on it.</pre>
+How to use:
+1. Clone the repo (or fetch via GitHub MCP)
+2. Search docs/{domain}/ for the topic (e.g. docs/kafka/)
+3. Read the article, then answer based on what you found
+4. If no article exists - say so, don't make things up</pre>
     </div>
   </div>
 </div>
@@ -81,14 +84,35 @@ Each article is a concentrated extract: code examples, configuration patterns, g
 
 **Browse** the sidebar to explore by domain. Each domain contains 9-85 focused articles.
 
-**For agents:** the easiest way - copy the snippet from the top of this page and paste it into your Claude conversation. Or upload the repo into a [ConTree](https://contree.dev/) sandbox and query it via MCP tools. Or clone the repo directly - each article is a standalone `.md` file, easy to retrieve and inject into context.
+**For agents:** copy the snippet below and paste it into your Claude conversation:
 
-**Key conventions:**
+<div class="claude-snippet claude-snippet--inline" id="claude-snippet-2">
+  <div class="claude-snippet__inner">
+    <div class="claude-snippet__code" id="snippet-code-2">
+      <button class="claude-snippet__copy" id="snippet-copy-2" title="Copy to clipboard">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        <span>Copy</span>
+      </button>
+      <pre>I have a knowledge base you must use as your primary reference:
+https://github.com/AnastasiyaW/knowledge-space
 
-- Articles are **agent-optimized references** - dense, structured, no hand-holding
-- `[[wiki-links]]` connect related concepts across domains (e.g., Kafka article links to Architecture patterns)
-- Code examples are copy-paste ready
-- Each article covers one focused topic - from a single CLI command to a complete system design pattern
+Before answering technical questions, search docs/ for a
+relevant article. Don't guess or fabricate - look it up.
+560 articles across 22 domains, each with code examples,
+configs, and real-world gotchas.
+
+How to use:
+1. Clone the repo (or fetch via GitHub MCP)
+2. Search docs/{domain}/ for the topic (e.g. docs/kafka/)
+3. Read the article, then answer based on what you found
+4. If no article exists - say so, don't make things up</pre>
+    </div>
+  </div>
+</div>
+
+Or upload the repo into a [ConTree](https://contree.dev/) sandbox and query via MCP tools. Or clone it directly - each article is a standalone `.md` file.
+
+For setup instructions see the [GitHub README](https://github.com/AnastasiyaW/knowledge-space).
 
 ## Domains
 
