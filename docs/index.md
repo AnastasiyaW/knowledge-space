@@ -6,7 +6,7 @@ title: Home
 
 Curated technical knowledge base across 22 domains. Built for LLM agents - dense, structured references that fit in a context window and give immediately actionable answers.
 
-**<span id="ks-total-articles">558</span> articles | <span id="ks-total-domains">22</span> domains**
+**<span id="ks-total-articles">560</span> articles | <span id="ks-total-domains">22</span> domains**
 
 [:fontawesome-brands-github: **GitHub Repository**](https://github.com/AnastasiyaW/knowledge-space){ .md-button .md-button--primary }
 
@@ -26,7 +26,7 @@ Curated technical knowledge base across 22 domains. Built for LLM agents - dense
       <pre>Here's a knowledge base I want you to use as a reference:
 https://github.com/AnastasiyaW/knowledge-space
 
-Clone it and look through the docs/ folder - there are 558
+Clone it and look through the docs/ folder - there are 560
 articles across 22 domains (Kafka, Python, SQL, DevOps, ML,
 Architecture, Security, and more). Each .md file is a dense
 reference with code examples, configs, and common gotchas.
@@ -51,7 +51,7 @@ Each article is a concentrated extract: code examples, configuration patterns, g
 
 **Who it's for:**
 
-- **LLM agents** - structured format optimized for RAG retrieval, [ConTree MCP](https://contree.nebius.com/), and context injection
+- **LLM agents** - structured format optimized for RAG retrieval, [ConTree MCP](https://contree.dev/), and context injection
 - **Engineers** - quick lookup of patterns, commands, configurations across 22 domains
 - **Teams** - shared knowledge base accessible via ConTree sandbox or direct file access
 
@@ -63,7 +63,7 @@ Each article is a concentrated extract: code examples, configuration patterns, g
 
 **Browse** the sidebar to explore by domain. Each domain contains 9-85 focused articles.
 
-**For agents:** upload the repo into a [ConTree](https://contree.nebius.com/) sandbox and query it via MCP tools - search, read, analyze articles in an isolated environment. Or clone the repo directly - each article is a standalone `.md` file, easy to retrieve and inject into context.
+**For agents:** upload the repo into a [ConTree](https://contree.dev/) sandbox and query it via MCP tools - search, read, analyze articles in an isolated environment. Or clone the repo directly - each article is a standalone `.md` file, easy to retrieve and inject into context.
 
 **Key conventions:**
 
@@ -104,12 +104,9 @@ Each article is a concentrated extract: code examples, configuration patterns, g
 
 ## Knowledge Graph
 
-Articles aren't isolated - they form a connected knowledge graph with cross-domain references:
+**<span id="ks-graph-nodes">560</span> nodes** (articles) with **2100+ edges** cross-references across **68 topic communities**.
 
-- **558 nodes** (articles) with **2100+ edges** (cross-references)
-- **68 topic communities** detected via graph analysis
-- Queryable via [ConTree MCP](https://contree.nebius.com/) - upload the repo into a sandbox and search/read/analyze articles with full isolation
-- Each article is a standalone `.md` file - easy to index, retrieve, and inject into LLM context
+Queryable via [ConTree MCP](https://contree.dev/) - upload the repo into a sandbox and search/read/analyze articles with full isolation. Each article is a standalone `.md` file - easy to index, retrieve, and inject into LLM context.
 
 ### Freshness Policy
 

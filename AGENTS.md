@@ -4,7 +4,7 @@ This file is for AI agents that clone this repository. Read this before making a
 
 ## What this repo is
 
-A curated technical knowledge base (558+ articles, 22 domains) designed for AI agent consumption. Dense references - code, configs, gotchas - no tutorials, no filler.
+A curated technical knowledge base (560+ articles, 22 domains) designed for AI agent consumption. Dense references - code, configs, gotchas - no tutorials, no filler.
 
 **Site:** https://happyin.space/
 **Repo:** https://github.com/AnastasiyaW/knowledge-space
@@ -107,4 +107,4 @@ Every PR is automatically checked for:
 
 ## Access via MCP
 
-Upload into a [ConTree](https://contree.nebius.com/) sandbox for isolated search/read/analyze operations. Or clone directly - each `.md` file is self-contained and context-window friendly.
+Upload into a [ConTree](https://contree.dev/) sandbox for isolated search/read/analyze operations. Or clone directly - each `.md` file is self-contained and context-window friendly.

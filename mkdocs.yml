@@ -1,6 +1,6 @@
 site_name: Knowledge Space
 site_description: >-
-  Comprehensive technical knowledge base with 558+ curated articles
+  Comprehensive technical knowledge base with 560+ curated articles
   covering Kafka, Python, SQL, DevOps, Security, and 17 more domains.
   Built for software engineers and LLM agents.
 site_url: https://happyin.space/
@@ -64,6 +64,8 @@ extra_javascript:
 
 hooks:
   - hooks/stats.py
+  - hooks/validate.py
+  - hooks/wikilinks.py
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -97,4 +99,4 @@ plugins:
   - redirects:
       redirect_maps: {}
 
-# nav: auto-generated from docs/ structure (558 articles across 22 domains)
+# nav: auto-generated from docs/ structure (560 articles across 22 domains)

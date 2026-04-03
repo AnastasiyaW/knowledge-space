@@ -5,15 +5,42 @@
   const container = document.getElementById("knowledge-graph");
   if (!container) return;
 
+  // Fallback domain data (used when stats.js hasn't loaded or hook didn't run)
+  const FALLBACK_DOMAINS = {
+    "data-science":     { name: "Data Science",      group: "data",   articles: 38 },
+    "python":           { name: "Python",             group: "code",   articles: 30 },
+    "web-frontend":     { name: "Web Frontend",       group: "code",   articles: 30 },
+    "devops":           { name: "DevOps",             group: "infra",  articles: 31 },
+    "architecture":     { name: "Architecture",       group: "design", articles: 32 },
+    "data-engineering":  { name: "Data Engineering",  group: "data",   articles: 33 },
+    "kafka":            { name: "Kafka",              group: "infra",  articles: 38 },
+    "sql-databases":    { name: "SQL & Databases",    group: "data",   articles: 32 },
+    "linux-cli":        { name: "Linux CLI",          group: "infra",  articles: 27 },
+    "llm-agents":       { name: "LLM & Agents",      group: "ai",     articles: 25 },
+    "java-spring":      { name: "Java & Spring",      group: "code",   articles: 25 },
+    "bi-analytics":     { name: "BI & Analytics",     group: "data",   articles: 23 },
+    "algorithms":       { name: "Algorithms",         group: "design", articles: 21 },
+    "security":         { name: "Security",           group: "infra",  articles: 29 },
+    "seo-marketing":    { name: "SEO & Marketing",    group: "other",  articles: 20 },
+    "testing-qa":       { name: "Testing & QA",       group: "design", articles: 9 },
+    "rust":             { name: "Rust",               group: "code",   articles: 18 },
+    "php":              { name: "PHP",                group: "code",   articles: 15 },
+    "nodejs":           { name: "Node.js",            group: "code",   articles: 16 },
+    "ios-mobile":       { name: "iOS & Mobile",       group: "code",   articles: 21 },
+    "image-generation": { name: "Image Generation",   group: "ai",     articles: 27 },
+    "misc":             { name: "Misc",               group: "other",  articles: 20 },
+  };
+
   // Read domain stats from auto-generated stats.js (single source of truth)
+  // Falls back to hardcoded data if stats.js hasn't loaded
   const stats = window.KS_STATS || {};
-  const domainData = stats.domains || {};
+  const domainData = (stats.domains && Object.keys(stats.domains).length > 0)
+    ? stats.domains
+    : FALLBACK_DOMAINS;
 
   const domains = Object.values(domainData)
     .map((d) => ({ id: d.name, articles: d.articles, group: d.group }))
     .sort((a, b) => b.articles - a.articles);
-
-  if (domains.length === 0) return; // stats.js not loaded yet
 
   const links = [
     { source: "Kafka", target: "Architecture", strength: 3 },
@@ -56,6 +83,9 @@
     { source: "iOS & Mobile", target: "Architecture", strength: 1 },
     { source: "BI & Analytics", target: "Data Engineering", strength: 2 },
     { source: "Data Engineering", target: "DevOps", strength: 2 },
+    { source: "Image Generation", target: "Data Science", strength: 2 },
+    { source: "Image Generation", target: "Python", strength: 1 },
+    { source: "Image Generation", target: "LLM & Agents", strength: 2 },
   ];
 
   // Theme detection
@@ -486,6 +516,7 @@
   };
   el("ks-total-articles", s.total_articles);
   el("ks-total-domains", s.total_domains);
+  el("ks-graph-nodes", s.total_articles);
 })();
 
 // ── Claude Snippet: border particles + copy button ──

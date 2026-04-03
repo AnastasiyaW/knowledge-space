@@ -2,7 +2,7 @@
 
 Curated technical knowledge base across 22 domains. Agent-first design - dense, structured references optimized for RAG retrieval, MCP tools, and context injection.
 
-**558 articles | 22 domains | 2100+ cross-references**
+**560 articles | 22 domains | 2100+ cross-references**
 
 **Live site:** [happyin.space](https://happyin.space/)
 
@@ -37,7 +37,7 @@ Curated technical knowledge base across 22 domains. Agent-first design - dense, 
 
 ### Quick access via ConTree MCP
 
-Upload the repo into a [ConTree](https://contree.nebius.com/) sandbox and query it via MCP tools - search, read, and analyze articles in an isolated environment:
+Upload the repo into a [ConTree](https://contree.dev/) sandbox and query it via MCP tools - search, read, and analyze articles in an isolated environment:
 
 ```bash
 # Upload to ConTree sandbox
@@ -133,13 +133,13 @@ The knowledge base is published as a searchable MkDocs Material site at [happyin
 
 - Auto-deploys to Cloudflare Pages on push to `master`
 - Interactive knowledge graph on the homepage
-- Full-text search across all 558 articles
+- Full-text search across all 560 articles
 - Dark/light mode, SEO optimized
 
 ## Stats
 
 ```
-Total articles:     558
+Total articles:     560
 Total domains:       22
 Wiki links:       2,100+
 Topic communities:   68
