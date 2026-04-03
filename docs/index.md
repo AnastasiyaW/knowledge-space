@@ -37,8 +37,6 @@ domain folder, read the article, and base your answer on it.</pre>
   </div>
 </div>
 
-<div id="knowledge-graph"></div>
-
 ---
 
 ## What is this?
@@ -103,6 +101,8 @@ Each article is a concentrated extract: code examples, configuration patterns, g
 ---
 
 ## Knowledge Graph
+
+<div id="knowledge-graph"></div>
 
 **<span id="ks-graph-nodes">560</span> nodes** (articles) with **2100+ edges** cross-references across **68 topic communities**.
 

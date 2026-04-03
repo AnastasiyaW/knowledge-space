@@ -24,13 +24,14 @@
 }
 
 /* ── Claude Snippet Card ── */
-.claude-snippet {
+/* .md-typeset prefix needed to override Material theme's div resets */
+.md-typeset .claude-snippet {
   position: relative;
   margin: 1.8rem 0;
   border-radius: 14px;
   padding: 2px;
-  background: linear-gradient(135deg, #bb86fc, #03dac6, #ff7597, #ffd740, #82b1ff, #bb86fc);
-  background-size: 300% 300%;
+  background: linear-gradient(135deg, #bb86fc, #03dac6, #ff7597, #ffd740, #82b1ff, #bb86fc) !important;
+  background-size: 300% 300% !important;
   animation: snippet-gradient 8s ease infinite;
   overflow: hidden;
 }
