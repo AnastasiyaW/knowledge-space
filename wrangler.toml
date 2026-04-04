@@ -1,0 +1,6 @@
+# Cloudflare Pages configuration
+# D1 database binding for email subscriptions
+[[d1_databases]]
+binding = "DB"
+database_name = "happyin-subscribers"
+database_id = "e0e95d02-1b2d-4811-a093-302aa6d563cf"
