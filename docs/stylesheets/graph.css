@@ -41,12 +41,17 @@
   margin: 0.6rem 0 1rem !important;
 }
 
-.md-typeset .ks-hero-actions .md-button,
+.md-typeset .ks-hero-actions > a,
 .md-typeset .ks-hero-actions .ks-subscribe__email,
 .md-typeset .ks-hero-actions .ks-subscribe__btn {
   width: 100% !important;
   box-sizing: border-box !important;
   display: block !important;
+  text-align: center !important;
+}
+
+.md-typeset .ks-hero-actions .ks-subscribe__email {
+  margin-bottom: 0.3rem !important;
 }
 
 .md-typeset .ks-hero-actions form {

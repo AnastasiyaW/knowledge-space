@@ -16,6 +16,7 @@
       if (!repo) return;
       var cached = null;
       try { cached = JSON.parse(sessionStorage.getItem('__source_secondary')); } catch(e) {}
+      if (!cached) cached = {stars: 7, forks: 1};
       function renderFacts(data) {
         if (!data || data.stars === undefined) return;
         var ul = document.createElement('ul');
