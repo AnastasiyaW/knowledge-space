@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Phase 1 (0-40%): explode from center to positions -->
+  <!-- Phase 2 (40-100%): slow drift at positions with links visible -->
+
+  <!-- Links: fade in at 40%, stay visible during drift -->
+  <line stroke="#fff" stroke-width="1.2" opacity="0.2">
+    <animate attributeName="x1" values="32;28;28;30;28" keyTimes="0;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="y1" values="32;22;22;20;22" keyTimes="0;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="x2" values="32;42;42;44;42" keyTimes="0;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="y2" values="32;30;30;28;30" keyTimes="0;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0;0.2;0.15;0.2" keyTimes="0;0.35;0.45;0.7;1" dur="5s" repeatCount="indefinite"/>
+  </line>
+  <line stroke="#fff" stroke-width="1" opacity="0.15">
+    <animate attributeName="x1" values="32;28;28;26;28" keyTimes="0;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="y1" values="32;22;22;24;22" keyTimes="0;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="x2" values="32;18;18;16;18" keyTimes="0;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="y2" values="32;40;40;42;40" keyTimes="0;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0;0.18;0.12;0.18" keyTimes="0;0.35;0.45;0.7;1" dur="5s" repeatCount="indefinite"/>
+  </line>
+  <line stroke="#fff" stroke-width="0.8" opacity="0.12">
+    <animate attributeName="x1" values="32;42;42;44;42" keyTimes="0;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="y1" values="32;30;30;32;30" keyTimes="0;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="x2" values="32;38;38;40;38" keyTimes="0;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="y2" values="32;46;46;48;46" keyTimes="0;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0;0.15;0.1;0.15" keyTimes="0;0.35;0.45;0.7;1" dur="5s" repeatCount="indefinite"/>
+  </line>
+  <line stroke="#fff" stroke-width="0.8" opacity="0.12">
+    <animate attributeName="x1" values="32;42;42;44;42" keyTimes="0;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="y1" values="32;30;30;28;30" keyTimes="0;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="x2" values="32;50;50;52;50" keyTimes="0;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="y2" values="32;16;16;18;16" keyTimes="0;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0;0.12;0.08;0.12" keyTimes="0;0.35;0.45;0.7;1" dur="5s" repeatCount="indefinite"/>
+  </line>
+  <line stroke="#fff" stroke-width="0.6" opacity="0.1">
+    <animate attributeName="x1" values="32;18;18;16;18" keyTimes="0;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="y1" values="32;40;40;42;40" keyTimes="0;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="x2" values="32;38;38;36;38" keyTimes="0;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="y2" values="32;46;46;44;46" keyTimes="0;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0;0.12;0.08;0.12" keyTimes="0;0.35;0.45;0.7;1" dur="5s" repeatCount="indefinite"/>
+  </line>
+
+  <!-- Purple (big) -->
+  <circle r="9" fill="#bb86fc" opacity="0.85">
+    <animate attributeName="cx" values="32;10;28;30;26;28" keyTimes="0;0.2;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 1 1;0 0 0.2 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/>
+    <animate attributeName="cy" values="32;8;22;20;24;22" keyTimes="0;0.2;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 1 1;0 0 0.2 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/>
+  </circle>
+
+  <!-- Teal -->
+  <circle r="7" fill="#03dac6" opacity="0.85">
+    <animate attributeName="cx" values="32;56;42;44;40;42" keyTimes="0;0.2;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 1 1;0 0 0.2 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/>
+    <animate attributeName="cy" values="32;12;30;28;32;30" keyTimes="0;0.2;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 1 1;0 0 0.2 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/>
+  </circle>
+
+  <!-- Pink -->
+  <circle r="6" fill="#ff7597" opacity="0.85">
+    <animate attributeName="cx" values="32;8;18;16;20;18" keyTimes="0;0.2;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 1 1;0 0 0.2 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/>
+    <animate attributeName="cy" values="32;54;40;42;38;40" keyTimes="0;0.2;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 1 1;0 0 0.2 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/>
+  </circle>
+
+  <!-- Yellow -->
+  <circle r="5" fill="#ffd740" opacity="0.8">
+    <animate attributeName="cx" values="32;52;38;40;36;38" keyTimes="0;0.2;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 1 1;0 0 0.2 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/>
+    <animate attributeName="cy" values="32;56;46;48;44;46" keyTimes="0;0.2;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 1 1;0 0 0.2 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/>
+  </circle>
+
+  <!-- Blue -->
+  <circle r="4" fill="#82b1ff" opacity="0.75">
+    <animate attributeName="cx" values="32;54;50;52;48;50" keyTimes="0;0.2;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 1 1;0 0 0.2 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/>
+    <animate attributeName="cy" values="32;8;16;18;14;16" keyTimes="0;0.2;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 1 1;0 0 0.2 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/>
+  </circle>
+
+  <!-- Grey -->
+  <circle r="3.5" fill="#b0bec5" opacity="0.6">
+    <animate attributeName="cx" values="32;8;12;10;14;12" keyTimes="0;0.2;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 1 1;0 0 0.2 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/>
+    <animate attributeName="cy" values="32;10;24;22;26;24" keyTimes="0;0.2;0.4;0.6;0.8;1" dur="5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 1 1;0 0 0.2 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/>
+  </circle>
+</svg>
