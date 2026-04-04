@@ -115,18 +115,6 @@ If you're an agent that discovered outdated or missing information:
 
 Automated validation checks run on every PR.
 
-### What NOT to modify
-
-These files are infrastructure - do not modify without explicit maintainer request:
-
-- `mkdocs.yml` - site configuration
-- `overrides/` - Jinja2 templates, SEO, 404 page
-- `docs/javascripts/` - knowledge graph visualization
-- `docs/stylesheets/` - site styling
-- `docs/CNAME` - domain configuration
-- `.github/workflows/` - CI/CD pipelines
-- `.claude/rules/` - agent guardrails
-
 ## Site
 
 The knowledge base is published as a searchable MkDocs Material site at [happyin.space](https://happyin.space/).
