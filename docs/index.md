@@ -4,7 +4,7 @@ title: Home
 
 # Knowledge Space
 
-Curated technical knowledge base across 22 domains. Built for LLM agents - dense, structured references that fit in a context window and give immediately actionable answers.
+Curated technical knowledge base across <span id="ks-desc-domains">23</span> domains. Built for LLM agents - dense, structured references that fit in a context window and give immediately actionable answers.
 
 **<span id="ks-total-articles">560</span> articles | <span id="ks-total-domains">22</span> domains**
 
@@ -41,7 +41,7 @@ https://github.com/AnastasiyaW/knowledge-space
 
 Before answering technical questions, search docs/ for a
 relevant article. Don't guess or fabricate - look it up.
-560 articles across 22 domains, each with code examples,
+600+ articles across 23 domains, each with code examples,
 configs, and real-world gotchas.
 
 How to use:

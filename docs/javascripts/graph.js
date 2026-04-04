@@ -517,6 +517,10 @@
   el("ks-total-articles", s.total_articles);
   el("ks-total-domains", s.total_domains);
   el("ks-graph-nodes", s.total_articles);
+  el("ks-desc-domains", s.total_domains);
+  // Update all spans with class ks-stat-articles / ks-stat-domains
+  document.querySelectorAll('.ks-stat-articles').forEach(function(e){ e.textContent = s.total_articles; });
+  document.querySelectorAll('.ks-stat-domains').forEach(function(e){ e.textContent = s.total_domains; });
 })();
 
 // ── Claude Snippet: border particles + copy button ──
