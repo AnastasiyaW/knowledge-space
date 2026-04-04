@@ -50,12 +50,12 @@ How to use:
   <div class="ks-graph-stats__divider"></div>
   <div class="ks-graph-stats__item">
     <span class="ks-graph-stats__number">2,100+</span>
-    <span class="ks-graph-stats__label">cross-references</span>
+    <span class="ks-graph-stats__label">links</span>
   </div>
   <div class="ks-graph-stats__divider"></div>
   <div class="ks-graph-stats__item">
     <span class="ks-graph-stats__number">68</span>
-    <span class="ks-graph-stats__label">topic communities</span>
+    <span class="ks-graph-stats__label">communities</span>
   </div>
   <div class="ks-graph-stats__divider"></div>
   <div class="ks-graph-stats__item">
