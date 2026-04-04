@@ -1,5 +1,5 @@
 ---
-title: Home
+title: Knowledge Space
 ---
 
 # Knowledge Space

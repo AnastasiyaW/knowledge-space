@@ -15,17 +15,21 @@
       var repoName=el.querySelector('.md-source__repository');
       if(repoName) repoName.textContent='claude-code-config';
       var facts=el.querySelector('.md-source__facts');
-      if(facts) facts.innerHTML='';
+      if(!facts){
+        facts=document.createElement('ul');facts.className='md-source__facts';
+        el.appendChild(facts);
+      }
+      facts.innerHTML='';
+      src.parentNode.appendChild(el);
       fetch('https://api.github.com/repos/AnastasiyaW/claude-code-config')
         .then(function(r){return r.json()})
         .then(function(d){
-          if(facts&&d.stargazers_count!==undefined){
-            var s=document.createElement('li');s.className='md-source__fact';s.textContent=d.stargazers_count+' \u2606';
-            var f=document.createElement('li');f.className='md-source__fact';f.textContent=d.forks_count+' \u2442';
+          if(d.stargazers_count!==undefined){
+            var s=document.createElement('li');s.className='md-source__fact';s.textContent='\u2606 '+d.stargazers_count;
+            var f=document.createElement('li');f.className='md-source__fact';f.textContent='\u2442 '+d.forks_count;
             facts.appendChild(s);facts.appendChild(f);
           }
         }).catch(function(){});
-      src.parentNode.appendChild(el);
     });
   </script>
 

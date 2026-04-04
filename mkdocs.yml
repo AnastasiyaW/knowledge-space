@@ -40,6 +40,8 @@ theme:
     - content.code.copy
     - content.code.annotate
     - toc.follow
+  logo: assets/favicon.svg
+  favicon: assets/favicon.svg
   icon:
     repo: fontawesome/brands/github
 
