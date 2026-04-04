@@ -1,0 +1,19 @@
+{#- Two GitHub repo buttons side by side -#}
+<a href="{{ config.repo_url }}" title="{{ lang.t('source') }}" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    {% set icon = config.theme.icon.repo or "fontawesome/brands/git-alt" %}
+    {% include ".icons/" ~ icon ~ ".svg" %}
+  </div>
+  <div class="md-source__repository">
+    {{ config.repo_name }}
+  </div>
+</a>
+<a href="https://github.com/AnastasiyaW/claude-code-config" title="{{ lang.t('source') }}" class="md-source md-source--secondary">
+  <div class="md-source__icon md-icon">
+    {% set icon = config.theme.icon.repo or "fontawesome/brands/git-alt" %}
+    {% include ".icons/" ~ icon ~ ".svg" %}
+  </div>
+  <div class="md-source__repository" id="source-secondary-repo">
+    claude-code-config
+  </div>
+</a>
