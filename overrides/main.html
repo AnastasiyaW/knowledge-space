@@ -12,6 +12,10 @@
   </style>
   <script>
     document.addEventListener('DOMContentLoaded', function(){
+      // Make site title clickable
+      var title = document.querySelector('.md-header__topic:first-child');
+      if (title) { title.style.cursor = 'pointer'; title.addEventListener('click', function(){ window.location = '/'; }); }
+
       var repo = document.getElementById('source-secondary-repo');
       if (!repo) return;
       var cached = null;
