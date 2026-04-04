@@ -12,10 +12,8 @@ Curated technical knowledge base across 22 domains. Built for LLM agents - dense
 
 <div class="ks-subscribe" id="subscribe-form-wrap" markdown="0">
   <form id="subscribe-form">
-    <div class="ks-subscribe__row">
-      <input type="email" id="sub-email" placeholder="your@email.com" required autocomplete="email">
-      <button type="submit" id="sub-btn" class="md-button md-button--primary">Subscribe to updates</button>
-    </div>
+    <input type="email" id="sub-email" placeholder="your@email.com" required autocomplete="email">
+    <button type="submit" id="sub-btn">Subscribe to updates</button>
     <label class="ks-subscribe__consent">
       <input type="checkbox" id="sub-consent" required>
       <span>I agree to receive occasional updates about new articles</span>

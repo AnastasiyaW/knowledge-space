@@ -6,8 +6,9 @@
   <link rel="icon" href="{{ config.site_url }}assets/favicon-16.png" type="image/png" sizes="16x16">
   <style>
     .md-search { max-width: 14rem; }
-    .md-header__source { display: flex; gap: 0.3rem; max-width: none; width: auto; }
-    .md-header__source .md-source { min-width: 0; max-width: 13rem; }
+    .md-header__source { display: flex; gap: 0; max-width: none; width: auto; align-items: stretch; }
+    .md-header__source .md-source { min-width: 0; width: 12rem; }
+    .md-header__source .md-source__repository { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   </style>
   <script>
     document.addEventListener('DOMContentLoaded', function(){
@@ -22,14 +23,14 @@
         if (!facts || facts.children.length < 2) return;
         added = true;
 
-        // Clone with fully rendered facts (SVG icons + numbers)
         var el = src.cloneNode(true);
         el.href = 'https://github.com/AnastasiyaW/claude-code-config';
+        el.style.borderLeft = '1px solid rgba(255,255,255,0.15)';
         var name = el.querySelector('.md-source__repository');
         if (name) name.textContent = 'claude-code-config';
 
-        // Update numbers from GitHub API
         container.appendChild(el);
+
         fetch('https://api.github.com/repos/AnastasiyaW/claude-code-config')
           .then(function(r) { return r.json(); })
           .then(function(d) {
@@ -42,10 +43,8 @@
           }).catch(function(){});
       }
 
-      // Watch for Material to populate facts
       var observer = new MutationObserver(function() { addSecondButton(); });
       observer.observe(src, { childList: true, subtree: true });
-      // Fallback: try after 3s in case observer misses it
       setTimeout(function() { addSecondButton(); observer.disconnect(); }, 3000);
     });
   </script>
