@@ -5,42 +5,22 @@
   <link rel="icon" href="{{ config.site_url }}assets/favicon.png" type="image/png" sizes="32x32">
   <link rel="icon" href="{{ config.site_url }}assets/favicon-16.png" type="image/png" sizes="16x16">
   <style>
-    .md-header__source { display: flex; gap: 0.4rem; max-width: none; width: auto; }
+    .md-header__source { display: flex; gap: 0.3rem; max-width: none; width: auto; }
     .md-header__source .md-source { min-width: 0; max-width: 11rem; }
-    .md-header__source .md-source__repository { font-size: 0.64rem; }
-    .md-header__source .md-source__facts { font-size: 0.55rem; }
   </style>
   <script>
-    // Add second repo button after Material theme finishes loading stats
-    setTimeout(function(){
+    document.addEventListener('DOMContentLoaded', function(){
       var src = document.querySelector('.md-source');
       if (!src || !src.parentNode) return;
-      // Clone fully rendered button
       var el = src.cloneNode(true);
       el.href = 'https://github.com/AnastasiyaW/claude-code-config';
-      // Set repo name
       var name = el.querySelector('.md-source__repository');
       if (name) name.textContent = 'claude-code-config';
-      // Remove cloned facts (will rebuild from API)
-      var oldFacts = el.querySelector('.md-source__facts');
-      if (oldFacts) oldFacts.remove();
+      // Remove facts entirely - keep it clean, just name + icon
+      var f = el.querySelector('.md-source__facts');
+      if (f) f.remove();
       src.parentNode.appendChild(el);
-      // Fetch fresh stats
-      fetch('https://api.github.com/repos/AnastasiyaW/claude-code-config')
-        .then(function(r) { return r.json(); })
-        .then(function(d) {
-          if (d.stargazers_count === undefined) return;
-          var origFacts = src.querySelector('.md-source__facts');
-          if (!origFacts) return;
-          var nf = origFacts.cloneNode(true);
-          var items = nf.querySelectorAll('.md-source__fact');
-          if (items.length >= 2) {
-            items[0].lastChild.textContent = ' ' + d.stargazers_count;
-            items[1].lastChild.textContent = ' ' + d.forks_count;
-          }
-          el.appendChild(nf);
-        }).catch(function(){});
-    }, 1500);
+    });
   </script>
 
   {% if page %}
