@@ -35,9 +35,9 @@ Curated technical knowledge base across 22 domains. Agent-first design - dense, 
 
 ## For AI agents
 
-### Quick access via ConTree MCP
+### Quick access via sandbox
 
-Upload the repo into a [ConTree](https://contree.dev/) sandbox and query it via MCP tools - search, read, and analyze articles in an isolated environment:
+Upload the repo into a [ConTree](https://contree.dev/) sandbox (or any other isolated environment you prefer) and query it via MCP tools - search, read, and analyze articles:
 
 ```bash
 # Upload to ConTree sandbox
