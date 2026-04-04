@@ -11,36 +11,36 @@
     .md-header__source .md-source__facts { font-size: 0.55rem; }
   </style>
   <script>
-    document.addEventListener('DOMContentLoaded',function(){
-      var src=document.querySelector('.md-source');
-      if(!src||!src.parentNode)return;
-      var el=src.cloneNode(true);
-      el.href='https://github.com/AnastasiyaW/claude-code-config';
-      var repoName=el.querySelector('.md-source__repository');
-      if(repoName) repoName.textContent='claude-code-config';
-      var facts=el.querySelector('.md-source__facts');
-      if(!facts){
-        facts=document.createElement('ul');facts.className='md-source__facts';
-        el.appendChild(facts);
-      }
-      facts.innerHTML='';
+    // Add second repo button after Material theme finishes loading stats
+    setTimeout(function(){
+      var src = document.querySelector('.md-source');
+      if (!src || !src.parentNode) return;
+      // Clone fully rendered button
+      var el = src.cloneNode(true);
+      el.href = 'https://github.com/AnastasiyaW/claude-code-config';
+      // Set repo name
+      var name = el.querySelector('.md-source__repository');
+      if (name) name.textContent = 'claude-code-config';
+      // Remove cloned facts (will rebuild from API)
+      var oldFacts = el.querySelector('.md-source__facts');
+      if (oldFacts) oldFacts.remove();
       src.parentNode.appendChild(el);
+      // Fetch fresh stats
       fetch('https://api.github.com/repos/AnastasiyaW/claude-code-config')
-        .then(function(r){return r.json()})
-        .then(function(d){
-          if(d.stargazers_count!==undefined){
-            var origFacts=src.querySelector('.md-source__facts');
-            if(origFacts){facts.innerHTML=origFacts.innerHTML.replace(/\d+/g,'');};
-            var s=document.createElement('li');s.className='md-source__fact';s.textContent=d.stargazers_count;
-            var f=document.createElement('li');f.className='md-source__fact';f.textContent=d.forks_count;
-            facts.innerHTML='';
-            var origItems=origFacts?origFacts.querySelectorAll('.md-source__fact'):[];
-            if(origItems.length>=2){var s2=origItems[0].cloneNode(true);s2.childNodes[s2.childNodes.length-1].textContent=d.stargazers_count;var f2=origItems[1].cloneNode(true);f2.childNodes[f2.childNodes.length-1].textContent=d.forks_count;facts.appendChild(s2);facts.appendChild(f2);}
-            else{facts.appendChild(s);facts.appendChild(f);}
-            facts.appendChild(s);facts.appendChild(f);
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+          if (d.stargazers_count === undefined) return;
+          var origFacts = src.querySelector('.md-source__facts');
+          if (!origFacts) return;
+          var nf = origFacts.cloneNode(true);
+          var items = nf.querySelectorAll('.md-source__fact');
+          if (items.length >= 2) {
+            items[0].lastChild.textContent = ' ' + d.stargazers_count;
+            items[1].lastChild.textContent = ' ' + d.forks_count;
           }
+          el.appendChild(nf);
         }).catch(function(){});
-    });
+    }, 1500);
   </script>
 
   {% if page %}
