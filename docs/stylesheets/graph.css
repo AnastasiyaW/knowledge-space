@@ -155,6 +155,15 @@
 .md-typeset .ks-subscribe__msg.success { color: #03dac6 !important; }
 .md-typeset .ks-subscribe__msg.error { color: #ff7597 !important; }
 
+/* ── Footer privacy note ── */
+.ks-footer-privacy {
+  text-align: center !important;
+  font-size: 0.65rem !important;
+  opacity: 0.35 !important;
+  padding: 0.5rem 0 0 !important;
+  letter-spacing: 0.03em !important;
+}
+
 /* ── Blog post separator ── */
 .md-typeset .md-post {
   border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
