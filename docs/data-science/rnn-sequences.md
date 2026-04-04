@@ -80,6 +80,19 @@ y_t = phi_1 * y_(t-1) + phi_2 * y_(t-2) + ... + phi_p * y_(t-p)
 
 Features are automatically extracted from lags - no manual target feature engineering needed.
 
+## Sequence Data Categories
+
+Different sequence tasks have different I/O shapes:
+
+| Category | Input | Output | Examples |
+|----------|-------|--------|----------|
+| Many-to-one | Sequence | Single value | Sentiment analysis, activity recognition |
+| One-to-many | Single value | Sequence | Music generation, image captioning |
+| Many-to-many (equal) | Sequence | Same-length sequence | NER, POS tagging |
+| Many-to-many (unequal) | Sequence | Different-length sequence | Translation, summarization |
+
+Note: "one-to-many" may have empty/null input (e.g., unconditional music generation) or a seed value (genre ID, first few notes).
+
 ## Sequence-to-Sequence
 
 Encoder processes input sequence -> context vector -> decoder generates output sequence.

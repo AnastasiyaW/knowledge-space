@@ -62,11 +62,29 @@ Iteratively denoise from pure Gaussian noise to generate samples. Current state-
 - **Point cloud generation**: PointNet-based generative models
 - **3D-aware GANs**: generate 3D-consistent images
 
+## Neural Style Transfer
+
+Combines content from one image with artistic style from another. Uses pre-trained CNN feature representations at different layers.
+
+**Three components:**
+- **Content image (C)**: the photo to transform
+- **Style image (S)**: the artistic reference (e.g., Van Gogh's Starry Night)
+- **Generated image (G)**: output combining C's structure with S's style
+
+**How it works:**
+1. Extract features from a pre-trained CNN (VGG-19) at multiple layers
+2. **Content loss**: difference between C and G features at deeper layers (captures structure/objects)
+3. **Style loss**: difference between Gram matrices of S and G features at multiple layers (captures textures/patterns/colors)
+4. **Total loss**: weighted sum of content and style loss
+5. Optimize G by gradient descent on the pixel values
+
+Shallow CNN layers capture edges, textures, colors. Deeper layers capture objects, faces, composition. Style transfer exploits this hierarchy: match shallow-layer statistics (style) while preserving deep-layer activations (content).
+
 ## Applications
 
 - **Image generation**: faces, art, product images
 - **Data augmentation**: generate training samples for rare classes
-- **Style transfer**: apply artistic style to photos
+- **Neural style transfer**: apply artistic style to photos using CNN features
 - **Super-resolution**: upscale low-resolution images
 - **Inpainting**: fill missing regions in images
 - **Text-to-image**: generate images from text descriptions

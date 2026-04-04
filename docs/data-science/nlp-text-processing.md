@@ -148,14 +148,42 @@ trainer.train()
 - **ALBERT**: parameter sharing, smaller model
 - **XLNet**: permutation-based bidirectional context
 
+## Fundamental NLP Terminology
+
+| Term | Definition |
+|------|-----------|
+| **Token** | General unit of text - can be a word, subword, punctuation, or character |
+| **Vocabulary** | Set of all unique tokens the model knows. Typically 10K-100K+ tokens |
+| **Corpus** | Dataset of text documents used for training |
+| **N-gram** | Sequence of N consecutive tokens. Unigram (1), bigram (2), trigram (3) |
+| **Sentence tokenization** | Splitting text into sentences (NLTK `sent_tokenize`) |
+| **Word tokenization** | Splitting sentence into words/tokens |
+| **Subword tokenization** | BPE/WordPiece splits rare words into known subunits |
+
+**Character vs Word models**: word-level models have richer semantics but sparse coverage. Character-level models handle any text but need more context to be meaningful. Subword tokenization is the standard compromise used by all modern transformers.
+
+## Sequence Data Taxonomy
+
+Different NLP tasks have different input/output shapes:
+
+| Task | Input (X) | Output (Y) | Example |
+|------|-----------|------------|---------|
+| Sentiment analysis | Sequence | Single label | "Great movie!" -> 5 stars |
+| NER | Sequence | Sequence (same length) | "Harry Potter met..." -> [PER, PER, O, ...] |
+| Machine translation | Sequence | Sequence (diff length) | French sentence -> English sentence |
+| Speech recognition | Audio sequence | Text sequence | Waveform -> "the quick brown fox" |
+| Music generation | Empty/seed | Sequence | Genre ID -> musical notes |
+| Text summarization | Sequence | Shorter sequence | Full article -> 3-sentence summary |
+
 ## Common NLP Tasks
 
 - **Text Classification**: sentiment, spam, topic categorization
 - **NER** (Named Entity Recognition): extract persons, organizations, locations
 - **Question Answering**: extract answer span from context
 - **Machine Translation**: sequence-to-sequence with attention
-- **Summarization**: extractive (select sentences) or abstractive (generate)
+- **Summarization**: extractive (select sentences) or abstractive (generate). See [[text-summarization]]
 - **Text Generation**: GPT-family autoregressive models
+- **Language Modeling**: predict next token given context. See [[probabilistic-language-models]]
 
 ## Practical Tips
 
@@ -178,3 +206,5 @@ trainer.train()
 - [[transfer-learning]] - pre-training and fine-tuning
 - [[feature-engineering]] - text-based feature engineering
 - [[model-evaluation]] - NLP-specific evaluation metrics
+- [[text-summarization]] - extractive and abstractive summarization
+- [[probabilistic-language-models]] - n-grams, Markov chains, cipher decryption

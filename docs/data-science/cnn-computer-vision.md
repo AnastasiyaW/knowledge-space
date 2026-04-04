@@ -51,7 +51,16 @@ Solve vanishing gradient for deep networks:
 ```
 input -> Conv -> BN -> ReLU -> Conv -> BN -> (+input) -> ReLU
 ```
-The identity shortcut lets gradients flow directly through the network.
+The identity shortcut lets gradients flow directly through the network. ResNet demonstrated that with skip connections, training a 152-layer network is feasible and outperforms shallower alternatives.
+
+### Why Study Architecture Case Studies
+
+Neural network architectures that work well on one computer vision task typically transfer to others. Key cross-pollination patterns:
+- **ResNet's skip connections** appeared in transformer architectures
+- **Inception's multi-scale processing** influenced feature pyramid networks
+- **ViT showed** that transformer attention can replace convolution entirely
+
+Reading architecture papers builds intuition similar to how programmers learn by reading others' code.
 
 ## Transfer Learning
 
