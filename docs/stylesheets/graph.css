@@ -35,37 +35,28 @@
 
 /* ── Hero Actions Container ── */
 .md-typeset .ks-hero-actions {
-  display: inline-flex !important;
-  flex-direction: column !important;
-  gap: 0.4rem !important;
   margin: 0.6rem 0 1rem !important;
 }
 
-.md-typeset .ks-hero-actions > a,
-.md-typeset .ks-hero-actions .ks-subscribe__email,
-.md-typeset .ks-hero-actions .ks-subscribe__btn {
-  width: 100% !important;
-  box-sizing: border-box !important;
-  display: block !important;
-  text-align: center !important;
-}
-
-.md-typeset .ks-hero-actions .ks-subscribe__email {
-  margin-bottom: 0.3rem !important;
-}
-
 .md-typeset .ks-hero-actions form {
-  margin: 0 !important;
+  display: flex !important;
+  gap: 0 !important;
+  margin: 0.4rem 0 0 !important;
   padding: 0 !important;
+}
+
+.md-typeset .ks-hero-actions .ks-subscribe__btn {
+  border-radius: 0 0.1rem 0.1rem 0 !important;
+  white-space: nowrap !important;
 }
 
 /* Email input - same width as md-button above, with subtle border */
 .md-typeset .ks-subscribe__email {
   display: block !important;
-  width: 100% !important;
+  flex: 1 !important;
   min-width: 0 !important;
-  padding: 0.625em 2em !important;
-  border-radius: 0.1rem !important;
+  padding: 0.625em 1em !important;
+  border-radius: 0.1rem 0 0 0.1rem !important;
   font-family: inherit !important;
   font-size: inherit !important;
   font-weight: 700 !important;
@@ -73,7 +64,7 @@
   -webkit-appearance: none !important;
   appearance: none !important;
   box-sizing: border-box !important;
-  margin: 0 0 0.4rem !important;
+  margin: 0 !important;
 }
 
 [data-md-color-scheme="slate"] .md-typeset .ks-subscribe__email {
@@ -163,6 +154,17 @@
 
 .md-typeset .ks-subscribe__msg.success { color: #03dac6 !important; }
 .md-typeset .ks-subscribe__msg.error { color: #ff7597 !important; }
+
+/* ── Blog post separator ── */
+.md-typeset .md-post {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  padding-bottom: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+[data-md-color-scheme="default"] .md-typeset .md-post {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
 
 /* ── Claude Snippet Card ── */
 /* .md-typeset prefix needed to override Material theme's div resets */
