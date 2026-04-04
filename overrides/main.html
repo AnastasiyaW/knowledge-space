@@ -25,8 +25,8 @@
         .then(function(r){return r.json()})
         .then(function(d){
           if(d.stargazers_count!==undefined){
-            var s=document.createElement('li');s.className='md-source__fact';s.textContent='\u2606 '+d.stargazers_count;
-            var f=document.createElement('li');f.className='md-source__fact';f.textContent='\u2442 '+d.forks_count;
+            var s=document.createElement('li');s.className='md-source__fact';s.innerHTML='&#9734; '+d.stargazers_count;
+            var f=document.createElement('li');f.className='md-source__fact';f.innerHTML='&#9906; '+d.forks_count;
             facts.appendChild(s);facts.appendChild(f);
           }
         }).catch(function(){});

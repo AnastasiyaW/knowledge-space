@@ -1,3 +1,8 @@
+/* ── Hide duplicate site name in sidebar nav ── */
+.md-nav--primary > .md-nav__list > .md-nav__item:first-child > .md-nav__link[href="."] {
+  display: none;
+}
+
 /* ── Reduce spacing between sections on homepage ── */
 .md-typeset hr {
   margin: 1.2rem 0;
