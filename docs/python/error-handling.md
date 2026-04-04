@@ -179,6 +179,72 @@ BaseException
       +-- TypeError, ValueError, RuntimeError
 ```
 
+### ExceptionGroup and except* (Python 3.11+)
+
+Handle multiple concurrent exceptions (useful with asyncio `TaskGroup`):
+```python
+# ExceptionGroup bundles multiple exceptions
+eg = ExceptionGroup("errors", [ValueError("bad"), TypeError("wrong")])
+
+try:
+    raise eg
+except* ValueError as exc_group:
+    print(f"Value errors: {exc_group.exceptions}")
+except* TypeError as exc_group:
+    print(f"Type errors: {exc_group.exceptions}")
+# Both except* clauses can match - unlike regular except
+```
+
+### Exception Chaining Details
+
+```python
+# Implicit chaining - __context__ set automatically
+try:
+    1 / 0
+except ZeroDivisionError:
+    raise ValueError("bad input")
+    # ValueError.__context__ = ZeroDivisionError (shown as "During handling...")
+
+# Explicit chaining - __cause__ set with 'from'
+try:
+    data = json.loads(raw)
+except json.JSONDecodeError as e:
+    raise AppError("Invalid config") from e
+    # AppError.__cause__ = JSONDecodeError (shown as "was the direct cause")
+
+# Suppress context display
+raise AppError("clean message") from None
+```
+
+### Nested Context Managers with ExitStack
+
+```python
+from contextlib import ExitStack
+
+def process_files(filenames):
+    with ExitStack() as stack:
+        files = [stack.enter_context(open(f)) for f in filenames]
+        # All files closed on exit, even if opening one fails
+        return [f.read() for f in files]
+```
+
+### async Context Manager
+
+```python
+from contextlib import asynccontextmanager
+
+@asynccontextmanager
+async def managed_connection(url):
+    conn = await connect(url)
+    try:
+        yield conn
+    finally:
+        await conn.close()
+
+async with managed_connection("db://localhost") as conn:
+    await conn.execute(query)
+```
+
 ## Gotchas
 
 - `except Exception as e` is acceptable; bare `except:` catches too much
@@ -186,6 +252,10 @@ BaseException
 - `finally` runs even with `return` in try/except - the `finally` return value wins
 - `__exit__` returning `True` suppresses the exception - use carefully
 - Retry loops should have a maximum attempt count to avoid infinite loops
+- `except*` clauses are **not** mutually exclusive - multiple can match one ExceptionGroup
+- Exception variable `e` in `except ValueError as e` is deleted after the except block exits (scoping rule to break reference cycles)
+- Raising inside `__del__` is silently ignored - never rely on destructor exceptions
+- `sys.exc_info()` returns `(None, None, None)` outside except blocks - use `e.__traceback__` to store tracebacks
 
 ## See Also
 

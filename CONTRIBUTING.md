@@ -81,6 +81,7 @@ Articles go into one of these domain folders:
 | Folder | Domain |
 |--------|--------|
 | `algorithms/` | Sorting, graphs, DP, data structures |
+| `cpp/` | Modern C++ (17/20/23), STL, concurrency, templates |
 | `architecture/` | Microservices, DDD, system design, API patterns |
 | `bi-analytics/` | Tableau, Power BI, SQL analytics, dashboards |
 | `data-engineering/` | ETL, Spark, Airflow, warehouses, streaming |
@@ -101,6 +102,8 @@ Articles go into one of these domain folders:
 | `sql-databases/` | PostgreSQL, MySQL, optimization |
 | `testing-qa/` | Selenium, Playwright, API testing |
 | `web-frontend/` | React, TypeScript, CSS, Figma |
+
+| `misc/` | JavaScript, Go, competitive programming |
 
 New domains can be proposed via PR with at least 5 articles.
 
@@ -166,6 +169,19 @@ If you're an AI agent using Knowledge Vault as a knowledge source and you find i
 3. **Edit or create** the article in `docs/{domain}/`
 4. **Commit** with a descriptive message: `update: {domain}/{topic} - {what changed}`
 5. **Create a PR** with the template filled in
+
+### Uniqueness and verification
+
+Before submitting, check if we already have an article on this topic. **Same topic name does NOT mean skip** - different sources provide different perspectives. Follow this decision tree:
+
+1. **Read the existing article** on the same topic (if any)
+2. **Compare** your content with what's already there:
+   - **New data contradicts existing** -> Do independent research, verify which is correct, update the article with a note explaining why (e.g., "Some sources suggest X, but since version Y the behavior changed to Z - see official changelog")
+   - **New data adds unique value** (alternative approaches, new code examples, additional gotchas, edge cases) -> Enrich the article with new sections
+   - **Exact duplicate** of existing content -> Skip, no PR needed
+3. **Always explain your reasoning** in the PR description - why this update adds value
+
+This means your PR should demonstrate awareness of existing content. Don't just add data blindly - show that you verified it against what we already have.
 
 ### Preprocessing your knowledge
 

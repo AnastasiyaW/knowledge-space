@@ -83,6 +83,79 @@ Hint mechanisms: `pg_hint_plan` extension (PostgreSQL), `USE INDEX`/`FORCE INDEX
 - **Hash indexes:** Memory-optimized tables only. O(1) point lookups, not for ranges.
 - **Included columns:** Non-key columns in leaf for covering without affecting sort order.
 
+### Index Selectivity and When NOT to Index
+
+```sql
+-- Check selectivity: values near 1.0 = highly selective (good for index)
+SELECT COUNT(DISTINCT status)::float / COUNT(*) AS selectivity FROM orders;
+-- 0.0001 (4 statuses / 1M rows) = low selectivity, index may not help
+
+-- Rule of thumb: index useful when selecting < 10-15% of rows
+-- For low selectivity columns, bitmap scan may still combine with other indexes
+```
+
+### Prefix Indexes (MySQL)
+
+For long string columns, index only the first N characters:
+```sql
+-- Full index on email wastes space
+CREATE INDEX idx_email ON users (email(20));
+
+-- Find optimal prefix length:
+SELECT
+    COUNT(DISTINCT LEFT(email, 10)) / COUNT(*) AS sel_10,
+    COUNT(DISTINCT LEFT(email, 15)) / COUNT(*) AS sel_15,
+    COUNT(DISTINCT LEFT(email, 20)) / COUNT(*) AS sel_20,
+    COUNT(DISTINCT email) / COUNT(*) AS sel_full
+FROM users;
+-- Pick smallest N where selectivity approaches full column selectivity
+```
+
+### Functional Indexes
+
+```sql
+-- PostgreSQL: index on expression
+CREATE INDEX idx_lower_email ON users (LOWER(email));
+-- Now WHERE LOWER(email) = 'user@example.com' uses the index
+
+-- MySQL 8.0+: functional index
+CREATE INDEX idx_year ON events ((YEAR(created_at)));
+-- WHERE YEAR(created_at) = 2024 can use this index
+```
+
+### Invisible Indexes (MySQL 8.0+)
+
+Test impact of dropping an index without actually dropping it:
+```sql
+ALTER TABLE orders ALTER INDEX idx_status INVISIBLE;
+-- Index ignored by optimizer but still maintained
+-- Run queries, check performance
+ALTER TABLE orders ALTER INDEX idx_status VISIBLE;  -- restore if needed
+```
+
+### Composite Index Column Ordering
+
+Equality - Range - Sort rule:
+```sql
+-- Query: WHERE status = 'active' AND created_at > '2024-01-01' ORDER BY amount
+-- Best composite index:
+CREATE INDEX idx_optimal ON orders (status, created_at, amount);
+--  1. status    = equality (exact match, narrows quickly)
+--  2. created_at = range (further narrows, but stops B-tree traversal)
+--  3. amount    = sort (avoids filesort if after range column in same direction)
+```
+
+### Duplicate and Redundant Index Detection
+
+```sql
+-- PostgreSQL: find unused indexes
+SELECT schemaname, relname, indexrelname, idx_scan, pg_size_pretty(pg_relation_size(indexrelid))
+FROM pg_stat_user_indexes WHERE idx_scan = 0 ORDER BY pg_relation_size(indexrelid) DESC;
+
+-- MySQL: find redundant indexes (index on (a,b) makes index on (a) redundant)
+SELECT * FROM sys.schema_redundant_indexes;
+```
+
 ## Gotchas
 
 - Standard `CREATE INDEX` acquires ShareLock (PostgreSQL) - blocks INSERT/UPDATE/DELETE
@@ -91,6 +164,10 @@ Hint mechanisms: `pg_hint_plan` extension (PostgreSQL), `USE INDEX`/`FORCE INDEX
 - Too many indexes on write-heavy tables dramatically slow INSERT/UPDATE/DELETE
 - Bitmap scans combine multiple indexes (AND/OR) - sometimes two mediocre indexes beat one perfect one
 - MySQL InnoDB secondary indexes always do double lookup through clustered index
+- Prefix indexes in MySQL cannot be used for ORDER BY or GROUP BY - only for filtering
+- Functional indexes must match the exact expression in the query - `LOWER(email)` index won't help `UPPER(email)` query
+- Adding columns to a covering index increases index size and slows writes - profile the trade-off
+- MySQL `FORCE INDEX` is a last resort - if the optimizer is wrong, fix statistics first with `ANALYZE TABLE`
 
 ## See Also
 

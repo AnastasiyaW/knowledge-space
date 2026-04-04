@@ -140,6 +140,74 @@ def check_divisible(args):
     return None
 ```
 
+### Free-Threaded Python (PEP 703, Python 3.13+)
+
+Python 3.13 introduces experimental `--disable-gil` build option:
+```bash
+python3.13t script.py  # free-threaded build (no GIL)
+```
+- True multi-threaded parallelism for CPU-bound code
+- Uses biased reference counting and per-object locks instead of GIL
+- C extensions must be updated for thread safety
+- Opt-in flag, not default - GIL builds remain standard
+
+### Shared Memory (Python 3.8+)
+
+```python
+from multiprocessing import shared_memory
+import numpy as np
+
+# Create shared memory from numpy array
+a = np.array([1, 2, 3, 4, 5])
+shm = shared_memory.SharedMemory(create=True, size=a.nbytes)
+shared_arr = np.ndarray(a.shape, dtype=a.dtype, buffer=shm.buf)
+shared_arr[:] = a[:]  # copy data
+
+# In another process - attach by name
+existing_shm = shared_memory.SharedMemory(name=shm.name)
+b = np.ndarray(a.shape, dtype=a.dtype, buffer=existing_shm.buf)
+# b sees same data without serialization overhead
+
+shm.close()
+shm.unlink()  # free shared memory
+```
+
+### Error Handling in Pools
+
+```python
+from concurrent.futures import ProcessPoolExecutor, as_completed
+
+def risky(n):
+    if n == 3:
+        raise ValueError(f"bad input: {n}")
+    return n * n
+
+with ProcessPoolExecutor(max_workers=4) as executor:
+    futures = {executor.submit(risky, i): i for i in range(5)}
+    for future in as_completed(futures):
+        try:
+            result = future.result()
+            print(f"{futures[future]} -> {result}")
+        except Exception as e:
+            print(f"{futures[future]} failed: {e}")
+        # Exceptions are re-raised in the calling thread
+```
+
+### Threading Semaphore - Rate Limiting
+
+```python
+import threading
+
+# Allow max 5 concurrent connections
+semaphore = threading.Semaphore(5)
+
+def download(url):
+    with semaphore:
+        # At most 5 threads execute this block simultaneously
+        response = requests.get(url)
+        return response.content
+```
+
 ## Gotchas
 
 - Even `counter += 1` is not atomic in Python - always protect shared mutable state with locks
@@ -148,6 +216,9 @@ def check_divisible(args):
 - Deadlock with logging in multiprocessing: if a thread holds the logging lock during `fork()`, child inherits locked state
 - `ThreadPoolExecutor` context manager waits for all futures on exit
 - Thread safety: `list.append()` is atomic in CPython (GIL), but don't rely on this
+- `ProcessPoolExecutor` workers are forked - imports and global state must be fork-safe
+- `future.result()` blocks until complete - use `as_completed()` for earliest-first processing
+- Pool workers that crash silently return `None` or raise `BrokenProcessPool` - always check results
 
 ## See Also
 

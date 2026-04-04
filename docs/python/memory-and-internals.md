@@ -132,6 +132,71 @@ gc.get_referrers(obj)  # what references this object
 - Each instruction is 2 bytes (opcode + argument)
 - Performance-critical operations have inlined fast paths for common types
 
+### Dynamic Typing Internals
+
+Variables in Python are names bound to objects, not typed memory slots:
+```python
+a = 3       # a -> int object (3)
+a = "hello" # a -> str object ("hello"), int(3) refcount decremented
+a = 3.14    # a -> float object, str released if refcount=0
+```
+Objects carry their type, not variables. This is why `type(x)` works - it asks the object what it is, not the variable.
+
+### String Interning Details
+
+```python
+a = "hello"
+b = "hello"
+a is b          # True - Python interns short strings (identifiers)
+
+a = "hello world!"
+b = "hello world!"
+a is b          # May be False - strings with spaces/special chars not always interned
+
+# Force interning
+import sys
+a = sys.intern("hello world!")
+b = sys.intern("hello world!")
+a is b          # True - same object
+```
+Interning saves memory for repeated strings and speeds up dict key comparison (identity check before equality).
+
+### `__slots__` Memory Savings
+
+```python
+import sys
+
+class Regular:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+class Slotted:
+    __slots__ = ('x', 'y')
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+sys.getsizeof(Regular(1, 2))    # ~48 bytes + __dict__ (~104 bytes)
+sys.getsizeof(Slotted(1, 2))    # ~48 bytes (no __dict__)
+# With 1M instances: Regular ~152MB vs Slotted ~48MB
+```
+
+### Cyclic Reference Detection Timing
+
+```python
+import gc
+
+# Generation thresholds control when GC runs
+gc.get_threshold()  # (700, 10, 10)
+# Gen 0 collects after 700 allocations - deallocations
+# Gen 1 collects after 10 Gen 0 collections
+# Gen 2 collects after 10 Gen 1 collections
+
+# Objects surviving collection are promoted to next generation
+# Long-lived objects get checked less frequently - efficient for caches
+```
+
 ## Gotchas
 
 - `is` checks identity (same object); `==` checks equality - never use `is` for value comparison
@@ -139,6 +204,10 @@ gc.get_referrers(obj)  # what references this object
 - `sys.getrefcount()` always shows +1 (the function argument itself is a temporary reference)
 - `del x` removes the name binding, not the object - object freed only when refcount reaches 0
 - Circular references without `__del__` are handled by GC; with `__del__` they may leak (Python < 3.4)
+- Integer cache range is -5 to 256 - `a = 257; b = 257; a is b` may be False in the REPL (but True in compiled .py files due to constant folding)
+- `sys.getsizeof()` does NOT include sizes of referenced objects - use `pympler.asizeof` for deep measurement
+- `copy.deepcopy()` handles circular references via a memo dict but is slow - profile before using in hot paths
+- Empty `dict` uses 64 bytes, empty `list` uses 56 bytes - for millions of small records, consider `__slots__` or numpy structured arrays
 
 ## See Also
 

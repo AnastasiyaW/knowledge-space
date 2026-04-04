@@ -114,12 +114,64 @@ Prevention:
 - **Black-box** - no internal knowledge, simulates real attacker, may miss logic flaws
 - **Gray-box** - partial knowledge (e.g., authenticated user perspective)
 
+## Serverless-Specific Vulnerabilities
+
+Serverless architectures (Lambda, Cloud Functions, Azure Functions) introduce unique attack surfaces:
+
+### Event Injection
+Serverless functions triggered by events (S3, SQS, API Gateway) can receive malicious payloads through the event source itself:
+```python
+# Vulnerable: event data directly used in command
+def handler(event, context):
+    filename = event['Records'][0]['s3']['object']['key']
+    os.system(f"convert {filename} output.png")  # command injection via filename!
+
+# Fix: validate and sanitize event data
+import shlex
+def handler(event, context):
+    filename = event['Records'][0]['s3']['object']['key']
+    if not re.match(r'^[a-zA-Z0-9._-]+$', filename):
+        raise ValueError("Invalid filename")
+    subprocess.run(["convert", filename, "output.png"])  # no shell=True
+```
+
+### Overprivileged IAM Roles
+Each function should follow least privilege - a common mistake is sharing a single IAM role across all functions:
+```yaml
+# BAD: wildcard permissions
+- Effect: Allow
+  Action: "s3:*"
+  Resource: "*"
+
+# GOOD: scoped per function
+- Effect: Allow
+  Action: "s3:GetObject"
+  Resource: "arn:aws:s3:::my-bucket/uploads/*"
+```
+
+### Cold Start Information Leakage
+Environment variables persist between warm invocations. Sensitive data from a previous invocation may leak to the next one if stored in global scope.
+
+## Security Headers Reference
+
+```
+Content-Security-Policy: default-src 'self'; script-src 'self' 'nonce-{random}'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; frame-ancestors 'none'
+Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=()
+```
+
 ## Gotchas
 - XSS in JSON API responses can still be exploited if the response is rendered in a browser context
 - CSP `unsafe-inline` defeats the purpose of CSP for XSS protection
 - SSRF blocklists for internal IPs can be bypassed with DNS rebinding, IPv6 mapped addresses, or URL parsing quirks
 - Path traversal `../` stripping can be bypassed with `....//` (nested traversal)
 - IDOR with UUIDs is still exploitable if UUIDs are leaked elsewhere (logs, URLs, responses)
+- Serverless functions share the execution environment between warm invocations - global variables persist and can leak data between tenants
+- Cloud metadata endpoints (169.254.169.254) are accessible from Lambda/Cloud Functions by default - use IMDSv2 (AWS) which requires session tokens
+- Event-driven architectures expand the attack surface - every event source (S3, SQS, SNS, API Gateway) is a potential injection point
 
 ## See Also
 - [[sql-injection-deep-dive]] - SQLi types, sqlmap, parameterized queries

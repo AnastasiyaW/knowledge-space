@@ -109,6 +109,77 @@ FROM pg_stat_statements ORDER BY total_exec_time DESC LIMIT 10;
 ALTER SYSTEM SET auto_explain.log_min_duration = '1s';
 ```
 
+### Deferred Joins (MySQL Optimization)
+
+When paginating with OFFSET on large tables, the database still reads and discards rows:
+```sql
+-- SLOW: reads and discards 100000 rows
+SELECT * FROM posts ORDER BY created_at DESC LIMIT 20 OFFSET 100000;
+
+-- FAST: deferred join - only fetch IDs first, then join for data
+SELECT p.* FROM posts p
+INNER JOIN (
+    SELECT id FROM posts ORDER BY created_at DESC LIMIT 20 OFFSET 100000
+) AS sub ON p.id = sub.id;
+-- Inner query uses covering index (id, created_at), outer fetches full rows only for 20 results
+```
+
+### Cursor-Based Pagination (Alternative to OFFSET)
+
+```sql
+-- Instead of OFFSET (scans discarded rows):
+SELECT * FROM posts ORDER BY id DESC LIMIT 20 OFFSET 100000;
+
+-- Use cursor (seeks directly via index):
+SELECT * FROM posts WHERE id < :last_seen_id ORDER BY id DESC LIMIT 20;
+-- O(1) seek vs O(N) scan - cursor pagination is constant time regardless of page depth
+```
+
+### Timestamps vs Booleans Pattern
+
+```sql
+-- Instead of boolean columns with unclear semantics:
+ALTER TABLE orders ADD COLUMN is_shipped BOOLEAN DEFAULT FALSE;
+
+-- Use timestamp - carries both state AND timing:
+ALTER TABLE orders ADD COLUMN shipped_at TIMESTAMP NULL;
+-- NULL = not shipped, non-NULL = shipped (and you know when)
+-- WHERE shipped_at IS NOT NULL = WHERE is_shipped = TRUE
+-- Bonus: indexable, sortable, auditable
+```
+
+### Summary Tables for Expensive Aggregations
+
+```sql
+-- Instead of running COUNT(*) GROUP BY on millions of rows:
+CREATE TABLE daily_stats (
+    date DATE PRIMARY KEY,
+    order_count INT,
+    total_revenue DECIMAL(12,2),
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Populate periodically or via trigger
+INSERT INTO daily_stats (date, order_count, total_revenue)
+SELECT DATE(created_at), COUNT(*), SUM(amount)
+FROM orders
+WHERE DATE(created_at) = CURRENT_DATE
+ON CONFLICT (date) DO UPDATE SET
+    order_count = EXCLUDED.order_count,
+    total_revenue = EXCLUDED.total_revenue,
+    updated_at = CURRENT_TIMESTAMP;
+```
+
+### EXPLAIN Red Flags to Watch For
+
+| Red Flag | Meaning | Action |
+|----------|---------|--------|
+| Seq Scan on large table | Missing or unused index | Add index, check SARGability |
+| Rows estimate way off | Stale statistics | `ANALYZE table` |
+| Sort with disk | `work_mem` too low | Increase `work_mem` or add sorted index |
+| Nested Loop with Seq Scan inner | Missing index on join column | Add index on inner table's join key |
+| Hash Join spilling to disk | `work_mem` too low for hash table | Increase `work_mem` |
+
 ## Gotchas
 
 - EXPLAIN ANALYZE actually executes the query (including DML!) - wrap in transaction and ROLLBACK
@@ -117,6 +188,9 @@ ALTER SYSTEM SET auto_explain.log_min_duration = '1s';
 - EXPLAIN ANALYZE timing excludes network transfer and format conversion
 - High `join_collapse_limit` value improves plan but slows planning for many-table JOINs
 - After VACUUM, visibility map updated -> Index Only Scan may replace Seq Scan
+- MySQL `EXPLAIN` shows estimated plan; `EXPLAIN ANALYZE` (8.0.18+) shows actual execution - always use ANALYZE for real diagnosis
+- `SELECT *` prevents index-only scans - specify only needed columns to enable covering index use
+- Correlated subqueries execute once per outer row - rewrite as JOIN or use lateral join when possible
 
 ## See Also
 

@@ -163,6 +163,85 @@ coordinates = {(0, 0): "origin", (1, 1): "diagonal"}
 
 *Insertion-ordered since Python 3.7
 
+### Named Tuples
+
+```python
+from collections import namedtuple
+
+Point = namedtuple('Point', ['x', 'y'])
+p = Point(3, 4)
+p.x                  # 3 (attribute access)
+x, y = p             # still unpacks like a tuple
+p._asdict()          # {'x': 3, 'y': 4}
+p._replace(x=10)     # Point(x=10, y=4) - returns new instance
+
+# Typing-friendly alternative (Python 3.6+)
+from typing import NamedTuple
+
+class Point(NamedTuple):
+    x: float
+    y: float
+    label: str = "origin"
+```
+
+### ChainMap - Layered Lookups
+
+```python
+from collections import ChainMap
+
+defaults = {'color': 'red', 'size': 10}
+user_prefs = {'color': 'blue'}
+runtime = {'debug': True}
+
+config = ChainMap(runtime, user_prefs, defaults)
+config['color']   # 'blue' - first match wins
+config['size']    # 10 - falls through to defaults
+config['debug']   # True
+```
+
+### deque - Fast Appends and Pops from Both Ends
+
+```python
+from collections import deque
+
+d = deque(maxlen=5)          # bounded buffer
+d.append(1)                  # right end
+d.appendleft(0)              # left end - O(1) unlike list.insert(0, x) which is O(n)
+d.rotate(2)                  # rotate right by 2
+
+# Sliding window pattern
+def sliding_window(iterable, n):
+    it = iter(iterable)
+    window = deque(maxlen=n)
+    for _ in range(n):
+        window.append(next(it))
+    yield tuple(window)
+    for item in it:
+        window.append(item)
+        yield tuple(window)
+```
+
+### Repetition and Shared References Trap
+
+```python
+# DANGER: repetition creates shared references for mutable objects
+board = [[0] * 3] * 3    # 3 references to SAME inner list
+board[0][0] = 1
+print(board)              # [[1, 0, 0], [1, 0, 0], [1, 0, 0]] - all rows affected!
+
+# FIX: use comprehension to create independent lists
+board = [[0] * 3 for _ in range(3)]
+board[0][0] = 1
+print(board)              # [[1, 0, 0], [0, 0, 0], [0, 0, 0]] - correct
+```
+
+### Walrus Operator in Comprehensions (Python 3.8+)
+
+```python
+# Avoid computing expensive function twice
+results = [y for x in data if (y := expensive(x)) > threshold]
+```
+
 ## Gotchas
 
 - `b = a` for lists creates shared reference, not a copy - use `a.copy()` or `a[:]`
@@ -170,6 +249,10 @@ coordinates = {(0, 0): "origin", (1, 1): "diagonal"}
 - `list.sort()` returns `None` (sorts in-place); `sorted()` returns new list
 - `{1, 2} | {3}` is set union, not dict merge - context matters for `|`
 - Modifying a dict during iteration raises `RuntimeError` - iterate over a copy
+- `[[0]*3]*3` shares inner lists - use `[[0]*3 for _ in range(3)]` for independent rows
+- `tuple` is NOT always immutable in practice: `t = ([1, 2],)` - the tuple itself is immutable but the list inside is mutable
+- `dict.fromkeys(['a','b'], [])` shares the SAME list for all keys - use dict comprehension instead
+- `in` operator on dict checks keys, not values - use `val in d.values()` for value check
 
 ## See Also
 

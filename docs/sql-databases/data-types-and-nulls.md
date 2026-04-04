@@ -132,6 +132,74 @@ DATE_FORMAT(d, '%Y-%m-%d')
 STR_TO_DATE(s, '%d/%m/%Y')
 ```
 
+### Generated Columns (MySQL 8.0+, PostgreSQL 12+)
+
+Computed columns stored or calculated on the fly:
+```sql
+-- MySQL: STORED (on disk) or VIRTUAL (computed at read)
+CREATE TABLE users (
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    full_name VARCHAR(101) GENERATED ALWAYS AS (CONCAT(first_name, ' ', last_name)) STORED
+);
+-- Can index STORED generated columns
+CREATE INDEX idx_fullname ON users (full_name);
+
+-- PostgreSQL 12+: only STORED
+ALTER TABLE users ADD COLUMN full_name TEXT GENERATED ALWAYS AS (first_name || ' ' || last_name) STORED;
+```
+
+### JSON Column Patterns
+
+```sql
+-- PostgreSQL JSONB: binary storage, indexable
+CREATE TABLE events (
+    id SERIAL PRIMARY KEY,
+    payload JSONB NOT NULL
+);
+
+-- GIN index for containment queries
+CREATE INDEX idx_payload ON events USING GIN (payload);
+
+-- Query with operators
+SELECT * FROM events WHERE payload @> '{"type": "click"}';         -- contains
+SELECT * FROM events WHERE payload ->> 'user_id' = '42';           -- text extraction
+SELECT * FROM events WHERE (payload -> 'meta' ->> 'score')::int > 90;  -- nested + cast
+
+-- MySQL 8.0: JSON with generated column for indexing
+ALTER TABLE events ADD COLUMN event_type VARCHAR(50)
+    GENERATED ALWAYS AS (JSON_UNQUOTE(JSON_EXTRACT(payload, '$.type'))) STORED;
+CREATE INDEX idx_event_type ON events (event_type);
+```
+
+### UUID as Primary Key
+
+```sql
+-- PostgreSQL: native UUID type
+CREATE TABLE users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name TEXT NOT NULL
+);
+-- Pro: no sequential guessing, safe for distributed systems
+-- Con: larger than INT (16 bytes vs 4), random = fragmented B-tree inserts
+
+-- UUIDv7 (time-sorted) available via extensions - preserves insert order
+-- Better B-tree locality than UUIDv4
+```
+
+### Unexpected Type Coercions
+
+```sql
+-- MySQL silently truncates
+INSERT INTO t (tinyint_col) VALUES (999);  -- stores 127 (max) with warning
+-- PostgreSQL raises error for out-of-range
+
+-- MySQL string-to-number coercion
+SELECT * FROM users WHERE phone = 0;
+-- Matches ALL rows where phone is a non-numeric string (coerced to 0)!
+-- Always use: WHERE phone = '0'
+```
+
 ## Gotchas
 
 - MySQL `utf8` is 3-byte only (no emoji) - always use `utf8mb4`
@@ -139,6 +207,10 @@ STR_TO_DATE(s, '%d/%m/%Y')
 - FLOAT arithmetic: `0.1 + 0.2 != 0.3` - use DECIMAL for exact comparisons
 - PostgreSQL SERIAL is deprecated in favor of `GENERATED ALWAYS AS IDENTITY`
 - NULL in NOT IN: if subquery returns any NULL, NOT IN returns empty result
+- MySQL implicit type coercion: `WHERE varchar_col = 0` matches non-numeric strings - always quote string comparisons
+- JSONB in PostgreSQL is ~30% larger than JSON but dramatically faster for queries - always prefer JSONB unless you need exact formatting preservation
+- UUID primary keys cause B-tree page splits on random inserts - consider UUIDv7 (time-ordered) for better write performance
+- Generated columns cannot reference other generated columns or use subqueries
 
 ## See Also
 

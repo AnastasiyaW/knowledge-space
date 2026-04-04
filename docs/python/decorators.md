@@ -157,6 +157,72 @@ class Point:
         self.y = y
 ```
 
+### Optional-Argument Decorator (Dual-Mode)
+
+A decorator that works both with and without arguments:
+```python
+import functools
+
+def decorator(func=None, *, retries=3, delay=1):
+    """Works as @decorator or @decorator(retries=5)."""
+    if func is None:
+        return lambda f: decorator(f, retries=retries, delay=delay)
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        for attempt in range(retries):
+            try:
+                return func(*args, **kwargs)
+            except Exception:
+                if attempt == retries - 1:
+                    raise
+                time.sleep(delay)
+    return wrapper
+
+@decorator           # no parentheses - func passed directly
+def task_a(): ...
+
+@decorator(retries=5) # with args - returns decorator
+def task_b(): ...
+```
+
+### Method Descriptor Decorator
+
+When a class-based decorator wraps an instance method, `self` is lost because the decorator instance replaces the function. Fix with `__get__`:
+```python
+import functools
+
+class Trace:
+    def __init__(self, func):
+        self.func = func
+        functools.update_wrapper(self, func)
+
+    def __call__(self, *args, **kwargs):
+        print(f"Calling {self.func.__name__}")
+        return self.func(*args, **kwargs)
+
+    def __get__(self, obj, objtype=None):
+        if obj is None:
+            return self
+        return functools.partial(self.__call__, obj)
+
+class MyClass:
+    @Trace
+    def method(self):  # now works correctly with self
+        return "ok"
+```
+
+### Preserving Signature with `functools.wraps`
+
+`@functools.wraps` copies `__name__`, `__doc__`, `__module__`, `__qualname__`, `__dict__`, and `__wrapped__`. The `__wrapped__` attribute stores the original function, enabling decorator bypass:
+```python
+@my_decorator
+def process(data):
+    ...
+
+# Bypass decorator for testing:
+process.__wrapped__(test_data)
+```
+
 ## Gotchas
 
 - Forgetting `return func(*args, **kwargs)` makes decorated function return `None`
@@ -164,6 +230,9 @@ class Point:
 - Decorator runs at import time - `@decorator` line executes when function is defined
 - Manual decoration preserves access to original: `decorated = my_decorator(original)` - `original` still usable
 - Deep decorator stacking adds function call overhead - usually negligible but relevant for hot paths
+- Class-based decorators on methods lose `self` - implement `__get__` to return a bound method via `functools.partial`
+- `@staticmethod` and `@classmethod` are descriptors - stacking them with other decorators requires correct ordering (put `@staticmethod`/`@classmethod` on top)
+- Decorated generators and coroutines need special handling - wrapper must `yield from` or `async` to preserve protocol
 
 ## See Also
 

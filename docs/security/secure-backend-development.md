@@ -198,12 +198,79 @@ export const CurrentUser = createParamDecorator(
 - CORS configuration (restrictive whitelist)
 - Disable `X-Powered-By` header
 
+### Serverless Backend Security
+
+```typescript
+// Lambda/Cloud Function: validate event source
+export async function handler(event: APIGatewayProxyEvent) {
+    // Always validate event structure - it could come from any trigger
+    if (!event.body || typeof event.body !== 'string') {
+        return { statusCode: 400, body: 'Invalid request' };
+    }
+
+    // Parse with schema validation
+    const parsed = JSON.parse(event.body);
+    const validated = schema.safeParse(parsed); // zod
+    if (!validated.success) {
+        return { statusCode: 400, body: 'Validation failed' };
+    }
+}
+```
+
+### Secrets Management
+
+```typescript
+// Never hardcode secrets - use environment + secrets manager
+// BAD
+const API_KEY = "sk-1234567890";
+
+// GOOD - from env (set by deployment, not committed)
+const API_KEY = process.env.API_KEY;
+
+// BETTER - from secrets manager with caching
+import { SecretsManagerClient, GetSecretValueCommand } from "@aws-sdk/client-secrets-manager";
+
+let cachedSecret: string | null = null;
+async function getSecret(name: string): Promise<string> {
+    if (cachedSecret) return cachedSecret;
+    const client = new SecretsManagerClient({});
+    const response = await client.send(new GetSecretValueCommand({ SecretId: name }));
+    cachedSecret = response.SecretString!;
+    return cachedSecret;
+}
+```
+
+### Rate Limiting Patterns
+
+```typescript
+// Express with sliding window
+import rateLimit from 'express-rate-limit';
+
+// Global rate limit
+app.use(rateLimit({
+    windowMs: 15 * 60 * 1000,  // 15 minutes
+    max: 100,                   // 100 requests per window
+    standardHeaders: true,
+    legacyHeaders: false,
+}));
+
+// Per-endpoint stricter limit for auth
+app.use('/api/auth', rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 5,                     // 5 login attempts per 15 min
+    skipSuccessfulRequests: true,
+}));
+```
+
 ## Gotchas
 - `whitelist: true` alone does NOT reject extra fields - it silently strips them. Add `forbidNonWhitelisted: true` to reject
 - Prisma `$queryRaw` with template literals IS safe (tagged template), but string concatenation is NOT
 - NestJS `@Body()` without `ValidationPipe` does no validation at all - pipe must be applied
 - MongoDB `$where` operator allows JavaScript execution - never use with user input
 - `express-mongo-sanitize` must be applied BEFORE route handlers to be effective
+- Rate limiting by IP alone is insufficient - attackers use IP rotation. Combine with user ID, API key, or fingerprint
+- `helmet()` sets good defaults but `Content-Security-Policy` needs manual tuning per app - test with report-only mode first
+- Secrets in Lambda environment variables are visible via `console.log(process.env)` - never log full env in production
 
 ## See Also
 - [[authentication-and-authorization]] - JWT, OAuth, RBAC concepts

@@ -171,6 +171,87 @@ for grade, group in groupby(data, key=lambda s: s.grade):
     print(grade, list(group))
 ```
 
+### Generator .throw() and .close()
+
+```python
+def resilient_reader(path):
+    with open(path) as f:
+        for line in f:
+            try:
+                yield line.strip()
+            except GeneratorExit:
+                print("Cleanup on close")
+                return
+            except Exception as e:
+                print(f"Handling injected: {e}")
+
+gen = resilient_reader("data.txt")
+next(gen)
+gen.throw(ValueError, "bad data")   # inject exception at yield point
+gen.close()                          # raises GeneratorExit inside generator
+```
+
+### Subgenerator Delegation with yield from
+
+`yield from` is more than syntactic sugar - it properly delegates `.send()`, `.throw()`, and `.close()` to the subgenerator:
+```python
+def accumulate():
+    total = 0
+    while True:
+        value = yield total
+        if value is None:
+            return total       # return value becomes StopIteration.value
+        total += value
+
+def main():
+    result = yield from accumulate()  # delegates send/throw/close
+    print(f"Final: {result}")
+
+gen = main()
+next(gen)        # prime
+gen.send(10)     # 10
+gen.send(20)     # 30
+gen.send(None)   # triggers return, prints "Final: 30"
+```
+
+### Iterator vs Iterable - The Reusability Pattern
+
+```python
+# Iterable (reusable) - returns new iterator each time
+class Sentence:
+    def __init__(self, text):
+        self.words = text.split()
+    def __iter__(self):
+        return iter(self.words)   # new iterator each call
+
+s = Sentence("one two three")
+list(s)  # ['one', 'two', 'three']
+list(s)  # ['one', 'two', 'three'] - works again!
+
+# Iterator (single-use) - IS its own iterator
+class WordIterator:
+    def __init__(self, words):
+        self.words = words
+        self.index = 0
+    def __iter__(self):
+        return self           # returns self = single-use
+    def __next__(self):
+        if self.index >= len(self.words):
+            raise StopIteration
+        word = self.words[self.index]
+        self.index += 1
+        return word
+```
+
+### batched() (Python 3.12+)
+
+```python
+from itertools import batched
+
+list(batched("ABCDEFG", 3))   # [('A','B','C'), ('D','E','F'), ('G',)]
+# Replaces common "chunks" recipe
+```
+
 ## Gotchas
 
 - Generators are one-shot - exhausted after single iteration; create new one to iterate again
@@ -178,6 +259,10 @@ for grade, group in groupby(data, key=lambda s: s.grade):
 - Can't get `len(gen)` - use `sum(1 for _ in gen)` but this exhausts it
 - `tee(iterator, n)` creates n copies but advancing one doesn't advance others - memory grows
 - Second `list(map_result)` returns empty list - iterators are consumed
+- Generator `.send()` requires `next(gen)` first to prime it - calling `.send(value)` on a fresh generator raises TypeError
+- `yield from` delegates `.close()` to subgenerator - if subgenerator ignores GeneratorExit, RuntimeError is raised
+- List comprehension `[x for x in gen]` exhausts the generator - can't reuse it after
+- `itertools.chain` accepts iterables, not iterators specifically - but if you pass an exhausted iterator, it contributes nothing
 
 ## See Also
 

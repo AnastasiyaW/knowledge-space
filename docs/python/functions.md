@@ -173,6 +173,62 @@ def my_func(param):
 | Introspection | `type()`, `isinstance()`, `id()`, `dir()`, `help()`, `callable()` |
 | Base conversion | `hex()`, `oct()`, `bin()`, `ord()`, `chr()` |
 
+### Keyword-Only and Positional-Only Arguments (Python 3.8+)
+
+```python
+# Everything after * is keyword-only
+def tag(name, *, cls=None, id=None):
+    ...
+tag("div", cls="main")       # OK
+tag("div", "main")           # TypeError - cls is keyword-only
+
+# Everything before / is positional-only
+def pow(base, exp, /, mod=None):
+    ...
+pow(2, 10)                   # OK
+pow(base=2, exp=10)          # TypeError - base and exp are positional-only
+
+# Combined
+def f(pos_only, /, normal, *, kw_only):
+    ...
+```
+
+### Closure Late-Binding Trap
+
+```python
+# WRONG - all lambdas capture the same variable i
+funcs = [lambda: i for i in range(5)]
+[f() for f in funcs]  # [4, 4, 4, 4, 4] - all return last value!
+
+# FIX - bind current value via default argument
+funcs = [lambda i=i: i for i in range(5)]
+[f() for f in funcs]  # [0, 1, 2, 3, 4] - each captures its own value
+```
+
+### functools.reduce
+
+```python
+from functools import reduce
+
+# reduce(func, iterable, initial) - fold left
+product = reduce(lambda a, b: a * b, [1, 2, 3, 4])  # 24
+# Equivalent: ((1*2)*3)*4
+
+# With initial value
+total = reduce(lambda a, b: a + b, [], 0)  # 0 (empty list, no error)
+```
+
+### Function Annotations (Runtime Accessible)
+
+```python
+def greet(name: str, times: int = 1) -> str:
+    return name * times
+
+greet.__annotations__
+# {'name': <class 'str'>, 'times': <class 'int'>, 'return': <class 'str'>}
+# Annotations are metadata only - Python does NOT enforce them at runtime
+```
+
 ## Gotchas
 
 - Never shadow built-in names: `list = [1, 2]` breaks `list()` function
@@ -180,6 +236,10 @@ def my_func(param):
 - `map()`/`filter()` iterators are exhausted after one pass - convert to list if needed
 - Mutable default arguments are shared across calls: use `def f(x=None): x = x or []`
 - Without `return`, function returns `None` implicitly
+- Closures capture variables by reference, not by value - loop variable trap: `lambda: i` captures the name `i`, not its current value
+- `def f(x=[]): x.append(1)` - default list is created ONCE at function definition time and shared across all calls
+- `*args` receives a tuple (immutable); `**kwargs` receives a dict (mutable)
+- `f(*[1,2], *[3,4])` is valid (multiple unpacking in a single call, Python 3.5+)
 
 ## See Also
 

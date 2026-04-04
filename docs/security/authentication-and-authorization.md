@@ -144,12 +144,70 @@ export class RolesGuard implements CanActivate {
 - Credential rotation - automatic password changes
 - Break-glass procedures - emergency access with full audit trail
 
+### JWT Refresh Token Rotation
+
+```
+Access Token:  short-lived (15 min), stateless verification
+Refresh Token: long-lived (7 days), stored server-side, single-use
+
+Flow:
+1. Login -> access_token + refresh_token
+2. API calls with access_token in Authorization header
+3. On 401 -> POST /refresh with refresh_token
+4. Server invalidates old refresh_token, issues new pair
+5. If old refresh_token reused -> token theft detected -> revoke all tokens for user
+```
+
+### Passkeys (FIDO2/WebAuthn)
+
+Modern passwordless authentication using public-key cryptography:
+```
+Registration:
+1. Server sends challenge (random bytes)
+2. Authenticator generates key pair
+3. Private key stored on device (never leaves)
+4. Public key sent to server
+
+Authentication:
+1. Server sends challenge
+2. Authenticator signs challenge with private key
+3. Server verifies signature with stored public key
+```
+- Phishing-resistant: cryptographic binding to origin (RP ID)
+- No shared secrets to steal from server
+- Supported: Chrome, Safari, Firefox, all major platforms
+
+### ABAC vs RBAC
+
+| Feature | RBAC | ABAC |
+|---------|------|------|
+| Granularity | Role-based | Attribute-based (user, resource, env) |
+| Complexity | Simple | Complex but flexible |
+| Example | admin, editor, viewer | user.dept == resource.dept AND time < 17:00 |
+| Best for | Well-defined roles | Dynamic, context-aware access |
+
+```python
+# ABAC-style policy check
+def can_access(user, resource, action):
+    if action == "read" and resource.classification == "public":
+        return True
+    if user.department == resource.department and user.clearance >= resource.sensitivity:
+        return True
+    if user.role == "admin" and not resource.restricted:
+        return True
+    return False
+```
+
 ## Gotchas
 - JWT tokens cannot be revoked once issued - use short expiration + refresh tokens
 - Storing JWT in localStorage is XSS-vulnerable; HttpOnly cookies are safer but need CSRF protection
 - OAuth implicit flow is deprecated - always use Authorization Code + PKCE
 - Kerberos clock skew > 5 minutes causes authentication failures
 - "Remember me" cookies must still be invalidated on password change
+- JWT `alg: none` attack - always validate the algorithm server-side, never trust the token header
+- Refresh token rotation without revocation tracking allows token replay - store a token family ID and revoke entire family on reuse detection
+- Passkeys eliminate phishing but require fallback for account recovery - plan recovery flows carefully
+- bcrypt has a 72-byte input limit - hash long passwords with SHA-256 first, then bcrypt (pre-hashing)
 
 ## See Also
 - [[cryptography-and-pki]] - underlying crypto mechanisms
