@@ -1,4 +1,4 @@
-# <img src="docs/assets/favicon-animated.gif" width="32" height="32" alt="logo"> Happyin Knowledge Space
+# <img src="docs/assets/favicon-animated.gif" width="28" height="28" alt="logo"> Knowledge Space
 
 Curated technical knowledge base across 22 domains. Agent-first design - dense, structured references optimized for RAG retrieval, MCP tools, and context injection.
 
