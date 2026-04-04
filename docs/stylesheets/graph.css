@@ -35,94 +35,126 @@
 
 /* ── Subscribe Form ── */
 .md-typeset .ks-subscribe {
-  margin: 1.2rem 0;
-  padding: 1rem 1.2rem;
-  border-radius: 10px;
+  margin: 1.2rem 0 !important;
+  padding: 1rem 1.2rem !important;
+  border-radius: 10px !important;
 }
 
-[data-md-color-scheme="slate"] .ks-subscribe {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+[data-md-color-scheme="slate"] .md-typeset .ks-subscribe {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
-[data-md-color-scheme="default"] .ks-subscribe {
-  background: rgba(0, 0, 0, 0.02);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+[data-md-color-scheme="default"] .md-typeset .ks-subscribe {
+  background: rgba(0, 0, 0, 0.02) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
 }
 
-.ks-subscribe__row {
-  display: flex;
-  gap: 0.5rem;
+.md-typeset .ks-subscribe form {
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-.ks-subscribe__row input[type="email"] {
-  flex: 1;
-  padding: 0.5rem 0.8rem;
-  border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.05);
-  color: inherit;
-  font-family: inherit;
-  font-size: 0.85rem;
-  outline: none;
-  transition: border-color 0.2s;
+.md-typeset .ks-subscribe__row {
+  display: flex !important;
+  gap: 0.5rem !important;
+  align-items: stretch !important;
 }
 
-.ks-subscribe__row input[type="email"]:focus {
-  border-color: #bb86fc;
+.md-typeset .ks-subscribe__row input[type="email"] {
+  flex: 1 !important;
+  padding: 0.6rem 0.9rem !important;
+  border-radius: 8px !important;
+  font-family: inherit !important;
+  font-size: 0.85rem !important;
+  outline: none !important;
+  transition: border-color 0.2s, box-shadow 0.2s !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  box-sizing: border-box !important;
+  height: auto !important;
+  margin: 0 !important;
 }
 
-[data-md-color-scheme="default"] .ks-subscribe__row input[type="email"] {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  background: #fff;
+[data-md-color-scheme="slate"] .md-typeset .ks-subscribe__row input[type="email"] {
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #fff !important;
 }
 
-.ks-subscribe__row button {
-  padding: 0.5rem 1.2rem;
-  border-radius: 6px;
-  border: none;
-  background: #bb86fc;
-  color: #1e1e2e;
-  font-family: inherit;
-  font-size: 0.85rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.2s;
-  white-space: nowrap;
+[data-md-color-scheme="slate"] .md-typeset .ks-subscribe__row input[type="email"]::placeholder {
+  color: rgba(255, 255, 255, 0.3) !important;
 }
 
-.ks-subscribe__row button:hover {
-  background: #ce9efc;
+[data-md-color-scheme="slate"] .md-typeset .ks-subscribe__row input[type="email"]:focus {
+  border-color: #bb86fc !important;
+  box-shadow: 0 0 0 2px rgba(187, 134, 252, 0.2) !important;
 }
 
-.ks-subscribe__row button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+[data-md-color-scheme="default"] .md-typeset .ks-subscribe__row input[type="email"] {
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  background: #fff !important;
+  color: #000 !important;
 }
 
-.ks-subscribe__consent {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.4rem;
-  margin-top: 0.5rem;
-  font-size: 0.7rem;
-  opacity: 0.5;
-  cursor: pointer;
+[data-md-color-scheme="default"] .md-typeset .ks-subscribe__row input[type="email"]:focus {
+  border-color: #6200ea !important;
+  box-shadow: 0 0 0 2px rgba(98, 0, 234, 0.15) !important;
 }
 
-.ks-subscribe__consent input[type="checkbox"] {
-  margin-top: 0.15rem;
-  flex-shrink: 0;
+.md-typeset .ks-subscribe__row button {
+  padding: 0.6rem 1.4rem !important;
+  border-radius: 8px !important;
+  border: none !important;
+  background: #bb86fc !important;
+  color: #1e1e2e !important;
+  font-family: inherit !important;
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: background 0.2s, transform 0.1s !important;
+  white-space: nowrap !important;
+  line-height: 1.4 !important;
 }
 
-.ks-subscribe__msg {
-  font-size: 0.78rem;
-  margin-top: 0.4rem;
-  min-height: 1.2em;
+.md-typeset .ks-subscribe__row button:hover {
+  background: #ce9efc !important;
+  transform: translateY(-1px) !important;
 }
 
-.ks-subscribe__msg.success { color: #03dac6; }
-.ks-subscribe__msg.error { color: #ff7597; }
+.md-typeset .ks-subscribe__row button:active {
+  transform: translateY(0) !important;
+}
+
+.md-typeset .ks-subscribe__row button:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+}
+
+.md-typeset .ks-subscribe__consent {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 0.4rem !important;
+  margin-top: 0.5rem !important;
+  font-size: 0.7rem !important;
+  opacity: 0.5 !important;
+  cursor: pointer !important;
+}
+
+.md-typeset .ks-subscribe__consent input[type="checkbox"] {
+  margin-top: 0.15rem !important;
+  flex-shrink: 0 !important;
+}
+
+.md-typeset .ks-subscribe__msg {
+  font-size: 0.78rem !important;
+  margin-top: 0.4rem !important;
+  min-height: 1.2em !important;
+}
+
+.md-typeset .ks-subscribe__msg.success { color: #03dac6 !important; }
+.md-typeset .ks-subscribe__msg.error { color: #ff7597 !important; }
 
 /* ── Claude Snippet Card ── */
 /* .md-typeset prefix needed to override Material theme's div resets */
