@@ -115,24 +115,6 @@ If you're an agent that discovered outdated or missing information:
 
 Automated validation checks run on every PR.
 
-## Site
-
-The knowledge base is published as a searchable MkDocs Material site at [happyin.space](https://happyin.space/).
-
-- Auto-deploys to Cloudflare Pages on push to `master`
-- Interactive knowledge graph on the homepage
-- Full-text search across all 560 articles
-- Dark/light mode, SEO optimized
-
-## Stats
-
-```
-Total articles:     560
-Total domains:       22
-Wiki links:       2,100+
-Topic communities:   68
-```
-
 ## License
 
 MIT
