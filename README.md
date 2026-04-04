@@ -1,10 +1,10 @@
-# <img src="docs/assets/favicon-animated.gif" width="32" height="32" alt="logo" style="vertical-align: middle;"> Knowledge Space
+# <img src="docs/assets/favicon-animated.gif" width="32" height="32" alt="logo" style="vertical-align: middle;"> <span><img src="https://readme-typing-svg.demolab.com?font=Inter&weight=800&size=28&pause=99999&color=BB86FC&vCenter=true&width=120&height=32&lines=Happyin" alt="Happyin" height="28"></span> <span><img src="https://readme-typing-svg.demolab.com?font=Inter&weight=800&size=28&pause=99999&color=03DAC6&vCenter=true&width=180&height=32&lines=Knowledge" alt="Knowledge" height="28"></span> <span><img src="https://readme-typing-svg.demolab.com?font=Inter&weight=800&size=28&pause=99999&color=FF7597&vCenter=true&width=90&height=32&lines=Space" alt="Space" height="28"></span>
 
 Curated technical knowledge base across 22 domains. Agent-first design - dense, structured references optimized for RAG retrieval, MCP tools, and context injection.
 
 **560 articles | 22 domains | 2100+ cross-references**
 
-**Live site:** [happyin.space](https://happyin.space/)
+**Live site:** [<img src="https://readme-typing-svg.demolab.com?font=Inter&weight=700&size=16&pause=99999&color=FFD740&vCenter=true&width=160&height=22&lines=happyin.space+%E2%86%97" alt="happyin.space" height="18">](https://happyin.space/)
 
 ## What's inside
 
