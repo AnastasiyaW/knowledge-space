@@ -10,6 +10,20 @@ Curated technical knowledge base across 22 domains. Built for LLM agents - dense
 
 [:fontawesome-brands-github: **GitHub Repository**](https://github.com/AnastasiyaW/knowledge-space){ .md-button .md-button--primary }
 
+<div class="ks-subscribe" id="subscribe-form-wrap" markdown="0">
+  <form id="subscribe-form">
+    <div class="ks-subscribe__row">
+      <input type="email" id="sub-email" placeholder="your@email.com" required autocomplete="email">
+      <button type="submit" id="sub-btn">Subscribe</button>
+    </div>
+    <label class="ks-subscribe__consent">
+      <input type="checkbox" id="sub-consent" required>
+      <span>I agree to receive occasional updates about new articles</span>
+    </label>
+    <div class="ks-subscribe__msg" id="sub-msg"></div>
+  </form>
+</div>
+
 <div class="claude-snippet" id="claude-snippet">
   <canvas class="claude-snippet__particles" id="snippet-particles"></canvas>
   <div class="claude-snippet__inner">

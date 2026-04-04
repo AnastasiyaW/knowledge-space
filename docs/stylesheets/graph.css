@@ -33,6 +33,97 @@
   height: 100%;
 }
 
+/* ── Subscribe Form ── */
+.md-typeset .ks-subscribe {
+  margin: 1.2rem 0;
+  padding: 1rem 1.2rem;
+  border-radius: 10px;
+}
+
+[data-md-color-scheme="slate"] .ks-subscribe {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-md-color-scheme="default"] .ks-subscribe {
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.ks-subscribe__row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.ks-subscribe__row input[type="email"] {
+  flex: 1;
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  color: inherit;
+  font-family: inherit;
+  font-size: 0.85rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.ks-subscribe__row input[type="email"]:focus {
+  border-color: #bb86fc;
+}
+
+[data-md-color-scheme="default"] .ks-subscribe__row input[type="email"] {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: #fff;
+}
+
+.ks-subscribe__row button {
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  border: none;
+  background: #bb86fc;
+  color: #1e1e2e;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.ks-subscribe__row button:hover {
+  background: #ce9efc;
+}
+
+.ks-subscribe__row button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ks-subscribe__consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+  font-size: 0.7rem;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.ks-subscribe__consent input[type="checkbox"] {
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+}
+
+.ks-subscribe__msg {
+  font-size: 0.78rem;
+  margin-top: 0.4rem;
+  min-height: 1.2em;
+}
+
+.ks-subscribe__msg.success { color: #03dac6; }
+.ks-subscribe__msg.error { color: #ff7597; }
+
 /* ── Claude Snippet Card ── */
 /* .md-typeset prefix needed to override Material theme's div resets */
 .md-typeset .claude-snippet {

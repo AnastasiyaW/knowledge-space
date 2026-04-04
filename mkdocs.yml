@@ -41,7 +41,7 @@ theme:
     - content.code.annotate
     - toc.follow
   logo: assets/favicon.svg
-  favicon: assets/favicon.svg
+  favicon: assets/favicon.png
   icon:
     repo: fontawesome/brands/github
 

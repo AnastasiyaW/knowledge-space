@@ -2,7 +2,8 @@
 
 {% block extrahead %}
   {{ super() }}
-  <link rel="icon" href="{{ config.site_url }}assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="{{ config.site_url }}assets/favicon.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="{{ config.site_url }}assets/favicon-16.png" type="image/png" sizes="16x16">
   <style>
     .md-header__source { display: flex; gap: 0.4rem; max-width: none; width: auto; }
     .md-header__source .md-source { min-width: 0; max-width: 11rem; }

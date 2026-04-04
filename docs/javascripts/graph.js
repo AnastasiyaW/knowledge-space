@@ -664,6 +664,51 @@
   });
 })();
 
+// ── Subscribe form ──
+(function () {
+  var form = document.getElementById("subscribe-form");
+  if (!form) return;
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var msg = document.getElementById("sub-msg");
+    var btn = document.getElementById("sub-btn");
+    var email = document.getElementById("sub-email").value.trim();
+    var consent = document.getElementById("sub-consent").checked;
+    if (!consent) {
+      msg.textContent = "Please agree to receive updates";
+      msg.className = "ks-subscribe__msg error";
+      return;
+    }
+    btn.disabled = true;
+    btn.textContent = "...";
+    fetch("/api/subscribe", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email }),
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (d.ok) {
+          msg.textContent = "Subscribed! We'll notify you about new articles.";
+          msg.className = "ks-subscribe__msg success";
+          document.getElementById("sub-email").value = "";
+          document.getElementById("sub-consent").checked = false;
+        } else {
+          msg.textContent = d.error || "Something went wrong";
+          msg.className = "ks-subscribe__msg error";
+        }
+      })
+      .catch(function () {
+        msg.textContent = "Network error, try again";
+        msg.className = "ks-subscribe__msg error";
+      })
+      .finally(function () {
+        btn.disabled = false;
+        btn.textContent = "Subscribe";
+      });
+  });
+})();
+
 // ── Inline snippet copy button ──
 (function () {
   const copyBtn2 = document.getElementById("snippet-copy-2");
