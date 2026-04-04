@@ -35,19 +35,10 @@
 
 /* ── Subscribe Form ── */
 .md-typeset .ks-subscribe {
-  margin: 1.2rem 0 !important;
-  padding: 1rem 1.2rem !important;
-  border-radius: 10px !important;
-}
-
-[data-md-color-scheme="slate"] .md-typeset .ks-subscribe {
-  background: rgba(255, 255, 255, 0.03) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-}
-
-[data-md-color-scheme="default"] .md-typeset .ks-subscribe {
-  background: rgba(0, 0, 0, 0.02) !important;
-  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  margin: 0.8rem 0 1.2rem !important;
+  padding: 0 !important;
+  border: none !important;
+  background: none !important;
 }
 
 .md-typeset .ks-subscribe form {
@@ -57,100 +48,82 @@
 
 .md-typeset .ks-subscribe__row {
   display: flex !important;
-  gap: 0.5rem !important;
+  gap: 0 !important;
   align-items: stretch !important;
 }
 
 .md-typeset .ks-subscribe__row input[type="email"] {
   flex: 1 !important;
-  padding: 0.6rem 0.9rem !important;
-  border-radius: 8px !important;
+  padding: 0.625em 1em !important;
+  border: none !important;
+  border-radius: 0.1rem 0 0 0.1rem !important;
   font-family: inherit !important;
-  font-size: 0.85rem !important;
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
   outline: none !important;
-  transition: border-color 0.2s, box-shadow 0.2s !important;
   -webkit-appearance: none !important;
   appearance: none !important;
   box-sizing: border-box !important;
   height: auto !important;
   margin: 0 !important;
+  background: var(--md-primary-fg-color) !important;
+  color: var(--md-primary-bg-color) !important;
+  opacity: 0.85 !important;
 }
 
-[data-md-color-scheme="slate"] .md-typeset .ks-subscribe__row input[type="email"] {
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  background: rgba(255, 255, 255, 0.06) !important;
-  color: #fff !important;
+.md-typeset .ks-subscribe__row input[type="email"]::placeholder {
+  color: var(--md-primary-bg-color) !important;
+  opacity: 0.5 !important;
 }
 
-[data-md-color-scheme="slate"] .md-typeset .ks-subscribe__row input[type="email"]::placeholder {
-  color: rgba(255, 255, 255, 0.3) !important;
-}
-
-[data-md-color-scheme="slate"] .md-typeset .ks-subscribe__row input[type="email"]:focus {
-  border-color: #bb86fc !important;
-  box-shadow: 0 0 0 2px rgba(187, 134, 252, 0.2) !important;
-}
-
-[data-md-color-scheme="default"] .md-typeset .ks-subscribe__row input[type="email"] {
-  border: 1px solid rgba(0, 0, 0, 0.15) !important;
-  background: #fff !important;
-  color: #000 !important;
-}
-
-[data-md-color-scheme="default"] .md-typeset .ks-subscribe__row input[type="email"]:focus {
-  border-color: #6200ea !important;
-  box-shadow: 0 0 0 2px rgba(98, 0, 234, 0.15) !important;
+.md-typeset .ks-subscribe__row input[type="email"]:focus {
+  opacity: 1 !important;
 }
 
 .md-typeset .ks-subscribe__row button {
-  padding: 0.6rem 1.4rem !important;
-  border-radius: 8px !important;
+  padding: 0.625em 1.5em !important;
   border: none !important;
-  background: #bb86fc !important;
-  color: #1e1e2e !important;
+  border-radius: 0 0.1rem 0.1rem 0 !important;
+  background: var(--md-primary-fg-color) !important;
+  color: var(--md-primary-bg-color) !important;
   font-family: inherit !important;
-  font-size: 0.85rem !important;
+  font-size: 0.8rem !important;
   font-weight: 700 !important;
   cursor: pointer !important;
-  transition: background 0.2s, transform 0.1s !important;
   white-space: nowrap !important;
-  line-height: 1.4 !important;
+  transition: opacity 0.2s !important;
+  border-left: 1px solid rgba(255,255,255,0.15) !important;
 }
 
 .md-typeset .ks-subscribe__row button:hover {
-  background: #ce9efc !important;
-  transform: translateY(-1px) !important;
-}
-
-.md-typeset .ks-subscribe__row button:active {
-  transform: translateY(0) !important;
+  opacity: 0.85 !important;
 }
 
 .md-typeset .ks-subscribe__row button:disabled {
   opacity: 0.5 !important;
   cursor: not-allowed !important;
-  transform: none !important;
 }
 
 .md-typeset .ks-subscribe__consent {
   display: flex !important;
   align-items: flex-start !important;
   gap: 0.4rem !important;
-  margin-top: 0.5rem !important;
-  font-size: 0.7rem !important;
-  opacity: 0.5 !important;
+  margin-top: 0.4rem !important;
+  font-size: 0.65rem !important;
+  opacity: 0.4 !important;
   cursor: pointer !important;
 }
 
 .md-typeset .ks-subscribe__consent input[type="checkbox"] {
-  margin-top: 0.15rem !important;
+  margin-top: 0.1rem !important;
   flex-shrink: 0 !important;
 }
 
 .md-typeset .ks-subscribe__msg {
-  font-size: 0.78rem !important;
-  margin-top: 0.4rem !important;
+  font-size: 0.8rem !important;
+  margin-top: 0.5rem !important;
   min-height: 1.2em !important;
+  font-weight: 600 !important;
 }
 
 .md-typeset .ks-subscribe__msg.success { color: #03dac6 !important; }

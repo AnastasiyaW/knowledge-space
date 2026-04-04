@@ -667,12 +667,14 @@
 // ── Subscribe form ──
 (function () {
   var form = document.getElementById("subscribe-form");
-  if (!form) return;
+  var wrap = document.getElementById("subscribe-form-wrap");
+  if (!form || !wrap) return;
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     var msg = document.getElementById("sub-msg");
     var btn = document.getElementById("sub-btn");
-    var email = document.getElementById("sub-email").value.trim();
+    var emailEl = document.getElementById("sub-email");
+    var email = emailEl.value.trim();
     var consent = document.getElementById("sub-consent").checked;
     if (!consent) {
       msg.textContent = "Please agree to receive updates";
@@ -689,22 +691,23 @@
       .then(function (r) { return r.json(); })
       .then(function (d) {
         if (d.ok) {
-          msg.textContent = "Subscribed! We'll notify you about new articles.";
-          msg.className = "ks-subscribe__msg success";
-          document.getElementById("sub-email").value = "";
-          document.getElementById("sub-consent").checked = false;
+          // Replace form with success message
+          wrap.innerHTML = '<div class="ks-subscribe__done">' +
+            '<span style="color:#03dac6;font-weight:700;">Subscribed!</span> ' +
+            'We will send you an email when new articles are published.' +
+            '</div>';
         } else {
           msg.textContent = d.error || "Something went wrong";
           msg.className = "ks-subscribe__msg error";
+          btn.disabled = false;
+          btn.textContent = "Subscribe to updates";
         }
       })
       .catch(function () {
         msg.textContent = "Network error, try again";
         msg.className = "ks-subscribe__msg error";
-      })
-      .finally(function () {
         btn.disabled = false;
-        btn.textContent = "Subscribe";
+        btn.textContent = "Subscribe to updates";
       });
   });
 })();
