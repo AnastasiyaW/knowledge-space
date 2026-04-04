@@ -4,42 +4,28 @@
   {{ super() }}
   <link rel="icon" href="{{ config.site_url }}assets/favicon.svg" type="image/svg+xml">
   <style>
-    /* Two repo buttons side by side */
-    .md-header__source { display: flex; gap: 0.4rem; }
-    .md-source { flex-shrink: 0; }
-    /* Replace default logo with our animated favicon */
-    .md-header__button.md-logo img, .md-header__button.md-logo svg { display: none; }
-    .md-header__button.md-logo { background: url('{{ config.site_url }}assets/favicon.svg') no-repeat center/contain; width: 28px; height: 28px; }
+    .md-header__source { display: flex; gap: 0.3rem; max-width: none; width: auto; }
   </style>
   <script>
     document.addEventListener('DOMContentLoaded',function(){
-      // Clone repo button for claude-code-config
       var src=document.querySelector('.md-source');
       if(!src||!src.parentNode)return;
       var el=src.cloneNode(true);
       el.href='https://github.com/AnastasiyaW/claude-code-config';
       var repoName=el.querySelector('.md-source__repository');
       if(repoName) repoName.textContent='claude-code-config';
-      // Fetch stars/forks for claude-code-config
+      var facts=el.querySelector('.md-source__facts');
+      if(facts) facts.innerHTML='';
       fetch('https://api.github.com/repos/AnastasiyaW/claude-code-config')
         .then(function(r){return r.json()})
         .then(function(d){
-          var facts=el.querySelector('.md-source__facts');
           if(facts&&d.stargazers_count!==undefined){
-            facts.innerHTML='<li class="md-source__fact">\u2606 '+d.stargazers_count+'</li><li class="md-source__fact">\u2442 '+d.forks_count+'</li>';
+            var s=document.createElement('li');s.className='md-source__fact';s.textContent=d.stargazers_count+' \u2606';
+            var f=document.createElement('li');f.className='md-source__fact';f.textContent=d.forks_count+' \u2442';
+            facts.appendChild(s);facts.appendChild(f);
           }
         }).catch(function(){});
       src.parentNode.appendChild(el);
-
-      // Replace logo with animated favicon
-      var logo=document.querySelector('.md-header__button.md-logo');
-      if(logo){
-        logo.innerHTML='';
-        var img=document.createElement('img');
-        img.src='{{ config.site_url }}assets/favicon.svg';
-        img.width=28;img.height=28;img.alt='logo';
-        logo.appendChild(img);
-      }
     });
   </script>
 
