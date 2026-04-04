@@ -136,3 +136,10 @@
   </script>
   {% endif %}
 {% endblock %}
+
+{% block footer %}
+  {{ super() }}
+  <div class="ks-footer-privacy">
+    No cookies. No tracking scripts. Privacy-friendly analytics by Cloudflare.
+  </div>
+{% endblock %}

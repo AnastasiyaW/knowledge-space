@@ -10,7 +10,8 @@ After adding or removing articles, these places need updating:
 - `README.md` line with "XXX articles | YY domains | ZZZZ+ cross-references"
 - `docs/blog/posts/welcome.md` mention of "600+ dense reference articles"
 - `docs/index.md` snippet text with "600+ articles across 23 domains"
-- GitHub repo description (via `gh repo edit --description`)
+- GitHub repo description (via `gh repo edit --description "... XXX+ articles across YY domains ..."`)
+- `mkdocs.yml` site_description (for OG meta tags and Telegram previews)
 
 ## How to get current stats
 ```bash
