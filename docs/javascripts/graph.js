@@ -86,6 +86,8 @@
     { source: "Image Generation", target: "Data Science", strength: 2 },
     { source: "Image Generation", target: "Python", strength: 1 },
     { source: "Image Generation", target: "LLM & Agents", strength: 2 },
+    { source: "C++", target: "Algorithms", strength: 2 },
+    { source: "C++", target: "Architecture", strength: 1 },
   ];
 
   // Theme detection

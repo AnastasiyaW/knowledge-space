@@ -185,4 +185,8 @@ Skills, architectural patterns, and best practices for Claude Code:
 
 [:fontawesome-brands-github: **claude-code-config**](https://github.com/AnastasiyaW/claude-code-config){ .md-button }
 
-[:material-post-outline: **Blog**](blog/index.md){ .md-button }
+## Blog
+
+Updates about new domains, features, and what we're working on.
+
+[:material-post-outline: **Read the blog**](blog/index.md){ .md-button }

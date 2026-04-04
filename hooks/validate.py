@@ -20,7 +20,7 @@ FORBIDDEN_RE = [re.compile(p, re.IGNORECASE) for p in FORBIDDEN_PATTERNS]
 
 # Valid domain folders
 VALID_DOMAINS = {
-    "algorithms", "architecture", "bi-analytics", "data-engineering",
+    "algorithms", "architecture", "bi-analytics", "cpp", "data-engineering",
     "data-science", "devops", "image-generation", "ios-mobile",
     "java-spring", "kafka", "linux-cli", "llm-agents", "misc",
     "nodejs", "php", "python", "rust", "security", "seo-marketing",
