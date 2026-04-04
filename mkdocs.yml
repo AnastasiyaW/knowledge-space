@@ -67,6 +67,7 @@ hooks:
   - hooks/validate.py
   - hooks/wikilinks.py
   - hooks/copy_extras.py
+  - hooks/public_check.py
 
 markdown_extensions:
   - pymdownx.highlight:
