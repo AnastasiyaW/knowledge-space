@@ -99,6 +99,11 @@ markdown_extensions:
 
 plugins:
   - search
+  - blog:
+      blog_dir: blog
+      post_date_format: long
+      archive: false
+      categories: false
   - privacy:
       assets: true
   - meta
