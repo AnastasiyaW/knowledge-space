@@ -16,21 +16,45 @@ For simple models: flatten to 1D (28x28 -> 784 features). Problem: loses spatial
 
 ## Convolution Layer
 
-Slide small filter (kernel) across input. Each filter detects one pattern (edge, texture, shape).
+Slide small filter (kernel) across input. Each filter detects one pattern (edge, texture, shape). Convolution reduces to two operations: multiply element-wise, then sum. Three objects: input image, filter (kernel), output image (feature map).
 
 - **Kernel size**: 3x3, 5x5 typical. Small kernels stacked = large receptive field
 - **Stride**: step size. Stride 2 halves spatial dimensions
 - **Padding**: "same" preserves size, "valid" reduces
 - **Channels**: input channels matched by filter depth; output channels = number of filters
 - **1x1 convolution**: linear combination of channels (bottleneck, dimensionality reduction)
+- **Bias term**: each filter has a scalar bias added after the convolution sum, before activation
+
+### Convolution as Feature Detection
+
+Different kernels detect different features:
+- **Blur kernel**: averaging filter smooths the image (noise reduction)
+- **Edge detection**: Sobel-style filters highlight boundaries between regions
+- **Sharpen kernel**: amplifies differences between adjacent pixels
+
+In a trained CNN, kernels are not hand-crafted - they are learned via backpropagation. Early layers learn edge/texture detectors; deeper layers learn complex pattern detectors (eyes, wheels, text).
 
 ### Pooling
 
-Reduce spatial dimensions. **Max pooling** (take max in window) most common. Typical: 2x2, stride 2.
+Reduce spatial dimensions (downsampling). **Max pooling** (take max in window) most common. Typical: 2x2, stride 2.
 
-### CNN Pattern
+- Pool size 2 with stride 2: 100x100 -> 50x50 (halves each dimension)
+- Achieves translation invariance - small shifts in input don't change pooled output
+- **Average pooling**: take mean instead of max. Used in some architectures (GoogLeNet)
+- **Global Average Pooling**: reduce entire feature map to single value per channel. Replaces flatten+dense in modern architectures (fewer parameters, less overfitting)
 
-Input -> [Conv -> BN -> ReLU -> (Pool)] x N -> Flatten -> Dense -> Output
+### CNN Two-Stage Architecture
+
+A CNN has two stages:
+
+1. **Feature extraction stage**: alternating Conv + Pool layers. Hierarchical - each layer detects features from the previous layer's output. This stage is a specialized image feature transformer
+2. **Classification stage**: standard dense (fully connected) layers that take extracted features and perform classification/regression
+
+```
+Input -> [Conv -> BN -> ReLU -> Pool] x N -> Flatten -> Dense -> Output
+```
+
+This separation explains why transfer learning works: stage 1 learns general image features (edges, textures, shapes) while stage 2 learns task-specific classification.
 
 ## Architecture Evolution
 

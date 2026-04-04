@@ -78,6 +78,70 @@ Disable-NetFirewallRule -DisplayName "Block Telnet"
 ```
 Profiles: Domain, Private, Public. Managed via `wf.msc` GUI or PowerShell.
 
+## Network Firewall Architecture
+
+### Deployment Topologies
+
+Two fundamental approaches to firewall placement:
+
+1. **Host-based firewall**: installed on each individual host. Each server/workstation runs its own firewall (iptables, Windows Firewall). Must be configured per host or automated via Ansible/Puppet
+2. **Network firewall**: single device protecting an entire network segment. Filters transit traffic between zones. Configured once for the entire network
+
+**Standard corporate topology**: firewall sits between the internet uplink and the LAN (server/workstation network). All traffic must pass through the firewall, which may be combined with the router.
+
+### Network Zones
+
+```
+Internet
+    |
+[Firewall/Router]
+    |           |
+  [DMZ]       [LAN]
+  (web,mail)  (internal servers, workstations)
+```
+
+- **DMZ (Demilitarized Zone)**: hosts accessible from the internet (web servers, mail). Firewall allows inbound to DMZ but blocks DMZ-to-LAN
+- **LAN**: internal network. Firewall blocks all inbound from internet, allows outbound
+- **Management zone**: separate VLAN for firewall/router management interfaces
+
+### IPSet for Efficient Rule Management
+
+IPSet creates named sets of IPs, networks, or ports that can be referenced in iptables rules. Far more efficient than individual rules for large blocklists:
+
+```bash
+# Create a set for blocked IPs
+ipset create blocklist hash:ip
+
+# Add entries
+ipset add blocklist 203.0.113.5
+ipset add blocklist 198.51.100.0/24
+
+# Reference in iptables
+iptables -A INPUT -m set --match-set blocklist src -j DROP
+
+# List set contents
+ipset list blocklist
+
+# Save/restore (persistent across reboots)
+ipset save > /etc/ipset.conf
+ipset restore < /etc/ipset.conf
+```
+
+**Performance**: iptables with 10,000 individual IP rules = O(n) per packet. IPSet with 10,000 IPs = O(1) hash lookup. For large blocklists (geo-blocking, threat intel feeds), IPSet is essential.
+
+### Traffic Flow Through Firewall
+
+Packet traversal order in iptables/netfilter:
+
+```
+Incoming -> PREROUTING (NAT/mangle) -> routing decision
+  -> INPUT (for firewall itself)
+  -> FORWARD (transit traffic to other hosts)
+Outgoing -> OUTPUT -> POSTROUTING (NAT/masquerade)
+```
+
+For a network firewall, most rules go in the FORWARD chain (transit traffic). INPUT chain protects the firewall host itself.
+
 ## IDS/IPS
 
 ### Types

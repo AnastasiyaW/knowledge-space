@@ -27,6 +27,59 @@ Network fundamentals from a security perspective: OSI model, TCP/IP stack, DNS m
 
 ## TCP/IP
 
+### TCP Three-Way Handshake
+
+TCP establishes a reliable connection before data transfer using three steps:
+
+```
+Client                    Server
+  |--- SYN (seq=x) ------->|     Step 1: Client sends SYN with random sequence number
+  |<-- SYN-ACK (seq=y, -----|     Step 2: Server responds with SYN-ACK, acknowledges x+1
+  |    ack=x+1)             |
+  |--- ACK (ack=y+1) ----->|     Step 3: Client acknowledges, connection established
+```
+
+**Security implications**:
+- **SYN flood attack**: attacker sends many SYN packets without completing the handshake, exhausting server resources. Mitigation: SYN cookies, rate limiting
+- The random sequence number prevents connection hijacking (predictable sequences were exploited historically)
+- Connection teardown uses a four-step FIN handshake (FIN -> ACK -> FIN -> ACK)
+
+### TCP vs UDP
+
+| Feature | TCP | UDP |
+|---------|-----|-----|
+| Delivery | Guaranteed, ordered | Best-effort, unordered |
+| Handshake | Three-way | None |
+| Overhead | Higher (headers, acks) | Minimal |
+| Use cases | HTTP, SSH, email, file transfer | DNS, VoIP, streaming, gaming |
+| Connection | Stateful | Stateless |
+
+### Routing and Route Tables
+
+Packets are forwarded based on the routing table - a set of rules mapping destination networks to next-hop gateways:
+
+```bash
+# View routing table
+ip route show
+# or legacy:
+route -n
+
+# Typical output:
+# default via 192.168.1.1 dev eth0    <- default gateway
+# 192.168.1.0/24 dev eth0 scope link  <- directly connected network
+# 10.0.0.0/8 via 192.168.1.254 dev eth0  <- static route
+
+# Add static route
+ip route add 10.0.0.0/8 via 192.168.1.254 dev eth0
+
+# Delete route
+ip route del 10.0.0.0/8
+```
+
+**Route selection**: most specific match wins (longest prefix). A packet to 10.1.2.3 matches /24 over /8 if both exist. If no specific route matches, the default gateway is used.
+
+**Security**: unauthorized route changes can redirect traffic (route poisoning). Use RPKI/ROA for BGP route validation in production networks.
+
 ### IPv4 Subnetting (CIDR)
 ```
 /24 = 255.255.255.0     = 254 usable hosts

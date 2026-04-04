@@ -116,6 +116,74 @@ Combines LoRA with quantization:
 
 **Memory savings**: 7B model goes from ~28GB (full) to ~6GB (QLoRA). Enables fine-tuning on consumer GPUs.
 
+### QLoRA Training with SFTTrainer
+
+```python
+from trl import SFTTrainer, SFTConfig
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+from peft import LoraConfig
+import torch
+
+# 4-bit quantization
+bnb_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_quant_type="nf4",
+    bnb_4bit_compute_dtype=torch.bfloat16,
+    bnb_4bit_use_double_quant=True
+)
+
+model = AutoModelForCausalLM.from_pretrained(model_name, quantization_config=bnb_config)
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+
+lora_config = LoraConfig(r=16, lora_alpha=32, target_modules=["q_proj", "v_proj"],
+                         lora_dropout=0.05, task_type="CAUSAL_LM")
+
+sft_config = SFTConfig(
+    output_dir="./qlora-output",
+    num_train_epochs=3,
+    per_device_train_batch_size=4,
+    gradient_accumulation_steps=4,
+    learning_rate=2e-4,
+    fp16=True,
+    logging_steps=10,
+    report_to="wandb",  # Weights & Biases integration
+)
+
+trainer = SFTTrainer(
+    model=model,
+    args=sft_config,
+    train_dataset=dataset,
+    peft_config=lora_config,
+    processing_class=tokenizer
+)
+trainer.train()
+```
+
+**TRL library** (Transformers Reinforcement Learning) provides `SFTTrainer` which wraps HuggingFace `Trainer` with fine-tuning-specific features: chat template handling, dataset formatting, LoRA integration.
+
+### GPU Selection for QLoRA
+
+| GPU | VRAM | QLoRA 7B | QLoRA 13B | Notes |
+|-----|------|----------|-----------|-------|
+| T4 | 16GB | Comfortable | Tight | Free tier on Colab |
+| A100 40GB | 40GB | Fast | Comfortable | ~$1/hr on Colab Pro |
+| RTX 4090 | 24GB | Good | Possible with small batch | Consumer option |
+
+For T4: reduce `per_device_train_batch_size` to 1-2 and increase `gradient_accumulation_steps`.
+
+### Monitoring with Weights & Biases
+
+```python
+import wandb
+wandb.login()  # or set WANDB_API_KEY environment variable
+
+# In TrainingArguments / SFTConfig:
+# report_to="wandb"
+# run_name="qlora-llama3-experiment-1"
+```
+
+W&B automatically tracks: loss curves, learning rate schedule, GPU utilization, gradient norms. For OpenAI fine-tuning: link your W&B API key in the OpenAI dashboard Settings -> Integrations section to visualize training progress.
+
 ## PEFT Methods Comparison
 
 | Method | Approach | Trainable Params |

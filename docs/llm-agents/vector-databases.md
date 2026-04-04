@@ -49,6 +49,43 @@ Vector databases store embedding vectors and enable fast similarity search. They
 | IVF-PQ | Large | Low | Fast | Moderate |
 | HNSW | Any | High | Very fast | Very good |
 
+## FAISS vs Chroma: Practical Comparison
+
+FAISS (Facebook AI Similarity Search) and Chroma are both commonly used with LangChain, but serve different purposes:
+
+| Aspect | FAISS | Chroma |
+|--------|-------|--------|
+| **Type** | Library (similarity search) | Database (embedded/server) |
+| **Persistence** | In-memory only (manual save/load) | Persistent on disk by default |
+| **Best for** | High-performance search, research | Prototyping, small-to-medium apps |
+| **GPU support** | Yes (massive speedup) | No |
+| **Metadata filtering** | Limited (via IDSelector) | Built-in |
+| **Install** | `pip install faiss-cpu` or `faiss-gpu` | `pip install chromadb` |
+
+### Swapping Vector Stores in LangChain
+
+LangChain's abstractions make switching trivial - same retriever interface:
+
+```python
+# Option A: Chroma (persistent, simpler)
+from langchain_community.vectorstores import Chroma
+vectorstore = Chroma.from_documents(chunks, embeddings, persist_directory="./chroma_db")
+
+# Option B: FAISS (in-memory, faster search)
+from langchain_community.vectorstores import FAISS
+vectorstore = FAISS.from_documents(chunks, embeddings)
+# To save: vectorstore.save_local("./faiss_index")
+# To load: vectorstore = FAISS.load_local("./faiss_index", embeddings)
+
+# Both use identical retriever interface
+retriever = vectorstore.as_retriever(search_kwargs={"k": 4})
+results = retriever.invoke("query text")
+```
+
+**When to use FAISS**: need raw search speed, have GPU available, dataset fits in memory, don't need complex metadata filtering. FAISS is the standard choice for benchmarks and research.
+
+**When to use Chroma**: need persistence across restarts, want metadata filtering, building RAG prototypes, don't want to manage save/load. Chroma is the default choice for LangChain tutorials.
+
 ## Patterns
 
 ### Metadata Filtering (Qdrant)

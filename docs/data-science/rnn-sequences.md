@@ -14,9 +14,15 @@ Process one element at a time: h_t = tanh(W_hh * h_(t-1) + W_xh * x_t + b)
 
 **Fatal flaw**: vanishing gradients. For sequences > ~20 tokens, gradients shrink exponentially through backpropagation through time (BPTT). Cannot learn long-range dependencies.
 
+### Why Vanishing Gradients Happen
+
+The output prediction y_hat(T) is a composite function of all inputs x_1...x_T. Weight matrix W_xh appears multiplied by every input at every time step. When computing the gradient of W_xh via chain rule, this produces a product of many derivatives. If W_hh eigenvalues < 1, the product shrinks exponentially (vanishing). If > 1, it explodes (exploding gradient). This means: the influence of early inputs on the final output becomes negligible - the network "forgets" early tokens.
+
+**Exploding gradients** are manageable via gradient clipping. **Vanishing gradients** are the harder problem - this is what LSTM and GRU were designed to solve.
+
 ## LSTM (Long Short-Term Memory)
 
-Solves vanishing gradient with gating mechanism:
+Solves vanishing gradient with a cell state that uses **additive** updates (not multiplicative), allowing gradients to flow through time without vanishing:
 
 - **Forget gate**: what to discard from cell state. f_t = sigma(W_f * [h_(t-1), x_t] + b_f)
 - **Input gate**: what new information to store. i_t = sigma(W_i * [h_(t-1), x_t] + b_i)
@@ -101,12 +107,59 @@ Encoder processes input sequence -> context vector -> decoder generates output s
 
 **Attention mechanism**: decoder attends to all encoder hidden states instead of just the final one. Solves information bottleneck of fixed-size context vector.
 
+## Training RNNs: Batching and Sequence Length
+
+### Generating Training Batches
+
+For character-level or word-level language models, the full text must be sliced into overlapping input/target pairs:
+
+```python
+def generate_batches(encoded_text, seq_length, batch_size):
+    """Slice encoded text into (input, target) pairs for RNN training."""
+    total_chars = len(encoded_text)
+    chars_per_batch = total_chars // batch_size
+
+    for i in range(0, chars_per_batch - seq_length, seq_length):
+        x = encoded_text[i:i + seq_length]       # input sequence
+        y = encoded_text[i + 1:i + seq_length + 1]  # target = shifted by 1
+        yield x, y
+```
+
+**Key parameters to tune**:
+
+- **Sequence length**: minimum ~100 characters/tokens. Longer = more context but slower training and more memory
+- **Batch size**: typical 64-128. Larger batches = more stable gradients but may converge to sharper minima
+- **Epochs**: depends on dataset size and model capacity. Monitor loss - stop when validation loss plateaus
+
+### Training Loop Pattern (PyTorch)
+
+```python
+model.train()
+if model.use_gpu:
+    model.cuda()
+
+for epoch in range(n_epochs):
+    hidden = model.init_hidden(batch_size)
+    for x_batch, y_batch in generate_batches(data, seq_len, batch_size):
+        hidden = tuple(h.detach() for h in hidden)  # detach to prevent BPTT through entire history
+        model.zero_grad()
+        output, hidden = model(x_batch, hidden)
+        loss = criterion(output, y_batch.view(-1))
+        loss.backward()
+        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=5)
+        optimizer.step()
+```
+
+**Critical**: `hidden.detach()` at each batch boundary prevents backpropagation through the entire sequence history (which would be memory-prohibitive). This is truncated BPTT.
+
 ## Gotchas
 - RNNs are sequential by nature - cannot parallelize across time steps (slow to train)
 - LSTM/GRU help but don't fully solve long-range dependencies for very long sequences
 - For most NLP tasks, transformers outperform RNNs significantly
 - Gradient clipping is often necessary: `torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)`
 - Variable-length sequences need padding and masking
+- **Hidden state detach**: forgetting to detach hidden state between batches causes OOM as the computation graph grows unboundedly
+- **Sequence length vs memory**: doubling sequence length roughly doubles memory usage and training time per batch
 
 ## See Also
 - [[nlp-text-processing]] - transformers largely replaced RNNs for NLP

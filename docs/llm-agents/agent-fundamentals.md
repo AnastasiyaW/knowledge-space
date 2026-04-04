@@ -101,6 +101,32 @@ User Request -> Supervisor
 -> Supervisor synthesizes
 ```
 
+## Agent Perception: Sensors and Environment
+
+### Sensors (Input Mechanisms)
+
+Sensors are the means by which agents receive input from their environment - analogous to human senses. Different agent types use different sensor combinations:
+
+| Agent Type | Sensors |
+|-----------|---------|
+| **Self-driving car** | Cameras, LiDAR, GPS, radar, cloud connection |
+| **Shopping assistant** | Web scrapers, product APIs, user history, price feeds, weather API |
+| **Code assistant** | File system access, terminal output, git history, error logs |
+| **Research agent** | Web search, document loaders, database queries, API calls |
+
+Sensors determine the agent's **observability** - what portion of the environment the agent can perceive. More sensors = richer perception but higher cost and complexity.
+
+### Environment Types
+
+The environment is everything the agent perceives and interacts with:
+
+- **Digital-only**: web pages, databases, APIs (most current LLM agents)
+- **Physical + digital**: self-driving cars, robotics (cameras + APIs)
+- **Dynamic**: environment changes while agent acts (stock market, live traffic)
+- **Static**: environment unchanged between actions (document analysis)
+
+**Key insight**: an agent's environment may include data the user doesn't consciously consider. A shopping agent considers weather forecasts, seasonal trends, and historical price patterns - not just the product catalog. The environment definition determines agent capability boundaries.
+
 ## Error Handling
 
 Agents can fail at multiple points:

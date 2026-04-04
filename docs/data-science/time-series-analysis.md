@@ -184,16 +184,41 @@ A random walk is: x_t = x_(t-1) + noise. Each value = previous value + random st
 
 ### Auto ARIMA
 
-Automated order selection via grid search over (p,d,q) combinations.
+Automated order selection via grid search over (p,d,q) combinations. Eliminates manual ACF/PACF interpretation by testing candidate models and selecting the best by AIC/BIC.
 
 ```python
 from pmdarima import auto_arima
 
+# Basic usage
 model = auto_arima(y_train, seasonal=True, m=12,
-                   stepwise=True, suppress_warnings=True)
+                   stepwise=True, suppress_warnings=True,
+                   trace=True)  # trace=True shows all models tested
 print(model.summary())
 forecast = model.predict(n_periods=12)
 ```
+
+**Log transform trick**: if the series has increasing variance (amplitude grows with level), apply log transform before fitting. This often improves accuracy with the same ARIMA order:
+
+```python
+import numpy as np
+
+df['log_values'] = np.log(df['values'])
+model_log = auto_arima(df['log_values'][:train_end],
+                       seasonal=True, m=12, trace=True,
+                       suppress_warnings=True)
+forecast_log = model_log.predict(n_periods=n_test)
+forecast_original = np.exp(forecast_log)  # reverse the transform
+```
+
+**Key arguments**:
+
+- `trace=True`: prints all candidate models and their AIC scores - useful for understanding the search
+- `suppress_warnings=True`: silences convergence warnings from weak candidates
+- `m`: seasonal period (12 for monthly, 7 for daily with weekly pattern, 52 for weekly with yearly)
+- `stepwise=True`: faster heuristic search (default). Set `False` for exhaustive grid search (slower, occasionally better)
+- `seasonal=True/False`: whether to include seasonal ARIMA component (P,D,Q)
+
+**pmdarima must be installed separately** - it is not included in standard Python distributions or most cloud notebook environments. Install via `pip install pmdarima`.
 
 ## Feature Engineering for Time Series
 
@@ -267,6 +292,8 @@ Combine with grid search over model parameters (trend type, seasonality type, Bo
 - **GARCH requires scaled input** - values between 1-1000, always standardize first
 - **Prophet disables sub-frequency seasonality automatically** - monthly data cannot capture daily/weekly patterns, this is expected
 - **Econometrics vs ML validation** - traditional econometrics often skips train/test splits and forecasts beyond available data. Always use proper out-of-sample evaluation
+- **Prophet on stock prices** is a common mistake - Prophet is designed for business metrics with strong seasonality (sales, traffic), not for financial instruments that follow random walks. Stock prices lack the stable seasonal patterns Prophet relies on, leading to wildly inaccurate forecasts
+- **Auto ARIMA on stocks** similarly produces poor results. The random walk hypothesis means the best forecast is "tomorrow's price = today's price" - any model that beats this consistently on out-of-sample data should be scrutinized for data leakage
 - **ACF/PACF for multivariate series** - per-series ACF/PACF ignores cross-correlations; use as rough guide only, then grid search over (p,q)
 - **statsmodels `use_boxcox='log'` is broken** - use `0` (lambda=0 = log transform) instead
 
