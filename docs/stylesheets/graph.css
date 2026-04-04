@@ -44,72 +44,86 @@
 .md-typeset .ks-subscribe form {
   margin: 0 !important;
   padding: 0 !important;
-  display: inline-block !important;
 }
 
-.md-typeset .ks-subscribe input[type="email"] {
+/* Email input - same width as md-button above, with subtle border */
+.md-typeset .ks-subscribe__email {
   display: block !important;
-  width: 17.4rem !important;
-  padding: 0.6em 1em !important;
+  width: auto !important;
+  min-width: 14rem !important;
+  padding: 0.625em 2em 0.625em 1em !important;
   border-radius: 0.1rem !important;
   font-family: inherit !important;
   font-size: 0.8rem !important;
+  font-weight: 700 !important;
   outline: none !important;
   -webkit-appearance: none !important;
   appearance: none !important;
   box-sizing: border-box !important;
-  margin: 0 0 0.35rem !important;
+  margin: 0 0 0.4rem !important;
 }
 
-[data-md-color-scheme="slate"] .md-typeset .ks-subscribe input[type="email"] {
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  background: rgba(255, 255, 255, 0.05) !important;
+[data-md-color-scheme="slate"] .md-typeset .ks-subscribe__email {
+  border: 2px solid rgba(187, 134, 252, 0.4) !important;
+  background: rgba(187, 134, 252, 0.06) !important;
   color: #fff !important;
 }
 
-[data-md-color-scheme="slate"] .md-typeset .ks-subscribe input[type="email"]::placeholder {
-  color: rgba(255, 255, 255, 0.3) !important;
+[data-md-color-scheme="slate"] .md-typeset .ks-subscribe__email::placeholder {
+  color: rgba(255, 255, 255, 0.35) !important;
 }
 
-[data-md-color-scheme="slate"] .md-typeset .ks-subscribe input[type="email"]:focus {
+[data-md-color-scheme="slate"] .md-typeset .ks-subscribe__email:focus {
   border-color: #bb86fc !important;
+  background: rgba(187, 134, 252, 0.1) !important;
 }
 
-[data-md-color-scheme="default"] .md-typeset .ks-subscribe input[type="email"] {
-  border: 1px solid rgba(0, 0, 0, 0.15) !important;
-  background: #fff !important;
+[data-md-color-scheme="default"] .md-typeset .ks-subscribe__email {
+  border: 2px solid rgba(98, 0, 234, 0.3) !important;
+  background: rgba(98, 0, 234, 0.03) !important;
   color: #000 !important;
 }
 
-.md-typeset .ks-subscribe button[type="submit"] {
-  display: block !important;
-  width: 17.4rem !important;
-  padding: 0.625em 1.5em !important;
-  border: none !important;
-  border-radius: 0.1rem !important;
-  background: var(--md-primary-fg-color) !important;
-  color: var(--md-primary-bg-color) !important;
-  font-family: inherit !important;
-  font-size: 0.8rem !important;
-  font-weight: 700 !important;
-  cursor: pointer !important;
-  transition: opacity 0.2s !important;
+[data-md-color-scheme="default"] .md-typeset .ks-subscribe__email:focus {
+  border-color: #6200ea !important;
+}
+
+/* Subscribe button inherits md-button--primary from Material */
+.md-typeset .ks-subscribe__btn {
+  display: inline-block !important;
   margin: 0 !important;
-  box-sizing: border-box !important;
 }
 
-.md-typeset .ks-subscribe button[type="submit"]:hover {
-  opacity: 0.85 !important;
-}
-
-.md-typeset .ks-subscribe button[type="submit"]:disabled {
+.md-typeset .ks-subscribe__btn:disabled {
   opacity: 0.5 !important;
   cursor: not-allowed !important;
+  pointer-events: none !important;
 }
 
+/* Consent checkbox row - below input and button */
+.md-typeset .ks-subscribe__consent-row {
+  margin-top: 0.4rem !important;
+  font-size: 0.65rem !important;
+  opacity: 0.4 !important;
+}
+
+.md-typeset .ks-subscribe__consent-row label {
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 0.3rem !important;
+}
+
+.md-typeset .ks-subscribe__consent-row input[type="checkbox"] {
+  margin-top: 0.1rem !important;
+  flex-shrink: 0 !important;
+}
+
+/* Success message replaces entire form */
 .md-typeset .ks-subscribe__done {
   font-size: 0.85rem !important;
-  padding: 0.8rem 0 !important;
+  padding: 0.6rem 0 !important;
+  line-height: 1.5 !important;
 }
 
 .md-typeset .ks-subscribe__consent {

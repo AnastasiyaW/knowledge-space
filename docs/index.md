@@ -12,12 +12,11 @@ Curated technical knowledge base across 22 domains. Built for LLM agents - dense
 
 <div class="ks-subscribe" id="subscribe-form-wrap" markdown="0">
   <form id="subscribe-form">
-    <input type="email" id="sub-email" placeholder="your@email.com" required autocomplete="email">
-    <button type="submit" id="sub-btn">Subscribe to updates</button>
-    <label class="ks-subscribe__consent">
-      <input type="checkbox" id="sub-consent" required>
-      <span>I agree to receive occasional updates about new articles</span>
-    </label>
+    <input type="email" id="sub-email" class="ks-subscribe__email" placeholder="your@email.com" required autocomplete="email">
+    <button type="submit" id="sub-btn" class="md-button md-button--primary ks-subscribe__btn">Subscribe to updates</button>
+    <div class="ks-subscribe__consent-row">
+      <label><input type="checkbox" id="sub-consent" required> <span>I agree to receive occasional updates about new articles</span></label>
+    </div>
     <div class="ks-subscribe__msg" id="sub-msg"></div>
   </form>
 </div>

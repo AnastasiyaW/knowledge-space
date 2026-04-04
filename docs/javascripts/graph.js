@@ -691,10 +691,9 @@
       .then(function (r) { return r.json(); })
       .then(function (d) {
         if (d.ok) {
-          // Replace form with success message
           wrap.innerHTML = '<div class="ks-subscribe__done">' +
-            '<span style="color:#03dac6;font-weight:700;">Subscribed!</span> ' +
-            'We will send you an email when new articles are published.' +
+            '<strong style="color:#03dac6;">Thank you for subscribing!</strong><br>' +
+            'We will send you updates about new articles a couple of times a month.' +
             '</div>';
         } else {
           msg.textContent = d.error || "Something went wrong";
