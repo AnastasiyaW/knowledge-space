@@ -152,12 +152,68 @@ for (const auto& entry : fs::recursive_directory_iterator("/path")) {
 }
 ```
 
+### Console Input (cin)
+
+`std::cin` is an input stream, counterpart to `std::cout`. The `>>` operator extracts formatted input, skipping whitespace.
+
+```cpp
+#include <iostream>
+#include <string>
+
+// Basic input
+std::string name;
+std::cout << "Enter name: ";
+std::cin >> name;  // reads until whitespace
+std::cout << "Hello, " << name << '\n';
+
+// Multiple values
+int age;
+double height;
+std::cin >> age >> height;  // space/newline separated
+
+// Full line input (including spaces)
+std::string full_name;
+std::cout << "Enter full name: ";
+std::getline(std::cin, full_name);
+```
+
+**Input direction**: `cin >> variable` - data flows FROM stream TO variable (arrows point right). Contrast with `cout << value` - data flows TO stream (arrows point left).
+
+**Input validation**:
+
+```cpp
+int value;
+while (!(std::cin >> value)) {
+    std::cin.clear();   // clear error flags
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cout << "Invalid input. Try again: ";
+}
+```
+
+### Locale and Encoding
+
+Console encoding issues are common with non-ASCII text. Standard C++ locale controls formatting/encoding:
+
+```cpp
+#include <locale>
+
+// Set locale for the program
+std::setlocale(LC_ALL, "");  // use system locale
+
+// C++ locale on streams
+std::cout.imbue(std::locale(""));  // system default
+```
+
+On Windows, console encoding is often incompatible with string literals. Non-ASCII console output is unreliable across platforms - stick to ASCII for console I/O in portable code. For file I/O, explicitly use UTF-8 encoding.
+
 ## Gotchas
 
 - **Issue:** Not checking if file opened successfully -> silent failure, empty reads -> **Fix:** Always check `if (!file)` after construction or use exceptions: `file.exceptions(std::ios::failbit)`
-- **Issue:** Mixing `>>` and `getline` - `>>` leaves `\n` in buffer, next `getline` reads empty -> **Fix:** Call `std::ignore` or `getline` to consume the newline before switching modes
+- **Issue:** Mixing `>>` and `getline` - `>>` leaves `\n` in buffer, next `getline` reads empty -> **Fix:** Call `std::cin.ignore()` or `getline` to consume the newline before switching modes
 - **Issue:** `fs::remove_all` can follow symlinks on some platforms -> **Fix:** Check with `fs::is_symlink` before recursive delete
 - **Issue:** Text mode on Windows adds `\r\n` - corrupts binary data -> **Fix:** Always use `std::ios::binary` for non-text files
+- **Issue:** Non-ASCII text in console garbled on Windows -> **Fix:** Use ASCII for console, UTF-8 for files. Don't rely on `setlocale` for cross-platform console encoding
+- **Issue:** `cin >> string_var` only reads until first whitespace -> **Fix:** Use `std::getline(std::cin, var)` for full-line input
 
 ## See Also
 

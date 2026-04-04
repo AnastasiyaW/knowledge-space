@@ -102,6 +102,67 @@ model.fit(X_train, y_train, epochs=10, batch_size=32, validation_split=0.2)
 | Weight init | He (ReLU), Xavier (tanh/sigmoid) | Usually handled by framework |
 | Epochs | Use early stopping | Don't fix a number |
 
+## ANNs for Time Series Forecasting
+
+Feedforward networks can predict time series using windowed lag features as input.
+
+### Pattern: Autoregressive ANN
+
+```python
+import numpy as np
+from tensorflow import keras
+
+# Create supervised dataset from time series
+def create_dataset(series, window_size):
+    X, y = [], []
+    for i in range(len(series) - window_size):
+        X.append(series[i:i + window_size])
+        y.append(series[i + window_size])
+    return np.array(X), np.array(y)
+
+X_train, y_train = create_dataset(train_series, window_size=20)
+
+model = keras.Sequential([
+    keras.layers.Dense(64, activation='relu', input_shape=(20,)),
+    keras.layers.Dense(32, activation='relu'),
+    keras.layers.Dense(1)
+])
+model.compile(optimizer='adam', loss='mse')
+model.fit(X_train, y_train, epochs=100, batch_size=32, validation_split=0.2)
+```
+
+### Stock Returns vs Stock Prices
+
+**Key insight**: use returns (or log returns), not raw prices. ANNs cannot extrapolate beyond training range - if prices were 100-200 during training, the network cannot predict 250. Returns are stationary and bounded, making them suitable ANN targets.
+
+```python
+# Log returns: better for neural networks
+returns = np.log(prices / prices.shift(1)).dropna()
+
+# Predict returns, then convert back to prices
+predicted_return = model.predict(X_test)
+predicted_price = last_price * np.exp(predicted_return)
+```
+
+### Multi-Input Networks
+
+Combine time series with tabular features (e.g., sensor data + statistical summaries for HAR):
+
+```python
+# Functional API for multiple inputs
+ts_input = keras.Input(shape=(128, 9), name='timeseries')
+flat = keras.layers.Flatten()(ts_input)
+x = keras.layers.Dense(64, activation='relu')(flat)
+
+tab_input = keras.Input(shape=(num_features,), name='tabular')
+y = keras.layers.Dense(32, activation='relu')(tab_input)
+
+combined = keras.layers.Concatenate()([x, y])
+output = keras.layers.Dense(6, activation='softmax')(combined)
+
+model = keras.Model(inputs=[ts_input, tab_input], outputs=output)
+```
+
 ## Gotchas
 - **Vanishing gradients**: deep networks with sigmoid/tanh. Fix: use ReLU, skip connections, BatchNorm
 - **Exploding gradients**: gradient clipping helps. Common in RNNs
@@ -109,10 +170,14 @@ model.fit(X_train, y_train, epochs=10, batch_size=32, validation_split=0.2)
 - Neural networks need MUCH more data than tree-based models for tabular data
 - Always normalize inputs (StandardScaler or similar)
 - GPU is practically required for non-trivial models
+- **Time series windowing**: window size is a critical hyperparameter. Too small = insufficient context, too large = noise. Start with domain-specific cycle length
+- **Stock prices are NOT suitable ANN targets** - use returns instead (extrapolation limitation)
+- **Multi-input models require functional API** - `Sequential` only supports single input/output
 
 ## See Also
-- [[cnn-computer-vision]] - convolutional networks for images
+- [[cnn-computer-vision]] - convolutional networks for images and time series
 - [[rnn-sequences]] - recurrent networks for sequences
+- [[time-series-analysis]] - classical time series models
 - [[nlp-text-processing]] - NLP with transformers
 - [[math-for-ml]] - calculus for backpropagation
 - [[transfer-learning]] - using pre-trained models

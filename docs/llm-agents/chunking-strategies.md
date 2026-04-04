@@ -99,6 +99,58 @@ Parent chunks (full sections) + child chunks (paragraphs). Retrieve child for pr
 - Very small chunks (< 200 chars) often lack enough context for meaningful embedding
 - Overlapping chunks increase storage costs but significantly reduce boundary-related retrieval failures
 
+## Alternative: Character Text Splitter
+
+Simpler than RecursiveCharacterTextSplitter - splits on a single separator:
+
+```python
+from langchain.text_splitter import CharacterTextSplitter
+
+splitter = CharacterTextSplitter(
+    separator="\n",       # single separator (not a list)
+    chunk_size=1000,
+    chunk_overlap=200
+)
+chunks = splitter.split_documents(docs)
+```
+
+**When to use**: when you know the document structure uses consistent delimiters. Recursive splitter is better for mixed-format documents.
+
+### Practical Splitting Pipeline
+
+Real-world document processing often requires multiple passes:
+
+```python
+from langchain_community.document_loaders import PyPDFLoader
+
+# 1. Load
+loader = PyPDFLoader("handbook.pdf")
+pages = loader.load()  # one Document per page
+
+# 2. Split with metadata preservation
+splitter = RecursiveCharacterTextSplitter(
+    chunk_size=1000,
+    chunk_overlap=200,
+    separators=["\n\n", "\n", ". ", " "]
+)
+chunks = splitter.split_documents(pages)
+
+# Each chunk inherits page metadata (source, page number)
+print(chunks[0].metadata)  # {'source': 'handbook.pdf', 'page': 0}
+
+# 3. Verify before indexing
+print(f"Total chunks: {len(chunks)}")
+print(f"Avg chunk size: {sum(len(c.page_content) for c in chunks)/len(chunks):.0f} chars")
+```
+
+### Indexing Verification Checklist
+
+After indexing, always verify:
+1. Document count matches expectations: `vectorstore._collection.count()`
+2. Sample retrieval works: `vectorstore.similarity_search("test query")`
+3. Metadata is preserved: check `result.metadata` on retrieved docs
+4. No empty chunks: filter chunks with `len(chunk.page_content.strip()) > 50`
+
 ## See Also
 - [[rag-pipeline]] - How chunks flow through the RAG system
 - [[vector-databases]] - Where chunks are stored and searched

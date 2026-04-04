@@ -132,15 +132,96 @@ Detect objects AND segment pixel boundaries.
 - **Point cloud processing**: PointNet for 3D point data
 - **NeRF**: learn 3D scene from 2D images, render novel views
 
+## Convolution on Color Images (3D Kernels)
+
+Grayscale convolution: 2D filter slides over 2D image. Color images: **3D filter** slides over 3D input (H x W x C).
+
+- Input: (H, W, 3) for RGB. Kernel: (k, k, 3) - same depth as input channels
+- Sum across all three channels at each position -> single scalar output
+- A 3D kernel acts as a **color pattern detector**: a filter for "red circle" will not match blue circles
+- Multiple filters -> multiple output channels: N filters of (k, k, 3) produce output of (H', W', N)
+- Each successive conv layer: input channels = previous layer's filter count, not 3
+
+This is why the first conv layer has few parameters (3 input channels) but deeper layers have many (64, 128, 256 input channels from previous filter counts).
+
+## CNNs for Time Series Classification
+
+CNNs are not limited to images - they work on any data with local spatial/temporal structure.
+
+### 1D Convolution for Time Series
+
+Input shape: (batch, timesteps, features) = (N, T, D). Use Conv1D instead of Conv2D.
+
+```python
+import tensorflow as tf
+
+model = tf.keras.Sequential([
+    tf.keras.layers.Conv1D(32, kernel_size=5, activation='relu',
+                           input_shape=(128, 9)),  # T=128, D=9
+    tf.keras.layers.MaxPooling1D(pool_size=3),
+    tf.keras.layers.Conv1D(64, kernel_size=3, activation='relu'),
+    tf.keras.layers.GlobalMaxPooling1D(),  # alternatives: Flatten, GlobalAvgPooling1D
+    tf.keras.layers.Dense(128, activation='relu'),
+    tf.keras.layers.Dense(num_classes, activation='softmax')
+])
+```
+
+**Kernel size selection**: for longer sequences (T=128+), use larger initial kernels (5-7). For short sequences (T~10), smaller kernels (3). Larger T justifies larger kernels, same principle as larger images.
+
+### Human Activity Recognition (HAR)
+
+Classic CNN application on sensor time series. Input: accelerometer/gyroscope readings from smartphone (T=128 timesteps, D=9 channels for x/y/z from 3 sensors).
+
+**Multi-input architecture**: combine time-series CNN with tabular features (statistics, FFT features) via concatenation:
+
+```python
+# Time series branch
+ts_input = tf.keras.Input(shape=(128, 9))
+x = tf.keras.layers.Conv1D(32, 5, activation='relu')(ts_input)
+x = tf.keras.layers.MaxPooling1D(3)(x)
+x = tf.keras.layers.GlobalMaxPooling1D()(x)
+
+# Tabular branch
+tab_input = tf.keras.Input(shape=(num_tabular_features,))
+y = tf.keras.layers.Dense(64, activation='relu')(tab_input)
+
+# Combine
+combined = tf.keras.layers.Concatenate()([x, y])
+output = tf.keras.layers.Dense(num_classes, activation='softmax')(combined)
+model = tf.keras.Model(inputs=[ts_input, tab_input], outputs=output)
+```
+
+### CNN for Time Series Forecasting
+
+Use CNN as feature extractor, then dense layer for prediction. Reshape univariate series into (T, 1) input.
+
+```python
+model = tf.keras.Sequential([
+    tf.keras.layers.Conv1D(32, kernel_size=3, activation='relu',
+                           input_shape=(window_size, 1)),
+    tf.keras.layers.Conv1D(64, kernel_size=3, activation='relu'),
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(64, activation='relu'),
+    tf.keras.layers.Dense(1)  # single step forecast
+])
+```
+
+Note: values don't divide evenly through pooling layers - always check `model.summary()` to verify output shapes at each layer.
+
 ## Gotchas
 - Always normalize images (ImageNet stats: mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 - Data augmentation is almost always beneficial for vision tasks
 - Larger input resolution = better accuracy but quadratic compute cost
 - Pre-trained models expect specific input sizes and normalization
 - YOLO versions vary widely - check which variant for fair comparison
+- **Conv1D for time series**: kernel slides along time axis only, not spatial. Input shape differs from Conv2D
+- **GlobalMaxPooling vs Flatten**: GlobalMaxPooling reduces to fixed-size regardless of input length. Flatten requires fixed input size
+- **Multi-input models** need `tf.keras.Model` (functional API), not `Sequential`
 
 ## See Also
 - [[neural-networks]] - general deep learning foundations
 - [[transfer-learning]] - detailed pre-training/fine-tuning strategies
 - [[data-augmentation]] - augmentation techniques for vision
 - [[generative-models]] - GANs, VAEs, diffusion in depth
+- [[time-series-analysis]] - classical time series models
+- [[rnn-sequences]] - RNN alternative for sequence data

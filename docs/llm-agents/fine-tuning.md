@@ -126,6 +126,75 @@ Combines LoRA with quantization:
 | **Prompt Tuning** | Trainable soft prompt vectors | Tiny |
 | **Adapter Layers** | Small trainable layers between frozen layers | 1-5% |
 
+## LoRA Hyperparameter Tuning
+
+### Rank (r)
+Controls the capacity of LoRA adaptation. Higher rank = more expressiveness but more memory and risk of overfitting.
+
+| Rank | Use Case | Notes |
+|------|----------|-------|
+| 4-8 | Simple task adaptation (classification, formatting) | Start here |
+| 16 | General-purpose fine-tuning | Good default |
+| 32-64 | Complex domain adaptation, multi-task | When lower ranks underperform |
+| 128+ | Rarely needed | Diminishing returns |
+
+### Alpha (lora_alpha)
+Scaling factor for LoRA updates. Effective scaling = alpha / r. Common practice: set alpha = 2 * r (e.g., r=16, alpha=32).
+
+### Dropout (lora_dropout)
+Regularization for LoRA layers. Typical: 0.05-0.1. Helps prevent overfitting on small datasets.
+
+### Target Module Selection Strategy
+- **Minimum viable**: `q_proj`, `v_proj` - attention queries and values only. Good starting point
+- **More capacity**: add `k_proj`, `o_proj` - full attention adaptation
+- **Maximum**: add `gate_proj`, `up_proj`, `down_proj` - adapts FFN layers too. Use when attention-only is insufficient
+
+## Quantization Impact on Fine-Tuning Quality
+
+Quantization reduces model precision to save memory, but impacts performance differently across tasks:
+
+- **Full precision (FP32/BF16)**: baseline quality, highest memory
+- **8-bit quantization**: ~1-2% quality drop, 2x memory reduction
+- **4-bit (NF4/GPTQ)**: ~3-5% quality drop, 4x memory reduction
+- **Impact varies by task**: simple classification barely affected, complex reasoning shows more degradation
+
+Run your evaluation suite across quantization levels to find the sweet spot:
+
+```python
+from transformers import BitsAndBytesConfig
+
+# 4-bit quantization config for QLoRA
+bnb_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_quant_type="nf4",
+    bnb_4bit_compute_dtype=torch.bfloat16,
+    bnb_4bit_use_double_quant=True  # nested quantization saves extra memory
+)
+
+model = AutoModelForCausalLM.from_pretrained(
+    model_name, quantization_config=bnb_config
+)
+```
+
+## Dataset Preparation for Fine-Tuning
+
+### Finding and Crafting Datasets
+- **Existing datasets**: HuggingFace Hub, Kaggle. Filter for task-specific quality
+- **Synthetic generation**: use a stronger model (GPT-4) to generate training data for a smaller model
+- **Manual curation**: highest quality, most expensive. Even 100 expert-curated examples can be transformative
+- **Format consistency**: every example must follow the exact format expected during inference
+
+### Conversation Format
+```json
+{"messages": [
+  {"role": "system", "content": "You are a pricing assistant..."},
+  {"role": "user", "content": "Price for item X?"},
+  {"role": "assistant", "content": "$42.99"}
+]}
+```
+
+System prompt should be identical across all training examples and match inference-time system prompt.
+
 ## Data Quality Guidelines
 
 - Each example should demonstrate the exact behavior you want
@@ -142,6 +211,10 @@ Combines LoRA with quantization:
 - Hyperparameter tuning (rank, learning rate, epochs) significantly affects results
 - Fine-tuned model quality degrades if training data format doesn't match inference format
 - Always measure: sometimes prompt engineering + RAG outperforms fine-tuning
+- **Quantization affects tasks unevenly** - always benchmark YOUR specific task at each precision level, not just overall perplexity
+- **lora_alpha/r ratio matters more than absolute values** - alpha=32/r=16 and alpha=64/r=32 behave similarly
+- **System prompt mismatch** - if training uses a system prompt but inference doesn't (or vice versa), quality drops significantly
+- **Double quantization** (`bnb_4bit_use_double_quant=True`) provides additional memory savings with minimal quality impact
 
 ## See Also
 - [[model-optimization]] - Quantization, distillation, pruning

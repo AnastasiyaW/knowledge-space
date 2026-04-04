@@ -101,6 +101,94 @@ For structured data or limited question types: prepare data tables/documents man
 ### Multi-Index RAG
 Different document types in different indexes with different chunking strategies. Route queries to appropriate index based on question type.
 
+## LangChain RAG Abstractions
+
+LangChain provides three key abstractions that compose into a conversational RAG pipeline:
+
+### LLM Abstraction
+Wraps any language model (OpenAI, Anthropic, local) behind a unified interface:
+
+```python
+from langchain_openai import ChatOpenAI
+llm = ChatOpenAI(model="gpt-4", temperature=0)
+```
+
+### Retriever Abstraction
+Interface for anything that returns documents given a query. Vector stores expose `.as_retriever()`:
+
+```python
+from langchain_community.vectorstores import Chroma
+
+vectorstore = Chroma.from_documents(chunks, embeddings)
+retriever = vectorstore.as_retriever(
+    search_type="similarity",
+    search_kwargs={"k": 4}
+)
+# retriever.invoke("query") returns list of Document objects
+```
+
+### Memory Abstraction
+Maintains conversation history for multi-turn RAG chat:
+
+```python
+from langchain.memory import ConversationBufferMemory
+
+memory = ConversationBufferMemory(
+    memory_key="chat_history",
+    return_messages=True
+)
+
+# ConversationalRetrievalChain combines all three
+from langchain.chains import ConversationalRetrievalChain
+chain = ConversationalRetrievalChain.from_llm(
+    llm=llm,
+    retriever=retriever,
+    memory=memory
+)
+result = chain.invoke({"question": "What is the revenue?"})
+```
+
+### Document Indexing Pipeline
+
+Full document-to-answer pipeline in LangChain:
+
+1. **Load**: `DirectoryLoader`, `PyPDFLoader`, `WebBaseLoader`
+2. **Split**: `RecursiveCharacterTextSplitter`, `CharacterTextSplitter`
+3. **Embed**: `OpenAIEmbeddings`, `OllamaEmbeddings`
+4. **Store**: `Chroma.from_documents()`, `FAISS.from_documents()`
+5. **Retrieve + Generate**: chain with retriever + LLM
+
+```python
+from langchain_community.document_loaders import DirectoryLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+
+# Load all PDFs from directory
+loader = DirectoryLoader('./docs/', glob="**/*.pdf")
+docs = loader.load()
+
+# Split with overlap
+splitter = RecursiveCharacterTextSplitter(
+    chunk_size=1000, chunk_overlap=200
+)
+chunks = splitter.split_documents(docs)
+
+# Index
+vectorstore = Chroma.from_documents(chunks, OpenAIEmbeddings())
+
+# Manage: add, update, delete documents
+vectorstore.add_documents(new_chunks)
+vectorstore.delete(ids=["doc_id_1", "doc_id_2"])
+```
+
+### Vector Store Document Management
+
+After initial indexing, vector stores need ongoing management:
+- **Add**: `vectorstore.add_documents(new_docs)` - incremental indexing
+- **Delete**: `vectorstore.delete(ids=[...])` - remove outdated docs
+- **Update**: delete old version + add new version (no in-place update)
+- **Inspect**: `vectorstore.get()` to view stored documents and metadata
+- **Similarity search with score**: `vectorstore.similarity_search_with_score(query)` returns (doc, score) tuples
+
 ## Gotchas
 - Simple RAG produces answers that change between runs and are often wrong - don't deploy without evaluation
 - Vector search can miss obviously present text that keyword search finds easily (cosine similarity failures)

@@ -126,6 +126,51 @@ auto final_result = parse_int(input)
     });
 ```
 
+### Multiple Exception Handling
+
+Order matters: catch derived types before base types. Most specific first:
+
+```cpp
+try {
+    open_file(path);
+    parse_data(content);
+    write_results(output_path);
+} catch (const std::ios_base::failure& e) {
+    // File I/O specific errors
+    std::cerr << "I/O error: " << e.what() << '\n';
+} catch (const std::invalid_argument& e) {
+    // Parse errors
+    std::cerr << "Invalid data: " << e.what() << '\n';
+} catch (const std::runtime_error& e) {
+    // Generic runtime errors
+    std::cerr << "Runtime error: " << e.what() << '\n';
+} catch (const std::exception& e) {
+    // Catch-all for standard exceptions
+    std::cerr << "Error: " << e.what() << '\n';
+} catch (...) {
+    // Non-standard exceptions (rare, e.g. from C libraries)
+    std::cerr << "Unknown error\n";
+    throw;  // re-throw - don't swallow unknown exceptions
+}
+```
+
+**Practical pattern**: wrap main logic in try, handle specific recoverable errors, let unrecoverable ones propagate:
+
+```cpp
+int main() {
+    try {
+        run_application();
+        return 0;
+    } catch (const std::exception& e) {
+        std::cerr << "Fatal: " << e.what() << '\n';
+        return 1;
+    } catch (...) {
+        std::cerr << "Unknown fatal error\n";
+        return 2;
+    }
+}
+```
+
 ### noexcept
 
 ```cpp
