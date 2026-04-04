@@ -4,7 +4,10 @@
   {{ super() }}
   <link rel="icon" href="{{ config.site_url }}assets/favicon.svg" type="image/svg+xml">
   <style>
-    .md-header__source { display: flex; gap: 0.3rem; max-width: none; width: auto; }
+    .md-header__source { display: flex; gap: 0.4rem; max-width: none; width: auto; }
+    .md-header__source .md-source { min-width: 0; max-width: 11rem; }
+    .md-header__source .md-source__repository { font-size: 0.64rem; }
+    .md-header__source .md-source__facts { font-size: 0.55rem; }
   </style>
   <script>
     document.addEventListener('DOMContentLoaded',function(){
@@ -25,8 +28,14 @@
         .then(function(r){return r.json()})
         .then(function(d){
           if(d.stargazers_count!==undefined){
-            var s=document.createElement('li');s.className='md-source__fact';s.innerHTML='&#9734; '+d.stargazers_count;
-            var f=document.createElement('li');f.className='md-source__fact';f.innerHTML='&#9906; '+d.forks_count;
+            var origFacts=src.querySelector('.md-source__facts');
+            if(origFacts){facts.innerHTML=origFacts.innerHTML.replace(/\d+/g,'');};
+            var s=document.createElement('li');s.className='md-source__fact';s.textContent=d.stargazers_count;
+            var f=document.createElement('li');f.className='md-source__fact';f.textContent=d.forks_count;
+            facts.innerHTML='';
+            var origItems=origFacts?origFacts.querySelectorAll('.md-source__fact'):[];
+            if(origItems.length>=2){var s2=origItems[0].cloneNode(true);s2.childNodes[s2.childNodes.length-1].textContent=d.stargazers_count;var f2=origItems[1].cloneNode(true);f2.childNodes[f2.childNodes.length-1].textContent=d.forks_count;facts.appendChild(s2);facts.appendChild(f2);}
+            else{facts.appendChild(s);facts.appendChild(f);}
             facts.appendChild(s);facts.appendChild(f);
           }
         }).catch(function(){});
