@@ -8,23 +8,194 @@
   margin: 1.2rem 0;
 }
 
-#knowledge-graph {
-  width: 100%;
-  height: 420px;
-  margin: 1.2rem 0 0;
-  border-radius: 12px;
-  overflow: hidden;
+/* ══════════════════════════════════════════════
+   COMPACT TOP-BAR (GitHub + Copy Prompt + Subscribe)
+   ══════════════════════════════════════════════ */
+
+.md-typeset .ks-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0.8rem 0 0.6rem !important;
+  flex-wrap: wrap;
+}
+
+/* ── Big navigation buttons after graph ── */
+.md-typeset .ks-nav-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 1.5rem 0 2rem !important;
+  flex-wrap: wrap;
+}
+
+.md-typeset .ks-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1rem 2.5rem !important;
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  border-radius: 12px !important;
+  text-decoration: none !important;
+  transition: all 0.3s ease;
+}
+
+.md-typeset .ks-nav-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.md-typeset .ks-nav-btn svg {
+  width: 22px;
+  height: 22px;
+}
+
+.md-typeset .ks-topbar__btn {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5em 1em !important;
+  font-size: 0.78rem !important;
+  white-space: nowrap;
+  border-radius: 6px !important;
+  height: 36px;
+  box-sizing: border-box;
+}
+
+.md-typeset .ks-topbar__copy {
+  cursor: pointer;
   position: relative;
 }
 
+.md-typeset .ks-topbar__copy.copied {
+  background: rgba(3, 218, 198, 0.15) !important;
+  border-color: #03dac6 !important;
+  color: #03dac6 !important;
+}
+
+.md-typeset .ks-topbar__subscribe {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.md-typeset .ks-topbar__form {
+  display: flex !important;
+  gap: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.md-typeset .ks-topbar__email {
+  display: block !important;
+  width: 10rem !important;
+  padding: 0 0.8em !important;
+  height: 36px;
+  border-radius: 6px 0 0 6px !important;
+  font-family: inherit !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  outline: none !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .ks-topbar__email {
+  border: 1px solid rgba(187, 134, 252, 0.4) !important;
+  background: rgba(187, 134, 252, 0.06) !important;
+  color: #fff !important;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .ks-topbar__email::placeholder {
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .ks-topbar__email:focus {
+  border-color: #bb86fc !important;
+}
+
+[data-md-color-scheme="default"] .md-typeset .ks-topbar__email {
+  border: 1px solid var(--md-primary-fg-color) !important;
+  background: rgba(98, 0, 234, 0.03) !important;
+  color: #000 !important;
+}
+
+.md-typeset .ks-topbar__sub-btn {
+  border-radius: 0 6px 6px 0 !important;
+  white-space: nowrap !important;
+  padding: 0 0.8em !important;
+  height: 36px;
+  font-size: 0.78rem !important;
+  margin: 0 !important;
+}
+
+.md-typeset .ks-subscribe__msg {
+  font-size: 0.75rem !important;
+  margin-top: 0.3rem !important;
+  min-height: 1em !important;
+  font-weight: 600 !important;
+}
+
+.md-typeset .ks-subscribe__msg.success { color: #03dac6 !important; }
+.md-typeset .ks-subscribe__msg.error { color: #ff7597 !important; }
+
+/* ══════════════════════════════════════════════
+   GRAPH HINT
+   ══════════════════════════════════════════════ */
+
+.md-typeset .ks-graph-hint {
+  text-align: center;
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  opacity: 0.35;
+  margin: 1.2rem 0 0.4rem;
+}
+
+/* ══════════════════════════════════════════════
+   KNOWLEDGE GRAPH — full-width premium hero
+   ══════════════════════════════════════════════ */
+
+/* ── Full-screen graph: break out of ALL MkDocs containers ── */
+.ks-graph-wrapper {
+  position: relative;
+  width: 100vw !important;
+  max-width: none !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  margin: 0 0 1.5rem !important;
+  padding: 0 !important;
+  z-index: 1;
+}
+
+#knowledge-graph {
+  width: 100%;
+  height: 82vh;
+  min-height: 520px;
+  max-height: 1000px;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
 [data-md-color-scheme="slate"] #knowledge-graph {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background:
+    radial-gradient(ellipse at 30% 30%, rgba(100, 70, 160, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 70%, rgba(40, 120, 130, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(20, 20, 35, 0.9) 0%, rgba(12, 12, 22, 1) 100%);
 }
 
 [data-md-color-scheme="default"] #knowledge-graph {
-  background: rgba(0, 0, 0, 0.02);
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  background:
+    radial-gradient(ellipse at 30% 30%, rgba(98, 0, 234, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 70%, rgba(0, 150, 136, 0.03) 0%, transparent 50%),
+    rgba(248, 248, 252, 1);
 }
 
 #knowledge-graph canvas {
@@ -33,330 +204,24 @@
   height: 100%;
 }
 
-/* ── Hero Actions Container ── */
-.md-typeset .ks-hero-actions {
-  margin: 0.6rem 0 1rem !important;
+@media (max-width: 960px) {
+  #knowledge-graph {
+    height: 65vh;
+    min-height: 400px;
+  }
 }
 
-.md-typeset .ks-hero-actions form {
-  display: flex !important;
-  gap: 0 !important;
-  margin: 0.4rem 0 0 !important;
-  padding: 0 !important;
+@media (max-width: 600px) {
+  #knowledge-graph {
+    height: 55vh;
+    min-height: 340px;
+  }
 }
 
-.md-typeset .ks-hero-actions .ks-subscribe__btn {
-  border-radius: 0 0.1rem 0.1rem 0 !important;
-  white-space: nowrap !important;
-}
+/* ══════════════════════════════════════════════
+   GRAPH STATS BAR
+   ══════════════════════════════════════════════ */
 
-/* Email input - same width as md-button above, with subtle border */
-.md-typeset .ks-subscribe__email {
-  display: block !important;
-  flex: 1 !important;
-  min-width: 0 !important;
-  padding: 0.625em 1em !important;
-  border-radius: 0.1rem 0 0 0.1rem !important;
-  font-family: inherit !important;
-  font-size: inherit !important;
-  font-weight: 700 !important;
-  outline: none !important;
-  -webkit-appearance: none !important;
-  appearance: none !important;
-  box-sizing: border-box !important;
-  margin: 0 !important;
-}
-
-[data-md-color-scheme="slate"] .md-typeset .ks-subscribe__email {
-  border: 0.1rem solid #bb86fc !important;
-  background: rgba(187, 134, 252, 0.06) !important;
-  color: #fff !important;
-}
-
-[data-md-color-scheme="slate"] .md-typeset .ks-subscribe__email::placeholder {
-  color: rgba(255, 255, 255, 0.35) !important;
-}
-
-[data-md-color-scheme="slate"] .md-typeset .ks-subscribe__email:focus {
-  border-color: #bb86fc !important;
-  background: rgba(187, 134, 252, 0.1) !important;
-}
-
-[data-md-color-scheme="default"] .md-typeset .ks-subscribe__email {
-  border: 0.1rem solid var(--md-primary-fg-color) !important;
-  background: rgba(98, 0, 234, 0.03) !important;
-  color: #000 !important;
-}
-
-[data-md-color-scheme="default"] .md-typeset .ks-subscribe__email:focus {
-  border-color: #6200ea !important;
-}
-
-/* Subscribe button inherits md-button--primary from Material */
-.md-typeset .ks-subscribe__btn {
-  display: inline-block !important;
-  margin: 0 !important;
-}
-
-.md-typeset .ks-subscribe__btn:disabled {
-  opacity: 0.5 !important;
-  cursor: not-allowed !important;
-  pointer-events: none !important;
-}
-
-/* Consent checkbox row - below input and button */
-.md-typeset .ks-subscribe__consent-row {
-  margin-top: 0.4rem !important;
-  font-size: 0.65rem !important;
-  opacity: 0.4 !important;
-}
-
-.md-typeset .ks-subscribe__consent-row label {
-  cursor: pointer !important;
-  display: flex !important;
-  align-items: flex-start !important;
-  gap: 0.3rem !important;
-}
-
-.md-typeset .ks-subscribe__consent-row input[type="checkbox"] {
-  margin-top: 0.1rem !important;
-  flex-shrink: 0 !important;
-}
-
-/* Success message replaces entire form */
-.md-typeset .ks-subscribe__done {
-  font-size: 0.85rem !important;
-  padding: 0.6rem 0 !important;
-  line-height: 1.5 !important;
-}
-
-.md-typeset .ks-subscribe__consent {
-  display: flex !important;
-  align-items: flex-start !important;
-  gap: 0.4rem !important;
-  margin-top: 0.4rem !important;
-  font-size: 0.65rem !important;
-  opacity: 0.4 !important;
-  cursor: pointer !important;
-}
-
-.md-typeset .ks-subscribe__consent input[type="checkbox"] {
-  margin-top: 0.1rem !important;
-  flex-shrink: 0 !important;
-}
-
-.md-typeset .ks-subscribe__msg {
-  font-size: 0.8rem !important;
-  margin-top: 0.5rem !important;
-  min-height: 1.2em !important;
-  font-weight: 600 !important;
-}
-
-.md-typeset .ks-subscribe__msg.success { color: #03dac6 !important; }
-.md-typeset .ks-subscribe__msg.error { color: #ff7597 !important; }
-
-/* ── Footer privacy note ── */
-.ks-footer-privacy {
-  text-align: center !important;
-  font-size: 0.65rem !important;
-  opacity: 0.35 !important;
-  padding: 0.5rem 0 0 !important;
-  letter-spacing: 0.03em !important;
-}
-
-/* ── Blog post separator ── */
-.md-typeset .md-post {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
-  padding-bottom: 1.5rem !important;
-  margin-bottom: 1.5rem !important;
-}
-
-[data-md-color-scheme="default"] .md-typeset .md-post {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
-}
-
-/* ── Claude Snippet Card ── */
-/* .md-typeset prefix needed to override Material theme's div resets */
-.md-typeset .claude-snippet {
-  position: relative;
-  margin: 1.8rem 0 1rem;
-  border-radius: 14px;
-  padding: 2px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.4), rgba(255,255,255,0.7)) !important;
-  background-size: 300% 300% !important;
-  animation: snippet-gradient 8s ease infinite;
-  overflow: hidden;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.08), 0 0 40px rgba(255, 255, 255, 0.04);
-}
-
-@keyframes snippet-gradient {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.claude-snippet__particles {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.claude-snippet__inner {
-  position: relative;
-  z-index: 2;
-  border-radius: 12px;
-  padding: 1.2rem 1.5rem 1.4rem;
-}
-
-[data-md-color-scheme="slate"] .claude-snippet__inner {
-  background: #1e1e2e;
-}
-
-[data-md-color-scheme="default"] .claude-snippet__inner {
-  background: #fafafa;
-}
-
-.claude-snippet__header {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1rem;
-  font-weight: 700;
-  margin-bottom: 0.2rem;
-}
-
-[data-md-color-scheme="slate"] .claude-snippet__header {
-  color: #bb86fc;
-}
-
-[data-md-color-scheme="default"] .claude-snippet__header {
-  color: #6200ea;
-}
-
-.claude-snippet__header svg {
-  flex-shrink: 0;
-}
-
-.claude-snippet__desc {
-  font-size: 0.82rem;
-  margin: 0 0 0.8rem;
-  opacity: 0.6;
-}
-
-.claude-snippet__code {
-  position: relative;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-[data-md-color-scheme="slate"] .claude-snippet__code {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-[data-md-color-scheme="default"] .claude-snippet__code {
-  background: rgba(0, 0, 0, 0.03);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-.claude-snippet__code pre {
-  margin: 0;
-  padding: 1rem 1.2rem;
-  font-size: 0.78rem;
-  line-height: 1.6;
-  font-family: var(--md-code-font, "JetBrains Mono"), monospace;
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-
-[data-md-color-scheme="slate"] .claude-snippet__code pre {
-  color: rgba(255, 255, 255, 0.75);
-}
-
-[data-md-color-scheme="default"] .claude-snippet__code pre {
-  color: rgba(0, 0, 0, 0.7);
-}
-
-.claude-snippet__copy {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  padding: 0.3rem 0.7rem;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  font-size: 0.72rem;
-  font-weight: 600;
-  font-family: inherit;
-  transition: all 0.2s;
-  z-index: 3;
-}
-
-[data-md-color-scheme="slate"] .claude-snippet__copy {
-  background: rgba(255, 255, 255, 0.12);
-  color: rgba(255, 255, 255, 0.85);
-}
-
-[data-md-color-scheme="slate"] .claude-snippet__copy:hover {
-  background: rgba(255, 255, 255, 0.22);
-}
-
-[data-md-color-scheme="default"] .claude-snippet__copy {
-  background: rgba(98, 0, 234, 0.08);
-  color: #6200ea;
-}
-
-[data-md-color-scheme="default"] .claude-snippet__copy:hover {
-  background: rgba(98, 0, 234, 0.16);
-}
-
-.claude-snippet__copy.copied {
-  background: rgba(3, 218, 198, 0.2) !important;
-  color: #03dac6 !important;
-}
-
-/* ── Inline snippet (no animated border) ── */
-.md-typeset .claude-snippet--inline {
-  margin: 0.8rem 0;
-  padding: 0;
-  background: none !important;
-  animation: none;
-  box-shadow: none;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.claude-snippet--inline .claude-snippet__inner {
-  padding: 0;
-  border-radius: 10px;
-}
-
-[data-md-color-scheme="slate"] .claude-snippet--inline .claude-snippet__inner {
-  background: transparent;
-}
-
-[data-md-color-scheme="default"] .claude-snippet--inline .claude-snippet__inner {
-  background: transparent;
-}
-
-[data-md-color-scheme="slate"] .claude-snippet--inline .claude-snippet__code {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-[data-md-color-scheme="default"] .claude-snippet--inline .claude-snippet__code {
-  background: rgba(0, 0, 0, 0.03);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-/* ── Graph Stats Bar ── */
 .md-typeset .ks-graph-stats {
   display: flex;
   align-items: center;
@@ -435,9 +300,36 @@
   .ks-graph-stats__item {
     min-width: 40%;
   }
+  .md-typeset .ks-topbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .md-typeset .ks-topbar__subscribe {
+    margin-left: 0;
+  }
+  #knowledge-graph {
+    height: 350px;
+  }
 }
 
-/* ── Contributors ── */
+/* ══════════════════════════════════════════════
+   BLOG POST SEPARATOR
+   ══════════════════════════════════════════════ */
+
+.md-typeset .md-post {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  padding-bottom: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+[data-md-color-scheme="default"] .md-typeset .md-post {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ══════════════════════════════════════════════
+   CONTRIBUTORS
+   ══════════════════════════════════════════════ */
+
 .md-typeset .ks-contributors {
   display: flex;
   gap: 0.8rem;
@@ -523,4 +415,58 @@
 
 [data-md-color-scheme="default"] .ks-contributor__role {
   color: rgba(0, 0, 0, 0.4);
+}
+
+/* ══════════════════════════════════════════════
+   ARTICLE LEVEL BADGES (1-5 stars)
+   ══════════════════════════════════════════════ */
+
+.ks-level {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  margin-left: 0.4rem;
+  vertical-align: middle;
+  font-size: 0.7rem;
+  line-height: 1;
+}
+
+.ks-level__star--filled {
+  color: #ffd740;
+}
+
+[data-md-color-scheme="default"] .ks-level__star--filled {
+  color: #ffab00;
+}
+
+.ks-level__star--empty {
+  color: rgba(255, 255, 255, 0.15);
+}
+
+[data-md-color-scheme="default"] .ks-level__star--empty {
+  color: rgba(0, 0, 0, 0.12);
+}
+
+/* Level badge under article title */
+.md-typeset .ks-level-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: -0.5rem 0 1rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+[data-md-color-scheme="slate"] .ks-level-badge {
+  background: rgba(187, 134, 252, 0.1);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+[data-md-color-scheme="default"] .ks-level-badge {
+  background: rgba(98, 0, 234, 0.06);
+  color: rgba(0, 0, 0, 0.45);
 }
