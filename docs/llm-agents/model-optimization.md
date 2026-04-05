@@ -81,6 +81,41 @@ Remove entire blocks - neurons, attention heads, or layers:
 - Often needs additional fine-tuning after pruning
 - Finding optimal pruning ratio per layer is non-trivial
 
+## Model Selection Framework
+
+Before optimizing, choose the right model. Evaluate along two axes:
+
+### Basic Attributes (Narrow First)
+
+| Attribute | What to Check |
+|-----------|--------------|
+| **Open vs closed source** | API costs vs self-hosting costs, data privacy requirements |
+| **Release date / knowledge cutoff** | Affects factual accuracy for recent topics |
+| **Parameter count** | Affects quality, cost, and fine-tuning data requirements |
+| **Training data size** | Larger = deeper domain knowledge |
+| **Context length** | Must fit system prompt + examples + conversation history |
+| **License** | Commercial use restrictions (Llama community license, Stable Diffusion revenue threshold) |
+
+### Cost Analysis
+
+| Cost Type | Closed Source | Open Source |
+|-----------|--------------|-------------|
+| **Inference** | API tokens (input + output) | GPU compute (Modal, RunPod, own hardware) |
+| **Training** | Fine-tuning API fees | GPU hours for training |
+| **Build cost** | Low (fast integration) | Higher (infrastructure setup) |
+| **Time to market** | Days | Weeks |
+
+### Performance Evaluation
+
+After narrowing by attributes and cost, benchmark candidates on your specific task:
+
+1. **Check leaderboards**: Hugging Face Open LLM Leaderboard for open-source comparison
+2. **Check arenas**: Chatbot Arena (LMSYS) for human preference rankings
+3. **Prototype with top 2-3 candidates** on representative examples from your domain
+4. **Measure**: accuracy on your test set, latency, cost per request
+
+**Key insight:** There is no universally "best" model. Selection depends on task requirements - a small fine-tuned model often outperforms a general-purpose large model on specific domains.
+
 ## Inference Optimizations
 
 Beyond model compression:

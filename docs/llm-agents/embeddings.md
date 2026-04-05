@@ -84,6 +84,47 @@ def majority_vote(candidates):
     return collections.Counter(candidates).most_common(1)[0]
 ```
 
+## Visualizing Embeddings with t-SNE
+
+Since embeddings have 1000+ dimensions, use dimensionality reduction to project them to 2D or 3D for visual inspection:
+
+```python
+from sklearn.manifold import TSNE
+import plotly.graph_objects as go
+import numpy as np
+
+# Get all embeddings from vector store
+collection = vectorstore._collection
+result = collection.get(include=["embeddings", "documents", "metadatas"])
+vectors = np.array(result["embeddings"])
+
+# Project to 2D
+tsne = TSNE(n_components=2, random_state=42)
+reduced = tsne.fit_transform(vectors)
+
+# Color by document type
+colors = [metadata.get("source_type", "unknown") for metadata in result["metadatas"]]
+color_map = {"employee": "green", "contract": "red", "product": "blue", "company": "gold"}
+
+fig = go.Figure(data=go.Scatter(
+    x=reduced[:, 0], y=reduced[:, 1],
+    mode="markers",
+    marker=dict(color=[color_map.get(c, "gray") for c in colors]),
+    text=[doc[:100] for doc in result["documents"]],  # hover text
+    hoverinfo="text"
+))
+fig.show()
+```
+
+**What you observe:** Documents cluster by semantic similarity - employee records group together, product descriptions cluster separately, contract terms sit near product features (shared vocabulary). The embedding model was never told document types - it inferred semantic structure purely from content.
+
+**3D projection** (`n_components=3`) gives rotatable views but is often less clear than 2D. Use `go.Scatter3d` with the same pattern.
+
+**Practical use:** Embedding visualization reveals:
+- Whether chunks from different sources are semantically separated (good for retrieval precision)
+- Outlier documents that may be mislabeled or irrelevant
+- Cross-topic overlap zones where retrieval might return unexpected results
+
 ## Known Issues
 
 - **Non-determinism**: OpenAI embeddings produce slightly different vectors across API calls for the same text. Small absolute differences but breaks deterministic unit tests.

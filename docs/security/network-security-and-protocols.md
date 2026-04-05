@@ -184,6 +184,71 @@ Security: DHCP starvation attack (exhaust pool), rogue DHCP server (MITM). Defen
 - v3: authentication + encryption (always use v3)
 - Exposed SNMP = full device configuration exposure
 
+## Network Diagnostics Toolkit
+
+Essential utilities for verifying connectivity and troubleshooting:
+
+### ping - ICMP Reachability
+```bash
+# Basic connectivity check
+ping -c 5 example.com
+
+# Specify interface
+ping -c 3 -I eth0 192.168.1.1
+
+# Large packet test (MTU/fragmentation issues)
+ping -c 3 -s 1400 example.com
+```
+
+**Interpretation:**
+- `Destination Host Unreachable` - routing problem, check default gateway
+- `Request timed out` - host is down or ICMP is blocked
+- Packet loss >0% - unstable connection or congestion
+- RTT variation - network jitter, check intermediate hops
+
+**Limitation:** Many hosts block ICMP. A failed ping does not prove the host is down.
+
+### traceroute - Path Discovery
+```bash
+# Trace route to destination (max 30 hops)
+traceroute -m 30 example.com
+
+# Use TCP instead of UDP (better firewall traversal)
+traceroute -T -p 443 example.com
+```
+
+Shows each router hop between source and destination. Asterisks (`* * *`) indicate hops that don't respond - this is normal for routers configured to drop ICMP TTL-exceeded messages.
+
+### dig / nslookup - DNS Verification
+```bash
+# Query default resolver
+dig example.com
+
+# Query specific nameserver
+dig @1.1.1.1 example.com
+
+# Reverse DNS lookup
+dig -x 8.8.8.8
+
+# Check a specific record type
+dig example.com MX
+dig example.com TXT
+```
+
+```bash
+# nslookup equivalent
+nslookup example.com
+nslookup example.com 8.8.8.8  # query specific server
+nslookup -type=PTR 8.8.8.8    # reverse lookup
+```
+
+**Practical use:** After migrating a domain to a new server, query multiple public DNS servers to verify propagation:
+```bash
+for ns in 1.1.1.1 8.8.8.8 77.88.8.8; do
+    echo "=== $ns ===" && dig @$ns example.com +short
+done
+```
+
 ## Gotchas
 - IPv6 can leak real network information even when IPv4 is routed through VPN
 - DNS queries are unencrypted by default - ISP/network admin can see all domains visited

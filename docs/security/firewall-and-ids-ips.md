@@ -142,6 +142,87 @@ Outgoing -> OUTPUT -> POSTROUTING (NAT/masquerade)
 
 For a network firewall, most rules go in the FORWARD chain (transit traffic). INPUT chain protects the firewall host itself.
 
+### NAT vs Masquerading
+
+Two methods for sharing a public IP with a LAN:
+
+| Feature | NAT (SNAT) | Masquerading |
+|---------|-----------|--------------|
+| IP type | Static | Dynamic (DHCP/PPPoE) |
+| Rule syntax | `--to-source <IP>` | `-j MASQUERADE` |
+| Performance | Better (cached) | Slight overhead |
+| Use when | Server with fixed IP | Home/VPN with dynamic IP |
+
+```bash
+# NAT with static IP (preferred for servers)
+iptables -t nat -A POSTROUTING -s 10.0.0.0/16 -j SNAT --to-source 65.108.243.108
+
+# Masquerading with dynamic IP
+iptables -t nat -A POSTROUTING -o ppp0 -j MASQUERADE
+```
+
+**Always prefer NAT over masquerading when you have a static IP** - it caches the source address mapping and avoids per-packet lookups.
+
+### Complete Firewall Setup for Gateway
+
+Step-by-step for a dual-interface gateway protecting a LAN:
+
+```bash
+# 1. Enable IP forwarding (persistent)
+echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+sysctl -p
+
+# 2. Allow SSH before setting DROP policy (avoid lockout!)
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+
+# 3. Set default policies
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
+
+# 4. Allow loopback
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+
+# 5. NAT for LAN
+iptables -t nat -A POSTROUTING -s 10.0.0.0/16 -j SNAT --to-source <PUBLIC_IP>
+
+# 6. Allow LAN to internet (FORWARD chain)
+iptables -A FORWARD -s 10.0.0.0/16 -j ACCEPT
+iptables -A FORWARD -d 10.0.0.0/16 -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# 7. Save rules
+iptables-save > /etc/iptables/rules.v4
+```
+
+**Critical order:** Allow SSH *before* setting DROP policy. Reversing this locks you out immediately.
+
+### Packet Marking and Policy Routing
+
+Route traffic by port using iptables mangle table + ip rule:
+
+```bash
+# Mark SSH packets (port 22) with mark 0x2
+iptables -t mangle -A PREROUTING -i eth0 -p tcp --dport 22 -j CONNMARK --set-mark 0x2
+iptables -t mangle -A OUTPUT -j CONNMARK --restore-mark
+
+# Create routing table 120 for marked packets
+ip route add default via 172.31.0.1 dev eth0 table 120
+
+# Route marked packets through table 120
+ip rule add fwmark 0x2 lookup 120
+```
+
+This sends SSH traffic through a different gateway than general traffic - useful for split routing, VPN bypass, or directing traffic through monitoring systems.
+
+### Traffic Mirroring for IDS
+
+Redirect traffic copies to an analysis system without affecting the original flow:
+
+- **Small scale:** Use iptables mangle to mark and queue packets for IDS processing on the same host
+- **Large scale:** Mirror traffic to a separate interface/host using `tc` (traffic control) or DPDK for high-performance packet processing
+- **Tunneling:** Wrap mirrored traffic in GRE/VXLAN to preserve original headers across the network
+
 ## IDS/IPS
 
 ### Types

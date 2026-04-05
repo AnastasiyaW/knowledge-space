@@ -98,6 +98,44 @@ LLM router classifies question type, routes to specialized agents with curated k
 ### Knowledge Base Without Vector Search
 For structured data or limited question types: prepare data tables/documents manually, load directly into prompt. More reliable than vector search for known categories.
 
+### DIY RAG (Keyword Matching)
+The simplest possible RAG - string matching to inject relevant context:
+
+```python
+# Load documents into a dict: {"Lancaster": "Avery Lancaster, CEO...", "HomeElm": "..."}
+context = {}
+for f in os.listdir("knowledge_base/employees"):
+    name = f.replace(".md", "").split("_")[-1]
+    context[name] = open(f"knowledge_base/employees/{f}").read()
+
+def get_relevant_context(message: str) -> list[str]:
+    return [details for title, details in context.items()
+            if title.lower() in message.lower()]
+
+def add_context(message: str) -> str:
+    relevant = get_relevant_context(message)
+    if relevant:
+        context_str = "\n\n".join(relevant)
+        return f"{message}\n\nThe following context may help:\n{context_str}"
+    return message
+```
+
+**Why this fails in production:**
+- Case-sensitive: "lancaster" vs "Lancaster" breaks matching
+- Requires exact keyword: "Avery" alone won't match if keyed by surname
+- No semantic understanding: "Who founded the company?" returns nothing
+- Fragile at scale: adding new document types requires new matching logic
+
+This approach demonstrates *why* vector search exists - it replaces fragile string matching with semantic similarity. Use it only for prototyping or when the question space is fully known and small.
+
+**Strong system prompts reduce hallucination in keyword RAG:**
+```python
+system = """You are an expert at answering questions about InsureElm.
+Give brief, accurate answers.
+If you don't know the answer, say so.
+Do NOT make anything up if you lack relevant context."""
+```
+
 ### Multi-Index RAG
 Different document types in different indexes with different chunking strategies. Route queries to appropriate index based on question type.
 

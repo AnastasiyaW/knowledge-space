@@ -248,6 +248,70 @@ class DegradedAgent:
             return "Service temporarily unavailable. Please try again later."
 ```
 
+## Serverless Model Deployment (Modal)
+
+Deploy fine-tuned models as serverless APIs with auto-scaling and pay-per-use:
+
+```python
+import modal
+
+app = modal.App("price-service")
+
+# Define the container image with dependencies
+image = modal.Image.debian_slim().pip_install(
+    "torch", "transformers", "peft", "bitsandbytes"
+)
+
+@app.cls(
+    image=image,
+    gpu="A10G",
+    secrets=[modal.Secret.from_name("huggingface-secret")],
+)
+class PriceService:
+    @modal.build()
+    def download_model(self):
+        """Cache model weights at build time (runs once)"""
+        from huggingface_hub import snapshot_download
+        snapshot_download("your-org/price-model", local_dir="/model-cache")
+
+    @modal.enter()
+    def load_model(self):
+        """Load model into GPU memory on container start"""
+        from transformers import AutoModelForCausalLM, AutoTokenizer
+        self.tokenizer = AutoTokenizer.from_pretrained("/model-cache")
+        self.model = AutoModelForCausalLM.from_pretrained(
+            "/model-cache", device_map="auto"
+        )
+
+    @modal.method()
+    def price(self, description: str) -> float:
+        """Inference - runs on warm container in <1s"""
+        prompt = f"How much does this cost?\n{description}\nPrice: $"
+        inputs = self.tokenizer(prompt, return_tensors="pt").to("cuda")
+        outputs = self.model.generate(**inputs, max_new_tokens=10)
+        text = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
+        return float(re.findall(r'\d+\.?\d*', text)[0])
+```
+
+**Deploy and call:**
+```bash
+modal deploy price_service.py
+```
+
+```python
+# From any Python code
+PriceService = modal.Cls.lookup("price-service", "PriceService")
+pricer = PriceService()
+result = pricer.price.remote("Sony WH-1000XM5 Wireless Headphones")
+```
+
+**Three container lifecycle decorators:**
+- `@modal.build()` - runs at image build time, caches model weights
+- `@modal.enter()` - runs once per container start, loads model to GPU
+- `@modal.method()` - handles each request, uses warm model
+
+**Cold start is 2-3 minutes** (download + load). Warm requests complete in <1 second. Container stays warm for a configurable period before sleeping.
+
 ## Gotchas
 
 - **No kill switch in production**: agents executing tool calls can cause real damage (send emails, delete data, make API calls). Always implement emergency stop mechanisms: per-user kill switch, global agent disable, and automatic shutdown on anomalous behavior (e.g., > 100 tool calls in one run)
