@@ -33,7 +33,6 @@ theme:
     - navigation.path
     - navigation.indexes
     - navigation.sections
-    - navigation.expand
     - navigation.top
     - search.suggest
     - search.highlight
@@ -66,6 +65,7 @@ extra_css:
 
 extra_javascript:
   - javascripts/stats.js
+  - https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js
   - javascripts/graph.js
 
 hooks:
@@ -74,6 +74,7 @@ hooks:
   - hooks/wikilinks.py
   - hooks/copy_extras.py
   - hooks/public_check.py
+  - hooks/levels.py
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -104,12 +105,13 @@ plugins:
       post_date_format: long
       archive: false
       categories: false
-  - privacy:
-      assets: true
+  # - privacy:
+  #     assets: true
   - meta
   - minify:
       minify_html: true
   - redirects:
       redirect_maps: {}
 
-# nav: auto-generated from docs/ structure (560 articles across 22 domains)
+# nav: auto-generated from docs/ structure
+# navigation.tabs creates top-level tabs from first-level directories

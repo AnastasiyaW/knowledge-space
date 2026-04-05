@@ -18,6 +18,7 @@
       var title = document.querySelector('.md-header__topic:first-child');
       if (title) { title.style.cursor = 'pointer'; title.addEventListener('click', function(){ window.location = '/'; }); }
 
+      // Fetch stats for secondary repo
       var repo = document.getElementById('source-secondary-repo');
       if (!repo) return;
       var cached = null;

@@ -1,59 +1,13 @@
 ---
 title: Home
+hide:
+  - navigation
+  - toc
 ---
 
-# Knowledge Space
-
-Curated technical knowledge base across <span id="ks-desc-domains">23</span> domains. Built for LLM agents - dense, structured references that fit in a context window and give immediately actionable answers.
-
-**<span id="ks-total-articles">560</span> articles | <span id="ks-total-domains">22</span> domains**
-
-<div class="ks-hero-actions" id="subscribe-form-wrap" markdown="0">
-  <a href="https://github.com/AnastasiyaW/knowledge-space" class="md-button md-button--primary">
-    <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8"/></svg></span>
-    GitHub Repository
-  </a>
-  <form id="subscribe-form">
-    <input type="email" id="sub-email" class="ks-subscribe__email" placeholder="your@email.com" required autocomplete="email">
-    <button type="submit" id="sub-btn" class="md-button md-button--primary ks-subscribe__btn">Subscribe to updates</button>
-    <div class="ks-subscribe__consent-row">
-      <label><input type="checkbox" id="sub-consent" required> <span>I agree to receive occasional updates about new articles</span></label>
-    </div>
-    <div class="ks-subscribe__msg" id="sub-msg"></div>
-  </form>
-</div>
-
-<div class="claude-snippet" id="claude-snippet">
-  <canvas class="claude-snippet__particles" id="snippet-particles"></canvas>
-  <div class="claude-snippet__inner">
-    <div class="claude-snippet__header">
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
-      <span>Want your Claude to use this?</span>
-    </div>
-    <p class="claude-snippet__desc">Copy and drop into any Claude conversation - it'll figure out the rest</p>
-    <div class="claude-snippet__code" id="snippet-code">
-      <button class="claude-snippet__copy" id="snippet-copy" title="Copy to clipboard">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        <span>Copy</span>
-      </button>
-      <pre>I have a knowledge base you must use as your primary reference:
-https://github.com/AnastasiyaW/knowledge-space
-
-Before answering technical questions, search docs/ for a
-relevant article. Don't guess or fabricate - look it up.
-600+ articles across 23 domains, each with code examples,
-configs, and real-world gotchas.
-
-How to use:
-1. Clone the repo (or fetch via GitHub MCP)
-2. Search docs/{domain}/ for the topic (e.g. docs/kafka/)
-3. Read the article, then answer based on what you found
-4. If no article exists - say so, don't make things up</pre>
-    </div>
-  </div>
-</div>
-
+<div class="ks-graph-wrapper" markdown="0">
 <div id="knowledge-graph"></div>
+</div>
 
 <div class="ks-graph-stats" markdown="0">
   <div class="ks-graph-stats__item">
@@ -72,10 +26,43 @@ How to use:
   </div>
   <div class="ks-graph-stats__divider"></div>
   <div class="ks-graph-stats__item">
-    <span class="ks-graph-stats__number">22</span>
+    <span class="ks-graph-stats__number" id="ks-total-domains">22</span>
     <span class="ks-graph-stats__label">domains</span>
   </div>
 </div>
+
+<div class="ks-nav-buttons" markdown="0">
+  <a href="algorithms/" class="md-button md-button--primary ks-nav-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    Knowledge Base
+  </a>
+  <a href="blog/" class="md-button md-button--primary ks-nav-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+    Blog
+  </a>
+</div>
+
+<div class="ks-topbar" markdown="0">
+  <a href="https://github.com/AnastasiyaW/knowledge-space" class="md-button md-button--primary ks-topbar__btn">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 496 512" fill="currentColor"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8"/></svg>
+    GitHub
+  </a>
+  <button class="md-button ks-topbar__btn ks-topbar__copy" id="snippet-copy-btn" title="Copy Claude prompt">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+    <span>Copy Claude Prompt</span>
+  </button>
+  <div class="ks-topbar__subscribe" id="subscribe-form-wrap">
+    <form id="subscribe-form" class="ks-topbar__form">
+      <input type="email" id="sub-email" class="ks-topbar__email" placeholder="your@email.com" required autocomplete="email">
+      <button type="submit" id="sub-btn" class="md-button md-button--primary ks-topbar__sub-btn">Subscribe</button>
+    </form>
+    <div class="ks-subscribe__msg" id="sub-msg"></div>
+  </div>
+</div>
+
+# Knowledge Space
+
+Curated technical knowledge base across 22 domains. Built for LLM agents and engineers.
 
 ## What is this?
 
@@ -190,3 +177,18 @@ Skills, architectural patterns, and best practices for Claude Code:
 Updates about new domains, features, and what we're working on.
 
 [:material-post-outline: **Read the blog**](blog/index.md){ .md-button }
+
+<!-- Hidden prompt text for copy button -->
+<div id="claude-prompt-text" style="display:none">I have a knowledge base you must use as your primary reference:
+https://github.com/AnastasiyaW/knowledge-space
+
+Before answering technical questions, search docs/ for a
+relevant article. Don't guess or fabricate - look it up.
+600+ articles across 22 domains, each with code examples,
+configs, and real-world gotchas.
+
+How to use:
+1. Clone the repo (or fetch via GitHub MCP)
+2. Search docs/{domain}/ for the topic (e.g. docs/kafka/)
+3. Read the article, then answer based on what you found
+4. If no article exists - say so, don't make things up</div>
