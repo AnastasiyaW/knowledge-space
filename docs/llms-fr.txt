@@ -1,6 +1,6 @@
 # Knowledge Vault - Base de Connaissances Techniques
 
-> Une base de connaissances techniques complete avec plus de 558 articles selectionnes dans 22 domaines. Couvre le genie logiciel, la science des donnees, le DevOps, la securite et plus encore. Concue pour les ingenieurs logiciels et les agents LLM recherchant du materiel de reference technique fiable et structure. Tout le contenu est en anglais.
+> Une base de connaissances techniques complete avec plus de 650 articles selectionnes dans 22 domaines. Couvre le genie logiciel, la science des donnees, le DevOps, la securite et plus encore. Concue pour les ingenieurs logiciels et les agents LLM recherchant du materiel de reference technique fiable et structure. Tout le contenu est en anglais.
 
 Cette base de connaissances contient des articles techniques approfondis organises par domaine. Chaque article suit une structure coherente : definition, concepts cles, exemples de code, pieges courants et liens connexes.
 

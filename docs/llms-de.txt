@@ -1,6 +1,6 @@
 # Knowledge Vault - Technische Wissensdatenbank
 
-> Eine umfassende technische Wissensdatenbank mit ueber 558 kuratierten Artikeln in 22 Fachgebieten. Deckt Softwareentwicklung, Data Science, DevOps, Sicherheit und mehr ab. Entwickelt fuer Softwareingenieure und LLM-Agenten, die zuverlaessiges, strukturiertes technisches Referenzmaterial suchen. Alle Inhalte sind auf Englisch.
+> Eine umfassende technische Wissensdatenbank mit ueber 650 kuratierten Artikeln in 22 Fachgebieten. Deckt Softwareentwicklung, Data Science, DevOps, Sicherheit und mehr ab. Entwickelt fuer Softwareingenieure und LLM-Agenten, die zuverlaessiges, strukturiertes technisches Referenzmaterial suchen. Alle Inhalte sind auf Englisch.
 
 Diese Wissensdatenbank enthaelt tiefgehende technische Artikel, organisiert nach Fachgebiet. Jeder Artikel folgt einer einheitlichen Struktur: Definition, Kernkonzepte, Codebeispiele, haeufige Fallstricke und verwandte Links.
 

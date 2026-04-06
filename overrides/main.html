@@ -3,7 +3,7 @@
 {% block extrahead %}
   {{ super() }}
   <link rel="icon" href="{{ config.site_url }}assets/favicon.png" type="image/png" sizes="32x32">
-  <!-- Cloudflare Web Analytics -->
+  <!-- Cloudflare Web Analytics — SRI not used: Cloudflare updates beacon.min.js in-place -->
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f25c967baa8f46e9883f279471fee824"}'></script>
   <link rel="icon" href="{{ config.site_url }}assets/favicon-16.png" type="image/png" sizes="16x16">
   <style>
