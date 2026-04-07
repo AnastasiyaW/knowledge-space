@@ -24,7 +24,7 @@ VALID_DOMAINS = {
     "data-science", "devops", "image-generation", "ios-mobile",
     "java-spring", "kafka", "linux-cli", "llm-agents", "misc",
     "nodejs", "php", "python", "rust", "security", "seo-marketing",
-    "sql-databases", "testing-qa", "web-frontend",
+    "sql-databases", "testing-qa", "web-frontend", "writing", "llm-memory",
 }
 
 
