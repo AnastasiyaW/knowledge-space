@@ -1,6 +1,6 @@
 site_name: Happyin Knowledge Space
 site_description: >-
-  Comprehensive technical knowledge base with 560+ curated articles
+  Comprehensive technical knowledge base with 650+ curated articles
   covering Kafka, Python, SQL, DevOps, Security, and 17 more domains.
   Built for software engineers and LLM agents.
 site_url: https://happyin.space/
@@ -60,6 +60,9 @@ extra:
       link: https://www.linkedin.com/in/happyinhappy/
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/in/anastasiya-ilukhina-09646a289/
+    - icon: fontawesome/brands/telegram
+      link: https://t.me/happyin_space
+      name: Telegram
 
 extra_css:
   - stylesheets/graph.css
@@ -72,6 +75,7 @@ extra_javascript:
 hooks:
   - hooks/stats.py
   - hooks/validate.py
+  - hooks/description.py
   - hooks/wikilinks.py
   - hooks/copy_extras.py
   - hooks/public_check.py

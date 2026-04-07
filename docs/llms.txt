@@ -1,6 +1,6 @@
 # Knowledge Vault
 
-> A comprehensive technical knowledge base with 558+ curated articles across 22 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material.
+> A comprehensive technical knowledge base with 650+ curated articles across 22 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links. Content is in English, curated from multiple authoritative sources, and regularly updated.
 

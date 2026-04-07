@@ -21,6 +21,7 @@ def on_post_build(config, **kwargs):
         "llms-es.txt",
         "llms-de.txt",
         "llms-fr.txt",
+        "_headers",
     ]
 
     copied = 0

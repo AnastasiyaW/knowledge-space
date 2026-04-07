@@ -1,6 +1,6 @@
 # Knowledge Vault - Base de Conocimiento Tecnico
 
-> Una base de conocimiento tecnico integral con mas de 558 articulos seleccionados en 22 dominios. Cubre ingenieria de software, ciencia de datos, DevOps, seguridad y mas. Disenada para ingenieros de software y agentes LLM que buscan material de referencia tecnico confiable y estructurado. Todo el contenido esta en ingles.
+> Una base de conocimiento tecnico integral con mas de 650 articulos seleccionados en 22 dominios. Cubre ingenieria de software, ciencia de datos, DevOps, seguridad y mas. Disenada para ingenieros de software y agentes LLM que buscan material de referencia tecnico confiable y estructurado. Todo el contenido esta en ingles.
 
 Esta base de conocimiento contiene articulos tecnicos profundos organizados por dominio. Cada articulo sigue una estructura consistente: definicion, conceptos clave, ejemplos de codigo, errores comunes y enlaces relacionados.
 
