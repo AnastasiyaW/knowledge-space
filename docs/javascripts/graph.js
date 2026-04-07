@@ -1,10 +1,11 @@
 // Knowledge Space — 3D Neural Galaxy
 // Pure Three.js with inline orbit controls
 
-(function () {
+function _initGalaxy() {
   "use strict";
   var container = document.getElementById("knowledge-graph");
   if (!container || typeof THREE === "undefined") return;
+  if (container.querySelector("canvas")) return; // already initialized
 
   // ── Data ──
   var FALLBACK = {
@@ -996,11 +997,31 @@
     camera.updateProjectionMatrix();
     renderer.setSize(container.clientWidth, container.clientHeight);
   });
-})();
+}
+
+// Run on initial load + re-run on MkDocs Material instant navigation
+_initGalaxy();
+if (typeof document$ !== "undefined") {
+  document$.subscribe(function() { _initGalaxy(); });
+} else {
+  // Fallback: observe DOM for container re-insertion (instant navigation)
+  var _galaxyObs = new MutationObserver(function() {
+    var c = document.getElementById("knowledge-graph");
+    if (c && !c.querySelector("canvas") && typeof THREE !== "undefined") _initGalaxy();
+  });
+  _galaxyObs.observe(document.body, { childList: true, subtree: true });
+}
 
 // ── Stats ──
-(function(){var s=window.KS_STATS;if(!s)return;var el=function(id,v){var e=document.getElementById(id);if(e)e.textContent=v};el("ks-total-articles",s.total_articles);el("ks-total-domains",s.total_domains);el("ks-graph-nodes",s.total_articles)})();
+function _initStats(){var s=window.KS_STATS;if(!s)return;var el=function(id,v){var e=document.getElementById(id);if(e)e.textContent=v};el("ks-total-articles",s.total_articles);el("ks-total-domains",s.total_domains);el("ks-graph-nodes",s.total_articles)}
+_initStats();
 // ── Copy ──
-(function(){var b=document.getElementById("snippet-copy-btn"),t=document.getElementById("claude-prompt-text");if(!b||!t)return;b.addEventListener("click",function(){navigator.clipboard.writeText(t.textContent.trim()).then(function(){b.classList.add("copied");b.querySelector("span").textContent="Copied!";setTimeout(function(){b.classList.remove("copied");b.querySelector("span").textContent="Copy Claude Prompt"},2000)})})})();
+function _initCopy(){var b=document.getElementById("snippet-copy-btn"),t=document.getElementById("claude-prompt-text");if(!b||!t||b._ksInit)return;b._ksInit=true;b.addEventListener("click",function(){navigator.clipboard.writeText(t.textContent.trim()).then(function(){b.classList.add("copied");b.querySelector("span").textContent="Copied!";setTimeout(function(){b.classList.remove("copied");b.querySelector("span").textContent="Copy Claude Prompt"},2000)})})}
+_initCopy();
 // ── Subscribe ──
-(function(){var f=document.getElementById("subscribe-form"),w=document.getElementById("subscribe-form-wrap");if(!f||!w)return;f.addEventListener("submit",function(e){e.preventDefault();var m=document.getElementById("sub-msg"),b=document.getElementById("sub-btn"),email=document.getElementById("sub-email").value.trim();b.disabled=true;b.textContent="...";fetch("/api/subscribe",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:email})}).then(function(r){return r.json()}).then(function(d){if(d.ok){w.textContent="";var sp=document.createElement("span");sp.style.cssText="color:#03dac6;font-size:0.78rem;font-weight:600;";sp.textContent="Subscribed!";w.appendChild(sp)};else{if(m){m.textContent=d.error||"Error";m.className="ks-subscribe__msg error"}b.disabled=false;b.textContent="Subscribe"}}).catch(function(){if(m){m.textContent="Network error";m.className="ks-subscribe__msg error"}b.disabled=false;b.textContent="Subscribe"})})})();
+function _initSubscribe(){var f=document.getElementById("subscribe-form"),w=document.getElementById("subscribe-form-wrap");if(!f||!w||f._ksInit)return;f._ksInit=true;f.addEventListener("submit",function(e){e.preventDefault();var m=document.getElementById("sub-msg"),b=document.getElementById("sub-btn"),email=document.getElementById("sub-email").value.trim();b.disabled=true;b.textContent="...";fetch("/api/subscribe",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:email})}).then(function(r){return r.json()}).then(function(d){if(d.ok){w.textContent="";var sp=document.createElement("span");sp.style.cssText="color:#03dac6;font-size:0.78rem;font-weight:600;";sp.textContent="Subscribed!";w.appendChild(sp)}else{if(m){m.textContent=d.error||"Error";m.className="ks-subscribe__msg error"}b.disabled=false;b.textContent="Subscribe"}}).catch(function(){if(m){m.textContent="Network error";m.className="ks-subscribe__msg error"}b.disabled=false;b.textContent="Subscribe"})})}
+_initSubscribe();
+// ── Re-init on instant navigation ──
+if (typeof document$ !== "undefined") {
+  document$.subscribe(function() { _initGalaxy(); _initStats(); _initCopy(); _initSubscribe(); });
+}
