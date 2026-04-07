@@ -230,3 +230,5 @@ class ContextRetriever:
 - [[agent-architectures]]
 - [[rag-pipeline]]
 - [[embeddings]]
+- [[context-window-management]] - Layered loading, token budgets, compaction strategies
+- [[session-persistence]] - Handoff files, state files, journal patterns

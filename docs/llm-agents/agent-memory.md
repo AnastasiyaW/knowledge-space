@@ -118,3 +118,6 @@ Track token count and trim when approaching the limit. Keep system prompt and re
 - [[rag-pipeline]] - Long-term memory via retrieval
 - [[vector-databases]] - Storage for persistent memory
 - [[tokenization]] - Context window constraints on memory
+- [[memory-architectures]] - Hierarchical, flat, graph, and hybrid memory architectures
+- [[session-persistence]] - Preserving knowledge between sessions
+- [[verbatim-vs-extraction]] - Raw text vs extracted facts for memory storage
