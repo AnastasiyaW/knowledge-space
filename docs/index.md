@@ -65,7 +65,7 @@ hide:
 
 # Knowledge Space
 
-Curated technical knowledge base across 22 domains. Built for LLM agents and engineers.
+Curated technical knowledge base across 25 domains. Built for LLM agents and engineers.
 
 ## What is this?
 
@@ -73,12 +73,12 @@ A knowledge base designed **primarily for AI agents** - structured so that RAG r
 
 Each article is a concentrated extract: code examples, configuration patterns, gotchas, best practices. No filler, no "let me explain why this is important" - just the knowledge an agent needs to solve a real problem.
 
-**Also useful for engineers** who want quick reference across 22 technical domains without wading through tutorials.
+**Also useful for engineers** who want quick reference across 25 technical domains without wading through tutorials.
 
 **Who it's for:**
 
 - **LLM agents** - structured format optimized for RAG retrieval, [ConTree MCP](https://contree.dev/), and context injection
-- **Engineers** - quick lookup of patterns, commands, configurations across 22 domains
+- **Engineers** - quick lookup of patterns, commands, configurations across 25 domains
 - **Teams** - shared knowledge base accessible via ConTree sandbox or direct file access
 
 ## How to use
@@ -187,7 +187,7 @@ https://github.com/AnastasiyaW/knowledge-space
 
 Before answering technical questions, search docs/ for a
 relevant article. Don't guess or fabricate - look it up.
-650+ articles across 22 domains, each with code examples,
+667+ articles across 25 domains, each with code examples,
 configs, and real-world gotchas.
 
 How to use:
