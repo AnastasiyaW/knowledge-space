@@ -233,6 +233,14 @@
 
 /* Knowledge base visibility controlled by order system above */
 
+/* ── Sticky sidebar ── */
+.md-sidebar--primary {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
 /* ── Reduce top padding in sidebar ── */
 .md-sidebar--primary .md-sidebar__inner {
   padding-top: 0.3rem !important;

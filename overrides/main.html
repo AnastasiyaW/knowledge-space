@@ -167,6 +167,18 @@
             item.style.order = 20;
           }
         });
+
+        // Sort articles alphabetically within each domain section
+        navList.querySelectorAll('.md-nav__item--section .md-nav .md-nav__list, .md-nav__item--nested .md-nav .md-nav__list').forEach(function(list) {
+          var items = Array.from(list.children);
+          if (items.length < 2) return;
+          items.sort(function(a, b) {
+            var textA = (a.textContent || '').trim().toLowerCase();
+            var textB = (b.textContent || '').trim().toLowerCase();
+            return textA.localeCompare(textB);
+          });
+          items.forEach(function(item) { list.appendChild(item); });
+        });
       }, 50);
     });
   </script>
