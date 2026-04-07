@@ -7,32 +7,6 @@ description: Browse 650+ technical articles across 23 domains. Dense references 
 
 650+ curated articles across 23 domains. Click any domain to explore.
 
-<div class="ks-domain-nav" id="ks-domain-nav" markdown="0">
-  <a href="#data-science" class="ks-domain-chip" style="--chip-color:#a07ad0">Data Science</a>
-  <a href="#kafka" class="ks-domain-chip" style="--chip-color:#d07870">Kafka</a>
-  <a href="#devops" class="ks-domain-chip" style="--chip-color:#c88060">DevOps</a>
-  <a href="#architecture" class="ks-domain-chip" style="--chip-color:#7088c8">Architecture</a>
-  <a href="#data-engineering" class="ks-domain-chip" style="--chip-color:#8878b8">Data Eng</a>
-  <a href="#llm-agents" class="ks-domain-chip" style="--chip-color:#c0b060">LLM & AI</a>
-  <a href="#sql-databases" class="ks-domain-chip" style="--chip-color:#9888c0">SQL</a>
-  <a href="#web-frontend" class="ks-domain-chip" style="--chip-color:#6090c8">Frontend</a>
-  <a href="#python" class="ks-domain-chip" style="--chip-color:#50b89a">Python</a>
-  <a href="#security" class="ks-domain-chip" style="--chip-color:#b87080">Security</a>
-  <a href="#algorithms" class="ks-domain-chip" style="--chip-color:#80a0d0">Algorithms</a>
-  <a href="#image-generation" class="ks-domain-chip" style="--chip-color:#c8a058">Image Gen</a>
-  <a href="#cpp" class="ks-domain-chip" style="--chip-color:#7090c0">C++</a>
-  <a href="#java-spring" class="ks-domain-chip" style="--chip-color:#68b080">Java</a>
-  <a href="#bi-analytics" class="ks-domain-chip" style="--chip-color:#70a0b0">BI</a>
-  <a href="#linux-cli" class="ks-domain-chip" style="--chip-color:#a08878">Linux</a>
-  <a href="#testing-qa" class="ks-domain-chip" style="--chip-color:#9090b8">Testing</a>
-  <a href="#rust" class="ks-domain-chip" style="--chip-color:#d89848">Rust</a>
-  <a href="#ios-mobile" class="ks-domain-chip" style="--chip-color:#b080b0">iOS</a>
-  <a href="#seo-marketing" class="ks-domain-chip" style="--chip-color:#80b868">SEO</a>
-  <a href="#misc" class="ks-domain-chip" style="--chip-color:#8898a8">Misc</a>
-  <a href="#nodejs" class="ks-domain-chip" style="--chip-color:#58c098">Node.js</a>
-  <a href="#php" class="ks-domain-chip" style="--chip-color:#7090c0">PHP</a>
-</div>
-
 ---
 
 <div id="data-science"></div>
