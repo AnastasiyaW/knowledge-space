@@ -88,7 +88,7 @@
     { source: "Image Generation", target: "LLM & Agents", strength: 2 },
     { source: "C++", target: "Algorithms", strength: 2 },
     { source: "C++", target: "Architecture", strength: 1 },
-    { source: "Writing", target: "SEO & Marketing", strength: 2 },
+    { source: "Natural Language & Writing", target: "SEO & Marketing", strength: 2 },
     { source: "LLM Memory", target: "LLM & Agents", strength: 3 },
     { source: "LLM Memory", target: "Architecture", strength: 1 },
   ];

@@ -32,7 +32,7 @@ DOMAIN_META = {
     "ios-mobile":       {"name": "iOS & Mobile",       "group": "code"},
     "image-generation": {"name": "Image Generation",   "group": "ai"},
     "cpp":              {"name": "C++",                 "group": "code"},
-    "writing":          {"name": "Writing",            "group": "other"},
+    "writing":          {"name": "Natural Language & Writing",            "group": "other"},
     "llm-memory":       {"name": "LLM Memory",        "group": "ai"},
     "misc":             {"name": "Misc",               "group": "other"},
 }
