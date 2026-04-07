@@ -110,8 +110,8 @@ plugins:
       post_date_format: long
       archive: false
       categories: false
-  - privacy:
-      assets: true
+  # - privacy:
+  #     assets: true
   - meta
   - minify:
       minify_html: true

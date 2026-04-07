@@ -1,5 +1,30 @@
 {% extends "base.html" %}
 
+{% block tabs %}
+  {{ super() }}
+  <nav class="ks-topnav">
+    <a href="{{ config.site_url }}" class="ks-topnav__link">Home</a>
+    <a href="{{ config.site_url }}knowledge-base/" class="ks-topnav__link">Knowledge Base</a>
+    <a href="{{ config.site_url }}blog/" class="ks-topnav__link">Blog</a>
+  </nav>
+  <button class="ks-scroll-top" id="ks-scroll-top" title="Scroll to top">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+  <script>
+    (function(){
+      var btn = document.getElementById('ks-scroll-top');
+      if (!btn) return;
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) btn.classList.add('visible');
+        else btn.classList.remove('visible');
+      });
+      btn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    })();
+  </script>
+{% endblock %}
+
 {% block extrahead %}
   {{ super() }}
   <link rel="icon" href="{{ config.site_url }}assets/favicon.png" type="image/png" sizes="32x32">
@@ -11,6 +36,57 @@
     .md-header__source { display: flex; gap: 0; max-width: none; width: auto; align-items: stretch; }
     .md-header__source .md-source { min-width: 0; width: 12rem; }
     .md-header__source .md-source--secondary { border-left: 1px solid rgba(255,255,255,0.15); }
+
+    /* Top nav bar — inside header flow, not overlapping */
+    .ks-topnav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.35rem 1rem;
+      background: rgba(10, 10, 20, 0.95);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    [data-md-color-scheme="default"] .ks-topnav {
+      background: rgba(245, 245, 252, 0.9);
+      border-bottom-color: rgba(0, 0, 0, 0.06);
+    }
+    .ks-topnav__link {
+      padding: 0.4rem 1.1rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      text-decoration: none;
+      transition: all 0.25s;
+      color: rgba(187, 134, 252, 0.85);
+      background: rgba(187, 134, 252, 0.08);
+      border: 1px solid rgba(187, 134, 252, 0.2);
+    }
+    [data-md-color-scheme="default"] .ks-topnav__link {
+      color: rgba(98, 0, 234, 0.8);
+      background: rgba(98, 0, 234, 0.05);
+      border-color: rgba(98, 0, 234, 0.15);
+    }
+    .ks-topnav__link:hover {
+      background: rgba(255, 193, 7, 0.12);
+      border-color: rgba(255, 193, 7, 0.4);
+      box-shadow: 0 0 12px rgba(255, 193, 7, 0.12);
+      color: #ffc107;
+    }
+    [data-md-color-scheme="default"] .ks-topnav__link:hover {
+      background: rgba(255, 193, 7, 0.1);
+      border-color: rgba(255, 193, 7, 0.35);
+      color: #e6a800;
+    }
+    .ks-topnav__link:active {
+      background: rgba(187, 134, 252, 0.28);
+      box-shadow: 0 0 16px rgba(187, 134, 252, 0.2);
+    }
+    .ks-topnav__link--active {
+      background: rgba(187, 134, 252, 0.2) !important;
+      border-color: rgba(187, 134, 252, 0.4) !important;
+      color: #bb86fc !important;
+    }
   </style>
   <script>
     document.addEventListener('DOMContentLoaded', function(){
@@ -48,6 +124,50 @@
           try{sessionStorage.setItem('__source_secondary',JSON.stringify(data))}catch(e){}
           if(!cached) renderFacts(data);
         }).catch(function(){});
+
+
+      // ── Reorder sidebar by text content ──
+      setTimeout(function() {
+        var navList = document.querySelector('.md-nav--primary > .md-nav__list');
+        if (!navList) return;
+
+        // Match by trimmed first-line text of each nav item
+        var rules = [
+          { match: 'home',                    rank: 0, hide: true },
+          { match: 'knowledge base',          rank: 0, hide: true },
+          { match: 'blog',                    rank: 0, hide: true },
+          { match: 'for llm agents',          rank: 1, style: 'secondary' },
+          { match: 'contributing',            rank: 2, style: 'secondary' },
+          { match: 'privacy',                 rank: 3, style: 'secondary', sep: true },
+          { match: 'happyin knowledge space', rank: 0, hide: true },
+        ];
+
+        navList.style.display = 'flex';
+        navList.style.flexDirection = 'column';
+
+        Array.from(navList.children).forEach(function(item) {
+          // Get the direct label text (first link or label)
+          var label = item.querySelector(':scope > a, :scope > .md-nav__link, :scope > div > a');
+          var text = label ? label.textContent.trim().toLowerCase() : item.textContent.trim().split('\n')[0].toLowerCase();
+
+          var rule = null;
+          for (var i = 0; i < rules.length; i++) {
+            if (text === rules[i].match || text.indexOf(rules[i].match) === 0) {
+              rule = rules[i];
+              break;
+            }
+          }
+
+          if (rule) {
+            if (rule.hide) { item.style.display = 'none'; return; }
+            item.style.order = rule.rank;
+            if (rule.sep) item.classList.add('ks-separator');
+            if (label) label.classList.add(rule.style === 'primary' ? 'ks-btn-primary' : 'ks-btn-secondary');
+          } else {
+            item.style.order = 20;
+          }
+        });
+      }, 50);
     });
   </script>
 

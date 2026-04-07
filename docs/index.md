@@ -7,6 +7,9 @@ hide:
 
 <div class="ks-graph-wrapper" markdown="0">
 <div id="knowledge-graph"></div>
+<button class="ks-scroll-down" id="ks-scroll-down" title="Scroll down">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</button>
 </div>
 
 <div class="ks-graph-stats" markdown="0">
@@ -32,7 +35,7 @@ hide:
 </div>
 
 <div class="ks-nav-buttons" markdown="0">
-  <a href="algorithms/" class="md-button md-button--primary ks-nav-btn">
+  <a href="knowledge-base/" class="md-button md-button--primary ks-nav-btn">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
     Knowledge Base
   </a>
