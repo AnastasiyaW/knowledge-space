@@ -112,3 +112,5 @@ Force agents to produce structured data at each step:
 - [[function-calling]] - How tool calls work at the API level
 - [[langchain-framework]] - Framework implementations of these patterns
 - [[langgraph]] - Graph-based agent orchestration
+- [[agent-self-improvement]] - Self-critique extended to agent self-modification
+- [[autonomous-agent-evolution]] - Heartbeat reflection pattern for long-running agents

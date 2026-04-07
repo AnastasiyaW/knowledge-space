@@ -1,7 +1,7 @@
 ---
 title: Flow Matching
 category: architectures
-tags: [flow-matching, rectified-flow, scheduler, sampling, diffusion, ode, cft]
+tags: [flow-matching, rectified-flow, scheduler, sampling, diffusion, ode, cft, img2img, self-refinement, sana, flux]
 aliases: ["Rectified Flow", "Flow Matching Scheduler"]
 ---
 
@@ -84,9 +84,80 @@ Flow matching is particularly amenable to progressive distillation:
 
 | Method | What it learns | ODE/SDE | Steps needed |
 |--------|---------------|---------|-------------|
-| DDPM | Score ∇log p(x_t) | SDE (stochastic) | 50-1000 |
+| DDPM | Score nabla log p(x_t) | SDE (stochastic) | 50-1000 |
 | DDIM | Score (deterministic sampling) | ODE | 20-50 |
 | Flow Matching | Velocity v(x_t, t) | ODE | 20-30 |
 | Consistency Models | Direct x_0 prediction | Single-step | 1-4 |
 
+## See Also
+
+- [[SANA]] - efficient DiT using flow matching with linear attention
+- [[FLUX Klein 9B Inference]] - FLUX flow matching model inference
+- [[Diffusion LoRA Training]] - training with flow matching loss
+- [[Diffusion Inference Acceleration]] - sampling acceleration techniques
+
 Flow matching sits in the sweet spot: simpler than DDPM, more flexible than consistency models, and competitive quality at moderate step counts.
+
+## Flow Matching img2img
+
+Unlike DDPM (add noise then denoise from intermediate step), flow matching img2img **interpolates along the ODE path**:
+
+```python
+# DDPM img2img: add noise to image, denoise from timestep t
+# Flow matching img2img: interpolate between image latent and noise along ODE path
+
+from diffusers import SanaSprintImg2ImgPipeline
+
+pipe = SanaSprintImg2ImgPipeline.from_pretrained(
+    "Efficient-Large-Model/Sana_Sprint_1.6B_1024px_diffusers",
+    torch_dtype=torch.bfloat16
+).to("cuda")
+
+result = pipe(
+    prompt="a detailed jewelry photo",
+    image=input_image,
+    strength=0.5,       # 0.0 = no change, 1.0 = full regeneration
+    num_inference_steps=2,
+    guidance_scale=4.5,
+).images[0]
+```
+
+The `strength` parameter determines how far along the flow path to start. At 0.5: start halfway = moderate changes while preserving structure.
+
+## Self-Refinement via Multi-Pass
+
+DDPM models use a separate refiner model (SDXL refiner pattern). Flow matching models use **self-refinement** - the same model applied iteratively at decreasing strength:
+
+```
+Pass 1: txt2img at 1024px -> base image
+Pass 2: img2img on result, strength=0.3-0.4 -> refined details
+Pass 3: img2img again, strength=0.2 -> final polish
+```
+
+Each pass partially re-noises along the flow path and re-solves. Low strength = mostly preserve structure, refine details. No separate refiner model exists for FLUX/SANA/SD3 because:
+- Flow matching produces higher quality in fewer steps
+- The ODE path is more direct than DDPM's stochastic path
+- Consistency distillation achieves 1-step at high quality
+
+## Iterative Flow Matching (Advanced)
+
+Two academic approaches extend the self-refinement concept:
+- **End-path correction**: fix the last portion of the ODE solution
+- **Gradual refinement**: samples increasingly converge to target distribution
+
+Not yet in production pipelines, but the multi-pass img2img approach achieves similar results in practice.
+
+## Timestep Sampling: Logit-Normal
+
+[[SANA]] and modern flow matching models use logit-normal timestep sampling during training:
+
+```python
+# Instead of uniform t ~ U(0, 1):
+t = torch.sigmoid(mean + std * torch.randn(...))  # mean=0.0, std=1.0
+```
+
+This concentrates training signal on intermediate timesteps where the velocity field is hardest to predict, improving sample quality without extra compute.
+
+## Flow Shift Parameter
+
+Controls the noise schedule shape. [[SANA]] uses shift=3.0, which biases the schedule toward more denoising at later timesteps. Higher shift = more detail refinement in final steps.

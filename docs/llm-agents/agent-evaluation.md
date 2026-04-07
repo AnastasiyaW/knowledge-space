@@ -211,3 +211,5 @@ def regression_check(current_results, baseline_results, threshold=0.05):
 - [[agent-design-patterns]]
 - [[llmops]]
 - [[production-patterns]]
+- [[agent-self-improvement]] - Using evaluation signals for agent self-improvement
+- [[token-optimization]] - Efficiency metrics and token budget management

@@ -34,6 +34,8 @@ DOMAIN_META = {
     "cpp":              {"name": "C++",                 "group": "code"},
     "writing":          {"name": "Natural Language & Writing",            "group": "other"},
     "llm-memory":       {"name": "LLM Memory",        "group": "ai"},
+    "audio-voice":      {"name": "Voice & Audio",       "group": "ai"},
+    "go":               {"name": "Go",                 "group": "code"},
     "misc":             {"name": "Misc",               "group": "other"},
 }
 

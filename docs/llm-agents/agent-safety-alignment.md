@@ -1,7 +1,7 @@
 ---
 title: Agent Safety and Alignment
 category: concepts
-tags: [llm-agents, safety, alignment, guardrails, prompt-injection, sandboxing]
+tags: [llm-agents, safety, alignment, guardrails, prompt-injection, sandboxing, anti-sycophancy]
 ---
 
 # Agent Safety and Alignment
@@ -197,6 +197,102 @@ def maybe_confirm(tool_name, params, user_callback):
     return execute_tool(tool_name, params)
 ```
 
+## Anti-Sycophancy and Pushback
+
+### The Sycophancy Problem
+
+LLMs default to agreeing with users and avoiding confrontation. In agent contexts this means:
+- Agent implements bad architecture because user asked for it
+- Agent skips validation steps when user says "just do it"
+- Agent confirms incorrect assumptions instead of challenging them
+- Agent writes code it knows is fragile rather than pushing back on requirements
+
+### Pushback Instruction Patterns
+
+System-level instructions that force the agent to challenge rather than comply:
+
+```
+You are a senior engineer who pushes back on bad ideas.
+
+Rules:
+1. If the user's approach has a known failure mode, explain it BEFORE implementing
+2. If requirements are ambiguous, ask clarifying questions - do not guess
+3. If asked to skip tests/validation, explain the risk and ask for explicit confirmation
+4. Never say "great idea" - evaluate ideas on merit
+5. If you disagree, state your position with reasoning, then ask if user wants to proceed
+6. Rewrite unclear user requests in your own words and confirm understanding
+```
+
+**Key technique**: separate the "evaluate" step from the "implement" step. Force evaluation before implementation:
+
+```python
+# Anti-sycophancy agent wrapper
+class CriticalAgent:
+    def handle_request(self, user_request: str) -> str:
+        # Step 1: Evaluate request (separate LLM call)
+        evaluation = self.evaluate(user_request)
+
+        if evaluation["issues"]:
+            return self.format_pushback(evaluation["issues"], user_request)
+
+        # Step 2: Implement only after evaluation passes
+        return self.implement(user_request)
+
+    def evaluate(self, request: str) -> dict:
+        prompt = f"""Evaluate this request for issues:
+        - Ambiguity (missing details that affect implementation)
+        - Known failure modes (patterns that break in production)
+        - Missing edge cases
+        - Security concerns
+        Request: {request}
+        Return JSON: {{"issues": [...], "severity": "high/medium/low"}}"""
+        return json.loads(self.llm(prompt))
+```
+
+### Scaling Pushback Instructions
+
+Pushback effectiveness scales with instruction detail. A 200-token instruction catches obvious issues. A 100K+ token instruction with exhaustive scenarios, examples of good/bad pushback, and domain-specific red flags catches subtle problems.
+
+**Structure for large pushback instructions**:
+
+```markdown
+# Section 1: Core principles (500 tokens)
+When to push back, when to comply, escalation levels
+
+# Section 2: Domain-specific failure patterns (5000+ tokens)
+Exhaustive list of known bad patterns per domain:
+- API design: N+1 queries, missing pagination, unbounded responses
+- Frontend: layout shifts, accessibility violations, state management
+- Data: missing indexes, implicit type coercion, timezone handling
+
+# Section 3: Examples (10000+ tokens)
+Pairs of (user request, correct pushback response) for calibration
+
+# Section 4: Anti-patterns in pushback itself (2000 tokens)
+- Don't block without alternative
+- Don't pushback on style preferences (only on correctness)
+- Don't be passive-aggressive
+```
+
+**Trade-off**: large pushback instructions consume context budget. Mitigate with [[context-engineering]] techniques - cache the stable instruction prefix, load domain-specific sections conditionally.
+
+### Measuring Sycophancy
+
+```python
+def sycophancy_score(agent, test_cases: list[dict]) -> float:
+    """Measure how often agent agrees with intentionally wrong statements."""
+    agreements = 0
+    for case in test_cases:
+        # case["prompt"] contains a wrong claim
+        # case["expected"] = "disagree"
+        response = agent.run(case["prompt"])
+        if response_agrees(response, case["claim"]):
+            agreements += 1
+    return agreements / len(test_cases)  # lower is better
+```
+
+Test cases should include: incorrect technical claims, bad architecture proposals, requests to skip safety steps, and subtly wrong code reviews.
+
 ## Logging and Audit Trail
 
 ```python
@@ -221,6 +317,8 @@ class AuditLogger:
 - **Allowlists beat blocklists for tool access**: blocking known-bad tools leaves unknown-bad tools open. Define exactly which tools the agent can use for each task type. New tools must be explicitly added to the allowlist, not assumed safe
 - **Prompt injection evolves faster than defenses**: no static filter catches all injection attacks. Defense in depth: input filtering + privilege separation + output validation + action confirmation + audit logging. Any single layer will be bypassed eventually
 - **Testing safety requires adversarial thinking**: normal test cases pass fine. Create a red-team test suite with injection attempts, privilege escalation, data exfiltration probes, and resource exhaustion attacks. Run these tests on every agent update
+- **Sycophancy increases with conversation length**: the longer the conversation, the more the model adapts to agree with the user's framing. Anti-sycophancy instructions degrade as context grows. Re-inject pushback instructions after context compaction events
+- **Anti-sycophancy and helpfulness trade off**: too much pushback makes the agent refuse valid requests. Calibrate with test cases that include both bad requests (should push back) and good requests (should comply immediately). Target: >90% correct pushback on bad requests, <5% false pushback on good ones
 
 ## See Also
 
@@ -228,3 +326,5 @@ class AuditLogger:
 - [[agent-design-patterns]]
 - [[agent-deployment]]
 - [[prompt-engineering]]
+- [[agent-self-improvement]] - Self-improving agents need safety guardrails on self-modification
+- [[token-optimization]] - Pushback instructions compete for context budget

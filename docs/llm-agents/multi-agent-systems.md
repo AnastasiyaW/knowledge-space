@@ -151,3 +151,4 @@ Triage (classify urgency) -> Knowledge (search FAQ) -> Action (execute operation
 - [[langgraph]] - Graph-based multi-agent orchestration
 - [[agent-memory]] - Shared memory across agents
 - [[no-code-platforms]] - Visual multi-agent building with FlowWise
+- [[autonomous-agent-evolution]] - Multi-agent evolution with workspace isolation and shared knowledge

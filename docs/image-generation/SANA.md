@@ -164,13 +164,30 @@ Key for [[Temporal Tiling]]: SANA-Video's causal attention = same mechanism need
 
 ## Fine-Tuning / LoRA
 
-Official support via diffusers `train_dreambooth_lora_sana.py`.
+Official support via diffusers `train_dreambooth_lora_sana.py`. See [[Diffusion LoRA Training]] for full training pipeline details.
 
 **LoRA targets:** `attn.to_k, attn.to_q, attn.to_v, attn.to_out.0` + optionally FFN/MLP.
 
-**Settings:** LR 1e-4, 500 steps, batch 1, grad accum 4, bf16, 3-5 images. Requires peft >= 0.14.0.
+**Settings:** LR 1e-4, 500 steps, batch 1, grad accum 4, bf16. Requires peft >= 0.14.0.
+
+**Dataset requirements:**
+- DreamBooth (subject): 3-5 images minimum
+- Style/domain LoRA: 20-30 images recommended
+- Format: 1024x1024+ resolution, detailed captions with rare trigger token ("sks")
+
+**Memory optimization flags:** `--offload` (CPU offload text encoder + VAE), `--cache_latents` (precompute VAE latents), `--use_8bit_adam`.
 
 **ControlNet** also supported — ControlNet-Transformer architecture for SANA backbone.
+
+### Self-Refinement (img2img)
+
+SANA supports img2img via `SanaSprintImg2ImgPipeline`. Multi-pass self-refinement replaces the SDXL refiner pattern:
+
+```
+txt2img 1024px -> img2img strength=0.3-0.4 -> img2img strength=0.2
+```
+
+See [[Flow Matching]] for details on how flow matching img2img differs from DDPM.
 
 ## License
 

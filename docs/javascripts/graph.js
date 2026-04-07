@@ -91,6 +91,10 @@
     { source: "Natural Language & Writing", target: "SEO & Marketing", strength: 2 },
     { source: "LLM Memory", target: "LLM & Agents", strength: 3 },
     { source: "LLM Memory", target: "Architecture", strength: 1 },
+    { source: "Voice & Audio", target: "Data Science", strength: 2 },
+    { source: "Voice & Audio", target: "Python", strength: 1 },
+    { source: "Go", target: "DevOps", strength: 2 },
+    { source: "Go", target: "Architecture", strength: 1 },
   ];
 
   // Theme detection

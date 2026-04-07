@@ -76,3 +76,25 @@ Non-standard technique from retouching: apply solar curve (tone inversion at mid
 ```
 
 Discussed for: white jewelry on white background segmentation, metal edge detection, gradient quality verification after tiled processing.
+
+## VRAM-Aware Tile Sizing
+
+For low-VRAM GPUs, tile size must be calculated from available memory. See [[Low-VRAM Inference Strategies]] for detailed adaptive tile selection.
+
+Quick reference (FP16 U-Net restoration model, 20 MB weights):
+
+| Tile Size | Total VRAM | Fits 2 GB GPU |
+|-----------|------------|---------------|
+| 128x128 | ~60 MB | Yes |
+| 256x256 | ~140 MB | Yes |
+| 512x512 | ~450 MB | Yes |
+| 1024x1024 | ~1.6 GB | Tight |
+
+**BatchNorm warning**: tiling with BatchNorm causes artifacts that overlap cannot fix (statistics computed per-tile, not per-image). Use LayerNorm/InstanceNorm, or train on tiles matching inference size.
+
+## See Also
+
+- [[Low-VRAM Inference Strategies]] - adaptive tile sizing, memory management
+- [[Temporal Tiling]] - cross-tile context propagation
+- [[Diffusion Inference Acceleration]] - complementary acceleration techniques
+- [[SANA]] - 32x compression reduces tiling need

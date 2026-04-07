@@ -137,3 +137,4 @@ Modern providers support token caching: pay 25% premium to cache context for ~5 
 - [[llm-api-integration]] - API parameters that affect generation (temperature, max_tokens)
 - [[agent-security]] - Prompt injection attacks and defenses
 - [[production-patterns]] - Production-grade prompt patterns
+- [[token-optimization]] - Response compression and cost reduction for agents

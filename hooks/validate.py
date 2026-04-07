@@ -25,6 +25,7 @@ VALID_DOMAINS = {
     "java-spring", "kafka", "linux-cli", "llm-agents", "misc",
     "nodejs", "php", "python", "rust", "security", "seo-marketing",
     "sql-databases", "testing-qa", "web-frontend", "writing", "llm-memory",
+    "audio-voice", "go",
 }
 
 
