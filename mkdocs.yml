@@ -60,6 +60,9 @@ extra:
       link: https://www.linkedin.com/in/happyinhappy/
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/in/anastasiya-ilukhina-09646a289/
+    - icon: fontawesome/brands/telegram
+      link: https://t.me/happyin_space
+      name: Telegram
 
 extra_css:
   - stylesheets/graph.css
