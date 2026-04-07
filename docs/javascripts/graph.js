@@ -1021,7 +1021,63 @@ _initCopy();
 // ── Subscribe ──
 function _initSubscribe(){var f=document.getElementById("subscribe-form"),w=document.getElementById("subscribe-form-wrap");if(!f||!w||f._ksInit)return;f._ksInit=true;f.addEventListener("submit",function(e){e.preventDefault();var m=document.getElementById("sub-msg"),b=document.getElementById("sub-btn"),email=document.getElementById("sub-email").value.trim();b.disabled=true;b.textContent="...";fetch("/api/subscribe",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:email})}).then(function(r){return r.json()}).then(function(d){if(d.ok){w.textContent="";var sp=document.createElement("span");sp.style.cssText="color:#03dac6;font-size:0.78rem;font-weight:600;";sp.textContent="Subscribed!";w.appendChild(sp)}else{if(m){m.textContent=d.error||"Error";m.className="ks-subscribe__msg error"}b.disabled=false;b.textContent="Subscribe"}}).catch(function(){if(m){m.textContent="Network error";m.className="ks-subscribe__msg error"}b.disabled=false;b.textContent="Subscribe"})})}
 _initSubscribe();
+// ── Scroll-down arrow ──
+function _initScrollDown(){var btn=document.getElementById("ks-scroll-down");if(!btn||btn._ksInit)return;btn._ksInit=true;btn.addEventListener("click",function(){var wrapper=document.querySelector(".ks-graph-wrapper");if(wrapper){var bottom=wrapper.getBoundingClientRect().bottom+window.scrollY;window.scrollTo({top:bottom,behavior:"smooth"})}})}
+_initScrollDown();
+// ── Domain nav chips ──
+function _initDomainNav(){
+  var nav=document.getElementById("ks-domain-nav");
+  if(!nav||nav._ksInit)return;
+  nav._ksInit=true;
+  var chips=nav.querySelectorAll(".ks-domain-chip");
+  // Click: scroll to anchor + open details
+  chips.forEach(function(chip){
+    chip.addEventListener("click",function(e){
+      e.preventDefault();
+      var id=this.getAttribute("href").substring(1);
+      var anchor=document.getElementById(id);
+      if(!anchor)return;
+      // Find the next details element after anchor
+      var details=anchor.nextElementSibling;
+      while(details&&details.tagName!=="DETAILS"){
+        details=details.nextElementSibling;
+      }
+      if(details&&!details.open)details.open=true;
+      // Scroll with offset for sticky nav
+      var offset=nav.offsetHeight+16;
+      var top=anchor.getBoundingClientRect().top+window.scrollY-offset;
+      window.scrollTo({top:top,behavior:"smooth"});
+      // Update active chip
+      chips.forEach(function(c){c.classList.remove("active")});
+      chip.classList.add("active");
+    });
+  });
+  // Scroll spy: highlight active chip
+  var anchors=[];
+  chips.forEach(function(chip){
+    var id=chip.getAttribute("href").substring(1);
+    var el=document.getElementById(id);
+    if(el)anchors.push({id:id,el:el,chip:chip});
+  });
+  var ticking=false;
+  window.addEventListener("scroll",function(){
+    if(ticking)return;
+    ticking=true;
+    requestAnimationFrame(function(){
+      ticking=false;
+      if(!anchors.length)return;
+      var scrollY=window.scrollY+200;
+      var active=null;
+      for(var i=anchors.length-1;i>=0;i--){
+        if(anchors[i].el.offsetTop<=scrollY){active=anchors[i];break}
+      }
+      chips.forEach(function(c){c.classList.remove("active")});
+      if(active)active.chip.classList.add("active");
+    });
+  });
+}
+_initDomainNav();
 // ── Re-init on instant navigation ──
 if (typeof document$ !== "undefined") {
-  document$.subscribe(function() { _initGalaxy(); _initStats(); _initCopy(); _initSubscribe(); });
+  document$.subscribe(function() { _initGalaxy(); _initStats(); _initCopy(); _initSubscribe(); _initScrollDown(); _initDomainNav(); });
 }

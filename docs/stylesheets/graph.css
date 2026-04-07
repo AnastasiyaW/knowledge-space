@@ -1,6 +1,496 @@
-/* ── Hide duplicate site name in sidebar nav ── */
-.md-nav--primary > .md-nav__list > .md-nav__item:first-child > .md-nav__link[href="."] {
-  display: none;
+/* ══════════════════════════════════════════════
+   KNOWLEDGE BASE — cosmic collapsible sections
+   ══════════════════════════════════════════════ */
+
+/* Domain sections — dark card with glow border */
+[data-md-color-scheme="slate"] .md-typeset details.note {
+  background: rgba(255, 255, 255, 0.02) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-left: 3px solid rgba(187, 134, 252, 0.4) !important;
+  border-radius: 8px !important;
+  margin: 0.6rem 0 !important;
+  transition: all 0.3s ease;
+}
+
+[data-md-color-scheme="default"] .md-typeset details.note {
+  background: rgba(0, 0, 0, 0.015) !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  border-left: 3px solid rgba(98, 0, 234, 0.3) !important;
+  border-radius: 8px !important;
+  margin: 0.6rem 0 !important;
+  transition: all 0.3s ease;
+}
+
+/* Hover glow */
+[data-md-color-scheme="slate"] .md-typeset details.note:hover {
+  border-left-color: rgba(187, 134, 252, 0.8) !important;
+  box-shadow: 0 0 20px rgba(187, 134, 252, 0.06);
+}
+
+[data-md-color-scheme="default"] .md-typeset details.note:hover {
+  border-left-color: rgba(98, 0, 234, 0.6) !important;
+  box-shadow: 0 0 20px rgba(98, 0, 234, 0.04);
+}
+
+/* Hide default admonition icon */
+.md-typeset details.note > summary::before {
+  display: none !important;
+}
+.md-typeset details.note > summary .twemoji,
+.md-typeset details.note .md-admonition-icon {
+  display: none !important;
+}
+
+/* Summary title — bold */
+.md-typeset details.note > summary {
+  font-weight: 700 !important;
+  letter-spacing: 0.02em;
+  font-size: 1rem !important;
+}
+
+/* Inline planet sphere */
+.ks-planet {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+  position: relative;
+  top: -1px;
+}
+
+/* Open state — brighter border */
+[data-md-color-scheme="slate"] .md-typeset details[open].note {
+  border-left-color: rgba(187, 134, 252, 0.7) !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* ── Section headers inside — prominent, colored, larger ── */
+.md-typeset .admonition.note p strong,
+.md-typeset details.note p strong {
+  display: block !important;
+  font-size: 0.92rem !important;
+  font-weight: 800 !important;
+  margin: 1.2rem 0 0.4rem !important;
+  padding: 0.3rem 0 0.25rem !important;
+  border-bottom: 1px solid rgba(187, 134, 252, 0.2) !important;
+  letter-spacing: 0.03em !important;
+}
+
+[data-md-color-scheme="slate"] .md-typeset details.note p strong {
+  color: #bb86fc !important;
+}
+
+[data-md-color-scheme="default"] .md-typeset details.note p strong {
+  color: #6200ea !important;
+  border-bottom-color: rgba(98, 0, 234, 0.15) !important;
+}
+
+/* ══════════════════════════════════════════════
+   DOMAIN NAVIGATION GRID
+   ══════════════════════════════════════════════ */
+
+.ks-domain-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+  padding: 0.8rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  margin: 0.5rem 0 0.2rem;
+  border-radius: 8px;
+}
+
+[data-md-color-scheme="slate"] .ks-domain-nav {
+  background: rgba(12, 12, 22, 0.92);
+  backdrop-filter: blur(8px);
+}
+
+[data-md-color-scheme="default"] .ks-domain-nav {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+}
+
+.ks-domain-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none !important;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.ks-domain-chip::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--chip-color);
+  box-shadow: 0 0 4px var(--chip-color);
+  flex-shrink: 0;
+}
+
+[data-md-color-scheme="slate"] .ks-domain-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+[data-md-color-scheme="slate"] .ks-domain-chip:hover,
+[data-md-color-scheme="slate"] .ks-domain-chip.active {
+  background: rgba(187, 134, 252, 0.15);
+  border-color: rgba(187, 134, 252, 0.3);
+  color: #fff;
+}
+
+[data-md-color-scheme="default"] .ks-domain-chip {
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: rgba(0, 0, 0, 0.65);
+}
+
+[data-md-color-scheme="default"] .ks-domain-chip:hover,
+[data-md-color-scheme="default"] .ks-domain-chip.active {
+  background: rgba(98, 0, 234, 0.1);
+  border-color: rgba(98, 0, 234, 0.25);
+  color: #6200ea;
+}
+
+@media (max-width: 600px) {
+  .ks-domain-chip {
+    font-size: 0.62rem;
+    padding: 0.2rem 0.5rem;
+  }
+}
+
+/* ── Article links — smaller, subtle, indented feel ── */
+.md-typeset .admonition.note li,
+.md-typeset details.note li {
+  margin: 0.08rem 0 !important;
+  font-size: 0.76rem !important;
+  line-height: 1.55 !important;
+  opacity: 0.75;
+}
+
+.md-typeset details.note li:hover {
+  opacity: 1;
+}
+
+.md-typeset details.note li a {
+  font-weight: 500;
+}
+
+/* Description after link — even more subtle */
+.md-typeset details.note li {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+[data-md-color-scheme="default"] .md-typeset details.note li {
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.md-typeset details.note li a {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+[data-md-color-scheme="default"] .md-typeset details.note li a {
+  color: rgba(0, 0, 0, 0.75) !important;
+}
+
+/* Section headings (h2 fallback) */
+.md-typeset details.note h2 {
+  font-size: 0.88rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.03em;
+  margin: 1.2rem 0 0.4rem !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(187, 134, 252, 0.2) !important;
+  padding-bottom: 0.25rem;
+}
+
+[data-md-color-scheme="slate"] .md-typeset details.note h2 {
+  color: #bb86fc !important;
+}
+
+[data-md-color-scheme="default"] .md-typeset details.note h2 {
+  color: #6200ea !important;
+}
+
+/* ══════════════════════════════════════════════ */
+
+/* ── Top-level sidebar: plain links (Home, Contributing, Privacy) as bright buttons ── */
+.md-nav--primary > .md-nav__list > .md-nav__item > a.md-nav__link {
+  display: inline-block !important;
+  padding: 0.4rem 1rem !important;
+  margin: 0.15rem 0.3rem 0.15rem 0 !important;
+  border-radius: 8px !important;
+  font-weight: 700 !important;
+  font-size: 0.78rem !important;
+  transition: all 0.25s;
+}
+
+[data-md-color-scheme="slate"] .md-nav--primary > .md-nav__list > .md-nav__item > a.md-nav__link {
+  background: rgba(187, 134, 252, 0.12) !important;
+  border: 1px solid rgba(187, 134, 252, 0.25) !important;
+  color: #bb86fc !important;
+}
+
+[data-md-color-scheme="slate"] .md-nav--primary > .md-nav__list > .md-nav__item > a.md-nav__link:hover {
+  background: rgba(187, 134, 252, 0.22) !important;
+  border-color: rgba(187, 134, 252, 0.5) !important;
+}
+
+[data-md-color-scheme="default"] .md-nav--primary > .md-nav__list > .md-nav__item > a.md-nav__link {
+  background: rgba(98, 0, 234, 0.06) !important;
+  border: 1px solid rgba(98, 0, 234, 0.15) !important;
+  color: #6200ea !important;
+}
+
+[data-md-color-scheme="default"] .md-nav--primary > .md-nav__list > .md-nav__item > a.md-nav__link:hover {
+  background: rgba(98, 0, 234, 0.12) !important;
+  border-color: rgba(98, 0, 234, 0.3) !important;
+}
+
+/* ── Domain section names — large, bold, colored ── */
+.md-nav--primary .md-nav__item--section > .md-nav__link,
+.md-nav--primary .md-nav__item--nested > .md-nav__link {
+  font-size: 0.88rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: none !important;
+  margin-top: 0.6rem !important;
+}
+
+[data-md-color-scheme="slate"] .md-nav--primary .md-nav__item--section > .md-nav__link,
+[data-md-color-scheme="slate"] .md-nav--primary .md-nav__item--nested > .md-nav__link {
+  color: rgba(187, 134, 252, 0.9) !important;
+}
+
+[data-md-color-scheme="default"] .md-nav--primary .md-nav__item--section > .md-nav__link,
+[data-md-color-scheme="default"] .md-nav--primary .md-nav__item--nested > .md-nav__link {
+  color: rgba(98, 0, 234, 0.8) !important;
+}
+
+/* ── Article links inside domains — smaller, muted, indented ── */
+.md-nav--primary .md-nav__item--section .md-nav .md-nav__link,
+.md-nav--primary .md-nav__item--nested .md-nav .md-nav__link {
+  font-size: 0.72rem !important;
+  font-weight: 400 !important;
+  opacity: 0.55;
+  padding: 0.12rem 0 0.12rem 0.8rem !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+[data-md-color-scheme="default"] .md-nav--primary .md-nav__item--section .md-nav .md-nav__link,
+[data-md-color-scheme="default"] .md-nav--primary .md-nav__item--nested .md-nav .md-nav__link {
+  border-left-color: rgba(0, 0, 0, 0.06);
+}
+
+.md-nav--primary .md-nav__item--section .md-nav .md-nav__link:hover,
+.md-nav--primary .md-nav__item--nested .md-nav .md-nav__link:hover {
+  opacity: 1;
+  border-left-color: rgba(187, 134, 252, 0.4);
+}
+
+/* ── Breadcrumb path — styled ── */
+.md-path {
+  font-size: 0.75rem !important;
+  opacity: 0.6;
+}
+
+.md-path a {
+  color: #bb86fc !important;
+  text-decoration: none;
+}
+
+[data-md-color-scheme="default"] .md-path a {
+  color: #6200ea !important;
+}
+
+/* Knowledge base visibility controlled by order system above */
+
+/* ── Reduce top padding in sidebar ── */
+.md-sidebar--primary .md-sidebar__inner {
+  padding-top: 0.3rem !important;
+}
+
+/* ── Sidebar nav button styles (applied by JS) ── */
+/* Primary buttons moved to header topnav — see main.html */
+
+.ks-btn-secondary,
+.ks-btn-secondary.md-nav__link,
+.ks-btn-secondary.md-nav__link--active,
+a.ks-btn-secondary,
+a.ks-btn-secondary:link,
+a.ks-btn-secondary:visited {
+  display: inline-block !important;
+  padding: 0.22rem 0.6rem !important;
+  margin: 0.12rem 0 !important;
+  border-radius: 5px !important;
+  font-weight: 500 !important;
+  font-size: 0.65rem !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: rgba(255, 255, 255, 0.5) !important;
+  transition: all 0.2s;
+}
+.ks-btn-secondary:hover,
+a.ks-btn-secondary:hover {
+  background: rgba(187, 134, 252, 0.1) !important;
+  border-color: rgba(187, 134, 252, 0.25) !important;
+  color: rgba(187, 134, 252, 0.85) !important;
+}
+.ks-btn-secondary:active,
+a.ks-btn-secondary:active {
+  background: rgba(187, 134, 252, 0.15) !important;
+}
+
+/* Override MkDocs Material amber accent in entire sidebar */
+[data-md-color-scheme="slate"] .md-nav--primary {
+  --md-accent-fg-color: #bb86fc !important;
+}
+[data-md-color-scheme="default"] .md-nav--primary {
+  --md-accent-fg-color: #6200ea !important;
+}
+
+/* Also override on any specific active/focus states */
+.md-nav .md-nav__link--active,
+.md-nav .md-nav__link:is(:focus, :hover) {
+  color: var(--md-accent-fg-color) !important;
+}
+
+/* ── Scroll to top button ── */
+.ks-scroll-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 50;
+  transition: all 0.3s;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  border: none;
+}
+
+.ks-scroll-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+[data-md-color-scheme="slate"] .ks-scroll-top {
+  background: rgba(187, 134, 252, 0.15);
+  border: 1px solid rgba(187, 134, 252, 0.3);
+  color: #bb86fc;
+}
+
+[data-md-color-scheme="slate"] .ks-scroll-top:hover {
+  background: rgba(187, 134, 252, 0.3);
+  box-shadow: 0 0 16px rgba(187, 134, 252, 0.2);
+}
+
+[data-md-color-scheme="default"] .ks-scroll-top {
+  background: rgba(98, 0, 234, 0.08);
+  border: 1px solid rgba(98, 0, 234, 0.2);
+  color: #6200ea;
+}
+
+[data-md-color-scheme="default"] .ks-scroll-top:hover {
+  background: rgba(98, 0, 234, 0.15);
+}
+
+.ks-separator {
+  margin-bottom: 0.6rem !important;
+  padding-bottom: 0.5rem !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+/* ── Blog Hero ── */
+.ks-blog-hero {
+  text-align: center;
+  padding: 2.5rem 1rem 2rem;
+  margin: -0.5rem -1rem 2rem;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+[data-md-color-scheme="slate"] .ks-blog-hero {
+  background: radial-gradient(ellipse at 50% 30%, rgba(187, 134, 252, 0.08) 0%, transparent 60%),
+              rgba(15, 15, 25, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+[data-md-color-scheme="default"] .ks-blog-hero {
+  background: radial-gradient(ellipse at 50% 30%, rgba(98, 0, 234, 0.05) 0%, transparent 60%),
+              rgba(245, 245, 252, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.ks-blog-hero__title {
+  font-size: 2.2rem !important;
+  font-weight: 800 !important;
+  margin: 0 0 0.5rem !important;
+  letter-spacing: -0.02em;
+}
+
+[data-md-color-scheme="slate"] .ks-blog-hero__title {
+  background: linear-gradient(135deg, #bb86fc, #03dac6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[data-md-color-scheme="default"] .ks-blog-hero__title {
+  color: #6200ea;
+}
+
+.ks-blog-hero__desc {
+  font-size: 1rem;
+  opacity: 0.6;
+  margin: 0;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* ── Remove colored bullet dots from sidebar nav items ── */
+.md-nav__item::before,
+.md-nav__item .md-nav__link::before,
+.md-nav .md-nav__item::marker {
+  display: none !important;
+  content: none !important;
+}
+
+.md-nav__list {
+  list-style: none !important;
+}
+
+/* ── Hide site name label in sidebar nav ── */
+.md-nav--primary > .md-nav__list > .md-nav__item:first-child > .md-nav__link[href="."],
+.md-nav--primary > .md-nav__title,
+.md-nav--primary > .md-nav__list > .md-nav__item:first-child > label {
+  display: none !important;
+}
+
+/* Also hide "Happyin Knowledge Space" text above nav */
+.md-sidebar .md-nav--primary > .md-nav__title {
+  display: none !important;
 }
 
 /* ── Reduce spacing between sections on homepage ── */
@@ -202,6 +692,45 @@
   display: block;
   width: 100%;
   height: 100%;
+}
+
+/* Scroll-down arrow on galaxy hero */
+.ks-scroll-down {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 10;
+  background: rgba(187, 134, 252, 0.15);
+  border: 1px solid rgba(187, 134, 252, 0.3);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: rgba(187, 134, 252, 0.8);
+  transition: all 0.3s;
+  animation: ks-bounce 2s infinite;
+}
+.ks-scroll-down:hover {
+  background: rgba(187, 134, 252, 0.3);
+  border-color: rgba(187, 134, 252, 0.5);
+  color: #bb86fc;
+}
+[data-md-color-scheme="default"] .ks-scroll-down {
+  background: rgba(98, 0, 234, 0.08);
+  border-color: rgba(98, 0, 234, 0.2);
+  color: rgba(98, 0, 234, 0.6);
+}
+[data-md-color-scheme="default"] .ks-scroll-down:hover {
+  background: rgba(98, 0, 234, 0.15);
+  color: rgba(98, 0, 234, 0.85);
+}
+@keyframes ks-bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(6px); }
+  60% { transform: translateY(3px); }
 }
 
 @media (max-width: 960px) {
