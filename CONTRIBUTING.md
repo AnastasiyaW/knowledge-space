@@ -102,8 +102,10 @@ Articles go into one of these domain folders:
 | `sql-databases/` | PostgreSQL, MySQL, optimization |
 | `testing-qa/` | Selenium, Playwright, API testing |
 | `web-frontend/` | React, TypeScript, CSS, Figma |
+| `audio-voice/` | TTS, voice cloning, ASR, music generation |
+| `go/` | Goroutines, channels, modules, HTTP servers |
 
-| `misc/` | JavaScript, Go, competitive programming |
+| `misc/` | JavaScript, competitive programming |
 
 New domains can be proposed via PR with at least 5 articles.
 
