@@ -575,8 +575,11 @@ a.ks-btn-secondary:active {
    ══════════════════════════════════════════════ */
 
 /* ── Kill gap between topnav and content on all pages ── */
+.md-main__inner {
+  margin-top: 0 !important;
+}
 .md-content__inner {
-  padding-top: 0 !important;
+  padding-top: 0.4rem !important;
   margin-top: 0 !important;
 }
 
