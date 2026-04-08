@@ -34,16 +34,6 @@ hide:
   </div>
 </div>
 
-<div class="ks-nav-buttons" markdown="0">
-  <a href="knowledge-base/" class="md-button md-button--primary ks-nav-btn">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-    Knowledge Base
-  </a>
-  <a href="blog/" class="md-button md-button--primary ks-nav-btn">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-    Blog
-  </a>
-</div>
 
 <div class="ks-topbar" markdown="0">
   <a href="https://github.com/AnastasiyaW/knowledge-space" class="md-button md-button--primary ks-topbar__btn">

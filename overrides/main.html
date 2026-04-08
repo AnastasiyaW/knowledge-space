@@ -21,6 +21,15 @@
       btn.addEventListener('click', function() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
+
+      // Pin topnav right below the sticky header
+      var header = document.querySelector('.md-header');
+      var topnav = document.querySelector('.ks-topnav');
+      if (header && topnav) {
+        var pin = function() { topnav.style.top = header.offsetHeight + 'px'; };
+        pin();
+        window.addEventListener('resize', pin);
+      }
     })();
   </script>
 {% endblock %}
@@ -43,44 +52,54 @@
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
-      padding: 0.3rem 1rem;
-      background: rgba(10, 10, 20, 0.95);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 0.4rem 1rem;
+      background: linear-gradient(180deg, rgba(30, 20, 50, 0.98) 0%, rgba(18, 12, 35, 0.99) 100%);
+      border-bottom: 1px solid rgba(187, 134, 252, 0.12);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      position: sticky;
+      top: 0;
+      z-index: 3;
     }
     [data-md-color-scheme="default"] .ks-topnav {
-      background: rgba(245, 245, 252, 0.9);
-      border-bottom-color: rgba(0, 0, 0, 0.06);
+      background: linear-gradient(180deg, rgba(248, 245, 255, 0.98) 0%, rgba(240, 235, 252, 0.99) 100%);
+      border-bottom-color: rgba(98, 0, 234, 0.08);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.7);
     }
     .ks-topnav__link {
-      padding: 0.4rem 1.1rem;
-      border-radius: 8px;
+      padding: 0.45rem 1.2rem;
+      border-radius: 10px;
       font-weight: 700;
       font-size: 0.82rem;
       text-decoration: none;
-      transition: all 0.25s;
-      color: rgba(187, 134, 252, 0.85);
-      background: rgba(187, 134, 252, 0.08);
-      border: 1px solid rgba(187, 134, 252, 0.2);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      color: rgba(220, 200, 255, 0.95);
+      background: linear-gradient(180deg, rgba(80, 50, 140, 0.7) 0%, rgba(50, 25, 100, 0.85) 100%);
+      border: 1px solid rgba(140, 100, 200, 0.35);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
     [data-md-color-scheme="default"] .ks-topnav__link {
-      color: rgba(98, 0, 234, 0.8);
-      background: rgba(98, 0, 234, 0.05);
-      border-color: rgba(98, 0, 234, 0.15);
+      color: rgba(70, 20, 160, 0.9);
+      background: linear-gradient(180deg, rgba(120, 80, 200, 0.12) 0%, rgba(98, 0, 234, 0.06) 100%);
+      border-color: rgba(98, 0, 234, 0.2);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.6);
     }
     .ks-topnav__link:hover {
-      background: rgba(255, 193, 7, 0.12);
-      border-color: rgba(255, 193, 7, 0.4);
-      box-shadow: 0 0 12px rgba(255, 193, 7, 0.12);
       color: #ffc107;
+      background: linear-gradient(180deg, rgba(100, 65, 160, 0.8) 0%, rgba(60, 30, 120, 0.9) 100%);
+      border-color: rgba(255, 193, 7, 0.4);
+      box-shadow: 0 4px 14px rgba(255, 193, 7, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      transform: translateY(-1px);
     }
     [data-md-color-scheme="default"] .ks-topnav__link:hover {
-      background: rgba(255, 193, 7, 0.1);
-      border-color: rgba(255, 193, 7, 0.35);
       color: #e6a800;
+      background: linear-gradient(180deg, rgba(255, 193, 7, 0.12) 0%, rgba(255, 193, 7, 0.04) 100%);
+      border-color: rgba(255, 193, 7, 0.35);
+      box-shadow: 0 4px 12px rgba(255, 193, 7, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+      transform: translateY(-1px);
     }
     .ks-topnav__link:active {
-      background: rgba(187, 134, 252, 0.28);
-      box-shadow: 0 0 16px rgba(187, 134, 252, 0.2);
+      transform: translateY(0.5px);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.15);
     }
     .ks-topnav__link--active {
       background: rgba(187, 134, 252, 0.2) !important;
@@ -136,8 +155,8 @@
           { match: 'home',                    rank: 0, hide: true },
           { match: 'knowledge base',          rank: 0, hide: true },
           { match: 'blog',                    rank: 0, hide: true },
-          { match: 'for llm agents',          rank: 1, style: 'secondary' },
-          { match: 'contributing',            rank: 2, style: 'secondary' },
+          { match: 'for ai agents',            rank: 1, style: 'secondary' },
+          { match: 'contributing',            rank: 2, style: 'secondary', rename: 'How to Contribute' },
           { match: 'privacy',                 rank: 3, style: 'secondary', sep: true },
           { match: 'happyin knowledge space', rank: 0, hide: true },
         ];
@@ -163,6 +182,7 @@
             item.style.order = rule.rank;
             if (rule.sep) item.classList.add('ks-separator');
             if (label) label.classList.add(rule.style === 'primary' ? 'ks-btn-primary' : 'ks-btn-secondary');
+            if (rule.rename && label) label.textContent = rule.rename;
           } else {
             item.style.order = 20;
           }
@@ -179,6 +199,90 @@
           });
           items.forEach(function(item) { list.appendChild(item); });
         });
+
+        // Pretty domain names
+        var prettyNames = {
+          'audio voice': 'Audio & Voice', 'bi analytics': 'BI & Analytics',
+          'cpp': 'C++', 'data engineering': 'Data Engineering',
+          'data science': 'Data Science', 'image generation': 'Image Generation',
+          'ios mobile': 'iOS & Mobile', 'java spring': 'Java & Spring',
+          'knowledge base': 'Knowledge Base', 'linux cli': 'Linux & CLI',
+          'llm agents': 'LLM Agents', 'llm memory': 'LLM Memory',
+          'nodejs': 'Node.js', 'php': 'PHP', 'seo marketing': 'SEO & Marketing',
+          'sql databases': 'SQL & Databases', 'testing qa': 'Testing & QA',
+          'web frontend': 'Web Frontend', 'devops': 'DevOps', 'misc': 'Misc'
+        };
+
+        // Extract button items (For AI Agents, How to Contribute, Privacy) into sticky header
+        var sidebar = document.querySelector('.md-sidebar--primary');
+        var scrollwrap = sidebar ? sidebar.querySelector('.md-sidebar__scrollwrap') : null;
+        if (sidebar && scrollwrap) {
+          var btnContainer = document.createElement('div');
+          btnContainer.className = 'ks-sidebar-buttons';
+          var btnItems = navList.querySelectorAll('.ks-btn-secondary');
+          btnItems.forEach(function(btn) {
+            var li = btn.closest('li, .md-nav__item');
+            if (li) {
+              var link = document.createElement('a');
+              var btnText = btn.textContent.trim();
+              link.textContent = btnText;
+              // btn may be <a> or <div> — find the actual href
+              var srcLink = btn.tagName === 'A' ? btn : (btn.querySelector('a') || li.querySelector('a'));
+              link.href = srcLink ? srcLink.href : ({ 'How to Contribute': '/contributing/' }[btnText] || '#');
+              link.className = 'ks-sidebar-btn';
+              btnContainer.appendChild(link);
+              li.style.display = 'none';
+            }
+          });
+          sidebar.insertBefore(btnContainer, scrollwrap);
+        }
+
+        // Make section toggles work: remove indeterminate and collapse all
+        navList.querySelectorAll('.md-nav__item--section').forEach(function(section) {
+          var toggle = section.querySelector(':scope > .md-toggle');
+          if (toggle) {
+            toggle.classList.remove('md-toggle--indeterminate');
+            toggle.indeterminate = false;
+            toggle.checked = false;
+          }
+
+          // Rename domain labels to pretty names
+          var nameSpan = section.querySelector(':scope > .md-nav__link .md-ellipsis');
+          if (nameSpan) {
+            var key = nameSpan.textContent.trim().toLowerCase();
+            if (prettyNames[key]) nameSpan.textContent = prettyNames[key];
+          }
+
+          // Replace default label/link with our own click handler
+          // This avoids Material JS intercepting label[for] clicks
+          var linkEl = section.querySelector(':scope > .md-nav__link.md-nav__container')
+                    || section.querySelector(':scope > label.md-nav__link');
+          if (linkEl && toggle) {
+            // Create a clean clickable overlay
+            var overlay = document.createElement('div');
+            overlay.className = 'ks-domain-toggle';
+            overlay.textContent = (nameSpan ? nameSpan.textContent : linkEl.textContent).trim();
+            overlay.addEventListener('click', function() {
+              toggle.checked = !toggle.checked;
+              overlay.classList.toggle('ks-expanded', toggle.checked);
+            });
+            // Hide original, insert overlay
+            linkEl.style.display = 'none';
+            section.insertBefore(overlay, linkEl);
+          }
+        });
+
+        // Auto-expand section containing current page
+        var activeLink = navList.querySelector('.md-nav__link--active');
+        if (activeLink) {
+          var activeSection = activeLink.closest('.md-nav__item--section');
+          if (activeSection) {
+            var activeToggle = activeSection.querySelector(':scope > .md-toggle');
+            var activeOverlay = activeSection.querySelector('.ks-domain-toggle');
+            if (activeToggle) activeToggle.checked = true;
+            if (activeOverlay) activeOverlay.classList.add('ks-expanded');
+          }
+        }
       }, 50);
     });
   </script>
