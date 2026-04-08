@@ -574,6 +574,12 @@ a.ks-btn-secondary:active {
    KNOWLEDGE GRAPH — full-width premium hero
    ══════════════════════════════════════════════ */
 
+/* ── Kill content padding on homepage so galaxy touches topnav ── */
+.md-content__inner:has(> .ks-graph-wrapper) {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
 /* ── Full-screen graph: break out of ALL MkDocs containers ── */
 .ks-graph-wrapper {
   position: relative;
@@ -581,7 +587,7 @@ a.ks-btn-secondary:active {
   max-width: none !important;
   left: 50% !important;
   transform: translateX(-50%) !important;
-  margin: -0.6rem 0 1.5rem !important;
+  margin: 0 0 1.5rem !important;
   padding: 0 !important;
   z-index: 1;
 }
