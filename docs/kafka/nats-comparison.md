@@ -61,6 +61,61 @@ NATS is a lightweight messaging system with three layers (Core, JetStream, Clust
 - **KV Store has limits** - 1MB value cap, no cross-key transactions
 - **Object Store objects are immutable** - no partial writes, sequential access only
 
+## JetStream: Persistent NATS
+
+JetStream adds persistence on top of NATS Core with explicit consumer semantics:
+
+```go
+// Connect and create JetStream context
+nc, _ := nats.Connect(nats.DefaultURL)
+js, _ := nc.JetStream()
+
+// Create a stream (persistent log):
+js.AddStream(&nats.StreamConfig{
+    Name:     "ORDERS",
+    Subjects: []string{"orders.*"},
+    MaxAge:   24 * time.Hour,
+    Replicas: 3,
+})
+
+// Durable consumer (survives reconnects):
+js.Subscribe("orders.new", func(msg *nats.Msg) {
+    // Process
+    msg.Ack()  // explicit ack; unacked redelivered after AckWait
+}, nats.Durable("order-processor"), nats.AckExplicit())
+```
+
+## NATS as Key/Value Store and Object Store
+
+```go
+// KV Store (distributed, versioned):
+kv, _ := js.CreateKeyValue(&nats.KeyValueConfig{
+    Bucket:   "config",
+    MaxBytes: 100 * 1024 * 1024,  // 100MB max
+})
+kv.Put("feature-flags", []byte(`{"dark_mode": true}`))
+entry, _ := kv.Get("feature-flags")
+
+// Object Store (content-addressed blobs):
+obs, _ := js.CreateObjectStore(&nats.ObjectStoreConfig{
+    Bucket: "artifacts",
+})
+obs.PutFile("model-v1.pkl", "path/to/file")
+```
+
+**Limitations:**
+- KV: 1MB per value cap, no cross-key transactions
+- Object Store: immutable objects, no partial writes
+
+## NATS Execution Engine (Nex)
+
+Serverless layer on top of NATS - deploy and invoke functions via subject routing:
+
+- Deploy: JavaScript functions, WebAssembly modules, native Linux binaries
+- Trigger via any NATS subject (pub/sub, request-reply)
+- Distributed scheduling across cluster nodes
+- No separate serverless infrastructure needed
+
 ## See Also
 
 - [[messaging-models]] - queue, pub-sub, log-based models comparison

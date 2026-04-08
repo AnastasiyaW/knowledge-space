@@ -96,20 +96,25 @@ Architecture (Qwen3.5-Omni):
 - **Chatterbox** (Resemble AI) - emotion control, cloning from short samples
 - **Dia** (Nari Labs) - dialogue-focused, multi-speaker generation
 
-## Model Comparison
+## Model Comparison (2026)
 
 | Model | Params | Languages | Sample Rate | Architecture | Strength |
 |-------|--------|-----------|-------------|-------------|----------|
-| OmniVoice | ? | 600+ | ? | Diffusion LM | Widest language coverage, fastest RTF |
-| VoxCPM2 | 2B | 30+ | 48kHz | Tokenizer-free Diff-AR | Studio quality, voice design |
+| Fish Audio S2 Pro | 4B + 400M | 80+ | — | Dual-AR (Slow+Fast) | #1 TTS Arena, 81.88% vs gpt-4o-mini |
+| VoxCPM2 | 2B | 30+ | 48kHz | Tokenizer-free Diff-AR | Studio quality, voice design, Russian |
+| OmniVoice | ? | 600+ | ? | Diffusion LM | Widest language coverage, RTF 0.025 |
 | Qwen3.5-Omni | Large | 36 TTS / 113 ASR | ? | Omni (Thinker-Talker) | End-to-end conversation |
+| Voxtral 4B | 4B | 9 (no RU/ZH) | ? | Streaming Diff-AR | 68.4% win vs ElevenLabs, 3s cloning |
+| Qwen3-TTS | 1.7B / 0.6B | 10 (incl. RU) | ? | Custom codec 12Hz | Voice design, 97ms streaming |
+| Dia 1.6B | 1.6B | EN focus | ? | Dialogue TTS | Multi-speaker dialogue, MOS 4.7 |
 | LEMAS-TTS | 0.3B | 10 | 24kHz | Flow matching | Multilingual + word-level edit |
-| Voxtral 4B | 4B | 9 | ? | Streaming AR | Low latency, accent capture |
-| XTTS v2 | ~0.5B | 17 | 24kHz | GPT + vocoder | Proven, stable |
-| Kokoro-82M | 82M | EN mainly | 24kHz | StyleTTS-like | Speed, CPU-friendly |
-| F5-TTS | 0.3B | Multi | 24kHz | Flow matching | Base for many forks |
-| CosyVoice 2 | ~0.5B | Multi | 22.05kHz | Flow matching | Streaming support |
-| Fish Speech | ~0.5B | Multi | 44.1kHz | AR codec | Fast, good CJK |
+| Chatterbox-Turbo | 350M-500M | 23+ (incl. RU) | ? | One-step decoder | MIT, paralinguistic tags |
+| Kokoro-82M | 82M | 6 (no RU) | 24kHz | StyleTTS-like | Fastest: 210x RT, CPU |
+| XTTS v2 | ~0.5B | 17 (incl. RU) | 24kHz | GPT + vocoder | Proven, stable, RU |
+| CosyVoice 3 | ~0.5B | 9 (incl. RU) | 22.05kHz | RL-optimized FM | CER 0.81%, 150ms latency |
+| F5-TTS Russian | 0.3B | RU | 24kHz | Flow matching (fine-tuned) | Best open-source RU TTS |
+| Spark-TTS | 0.5B | ZH/EN | ? | BiCodec + Qwen2.5 | Chain-of-thought attribute control |
+| OuteTTS 1.0 | 0.6B/1B | Multi | ? | AR + DAC encoder | GGUF/EXL2, consumer hardware |
 
 ## Inference Parameters
 
@@ -152,6 +157,33 @@ OmniVoice attribute control:
   -> Fine-grained parametric control over synthetic voice
   -> Can combine: "young female, whispering, fast pace"
 ```
+
+## Latency Benchmarks (2026)
+
+| Model | First-packet (TTFA) | RTF | Notes |
+|-------|---------------------|-----|-------|
+| Kokoro 82M | 40-70ms | 0.005 (210x RT) | Fastest, CPU-friendly |
+| Qwen3-TTS Flash | 97ms | — | Streaming |
+| CosyVoice 3 | 150ms | — | Bi-streaming, lossless |
+| Voxtral 4B | 70ms | — | 500-char / 10s input |
+| Fish Audio S2 Pro | <100ms | 0.195 | SGLang inference engine |
+| VoxCPM2 | — | 0.13 (Nano-VLLM) | RTF 0.30 standard PyTorch |
+| Chatterbox-Turbo | ~472ms | 0.499 | One-step decoder tradeoff |
+
+## Russian TTS (Open-Source, Ranked)
+
+| Model | Quality | Notes |
+|-------|---------|-------|
+| F5-TTS Russian (ESpeech) | Best open-source | Multiple fine-tunes, 10K+ hours |
+| ESpeech-TTS-1 RL-V2 | Excellent | Apache 2.0 |
+| Qwen3-TTS 1.7B | Strong | 1 of 10 languages |
+| CosyVoice 3 | Supported | RL-optimized |
+| Chatterbox-ML 500M | Supported | 1 of 23 languages |
+| VoxCPM2 2B | Supported | 30+ language model |
+| XTTS v2 | Good | 17 languages, proven |
+| Silero TTS | Excellent | Purpose-built for Russian |
+
+Resources: [Russian TTS Leaderboard](https://huggingface.co/spaces/ESpeech/open_tts_leaderboard_ru) | [awesome-russian-speech](https://github.com/alphacep/awesome-russian-speech)
 
 ## Gotchas
 

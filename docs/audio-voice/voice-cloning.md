@@ -126,6 +126,92 @@ Preprocessing pipeline:
   5. Resample to model's expected rate (usually 24kHz)
 ```
 
+## Voice Mixing: Creating Novel Voice Identities
+
+Modern TTS models expose speaker embeddings as vectors. Mixing embeddings creates voices that don't correspond to any real person.
+
+### Linear Interpolation (Cartesia Sonic)
+
+Cartesia Sonic uses 192-dimensional speaker embeddings (floats -1 to 1):
+
+```python
+import numpy as np
+
+def mix_voices(embedding_a: np.ndarray, embedding_b: np.ndarray, 
+               weight_a: float = 0.5) -> np.ndarray:
+    """Linear interpolation between two speaker embeddings."""
+    weight_b = 1.0 - weight_a
+    return weight_a * embedding_a + weight_b * embedding_b
+
+# Via Cartesia API:
+import requests
+
+new_voice = requests.post("https://api.cartesia.ai/voices", json={
+    "name": "Custom Mix",
+    "embedding": mix_voices(voice_a_embedding, voice_b_embedding, 0.6).tolist()
+}).json()
+```
+
+**Warning:** Perception does NOT change linearly with interpolation coefficient. A 50/50 mix may require non-equal weights (e.g. 0.7/0.3) to achieve perceptually balanced output. Use prototype embeddings (speed/emotion controls) to fine-tune characteristics.
+
+### Spherical Linear Interpolation (Slerp) - Research Method
+
+Slerp preserves vector magnitude on the high-dimensional hypersphere, minimizing artifacts compared to linear interpolation. Used in VoxMorph (ICASSP 2026):
+
+```python
+def slerp(a: np.ndarray, b: np.ndarray, t: float) -> np.ndarray:
+    """Spherical linear interpolation between two embedding vectors."""
+    a_norm = a / np.linalg.norm(a)
+    b_norm = b / np.linalg.norm(b)
+    
+    dot = np.clip(np.dot(a_norm, b_norm), -1.0, 1.0)
+    theta = np.arccos(dot)
+    
+    if np.abs(theta) < 1e-6:
+        return a  # vectors nearly identical
+    
+    return (np.sin((1 - t) * theta) * a + np.sin(t * theta) * b) / np.sin(theta)
+```
+
+**VoxMorph advantage:** Disentangles prosody embedding (rhythm, pitch) from timbre embedding (vocal tract, formants). Can mix speaking style from speaker A with voice texture from speaker B independently. Input: 5 seconds per source speaker, zero-shot.
+
+### INSIDE Method (Novel Identity Generation)
+
+Selects pairs of nearby speaker embeddings and computes intermediate identities via Slerp. Creates voices that "fill gaps" in embedding space between real speakers. Validated: +5.24% speaker verification improvement, +13.44% gender classification gain.
+
+## What Makes Synthetic Voices Sound Unnatural
+
+The most common naturalness failures and which models address them:
+
+| Problem | Symptom | Best Solutions |
+|---------|---------|---------------|
+| Flat prosody | Monotone regardless of content | Sesame CSM (context-aware), Fish S2 (15K+ tags) |
+| Missing micro-pauses | Uniform word spacing | Sesame CSM (natural umms/uhhs), VoxCPM2 (tokenizer-free) |
+| Absent breathing | No breath intakes between sentences | Orpheus TTS (`<sigh>`, natural breathing) |
+| Emotion flatness | Same intonation for joke vs tragedy | Fish S2 Pro (sub-word emotion), IndexTTS-2.5 (8D vector) |
+| Pitch range compression | Narrower pitch than humans | VoxCPM2 48kHz (no tokenization loss), CosyVoice 3 (RL) |
+| Context ignorance | Words read, not understood | Sesame CSM (conversational context modeling) |
+| Robotic transitions | "Concatenated" word boundaries | RL-aligned models (Fish S2, CosyVoice 3) |
+
+**Practical workarounds:**
+- Inject commas, ellipses, micro-pause markers to guide prosody
+- Use model-specific tags (`[laugh]`, `[excited]`, `[whisper]`) for expression
+- Provide conversational history for context-aware models (Sesame CSM)
+- RL-aligned post-training improves naturalness without architecture changes
+
+## Naturalness Benchmarks (2026)
+
+| Model | MOS | Win Rate | Notes |
+|-------|-----|----------|-------|
+| Sesame CSM | 4.7 | near-human (without context) | English only |
+| Cartesia Sonic 2 | 4.7 | — | ~90ms TTFB |
+| Orpheus TTS | 4.6 | — | Llama-3B based |
+| Fish S2 Pro (EN) | 4.50 exp / 4.21 nat | Bradley-Terry 3.07 #1 | vs all major competitors |
+| Fish S2 Pro (ZH) | 4.94 exp / 4.40 nat | — | Strongest in Chinese |
+| Human speech | ~4.5-4.8 | Reference | Varies by recording |
+
+**Key trend:** Quality gap between top open-source and commercial TTS shrunk from ~1.0 MOS (2023) to 0.1-0.2 MOS (2026). Fish S2 Pro beats gpt-4o-mini-tts on EmergentTTS-Eval (81.88% win rate). Voxtral beats ElevenLabs Flash v2.5 in blind tests.
+
 ## Safety and Ethics
 
 - **Consent**: voice cloning without speaker consent is illegal in many jurisdictions
