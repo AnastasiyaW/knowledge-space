@@ -28,7 +28,7 @@ Pick a color that doesn't clash with existing neighbors in the same group.
 
 ## Link rules
 
-Each new domain should have 1-3 links to semantically related existing domains. Links create visible connections (neural pulses) between planets.
+Links create visible connections (neural pulses) between planets. Only add links if there is a real semantic relationship between domains. Not every domain needs links — isolated planets are fine. Don't force connections.
 
 ## When to check
 
