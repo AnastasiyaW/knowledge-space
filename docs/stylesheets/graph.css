@@ -581,7 +581,7 @@ a.ks-btn-secondary:active {
   max-width: none !important;
   left: 50% !important;
   transform: translateX(-50%) !important;
-  margin: 0 0 1.5rem !important;
+  margin: -0.6rem 0 1.5rem !important;
   padding: 0 !important;
   z-index: 1;
 }
