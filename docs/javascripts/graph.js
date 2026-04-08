@@ -1031,7 +1031,10 @@ _initCopy();
 // ── Subscribe ──
 function _initSubscribe(){var f=document.getElementById("subscribe-form"),w=document.getElementById("subscribe-form-wrap");if(!f||!w||f._ksInit)return;f._ksInit=true;f.addEventListener("submit",function(e){e.preventDefault();var m=document.getElementById("sub-msg"),b=document.getElementById("sub-btn"),email=document.getElementById("sub-email").value.trim();b.disabled=true;b.textContent="...";fetch("/api/subscribe",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:email})}).then(function(r){return r.json()}).then(function(d){if(d.ok){w.textContent="";var sp=document.createElement("span");sp.style.cssText="color:#03dac6;font-size:0.78rem;font-weight:600;";sp.textContent="Subscribed!";w.appendChild(sp)}else{if(m){m.textContent=d.error||"Error";m.className="ks-subscribe__msg error"}b.disabled=false;b.textContent="Subscribe"}}).catch(function(){if(m){m.textContent="Network error";m.className="ks-subscribe__msg error"}b.disabled=false;b.textContent="Subscribe"})})}
 _initSubscribe();
+// ── Scroll-down arrow ──
+function _initScrollDown(){var btn=document.getElementById("ks-scroll-down");if(!btn||btn._ksInit)return;btn._ksInit=true;btn.addEventListener("click",function(){var wrapper=document.querySelector(".ks-graph-wrapper");if(wrapper){var bottom=wrapper.getBoundingClientRect().bottom+window.scrollY;window.scrollTo({top:bottom,behavior:"smooth"})}})}
+_initScrollDown();
 // ── Re-init on instant navigation ──
 if (typeof document$ !== "undefined") {
-  document$.subscribe(function() { _initGalaxy(); _initStats(); _initCopy(); _initSubscribe(); });
+  document$.subscribe(function() { _initGalaxy(); _initStats(); _initCopy(); _initSubscribe(); _initScrollDown(); });
 }
