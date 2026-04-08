@@ -20,7 +20,7 @@ So we made one.
 
 We're Anastasiia But and Anastasiya Ilukhina, and over the past months we've been running deep research with AI agents across 25 technical domains - from Kafka internals to Kubernetes configs, from SQL optimization to diffusion model architectures.
 
-The result: **667+ dense reference articles**, each one structured the same way - key facts, runnable code, real-world gotchas, cross-references. No tutorials, no filler. Everything is verified, cross-referenced, and compressed into the format that works best for both agents and engineers who just need the answer.
+The result: **683+ dense reference articles**, each one structured the same way - key facts, runnable code, real-world gotchas, cross-references. No tutorials, no filler. Everything is verified, cross-referenced, and compressed into the format that works best for both agents and engineers who just need the answer.
 
 The whole thing is designed agent-first. Point your Claude, Cursor, or any RAG pipeline at the [repo](https://github.com/AnastasiyaW/knowledge-space), and it gets structured, verified knowledge instead of guessing. The difference is measurable - fewer hallucinations, more correct code on the first try.
 

@@ -3,7 +3,7 @@
 ## Repository structure
 
 ```
-docs/                     # 560+ articles across 22 domains - WORK HERE
+docs/                     # 683+ articles across 27 domains - WORK HERE
   {domain}/               # Domain folders (algorithms, python, kafka, etc.)
   index.md                # Main page - DO NOT MODIFY
   contributing/           # Contribution guide - DO NOT MODIFY
@@ -59,10 +59,10 @@ Brief context (1-2 lines). Then straight to content.
 ```
 
 ## Domain folders
-algorithms, architecture, bi-analytics, data-engineering, data-science,
-devops, image-generation, ios-mobile, java-spring, kafka, linux-cli,
-llm-agents, nodejs, php, python, rust, security, seo-marketing,
-sql-databases, testing-qa, web-frontend, misc
+algorithms, architecture, audio-voice, bi-analytics, cpp, data-engineering,
+data-science, devops, go, image-generation, ios-mobile, java-spring, kafka,
+linux-cli, llm-agents, llm-memory, nodejs, php, python, rust, security,
+seo-marketing, sql-databases, testing-qa, web-frontend, writing, misc
 
 New domains: require maintainer approval + minimum 5 articles.
 
