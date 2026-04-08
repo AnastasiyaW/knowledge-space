@@ -143,7 +143,8 @@
 /* ══════════════════════════════════════════════ */
 
 /* ── Top-level sidebar: plain links (Home, Contributing, Privacy) as bright buttons ── */
-.md-nav--primary > .md-nav__list > .md-nav__item > a.md-nav__link {
+/* Excludes .ks-btn-secondary which has its own muted style */
+.md-nav--primary > .md-nav__list > .md-nav__item > a.md-nav__link:not(.ks-btn-secondary) {
   display: inline-block !important;
   padding: 0.4rem 1rem !important;
   margin: 0.15rem 0.3rem 0.15rem 0 !important;
@@ -153,31 +154,31 @@
   transition: all 0.25s;
 }
 
-[data-md-color-scheme="slate"] .md-nav--primary > .md-nav__list > .md-nav__item > a.md-nav__link {
+[data-md-color-scheme="slate"] .md-nav--primary > .md-nav__list > .md-nav__item > a.md-nav__link:not(.ks-btn-secondary) {
   background: rgba(187, 134, 252, 0.12) !important;
   border: 1px solid rgba(187, 134, 252, 0.25) !important;
   color: #bb86fc !important;
 }
 
-[data-md-color-scheme="slate"] .md-nav--primary > .md-nav__list > .md-nav__item > a.md-nav__link:hover {
+[data-md-color-scheme="slate"] .md-nav--primary > .md-nav__list > .md-nav__item > a.md-nav__link:not(.ks-btn-secondary):hover {
   background: rgba(187, 134, 252, 0.22) !important;
   border-color: rgba(187, 134, 252, 0.5) !important;
 }
 
-[data-md-color-scheme="default"] .md-nav--primary > .md-nav__list > .md-nav__item > a.md-nav__link {
+[data-md-color-scheme="default"] .md-nav--primary > .md-nav__list > .md-nav__item > a.md-nav__link:not(.ks-btn-secondary) {
   background: rgba(98, 0, 234, 0.06) !important;
   border: 1px solid rgba(98, 0, 234, 0.15) !important;
   color: #6200ea !important;
 }
 
-[data-md-color-scheme="default"] .md-nav--primary > .md-nav__list > .md-nav__item > a.md-nav__link:hover {
+[data-md-color-scheme="default"] .md-nav--primary > .md-nav__list > .md-nav__item > a.md-nav__link:not(.ks-btn-secondary):hover {
   background: rgba(98, 0, 234, 0.12) !important;
   border-color: rgba(98, 0, 234, 0.3) !important;
 }
 
 /* ── Domain section names — large, bold, colored ── */
-.md-nav--primary .md-nav__item--section > .md-nav__link,
-.md-nav--primary .md-nav__item--nested > .md-nav__link {
+.md-nav--primary .md-nav__item--section > .md-nav__link:not(.ks-btn-secondary),
+.md-nav--primary .md-nav__item--nested > .md-nav__link:not(.ks-btn-secondary) {
   font-size: 0.88rem !important;
   font-weight: 800 !important;
   letter-spacing: 0.02em !important;
@@ -185,13 +186,13 @@
   margin-top: 0.6rem !important;
 }
 
-[data-md-color-scheme="slate"] .md-nav--primary .md-nav__item--section > .md-nav__link,
-[data-md-color-scheme="slate"] .md-nav--primary .md-nav__item--nested > .md-nav__link {
+[data-md-color-scheme="slate"] .md-nav--primary .md-nav__item--section > .md-nav__link:not(.ks-btn-secondary),
+[data-md-color-scheme="slate"] .md-nav--primary .md-nav__item--nested > .md-nav__link:not(.ks-btn-secondary) {
   color: rgba(187, 134, 252, 0.9) !important;
 }
 
-[data-md-color-scheme="default"] .md-nav--primary .md-nav__item--section > .md-nav__link,
-[data-md-color-scheme="default"] .md-nav--primary .md-nav__item--nested > .md-nav__link {
+[data-md-color-scheme="default"] .md-nav--primary .md-nav__item--section > .md-nav__link:not(.ks-btn-secondary),
+[data-md-color-scheme="default"] .md-nav--primary .md-nav__item--nested > .md-nav__link:not(.ks-btn-secondary) {
   color: rgba(98, 0, 234, 0.8) !important;
 }
 
@@ -233,12 +234,163 @@
 
 /* Knowledge base visibility controlled by order system above */
 
-/* ── Sticky sidebar ── */
+/* ── Sticky sidebar — full article height ── */
 .md-sidebar--primary {
   position: sticky;
   top: 0;
   height: 100vh;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+}
+/* Hide sidebar on pages that opt out (homepage) */
+.md-sidebar--primary[hidden] {
+  display: none !important;
+}
+
+/* ── Sticky buttons at top of sidebar ── */
+.ks-sidebar-buttons {
+  flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  margin-top: 0;
+}
+/* Kill any default padding above buttons */
+.md-sidebar--primary {
+  padding-top: 0 !important;
+}
+[data-md-color-scheme="default"] .ks-sidebar-buttons {
+  border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+.ks-sidebar-btn {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  border-radius: 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+[data-md-color-scheme="slate"] .ks-sidebar-btn {
+  background: linear-gradient(135deg, rgba(187, 134, 252, 0.16) 0%, rgba(187, 134, 252, 0.06) 100%);
+  border: 1px solid rgba(187, 134, 252, 0.28);
+  color: #bb86fc !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+[data-md-color-scheme="slate"] .ks-sidebar-btn:hover {
+  background: linear-gradient(135deg, rgba(187, 134, 252, 0.28) 0%, rgba(187, 134, 252, 0.12) 100%);
+  border-color: rgba(187, 134, 252, 0.5);
+  box-shadow: 0 4px 10px rgba(187, 134, 252, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transform: translateY(-1px);
+}
+[data-md-color-scheme="default"] .ks-sidebar-btn {
+  background: linear-gradient(135deg, rgba(98, 0, 234, 0.09) 0%, rgba(98, 0, 234, 0.02) 100%);
+  border: 1px solid rgba(98, 0, 234, 0.18);
+  color: #6200ea !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+[data-md-color-scheme="default"] .ks-sidebar-btn:hover {
+  background: linear-gradient(135deg, rgba(98, 0, 234, 0.14) 0%, rgba(98, 0, 234, 0.04) 100%);
+  border-color: rgba(98, 0, 234, 0.3);
+  box-shadow: 0 4px 10px rgba(98, 0, 234, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transform: translateY(-1px);
+}
+.md-sidebar--primary .md-sidebar__scrollwrap {
+  flex: 1;
+  min-height: 0;
+}
+
+/* ── Domain toggle (replaces Material label) ── */
+.ks-domain-toggle {
+  cursor: pointer;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-top: 0.4rem;
+  transition: color 0.2s;
+}
+[data-md-color-scheme="slate"] .ks-domain-toggle {
+  color: rgba(187, 134, 252, 0.9);
+}
+[data-md-color-scheme="default"] .ks-domain-toggle {
+  color: rgba(98, 0, 234, 0.8);
+}
+.ks-domain-toggle:hover {
+  opacity: 0.75;
+}
+.ks-domain-toggle::before {
+  content: '▸';
+  display: inline-block;
+  margin-right: 0.3rem;
+  transition: transform 0.2s;
+}
+.ks-domain-toggle.ks-expanded::before {
+  transform: rotate(90deg);
+}
+
+/* ── Thin styled scrollbar ── */
+.md-sidebar--primary .md-sidebar__scrollwrap {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+}
+.md-sidebar--primary .md-sidebar__scrollwrap::-webkit-scrollbar {
+  width: 4px;
+}
+.md-sidebar--primary .md-sidebar__scrollwrap::-webkit-scrollbar-track {
+  background: transparent;
+}
+.md-sidebar--primary .md-sidebar__scrollwrap::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+.md-sidebar--primary .md-sidebar__scrollwrap:hover::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+[data-md-color-scheme="default"] .md-sidebar--primary .md-sidebar__scrollwrap {
+  scrollbar-color: rgba(0, 0, 0, 0.12) transparent;
+}
+[data-md-color-scheme="default"] .md-sidebar--primary .md-sidebar__scrollwrap::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+}
+[data-md-color-scheme="default"] .md-sidebar--primary .md-sidebar__scrollwrap:hover::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* ── Fade indicators on scrollwrap (not sidebar — avoids flex gap) ── */
+.md-sidebar--primary .md-sidebar__scrollwrap {
+  position: relative;
+}
+.md-sidebar--primary .md-sidebar__scrollwrap::before,
+.md-sidebar--primary .md-sidebar__scrollwrap::after {
+  content: '';
+  position: sticky;
+  left: 0;
+  right: 0;
+  height: 1rem;
+  pointer-events: none;
+  z-index: 2;
+  display: block;
+}
+.md-sidebar--primary .md-sidebar__scrollwrap::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--md-default-bg-color, #1a1a2e) 0%, transparent 100%);
+}
+.md-sidebar--primary .md-sidebar__scrollwrap::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--md-default-bg-color, #1a1a2e) 0%, transparent 100%);
+}
+
+/* ── Domains collapsed by default ── */
+.md-nav--primary .md-nav__item--section > nav.md-nav {
+  display: none !important;
+  overflow: hidden;
+}
+.md-nav--primary .md-nav__item--section > .md-toggle:checked ~ nav.md-nav {
+  display: block !important;
 }
 
 /* ── Reduce top padding in sidebar ── */
@@ -249,12 +401,14 @@
 /* ── Sidebar nav button styles (applied by JS) ── */
 /* Primary buttons moved to header topnav — see main.html */
 
-.ks-btn-secondary,
-.ks-btn-secondary.md-nav__link,
-.ks-btn-secondary.md-nav__link--active,
-a.ks-btn-secondary,
-a.ks-btn-secondary:link,
-a.ks-btn-secondary:visited {
+.md-nav--primary .ks-btn-secondary,
+.md-nav--primary .ks-btn-secondary.md-nav__link,
+.md-nav--primary .ks-btn-secondary.md-nav__link--active,
+.md-nav--primary .ks-btn-secondary.md-nav__container,
+.md-nav--primary a.ks-btn-secondary,
+.md-nav--primary a.ks-btn-secondary:link,
+.md-nav--primary a.ks-btn-secondary:visited,
+.md-nav--primary div.ks-btn-secondary {
   display: inline-block !important;
   padding: 0.22rem 0.6rem !important;
   margin: 0.12rem 0 !important;
@@ -266,14 +420,15 @@ a.ks-btn-secondary:visited {
   color: rgba(255, 255, 255, 0.5) !important;
   transition: all 0.2s;
 }
-.ks-btn-secondary:hover,
-a.ks-btn-secondary:hover {
+.md-nav--primary .ks-btn-secondary:hover,
+.md-nav--primary a.ks-btn-secondary:hover,
+.md-nav--primary div.ks-btn-secondary:hover {
   background: rgba(187, 134, 252, 0.1) !important;
   border-color: rgba(187, 134, 252, 0.25) !important;
   color: rgba(187, 134, 252, 0.85) !important;
 }
-.ks-btn-secondary:active,
-a.ks-btn-secondary:active {
+.md-nav--primary .ks-btn-secondary:active,
+.md-nav--primary a.ks-btn-secondary:active {
   background: rgba(187, 134, 252, 0.15) !important;
 }
 
@@ -285,9 +440,9 @@ a.ks-btn-secondary:active {
   --md-accent-fg-color: #6200ea !important;
 }
 
-/* Also override on any specific active/focus states */
-.md-nav .md-nav__link--active,
-.md-nav .md-nav__link:is(:focus, :hover) {
+/* Also override on any specific active/focus states (except styled buttons) */
+.md-nav .md-nav__link--active:not(.ks-btn-secondary):not(.ks-btn-primary),
+.md-nav .md-nav__link:not(.ks-btn-secondary):not(.ks-btn-primary):is(:focus, :hover) {
   color: var(--md-accent-fg-color) !important;
 }
 

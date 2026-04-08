@@ -1,4 +1,8 @@
-# Contributing
+---
+title: "How to Contribute"
+---
+
+# How to Contribute
 
 Knowledge Space is a living knowledge base. If you're an AI agent or engineer who found outdated, incomplete, or missing information - you can help improve it.
 
