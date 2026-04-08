@@ -1,21 +1,24 @@
 ---
 title: Text-to-Speech Models
 category: reference
-tags: [tts, speech-synthesis, voice, flow-matching, autoregressive, zero-shot, multilingual]
+tags: [tts, speech-synthesis, voice, flow-matching, autoregressive, zero-shot, multilingual, diffusion-language-model]
 ---
 
 # Text-to-Speech Models
 
-Modern TTS has moved from concatenative and parametric approaches to neural end-to-end models. Two dominant architectures: autoregressive (token-by-token, flexible but slow) and non-autoregressive / flow-matching (fixed steps, faster inference, deterministic length).
+Modern TTS has moved from concatenative and parametric approaches to neural end-to-end models. Three dominant architectures: autoregressive (token-by-token, flexible but slow), non-autoregressive / flow-matching (fixed steps, faster inference), and diffusion language models (text to multi-codebook acoustic tokens).
 
 ## Key Facts
 
-- Zero-shot TTS = clone any voice from a short reference clip (5-30 sec) without fine-tuning
+- Zero-shot TTS = clone any voice from a short reference clip (3-30 sec) without fine-tuning
 - Flow matching (FM) models use fixed NFE steps (typically 16-32), making inference time predictable
 - Autoregressive (AR) codec models generate audio tokens sequentially, better prosody but variable latency
 - Diffusion-based TTS adds gaussian noise to mel-spectrograms and learns to reverse the process
+- Diffusion Language Models (OmniVoice) map text directly to multi-codebook acoustic tokens - a third paradigm combining flow-based and AR strengths
+- Tokenizer-free architectures (VoxCPM2) skip discrete codec tokens entirely, preserving prosodic nuance that tokenization destroys
 - Most modern TTS outputs mel-spectrograms or audio codec tokens, then a vocoder (Vocos, HiFi-GAN) reconstructs waveform
 - Sampling rate matters: 16kHz (telephony), 24kHz (standard), 44.1/48kHz (studio quality)
+- End-to-end omni-models (Qwen3.5-Omni) combine ASR + TTS + LLM reasoning in a single architecture with real-time conversation support
 
 ## Architecture Families
 
@@ -47,9 +50,43 @@ Pipeline:
 ```
 
 **Key models:**
-- **VoxCPM2** (2B) - diffusion-AR hybrid on MiniCPM-4 backbone, 30+ languages, 48kHz
+- **VoxCPM2** (2B) - tokenizer-free, 4-stage pipeline (LocEnc -> TSLM -> RALM -> LocDiT), diffusion-AR hybrid on MiniCPM-4 backbone, 30+ languages, 48kHz native with built-in super-resolution, Apache 2.0
 - **Orpheus TTS** (Canopy AI) - LLM-native, emotional control via tags
 - **Fish Speech** - fast AR codec, good CJK support
+
+### Diffusion Language Model
+
+Maps text directly to multi-codebook acoustic tokens via diffusion process - avoids single-codebook bottleneck of AR models.
+
+```text
+Pipeline:
+  text -> diffusion_language_model -> multi_codebook_acoustic_tokens
+  codec_decoder(multi_codebook_tokens) -> waveform
+  
+  Key advantage: multi-codebook = richer acoustic representation
+  than single-stream AR, while still being faster than flow matching
+```
+
+**Key models:**
+- **OmniVoice** (k2-fsa) - 600+ languages, RTF 0.025 (40x realtime), zero-shot cross-lingual cloning, noise-robust reference intake, Apache 2.0
+- **Voxtral 4B** (Mistral) - 4B params, 9 languages (EN/FR/DE/ES/NL/PT/IT/HI/AR, no RU/ZH), 70ms latency, cloning from 3 sec, captures accent and disfluencies, open weights
+
+### End-to-End Omni-Models
+
+Combined ASR + TTS + LLM reasoning in a single model. Input: audio or text. Output: text + speech simultaneously.
+
+```text
+Architecture (Qwen3.5-Omni):
+  Input audio/text -> Thinker module (reasoning, MoE)
+  Thinker -> Talker module (speech synthesis)
+  ARIA alignment: dynamic text-speech synchronization mid-generation
+  
+  Capabilities: real-time conversation, turn-taking detection,
+  mid-conversation control (volume, tempo, emotion)
+```
+
+**Key models:**
+- **Qwen3.5-Omni** (Alibaba) - Thinker-Talker dual-module, 113 languages ASR / 36 languages TTS / 55 voices, real-time turn-taking, WER 6.24 on seed-hard (vs GPT-Audio 8.19), API only (not open-source), 3 variants: Plus/Flash/Light
 
 ### Hybrid / Other
 
@@ -63,8 +100,11 @@ Pipeline:
 
 | Model | Params | Languages | Sample Rate | Architecture | Strength |
 |-------|--------|-----------|-------------|-------------|----------|
+| OmniVoice | ? | 600+ | ? | Diffusion LM | Widest language coverage, fastest RTF |
+| VoxCPM2 | 2B | 30+ | 48kHz | Tokenizer-free Diff-AR | Studio quality, voice design |
+| Qwen3.5-Omni | Large | 36 TTS / 113 ASR | ? | Omni (Thinker-Talker) | End-to-end conversation |
 | LEMAS-TTS | 0.3B | 10 | 24kHz | Flow matching | Multilingual + word-level edit |
-| VoxCPM2 | 2B | 30+ | 48kHz | Diffusion-AR | Studio quality |
+| Voxtral 4B | 4B | 9 | ? | Streaming AR | Low latency, accent capture |
 | XTTS v2 | ~0.5B | 17 | 24kHz | GPT + vocoder | Proven, stable |
 | Kokoro-82M | 82M | EN mainly | 24kHz | StyleTTS-like | Speed, CPU-friendly |
 | F5-TTS | 0.3B | Multi | 24kHz | Flow matching | Base for many forks |
@@ -97,12 +137,30 @@ LEMAS-Edit and VoiceCraft enable word-level editing - replace specific words in 
 - **Speaker similarity** - cosine similarity of speaker embeddings between reference and generated
 - **PESQ / POLQA** - perceptual quality, correlates with MOS
 
+## Voice Design (Text-Described Voice Creation)
+
+Some models can create a voice from a text description, no reference audio needed:
+
+```text
+VoxCPM2 voice design:
+  Input: "A warm female voice, age 30, slight accent, cheerful"
+  -> Voice design module generates synthetic speaker embedding
+  -> TTS generates speech with described characteristics
+
+OmniVoice attribute control:
+  Attributes: gender, age, pitch, dialect, whisper, speaking rate
+  -> Fine-grained parametric control over synthetic voice
+  -> Can combine: "young female, whispering, fast pace"
+```
+
 ## Gotchas
 
-- **Reference audio quality is everything** - noisy, reverberant, or music-contaminated references produce poor clones regardless of model quality. Apply UVR5 or DeepFilterNet denoising before use
-- **Multilingual zero-shot has uneven quality** - most models excel at English/Chinese but degrade on lower-resource languages. Always test target language specifically
+- **Reference audio quality is everything** - noisy, reverberant, or music-contaminated references produce poor clones regardless of model quality. Apply UVR5 or DeepFilterNet denoising before use. Exception: OmniVoice is explicitly noise-robust and accepts noisy samples
+- **Multilingual zero-shot has uneven quality** - most models excel at English/Chinese but degrade on lower-resource languages. OmniVoice (600+ langs) and VoxCPM2 (30+ langs) have the widest coverage, but always test target language specifically
 - **Flow matching NFE tradeoff is non-linear** - going from 16 to 32 steps improves quality noticeably, but 32 to 64 shows diminishing returns while doubling latency
 - **Codec-based models hallucinate under long inputs** - AR models can loop, stutter, or skip words on texts >500 characters. Split long texts into sentence-level chunks
+- **API-only models lock you in** - Qwen3.5-Omni offers the best end-to-end experience but is API-only. Plan for fallback to open models (OmniVoice, VoxCPM2) if cost or availability becomes an issue
+- **Tokenizer-free vs codec tradeoff** - tokenizer-free models (VoxCPM2) preserve prosodic detail that codec-based models lose during tokenization, but they tend to be larger and slower
 
 ## See Also
 

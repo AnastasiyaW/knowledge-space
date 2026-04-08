@@ -56,6 +56,7 @@ Comprehensive reference covering statistics, machine learning, deep learning, co
 - [[time-series-analysis]] - stationarity, ARIMA, seasonality, feature engineering for time
 - [[monte-carlo-simulation]] - simulation, portfolio optimization, risk metrics
 - [[recommender-systems]] - collaborative filtering, content-based, evaluation
+- [[knowledge-tracing]] - learner modeling, BKT->DKT->SAKT->AKT->simpleKT, adaptive learning, FSRS
 
 ## Applied & Production
 

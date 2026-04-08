@@ -50,14 +50,25 @@ Typically 500-2000 training steps, 10-30 minutes on a single GPU.
 
 ### Voice Design (Text-Described)
 
-OmniVoice and similar models support generating a voice from a text description rather than audio reference.
+Multiple models now support generating a voice from a text description rather than audio reference.
 
 ```text
-"A warm, deep male voice with slight British accent, age 40-50"
-  -> Voice design module
+VoxCPM2 voice design:
+  "A warm, deep male voice with slight British accent, age 40-50"
+  -> Voice design module (built into tokenizer-free pipeline)
   -> Synthetic speaker embedding
-  -> TTS generation
+  -> TTS generation at 48kHz studio quality
+
+OmniVoice attribute-based design:
+  Attributes: gender=male, age=40-50, pitch=low, dialect=british, style=warm
+  -> Parametric attribute control (not free-text)
+  -> Can specify: whisper, shouting, specific dialect
+  -> Works across 600+ languages
 ```
+
+**Comparison:**
+- VoxCPM2: free-text description, more flexible, 30+ languages
+- OmniVoice: attribute-based, more predictable results, 600+ languages
 
 ## Cross-Lingual Cloning
 
@@ -72,6 +83,17 @@ Quality hierarchy for cross-lingual transfer:
 ```
 
 **Key challenge:** prosody patterns are language-specific. A cloned English speaker in Mandarin may sound foreign in rhythm even if timbre is perfect. VoxCPM2 and OmniVoice specifically optimize for this.
+
+**Cloning from minimal reference (2026 state of the art):**
+
+| Model | Min Reference | Languages | Cross-Lingual | Notes |
+|-------|--------------|-----------|---------------|-------|
+| OmniVoice | Few seconds | 600+ | Yes, zero-shot | Noise-robust intake |
+| VoxCPM2 | Short clip | 30+ | Yes | Diffusion-AR preserves emotion |
+| Voxtral 4B | 3 seconds | 9 | Limited | Captures accent + disfluencies |
+| Qwen3.5-Omni | Voice upload | 36 TTS | Yes, 20 languages tested | WER 1.87 across languages, cosine sim 0.79 |
+
+Qwen3.5-Omni achieves the best measured cloning fidelity (WER 1.87 across 20 languages) but is API-only.
 
 ## Emotion and Style Control
 
@@ -114,9 +136,10 @@ Preprocessing pipeline:
 
 ## Gotchas
 
-- **Short references degrade on rare phonemes** - a 5-second clip may not contain enough phonetic diversity. The model invents missing sounds, sometimes inconsistently. Use 15-30 sec references with diverse content
-- **Background noise in reference transfers to output** - even small amounts of room reverb or air conditioning hum get encoded in the speaker embedding and appear in all generated speech. Always denoise first
+- **Short references degrade on rare phonemes** - a 5-second clip may not contain enough phonetic diversity. The model invents missing sounds, sometimes inconsistently. Use 15-30 sec references with diverse content. Exception: Voxtral 4B is specifically designed for 3-second references
+- **Background noise in reference transfers to output** - even small amounts of room reverb or air conditioning hum get encoded in the speaker embedding and appear in all generated speech. Always denoise first. Exception: OmniVoice explicitly handles noisy reference samples
 - **Cross-lingual accent bleed** - if the reference audio is in English, generated Chinese speech often has an English-accented rhythm. Providing reference audio in the target language (even a few seconds) dramatically improves results
+- **API-only cloning = vendor lock-in** - Qwen3.5-Omni has the best measured cloning quality but is API-only. Build fallback paths to open models (OmniVoice, VoxCPM2) for production systems
 
 ## See Also
 

@@ -159,6 +159,73 @@ Save memory state automatically at key points:
 - **Compaction loses information irreversibly.** Before compacting, save full state to files. After compaction, re-inject the structured state so the agent knows where it stands. Test by asking the agent questions about pre-compaction work - if it can't answer, your re-injection is incomplete
 - **Auto-compact can loop.** If context refills quickly after compaction (e.g., large tool outputs), the agent can enter a compact-refill-compact cycle. Set a circuit breaker: after 3 compactions without progress, stop and report
 
+## KV Cache Compression (2026)
+
+Hardware-level techniques to reduce memory footprint of context windows during inference. Orthogonal to prompt-level compression - these work at the attention mechanism level.
+
+### TriAttention (April 2026) - SOTA
+
+Exploits the discovery that pre-RoPE Q/K vectors concentrate around fixed centers across attention heads. Uses trigonometric series to estimate key importance without needing recent queries.
+
+```text
+How it works:
+  1. Trigonometric Series Scoring (S_trig):
+     Estimates key importance via Q/K centers + positional distance
+     Operates in pre-RoPE space where vectors are stable
+     
+  2. Norm-Based Scoring (S_norm):
+     Complementary signal for low-concentration heads
+     
+  3. Adaptive Weighting:
+     Auto-balances using Mean Resultant Length (R) metric
+
+Results:
+  10.7x KV memory reduction matching full attention accuracy (AIME25 40.8%)
+  2.5x throughput at equivalent accuracy
+  6.3x speedup on MATH 500 (1405 vs 223 tokens/sec)
+  RULER retrieval: 66.1 vs SnapKV 55.6
+
+Deployment: vLLM plugin (auto-discovery, zero code changes)
+Validated on: Qwen3-8B, DeepSeek-R1-Distill, GPT-OSS-20B, GLM-4.7-Flash
+```
+
+Previous KV compression methods (H2O, SnapKV, R-KV) use "limited observation windows" - only recent queries maintain representative orientations. TriAttention operates in pre-RoPE space where vectors are inherently stable, providing intrinsic importance signals.
+
+### TurboQuant (ICLR 2026)
+
+Production-ready KV cache quantization integrated into vLLM.
+
+```text
+Method: Hadamard rotation + Lloyd-Max scalar quantization + outlier-aware allocation
+Effect: bf16 -> packed 4-bit uint8 (4x memory reduction)
+Usage: --kv-cache-dtype option in vLLM
+Quality: minimal degradation on standard benchmarks
+```
+
+### Other Compression Approaches
+
+| Method | Type | Compression | Use Case |
+|--------|------|-------------|----------|
+| TriAttention | KV eviction | 10.7x | Inference, reasoning tasks |
+| TurboQuant | KV quantization | 4x | Production serving (vLLM) |
+| NVIDIA KVPress | KV compression toolkit | Variable | Benchmarking strategies |
+| CompLLM | Soft context compression | 2x | Long context Q&A, 4x TTFT speedup |
+| LoPace | Lossless prompt storage | 4.89x avg | Prompt caching, not inference |
+
+### Practical Deployment
+
+```text
+Strategy for maximum context efficiency:
+  1. TurboQuant (4-bit KV cache) - always-on, minimal quality impact
+  2. TriAttention (selective eviction) - for reasoning/long context
+  3. Both combined: ~40x effective KV compression
+  
+Hardware requirements:
+  TriAttention: tested on A100 80GB, bfloat16
+  TurboQuant: any vLLM-supported GPU
+  Combined: enables 128K context on consumer GPUs (24GB)
+```
+
 ## See Also
 
 - [[memory-architectures]]
@@ -166,3 +233,4 @@ Save memory state automatically at key points:
 - [[forgetting-strategies]]
 - [[context-engineering]]
 - [[agent-memory]]
+- [[verbatim-vs-extraction]]
