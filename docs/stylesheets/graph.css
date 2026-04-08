@@ -574,8 +574,8 @@ a.ks-btn-secondary:active {
    KNOWLEDGE GRAPH — full-width premium hero
    ══════════════════════════════════════════════ */
 
-/* ── Kill content padding on homepage so galaxy touches topnav ── */
-.md-content__inner:has(> .ks-graph-wrapper) {
+/* ── Kill gap between topnav and content on all pages ── */
+.md-content__inner {
   padding-top: 0 !important;
   margin-top: 0 !important;
 }
