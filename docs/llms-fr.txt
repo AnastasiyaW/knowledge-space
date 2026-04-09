@@ -1,35 +1,755 @@
-# Knowledge Vault - Base de Connaissances Techniques
+# Happyin Knowledge Space - Base de Connaissances Techniques
 
-> Une base de connaissances techniques complete avec plus de 650 articles selectionnes dans 22 domaines. Couvre le genie logiciel, la science des donnees, le DevOps, la securite et plus encore. Concue pour les ingenieurs logiciels et les agents LLM recherchant du materiel de reference technique fiable et structure. Tout le contenu est en anglais.
+> Une base de connaissances techniques complète avec 691+ articles sélectionnés couvrant 27 domaines. Couvre le génie logiciel, la science des données, DevOps, la sécurité et plus encore. Conçue pour les ingénieurs logiciels et les agents LLM. Tout le contenu est en anglais.
 
-Cette base de connaissances contient des articles techniques approfondis organises par domaine. Chaque article suit une structure coherente : definition, concepts cles, exemples de code, pieges courants et liens connexes.
+Contient des articles techniques approfondis organisés par domaine. Chaque article suit une structure cohérente : définition, concepts clés, exemples de code, pièges courants et liens connexes.
 
-## Kafka et Files de Messages
-- [Event Sourcing et CQRS](https://happyin.space/kafka/event-sourcing-and-cqrs/): Patrons d'architecture evenementielle, implementation CQRS, magasins d'evenements, strategies de rejeu de messages
+
+## Algorithms & Data Structures
+- [Amortized Analysis](https://happyin.space/algorithms/amortized-analysis/): Amortized analysis computes the average cost per operation over a sequence of operations, providing a guaranteed boun...
+- [Backtracking](https://happyin.space/algorithms/backtracking/): Systematic exploration of solution space by building candidates incrementally and abandoning ("backtracking") branche...
+- [Bit Manipulation](https://happyin.space/algorithms/bit-manipulation/): Operations on individual bits of integers.
+- [Complexity Analysis](https://happyin.space/algorithms/complexity-analysis/): Complexity analysis measures how algorithm resource usage (time or space) scales with input size n.
+- [Complexity Classes: P, NP, NP-Complete](https://happyin.space/algorithms/complexity-classes/): Complexity classes categorize decision problems by the computational resources needed to solve or verify them.
+- [DP: Grid and Combinatorics Problems](https://happyin.space/algorithms/dp-grid-problems/): Grid-based and combinatorial DP problems: Partition Problem, Maximal Square, Count Sorted Vowel Strings, and counting...
+- [DP: Optimization Problems](https://happyin.space/algorithms/dp-optimization-problems/): Classic DP optimization problems: House Robber, Coin Change, 0-1 Knapsack, Subset Sum, Rod Cutting, Minimum Ticket Co...
+- [DP: Sequence Problems](https://happyin.space/algorithms/dp-sequence-problems/): Dynamic programming on sequences and strings: Longest Common Subsequence (LCS), Edit Distance (Levenshtein), Longest ...
+- [Dynamic Programming Fundamentals](https://happyin.space/algorithms/dynamic-programming-fundamentals/): Dynamic programming (DP) solves problems by breaking them into overlapping subproblems and storing results to avoid r...
+- [Eulerian and Hamiltonian Paths](https://happyin.space/algorithms/eulerian-hamiltonian-paths/): Eulerian paths visit every EDGE exactly once; Hamiltonian paths visit every VERTEX exactly once.
+- [Graph Coloring](https://happyin.space/algorithms/graph-coloring/): Graph coloring assigns colors to vertices such that no two adjacent vertices share a color.
+- [Graph Representation](https://happyin.space/algorithms/graph-representation/): Graphs can be represented as edge lists, adjacency lists, or adjacency matrices.
+- [Graph Traversal: BFS and DFS](https://happyin.space/algorithms/graph-traversal-bfs-dfs/): BFS (Breadth-First Search) and DFS (Depth-First Search) are the two fundamental graph traversal algorithms.
+- [Greedy Algorithms](https://happyin.space/algorithms/greedy-algorithms/): Build solutions incrementally by making the locally optimal choice at each step.
+- [Hash Tables](https://happyin.space/algorithms/hash-tables/): Data structure mapping keys to values via hash function.
+- [Heap and Priority Queue](https://happyin.space/algorithms/heap-priority-queue/): Binary heap: complete binary tree satisfying heap property.
+- [Minimum Spanning Trees](https://happyin.space/algorithms/minimum-spanning-trees/): A minimum spanning tree (MST) of a weighted undirected connected graph is a spanning tree with minimum total edge wei...
+- [Network Flow](https://happyin.space/algorithms/network-flow/): Network flow algorithms find the maximum feasible flow from source to sink in a directed weighted graph.
+- [Recursion Fundamentals](https://happyin.space/algorithms/recursion-fundamentals/): Function that calls itself to solve smaller instances of the same problem.
+- [Searching Algorithms](https://happyin.space/algorithms/searching-algorithms/): Covers linear search, binary search, and KMP string matching.
+- [Shortest Path Algorithms](https://happyin.space/algorithms/shortest-path-algorithms/): Algorithms for finding shortest paths in weighted graphs: BFS (unweighted), Dijkstra (non-negative weights), Bellman-...
+- [Sliding Window Technique](https://happyin.space/algorithms/sliding-window/): Maintain a window (contiguous subarray/substring) that slides across input, expanding and shrinking to satisfy constr...
+- [Sorting Algorithms](https://happyin.space/algorithms/sorting-algorithms/): Comprehensive reference for sorting algorithms covering comparison-based sorts (insertion, bubble, selection, merge, ...
+- [String Algorithms](https://happyin.space/algorithms/string-algorithms/): Algorithms for string searching, matching, and manipulation.
+- [Topological Sort](https://happyin.space/algorithms/topological-sort/): A topological ordering of a DAG (Directed Acyclic Graph) is a linear ordering of vertices such that for every edge u ...
+- [Traveling Salesman Problem (TSP)](https://happyin.space/algorithms/traveling-salesman-problem/): Find the shortest route visiting every city exactly once and returning to origin.
+- [Trees and Binary Trees](https://happyin.space/algorithms/trees-and-binary-trees/): A tree is an undirected, connected, acyclic graph.
+- [Two-Pointer Technique](https://happyin.space/algorithms/two-pointer-technique/): The two-pointer technique uses two indices to traverse data structures (typically arrays), reducing time complexity b...
+- [Union-Find (Disjoint Set Union)](https://happyin.space/algorithms/union-find/): Union-Find maintains a collection of disjoint sets with near-constant-time operations for merging sets and finding wh...
+
+## Software Architecture
+- [API Authentication and Security](https://happyin.space/architecture/api-authentication-security/): Authentication proves identity, authorization determines access.
+- [API Documentation and Specifications](https://happyin.space/architecture/api-documentation-specs/): API is only one component of a web service.
+- [API Testing Tools](https://happyin.space/architecture/api-testing-tools/): Practical tools for testing, debugging, and validating APIs during development and integration work.
+- [Architectural Styles - Monolith to Microservices](https://happyin.space/architecture/architectural-styles/): The choice of architectural style is the first and most important design step.
+- [Architecture Documentation](https://happyin.space/architecture/architecture-documentation/): Architecture documentation should be pragmatic, not exhaustive.
+- [Async and Event-Based APIs](https://happyin.space/architecture/async-event-apis/): Asynchronous APIs enable non-blocking communication.
+- [Big Data and ML Architecture](https://happyin.space/architecture/bigdata-ml-architecture/): Architecture for processing large data volumes and integrating ML models into production.
+- [Caching Strategies and Performance](https://happyin.space/architecture/caching-and-performance/): Caching is one of the most effective performance optimizations.
+- [Data Serialization Formats - XML, JSON, Protobuf](https://happyin.space/architecture/data-serialization-formats/): Serialization converts in-memory objects into byte formats for network transmission.
+- [Database Selection and Design](https://happyin.space/architecture/database-selection/): Choosing the right database is an architectural decision with long-term consequences.
+- [Design Patterns (GoF)](https://happyin.space/architecture/design-patterns-gof/): Classic design patterns from the Gang of Four.
+- [DevOps and CI/CD](https://happyin.space/architecture/devops-cicd/): DevOps bridges development and operations through culture, automation, and process improvement.
+- [Distributed Systems Fundamentals](https://happyin.space/architecture/distributed-systems-fundamentals/): Distributed systems introduce failure modes that don't exist in single-process systems - network partitions, partial ...
+- [Enterprise Integration - ESB, Styles, Patterns](https://happyin.space/architecture/enterprise-integration/): Modern systems rarely operate in isolation.
+- [GraphQL API Design](https://happyin.space/architecture/graphql-api/): GraphQL is a query language and server-side runtime for APIs.
+- [gRPC API Design](https://happyin.space/architecture/grpc-api/): gRPC is an open-source RPC framework created by Google (2016).
+- [HTTP and REST API Fundamentals](https://happyin.space/architecture/http-rest-fundamentals/): REST (Representational State Transfer) is an architectural style for distributed systems, not a protocol.
+- [JSON-RPC API Design](https://happyin.space/architecture/json-rpc-api/): JSON-RPC is a lightweight RPC protocol encoded in JSON.
+- [Apache Kafka Architecture](https://happyin.space/architecture/kafka-architecture/): Kafka is a message broker built on the log (journal) model.
+- [Message Broker Patterns](https://happyin.space/architecture/message-broker-patterns/): Message brokers decouple services (dependencies reduced to message format only) and enable asynchronous processing (p...
+- [Microfrontends](https://happyin.space/architecture/microfrontends/): Microfrontends extend microservices principles to the frontend.
+- [Microservices Communication Patterns](https://happyin.space/architecture/microservices-communication/): How microservices talk to each other and to external clients.
+- [Quality Attributes - Reliability and Fault Tolerance](https://happyin.space/architecture/quality-attributes-reliability/): Reliability = system operates correctly under specified conditions over time, including recovery from failures.
+- [Queueing Theory for Engineers](https://happyin.space/architecture/queueing-theory/): Queueing theory studies how waiting lines behave.
+- [RabbitMQ Architecture](https://happyin.space/architecture/rabbitmq-architecture/): RabbitMQ is a message broker built on the queue model.
+- [REST API Advanced - Performance, Versioning, Caching](https://happyin.space/architecture/rest-api-advanced/): API performance depends on speed, data volume, and call frequency.
+- [Security Architecture](https://happyin.space/architecture/security-architecture/): The Solution Architect is the key link between business requirements, technical solutions, and the dev team for secur...
+- [SOAP API Design](https://happyin.space/architecture/soap-api/): SOAP (Simple Object Access Protocol) is an XML-based messaging protocol for data exchange.
+- [Solution Architecture Process](https://happyin.space/architecture/solution-architecture-process/): Solution architecture bridges business needs and technology implementation.
+- [System Design Interviews and Practice](https://happyin.space/architecture/system-design-interviews/): Structured approach to system design problems, whether in interviews or real architecture work.
+- [Tech Lead Role and Technical Leadership](https://happyin.space/architecture/tech-lead-role/): There is no universal definition of tech lead.
+- [Testing Strategy and Quality Management](https://happyin.space/architecture/testing-and-quality/): Quality and development speed are connected through technical debt: poor quality = slow development.
+
+## Audio & Voice
+- [Audio Generation](https://happyin.space/audio-voice/audio-generation/): Audio generation covers music synthesis, sound effect creation, and video-to-audio synchronization.
+- [Podcast Processing](https://happyin.space/audio-voice/podcast-processing/): End-to-end podcast processing pipelines handle speaker diarization (who spoke when), transcription, music/noise remov...
+- [Speech Recognition](https://happyin.space/audio-voice/speech-recognition/): Automatic Speech Recognition (ASR) converts spoken audio to text.
+- [Text-to-Speech Models](https://happyin.space/audio-voice/tts-models/): Modern TTS has moved from concatenative and parametric approaches to neural end-to-end models.
+- [Voice Agent Pipelines and Frameworks](https://happyin.space/audio-voice/voice-agent-pipelines/): Building real-time voice AI systems: framework selection, latency optimization, VAD configuration, and architecture d...
+- [Voice Cloning](https://happyin.space/audio-voice/voice-cloning/): Voice cloning reproduces a target speaker's voice characteristics (timbre, pitch, rhythm) from a reference audio sample.
+- [Voice Conversion](https://happyin.space/audio-voice/voice-conversion/): Voice conversion (VC) transforms the speaker identity in existing audio while preserving linguistic content, prosody,...
+
+## BI & Analytics
+- [App Store Optimization (ASO)](https://happyin.space/bi-analytics/app-store-optimization/): ASO is organic search optimization for app stores - the goal is to appear in top results for relevant keywords withou...
+- [BI Development Process](https://happyin.space/bi-analytics/bi-development-process/): The BI development process covers the full lifecycle from requirements gathering through stakeholder interviews, dash...
+- [BI Tools Comparison](https://happyin.space/bi-analytics/bi-tools-comparison/): A comparison of major BI platforms covering Tableau, Power BI, Apache Superset, DataLens (Yandex), FineBI, and Visiol...
+- [Cohort & Retention Analysis](https://happyin.space/bi-analytics/cohort-retention-analysis/): Cohort analysis groups users by a shared characteristic at a fixed point in time and tracks their behavior over subse...
+- [Color Theory for Data Visualization](https://happyin.space/bi-analytics/color-theory-visualization/): Color is one of the most powerful and most frequently misused encoding attributes in data visualization.
+- [Dashboard Design Patterns](https://happyin.space/bi-analytics/dashboard-design-patterns/): Dashboard design combines information design, graphic design, UX, and storytelling.
+- [Funnel Analysis](https://happyin.space/bi-analytics/funnel-analysis/): Funnel analysis visualizes and measures user progression through a multi-step flow toward a conversion goal.
+- [Mobile Analytics Platforms](https://happyin.space/bi-analytics/mobile-analytics-platforms/): Mobile analytics platforms collect user behavioral data from mobile apps via SDK integration.
+- [Mobile Attribution & Fraud Detection](https://happyin.space/bi-analytics/mobile-attribution-fraud/): Mobile attribution determines which ad source (campaign, network, creative) caused each app install and subsequent in...
+- [pandas Data Analysis](https://happyin.space/bi-analytics/pandas-data-analysis/): pandas is the core Python library for tabular data manipulation and analysis.
+- [Power BI Advanced Features](https://happyin.space/bi-analytics/powerbi-advanced-features/): Advanced Power BI capabilities including custom themes, visuals from AppSource, What-If parameters for scenario analy...
+- [Power BI Fundamentals](https://happyin.space/bi-analytics/powerbi-fundamentals/): Power BI is Microsoft's BI platform (Desktop + Cloud) with tight Microsoft ecosystem integration, a generous free tie...
+- [Product Analytics Fundamentals](https://happyin.space/bi-analytics/product-analytics-fundamentals/): Product analytics is the discipline of measuring and understanding user behavior within a product to drive business d...
+- [Product Metrics Framework](https://happyin.space/bi-analytics/product-metrics-framework/): Core product metrics that measure user engagement, retention, and product health.
+- [Python for Analytics](https://happyin.space/bi-analytics/python-for-analytics/): Python fundamentals for data analysts, covering core syntax, NumPy for numerical operations, and Jupyter Notebook wor...
+- [SQL for Analytics](https://happyin.space/bi-analytics/sql-for-analytics/): SQL is the foundational tool for data analysts, but knowing SQL syntax alone doesn't make you an analyst - analytical...
+- [Tableau Calculations](https://happyin.space/bi-analytics/tableau-calculations/): Tableau offers multiple calculation types that operate at different levels of granularity.
+- [Tableau Chart Types & Visualization Selection](https://happyin.space/bi-analytics/tableau-chart-types/): Choosing the right chart type is a core BI skill.
+- [Tableau Fundamentals](https://happyin.space/bi-analytics/tableau-fundamentals/): Tableau is an enterprise BI platform (Desktop + Server/Cloud) with the most powerful visualization engine in the BI m...
+- [Tableau LOD Expressions](https://happyin.space/bi-analytics/tableau-lod-expressions/): Level of Detail (LOD) expressions compute aggregations at a different granularity than what is shown in the current v...
+- [Tableau Performance Optimization](https://happyin.space/bi-analytics/tableau-performance-optimization/): Performance tuning in Tableau spans four layers: server load, data source, calculations, and view-level.
+- [Unit Economics](https://happyin.space/bi-analytics/unit-economics/): Unit economics is an economic modeling method for determining business profitability by evaluating profitability per ...
+- [Web & Marketing Analytics](https://happyin.space/bi-analytics/web-marketing-analytics/): Web and marketing analytics encompasses the tools and methods for measuring website effectiveness, traffic source per...
+
+## C++
+- [CMake and Build Systems](https://happyin.space/cpp/cmake-build-systems/): CMake is the de facto standard C++ build system generator.
+- [C++20 Concepts and Constraints](https://happyin.space/cpp/concepts-and-constraints/): Named requirements on template parameters replacing SFINAE with readable, compiler-enforced constraints
+- [Concurrency - Threads, Async, Atomics](https://happyin.space/cpp/concurrency/): C++ standard threading primitives: std::thread, std::async, std::mutex, std::atomic, std::condition_variable.
+- [Const Correctness and Type Safety](https://happyin.space/cpp/const-and-type-safety/): const communicates intent, prevents accidental mutation, and enables compiler optimizations.
+- [C++20 Coroutines](https://happyin.space/cpp/coroutines/): Cooperative multitasking with co_yield, co_return, and co_await for lazy generators and async I/O
+- [Design Patterns in Modern C++](https://happyin.space/cpp/design-patterns-cpp/): Classic GoF patterns adapted for modern C++ with templates, smart pointers, lambdas, and value semantics.
+- [Error Handling - Exceptions and Alternatives](https://happyin.space/cpp/error-handling/): C++ supports exceptions, error codes, std::optional, and std::expected (C++23).
+- [File I/O and Streams](https://happyin.space/cpp/file-io-streams/): Stream-based I/O (<fstream>, <iostream>) and filesystem operations (<filesystem>).
+- [Function Pointers and Callbacks in C++](https://happyin.space/cpp/function-pointers-and-callbacks/): C-style function pointers, std::function, and lambdas for indirect invocation and callback patterns
+- [Inheritance and Polymorphism](https://happyin.space/cpp/inheritance-and-polymorphism/): Runtime polymorphism via virtual functions and inheritance hierarchies.
+- [Lambda Expressions](https://happyin.space/cpp/lambda-expressions/): Anonymous function objects with capture semantics.
+- [Manual Memory Management in C++](https://happyin.space/cpp/manual-memory-management/): Raw new/delete, stack vs heap, and the three failure modes that motivate smart pointers and RAII
+- [Modern C++ Features (C++17/20/23)](https://happyin.space/cpp/modern-cpp-features/): Key features from recent standards that change how C++ is written.
+- [Move Semantics and Perfect Forwarding](https://happyin.space/cpp/move-semantics/): Transfer resources instead of copying them.
+- [Object Lifetime and Construction](https://happyin.space/cpp/object-lifetime/): Object construction, destruction, initialization forms, and copy elision.
+- [Operator Overloading](https://happyin.space/cpp/operator-overloading/): Define custom behavior for operators on user-defined types.
+- [Performance Optimization](https://happyin.space/cpp/performance-optimization/): C++ performance fundamentals: cache efficiency, move semantics, allocation strategies, compiler optimizations, and pr...
+- [RAII and Resource Management](https://happyin.space/cpp/raii-resource-management/): Resource Acquisition Is Initialization - tie resource lifetime to object lifetime.
+- [C++20 Ranges and Views](https://happyin.space/cpp/ranges-and-views/): Composable lazy pipelines for sequence processing with the pipe operator and range adaptors
+- [Variable Scope and Lifetime in C++](https://happyin.space/cpp/scope-and-lifetime/): Block-level scoping rules, name shadowing, and deterministic destruction order as prerequisite for RAII
+- [Smart Pointers and Memory Management](https://happyin.space/cpp/smart-pointers/): Ownership-based memory management through unique_ptr, shared_ptr, and weak_ptr.
+- [STL Algorithms and Ranges](https://happyin.space/cpp/stl-algorithms/): <algorithm> provides 100+ generic algorithms that work with iterators.
+- [STL Containers](https://happyin.space/cpp/stl-containers/): Standard Template Library containers - type-safe, RAII-managed collections with well-defined complexity guarantees.
+- [String Handling](https://happyin.space/cpp/string-handling/): std::string, std::string_view, formatting, conversion, and searching.
+- [Templates and Concepts](https://happyin.space/cpp/templates-and-concepts/): Generic programming through compile-time type parameterization.
+
+## Data Engineering
+- [Apache Airflow](https://happyin.space/data-engineering/apache-airflow/): Apache Airflow is an open-source platform for authoring, scheduling, and monitoring workflows as Directed Acyclic Gra...
+- [Apache Hive](https://happyin.space/data-engineering/apache-hive/): Hive is a SQL-on-Hadoop warehouse system.
+- [Apache Kafka](https://happyin.space/data-engineering/apache-kafka/): Apache Kafka is a distributed event streaming platform.
+- [Apache Spark Core Architecture](https://happyin.space/data-engineering/apache-spark-core/): Apache Spark is an open-source distributed data processing framework.
+- [ClickHouse Table Engines](https://happyin.space/data-engineering/clickhouse-engines/): Every ClickHouse table requires an ENGINE.
+- [ClickHouse](https://happyin.space/data-engineering/clickhouse/): ClickHouse is a columnar DBMS for OLAP workloads.
+- [Cloud Data Platforms](https://happyin.space/data-engineering/cloud-data-platforms/): Cloud platforms separate compute from storage, enabling elastic scaling and pay-per-use pricing.
+- [Data Governance and Catalog](https://happyin.space/data-engineering/data-governance-catalog/): Data governance is the framework of roles, policies, standards, and metrics ensuring effective data management.
+- [Data Lake and Lakehouse](https://happyin.space/data-engineering/data-lake-lakehouse/): A data lake stores all data types without strict schema (schema-on-read).
+- [Data Lineage and Metadata](https://happyin.space/data-engineering/data-lineage-metadata/): Data lineage describes the origin and transformations of data over time - how data was transformed, what changed, and...
+- [Data Modeling and Normalization](https://happyin.space/data-engineering/data-modeling/): Data modeling is the process of analyzing requirements and creating data structures.
+- [Data Quality](https://happyin.space/data-engineering/data-quality/): Data quality encompasses monitoring, defining, and maintaining data integrity.
+- [Data Vault 2.0](https://happyin.space/data-engineering/data-vault/): Data Vault is a data modeling methodology designed for agile DWH environments with many sources, frequent schema chan...
+- [Dimensional Modeling (Kimball)](https://happyin.space/data-engineering/dimensional-modeling/): Dimensional modeling organizes data into fact tables (measures/events) surrounded by dimension tables (descriptive co...
+- [Docker for Data Engineering](https://happyin.space/data-engineering/docker-for-de/): Docker provides isolated, reproducible environments for data engineering workloads.
+- [Data Warehouse Architecture](https://happyin.space/data-engineering/dwh-architecture/): A data warehouse (DWH) is a subject-oriented, integrated, non-volatile, time-variant collection of data organized to ...
+- [ETL/ELT Pipelines](https://happyin.space/data-engineering/etl-elt-pipelines/): ETL (Extract-Transform-Load) and ELT (Extract-Load-Transform) are the two fundamental patterns for moving data from s...
+- [File Formats for Big Data](https://happyin.space/data-engineering/file-formats/): Choosing the right file format significantly impacts storage efficiency, query performance, and compatibility across ...
+- [Greenplum and MPP Architecture](https://happyin.space/data-engineering/greenplum-mpp/): Greenplum is an MPP (Massive Parallel Processing) analytical database based on PostgreSQL.
+- [Hadoop and HDFS](https://happyin.space/data-engineering/hadoop-hdfs/): Hadoop is a framework for distributed storage and processing of large datasets.
+- [HBase](https://happyin.space/data-engineering/hbase/): HBase is a columnar NoSQL store within the Hadoop ecosystem, designed for billions of rows and millions of columns.
+- [Kubernetes for Data Engineering](https://happyin.space/data-engineering/kubernetes-for-de/): Kubernetes orchestrates containerized workloads at scale.
+- [MapReduce](https://happyin.space/data-engineering/mapreduce/): MapReduce is a programming model for distributed data processing.
+- [MLOps and Feature Store](https://happyin.space/data-engineering/mlops-feature-store/): MLOps bridges data engineering and machine learning, covering experiment tracking, model versioning, feature manageme...
+- [MongoDB and NoSQL](https://happyin.space/data-engineering/mongodb-nosql/): MongoDB is a document-oriented NoSQL database designed for scenarios where relational databases hit scalability limits.
+- [PostgreSQL for Data Engineering](https://happyin.space/data-engineering/postgresql-administration/): PostgreSQL is the most common RDBMS in data engineering - used as Airflow metastore, source system, and sometimes as ...
+- [PySpark DataFrame API](https://happyin.space/data-engineering/pyspark-dataframe-api/): Comprehensive reference for PySpark DataFrame operations - the primary API for structured data processing in Spark.
+- [Python for Data Engineering](https://happyin.space/data-engineering/python-for-de/): Python is the primary scripting language for data engineering.
+- [Slowly Changing Dimensions (SCD)](https://happyin.space/data-engineering/scd-patterns/): SCD patterns handle changes to dimension attributes over time.
+- [Spark Performance Optimization](https://happyin.space/data-engineering/spark-optimization/): Spark optimization revolves around minimizing shuffles, managing partitions, and leveraging the Catalyst optimizer ef...
+- [Spark Streaming](https://happyin.space/data-engineering/spark-streaming/): Spark Streaming processes real-time data via micro-batching - incoming stream is split into small batch jobs processe...
+- [SQL for Data Engineering](https://happyin.space/data-engineering/sql-for-de/): SQL is the universal language for data engineering.
+- [Vector Search at Scale](https://happyin.space/data-engineering/vector-search-at-scale/): Scaling embedding-based similarity search from tens of thousands to millions of vectors.
+- [YARN Resource Management](https://happyin.space/data-engineering/yarn-resource-management/): YARN (Yet Another Resource Negotiator) replaced Hadoop v1's monolithic JobTracker with a distributed resource managem...
+
+## Data Science & ML
+- [AI-Powered Video Production](https://happyin.space/data-science/ai-video-production/): Full pipeline for creating commercial video using AI tools.
+- [Anomaly Detection](https://happyin.space/data-science/anomaly-detection/): Identifying data points that deviate significantly from normal behavior.
+- [Attention Mechanisms and Transformers for Data Science](https://happyin.space/data-science/attention-mechanisms/): Attention allows models to focus on relevant parts of the input when producing each output element.
+- [Bayesian Inference for ML](https://happyin.space/data-science/bayesian-inference/): Bayesian approach treats model parameters as probability distributions, not point estimates.
+- [Bayesian Methods in ML](https://happyin.space/data-science/bayesian-methods/): Bayesian thinking updates beliefs with evidence.
+- [BI Systems and Dashboards](https://happyin.space/data-science/bi-dashboards/): Business Intelligence transforms data into actionable decisions.
+- [Bias-Variance Tradeoff](https://happyin.space/data-science/bias-variance-tradeoff/): The fundamental tension in machine learning: models that are too simple miss patterns (bias), models that are too com...
+- [Causal Inference](https://happyin.space/data-science/causal-inference/): Determining cause-and-effect from data.
+- [CNNs and Computer Vision](https://happyin.space/data-science/cnn-computer-vision/): Convolutional Neural Networks exploit spatial structure in images through local pattern detection and translation inv...
+- [Data Augmentation](https://happyin.space/data-science/data-augmentation/): Artificially increase training data by applying random transformations.
+- [Data Visualization](https://happyin.space/data-science/data-visualization/): Visualization is both an analysis tool (EDA) and a communication tool (dashboards, reports).
+- [Descriptive Statistics](https://happyin.space/data-science/descriptive-statistics/): Quantitative summaries of data distributions.
+- [Dimensionality Reduction](https://happyin.space/data-science/dimensionality-reduction/): Reducing number of features while preserving important information.
+- [Data Science Workflow and Best Practices](https://happyin.space/data-science/ds-workflow/): End-to-end project methodology.
+- [Ensemble Methods](https://happyin.space/data-science/ensemble-methods/): Combining multiple models to produce better predictions than any single model.
+- [Feature Engineering and Preprocessing](https://happyin.space/data-science/feature-engineering/): The art of transforming raw data into features that ML models can use effectively.
+- [Financial Data Science](https://happyin.space/data-science/financial-data-science/): Applying data science methods to financial markets.
+- [Generative Models](https://happyin.space/data-science/generative-models/): Models that learn to generate new data samples from a learned distribution.
+- [Gradient Boosting and Tree-Based Models](https://happyin.space/data-science/gradient-boosting/): Gradient boosting is the dominant algorithm for tabular data.
+- [Graph Neural Networks](https://happyin.space/data-science/graph-neural-networks/): GNNs operate on graph-structured data where entities (nodes) have relationships (edges).
+- [Hyperparameter Optimization](https://happyin.space/data-science/hyperparameter-optimization/): Systematic search for the best model configuration.
+- [Hypothesis Testing and A/B Testing](https://happyin.space/data-science/hypothesis-testing/): Statistical framework for making decisions from data.
+- [Handling Imbalanced Data](https://happyin.space/data-science/imbalanced-data/): When one class dominates the dataset (e.
+- [KNN and Classical ML Algorithms](https://happyin.space/data-science/knn-and-classical-ml/): Classical ML algorithms beyond linear models and gradient boosting.
+- [Knowledge Tracing](https://happyin.space/data-science/knowledge-tracing/): Knowledge tracing (KT) models predict the probability that a learner will answer a question correctly, given their in...
+- [Linear Models and Gradient Descent](https://happyin.space/data-science/linear-models/): Linear models are the foundation of ML.
+- [Mathematics for Machine Learning](https://happyin.space/data-science/math-for-ml/): The essential math underlying ML algorithms.
+- [Linear Algebra for Data Science](https://happyin.space/data-science/math-linear-algebra/): Vectors, matrices, and their operations form the computational backbone of ML.
+- [Mathematical Logic](https://happyin.space/data-science/math-logic/): Formal reasoning systems underlying computer science and mathematical proofs.
+- [Pre-Calculus Foundations](https://happyin.space/data-science/math-precalculus/): Number systems, equations, functions, and basic set theory - the prerequisites before diving into calculus, probabili...
+- [Probability Theory and Statistical Inference](https://happyin.space/data-science/math-probability-statistics/): Rigorous probability foundations and statistical estimation methods.
+- [ML in Production](https://happyin.space/data-science/ml-production/): Taking a model from notebook to production.
+- [ML System Design](https://happyin.space/data-science/ml-system-design/): Designing end-to-end ML systems that work in production.
+- [MLOps and ML Pipelines](https://happyin.space/data-science/mlops-pipelines/): MLOps applies DevOps principles to machine learning: version control for data/models, automated training pipelines, m...
+- [Model Evaluation and Validation](https://happyin.space/data-science/model-evaluation/): Choosing the right metric and validation strategy is as important as choosing the model.
+- [Monte Carlo Simulation](https://happyin.space/data-science/monte-carlo-simulation/): Estimate outcomes by running thousands of random experiments.
+- [Neural Networks and Deep Learning](https://happyin.space/data-science/neural-networks/): Deep learning learns features automatically from raw data.
+- [NLP and Text Processing](https://happyin.space/data-science/nlp-text-processing/): From bag-of-words to transformers - NLP has evolved from manual feature engineering to pre-trained language models.
+- [NumPy Fundamentals](https://happyin.space/data-science/numpy-fundamentals/): NumPy is the numerical computing foundation underlying pandas, scikit-learn, and PyTorch.
+- [Object Detection and YOLO](https://happyin.space/data-science/object-detection-yolo/): Object detection finds and classifies multiple objects in images with bounding boxes.
+- [Pandas and Exploratory Data Analysis](https://happyin.space/data-science/pandas-eda/): Pandas is the primary tool for tabular data manipulation in Python.
+- [Probabilistic Language Models](https://happyin.space/data-science/probabilistic-language-models/): N-gram models, smoothing techniques, and perplexity evaluation for text generation and NLP foundations
+- [Probability and Distributions](https://happyin.space/data-science/probability-distributions/): Core probability theory and common distributions used throughout data science and ML.
+- [Python Fundamentals for Data Science](https://happyin.space/data-science/python-for-ds/): Python for DS is primarily an interface to existing libraries (pandas, sklearn, torch), not general-purpose programming.
+- [Recommender Systems](https://happyin.space/data-science/recommender-systems/): Predict user preferences and rank items.
+- [Reinforcement Learning](https://happyin.space/data-science/reinforcement-learning/): Agent learns by interacting with an environment, receiving rewards/penalties, and optimizing a policy to maximize cum...
+- [RNNs and Sequence Models](https://happyin.space/data-science/rnn-sequences/): Recurrent Neural Networks process sequential data by maintaining hidden state across time steps.
+- [Apache Spark and Big Data Processing](https://happyin.space/data-science/spark-big-data/): When data exceeds single-machine memory, Spark distributes computation across clusters.
+- [SQL for Data Science](https://happyin.space/data-science/sql-for-data-science/): SQL is the universal language for extracting data from databases.
+- [Text Summarization](https://happyin.space/data-science/text-summarization/): Extractive and abstractive summarization techniques using TF-IDF scoring and transformer models
+- [Time Series Analysis](https://happyin.space/data-science/time-series-analysis/): Data ordered by time.
+- [Transfer Learning](https://happyin.space/data-science/transfer-learning/): Use knowledge from one task (source) to improve learning on another (target).
+- [Unsupervised Learning](https://happyin.space/data-science/unsupervised-learning/): Learning from unlabeled data.
+
+## DevOps & Infrastructure
+- [Ansible Configuration Management](https://happyin.space/devops/ansible-configuration-management/): Ansible is an agentless automation tool for orchestration, configuration management, provisioning, and deployment.
+- [AWS Cloud Fundamentals](https://happyin.space/devops/aws-cloud-fundamentals/): Core AWS services for DevOps: IAM for access control, VPC for networking, EC2 for compute, S3 for storage, and CloudW...
+- [Chaos Engineering and Reliability Testing](https://happyin.space/devops/chaos-engineering-and-testing/): Reliability testing validates system behavior under stress and failure.
+- [CI/CD Pipelines](https://happyin.space/devops/cicd-pipelines/): CI/CD automates building, testing, and deploying software.
+- [Container Registries](https://happyin.space/devops/container-registries/): Container registries store and distribute Docker images.
+- [Container Security Scanning](https://happyin.space/devops/container-security-scanning/): Automated detection of vulnerabilities, misconfigurations, and secrets in container images, IaC files, and running wo...
+- [Data Center Network Design](https://happyin.space/devops/datacenter-network-design/): Modern data center networks use leaf-spine (CLOS) topologies with VXLAN overlay and EVPN control plane.
+- [Deployment Strategies](https://happyin.space/devops/deployment-strategies/): Deployment strategies control how new application versions replace old ones.
+- [DevOps Culture and SDLC](https://happyin.space/devops/devops-culture-and-sdlc/): DevOps is a set of practices, tools, and cultural philosophies automating and integrating processes between software ...
+- [Docker Compose](https://happyin.space/devops/docker-compose/): Docker Compose defines and runs multi-container applications in a single declarative YAML file.
+- [Docker for Machine Learning](https://happyin.space/devops/docker-for-ml/): Docker standardizes ML workflows by eliminating "works on my machine" problems across data collection, experimentatio...
+- [Docker Fundamentals](https://happyin.space/devops/docker-fundamentals/): Docker is a platform for building, packaging, and running applications in isolated containers that share the host OS ...
+- [Dockerfile and Image Building](https://happyin.space/devops/dockerfile-and-image-building/): A Dockerfile is a text file with instructions for building Docker images.
+- [Git Version Control](https://happyin.space/devops/git-version-control/): Git is a distributed version control system where every clone is a full repository.
+- [GitOps and ArgoCD](https://happyin.space/devops/gitops-and-argocd/): GitOps uses Git as the single source of truth for infrastructure and application state.
+- [Helm Package Manager](https://happyin.space/devops/helm-package-manager/): Helm is a package manager for Kubernetes that templates manifests, manages releases, and enables reusable infrastruct...
+- [Jenkins Automation](https://happyin.space/devops/jenkins-automation/): Jenkins is an automation server for CI/CD pipelines.
+- [Kubernetes Architecture](https://happyin.space/devops/kubernetes-architecture/): Kubernetes (K8s) is the industry-standard container orchestration platform.
+- [Kubernetes on Azure (AKS)](https://happyin.space/devops/kubernetes-on-aks/): Azure Kubernetes Service is a managed K8s offering where Azure manages the control plane.
+- [Kubernetes on AWS (EKS)](https://happyin.space/devops/kubernetes-on-eks/): Elastic Kubernetes Service is AWS's managed Kubernetes.
+- [Kubernetes Operators](https://happyin.space/devops/kubernetes-operators/): Software extensions that use Custom Resources (CRs) to manage applications and their components.
+- [Kubernetes Resource Management](https://happyin.space/devops/kubernetes-resource-management/): Resource management controls how CPU and memory are allocated, consumed, and bounded across the cluster.
+- [Kubernetes Security](https://happyin.space/devops/kubernetes-security/): Multi-layered defense for Kubernetes clusters: authentication, authorization, admission control, network policies, po...
+- [Kubernetes Services and Networking](https://happyin.space/devops/kubernetes-services-and-networking/): Services provide stable network access to dynamic sets of pods.
+- [Kubernetes Storage](https://happyin.space/devops/kubernetes-storage/): Containers are ephemeral by default - data lost on pod restart, update, or migration.
+- [Kubernetes Workloads](https://happyin.space/devops/kubernetes-workloads/): Kubernetes workload resources manage sets of pods.
+- [Kustomize](https://happyin.space/devops/kustomize/): Template-free customization of Kubernetes YAML configurations.
+- [Linux Server Administration](https://happyin.space/devops/linux-server-administration/): Essential Linux skills for DevOps: filesystem navigation, process management, networking, user management, and servic...
+- [Microservices Architecture Patterns](https://happyin.space/devops/microservices-patterns/): Microservices decompose applications into independently deployable services, each owning its database and communicati...
+- [Monitoring and Observability](https://happyin.space/devops/monitoring-and-observability/): Monitoring answers "what is broken?
+- [Service Mesh and Istio](https://happyin.space/devops/service-mesh-istio/): A service mesh adds a dedicated infrastructure layer for service-to-service communication.
+- [SRE Automation and Toil Reduction](https://happyin.space/devops/sre-automation-and-toil/): SRE teams become platform developers.
+- [SRE Incident Management](https://happyin.space/devops/sre-incident-management/): Incident management covers on-call structure, escalation, mitigation, and blameless postmortems.
+- [SRE Principles and Culture](https://happyin.space/devops/sre-principles/): Site Reliability Engineering (SRE) is a set of engineering techniques for building and maintaining reliable systems.
+- [Terraform Infrastructure as Code](https://happyin.space/devops/terraform-iac/): Terraform is a declarative IaC tool using HCL (HashiCorp Configuration Language).
+
+## Go
+- [Error Handling](https://happyin.space/go/error-handling/): Go uses explicit error returns instead of exceptions.
+- [Goroutines and Channels](https://happyin.space/go/goroutines-channels/): Go's concurrency model is built on goroutines (lightweight threads managed by the Go runtime) and channels (typed con...
+- [HTTP Servers](https://happyin.space/go/http-servers/): Go's net/http package provides a production-grade HTTP/2 server with TLS support out of the box.
+- [Interfaces and Composition](https://happyin.space/go/interfaces-composition/): Go uses interfaces for polymorphism and embedding for composition.
+- [Modules and Packages](https://happyin.space/go/modules-packages/): Go modules are the unit of dependency management, and packages are the unit of code organization.
+
+## Image Generation & Diffusion
+- [ACE++ (Alibaba / Tongyi Lab)](https://happyin.space/image-generation/ACE++/): Unified multi-task image editing model built on [[FLUX Kontext|FLUX.
+- [ATI (Any Trajectory Instruction)](https://happyin.space/image-generation/ATI/): Trajectory-based motion control for I2V generation.
+- [Block Causal Linear Attention](https://happyin.space/image-generation/Block Causal Linear Attention/): Temporal extension of [[SANA]]'s linear attention for sequential processing (video frames or image tiles).
+- [Calligrapher (Freestyle Text Image Customization)](https://happyin.space/image-generation/Calligrapher/): Text generation and editing on images with style reference.
+- [Color Checker and White Balance Correction](https://happyin.space/image-generation/Color Checker and White Balance/): Automated color calibration using color checker cards and white balance correction models.
+- [DC-AE - Deep Compression Autoencoder](https://happyin.space/image-generation/DC-AE/): 32x spatial compression autoencoder from MIT Han Lab, core component of [[SANA]].
+- [Diffusion Inference Acceleration](https://happyin.space/image-generation/Diffusion Inference Acceleration/): Techniques for accelerating diffusion model inference without quality loss.
+- [Diffusion LoRA Training](https://happyin.space/image-generation/Diffusion LoRA Training/): Practical patterns for LoRA fine-tuning of diffusion models (FLUX Klein 9B, [[SANA]], SDXL).
+- [FLAIR (Flow-Based Latent Alignment for Image Restoration)](https://happyin.space/image-generation/FLAIR/): Training-free variational posterior sampling framework for image restoration.
+- [FLUX Klein 9B Inference](https://happyin.space/image-generation/FLUX Klein 9B Inference/): Practical reference for FLUX.
+- [FLUX Kontext](https://happyin.space/image-generation/FLUX Kontext/): Image editing model from Black Forest Labs (BFL).
+- [Flow Matching](https://happyin.space/image-generation/Flow Matching/): Generative modeling framework that learns straight-line transport between noise and data distributions.
+- [Image Restoration - Approaches and Models](https://happyin.space/image-generation/Image Restoration Survey/): Overview of image restoration approaches: from classical to diffusion-based.
+- [LaMa (Large Mask Inpainting)](https://happyin.space/image-generation/LaMa/): Feed-forward inpainting model using Fast Fourier Convolution (FFC) for image-wide receptive field from the first layer.
+- [LoRA Fine-Tuning for Editing Models](https://happyin.space/image-generation/LoRA Fine-Tuning for Editing Models/): Practical patterns for applying LoRA adapters to [[MMDiT]]-based editing models ([[Step1X-Edit]], Qwen-Image-Edit-2511).
+- [Low-VRAM Inference Strategies](https://happyin.space/image-generation/Low-VRAM Inference Strategies/): Techniques for running image generation and processing models on GPUs with limited VRAM (2-8 GB).
+- [MACRO (Multi-Reference Image Generation)](https://happyin.space/image-generation/MACRO/): Dataset + benchmark + fine-tuning recipe that fixes quality degradation when generation models receive many (6-10) re...
+- [MARBLE (Material Recomposition and Blending in CLIP-Space)](https://happyin.space/image-generation/MARBLE/): Material property editing via CLIP embedding manipulation on SDXL.
+- [MMDiT (Multi-Modal Diffusion Transformer)](https://happyin.space/image-generation/MMDiT/): Transformer architecture for diffusion models that processes multiple modalities (text, image) through joint attentio...
+- [Paired Training for Image Restoration](https://happyin.space/image-generation/Paired Training for Restoration/): How to train a diffusion model for image-to-image restoration (not text-to-image).
+- [PixelSmile](https://happyin.space/image-generation/PixelSmile/): LoRA adapter for [[Step1X-Edit|Qwen-Image-Edit-2511]] that enables fine-grained facial expression editing with contin...
+- [RealRestorer](https://happyin.space/image-generation/RealRestorer/): Image restoration model built on [[Step1X-Edit]].
+- [SANA-Denoiser - Our Architecture Design](https://happyin.space/image-generation/SANA-Denoiser Architecture/): Repurposing [[SANA]] 1.
+- [SANA (Efficient High-Resolution Image Synthesis)](https://happyin.space/image-generation/SANA/): Efficient DiT from NVlabs/MIT Han Lab.
+- [Step1X-Edit](https://happyin.space/image-generation/Step1X-Edit/): Open-source image editing foundation model by StepFun (Shanghai).
+- [Temporal Tiling: Treating Image Tiles as a Temporal Sequence](https://happyin.space/image-generation/Temporal Tiling/): The idea: instead of processing tiles independently (standard tiling), treat them as a temporal sequence where each t...
+- [Text-to-LoRA (Sakana AI)](https://happyin.space/image-generation/Text-to-LoRA/): Hypernetwork that generates LoRA adapter weights from a natural language task description in a single forward pass.
+- [Textual Latent Interpolation](https://happyin.space/image-generation/Textual Latent Interpolation/): Technique for continuous attribute control in diffusion models by interpolating between text embeddings.
+- [Tiled Inference for High-Resolution Processing](https://happyin.space/image-generation/Tiled Inference/): Techniques for processing images larger than model input size by splitting into overlapping tiles, processing individ...
+- [Transformers v5.0.0](https://happyin.space/image-generation/Transformers v5/): First major release in 5 years (1200+ commits).
+- [X-Dub](https://happyin.space/image-generation/X-Dub/): Visual dubbing model that edits lip movements in video to match new audio, preserving identity and pose.
+- [Neural Networks for Grayscale Overlay Prediction](https://happyin.space/image-generation/grayscale-overlay-nn-architectures/): Predicting single-channel grayscale overlay maps for Photoshop Soft Light blending - a pixel-aligned regression task.
+- [In-Context Segmentation](https://happyin.space/image-generation/in-context-segmentation/): Segmenting images by example: provide one or more (image, mask) pairs and the model segments the same category in new...
+
+## iOS & Mobile
+- [Android Dagger 2 Dependency Injection](https://happyin.space/ios-mobile/android-dagger-dependency-injection/): Dagger 2 generates dependency injection code at compile time with zero reflection and zero runtime overhead.
+- [Android MVVM Architecture](https://happyin.space/ios-mobile/android-mvvm-architecture/): MVVM (Model-View-ViewModel) is the recommended architecture for Android apps.
+- [Android Retrofit Networking](https://happyin.space/ios-mobile/android-retrofit-networking/): Retrofit is the standard HTTP client for Android, converting REST API definitions into Kotlin interfaces.
+- [Android Room Database](https://happyin.space/ios-mobile/android-room-database/): Room is Android's SQLite abstraction layer that provides compile-time SQL verification, LiveData integration, and cor...
+- [AVKit Audio and Haptic Feedback](https://happyin.space/ios-mobile/avkit-audio-and-haptics/): AVKit provides audio playback for background music and sound effects.
+- [Core Data Persistence](https://happyin.space/ios-mobile/core-data-persistence/): Core Data is Apple's mature persistence framework, available on all iOS versions.
+- [Graph Algorithms in Swift](https://happyin.space/ios-mobile/graph-algorithms-swift/): Adjacency list graphs, BFS/DFS traversal, and shortest path algorithms with mapping examples
+- [Kotlin and Android Fundamentals](https://happyin.space/ios-mobile/kotlin-android-fundamentals/): Kotlin is the primary language for Android development.
+- [MapKit Integration](https://happyin.space/ios-mobile/mapkit-integration/): SwiftUI's MapKit integration provides native map views with annotations, camera control, satellite/standard toggle, a...
+- [Refactoring Large View Controllers](https://happyin.space/ios-mobile/refactoring-view-controllers/): Systematic decomposition of massive view controllers into testable components using extraction patterns
+- [StoreKit 2 In-App Purchases](https://happyin.space/ios-mobile/storekit-in-app-purchases/): StoreKit 2 is Apple's modern API for in-app purchases.
+- [Swift Collections Beyond Arrays](https://happyin.space/ios-mobile/swift-collections-beyond-arrays/): Sets and Dictionaries in Swift with performance characteristics, set operations, and access patterns
+- [Swift Enums and Optionals](https://happyin.space/ios-mobile/swift-enums-and-optionals/): Enums define a finite set of named cases.
+- [Swift Language Fundamentals](https://happyin.space/ios-mobile/swift-fundamentals/): Core Swift language constructs: variables, constants, types, operators, control flow, functions, and string handling.
+- [Swift Generics](https://happyin.space/ios-mobile/swift-generics/): Type-safe reusable functions and types with generic parameters, constraints, and associated types
+- [Swift Macros](https://happyin.space/ios-mobile/swift-macros/): Compile-time code generation via attached and freestanding macros using AST transformation in Swift 5.9+
+- [Swift Phantom Types](https://happyin.space/ios-mobile/swift-phantom-types/): Compile-time-only type parameters for enforcing state machines, unit safety, and domain constraints
+- [Swift Structs and Classes](https://happyin.space/ios-mobile/swift-structs-and-classes/): Structs and classes are blueprints for custom types in Swift.
+- [SwiftData Persistence](https://happyin.space/ios-mobile/swiftdata-persistence/): SwiftData (iOS 17+) is Apple's modern persistence framework built on top of Core Data.
+- [SwiftUI Animations](https://happyin.space/ios-mobile/swiftui-animations/): SwiftUI animations are property-driven: toggle a Bool, attach modifiers that react to it, wrap the toggle in withAnim...
+- [SwiftUI Forms and Input Controls](https://happyin.space/ios-mobile/swiftui-forms-and-input/): Forms group input controls for data entry screens.
+- [SwiftUI Layout Testing](https://happyin.space/ios-mobile/swiftui-layout-testing/): Property-based fuzzing to verify custom layout engines against Apple's native SwiftUI rendering
+- [SwiftUI Lists and Grids](https://happyin.space/ios-mobile/swiftui-lists-and-grids/): List, ForEach, LazyVGrid, and ScrollView are the primary containers for displaying collections of data in SwiftUI.
+- [SwiftUI Navigation](https://happyin.space/ios-mobile/swiftui-navigation/): SwiftUI provides NavigationStack for hierarchical push/pop navigation, sheets for modal presentation, and TabView for...
+- [SwiftUI Networking and JSON Decoding](https://happyin.space/ios-mobile/swiftui-networking/): Networking in SwiftUI uses Swift's async/await with URLSession for HTTP requests and Codable/Decodable for JSON parsing.
+- [SwiftUI State and Data Flow](https://happyin.space/ios-mobile/swiftui-state-and-data-flow/): SwiftUI views are structs (immutable by default).
+- [SwiftUI Views and Modifiers](https://happyin.space/ios-mobile/swiftui-views-and-modifiers/): Every visual element in SwiftUI is a View.
+- [Type-Safe Domain Modeling in Swift](https://happyin.space/ios-mobile/type-safe-modeling/): Using enums, structs, and generics to eliminate impossible states and make APIs self-documenting
+- [Wrapping C Libraries in Swift](https://happyin.space/ios-mobile/wrapping-c-libraries/): Bridging C functions into Swift with type safety, automatic memory management via deinit, and error handling
+- [Xcode Project Setup and Tooling](https://happyin.space/ios-mobile/xcode-project-setup/): Xcode is the required IDE for iOS development.
+
+## Java & Spring
+- [Algorithms and Data Structures in Java](https://happyin.space/java-spring/algorithms-data-structures/): Core algorithms (sorting, searching), fundamental data structures (stack, queue, linked list, tree, hash map), comple...
+- [Android Activity Lifecycle and Intent Navigation](https://happyin.space/java-spring/android-activity-lifecycle/): Activity lifecycle callbacks, explicit and implicit Intents, data passing between Activities, Activity Result API, an...
+- [Android Architecture - MVP, MVVM, ViewModel, LiveData](https://happyin.space/java-spring/android-architecture-mvvm/): Architectural patterns for Android: MVP (Model-View-Presenter) vs MVVM (Model-View-ViewModel), Jetpack ViewModel, Liv...
+- [Android Data Storage - SharedPreferences, SQLite, Room](https://happyin.space/java-spring/android-data-storage/): Local data persistence on Android: SharedPreferences for settings, raw SQLite, Room ORM (recommended), Content Provid...
+- [Android Dependency Injection with Hilt](https://happyin.space/java-spring/android-dependency-injection/): Hilt (built on Dagger) as the recommended DI framework for Android.
+- [Android Firebase - Auth, Firestore, Storage](https://happyin.space/java-spring/android-firebase/): Firebase integration for Android: Authentication (email/password), Cloud Firestore (NoSQL database), Cloud Storage (f...
+- [Android Fragments and Navigation Component](https://happyin.space/java-spring/android-fragments-navigation/): Fragment lifecycle, Fragment communication via shared ViewModel, Jetpack Navigation Component, Safe Args, View Bindin...
+- [Android Fundamentals - Project Structure and XML Layouts](https://happyin.space/java-spring/android-fundamentals-ui/): Android project structure, XML layout system, View hierarchy, common widgets, and ViewGroups (LinearLayout, RelativeL...
+- [Android Jetpack Compose](https://happyin.space/java-spring/android-jetpack-compose/): Android's modern declarative UI toolkit: composable functions, state management, layout composables, Modifier chains,...
+- [Android Networking - Retrofit, OkHttp, REST APIs](https://happyin.space/java-spring/android-networking-retrofit/): HTTP networking on Android using Retrofit (type-safe HTTP client), OkHttp, Gson serialization, coroutine integration,...
+- [Android RecyclerView and Custom Views](https://happyin.space/java-spring/android-recyclerview/): RecyclerView for efficient scrollable lists, Adapter/ViewHolder pattern, LayoutManagers, DiffUtil for efficient updat...
+- [Database Migrations - Flyway and Liquibase](https://happyin.space/java-spring/database-migrations/): Controlled, versioned database schema evolution using Flyway (SQL-based) and Liquibase (multi-format).
+- [Java Collections and Stream API](https://happyin.space/java-spring/java-collections-streams/): Java Collections Framework hierarchy, choosing the right collection, and functional-style data processing with the St...
+- [Java Concurrency and Threading](https://happyin.space/java-spring/java-concurrency/): Java threading model, synchronization primitives, thread pools, CompletableFuture, and concurrent collections.
+- [Java Type System and Language Fundamentals](https://happyin.space/java-spring/java-type-system-fundamentals/): Core Java type system covering primitives, wrappers, strings, type casting, generics, and exception handling.
+- [Kotlin Coroutines, Flow, and Async Patterns](https://happyin.space/java-spring/kotlin-coroutines/): Kotlin coroutines for async programming: suspend functions, dispatchers, scopes, structured concurrency, error handli...
+- [Kotlin Language Features](https://happyin.space/java-spring/kotlin-language-features/): Kotlin-specific language features that differentiate it from Java: null safety, data classes, sealed classes, extensi...
+- [Spring Boot Project Setup and Configuration](https://happyin.space/java-spring/spring-boot-configuration/): Spring Boot project initialization, application properties, build tools (Maven/Gradle), project structure, and clean ...
+- [Spring Data Access - From JDBC to Spring Data](https://happyin.space/java-spring/spring-data-access-evolution/): Evolution of data access in Spring: raw JDBC -> PreparedStatement -> JdbcTemplate -> NamedParameterJdbcTemplate -> JO...
+- [Spring Data JPA and Hibernate](https://happyin.space/java-spring/spring-data-jpa-hibernate/): JPA (Jakarta Persistence API) specification, Hibernate ORM implementation, entity mapping, relationships, inheritance...
+- [Spring IoC Container, DI, and Bean Management](https://happyin.space/java-spring/spring-ioc-beans/): Inversion of Control (IoC) principle, dependency injection types, bean scopes, lifecycle callbacks, conditional beans...
+- [Spring MVC Controllers, REST, and Thymeleaf](https://happyin.space/java-spring/spring-mvc-rest/): Spring MVC request handling with @Controller and @RestController, Thymeleaf template engine, form processing, interna...
+- [Spring Data NoSQL - Cassandra, MongoDB, Redis, Neo4j](https://happyin.space/java-spring/spring-nosql-databases/): Spring Data abstractions for NoSQL databases: Cassandra (column-family), MongoDB (document), Redis (key-value), and N...
+- [Spring Security - Authentication and Authorization](https://happyin.space/java-spring/spring-security/): Spring Security framework covering password encoding with BCrypt, SecurityFilterChain configuration, role-based acces...
+- [Spring Validation and DTOs](https://happyin.space/java-spring/spring-validation/): Bean Validation (Jakarta Validation) annotations, DTO pattern for separating domain models from input/output, and val...
+
+## Kafka & Message Queues
+- [Admin API](https://happyin.space/kafka/admin-api/): The Admin API (kafka-clients library) provides programmatic cluster management for topics, consumer groups, ACLs, and...
+- [Alpakka Kafka (Akka Streams)](https://happyin.space/kafka/alpakka-kafka/): Alpakka Kafka connects Kafka topics to Akka Streams pipelines, providing reactive backpressure, Graph DSL for complex...
+- [Broker Architecture](https://happyin.space/kafka/broker-architecture/): A Kafka broker is a single server process that receives messages from producers, assigns offsets, persists data to di...
+- [Confluent REST Proxy](https://happyin.space/kafka/confluent-rest-proxy/): The Confluent REST Proxy provides an HTTP-based interface to Kafka (default port 8082), enabling produce, consume, an...
+- [Consumer Configuration](https://happyin.space/kafka/consumer-configuration/): Complete reference for Kafka consumer configuration parameters with defaults, tuning guidelines, and impact on behavior.
+- [Consumer Groups](https://happyin.space/kafka/consumer-groups/): A consumer group is a named entity that enables multiple consumers to cooperatively read from topic partitions, with ...
+- [CQRS Pattern](https://happyin.space/kafka/cqrs-pattern/): CQRS (Command Query Responsibility Segregation) separates the write path (Command API with event store) from the read...
+- [Delivery Semantics](https://happyin.space/kafka/delivery-semantics/): Kafka supports three delivery semantics - at-most-once, at-least-once, and exactly-once - each with specific configur...
+- [Docker Development Setup](https://happyin.space/kafka/docker-development-setup/): Minimal Docker Compose configurations for local Kafka development using KRaft mode (no ZooKeeper), with single-broker...
+- [Event Sourcing](https://happyin.space/kafka/event-sourcing/): Event sourcing stores every state change as an immutable event in Kafka rather than overwriting current state in a da...
+- [Idempotent Producer](https://happyin.space/kafka/idempotent-producer/): The idempotent producer assigns a PID (Producer ID) and sequence numbers to each message, allowing the broker to dedu...
+- [Kafka Cluster Operations](https://happyin.space/kafka/kafka-cluster-operations/): Production Kafka: sizing, upgrades, monitoring, tuning, disk failures, partition reassignment, cross-DC replication, ...
+- [Kafka Connect](https://happyin.space/kafka/kafka-connect/): Kafka Connect is a framework for streaming data between Kafka and external systems (databases, search indexes, file s...
+- [Kafka Monitoring](https://happyin.space/kafka/kafka-monitoring/): Kafka exposes metrics via JMX; production monitoring requires tracking broker health, replication state, consumer lag...
+- [Kafka Queues (v4.0)](https://happyin.space/kafka/kafka-queues-v4/): Kafka 4.
+- [Kafka Security](https://happyin.space/kafka/kafka-security/): Kafka security covers three layers: encryption (SSL/TLS for data in transit), authentication (SASL for identity verif...
+- [Kafka Streams State Stores](https://happyin.space/kafka/kafka-streams-state-stores/): State stores provide local key-value storage per Kafka Streams task, backed by RocksDB on disk and changelog topics i...
+- [Kafka Streams Time Semantics](https://happyin.space/kafka/kafka-streams-time-semantics/): Stream processing time semantics based on the Google Dataflow model define how events are grouped by time, with water...
+- [Kafka Streams Windowing](https://happyin.space/kafka/kafka-streams-windowing/): Windowed operations group stream records into finite time intervals for aggregation, supporting tumbling (non-overlap...
+- [Kafka Streams](https://happyin.space/kafka/kafka-streams/): Kafka Streams is a client library (not a framework or separate cluster) for building stream processing applications a...
+- [Kafka Transactions](https://happyin.space/kafka/kafka-transactions/): Kafka transactions enable atomic writes to multiple topics/partitions - either all messages in a transaction are comm...
+- [Kafka Troubleshooting](https://happyin.space/kafka/kafka-troubleshooting/): Common Kafka problems mapped to symptoms, root causes, and fixes for both producer-side and consumer-side issues.
+- [ksqlDB](https://happyin.space/kafka/ksqldb/): ksqlDB is a streaming SQL engine built on Kafka Streams that translates SQL statements into Kafka Streams topologies,...
+- [Messaging Models](https://happyin.space/kafka/messaging-models/): Three fundamental messaging models exist in distributed systems; Kafka uses the log-based model which subsumes both q...
+- [MirrorMaker 2](https://happyin.space/kafka/mirrormaker/): MirrorMaker 2 (MM2) replicates topics between Kafka clusters for disaster recovery and geo-distribution, built on Kaf...
+- [NATS Comparison](https://happyin.space/kafka/nats-comparison/): NATS is a lightweight messaging system with three layers (Core, JetStream, Clustering), offering simpler operations a...
+- [Offsets and Commits](https://happyin.space/kafka/offsets-and-commits/): An offset is a sequential message number within a partition, assigned on write; consumers track their position via of...
+- [Partitioning Strategies](https://happyin.space/kafka/partitioning-strategies/): Kafka partitioning determines how messages are distributed across partitions using key hashing (murmur2), round-robin...
+- [Producer Patterns](https://happyin.space/kafka/producer-patterns/): Advanced producer patterns beyond basic send/receive.
+- [Rebalancing Deep Dive](https://happyin.space/kafka/rebalancing-deep-dive/): Rebalancing is the process of redistributing partition assignments among consumers in a group, triggered by membershi...
+- [Replication and Fault Tolerance](https://happyin.space/kafka/replication-and-fault-tolerance/): Every Kafka partition is replicated across multiple brokers.
+- [Saga Pattern](https://happyin.space/kafka/saga-pattern/): The Saga pattern manages distributed transactions across microservices via Kafka using either choreography (event-dri...
+- [Schema Registry](https://happyin.space/kafka/schema-registry/): Confluent Schema Registry is a separate service (not part of Apache Kafka core) that stores, manages, and validates m...
+- [Spring Kafka](https://happyin.space/kafka/spring-kafka/): Spring Kafka provides declarative, annotation-based Kafka integration with KafkaTemplate for producing and @KafkaList...
+- [Topics and Partitions](https://happyin.space/kafka/topics-and-partitions/): A topic is Kafka's logical channel for organizing records.
+- [Transactional Outbox and Inbox](https://happyin.space/kafka/transactional-outbox/): The Transactional Outbox pattern writes events to an outbox table within the same database transaction as business da...
+- [Zero-Copy and Disk I/O](https://happyin.space/kafka/zero-copy-and-disk-io/): Kafka achieves high throughput through sequential disk I/O, OS page cache utilization, and zero-copy transfer via sen...
+- [ZIO Kafka](https://happyin.space/kafka/zio-kafka/): ZIO Kafka provides purely functional Kafka integration using ZIO Streams, wrapping the standard Java client with expl...
+
+## Linux & CLI
+- [Bash Scripting](https://happyin.space/linux-cli/bash-scripting/): Bash scripts automate command sequences.
+- [Cron and Task Scheduling](https://happyin.space/linux-cli/cron-and-scheduling/): cron handles recurring scheduled tasks; at handles one-time future execution.
+- [Disks and Filesystems](https://happyin.space/linux-cli/disks-and-filesystems/): This entry covers disk device naming, partitioning, formatting, mounting, filesystem internals (ext3/ext4), LVM, LUKS...
+- [Docker Basics](https://happyin.space/linux-cli/docker-basics/): Docker packages applications into containers - isolated, portable runtime environments built from images.
+- [File Operations](https://happyin.space/linux-cli/file-operations/): Core commands for creating, copying, moving, deleting, and viewing files and directories.
+- [File Permissions](https://happyin.space/linux-cli/file-permissions/): Every file and directory in Linux has an owner, a group, and permission bits for three categories: owner (u), group (...
+- [File Search and grep](https://happyin.space/linux-cli/file-search-and-grep/): Finding files by name/attributes with find, searching file contents with grep, and fast lookups with locate.
+- [Filesystem Hierarchy Standard](https://happyin.space/linux-cli/filesystem-hierarchy/): Linux follows the Filesystem Hierarchy Standard (FHS).
+- [Firewall and iptables](https://happyin.space/linux-cli/firewall-and-iptables/): iptables configures the Linux kernel's netfilter packet filtering framework.
+- [I/O Redirection and Pipes](https://happyin.space/linux-cli/io-redirection-and-pipes/): Every process in Linux has three standard streams: stdin (0), stdout (1), and stderr (2).
+- [Links and Inodes](https://happyin.space/linux-cli/links-and-inodes/): Every file in Linux has an inode - a data structure storing metadata and pointers to data blocks.
+- [Linux Kernel and Boot Process](https://happyin.space/linux-cli/linux-kernel-and-boot/): The kernel is the core of the operating system, mediating between hardware and user programs.
+- [Linux OS Structure](https://happyin.space/linux-cli/linux-os-structure/): Linux architecture separates kernel space from user space, uses files as universal abstractions, and provides IPC mec...
+- [Linux Security](https://happyin.space/linux-cli/linux-security/): Linux provides multiple layers of security: from basic file permissions (DAC) to mandatory access control (MAC), proc...
+- [Logging and journald](https://happyin.space/linux-cli/logging-and-journald/): Linux logging covers system events, service output, security audit trails, and application logs.
+- [Monitoring and Performance](https://happyin.space/linux-cli/monitoring-and-performance/): System monitoring tools for CPU, memory, disk I/O, and network.
+- [Package Management](https://happyin.space/linux-cli/package-management/): Linux software is distributed as packages - archives containing binaries, libraries, configs, and metadata.
+- [PowerShell Basics](https://happyin.space/linux-cli/powershell-basics/): PowerShell is a cross-platform shell and scripting language built on .
+- [Process Management](https://happyin.space/linux-cli/process-management/): A process is a running program with a PID, state, priority, and resource allocation.
+- [Python and Node.js CLI](https://happyin.space/linux-cli/python-and-node-cli/): Installing and running Python and Node.
+- [SSH Remote Access](https://happyin.space/linux-cli/ssh-remote-access/): SSH (Secure Shell) provides encrypted remote access to Linux systems.
+- [systemd and Services](https://happyin.space/linux-cli/systemd-and-services/): systemd is the standard init system on modern Linux, managing service lifecycle, boot process, and system state.
+- [Terminal Basics](https://happyin.space/linux-cli/terminal-basics/): The terminal (terminal emulator) provides a window to interact with the shell - the command-line interpreter that pas...
+- [Terminal Text Editors](https://happyin.space/linux-cli/text-editors/): nano is beginner-friendly; vim is the power-user standard found on virtually every Linux system.
+- [Text Processing Tools](https://happyin.space/linux-cli/text-processing/): Command-line utilities for transforming, filtering, and analyzing text data.
+- [Users and Groups](https://happyin.space/linux-cli/users-and-groups/): Linux is a multi-user system.
+- [WSL - Windows Subsystem for Linux](https://happyin.space/linux-cli/wsl/): WSL runs Linux distributions inside Windows.
+
+## LLM & AI Agents
+- [Agent Cognitive Architectures](https://happyin.space/llm-agents/agent-architectures/): How to structure the control flow and state management of an LLM agent beyond individual patterns.
+- [Agent Deployment Patterns](https://happyin.space/llm-agents/agent-deployment/): Taking agents from prototype to production.
+- [Agent Design Patterns](https://happyin.space/llm-agents/agent-design-patterns/): Established patterns for structuring agent behavior, from simple tool-calling to sophisticated self-correcting loops.
+- [Agent Evaluation and Benchmarks](https://happyin.space/llm-agents/agent-evaluation/): Evaluating agents is fundamentally harder than evaluating models.
+- [Agent Fundamentals](https://happyin.space/llm-agents/agent-fundamentals/): An AI agent is an autonomous system that uses an LLM as its reasoning engine to perceive its environment, reason abou...
+- [Agent Memory](https://happyin.space/llm-agents/agent-memory/): Agent memory systems manage context across interactions - from short-term conversation buffers to persistent long-ter...
+- [Agent Orchestration Frameworks](https://happyin.space/llm-agents/agent-orchestration/): Frameworks that handle the boilerplate of agent execution: state management, tool routing, multi-agent coordination, ...
+- [Agent Safety and Alignment](https://happyin.space/llm-agents/agent-safety-alignment/): Agents that take actions in the real world can cause irreversible harm.
+- [Agent Security and Safety](https://happyin.space/llm-agents/agent-security/): AI agents with tool access can cause real-world damage when compromised.
+- [Agent Self-Improvement](https://happyin.space/llm-agents/agent-self-improvement/): Techniques for agents to improve their own performance through reflection, step-level reward signals, and code self-m...
+- [AI Coding Assistants](https://happyin.space/llm-agents/ai-coding-assistants/): AI-powered development tools that assist with code completion, generation, editing, debugging, and explanation.
+- [Autonomous Agent Evolution](https://happyin.space/llm-agents/autonomous-agent-evolution/): Replacing fixed evolutionary search (agents as stateless workers) with long-lived autonomous agents that control the ...
+- [Chunking Strategies](https://happyin.space/llm-agents/chunking-strategies/): Chunking is the process of splitting documents into smaller pieces for embedding and retrieval in RAG systems.
+- [Context Engineering for Agents](https://happyin.space/llm-agents/context-engineering/): Managing what information goes into the LLM context window and when.
+- [Embeddings](https://happyin.space/llm-agents/embeddings/): Embeddings convert text into high-dimensional numeric vectors where proximity represents semantic similarity.
+- [Fine-Tuning and LoRA](https://happyin.space/llm-agents/fine-tuning/): Fine-tuning adapts a pre-trained model to specific tasks, domains, or output styles.
+- [Frontier Models Comparison](https://happyin.space/llm-agents/frontier-models/): A practical comparison of major LLM families for selecting the right model for different use cases.
+- [Function Calling and Tool Use](https://happyin.space/llm-agents/function-calling/): Function calling enables LLMs to output structured tool invocations instead of free text.
+- [Gradio for LLM Interfaces](https://happyin.space/llm-agents/gradio-llm-interfaces/): Rapid prototyping of chat UIs with streaming, markdown rendering, and multi-model comparison dashboards
+- [LangChain Framework](https://happyin.space/llm-agents/langchain-framework/): LangChain is a Python/JS framework providing abstractions for building LLM applications: chains, agents, RAG, memory.
+- [LangGraph](https://happyin.space/llm-agents/langgraph/): LangGraph is a framework for building stateful, multi-step agent workflows as directed graphs.
+- [LLM API Integration](https://happyin.space/llm-agents/llm-api-integration/): Practical guide to integrating with LLM provider APIs.
+- [Practical LLM Fine-Tuning](https://happyin.space/llm-agents/llm-fine-tuning-practical/): End-to-end guide for frontier API and QLoRA fine-tuning with when-to-use decision framework
+- [LLMOps](https://happyin.space/llm-agents/llmops/): LLMOps adapts MLOps practices for LLM-specific workflows: prompt management, model serving, evaluation, monitoring, a...
+- [Model Optimization](https://happyin.space/llm-agents/model-optimization/): Three complementary techniques for reducing model size and inference cost: distillation (train a smaller model), quan...
+- [Multi-Agent Systems](https://happyin.space/llm-agents/multi-agent-systems/): Multi-agent systems decompose complex tasks across specialized agents that collaborate.
+- [No-Code Agent Platforms](https://happyin.space/llm-agents/no-code-platforms/): Visual and low-code platforms for building LLM agents, chatbots, and automation workflows.
+- [Ollama and Local LLMs](https://happyin.space/llm-agents/ollama-local-llms/): Ollama provides a simple way to run open-source LLMs locally.
+- [Production LLM Patterns](https://happyin.space/llm-agents/production-patterns/): Battle-tested patterns for deploying LLM systems in production.
+- [Prompt Engineering](https://happyin.space/llm-agents/prompt-engineering/): Prompt engineering is the practice of crafting inputs to get desired outputs from LLMs.
+- [RAG Pipeline](https://happyin.space/llm-agents/rag-pipeline/): Retrieval-Augmented Generation (RAG) supplements LLM generation with external knowledge retrieved at query time.
+- [LLM Scaling Laws and Benchmarks](https://happyin.space/llm-agents/scaling-laws-and-benchmarks/): Chinchilla scaling law, standard benchmarks (ARC, DROP, HellaSwag), and model selection guidelines
+- [Spring AI (Java)](https://happyin.space/llm-agents/spring-ai/): Spring AI brings LLM integration to the Java/Spring Boot ecosystem.
+- [Token Optimization for Agents](https://happyin.space/llm-agents/token-optimization/): Reducing token consumption in agent systems without degrading task performance.
+- [Tokenization](https://happyin.space/llm-agents/tokenization/): Tokenization converts raw text into sequences of integer token IDs that transformer models can process.
+- [Tool Use Patterns](https://happyin.space/llm-agents/tool-use-patterns/): How to design, expose, and manage tools for LLM agents.
+- [Transformer Architecture](https://happyin.space/llm-agents/transformer-architecture/): The transformer is the foundational architecture behind all modern LLMs.
+- [Vector Databases](https://happyin.space/llm-agents/vector-databases/): Vector databases store embedding vectors and enable fast similarity search.
+
+## LLM Memory & Knowledge Persistence
+- [Context Window Management](https://happyin.space/llm-memory/context-window-management/): Strategies for managing what enters the LLM's context window and when.
+- [Forgetting Strategies](https://happyin.space/llm-memory/forgetting-strategies/): When and how to remove information from LLM agent memory.
+- [Knowledge Base as Memory](https://happyin.space/llm-memory/knowledge-base-as-memory/): Using a structured markdown knowledge base as the agent's long-term memory.
+- [Memory Architectures for LLM Agents](https://happyin.space/llm-memory/memory-architectures/): Structural approaches to organizing persistent knowledge for LLM agents.
+- [Memory Retrieval Patterns](https://happyin.space/llm-memory/memory-retrieval-patterns/): How agents find relevant information in their memory.
+- [Session Persistence](https://happyin.space/llm-memory/session-persistence/): How to preserve knowledge, decisions, and progress between LLM agent sessions.
+- [Shared Knowledge Layers for Multi-Agent Systems](https://happyin.space/llm-memory/shared-knowledge-layers/): When multiple agents work in parallel, they need a structured way to share discoveries without interfering with each ...
+- [Temporal Memory](https://happyin.space/llm-memory/temporal-memory/): Managing the time dimension of stored knowledge.
+- [Verbatim Storage vs LLM Extraction](https://happyin.space/llm-memory/verbatim-vs-extraction/): Whether to store raw text or LLM-extracted facts in memory.
+
+## Misc
+- [AI Agent IDEs and Framework Patterns](https://happyin.space/misc/ai-agent-ide-features/): Reference for AI-native development tools - agent-first IDEs with parallel task execution, AI agent frameworks for me...
+- [Algorithm Problem-Solving Patterns](https://happyin.space/misc/algorithm-problem-patterns/): Systematic approach to algorithm problems - the 7-step interview process, common patterns (two-pointer, sliding windo...
+- [Browser Test Automation with Geb/Groovy (Selenium)](https://happyin.space/misc/browser-test-automation/): Geb is a Groovy library on top of Selenium WebDriver for browser test automation.
+- [Data Structures Fundamentals - Arrays, Hash Tables, Linked Lists](https://happyin.space/misc/data-structures-fundamentals/): Core data structure operations and complexity analysis - arrays, sorted arrays with binary search, hash tables, linke...
+- [Django REST Framework and ORM Patterns](https://happyin.space/misc/django-rest-framework/): Django REST Framework serializer patterns, relationship handling, validation, and advanced ORM techniques including Q...
+- [Dynamic Programming and Recursion](https://happyin.space/misc/dynamic-programming/): Recursion fundamentals, memoization (top-down), bottom-up tabulation, and recognizing DP opportunities.
+- [Go Concurrency - Goroutines, Channels, and Sync](https://happyin.space/misc/go-concurrency/): Go's concurrency model - the GMP scheduler, channels, select, synchronization primitives, and production patterns for...
+- [Go Database Patterns - PostgreSQL, MongoDB, Redis](https://happyin.space/misc/go-database-patterns/): Production database patterns in Go - PostgreSQL with pgx, MongoDB with official driver, Redis caching, transactional ...
+- [Go Language Fundamentals](https://happyin.space/misc/go-fundamentals/): Core Go language features - type system, slices, maps, pointers, interfaces, closures, and error handling.
+- [Go Microservices - gRPC, Architecture, and Testing](https://happyin.space/misc/go-microservices/): Production Go microservice patterns - gRPC with protobuf, clean architecture layers, dependency injection, testing wi...
+- [JavaScript Async Patterns and Event Loop](https://happyin.space/misc/javascript-async-patterns/): Comprehensive reference for JavaScript asynchronous programming - from callbacks through async/await to streams and s...
+- [JavaScript Concurrency Primitives and Workers](https://happyin.space/misc/javascript-concurrency-primitives/): Advanced async coordination in JavaScript - semaphores, mutexes, async queues/pools, worker threads, and GoF patterns...
+- [Apache Kafka - Delivery Semantics and Consumer Patterns](https://happyin.space/misc/kafka-messaging/): Kafka delivery guarantees, consumer group mechanics, rebalancing strategies, and integration patterns.
+- [Observability Query Languages - PromQL, LogQL, TraceQL](https://happyin.space/misc/observability-query-languages/): Reference for the three main observability query languages - Prometheus PromQL for metrics, Grafana Loki LogQL for lo...
+- [Python Standard Library Patterns - Collections, Itertools, Closures](https://happyin.space/misc/python-stdlib-patterns/): Python standard library data structures and functional programming tools - collections module, itertools, functools, ...
+- [Python Web Scraping with BeautifulSoup](https://happyin.space/misc/python-web-scraping/): BeautifulSoup web scraping patterns - element search methods, data extraction, pagination, table scraping, and anti-b...
+- [Sorting Algorithms - Bubble, Selection, Insertion, Quicksort](https://happyin.space/misc/sorting-algorithms/): Comparison of fundamental sorting algorithms with implementations, complexity analysis, and practical trade-offs.
+- [Advanced SQL - Window Functions, Subqueries, Date Functions](https://happyin.space/misc/sql-advanced-patterns/): Advanced SQL patterns beyond basic CRUD - window functions for analytics, correlated subqueries, date manipulation, a...
+- [Trees and Graphs - BST, Heaps, Tries, Traversal](https://happyin.space/misc/trees-and-graphs/): Binary search trees, heaps/priority queues, tries (prefix trees), graph representation, and traversal algorithms (BFS...
+- [YOLO Object Detection - Architecture, API, and Metrics](https://happyin.space/misc/yolo-object-detection/): YOLO (You Only Look Once) object detection - bounding box representation, IoU, NMS, evaluation metrics (mAP), YOLOv12...
+
+## Node.js
+- [Application Architecture](https://happyin.space/nodejs/application-architecture/): Node.
+- [Async Patterns](https://happyin.space/nodejs/async-patterns/): JavaScript's async programming model spans callbacks, Promises, async/await, EventEmitter, and streams.
+- [Closures and Scope](https://happyin.space/nodejs/closures-and-scope/): A closure is a function that retains a reference to variables from its outer function's scope even after the outer fu...
+- [Concurrency Patterns](https://happyin.space/nodejs/concurrency-patterns/): Node.
+- [Data Access Patterns](https://happyin.space/nodejs/data-access-patterns/): The data access layer (DAL) separates business logic from physical storage, providing abstract CRUD operations, conne...
+- [Dependency Injection and Coupling](https://happyin.space/nodejs/dependency-injection/): Coupling occurs whenever one module calls methods, creates instances, or reads/writes properties of another module's ...
+- [Design Patterns (GoF) in JavaScript](https://happyin.space/nodejs/design-patterns-gof/): The Gang of Four patterns apply differently in JavaScript than in class-based languages.
+- [Error Handling](https://happyin.space/nodejs/error-handling/): Effective error handling in Node.
+- [Event Loop and Architecture](https://happyin.space/nodejs/event-loop-and-architecture/): Node.
+- [Middleware and HTTP](https://happyin.space/nodejs/middleware-and-http/): HTTP handling in Node.
+- [Modules and Packages](https://happyin.space/nodejs/modules-and-packages/): Node.
+- [Performance Optimization](https://happyin.space/nodejs/performance-optimization/): Node.
+- [Security and Sandboxing](https://happyin.space/nodejs/security-and-sandboxing/): Node.
+- [SOLID and GRASP Principles](https://happyin.space/nodejs/solid-and-grasp/): SOLID and GRASP principles guide code organization in JavaScript, but their application differs from class-based lang...
+- [Streams](https://happyin.space/nodejs/streams/): Node.
+- [V8 Optimization Internals](https://happyin.space/nodejs/v8-optimization/): V8 compiles JavaScript to machine code using JIT compilation with multiple optimization tiers.
+
+## PHP & Laravel
+- [Laravel Architecture](https://happyin.space/php/laravel-architecture/): Laravel 11 is a PHP framework following the MVC pattern with a service container (IoC), service providers, facades, a...
+- [Laravel Authentication](https://happyin.space/php/laravel-authentication/): Laravel provides built-in authentication via the Auth facade/helper, supporting manual login, session-based auth, rem...
+- [Laravel Blade Templates](https://happyin.space/php/laravel-blade-templates/): Blade is Laravel's templating engine that provides template inheritance, sections, components, and control directives.
+- [Laravel Eloquent ORM](https://happyin.space/php/laravel-eloquent-orm/): Eloquent is Laravel's Active Record ORM.
+- [Laravel File Storage](https://happyin.space/php/laravel-file-storage/): Laravel's filesystem abstraction (Flysystem) provides a unified API for local disk, S3, and other storage backends.
+- [Laravel Middleware](https://happyin.space/php/laravel-middleware/): Middleware filters HTTP requests before they reach controllers.
+- [Laravel Migrations](https://happyin.space/php/laravel-migrations/): Migrations are version control for the database schema.
+- [Laravel Routing](https://happyin.space/php/laravel-routing/): Routes map HTTP requests to controller actions.
+- [Laravel Validation](https://happyin.space/php/laravel-validation/): Laravel provides built-in request validation with 90+ rules, automatic redirect-back on failure, and flash error mess...
+- [Custom MVC Framework](https://happyin.space/php/mvc-framework/): Building an MVC framework from scratch in PHP teaches core web architecture: Router dispatches URLs to Controller act...
+- [PHP Arrays](https://happyin.space/php/php-arrays/): PHP arrays are ordered maps - they serve as arrays, lists, hash tables, dictionaries, stacks, and queues.
+- [PHP Control Structures and Functions](https://happyin.space/php/php-control-structures/): PHP control structures include if/elseif/else, switch, match (PHP 8), for/foreach/while.
+- [PHP OOP Fundamentals](https://happyin.space/php/php-oop-fundamentals/): PHP 8.
+- [PDO, Sessions, and Authentication](https://happyin.space/php/php-pdo-and-sessions/): PDO (PHP Data Objects) provides a consistent interface for database access with prepared statements to prevent SQL in...
+- [PHP Type System](https://happyin.space/php/php-type-system/): PHP is dynamically typed with optional strict mode.
 
 ## Python
-- [Introduction a FastAPI](https://happyin.space/python/fastapi-introduction/): Concepts fondamentaux de FastAPI, traitement asynchrone des requetes, validation Pydantic, generation OpenAPI
-
-## SQL et Bases de Donnees
-- [Architecture PostgreSQL 17](https://happyin.space/sql-databases/postgresql-17-architecture-and-query-tuning/): Fonctionnement interne de PostgreSQL, planificateur de requetes, MVCC, strategies d'indexation, optimisation des performances
-
-## DevOps et Infrastructure
-- [Fondamentaux Docker](https://happyin.space/devops/docker-fundamentals/): Cycle de vie des conteneurs, bonnes pratiques Dockerfile, constructions multi-etapes, reseau, volumes
-
-## Securite
-- [Securite des Applications Web](https://happyin.space/security/web-application-security/): OWASP Top 10, prevention XSS, protection CSRF, injection SQL, securite de l'authentification
-
-## LLM et Agents IA
-- [Fondamentaux RAG](https://happyin.space/llm-agents/rag-fundamentals/): Architecture de Generation Augmentee par Recuperation, bases de donnees vectorielles, strategies de decoupage, modeles d'embedding
+- [Async Programming (asyncio)](https://happyin.space/python/async-programming/): Python's asyncio provides cooperative multitasking for I/O-bound workloads in a single thread.
+- [Concurrency - Threading and Multiprocessing](https://happyin.space/python/concurrency/): Python offers three concurrency models: threading for I/O-bound tasks, multiprocessing for CPU-bound tasks (bypasses ...
+- [Control Flow](https://happyin.space/python/control-flow/): Python uses indentation (4 spaces) to delimit code blocks.
+- [Data Analysis Basics (Pandas and Matplotlib)](https://happyin.space/python/data-analysis-basics/): Pandas provides tabular data structures (DataFrame, Series) for data manipulation and analysis.
+- [Built-in Data Structures](https://happyin.space/python/data-structures/): Python provides four primary collection types: lists (ordered, mutable), tuples (ordered, immutable), sets (unordered...
+- [Decorators](https://happyin.space/python/decorators/): A decorator is a function that wraps another function to extend its behavior without modifying its source code.
+- [Error Handling and Context Managers](https://happyin.space/python/error-handling/): Python's exception handling uses try/except blocks and follows the EAFP (Easier to Ask Forgiveness than Permission) p...
+- [FastAPI Authentication and Security](https://happyin.space/python/fastapi-auth-and-security/): FastAPI authentication typically uses JWT tokens stored in HTTP-only cookies, with bcrypt password hashing.
+- [FastAPI Caching and Background Tasks](https://happyin.space/python/fastapi-caching-and-tasks/): Caching with Redis reduces database load; background tasks offload long-running operations from the request-response ...
+- [FastAPI Database Layer (SQLAlchemy + Alembic)](https://happyin.space/python/fastapi-database-layer/): SQLAlchemy is the most popular Python ORM.
+- [FastAPI Deployment and Production](https://happyin.space/python/fastapi-deployment/): Production FastAPI deployments typically use Docker for containerization, Nginx as reverse proxy with SSL termination...
+- [FastAPI Fundamentals](https://happyin.space/python/fastapi-fundamentals/): FastAPI is a modern, high-performance Python web framework for building APIs, built on Starlette (ASGI) and Pydantic ...
+- [FastAPI Pydantic and Validation](https://happyin.space/python/fastapi-pydantic-validation/): Pydantic provides runtime data validation using Python type hints.
+- [File I/O and pathlib](https://happyin.space/python/file-io/): Python provides built-in support for reading/writing text and binary files, CSV and JSON handling, and both os.
+- [Functions](https://happyin.space/python/functions/): Functions are first-class objects in Python - they can be passed as arguments, returned from other functions, and sto...
+- [Iterators and Generators](https://happyin.space/python/iterators-and-generators/): Iterators implement the iteration protocol (__iter__/__next__), while generators provide a concise way to create iter...
+- [Magic Methods (Dunder Methods)](https://happyin.space/python/magic-methods/): Magic methods (double-underscore or "dunder" methods) let classes integrate with Python's built-in operations: len(),...
+- [Memory Management and CPython Internals](https://happyin.space/python/memory-and-internals/): CPython is the reference Python implementation - a stack-based virtual machine executing bytecode.
+- [OOP Advanced](https://happyin.space/python/oop-advanced/): Advanced OOP patterns in Python include Abstract Base Classes for defining interfaces, descriptors for attribute acce...
+- [OOP Fundamentals](https://happyin.space/python/oop-fundamentals/): Python's object-oriented programming uses classes to bundle data (attributes) and behavior (methods).
+- [Profiling and Performance Optimization](https://happyin.space/python/profiling-and-optimization/): Never optimize without measuring.
+- [Project Setup and Tooling](https://happyin.space/python/project-setup-and-tooling/): Python project setup involves choosing an IDE, managing dependencies with virtual environments, and following PEP 8 s...
+- [Recursion and Algorithm Basics](https://happyin.space/python/recursion-and-algorithms/): Recursion is when a function calls itself.
+- [Regular Expressions](https://happyin.space/python/regular-expressions/): The re module provides Perl-style regular expressions for pattern matching, searching, and text manipulation.
+- [Standard Library Essentials](https://happyin.space/python/standard-library/): Python's standard library provides powerful modules for common tasks.
+- [Strings and Text Processing](https://happyin.space/python/strings-and-text/): Python strings are immutable sequences of Unicode characters.
+- [Testing with Pytest](https://happyin.space/python/testing-with-pytest/): pytest is the de facto standard Python testing framework - more concise and powerful than built-in unittest.
+- [Type Hints and Static Typing](https://happyin.space/python/type-hints/): Type hints are optional annotations for documentation, IDE support, and static analysis (mypy).
+- [Variables, Types, and Operators](https://happyin.space/python/variables-types-operators/): Python is dynamically typed - variables don't need type declarations, and their type is determined at runtime.
+- [Python Web Frameworks Comparison](https://happyin.space/python/web-frameworks-comparison/): Python has three major web frameworks: Django (batteries-included, 2005), Flask (micro-framework, 2010), and FastAPI ...
 
 ## Rust
-- [Propriete et Emprunt](https://happyin.space/rust/ownership-and-borrowing/): Systeme de propriete Rust, regles d'emprunt, durees de vie, securite memoire sans ramasse-miettes
+- [Async/Await](https://happyin.space/rust/async-await/): Rust's async model provides zero-cost abstractions for I/O-bound concurrency.
+- [Borrowing and References](https://happyin.space/rust/borrowing-and-references/): Borrowing allows access to data without taking ownership.
+- [Closures](https://happyin.space/rust/closures/): Closures are anonymous functions that can capture variables from their enclosing scope.
+- [Collections](https://happyin.space/rust/collections/): Rust's standard library collections store data on the heap and grow dynamically.
+- [Concurrency](https://happyin.space/rust/concurrency/): Rust's type system prevents data races at compile time through the Send and Sync marker traits.
+- [Dynamic Dispatch](https://happyin.space/rust/dynamic-dispatch/): Dynamic dispatch uses trait objects (dyn Trait) to call methods through a vtable at runtime.
+- [Enums and Pattern Matching](https://happyin.space/rust/enums-and-pattern-matching/): Rust enums are algebraic data types - each variant can hold different data (unit, tuple, or struct-like).
+- [Error Handling](https://happyin.space/rust/error-handling/): Rust uses Result<T, E> and Option<T> for recoverable errors and absent values, with panic!
+- [Generics and Monomorphization](https://happyin.space/rust/generics-and-monomorphization/): Generics enable writing code that works with any type satisfying trait bounds.
+- [Interior Mutability](https://happyin.space/rust/interior-mutability/): Pattern allowing mutation of data behind shared references (&T).
+- [Iterators](https://happyin.space/rust/iterators/): Rust iterators are lazy, composable, and zero-cost.
+- [Lifetimes](https://happyin.space/rust/lifetimes/): Lifetimes are the compiler's way of tracking how long references remain valid.
+- [Macros](https://happyin.space/rust/macros/): Rust macros generate code at compile time.
+- [Modules and Visibility](https://happyin.space/rust/modules-and-visibility/): Rust's module system controls code organization and visibility.
+- [Ownership and Move Semantics](https://happyin.space/rust/ownership-and-move-semantics/): Rust's ownership system is its defining feature - a compile-time mechanism for memory safety without garbage collection.
+- [Rust GUI Frameworks](https://happyin.space/rust/rust-gui/): Landscape of GUI development in Rust: native frameworks, bindings to established toolkits, and web-based approaches.
+- [Rust Tooling and Ecosystem](https://happyin.space/rust/rust-tooling/): Rust ships with a unified toolchain: cargo (build/deps/test), clippy (lint), rustfmt (format), rustdoc (docs).
+- [Send and Sync Traits](https://happyin.space/rust/send-sync/): Marker traits that encode thread-safety guarantees at the type level.
+- [Sized Types and DSTs](https://happyin.space/rust/sized-and-dst/): Rust types divide into Sized (known size at compile time) and Dynamically Sized Types (DSTs, size known only at runti...
+- [Smart Pointers](https://happyin.space/rust/smart-pointers/): Smart pointers are data structures that act like pointers but have additional metadata and capabilities.
+- [Structs and Methods](https://happyin.space/rust/structs-and-methods/): Structs are Rust's primary way to create custom data types.
+- [Traits](https://happyin.space/rust/traits/): Traits define shared behavior - similar to interfaces in other languages but with default implementations, associated...
+
+## Security & Pentesting
+- [Active Directory Attacks](https://happyin.space/security/active-directory-attacks/): Active Directory attack techniques: LDAP enumeration, BloodHound attack path analysis, Kerberoasting, AS-REP Roasting...
+- [Anti-Fraud Behavioral Analysis](https://happyin.space/security/anti-fraud-behavioral-analysis/): Behavioral signals used by anti-fraud systems: mouse movement patterns, keystroke dynamics, session timing analysis, ...
+- [Authentication and Authorization](https://happyin.space/security/authentication-and-authorization/): Authentication (proving identity) and authorization (granting access) mechanisms: password policies, MFA, JWT tokens,...
+- [Browser and Device Fingerprinting](https://happyin.space/security/browser-and-device-fingerprinting/): Technical fingerprinting methods used by anti-fraud systems and tracking: canvas fingerprinting, WebGL, AudioContext,...
+- [Burp Suite and Web Pentesting Tools](https://happyin.space/security/burp-suite-and-web-pentesting/): Burp Suite as the primary web application security testing platform: proxy configuration, key components (Repeater, I...
+- [Compliance and Regulations](https://happyin.space/security/compliance-and-regulations/): Regulatory frameworks and compliance requirements: ISO 27001, NIST Cybersecurity Framework, PCI DSS, GDPR, policy hie...
+- [Cryptography and PKI](https://happyin.space/security/cryptography-and-pki/): Symmetric and asymmetric encryption, hashing algorithms, digital signatures, TLS/SSL protocol mechanics, and Public K...
+- [Database Security](https://happyin.space/security/database-security/): Database security for SQL and NoSQL: user privilege management, encryption at rest and in transit, auditing, backup s...
+- [Deepfake and Document Forensics](https://happyin.space/security/deepfake-and-document-forensics/): Detection and analysis of forged content: deepfake video/audio technology and detection methods, document forgery tec...
+- [Firewalls and IDS/IPS](https://happyin.space/security/firewall-and-ids-ips/): Network and application-layer security controls: iptables/ufw for Linux firewalls, Windows Defender Firewall, Snort a...
+- [Information Security Fundamentals](https://happyin.space/security/information-security-fundamentals/): Core concepts of information security: the CIA triad, threat modeling, risk management, and security architecture pat...
+- [Linux OS Fundamentals for Security](https://happyin.space/security/linux-os-fundamentals/): Linux operating system internals relevant to security: filesystem hierarchy, user model, kernel vs user space, boot p...
+- [Linux System Hardening](https://happyin.space/security/linux-system-hardening/): Linux security hardening: user management, file permissions, SSH configuration, fail2ban, firewall setup, sysctl kern...
+- [Network Security and Protocols](https://happyin.space/security/network-security-and-protocols/): Network fundamentals from a security perspective: OSI model, TCP/IP stack, DNS mechanics, DHCP, VPN technologies (Ope...
+- [Network Traffic Analysis](https://happyin.space/security/network-traffic-analysis/): Packet capture and analysis with tcpdump and Wireshark, port scanning with nmap, and network diagnostic tools.
+- [OSINT and Reconnaissance](https://happyin.space/security/osint-and-reconnaissance/): Open Source Intelligence techniques: Shodan/Censys infrastructure search, Google Dorking, metadata extraction (EXIF, ...
+- [Penetration Testing Methodology](https://happyin.space/security/penetration-testing-methodology/): End-to-end penetration testing workflow: reconnaissance (passive and active), scanning, exploitation with Metasploit,...
+- [Privilege Escalation Techniques](https://happyin.space/security/privilege-escalation-techniques/): Post-exploitation privilege escalation on Linux and Windows systems: SUID binaries, sudo misconfigurations, kernel ex...
+- [Python for Security](https://happyin.space/security/python-for-security/): Python scripting for security professionals: socket programming for port scanning and banner grabbing, log analysis w...
+- [Secure Backend Development](https://happyin.space/security/secure-backend-development/): Security patterns for backend development with Node.
+- [Security Solutions Architecture](https://happyin.space/security/security-solutions-architecture/): Enterprise security solution categories and implementation: EDR (Endpoint Detection and Response), DLP (Data Loss Pre...
+- [SIEM and Incident Response](https://happyin.space/security/siem-and-incident-response/): Security Information and Event Management: log collection, correlation rules, alert tuning.
+- [Social Engineering and Phishing](https://happyin.space/security/social-engineering-and-phishing/): Human-targeted attack vectors: phishing (spear, whaling, vishing), pretexting, email spoofing detection (SPF/DKIM/DMA...
+- [SQL Injection Deep Dive](https://happyin.space/security/sql-injection-deep-dive/): Comprehensive coverage of SQL injection: in-band (UNION-based), blind (boolean and time-based), out-of-band technique...
+- [Threat Modeling](https://happyin.space/security/threat-modeling/): Systematic process for identifying, evaluating, and documenting potential threats to an organization's information as...
+- [TLS Fingerprinting and Network Identifiers](https://happyin.space/security/tls-fingerprinting-and-network-identifiers/): Network-level identification techniques: IP address classification and reputation, geolocation methods and spoofing d...
+- [Vulnerability Scanning and Management](https://happyin.space/security/vulnerability-scanning-and-management/): Vulnerability lifecycle management: scanning with Nessus and OpenVAS, CVE/CVSS scoring interpretation, authenticated ...
+- [Web Application Security Fundamentals](https://happyin.space/security/web-application-security-fundamentals/): Core web application vulnerabilities and defenses: XSS (reflected, stored, DOM-based), CSRF, SSRF, XXE, path traversa...
+- [Web Server Security](https://happyin.space/security/web-server-security/): Secure configuration of web servers: Apache and Nginx virtual hosts, TLS/SSL setup with Let's Encrypt, reverse proxy ...
+- [Windows Security and PowerShell](https://happyin.space/security/windows-security-and-powershell/): Windows security internals: credential storage (SAM, LSASS), PowerShell for security operations, Windows Event Log cr...
+
+## SEO & Marketing
+- [Behavioral Factors and CTR Optimization](https://happyin.space/seo-marketing/behavioral-factors-ctr/): Behavioral factors analysis, snippet optimization for CTR, and Schema.
+- [Commercial Ranking Factors and E-E-A-T](https://happyin.space/seo-marketing/commercial-ranking-factors/): Commercial factors assess service quality as seen by search engines.
+- [Core Web Vitals and Performance](https://happyin.space/seo-marketing/core-web-vitals-performance/): Page experience signals including Core Web Vitals metrics, mobile-first indexation, SPA/AJAX rendering solutions, and...
+- [Search Engine Filters and Penalties](https://happyin.space/seo-marketing/filters-and-penalties/): Complete reference of Yandex and Google filters, their triggers, symptoms, diagnostics, and recovery procedures.
+- [Internal Linking](https://happyin.space/seo-marketing/internal-linking/): System of internal link connections between pages.
+- [Keyword Research and Semantic Core](https://happyin.space/seo-marketing/keyword-research-semantic-core/): Complete process of collecting, cleaning, clustering, and assigning keyword groups to pages.
+- [Link Building Strategy](https://happyin.space/seo-marketing/link-building-strategy/): Link types, anchor composition, strategies by site age, and search engine differences.
+- [Link Quality Assessment](https://happyin.space/seo-marketing/link-quality-assessment/): Donor quality evaluation criteria, outreach methodology, PBN (Private Blog Network) usage, drop domain strategies, an...
+- [LLM Discoverability and AI Search Optimization](https://happyin.space/seo-marketing/llm-discoverability-ai-search/): Optimizing web content to appear in AI-generated answers, ChatGPT Search, Perplexity, Google AI Overviews, and Bing C...
+- [Niche Analysis and Content Audit](https://happyin.space/seo-marketing/niche-content-audit/): Process of identifying key content presentation features in a niche.
+- [Ranking Algorithms History](https://happyin.space/seo-marketing/ranking-algorithms-history/): Timeline of major search engine algorithm updates for both Yandex and Google, including the evolution from heuristic ...
+- [Regional SEO Promotion](https://happyin.space/seo-marketing/regional-seo/): Multi-region promotion strategies, geo-targeting methods, and search engine differences for regional ranking.
+- [robots.txt, Sitemaps, and Indexation](https://happyin.space/seo-marketing/robots-txt-sitemaps-indexation/): Detailed coverage of robots.
+- [Search Engine Mechanics](https://happyin.space/seo-marketing/search-engine-mechanics/): How search engines discover, process, and rank web documents.
+- [SEO Analytics and Reporting](https://happyin.space/seo-marketing/seo-analytics-reporting/): Project control system: KPI metrics, monthly reporting structure, meta-scanner monitoring, hypothesis building for tr...
+- [SEO Client Management and Business](https://happyin.space/seo-marketing/seo-client-management/): Client communication protocols, pricing models, work scope definition, project management, legal documents, and caree...
+- [SEO Strategy by Site Type](https://happyin.space/seo-marketing/seo-strategy-by-site-type/): Differentiated SEO approaches for e-commerce, service sites, informational sites, and aggregators.
+- [SEO Tools and Workflow](https://happyin.space/seo-marketing/seo-tools-workflow/): Complete tool stack for SEO work, CMS integration (WordPress, Tilda), browser extensions, AI workflow integration, an...
+- [Site Structure and URL Architecture](https://happyin.space/seo-marketing/site-structure-urls/): Site hierarchy principles, URL construction rules, nesting levels, and structure templates by site type.
+- [Technical Content SEO Strategy](https://happyin.space/seo-marketing/technical-content-seo-strategy/): Content architecture and SEO approach for technical knowledge bases, developer documentation, and programming tutoria...
+- [Technical SEO Audit](https://happyin.space/seo-marketing/technical-seo-audit/): Comprehensive technical audit framework covering prioritization, duplicate pages, server response codes, hosting requ...
+- [Text Optimization](https://happyin.space/seo-marketing/text-optimization/): Document text zones, meta tag rules, text relevance scoring (TF-IDF, BM25), text analyzer workflow, and content brief...
+
+## SQL & Databases
+- [Aggregate Functions and GROUP BY](https://happyin.space/sql-databases/aggregate-functions-group-by/): Aggregate functions collapse multiple rows into single summary values.
+- [Backup and Recovery](https://happyin.space/sql-databases/backup-and-recovery/): PostgreSQL offers multiple backup strategies from logical dumps to continuous WAL archiving.
+- [B-Tree and Index Internals](https://happyin.space/sql-databases/btree-and-index-internals/): B+Trees are the backbone of database indexing in all major RDBMS.
+- [Caching - Redis and Memcached](https://happyin.space/sql-databases/caching-redis-memcached/): Caching layers between application and database dramatically reduce query load.
+- [Concurrency and Locking](https://happyin.space/sql-databases/concurrency-and-locking/): Database locking controls concurrent access to shared data.
+- [Connection Pooling](https://happyin.space/sql-databases/connection-pooling/): Each database connection is expensive: TCP handshake, TLS negotiation, authentication, and backend process spawn (Pos...
+- [Data Types and NULL Handling](https://happyin.space/sql-databases/data-types-and-nulls/): Choosing correct data types affects storage, performance, and data integrity.
+- [Database Cursors](https://happyin.space/sql-databases/database-cursors/): A cursor is a pointer to a result set that enables row-by-row or batch processing instead of fetching all results at ...
+- [Database Security](https://happyin.space/sql-databases/database-security/): Database security spans multiple layers: network access, authentication, authorization, encryption, and application-l...
+- [Database Storage Internals](https://happyin.space/sql-databases/database-storage-internals/): Understanding how databases store and retrieve data on disk is fundamental to performance optimization.
+- [DDL and Schema Management](https://happyin.space/sql-databases/ddl-schema-management/): Data Definition Language (DDL) creates, modifies, and drops database objects.
+- [Distributed SQL Databases](https://happyin.space/sql-databases/distributed-databases/): When single-server PostgreSQL reaches its limits, distributed databases provide horizontal scaling.
+- [Distributed Transactions and Patterns](https://happyin.space/sql-databases/distributed-transactions/): When data spans multiple databases or services, maintaining consistency requires patterns beyond single-database ACID.
+- [DML - INSERT, UPDATE, DELETE](https://happyin.space/sql-databases/dml-insert-update-delete/): Data Manipulation Language (DML) statements modify table data.
+- [Index Strategies](https://happyin.space/sql-databases/index-strategies/): Indexes accelerate reads but slow writes.
+- [Infrastructure as Code for Databases](https://happyin.space/sql-databases/infrastructure-as-code/): Terraform provisions infrastructure (VMs, managed databases, networks), while Ansible configures software (PostgreSQL...
+- [JOINs and Set Operations](https://happyin.space/sql-databases/joins-and-set-operations/): JOINs combine rows from two or more tables based on related columns.
+- [MySQL InnoDB and Storage Engines](https://happyin.space/sql-databases/mysql-innodb-engine/): MySQL supports pluggable storage engines.
+- [Partitioning and Sharding](https://happyin.space/sql-databases/partitioning-and-sharding/): Partitioning splits a large table into smaller physical segments on the same server.
+- [PostgreSQL Configuration and Tuning](https://happyin.space/sql-databases/postgresql-configuration-tuning/): PostgreSQL performance depends heavily on proper configuration.
+- [PostgreSQL Data Loading and FDW](https://happyin.space/sql-databases/postgresql-data-loading/): PostgreSQL provides multiple methods for loading data, from simple COPY commands to Foreign Data Wrappers that make e...
+- [PostgreSQL on Docker and Kubernetes](https://happyin.space/sql-databases/postgresql-docker-kubernetes/): Running PostgreSQL in containers requires careful handling of persistent storage, shared memory, and stateful workloa...
+- [PostgreSQL HA with Patroni](https://happyin.space/sql-databases/postgresql-ha-patroni/): Patroni is a Python daemon running alongside PostgreSQL that manages automatic failover, leader election, and cluster...
+- [PostgreSQL MVCC and VACUUM](https://happyin.space/sql-databases/postgresql-mvcc-vacuum/): PostgreSQL uses Multi-Version Concurrency Control (MVCC) where readers never block writers and vice versa.
+- [PostgreSQL WAL and Durability](https://happyin.space/sql-databases/postgresql-wal-durability/): The Write-Ahead Log (WAL) is the foundation of crash recovery and replication in PostgreSQL.
+- [Query Optimization and EXPLAIN](https://happyin.space/sql-databases/query-optimization-explain/): EXPLAIN reveals how the database plans to execute a query.
+- [Replication Fundamentals](https://happyin.space/sql-databases/replication-fundamentals/): Database replication copies data from a primary to one or more replicas for read scaling, high availability, and geog...
+- [Schema Design and Normalization](https://happyin.space/sql-databases/schema-design-normalization/): Good schema design balances data integrity (normalization) with read performance (denormalization).
+- [SELECT Fundamentals](https://happyin.space/sql-databases/select-fundamentals/): The SELECT statement is the primary tool for reading data from relational databases.
+- [Subqueries and CTEs](https://happyin.space/sql-databases/subqueries-and-ctes/): Subqueries are queries nested inside other queries.
+- [Transactions and ACID Properties](https://happyin.space/sql-databases/transactions-and-acid/): Transactions group multiple queries into an atomic unit of work.
+- [Window Functions](https://happyin.space/sql-databases/window-functions/): Window functions perform calculations across a set of rows related to the current row without collapsing rows like GR...
+
+## Testing & QA
+- [Allure Reporting](https://happyin.space/testing-qa/allure-reporting/): Allure generates rich HTML test reports with steps, attachments, history, and trends.
+- [API Testing](https://happyin.space/testing-qa/api-testing-requests/): API testing validates backend services via HTTP (REST) or gRPC.
+- [CI/CD for Test Automation](https://happyin.space/testing-qa/ci-cd-test-automation/): Tests running only locally are useless for the team.
+- [Database Testing from Test Code](https://happyin.space/testing-qa/database-testing/): Querying databases directly from tests: verifying data integrity after API calls, setting up preconditions, and using...
+- [Docker for Test Environments](https://happyin.space/testing-qa/docker-test-environments/): Running services under test in Docker containers: compose files for local stacks, testcontainers for programmatic lif...
+- [FastAPI Test Services](https://happyin.space/testing-qa/fastapi-test-services/): Building testable FastAPI microservices and writing tests against them.
+- [gRPC Testing with Python](https://happyin.space/testing-qa/grpc-testing/): Testing gRPC services: protobuf compilation, client generation, interceptors for logging, Allure integration, and moc...
+- [Kafka and Async Service Testing](https://happyin.space/testing-qa/kafka-async-testing/): Testing asynchronous microservices communicating via Apache Kafka.
+- [Mobile Testing](https://happyin.space/testing-qa/mobile-testing/): Android UI testing uses Kaspresso (Kotlin DSL over Espresso + UI Automator).
+- [OAuth and Authentication Testing](https://happyin.space/testing-qa/oauth-testing/): Testing APIs that require OAuth 2.
+- [Page Object Model](https://happyin.space/testing-qa/page-object-model/): Page Object Model (POM) encapsulates each web page as a class: locators as attributes, actions as methods.
+- [Playwright Testing](https://happyin.space/testing-qa/playwright-testing/): Playwright is a modern browser automation framework by Microsoft.
+- [Pydantic for Test Validation](https://happyin.space/testing-qa/pydantic-test-models/): Using Pydantic models to validate API responses, generate test data, and enforce contracts.
+- [Pytest Fixtures - Advanced Patterns](https://happyin.space/testing-qa/pytest-fixtures-advanced/): Beyond basic fixtures: scoping strategies, factory patterns, fixture composition, and conftest hierarchy for large te...
+- [Pytest Fundamentals](https://happyin.space/testing-qa/pytest-fundamentals/): Pytest is Python's most powerful test framework.
+- [Selene - Selenide for Python](https://happyin.space/testing-qa/selene-python/): Selene is a Python port of Selenide (Java) - a concise, auto-waiting wrapper over Selenium WebDriver.
+- [Selenium WebDriver](https://happyin.space/testing-qa/selenium-webdriver/): Selenium automates browsers via the W3C WebDriver protocol.
+- [SOAP Service Testing with Python](https://happyin.space/testing-qa/soap-testing/): Testing SOAP/XML web services using requests (raw XML) and zeep (WSDL-aware client).
+- [Test Architecture](https://happyin.space/testing-qa/test-architecture/): Test automation projects are software projects - they need the same engineering practices: version control, code revi...
+- [Test Data Management](https://happyin.space/testing-qa/test-data-management/): Strategies for creating, managing, and cleaning up test data across environments.
+- [Test Logging and Secret Masking](https://happyin.space/testing-qa/test-logging-secrets/): Structured logging in test frameworks, masking sensitive data in logs and reports, and DevTools techniques for test d...
+- [Test Parallelization](https://happyin.space/testing-qa/test-parallelization/): Running tests in parallel with pytest-xdist.
 
 ## Web Frontend
-- [Etat et Hooks React](https://happyin.space/web-frontend/react-state-and-hooks/): API React Hooks, patrons de gestion d'etat, cycle de vie useEffect, Hooks personnalises
+- [CSS Animation and Transforms](https://happyin.space/web-frontend/css-animation-and-transforms/): CSS animations are GPU-accelerated, declarative, and don't block the main thread.
+- [CSS Box Model and Layout](https://happyin.space/web-frontend/css-box-model-and-layout/): Every HTML element is a rectangular box with four layers.
+- [CSS Flexbox](https://happyin.space/web-frontend/css-flexbox/): Flexbox is a 1-dimensional layout system for distributing space and aligning items along a single axis (row or column).
+- [CSS Grid](https://happyin.space/web-frontend/css-grid/): Grid is a 2-dimensional layout system for rows AND columns simultaneously.
+- [CSS Responsive Design](https://happyin.space/web-frontend/css-responsive-design/): One codebase adapts to all screen sizes.
+- [CSS Methodology and SASS](https://happyin.space/web-frontend/css-sass-and-methodology/): Without methodology, CSS becomes unmaintainable: fragile specificity chains, inconsistent naming, unpredictable casca...
+- [CSS Selectors and Cascade](https://happyin.space/web-frontend/css-selectors-and-cascade/): CSS controls presentation of HTML.
+- [DOM-Free Text Layout and Measurement](https://happyin.space/web-frontend/dom-free-text-layout/): Measuring and laying out text without triggering browser DOM reflow.
+- [Figma Design Workflow](https://happyin.space/web-frontend/figma-design-workflow/): Typography, color theory, effects, prototyping, and responsive design workflow in Figma.
+- [Figma Fundamentals](https://happyin.space/web-frontend/figma-fundamentals/): Figma is a collaborative design tool for UI/UX.
+- [Figma Layout and Components](https://happyin.space/web-frontend/figma-layout-and-components/): AutoLayout (Figma's Flexbox equivalent), constraints for positioning, and components for reusable design elements.
+- [Frontend Build Systems](https://happyin.space/web-frontend/frontend-build-systems/): Bundlers combine modules into optimized output.
+- [Git and GitHub](https://happyin.space/web-frontend/git-and-github/): Git is a distributed version control system.
+- [HTML Fundamentals](https://happyin.space/web-frontend/html-fundamentals/): HTML (HyperText Markup Language) defines the structure and meaning of web content.
+- [HTML Tables and Forms](https://happyin.space/web-frontend/html-tables-and-forms/): Tables display tabular data; forms collect user input.
+- [JavaScript Arrays](https://happyin.space/web-frontend/js-arrays/): Arrays are ordered collections with powerful built-in methods for searching, transforming, and reducing data.
+- [JavaScript Async and Fetch API](https://happyin.space/web-frontend/js-async-and-fetch/): JavaScript is single-threaded.
+- [JavaScript Control Flow](https://happyin.space/web-frontend/js-control-flow/): Conditional statements, comparison operators, logical operators, and loops for controlling program execution.
+- [JavaScript DOM and Events](https://happyin.space/web-frontend/js-dom-and-events/): The DOM (Document Object Model) is a tree representation of HTML.
+- [JavaScript Functions](https://happyin.space/web-frontend/js-functions/): Functions are first-class citizens in JavaScript - they can be stored in variables, passed as arguments, and returned...
+- [JavaScript Objects and Data](https://happyin.space/web-frontend/js-objects-and-data/): Objects are key-value collections.
+- [JavaScript Scope, Closures, and this](https://happyin.space/web-frontend/js-scope-closures-this/): Scope determines variable accessibility.
+- [JavaScript Strings and Numbers](https://happyin.space/web-frontend/js-strings-and-numbers/): String and Number methods, Math object, and regular expression basics.
+- [JavaScript Variables and Types](https://happyin.space/web-frontend/js-variables-and-types/): JavaScript is dynamic and weakly-typed.
+- [npm and Task Runners](https://happyin.space/web-frontend/npm-and-task-runners/): Node.
+- [React Components and JSX](https://happyin.space/web-frontend/react-components-and-jsx/): React builds UIs from composable components.
+- [React Rendering Internals](https://happyin.space/web-frontend/react-rendering-internals/): Understanding how React renders enables writing performant applications.
+- [React State and Hooks](https://happyin.space/web-frontend/react-state-and-hooks/): Hooks let functional components manage state, side effects, and lifecycle without classes.
+- [React Styling Approaches](https://happyin.space/web-frontend/react-styling-approaches/): Two dominant patterns for styling React: CSS Modules (scoped traditional CSS) and Tailwind CSS (utility-first).
+- [TypeScript Advanced Types](https://happyin.space/web-frontend/typescript-advanced/): TypeScript's type system is a programming language itself - types can be computed, transformed, and composed using ge...
+- [TypeScript Fundamentals](https://happyin.space/web-frontend/typescript-fundamentals/): TypeScript is a typed superset of JavaScript that compiles to plain JS.
 
-## SEO et Marketing
-- [Mecanismes des Moteurs de Recherche](https://happyin.space/seo-marketing/search-engine-mechanics/): Comment les moteurs explorent, indexent et classent le contenu, PageRank, recherche semantique
+## Natural Language & Writing
+- [AI Text Detection](https://happyin.space/writing/ai-text-detection/): Methods and research for identifying AI-generated text.
+- [Editing Checklist for Text Quality](https://happyin.space/writing/editing-checklist/): Practical checklist for reviewing text before publication.
+- [Natural Writing Style](https://happyin.space/writing/natural-writing-style/): What makes text read as human-written, and techniques for achieving natural voice in technical and non-technical writ...
+- [Overused AI Words and Phrases](https://happyin.space/writing/overused-words-phrases/): Comprehensive reference of words and phrases that signal AI-generated text.
+- [Publishing Platforms for Technical Content](https://happyin.space/writing/publishing-platforms/): Where to publish technical articles, with audience profiles, formatting requirements, and cross-posting strategy.
+- [SEO for Technical Articles](https://happyin.space/writing/seo-for-articles/): How to optimize technical articles for search without degrading quality.
+- [Structural Anti-Patterns in AI Text](https://happyin.space/writing/structural-antipatterns/): AI-generated text has a recognizable "shape" independent of vocabulary.
+- [Technical Article Structure](https://happyin.space/writing/technical-article-structure/): How to structure technical articles that get read, shared, and bookmarked.
 
-## iOS et Developpement Mobile
-- [Fondamentaux SwiftUI](https://happyin.space/ios-mobile/swiftui-basics-and-first-app/): Framework d'interface declaratif SwiftUI, vues, modificateurs, gestion d'etat, navigation
+## Optional
+- [Contributing Guide](https://happyin.space/contributing/): How to contribute articles, style guide, quality standards
+- [For AI Agents](https://happyin.space/for-llm-agents/): Quick-start guide for LLM agent contributors
