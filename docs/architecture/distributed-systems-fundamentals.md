@@ -128,4 +128,4 @@ Every fallacy becomes a bug in production.
 - [[queueing-theory]] - Why systems degrade nonlinearly under load
 - [[quality-attributes-reliability]] - Availability, fault tolerance, recoverability
 - [[microservices-communication]] - Saga, CQRS, event sourcing patterns
-- [[cap-theorem]] in [[sql-databases]] topic for ACID vs BASE
+- [[transactions-and-acid]] - ACID vs BASE trade-offs in distributed databases

@@ -208,4 +208,4 @@ scores = cross_val_score(pipe, X, y, cv=5)  # correct: no leakage
 - [[feature-engineering]]
 - [[unsupervised-learning]]
 - [[neural-networks]]
-- [[pca-and-classical-ml]]
+- [[knn-and-classical-ml]]

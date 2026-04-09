@@ -1,3 +1,8 @@
+---
+title: "Swift Generics"
+description: "Type-safe reusable functions and types with generic parameters, constraints, and associated types"
+---
+
 # Swift Generics
 
 Generics enable writing flexible, reusable functions and types that work with any data type while maintaining type safety. They eliminate the need to write identical logic for different types.

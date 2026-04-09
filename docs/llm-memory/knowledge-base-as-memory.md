@@ -46,7 +46,7 @@ wiki/
 ```
 
 - Encyclopedia-style articles for concepts and entities
-- Summaries, comparisons, cross-references via [[wiki-links]]
+- Summaries, comparisons, cross-references via `[[wiki-links]]`
 - `index.md` - the agent's entry point, updated on every ingest
 - `log.md` - append-only record of all operations (creates audit trail)
 
@@ -117,12 +117,12 @@ llm_checks = [
 # Knowledge Base Index
 
 ## Architecture (12 articles)
-- [microservices-patterns](wiki/microservices-patterns.md) - saga, CQRS, event sourcing
-- [api-design](wiki/api-design.md) - REST vs GraphQL, versioning, pagination
+- microservices-patterns - saga, CQRS, event sourcing
+- api-design - REST vs GraphQL, versioning, pagination
 
 ## Infrastructure (8 articles)
-- [kubernetes-ops](wiki/kubernetes-ops.md) - deployment strategies, HPA, resource limits
-- [observability](wiki/observability.md) - metrics, tracing, alerting stack
+- kubernetes-ops - deployment strategies, HPA, resource limits
+- observability - metrics, tracing, alerting stack
 
 Last updated: 2026-04-08 | Total: 87 articles
 ```

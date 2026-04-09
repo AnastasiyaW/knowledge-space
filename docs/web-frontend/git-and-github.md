@@ -167,4 +167,4 @@ Types: `feat:`, `fix:`, `refactor:`, `style:`, `docs:`, `test:`, `chore:`
 
 - [[npm-and-task-runners]] - .gitignore for node_modules
 - [[frontend-build-systems]] - CI/CD build triggers
-- [[linux-cli]] - Terminal commands for git workflows
+- [[terminal-basics]] - Terminal commands for git workflows

@@ -5,7 +5,7 @@ type: MOC
 
 # LLM Memory & Knowledge Persistence
 
-Patterns and architectures for organizing persistent knowledge when working with LLM agents. Not about building RAG systems (see [[llm-agents]]) - about how agents remember, forget, and manage knowledge across sessions.
+Patterns and architectures for organizing persistent knowledge when working with LLM agents. Not about building RAG systems (see [[agent-fundamentals]]) - about how agents remember, forget, and manage knowledge across sessions.
 
 ## Memory Architecture
 - [[memory-architectures]] - Flat files, hierarchical graphs, vector stores, knowledge graphs, hybrid approaches

@@ -1,3 +1,8 @@
+---
+title: "C++20 Ranges and Views"
+description: "Composable lazy pipelines for sequence processing with the pipe operator and range adaptors"
+---
+
 # C++20 Ranges and Views
 
 C++20 ranges provide a composable, lazy, pipeline-oriented way to work with sequences. They replace verbose iterator-pair patterns with cleaner syntax and often yield better performance through lazy evaluation.

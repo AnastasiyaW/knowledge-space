@@ -41,6 +41,11 @@ def _make_replacer(current_page_path: str):
         if any(c in slug for c in ("'", '"', ",", "=", "&", "|", "(", ")", ":", "+")):
             return match.group(0)
 
+        # Support [[domain/slug]] syntax - extract the slug part
+        # e.g. [[data-engineering/apache-kafka]] -> apache-kafka
+        if "/" in slug:
+            slug = slug.rsplit("/", 1)[-1]
+
         if slug in _slug_map:
             target_path = _slug_map[slug]
             # Compute relative path from current page directory

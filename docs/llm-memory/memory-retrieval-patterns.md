@@ -35,11 +35,11 @@ The simplest retrieval: agent reads an index, picks relevant files, reads them.
 # Memory Index (agent reads this first)
 
 ## User Preferences
-- [db-preference](mem/db-preference.md) - PostgreSQL, pgvector, reasons
-- [editor](mem/editor.md) - Neovim, plugins, keybindings
+- db-preference - PostgreSQL, pgvector, reasons
+- editor - Neovim, plugins, keybindings
 
 ## Current Projects
-- [api-rewrite](mem/api-rewrite.md) - GraphQL migration, Q2 deadline
+- api-rewrite - GraphQL migration, Q2 deadline
 ```
 
 **How it works:** The index fits in context (~500 tokens for 100 entries). The agent pattern-matches the user's query against index entries and reads the relevant files. No embeddings, no search infrastructure.

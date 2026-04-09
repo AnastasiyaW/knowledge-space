@@ -87,4 +87,4 @@ Historical curiosity: Vyacheslav Egorov demonstrated that adding a large comment
 
 - [[event-loop-and-architecture]] - V8's role in the Node.js runtime
 - [[performance-optimization]] - practical benchmarking and optimization patterns
-- [[factory-and-builder]] - object creation patterns that maintain consistent shapes
+- [[design-patterns-gof]] - object creation patterns that maintain consistent shapes

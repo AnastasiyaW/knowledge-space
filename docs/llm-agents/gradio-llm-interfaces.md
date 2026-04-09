@@ -1,3 +1,8 @@
+---
+title: "Gradio for LLM Interfaces"
+description: "Rapid prototyping of chat UIs with streaming, markdown rendering, and multi-model comparison dashboards"
+---
+
 # Gradio for LLM Interfaces
 
 Gradio provides rapid prototyping of web UIs for LLM applications. From simple chat interfaces to multi-model comparison dashboards, it handles streaming, markdown rendering, and model switching with minimal code.

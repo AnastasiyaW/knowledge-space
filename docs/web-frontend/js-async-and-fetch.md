@@ -185,4 +185,4 @@ await fetch("/upload", {
 - [[js-dom-and-events]] - DOM events are async
 - [[react-state-and-hooks]] - useEffect for data fetching
 - [[typescript-fundamentals]] - Typing async functions
-- [[nodejs]] - Server-side async patterns
+- [[event-loop-and-architecture]] - Server-side async patterns

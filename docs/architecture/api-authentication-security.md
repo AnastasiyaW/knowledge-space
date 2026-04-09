@@ -138,4 +138,4 @@ One-way transformation producing fixed-length output. Any single-character chang
 
 - [[http-rest-fundamentals]] - HTTP protocol basics, CORS
 - [[security-architecture]] - Architect's security workflow
-- [[sso-identity]] - SSO patterns, SAML, OpenID Connect
+- [[authentication-and-authorization]] - SSO patterns, SAML, OpenID Connect

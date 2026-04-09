@@ -1,3 +1,8 @@
+---
+title: "C++20 Concepts and Constraints"
+description: "Named requirements on template parameters replacing SFINAE with readable, compiler-enforced constraints"
+---
+
 # C++20 Concepts and Constraints
 
 Concepts are named sets of requirements on template parameters. They replace SFINAE and `enable_if` hacks with readable, compiler-enforced constraints that produce clear error messages.

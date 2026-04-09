@@ -33,7 +33,7 @@ Layers should interact through safe interfaces (contracts):
 - **Unidirectional:** layer A calls layer B, but not vice versa
 - **Bidirectional:** both layers call each other (use events/callbacks to avoid circular deps)
 
-Structural patterns for isolation: [[adapter-facade-proxy]] (convert interfaces), Proxy (control access), Facade (simplify subsystem), Composite (uniform tree traversal).
+Structural patterns for isolation: [[design-patterns-gof]] (convert interfaces), Proxy (control access), Facade (simplify subsystem), Composite (uniform tree traversal).
 
 ### Platform Abstraction
 

@@ -16,7 +16,7 @@ Inherits [[Step1X-Edit]] architecture with custom modifications:
 
 | Component | Class | Notes |
 |-----------|-------|-------|
-| Text Encoder | Qwen2_5_VLForConditionalGeneration | Standard [[Qwen 2.5 VL]] |
+| Text Encoder | Qwen2_5_VLForConditionalGeneration | Standard **Qwen 2.5 VL** |
 | Transformer | RealRestorerTransformer2DModel | Modified Step1X-Edit transformer |
 | VAE | RealRestorerAutoencoderKL | Custom autoencoder |
 | Scheduler | RealRestorerFlowMatchScheduler | [[Flow Matching]] |

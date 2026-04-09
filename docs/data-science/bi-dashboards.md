@@ -122,4 +122,4 @@ Source (OLTP) -> ETL/ELT -> Data Warehouse (OLAP) -> Semantic Layer -> BI Tool -
 - [[data-visualization]] - Python plotting for analysis
 - [[hypothesis-testing]] - A/B testing on dashboard metrics
 - [[ds-workflow]] - dashboards in project lifecycle
-- [[sql-fundamentals]] - SQL for analytics queries
+- [[select-fundamentals]] - SQL for analytics queries

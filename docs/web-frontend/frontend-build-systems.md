@@ -178,4 +178,4 @@ Don't ship to production (exposes source). Upload to error tracking (Sentry) ins
 - [[git-and-github]] - CI/CD triggers builds
 - [[react-rendering-internals]] - Code splitting with React.lazy
 - [[typescript-fundamentals]] - TypeScript compilation
-- [[architecture]] - Microfrontends with Module Federation
+- [[architectural-styles]] - Microfrontends with Module Federation

@@ -141,7 +141,7 @@ Public Wan-5B vs internal model:
 
 ## Relation to Other Models
 
-- Built on [[Wan2.2]] (Alibaba video generation model) — same VAE, text encoder, DiT architecture
+- Built on **Wan2.2** (Alibaba video generation model) — same VAE, text encoder, DiT architecture
 - Uses DiffSynth-Studio framework (same as [[Step1X-Edit|Qwen-Image-Edit]])
 - Audio approach similar to AniPortrait, DreamTalk but with dual encoder (Whisper + Wav2Vec2)
 

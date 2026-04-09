@@ -1,3 +1,8 @@
+---
+title: "Swift Collections Beyond Arrays"
+description: "Sets and Dictionaries in Swift with performance characteristics, set operations, and access patterns"
+---
+
 # Swift Collections Beyond Arrays
 
 Arrays are the most common collection, but Swift provides Sets and Dictionaries for different access patterns. Choosing the right collection type directly impacts performance and correctness.

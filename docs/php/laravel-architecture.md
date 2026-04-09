@@ -161,7 +161,6 @@ auth()->attempt($creds);
 
 - [[laravel-routing]] - URL to controller mapping
 - [[laravel-middleware]] - request/response pipeline
-- [[composer-and-autoloading]] - dependency management
 - https://laravel.com/docs/11.x/structure
 - https://laravel.com/docs/11.x/container
 - https://laravel.com/docs/11.x/artisan

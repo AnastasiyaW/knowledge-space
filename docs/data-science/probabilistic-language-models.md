@@ -1,3 +1,8 @@
+---
+title: "Probabilistic Language Models"
+description: "N-gram models, smoothing techniques, and perplexity evaluation for text generation and NLP foundations"
+---
+
 # Probabilistic Language Models
 
 Statistical models that assign probabilities to sequences of words. Foundation for text generation, spelling correction, speech recognition, and cipher breaking. Understanding n-gram models is prerequisite for appreciating why transformers were transformative.

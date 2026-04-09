@@ -1,3 +1,8 @@
+---
+title: "Swift Phantom Types"
+description: "Compile-time-only type parameters for enforcing state machines, unit safety, and domain constraints"
+---
+
 # Swift Phantom Types
 
 Phantom types use generic type parameters that exist only at compile time - they appear in the type signature but are never stored as values. This enforces state machine transitions, unit safety, and domain constraints at compile time.

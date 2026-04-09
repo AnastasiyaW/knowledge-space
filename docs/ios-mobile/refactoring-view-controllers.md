@@ -1,3 +1,8 @@
+---
+title: "Refactoring Large View Controllers"
+description: "Systematic decomposition of massive view controllers into testable components using extraction patterns"
+---
+
 # Refactoring Large View Controllers
 
 Systematic techniques for decomposing massive view controllers (1000+ lines) into testable, maintainable components. Applies to both UIKit and hybrid UIKit/SwiftUI codebases.

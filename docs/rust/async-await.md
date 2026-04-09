@@ -79,4 +79,4 @@ while let Some(value) = stream.next().await {
 
 - [[concurrency]] - thread-based concurrency, Send/Sync traits
 - [[error-handling]] - async error propagation with `?`
-- [[rust-ecosystem]] - tokio, reqwest, and async ecosystem crates
+- [[rust-tooling]] - tokio, reqwest, and async ecosystem crates

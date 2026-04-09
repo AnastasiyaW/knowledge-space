@@ -256,6 +256,6 @@ results = [y for x in data if (y := expensive(x)) > threshold]
 
 ## See Also
 
-- [[standard-library-collections]] - Counter, defaultdict, ChainMap, OrderedDict
+- [[standard-library]] - Counter, defaultdict, ChainMap, OrderedDict
 - [[iterators-and-generators]] - lazy sequences
 - [[oop-fundamentals]] - custom data classes

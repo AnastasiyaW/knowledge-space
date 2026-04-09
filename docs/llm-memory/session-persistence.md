@@ -75,19 +75,19 @@ Permanent key-value index that grows over time. Organized by topic with links to
 # Memory Index
 
 ## User
-- [user_profile](user_profile.md) - name, preferences, communication style
+- user_profile - name, preferences, communication style
 
 ## Projects
-- [api-rewrite](project_api_rewrite.md) - REST->GraphQL, timeline, decisions
-- [ml-pipeline](project_ml_pipeline.md) - training infra, model registry
+- api-rewrite - REST->GraphQL, timeline, decisions
+- ml-pipeline - training infra, model registry
 
 ## Infrastructure
-- [prod-cluster](infra_prod.md) - K8s on GCP, 3 node pools, autoscaling
-- [ci-cd](infra_cicd.md) - GitHub Actions, deploy to staging/prod
+- prod-cluster - K8s on GCP, 3 node pools, autoscaling
+- ci-cd - GitHub Actions, deploy to staging/prod
 
 ## Decisions
-- [db-choice](decision_db.md) - PostgreSQL, reasons, alternatives considered
-- [api-style](decision_api.md) - GraphQL over REST, tradeoffs documented
+- db-choice - PostgreSQL, reasons, alternatives considered
+- api-style - GraphQL over REST, tradeoffs documented
 ```
 
 Each linked file contains structured details. The index itself stays small enough to always fit in context.

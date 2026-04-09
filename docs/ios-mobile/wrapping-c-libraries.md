@@ -1,3 +1,8 @@
+---
+title: "Wrapping C Libraries in Swift"
+description: "Bridging C functions into Swift with type safety, automatic memory management via deinit, and error handling"
+---
+
 # Wrapping C Libraries in Swift
 
 Swift can call C functions directly through bridging headers. Wrapping C libraries (libgit2, libpq, SQLite, etc.) in Swift idioms provides type safety, automatic memory management via `deinit`, and cleaner error handling.

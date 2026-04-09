@@ -116,5 +116,5 @@ Solutions: batch by time window, combine updates, implement backpressure, use bi
 
 - [[streams]] - Readable, Writable, Transform, Duplex with backpressure
 - [[error-handling]] - AppError, AggregateError, fail-fast patterns
-- [[observer-and-mediator]] - EventEmitter as async communication pattern
+- [[design-patterns-gof]] - EventEmitter as async communication pattern
 - [[event-loop-and-architecture]] - how the event loop processes async callbacks

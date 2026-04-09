@@ -1,3 +1,8 @@
+---
+title: "Variable Scope and Lifetime in C++"
+description: "Block-level scoping rules, name shadowing, and deterministic destruction order as prerequisite for RAII"
+---
+
 # Variable Scope and Lifetime in C++
 
 C++ has block-level scoping with strict rules about where variables are visible and when they are destroyed. Understanding scope prevents name shadowing bugs and is prerequisite for [[raii-resource-management]].

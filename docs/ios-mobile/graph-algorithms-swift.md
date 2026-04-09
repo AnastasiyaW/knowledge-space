@@ -1,3 +1,8 @@
+---
+title: "Graph Algorithms in Swift"
+description: "Adjacency list graphs, BFS/DFS traversal, and shortest path algorithms with mapping examples"
+---
+
 # Graph Algorithms in Swift
 
 Building graph data structures and traversal algorithms in Swift, with practical examples from geographic/mapping applications.

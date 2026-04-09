@@ -1,3 +1,8 @@
+---
+title: "LLM Scaling Laws and Benchmarks"
+description: "Chinchilla scaling law, standard benchmarks (ARC, DROP, HellaSwag), and model selection guidelines"
+---
+
 # LLM Scaling Laws and Benchmarks
 
 Understanding how model size relates to performance and how to compare models objectively. Essential for choosing the right model for a task and predicting whether bigger = better for your use case.

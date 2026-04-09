@@ -114,4 +114,4 @@ poetry init && poetry add pytest requests
 - [[pytest-fundamentals]] - fixtures, parametrize, hooks
 - [[allure-reporting]] - test reports as team communication
 - [[ci-cd-test-automation]] - running tests in CI pipelines
-- [[api-testing]] - HTTP client classes and response validation
+- [[api-testing-tools]] - HTTP client classes and response validation

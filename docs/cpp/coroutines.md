@@ -1,3 +1,8 @@
+---
+title: "C++20 Coroutines"
+description: "Cooperative multitasking with co_yield, co_return, and co_await for lazy generators and async I/O"
+---
+
 # C++20 Coroutines
 
 Coroutines provide cooperative multitasking in C++20 - a function that can suspend execution, yield a value, and later resume where it left off. They are fundamentally different from threads and are not about parallelism but about interleaving execution without blocking.

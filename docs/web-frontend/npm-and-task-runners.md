@@ -134,4 +134,4 @@ With local dev server running:
 - [[frontend-build-systems]] - Webpack, Vite, bundling
 - [[css-sass-and-methodology]] - SASS language features
 - [[git-and-github]] - .gitignore, version control
-- [[nodejs]] - Node.js server-side development
+- [[event-loop-and-architecture]] - Node.js server-side development

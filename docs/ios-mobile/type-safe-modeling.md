@@ -1,3 +1,8 @@
+---
+title: "Type-Safe Domain Modeling in Swift"
+description: "Using enums, structs, and generics to eliminate impossible states and make APIs self-documenting"
+---
+
 # Type-Safe Domain Modeling in Swift
 
 Choosing the right type representation eliminates impossible states, reduces bugs, and makes APIs self-documenting. Swift's type system (enums, structs, optionals, generics) allows precise modeling that goes beyond what languages with only classes can express.

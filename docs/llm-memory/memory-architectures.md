@@ -128,12 +128,12 @@ See [[context-window-management]] for the layered loading pattern.
 # Memory Index
 
 ## User Preferences
-- [database-choice](wiki/database-choice.md) - PostgreSQL, reasons, migration history
-- [editor-setup](wiki/editor-setup.md) - Neovim config, plugins, keybindings
+- database-choice - PostgreSQL, reasons, migration history
+- editor-setup - Neovim config, plugins, keybindings
 
 ## Project: API Rewrite
-- [architecture-decisions](wiki/api-arch.md) - REST vs GraphQL, chosen GraphQL
-- [deployment](wiki/api-deploy.md) - K8s on GCP, Terraform managed
+- architecture-decisions - REST vs GraphQL, chosen GraphQL
+- deployment - K8s on GCP, Terraform managed
 ```
 
 The agent reads this index first, then opens only the files it needs. This is JIT context loading - minimal tokens until specific knowledge is required.

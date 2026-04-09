@@ -25,7 +25,7 @@ Three core components:
 
 | Component | Implementation | Trainable? | Size |
 |-----------|---------------|------------|------|
-| Text Encoder | [[Qwen 2.5 VL]] (vision-language model) | Yes (usually) | ~7B params |
+| Text Encoder | **Qwen 2.5 VL** (vision-language model) | Yes (usually) | ~7B params |
 | Transformer | [[MMDiT]] with joint attention | Yes / LoRA | ~20B+ params |
 | VAE | Custom autoencoder (RealRestorerAutoencoderKL variant) | Usually frozen | ~200M params |
 

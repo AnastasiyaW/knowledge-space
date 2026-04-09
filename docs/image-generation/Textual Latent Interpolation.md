@@ -75,7 +75,7 @@ e_cond = e_neutral + 0.7 * delta_angry + 0.5 * delta_sad
 
 ## Requirements
 
-1. **Aligned embedding space**: the text encoder must produce embeddings where linear interpolation is semantically meaningful. VLM-based encoders ([[Qwen 2.5 VL]]) work better than CLIP for this.
+1. **Aligned embedding space**: the text encoder must produce embeddings where linear interpolation is semantically meaningful. VLM-based encoders (**Qwen 2.5 VL**) work better than CLIP for this.
 
 2. **LoRA training with the technique**: the model must be trained to respond to interpolated embeddings. PixelSmile explicitly trains with varied alpha values — the model learns that intermediate embeddings mean intermediate expressions.
 

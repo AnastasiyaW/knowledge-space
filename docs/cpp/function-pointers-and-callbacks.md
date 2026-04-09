@@ -1,3 +1,8 @@
+---
+title: "Function Pointers and Callbacks in C++"
+description: "C-style function pointers, std::function, and lambdas for indirect invocation and callback patterns"
+---
+
 # Function Pointers and Callbacks in C++
 
 Functions in C++ have addresses in memory. A function pointer holds the address of a function and can invoke it indirectly. Modern C++ provides `std::function` and lambdas as safer, more flexible alternatives.

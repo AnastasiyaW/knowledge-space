@@ -1,3 +1,8 @@
+---
+title: "Text Summarization"
+description: "Extractive and abstractive summarization techniques using TF-IDF scoring and transformer models"
+---
+
 # Text Summarization
 
 Automatic generation of condensed versions of documents. Two fundamental approaches: extractive (select existing sentences) and abstractive (generate new text). Extractive methods require no training data and work from a single document.

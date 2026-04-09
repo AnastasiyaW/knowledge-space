@@ -1,3 +1,8 @@
+---
+title: "Swift Macros"
+description: "Compile-time code generation via attached and freestanding macros using AST transformation in Swift 5.9+"
+---
+
 # Swift Macros
 
 Swift macros (5.9+) generate boilerplate code at compile time by transforming the abstract syntax tree. They operate at the syntax level, not semantic level - they see tokens and structure, not resolved types.

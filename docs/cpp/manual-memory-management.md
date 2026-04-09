@@ -1,3 +1,8 @@
+---
+title: "Manual Memory Management in C++"
+description: "Raw new/delete, stack vs heap, and the three failure modes that motivate smart pointers and RAII"
+---
+
 # Manual Memory Management in C++
 
 Understanding raw `new`/`delete` is essential for comprehending why [[smart-pointers]] and [[raii-resource-management]] exist. Manual memory management is error-prone and should be avoided in modern C++, but knowing the failure modes is critical.

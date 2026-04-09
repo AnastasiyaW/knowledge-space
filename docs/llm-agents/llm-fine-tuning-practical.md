@@ -1,3 +1,8 @@
+---
+title: "Practical LLM Fine-Tuning"
+description: "End-to-end guide for frontier API and QLoRA fine-tuning with when-to-use decision framework"
+---
+
 # Practical LLM Fine-Tuning
 
 End-to-end guide for fine-tuning LLMs on custom tasks. Covers both frontier model fine-tuning (via API) and open-source model fine-tuning with QLoRA. Includes the failure modes - fine-tuning does NOT always help.

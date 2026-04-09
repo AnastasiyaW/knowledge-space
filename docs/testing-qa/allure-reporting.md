@@ -86,5 +86,5 @@ def pytest_runtest_call(item):
 
 - [[pytest-fundamentals]] - pytest hooks that Allure integrates with
 - [[ci-cd-test-automation]] - publishing Allure reports in CI
-- [[api-testing]] - HTTP client with auto-logging
+- [[api-testing-tools]] - HTTP client with auto-logging
 - [[test-architecture]] - where Allure fits in test project structure

@@ -1,3 +1,8 @@
+---
+title: "SwiftUI Layout Testing"
+description: "Property-based fuzzing to verify custom layout engines against Apple's native SwiftUI rendering"
+---
+
 # SwiftUI Layout Testing
 
 Automated verification of custom SwiftUI layout implementations by comparing against Apple's native rendering using property-based testing (fuzzing).
