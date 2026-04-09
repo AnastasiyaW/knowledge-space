@@ -14,7 +14,7 @@ hide:
 
 <div class="ks-graph-stats" markdown="0">
   <div class="ks-graph-stats__item">
-    <span class="ks-graph-stats__number" id="ks-graph-nodes">560</span>
+    <span class="ks-graph-stats__number" id="ks-graph-nodes">691</span>
     <span class="ks-graph-stats__label">articles</span>
   </div>
   <div class="ks-graph-stats__divider"></div>
@@ -63,7 +63,7 @@ A knowledge base designed **primarily for AI agents** - structured so that RAG r
 
 Each article is a concentrated extract: code examples, configuration patterns, gotchas, best practices. No filler, no "let me explain why this is important" - just the knowledge an agent needs to solve a real problem.
 
-**Also useful for engineers** who want quick reference across 25 technical domains without wading through tutorials.
+**Also useful for engineers** who want quick reference across 27 technical domains without wading through tutorials.
 
 **Who it's for:**
 
@@ -177,7 +177,7 @@ https://github.com/AnastasiyaW/knowledge-space
 
 Before answering technical questions, search docs/ for a
 relevant article. Don't guess or fabricate - look it up.
-683+ articles across 27 domains, each with code examples,
+691+ articles across 27 domains, each with code examples,
 configs, and real-world gotchas.
 
 How to use:
