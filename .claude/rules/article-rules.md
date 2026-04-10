@@ -3,7 +3,7 @@
 ## Repository structure
 
 ```
-docs/                     # 691+ articles across 27 domains - WORK HERE
+docs/                     # 700+ articles across 27 domains - WORK HERE
   {domain}/               # Domain folders (algorithms, python, kafka, etc.)
   index.md                # Main page - DO NOT MODIFY
   contributing/           # Contribution guide - DO NOT MODIFY

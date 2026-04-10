@@ -89,15 +89,55 @@ You are a customer service agent. Follow these rules STRICTLY:
 - Content with significant human creative direction may be copyrightable
 - Company policies should address ownership of AI-assisted work
 
+## OWASP Top 10 for Agentic Applications (2026)
+
+Dedicated threat taxonomy for AI agents (separate from general LLM Top 10):
+
+| Rank | Threat | Notes |
+|------|--------|-------|
+| 1 | **Prompt injection** (direct + indirect) | Every RAG document = potential injection vector |
+| 2 | **Memory poisoning** | Attack through long-term agent memory |
+| 3 | **Tool misuse** | Context manipulation to trigger wrong tools |
+| 4 | **Supply chain attacks** | Compromised dependencies (axios npm RAT, Mar 2026) |
+| 5 | **Data exfiltration** | Leaking data through tool calls |
+
+**Lethal triad**: root access + agency capability + persistence = critical combination. An agent with all three is a compromise waiting to happen.
+
+**Indirect prompt injection** remains the most dangerous: each document in a RAG corpus is a potential injection vector. A poisoned PDF in the knowledge base = persistent influence on all queries.
+
+### Automated Red-Teaming: RedCodeAgent (ICLR 2026)
+
+First automated red-team agent against code agents. Uses memory module to accumulate successful jailbreak experience, dynamically selects and combines attack tools. Found previously unknown vulnerabilities in production Cursor and Codeium.
+
+Key pattern: memory-augmented adversarial agent that improves over sessions. Same architecture applicable for defense - accumulate known attack vectors and test against them automatically.
+
+## Supply Chain Defense for Agent Dependencies
+
+Agent frameworks pull hundreds of transitive npm/pip dependencies. A single compromised package gives attacker code execution inside the agent runtime.
+
+**Protection**: delay fresh package installation by 7+ days. Most supply chain attacks are discovered within 1-3 days.
+
+```ini
+# ~/.npmrc
+min-release-age=7
+```
+
+```toml
+# uv.toml
+exclude-newer = "7 days"
+```
+
 ## Practical Recommendations
 
 1. **Defense in depth**: multiple layers of protection
 2. **Assume breach**: limit damage even when compromised
 3. **Human-in-the-loop**: for high-stakes decisions
-4. **Regular red-teaming**: test with adversarial inputs
+4. **Regular red-teaming**: test with adversarial inputs (consider RedCodeAgent pattern)
 5. **Least privilege**: minimum necessary tool access
 6. **Audit trails**: complete logs of all agent actions
 7. **Fail-safe**: refuse when uncertain
+8. **Supply chain hygiene**: delay fresh packages, audit lockfiles
+9. **Agent identity scoping**: separate identities for agents with different privilege levels
 
 ## Gotchas
 - Prompt injection is an unsolved problem - no defense is 100% effective
@@ -106,6 +146,8 @@ You are a customer service agent. Follow these rules STRICTLY:
 - Guardrail models add latency and cost to every request
 - Over-restrictive safety measures degrade legitimate user experience
 - Security testing must be ongoing, not one-time - new attack techniques emerge continuously
+- **Reliability grows slower than accuracy** - higher benchmark scores do not mean production-ready agents. SWE-Bench score != reliability (2602.16666)
+- **Memory poisoning persists across sessions** - unlike prompt injection which dies with the conversation, poisoned agent memory affects all future interactions
 
 ## See Also
 - [[agent-fundamentals]] - Agent architecture and error handling

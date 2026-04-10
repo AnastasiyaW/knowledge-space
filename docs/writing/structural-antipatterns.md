@@ -97,6 +97,15 @@ SD: ~2 words
 
 Human text has rhythm. Short sentences punch. Long sentences develop complex ideas with subordinate clauses, digressions, and qualifications that mirror actual thought. AI text runs at a constant 18-22 words per sentence.
 
+## Perplexity Deficit
+
+**Perplexity** = how unpredictable word choices are. The second key metric after burstiness.
+
+- **Human writing**: unexpected verbs, surprising metaphors, unusual word pairings. Spikes of high perplexity (creative choices) mixed with low perplexity (common phrases).
+- **AI writing**: consistently low perplexity. Every word is the "safest statistical choice." Technically correct but predictable. No surprises.
+
+Burstiness measures rhythm variation. Perplexity measures vocabulary unpredictability. Both are low in AI text; both need to be high for natural reading.
+
 ## Missing Human Markers
 
 What human text has that AI text lacks:

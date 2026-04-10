@@ -120,6 +120,16 @@ Up to **3 LoRAs** simultaneously, each with individual weight (0-4).
 - If artifacts appear, reduce weakest LoRA first
 - Watch for style conflicts (two different color grading LoRAs)
 
+### LoRA Training Parameters (from 50+ runs)
+
+| Parameter | Optimal Value | Notes |
+|-----------|--------------|-------|
+| Network dims | 128/64/64/32 | linear/linear_alpha/conv/conv_alpha, 4:2:1:1 ratio |
+| Weight decay | 0.00001 | 1/10th default for balanced analog texture |
+| Learning rate | DO NOT CHANGE | Even 0.005% deviation destroys the image on FLUX |
+| Optimal steps | ~7,000 | 3K = too raw, beyond 7K = anatomical distortion |
+| Trigger word | One per style | Define explicit trigger for each LoRA |
+
 ### Klein vs Dev LoRA Behavior
 
 Same LoRA settings produce fundamentally different results:
@@ -196,6 +206,126 @@ Both 4B and 9B support 11 aspect ratios up to 4MP (2048x2048 square). Range from
 - **FP8 specifically benefits from 8 steps**: the FP8 quantized distilled model needs more steps than bf16 to match quality. Budget 8 steps minimum for FP8 inference.
 - **Qwen-Image VAE artifacts**: the VAE decoder can introduce washed-out details and checkerboard noise. A dedicated fix LoRA exists (strength 1.0, trigger: "Remove compression artifacts. Restore the fine details of the photo."). Only works on Qwen-VAE artifacts - will degrade images from other VAEs.
 
+## Detail Enhancement LoRAs
+
+Community-trained LoRAs specifically for increasing detail/realism in Klein 9B output.
+
+### Tier 1: General Detail
+
+| LoRA | Weight | Effect | Notes |
+|------|--------|--------|-------|
+| Realistic Enhanced Details | 0.5-0.75 | Skin texture, fabric, hair, material grain | Start at 0.65. CFG 3.5-5.0. 24GB VRAM |
+| Klein Detail Slider | -10 to +10 | Adjustable detail amount via weight | Safe range -3 to +3, works in img2img |
+| Elusarca's Detail Enhancer | 0.3-1.0 | Sharpness, color balance, microdetails | Trigger: "Enhance this image". 632 MB |
+| Ultimate Upscaler Klein-9b | 0.5-0.8 | Removes soft edges, JPEG artifacts | Good for compression artifact removal |
+
+### Tier 2: Skin-Specific
+
+| LoRA | Weight | Focus |
+|------|--------|-------|
+| Ultra Real V3 (KL_9B_V3) | 0.6 (edit) / 0.75 (gen) | Subtle skin texture without freckles |
+| Lust Skin Klein | 0.5-0.7 | Pores, irregular freckles, natural imperfections |
+| Visceral | 0.5-0.7 | Pore detail, eliminates plastic look |
+| Portrait Engine V2 | 1.0 (calibrated) | Photorealistic skin, decoupled from outfit |
+
+### Stacking Strategy
+
+For maximum detail: base realism LoRA (0.5-0.65) + detail slider (+2 to +5). For portraits: skin-specific (0.5-0.7) + general detail (0.4-0.5). Keep total combined influence moderate - artifacts appear when cumulative weight exceeds ~1.5.
+
+## Latent Space Detail Manipulation
+
+### Detail Daemon (ComfyUI-Detail-Daemon)
+
+Modifies sigma schedule during sampling - keeps noise injection the same but lowers noise removal, effectively adding detail.
+
+| Parameter | FLUX Range | Purpose |
+|-----------|-----------|---------|
+| detail_amount | 0.3-1.0+ | Main intensity. FLUX needs higher values than SDXL (<0.25) |
+| start | 0.1-0.5 | When adjustment begins (0=first step) |
+| end | 0.5-0.9 | When adjustment ends |
+| bias | varies | Shifts peak adjustment location |
+| exponent | 0-1 | Curve shape (0=linear, 1=smooth) |
+
+Large features form early, fine details late. Set `start=0.3, end=0.8` to affect detail without breaking composition.
+
+### ComfyUI-Latent-Modifiers (Fooocus Sharpness)
+
+Single mega-node with chained techniques. Most useful combo for Klein detail: **Sharpness + Spectral Modulation**.
+
+- **Sharpness**: Fooocus-based, sharpens noise mid-diffusion. Strength 2.0-4.0.
+- **Spectral Modulation**: converts latent to frequencies, clamps high frequencies while boosting low ones. Fixes oversaturation from high CFG.
+- **Divisive Norm**: pooling to reduce artifacts from sharpness. Add after Sharpness.
+- **Tonemapping**: 6 methods (Reinhard, Arctan, Quantile, Gated, CFG-Mimic, Spatial-Norm) for clamping oversaturation.
+
+### CFG Tuning for Detail
+
+| CFG | Base 9B Effect | When to Use |
+|-----|---------------|-------------|
+| 3.5-4.5 | Sweet spot, natural detail | Default |
+| 5.0 | Stronger prompt adherence, slightly more detail | When LoRA isn't applying enough |
+| 6.0-7.0 | Oversaturation risk, use Spectral Modulation | Extreme prompt adherence |
+| >7.0 | Quality degrades | Avoid |
+
+Distilled model: CFG must be 1.0 - higher values break generation entirely.
+
+## Tiled 4K+ Upscale Pipelines
+
+### Klein + SeedVR2 (Proven Two-Stage)
+
+```
+Stage 1: Klein 9B img2img to 2048x2048
+  Sampler: euler_ancestral_cfg++
+  Scheduler: sgm_uniform (BasicScheduler)
+  Denoise: 0.8 (range 0.75-0.85)
+  eta: 1.0, s_noise: 1.0-1.2
+  Prompt: add "8K, intricate details"
+
+Stage 2: SeedVR2 tile upscale to 4096x4096
+  Grid: 4x4 = 16 tiles (~256x256 each)
+  Default SeedVR2 parameters
+  Variants: 3B (realism), 7B Sharp (stylized)
+```
+
+### ControlNet Tile Upscale
+
+For FLUX Klein, use `Flux.1-dev-Controlnet-Upscaler` as tile controlnet. ControlNet strength must stay below 0.7 - higher produces rough edge artifacts. Denoise 0.3-0.4. Tile size 1024x1024 (768x768 for low VRAM).
+
+### Florence2 Smart Tiling
+
+Auto-captions image before upscaling. Caption guides diffusion to respect context during tile processing. Reduces hallucinations at tile borders. Can reach 4K-8K (45MP).
+
+## Prompt Engineering for Detail
+
+### Structure (BFL Official)
+
+**Subject -> Setting -> Details -> Lighting -> Atmosphere**. Natural language prose, NOT tag lists. Front-load important elements.
+
+Lighting descriptions have the single greatest impact on output quality. Be specific: "soft, diffused natural light filtering through sheer curtains" >> "good lighting."
+
+### Detail-Boosting Phrases
+
+- "8K" + "intricate details" together: consistently produces strong results in upscale passes
+- If too aggressive: remove "intricate details", keep only "8K"
+- NEVER use the word "enhance" - model associates it with heavy AI upscaling artifacts
+- Describe specific material properties: "silk with visible thread count", "leather with visible grain and patina"
+
+### Prompt Length
+
+| Length | Words | Use |
+|--------|-------|-----|
+| Short | 10-30 | Concept exploration |
+| Medium | 30-80 | Production work |
+| Long | 80-300+ | Complex editorial/product |
+
+## Gotchas
+
+- **4B LoRA incompatible with 9B**: different text encoder sizes (Qwen 3-4B vs Qwen 3-8B). LoRAs are not interchangeable between Klein 4B and Klein 9B.
+- **FP8 specifically benefits from 8 steps**: the FP8 quantized distilled model needs more steps than bf16 to match quality. Budget 8 steps minimum for FP8 inference.
+- **Qwen-Image VAE artifacts**: the VAE decoder can introduce washed-out details and checkerboard noise. A dedicated fix LoRA exists (strength 1.0, trigger: "Remove compression artifacts. Restore the fine details of the photo."). Only works on Qwen-VAE artifacts - will degrade images from other VAEs.
+- **Detail Daemon needs higher values on FLUX**: SDXL uses detail_amount <0.25, FLUX needs 0.3-1.0+. Using SDXL values produces no visible change.
+- **"Enhance" in prompts causes artifacts**: Klein associates this word with aggressive AI upscaling look. Use "8K" and "intricate details" instead.
+- **Steps above 50 degrade quality**: Klein Base 9B is designed for 25-50 steps. Going higher produces overcooked results. For more detail, use multi-pass or LoRAs, not more steps.
+
 ## See Also
 
 - [[Diffusion Inference Acceleration]] - Spectrum, Nunchaku quantization
@@ -203,3 +333,4 @@ Both 4B and 9B support 11 aspect ratios up to 4MP (2048x2048 square). Range from
 - [[MMDiT]] - transformer architecture used by FLUX
 - [[Tiled Inference]] - high-res output strategies
 - [[Diffusion LoRA Training]] - training LoRAs for Klein
+- [[LoRA Fine-Tuning for Editing Models]] - training custom edit LoRAs

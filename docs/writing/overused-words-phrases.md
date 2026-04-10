@@ -122,11 +122,46 @@ commendable, versatile, profound, fascinating, intriguing, prevalent, proactive,
 **Human-written:**
 > We added GPT-4 to our support pipeline in January. Ticket resolution dropped from 4 hours to 40 minutes. The model hallucinates about 8% of the time, so a human still reviews every response.
 
+## Russian-Specific AI Markers
+
+Russian AI text has distinct markers beyond translated English patterns.
+
+### Word Markers
+
+| Category | AI Signal | Natural Alternative |
+|----------|-----------|-------------------|
+| Copula verbs | "является" (is) | dash or rephrase |
+| Role phrases | "играет важную/ключевую роль" | specific verb |
+| Favorite construction | "не просто..., а..." | varies |
+| Overused adjective | "мощный" (powerful) | specific descriptor |
+| Indicator phrase | "Я надеюсь, это помогло Вам" | omit entirely |
+| Opening filler | "Конечно" / "Безусловно" | skip |
+
+### Structural Signs
+
+- **Deverbal nouns** (отглагольные существительные): привлечение, обеспечение, тестирование - used excessively vs natural Russian verbs
+- **Rigid SVO word order**: Russian allows free word order; overly rigid subject-predicate order signals translation from English
+- **Simple sentence structure**: compound sentences with at most two parts, no complex subordination
+- **Paragraphs are interchangeable**: no logical chain between paragraphs - can be rearranged without damage
+- **Perfect punctuation**: zero errors throughout - humans make strategic errors in informal writing
+
+### Key Differences from English Detection
+
+1. Russian free word order makes rigid SVO suspicious (English SVO is normal)
+2. Russian morphology is richer - AI uses simpler forms than native speakers
+3. "является" is much more flagged than English "is" because Russian rarely needs a copula
+4. English calque problem is unique to Russian AI - sentence structures that feel "translated"
+
+### Russian Detection Tools
+
+- **Sber GigaCheck** (developers.sber.ru) - 94.7% accuracy AI detector for Russian text
+
 ## Gotchas
 
 - **Issue:** Replacing individual AI words while keeping AI sentence structure produces text that still reads as AI - "the landscape of" becomes "the world of" but the problem is the construction, not the word. **Fix:** Rewrite the sentence from scratch. State the specific thing you mean instead of reaching for a metaphor.
 - **Issue:** Some AI marker words are perfectly fine in context - "comprehensive" in "comprehensive test coverage" is normal technical usage. **Fix:** Words become markers when they appear in hedging/filler positions. "A comprehensive analysis reveals" = AI. "We need comprehensive test coverage" = human. Context matters more than the word itself.
 - **Issue:** Word lists decay over time as models adapt (e.g., "delve" dropped after being called out). **Fix:** Focus on the underlying pattern - formal Latinate verbs where simple Anglo-Saxon ones work, superlative adjectives without evidence, metaphors instead of specifics.
+- **Issue:** Russian AI text fixes ("add разговорные элементы") feel forced when applied to bureaucratic AI structure. **Fix:** Rewrite from scratch in natural Russian with free word order, actual opinions, and colloquial register - don't decorate AI output.
 
 ## See Also
 

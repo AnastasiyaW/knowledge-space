@@ -108,6 +108,95 @@ Extend RoPE position encoding to include 2D tile position. When generating a til
 **Full approach:**
 Port SANA-Video's Block Causal Linear Attention to 2D spatial tiling. Each tile = one "frame". KV cache stores cumulative statistics from previous tiles (O(D^2) memory regardless of tile count).
 
+### SANA BCLA Hook Implementation
+
+Hook into `SanaLinearAttn` layers to extract/inject cumulative statistics S, Z across tiles:
+
+```python
+# SANA linear attention forward:
+# O_i = phi(Q_i) @ S / (phi(Q_i) @ Z)
+# S = sum(phi(K)^T @ V)  -- shape [D, D]
+# Z = sum(phi(K)^T)       -- shape [D, 1]
+
+# Hook: before forward, inject accumulated S, Z from previous tiles
+# Hook: after forward, extract current tile's S, Z for next tile
+
+class TemporalBCLAHook:
+    def __init__(self):
+        self.S = None  # cumulative key-value statistics
+        self.Z = None  # cumulative key statistics
+    
+    def pre_forward(self, module, input):
+        if self.S is not None:
+            module._temporal_S = self.S
+            module._temporal_Z = self.Z
+    
+    def post_forward(self, module, input, output):
+        self.S = module._current_S.detach()
+        self.Z = module._current_Z.detach()
+```
+
+**RoPE fix (from SANA-Video):** the denominator must NOT use RoPE for numerical stability:
+
+```python
+# Correct: O_i = (phi(Q_i) @ S_with_rope) / (phi(Q_i) @ Z_without_rope)
+# Wrong:   O_i = (phi(Q_i) @ S_with_rope) / (phi(Q_i) @ Z_with_rope)
+```
+
+### SANA Temporal Tiling Verification Tests
+
+| Test | Method | Expected |
+|------|--------|----------|
+| Cache norm growth | `norm(S)` after each tile | Monotonic increase |
+| Perturbation | Replace S, Z with zeros | Result = independent tiles |
+| Feature similarity | Cosine sim of adjacent tiles | > 0.85 with BCLA, < 0.85 without |
+| Shuffle test | Random tile order | Worse than raster-scan |
+
+### SANA Flow Matching Bug Fixes
+
+Common bugs in `train_flowmatching.py` implementations:
+
+| Bug | Wrong | Correct |
+|-----|-------|---------|
+| Interpolation | `(1-sigma) * noise + sigma * data` | `(1-sigma) * data + sigma * noise` |
+| Target | `data - noise` | `noise - data` |
+| Model precision | FP16 | BF16 (`Sana_1600M_1024px_BF16_diffusers`) |
+| Shift | 1.0 | 3.0 |
+| Timestep sampling | Beta(1.6, 1.605) | Logit-normal(0, 1) |
+| DC-AE encode | `.latent_dist.sample()` | `.latent` (deterministic) |
+| Loss | Unweighted MSE | Sigma-weighted MSE |
+
+### SANA Temporal LoRA Training Recipe
+
+If inference-only BCLA is insufficient, train temporal awareness:
+
+```
+Phase 1: Temporal LoRA only
+  Freeze: all spatial (transformer, VAE, text encoder)
+  Train: LoRA on attn.to_q/k/v/out (rank 32)
+  LR: 1e-4
+  Data: 5K+ images split into tile sequences
+  Steps: 10K
+  Loss: flow matching MSE (sigma-weighted)
+  Init: zero-init output projection (AnimateDiff technique)
+
+Phase 2: Joint fine-tune (if Phase 1 insufficient)
+  Unfreeze: all, LR: 1e-5
+
+Phase 3: High-quality polish
+  LR: 1e-6, best data only
+```
+
+**Zero-init** ensures model = pretrained SANA at step 0 (temporal output contributes nothing initially, signal gradually emerges during training).
+
+### Quality Targets
+
+| Metric | Target | Baseline (independent tiles) |
+|--------|--------|------------------------------|
+| Seam PSNR (overlap zones) | > 40 dB | ~30 dB |
+| Color consistency (Delta E) | < 2.0 | ~5-8 |
+| Gradient continuity (boundary ratio) | < 1.2 | ~2-3 |
+
 ## Key Papers
 
 | Paper | Year | Key Contribution |
@@ -123,6 +212,9 @@ Port SANA-Video's Block Causal Linear Attention to 2D spatial tiling. Each tile 
 | NUWA-Infinity | NeurIPS 2022 | Autoregressive tile generation |
 | Hierarchical Patch Diffusion | CVPR 2024 | Deep Context Fusion coarse→fine |
 | SANA-Video | ICLR 2026 | Block Causal Linear Attention for video |
+| MiraMo | TPAMI 2026 | Temporal modules for SANA linear attention (video) |
+| FramePack | 2025 | Geometric context compression |
+| AnimateDiff | 2023 | Zero-init temporal modules |
 
 ## Memory Comparison
 
@@ -135,3 +227,17 @@ Port SANA-Video's Block Causal Linear Attention to 2D spatial tiling. Each tile 
 | Causal (sequential) | ~1.5× + KV | Very good | Medium |
 | **SANA causal linear** | ~1.2× + O(D^2) KV | Very good | **Fast (O(N))** |
 | Hybrid (global + CAA) | ~2-3× | Very good | Medium (parallel) |
+
+## Gotchas
+
+- **RoPE in SANA denominator breaks numerical stability**: when implementing BCLA for SANA, the attention denominator Z must NOT include RoPE-transformed keys. Using RoPE in both numerator and denominator causes NaN/Inf in the normalization. The numerator uses RoPE, the denominator does not.
+- **Tile order matters for causal approaches**: raster-scan (left-to-right, top-to-bottom) is the default but not always optimal. Spiral or center-out patterns may produce better results for certain subjects. NUWA-Infinity's Arbitrary Direction Controller learns optimal order, but for simpler implementations, shuffling tile order degrades quality measurably.
+- **SANA flow matching training has 7 common bugs**: wrong interpolation direction, wrong target sign, wrong precision (must be BF16), wrong shift value, wrong timestep distribution, deterministic vs stochastic DC-AE encoding, and unweighted loss. Each independently causes training failure. See the bug table above.
+
+## See Also
+
+- [[Tiled Inference]] - standard tiled diffusion (overlap averaging)
+- [[SANA]] - SANA architecture and linear attention details
+- [[SANA-Denoiser Architecture]] - SANA as denoiser pipeline
+- [[Block Causal Linear Attention]] - BCLA mechanism from SANA-Video
+- [[Flow Matching]] - training objective for temporal LoRA

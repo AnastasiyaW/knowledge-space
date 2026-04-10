@@ -233,12 +233,60 @@ For creating purpose-built small models:
 - Works for image-to-image tasks (denoising, deblurring, restoration)
 - Best long-term strategy: purpose-built small models outperform quantized large models
 
+## Model Architecture Selection for Low VRAM
+
+| Architecture | Params | FP16 Size | VRAM at 512x512 | PSNR | Fits 2GB? |
+|-------------|--------|-----------|-----------------|------|-----------|
+| Lightweight U-Net | 1-5M | 2-10 MB | ~50-150 MB | 30-33 dB | Yes |
+| NAFNet-width32 | ~5M | ~10 MB | ~100-200 MB | 33.7 dB | Yes |
+| NAFNet-width64 | ~17M | ~34 MB | ~200-500 MB | Higher | Tiled |
+| MobileNet-based | 0.5-3M | 1-6 MB | ~30-100 MB | 28-31 dB | Yes |
+| Real-ESRGAN x4v3 | 1.2M | 2.3 MB | ~50-100 MB | Good SR | Yes |
+| Real-ESRGAN x4plus | 16.7M | 32 MB | ~300-800 MB | Best SR | Tiled |
+| SwinIR | 11.8M | ~24 MB | ~400-1000 MB | 32-34 dB | Tiled only |
+| Restormer | ~26M | ~52 MB | ~1-3 GB | SOTA | No |
+| INRetouch | 11K | <1 MB | <50 MB | Excellent | Yes |
+
+**Best quality/VRAM ratio:** NAFNet-width32 - uses LayerNorm (no tiling artifacts from BatchNorm), no nonlinear activations (easier INT8 quantization), modular width scaling, clean ONNX export.
+
+**INRetouch** is an outlier - only 11K parameters via implicit neural representation, 70ms on 4K images. Specialized for photography retouching, not general-purpose.
+
+## Progressive Quality (Preview to Full)
+
+```cpp
+// Fast preview on any hardware, full quality when user commits
+void processAdaptive(const cv::Mat& input) {
+    // Preview: downscale 4x, run model, upscale bilinear
+    // ~50ms even on CPU at 512x512 from 2048x2048
+    cv::Mat preview;
+    cv::resize(input, preview, input.size() / 4);
+    cv::Mat result = runModel(preview);
+    cv::resize(result, result, input.size());  // fast preview
+
+    // Full quality: triggered on user action
+    // Use tiled processing at native resolution
+}
+```
+
+Preview at 1/4 resolution takes ~50ms even on CPU. Apply full resolution only when user confirms the edit.
+
+## Competitor VRAM Requirements
+
+| Application | GPU Minimum | GPU Recommended | Notes |
+|------------|------------|-----------------|-------|
+| Topaz Photo AI | Integrated (16GB RAM) | 8 GB VRAM | Generative models need 8GB |
+| Retouch4me | 4 GB GPU or CPU+OpenCL | - | CPU fallback works |
+| Luminar Neo | Integrated | Dedicated GPU | No specific VRAM min |
+| Adobe Neural Filters | 4 GB VRAM DX12 | 8 GB+ VRAM | AI Denoise 70% slower at 4GB |
+
 ## Gotchas
 
-- **DirectML memory leak**: each ONNX Runtime inference run allocates ~517 MB that is not freed until session destruction. For iterative processing (multiple tiles), destroy and recreate session periodically, or accept growing memory usage.
-- **Shared memory fallback is deceptive**: DirectML reports "success" when falling back to shared system memory, but performance drops to CPU-equivalent levels. Monitor actual execution time, not just whether the call succeeded.
-- **INT8 calibration data matters**: dynamic quantization (no calibration) is easy but ~1-2 dB worse PSNR than static quantization with representative calibration images. For production models, always use static quantization.
-- **ONNX graph optimization level ALL can change memory layout**: this may break assumptions about tensor contiguity. Test thoroughly with your specific model before deploying.
+- **DirectML memory leak**: each ONNX Runtime inference run allocates ~517 MB that is not freed until session destruction. For iterative processing (multiple tiles), destroy and recreate session periodically, or accept growing memory usage
+- **Shared memory fallback is deceptive**: DirectML reports "success" when falling back to shared system memory, but performance drops to CPU-equivalent levels. Monitor actual execution time, not just whether the call succeeded
+- **INT8 calibration data matters**: dynamic quantization (no calibration) is easy but ~1-2 dB worse PSNR than static quantization with representative calibration images. For production models, always use static quantization
+- **ONNX graph optimization level ALL can change memory layout**: this may break assumptions about tensor contiguity. Test thoroughly with your specific model before deploying
+- **BatchNorm causes tiling artifacts that overlap cannot fix**: BN computes statistics per-tile, not per-image. Use LayerNorm/InstanceNorm or train on tiles matching inference size. NAFNet uses LayerNorm specifically for this reason
+- **Intel iGPU via DirectML can be slower than CPU**: integrated graphics with shared memory + DirectML overhead sometimes runs slower than pure CPU with OpenMP SIMD. Always benchmark both paths and pick the faster one at runtime
 
 ## See Also
 

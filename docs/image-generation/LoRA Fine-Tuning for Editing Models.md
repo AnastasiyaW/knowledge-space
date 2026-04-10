@@ -90,10 +90,110 @@ Apache 2.0 base (Qwen) + proprietary LoRA = your product
 
 No license contamination from base model. LoRA weights are your IP.
 
+## FLUX.2 Klein 9B Edit LoRA Training
+
+Klein 9B has native multi-reference conditioning (up to 4 images concatenated as latents) - not IP-Adapter, but architecture-level latent-space concatenation. This makes it suitable for face swap, head swap, and paired before/after edit LoRAs.
+
+### Architecture Specifics
+
+- **Parameters**: 9B flow model + 8B Qwen3 text embedder (~17B total)
+- **Blocks**: 8 DoubleStreamBlocks + 24 SingleStreamBlocks
+- **Text encoder**: Qwen3-8B bundled (NOT separate like FLUX.1 T5+CLIP)
+- **Training base**: always use `FLUX.2-klein-base-9B` (undistilled), never the distilled variant
+- **FLUX.1-dev adapters incompatible**: hidden_dim mismatch (3072 vs 4096)
+
+### Training Frameworks
+
+| Framework | Strength | Best For |
+|-----------|----------|----------|
+| SimpleTuner | `use_flux_kontext: true` for native paired training, `model_flavour: "klein-9b"` | Edit LoRAs with before/after pairs |
+| AI-Toolkit (ostris) | Most tested (50+ run study), YAML config | Style LoRAs, character LoRAs |
+| DiffSynth-Studio | Chinese ecosystem, ready-to-run scripts | Klein + Qwen-Image-Edit |
+
+### Optimal Hyperparameters
+
+Based on Calvin Herbst's 50+ A/B test study:
+
+| Parameter | Value | Notes |
+|-----------|-------|-------|
+| Linear rank/alpha | 128/64 | Winner across all models |
+| Conv rank/alpha | 64/32 | 4:2:2:1 ratio proven optimal |
+| LR | 1e-4 | EXTREME sensitivity - 0.005% change degrades quality |
+| Optimizer | adamw8bit | Best for faces. Avoid adafactor |
+| Weight decay | 0.00001 | 10x lower than default improves grain/texture |
+| Scheduler | cosine_with_warmup (10%) | Direct evidence it helps face quality |
+| Timestep type | sigmoid | Confirmed by 3 independent sources for face work |
+| Noise offset | 0.05-0.1 | Slight contrast improvement |
+| Precision | bf16 training + fp8 base | fp8 = better film grain, fp32 = better fidelity |
+| Steps | 3000-4000 | For face edit with progressive dataset refinement |
+| Save every | 250 steps | Essential - overfitting is non-monotonic on FLUX |
+
+### Dataset Format for Paired Training
+
+SimpleTuner Kontext mode (recommended):
+
+```
+dataset/
+  01_start.png      # Before image (source)
+  01_start2.png     # Face reference crop (optional)
+  01_end.png        # After image (target)
+  01.txt            # "EDITFACE open the eyes wider"
+```
+
+Caption format: trigger word + specific change description. Describe the CHANGE, not the image. Be consistent across dataset.
+
+### Progressive Dataset Refinement (BFS Method)
+
+The most successful published face swap LoRA (BFS) used:
+
+1. **Phase 1** (~2000 steps): 628 initial pairs, broad diversity
+2. **Phase 2** (~4000 steps): narrowed to 138 pairs, best skin-tone matches
+3. **Phase 3** (fine-tune): narrowed to 76 high-quality pairs
+
+Start broad, filter to best pairs, continue training. Dataset refinement matters more than progressive resolution.
+
+### Layer Targeting for Face Edit
+
+| Approach | Target | Result |
+|----------|--------|--------|
+| Double-stream only | `double_blocks` attention | Highest face similarity in A/B tests |
+| All blocks | All double + single | Baseline |
+| Single blocks only | `single_transformer_blocks 0-23` | DiffSynth default |
+| Selective | Blocks 7, 12, 16, 20 | Lighter, good LoRAs |
+
+Double-stream blocks handle cross-image interaction (reference latent + main image). For face conditioning, these are most critical.
+
+### Face Crop Preprocessing
+
+- Detection: InsightFace (buffalo_sc) for best diverse-face accuracy, or YOLOv8-face
+- Padding: 40-50% around bbox for face swap, 80-100% for head swap
+- Minimum: 512x512 face crop, 1024x1024 preferred
+- Alignment: prefer eyes-horizontal but Klein tolerates mild rotation
+- Include some neck/hair/ears for natural editing context
+
+### Evaluation Metrics
+
+| Metric | Target | Purpose |
+|--------|--------|---------|
+| ArcFace CSIM | >0.85 | Identity preservation |
+| LPIPS | Lower = better | Visual closeness / edit containment |
+| Background SSIM | ~1.0 | Non-face region preservation |
+| CLIP Score | Task-dependent | Semantic alignment with prompt |
+
+### min_snr_gamma: Incompatible
+
+min_snr_gamma does NOT work with flowmatch scheduler used by Klein. Skip it entirely. Use noise_offset for contrast control instead.
+
 ## Gotchas
 
 - Qwen-Image-Edit requires **DiffSynth-Studio** framework, not standard diffusers. LoRA loading path differs.
 - PixelSmile requires a diffusers **patch script** (`patch_qwen_diffusers.sh`).
 - At rank 64+, LoRA training on 60GB base needs 4x 80GB GPUs. Lower rank (16-32) fits on 2x A100.
-- EMA (exponential moving average) on LoRA weights recommended for stability — PixelSmile uses it.
-- Data quality matters more than data quantity — synthetic data with VLM scoring outperforms larger messy datasets.
+- EMA (exponential moving average) on LoRA weights recommended for stability - PixelSmile uses it.
+- Data quality matters more than data quantity - synthetic data with VLM scoring outperforms larger messy datasets.
+- **Klein 4B and 9B LoRAs are incompatible** - different text encoder sizes (Qwen 3-4B vs Qwen 3-8B).
+- **LR sensitivity is extreme on FLUX** - changing by 0.005% can destroy output quality. Use adamw8bit or Prodigy.
+- **Overfitting is non-monotonic** - epoch 6 good, 8 bad, 10 good again. Save every checkpoint.
+- **Hair is the #1 failure mode** in face editing - hairline, length, shape must match between pairs.
+- **Multi-reference cost scales ~3.5x** for 2 refs, ~5x for 3 refs, ~7x for 4 refs.
+- **Class prompts HURT Flux training** especially for males and pets.

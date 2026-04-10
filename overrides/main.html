@@ -295,10 +295,15 @@
   <meta property="og:url" content="{{ page.canonical_url }}" />
   <meta property="og:site_name" content="{{ config.site_name }}" />
 
+  <meta property="og:image" content="{{ config.site_url }}assets/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
   {# Twitter Card #}
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="{{ page.title }} - {{ config.site_name }}" />
   <meta name="twitter:description" content="{{ (page.meta.description if page.meta and page.meta.description) | default(config.site_description) }}" />
+  <meta name="twitter:image" content="{{ config.site_url }}assets/og-image.png" />
   {% endif %}
 
   {# WebSite JSON-LD with availableLanguage - on homepage only #}
