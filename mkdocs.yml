@@ -75,6 +75,7 @@ extra_javascript:
 hooks:
   - hooks/stats.py
   - hooks/validate.py
+  - hooks/link_checker.py
   - hooks/description.py
   - hooks/wikilinks.py
   - hooks/copy_extras.py

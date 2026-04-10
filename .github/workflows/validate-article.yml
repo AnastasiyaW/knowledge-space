@@ -1,6 +1,11 @@
 name: Validate Articles
 
 on:
+  push:
+    branches: [master]
+    paths:
+      - 'docs/**/*.md'
+      - 'hooks/**'
   pull_request:
     paths:
       - 'docs/**/*.md'
@@ -119,11 +124,12 @@ jobs:
         if: steps.changed.outputs.any_changed == 'true'
         run: |
           valid_domains=(
-            "algorithms" "architecture" "bi-analytics" "data-engineering"
-            "data-science" "devops" "image-generation" "ios-mobile"
-            "java-spring" "kafka" "linux-cli" "llm-agents" "nodejs"
-            "php" "python" "rust" "security" "seo-marketing"
-            "sql-databases" "testing-qa" "web-frontend" "misc" "contributing"
+            "algorithms" "architecture" "audio-voice" "bi-analytics" "cpp"
+            "data-engineering" "data-science" "devops" "go" "image-generation"
+            "ios-mobile" "java-spring" "kafka" "linux-cli" "llm-agents"
+            "llm-memory" "misc" "nodejs" "php" "python" "rust" "security"
+            "seo-marketing" "sql-databases" "testing-qa" "web-frontend"
+            "writing" "contributing"
           )
 
           for file in ${{ steps.changed.outputs.all_changed_files }}; do
@@ -145,3 +151,15 @@ jobs:
               echo "::warning file=$file::Unknown domain folder '$dir'. Valid domains: ${valid_domains[*]}"
             fi
           done
+
+  link-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Check all internal links
+        run: python lint.link-check.py --strict
