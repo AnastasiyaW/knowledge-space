@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 700+ curated articles across 27 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 710+ curated articles across 27 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -190,6 +190,8 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Graph Neural Networks](https://happyin.space/data-science/graph-neural-networks/): GNNs operate on graph-structured data where entities (nodes) have relationships (edges). Social networks, molecules, citation networks, knowledge grap
 - [Hyperparameter Optimization](https://happyin.space/data-science/hyperparameter-optimization/): Systematic search for the best model configuration. Hyperparameters control training behavior (learning rate, regularization, architecture) but cannot
 - [Hypothesis Testing and A/B Testing](https://happyin.space/data-science/hypothesis-testing/): Statistical framework for making decisions from data. A/B testing applies these principles to controlled experiments. Critical skill for data scientis
+- [Image Similarity Pipeline: Graph Supervision, Contrastive Training, Vector Search](https://happyin.space/data-science/image-similarity-pipeline/): Production-grade image similarity pipeline using CLIP+CSD+DINOv3 backbones, contrastive learning on graph-supervised pairs, and Elasticsearch HNSW - with noise filtering and evaluation methodology
+- [Image Similarity at Scale: Architecture Decisions from 430K to 50M](https://happyin.space/data-science/image-similarity-scaling/): Concrete migration path and infrastructure decisions for image similarity systems scaling from hundreds of thousands to tens of millions of vectors - vector DBs, storage, training pipelines
 - [Handling Imbalanced Data](https://happyin.space/data-science/imbalanced-data/): When one class dominates the dataset (e.g., 99% negative, 1% positive), standard classifiers become biased toward the majority class. Fraud detection,
 - [KNN and Classical ML Algorithms](https://happyin.space/data-science/knn-and-classical-ml/): Classical ML algorithms beyond linear models and gradient boosting. Important for understanding the algorithm landscape and choosing appropriate tools
 - [Knowledge Tracing](https://happyin.space/data-science/knowledge-tracing/): Knowledge tracing (KT) models predict the probability that a learner will answer a question correctly, given their interaction history. Core component
@@ -448,7 +450,9 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Agent Self-Improvement](https://happyin.space/llm-agents/agent-self-improvement/): Techniques for agents to improve their own performance through reflection, step-level reward signals, and code self-modification - without gradient-ba
 - [AI Coding Assistants](https://happyin.space/llm-agents/ai-coding-assistants/): AI-powered development tools that assist with code completion, generation, editing, debugging, and explanation. They range from inline completions to 
 - [Autonomous Agent Evolution](https://happyin.space/llm-agents/autonomous-agent-evolution/): Replacing fixed evolutionary search (agents as stateless workers) with long-lived autonomous agents that control the entire search process: what to re
+- [Chinese AI Coding Ecosystem](https://happyin.space/llm-agents/chinese-ai-coding-ecosystem/): Chinese AI coding tools, patterns, and community practices: Trae, OpenSpec, MetaGPT, GLM-5, DeepSeek, and spec-first development methodology.
 - [Chunking Strategies](https://happyin.space/llm-agents/chunking-strategies/): Chunking is the process of splitting documents into smaller pieces for embedding and retrieval in RAG systems. Chunk quality directly determines retri
+- [Claude Code Ecosystem (2026)](https://happyin.space/llm-agents/claude-code-ecosystem/): Claude Code plugin system, hooks lifecycle, skills patterns, CLAUDE.md best practices, and the managed agents architecture as of April 2026.
 - [Context Engineering for Agents](https://happyin.space/llm-agents/context-engineering/): Managing what information goes into the LLM context window and when. The context window is the agent's working memory - everything it can reason about
 - [Embeddings](https://happyin.space/llm-agents/embeddings/): Embeddings convert text into high-dimensional numeric vectors where proximity represents semantic similarity. They are the foundation of vector search
 - [Fine-Tuning and LoRA](https://happyin.space/llm-agents/fine-tuning/): Fine-tuning adapts a pre-trained model to specific tasks, domains, or output styles. LoRA and PEFT methods make this practical on consumer hardware by
@@ -462,7 +466,9 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Practical LLM Fine-Tuning](https://happyin.space/llm-agents/llm-fine-tuning-practical/): End-to-end guide for frontier API and QLoRA fine-tuning with when-to-use decision framework
 - [LLMOps](https://happyin.space/llm-agents/llmops/): LLMOps adapts MLOps practices for LLM-specific workflows: prompt management, model serving, evaluation, monitoring, and cost control. The key differen
 - [Model Optimization](https://happyin.space/llm-agents/model-optimization/): Three complementary techniques for reducing model size and inference cost: distillation (train a smaller model), quantization (reduce numeric precisio
+- [Multi-Agent Messaging Patterns](https://happyin.space/llm-agents/multi-agent-messaging/): Inter-agent communication patterns for Claude Code sessions: built-in Agent Teams, hook-based polling, MCP brokers, file P2P, and WebSocket approaches with trade-offs.
 - [Multi-Agent Systems](https://happyin.space/llm-agents/multi-agent-systems/): Multi-agent systems decompose complex tasks across specialized agents that collaborate. Research shows giving one LLM a specific narrow task makes it 
+- [Multi-Session Agent Coordination](https://happyin.space/llm-agents/multi-session-coordination/): Patterns and tools for coordinating multiple Claude Code sessions: git worktrees, tmux orchestration, advisory leases, pre-commit guards, and orchestrator tiers.
 - [No-Code Agent Platforms](https://happyin.space/llm-agents/no-code-platforms/): Visual and low-code platforms for building LLM agents, chatbots, and automation workflows. Enable building AI applications without deep programming, c
 - [Ollama and Local LLMs](https://happyin.space/llm-agents/ollama-local-llms/): Ollama provides a simple way to run open-source LLMs locally. Complete data privacy, no API costs after download, offline capability, and full customi
 - [Production LLM Patterns](https://happyin.space/llm-agents/production-patterns/): Battle-tested patterns for deploying LLM systems in production. These patterns address the gap between demo-quality RAG and reliable business applicat
@@ -480,6 +486,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Context Window Management](https://happyin.space/llm-memory/context-window-management/): Strategies for managing what enters the LLM's context window and when. The context window is finite working memory - everything the agent can reason a
 - [Forgetting Strategies](https://happyin.space/llm-memory/forgetting-strategies/): When and how to remove information from LLM agent memory. Unbounded memory growth degrades retrieval quality - irrelevant results dilute relevant ones
 - [Knowledge Base as Memory](https://happyin.space/llm-memory/knowledge-base-as-memory/): Using a structured markdown knowledge base as the agent's long-term memory. The agent reads, writes, and maintains a collection of articles that compo
+- [Knowledge Graph Memory for AI Agents](https://happyin.space/llm-memory/knowledge-graph-memory/): Persistent knowledge graph patterns for AI agents: entity resolution, pipeline stages, agent notes, and inline executable tasks in Markdown vaults.
 - [Memory Architectures for LLM Agents](https://happyin.space/llm-memory/memory-architectures/): Structural approaches to organizing persistent knowledge for LLM agents. The architecture determines retrieval quality, storage cost, and how well the
 - [Memory Retrieval Patterns](https://happyin.space/llm-memory/memory-retrieval-patterns/): How agents find relevant information in their memory. The retrieval method determines recall quality, latency, and cost. Different approaches work at 
 - [Session Persistence](https://happyin.space/llm-memory/session-persistence/): How to preserve knowledge, decisions, and progress between LLM agent sessions. Since each session starts with a blank context, explicit persistence me
@@ -716,6 +723,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Test Parallelization](https://happyin.space/testing-qa/test-parallelization/): Running tests in parallel with pytest-xdist. Reduces suite execution time proportionally to worker count - but requires test isolation.
 
 ## Web Frontend
+- [3D Browser Libraries for Product Video](https://happyin.space/web-frontend/3d-browser-libs-for-video/): Comparison of Three.js, React Three Fiber, Spline, Lottie, and other 3D/animation libraries for browser-based product video generation with Remotion.
 - [CSS Animation and Transforms](https://happyin.space/web-frontend/css-animation-and-transforms/): CSS animations are GPU-accelerated, declarative, and don't block the main thread. Use JS animation only for dynamic creation, complex orchestration, o
 - [CSS Box Model and Layout](https://happyin.space/web-frontend/css-box-model-and-layout/): Every HTML element is a rectangular box with four layers. Understanding the box model, display, position, and units is foundational for all CSS layout
 - [CSS Flexbox](https://happyin.space/web-frontend/css-flexbox/): Flexbox is a 1-dimensional layout system for distributing space and aligning items along a single axis (row or column). It replaced float-based layout
@@ -745,8 +753,10 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [React Rendering Internals](https://happyin.space/web-frontend/react-rendering-internals/): Understanding how React renders enables writing performant applications. React uses a Virtual DOM and Fiber architecture to minimize real DOM operatio
 - [React State and Hooks](https://happyin.space/web-frontend/react-state-and-hooks/): Hooks let functional components manage state, side effects, and lifecycle without classes.
 - [React Styling Approaches](https://happyin.space/web-frontend/react-styling-approaches/): Two dominant patterns for styling React: CSS Modules (scoped traditional CSS) and Tailwind CSS (utility-first). Both work out of the box with Vite.
+- [Remotion: Programmatic Video with React](https://happyin.space/web-frontend/remotion-programmatic-video/): Build product demos, marketing videos, and pitch decks as React components — render to MP4 with frame-accurate animation control.
 - [TypeScript Advanced Types](https://happyin.space/web-frontend/typescript-advanced/): TypeScript's type system is a programming language itself - types can be computed, transformed, and composed using generics, conditional types, mapped
 - [TypeScript Fundamentals](https://happyin.space/web-frontend/typescript-fundamentals/): TypeScript is a typed superset of JavaScript that compiles to plain JS. All valid JS is valid TS. Static type checking catches errors at compile time.
+- [Video & Motion Design Rules](https://happyin.space/web-frontend/video-motion-design-rules/): Concrete numbers for timing, easing, audio levels, composition, and storytelling in product videos and motion graphics.
 
 ## Natural Language & Writing
 - [AI Text Detection](https://happyin.space/writing/ai-text-detection/): Methods and research for identifying AI-generated text. Detection relies on statistical markers (word frequency shifts), structural patterns (low burs

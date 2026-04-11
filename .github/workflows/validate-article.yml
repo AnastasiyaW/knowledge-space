@@ -55,9 +55,9 @@ jobs:
               echo "::warning file=$file::Article is very long ($lines lines, consider splitting)"
             fi
 
-            # Check has H1 title
-            if ! head -5 "$file" | grep -q "^# "; then
-              echo "::error file=$file::Missing H1 title (first line should be '# Title')"
+            # Check has H1 title (may be after frontmatter, so check first 15 lines)
+            if ! head -15 "$file" | grep -q "^# "; then
+              echo "::error file=$file::Missing H1 title"
               errors=$((errors + 1))
             fi
 
