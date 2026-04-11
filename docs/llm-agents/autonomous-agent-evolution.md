@@ -168,6 +168,74 @@ def already_evaluated(code: str) -> bool:
     return (SHARED / "attempts" / f"{h}.json").exists()
 ```
 
+## CORAL Framework
+
+Reference implementation: [github.com/Human-Agent-Society/Coral](https://github.com/Human-Agent-Society/Coral) (MIT, 429 stars). Multi-agent research infrastructure by MIT/NUS/Stanford/Meta.
+
+### Setup and Launch
+
+```bash
+git clone https://github.com/Human-Agent-Society/CORAL.git && cd CORAL
+uv sync --extra ui    # include web dashboard
+uv run coral start -c examples/kernel_builder/task.yaml
+```
+
+### Task Definition (task.yaml)
+
+```yaml
+task_name: kernel_builder
+num_agents: 4
+runtime: claude-code   # or opencode, codex
+grader: examples/kernel_builder/grader.py
+max_iterations: 100
+heartbeat_interval: 10  # consolidation every N evals
+stagnation_threshold: 5
+```
+
+### Custom Grader
+
+```python
+from coral.grading import TaskGrader, ScoreBundle
+
+class KernelGrader(TaskGrader):
+    def evaluate(self, workspace: str) -> ScoreBundle:
+        # Run benchmark, return structured scores
+        cycles = run_kernel_benchmark(workspace)
+        return ScoreBundle(
+            primary=1.0 / cycles,          # lower cycles = higher score
+            metrics={"cycles": cycles, "correctness": verify(workspace)},
+        )
+```
+
+### Supported Runtimes
+
+| Runtime | Command | Notes |
+|---------|---------|-------|
+| Claude Code | `claude` | Default, most tested |
+| OpenCode | `opencode` | Open-source terminal agent |
+| Codex | `codex` | OpenAI coding agent |
+
+All require pre-installation. Runtime selection per `task.yaml`.
+
+### Evaluation Flow
+
+Agents call `uv run coral eval -m "description"` which atomically: stages changes, commits, runs grader, records attempt to `.coral/public/attempts/`, updates shared knowledge.
+
+### Additional Features
+
+- **Web dashboard** on port 8420 (`uv run coral ui`) - real-time agent monitoring
+- **LiteLLM gateway** - custom model routing for non-default providers
+- **Docker session mode** - containerized agent isolation
+- **Warm-start literature review** - agents review prior art before optimization
+- **Post-commit hooks** - automatic evaluation triggers
+
+### Benchmarks
+
+| Task | CORAL (4 agents) | AlphaEvolve | Speedup |
+|------|-------------------|-------------|---------|
+| Erdos Minimum Overlap | 99% of optimal, 34 min | 99% of optimal, 5.2h | ~9x |
+| Anthropic Kernel | 1103 cycles | 1363 cycles | 19% better |
+
 ## Comparison with Linear Approaches
 
 | Aspect | Linear (autoresearch) | Parallel Evolution |

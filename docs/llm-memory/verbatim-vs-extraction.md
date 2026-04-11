@@ -93,6 +93,18 @@ def store_with_metadata(text: str, context: dict):
     vector_store.add(documents=[text], metadatas=[metadata])
 ```
 
+### Graph-Based Compression (MemPalace Pattern)
+
+Instead of choosing verbatim vs extraction, store both in a knowledge graph: raw text as "rooms" + extracted entities/relationships as edges. Retrieval traverses the graph, pulling verbatim text only for relevant nodes. Achieves ~30x lossless compression vs flat verbatim storage by deduplicating entity references across memories.
+
+Key architecture:
+1. **Ingest**: store verbatim text with position-aware chunking
+2. **Extract**: build entity graph (people, projects, decisions) from chunks
+3. **Link**: bidirectional edges between entities and source chunks
+4. **Retrieve**: graph traversal from query entities -> pull only relevant verbatim chunks
+
+This avoids the information bottleneck of extraction-only systems (the graph preserves full source text) while achieving compression ratios impossible with flat verbatim (shared entities are stored once, referenced many times).
+
 ### Compression Approaches That Preserve Quality
 
 Lossy abbreviation schemes (custom dialects, acronym compression) empirically degrade retrieval. Tested on benchmarks: 96.6% baseline drops to 84.2% with aggressive compression. Token counting bugs in compression implementations are common - always validate with a proper tokenizer, not `len(text) // 3`.
