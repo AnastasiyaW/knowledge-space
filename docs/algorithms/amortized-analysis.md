@@ -49,4 +49,4 @@ Even though a single resize costs O(n), it happens so rarely that the amortized 
 ## See Also
 
 - [[complexity-analysis]] - fundamental complexity concepts
-- [[python:lists-and-tuples]] - Python list internals
+- [[data-structures]] - Python list internals

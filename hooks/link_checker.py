@@ -52,11 +52,13 @@ def _extract_wikilinks(content: str) -> list[tuple[int, str]]:
         for m in re.finditer(r'\[\[([^\]]+)\]\]', cleaned):
             slug = m.group(1).strip()
             # Skip code-like patterns
-            if any(c in slug for c in ("'", '"', ",", "=", "&", "|", "(", ")", ":", "+")):
+            if any(c in slug for c in ("'", '"', ",", "=", "&", "|", "(", ")", "+")):
                 continue
-            # Handle [[domain/slug]] syntax
+            # Handle [[domain/slug]] and [[domain:slug]] syntax
             if "/" in slug:
                 slug = slug.rsplit("/", 1)[-1]
+            if ":" in slug:
+                slug = slug.rsplit(":", 1)[-1]
             links.append((i, slug))
 
     return links

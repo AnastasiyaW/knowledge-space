@@ -123,4 +123,4 @@ sorted(products, key=lambda p: p['price'])  # by dict field
 
 - [[complexity-analysis]] - understanding O-notation
 - [[searching-algorithms]] - binary search requires sorted input
-- [[python:built-in-functions]] - sorted() and sort() details
+- [[functions]] - sorted() and sort() details
