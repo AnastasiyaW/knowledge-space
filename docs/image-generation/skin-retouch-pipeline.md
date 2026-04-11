@@ -104,6 +104,8 @@ At 2-20px mask size, there's nothing to "hallucinate" - just copy neighboring sk
 - Good on small uniform areas, poor on complex texture boundaries
 - Fourier convolutions can flatten skin texture in larger masks
 - Use with HF reinjection post-fix (see below)
+- **LaMa-Dilated** (Qualcomm, 45.6M, 174 MB): w8a16 quantized ONNX available, 28-32ms on mobile SoCs
+- **OpenCV DNN LaMa** (`opencv/inpainting_lama` on HF): runs via `cv2.dnn` without PyTorch, CPU-only path
 
 #### FLUX.1 Fill + Turbo-Alpha (24+ GB VRAM)
 
@@ -140,6 +142,19 @@ Train an edit LoRA on FLUX.2 Klein 9B with before/after blemish pairs (50-200 pa
 **Cons:** no control over what gets modified - risk of overcorrecting (smoothing pores, removing moles). Works best as semi-automated with human selection of final result.
 
 See [[LoRA Fine-Tuning for Editing Models]] for training details.
+
+## Model Specs Reference
+
+| Model | Params | FP32 size | VRAM (512x512) | GPU speed | CPU speed | ONNX | License |
+|-------|--------|-----------|----------------|-----------|-----------|------|---------|
+| LaMa (regular) | 27M | ~107 MB | ~300 MB | ~30ms | ~200ms | Yes | Apache 2.0 |
+| Big-LaMa | 51M | ~208 MB | ~500 MB | ~50ms | ~500ms | Yes | Apache 2.0 |
+| LaMa-Dilated | 45.6M | 174 MB | ~400 MB | ~30ms | ~200ms | Yes (Qualcomm w8a16) | Apache 2.0 |
+| MAT | ~61M | ~250 MB | ~500-800 MB | ~50ms | ~800ms | No | MIT |
+| SD 1.5 Inpaint | ~860M | ~2 GB | 4-6 GB | ~3s | ~30s | Partial | CreativeML |
+| OpenCV TELEA | 0 | 0 | 0 | <1ms | <5ms | N/A | BSD |
+
+**SD 1.5 inpainting is rejected for <2 GB VRAM** - even INT8 quantized needs 3.5+ GB. Critical issue beyond VRAM: diffusion models generate new latent content (64px patch for a 20-25px mask), destroying pore-level high-frequency texture outside the mask boundary. Fundamental mismatch with texture preservation requirements.
 
 ## VRAM Budget Guide
 

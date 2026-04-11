@@ -47,6 +47,27 @@ Supports: FLUX, Flux Kontext, Wan, HunyuanVideo, Chroma, SD3.5, SDXL
 
 Tune `nag_tau` + `nag_alpha` first, then `nag_scale`. Acts as negative guidance improving structural coherence.
 
+### Flux2Klein-Enhancer (Klein 9B Only)
+
+```
+Repo: github.com/capitan01R/ComfyUI-Flux2Klein-Enhancer
+Klein 9B ONLY - does not work with other FLUX variants
+```
+
+Modifies active text embedding region to improve prompt adherence. Makes anatomical prompt language "stick" better when Klein ignores it:
+
+| Parameter | Anatomy use | Notes |
+|-----------|-------------|-------|
+| `magnitude` 1.15-1.25 | Gentle: makes anatomy prompts effective | >1.4 causes distortion |
+| `contrast` 0.10-0.20 | Sharpens concept separation | High values over-separate |
+| `normalize_strength` 0-1 | Balances token emphasis | - |
+
+Combine with anatomy LoRA: enhancer makes the prompt effective, LoRA enforces the anatomy direction. NAG adds a third orthogonal axis - none cancel each other.
+
+### VSF - Value Sign Flip (arXiv 2508.10931)
+
+Inference technique for negative guidance in few-step distilled models. Flips value signs in self-attention to achieve negative guidance effect without CFG. Works in models where standard negative prompts have no effect due to distillation. Complementary to NAG - both target different levels of the attention mechanism.
+
 ### Other Guidance Methods
 
 - **PAG** (Perturbed-Attention Guidance): fixes ~80% of finger errors in SDXL at scale=0.3. FLUX support NOT confirmed.
@@ -140,15 +161,36 @@ unconditional: "broken hands, extra fingers, deformed anatomy"
 # Total time: ~5 minutes
 ```
 
-### Pre-trained LoRAs
+### Pre-trained LoRAs for Klein 9B
 
-| LoRA | Platform | Notes |
-|------|----------|-------|
-| Klein Anatomy/Quality Fixer | Civitai | Weight 2.0 (minor) to 3.0 (major fixes), 50 training steps |
-| Hand Detail FLUX & XL | Civitai | v3.0-FLUX, adds hand detail |
-| Better Hands - Flux | Civitai | v1.0, FLUX-specific |
+| LoRA | Notes | Weight range |
+|------|-------|-------------|
+| **klein_slider_anatomy v1.5** (Civitai 2324991) | Anatomy ONLY, no quality effects. v1.0 also fixes quality. Klein-native. | 2.0-4.0 (NOT 0-1 scale) |
+| **DPO Klein 9B** (Civitai 2427102) | DPO-trained on anatomy preference pairs. Targets waxy skin + bad arms/legs/hands. | 0.5-1.0 |
+| Hand Detail FLUX (Civitai 260852 v3.0) | **FLUX.1 Dev ONLY** - NOT Klein compatible | - |
+| Better Hands - Flux | FLUX-specific, check Klein compatibility | 0.5-0.8 |
 
-Apply at strength 0.5-0.8 (not 1.0 - can over-correct). Can stack with style LoRA if total weight stays under 1.5.
+**Critical:** `klein_slider_anatomy` uses a 1.0-4.0 weight scale, not 0-1. Weight 2.0 = minor fix, 3.0 = prominent fix, 4.0 = maximum. Stacking at 0.5-1.0 has no meaningful effect.
+
+**Stacking order for style + anatomy:**
+
+```
+1. Style LoRA:              weight 0.7-1.0, strength_clip 0.4-0.6
+2. klein_slider_anatomy v1.5: weight 2.0-3.0, strength_clip 0.3-0.5
+3. DPO Klein 9B (optional): weight 0.4-0.6
+
+CLIP weight trick: reduce strength_clip on anatomy LoRA more than strength_model.
+anatomy LoRA model: 1.0-3.0, clip: 0.3-0.5
+This lets anatomy correction affect denoising trajectory while limiting
+its influence on text token processing (where style gets encoded).
+```
+
+### Asian/Community Anatomy LoRAs
+
+Available on Tensor.Art, Shakker.ai, LiblibAI for Klein 9B:
+- **手部肢体修复完善 V5** (Tensor.Art): body + limb repair, V5 with improved hand + torso
+- **YesWenwen Hand Repair** (Shakker): dedicated hand repair LoRA
+- **Xian-T Hand Repair** (LiblibAI): community-tested for hands/fingers
 
 ## Training Data for Anatomy Correction
 
@@ -184,15 +226,26 @@ Apply at strength 0.5-0.8 (not 1.0 - can over-correct). Can stack with style LoR
 
 ## Klein 9B Best Anatomy Pipeline
 
-**Recommended order (effectiveness ranking):**
+**Step 1 (before LoRAs): generation parameters**
 
-1. **Generation**: Base 9B, 25-30 steps, euler, CFG 3.5-4.0
-2. **During sampling**: NAG (`nag_sigma_end=0.75`)
-3. **Post-gen detection**: `hand_yolov8s.pt` + `face_yolov8m.pt` via Impact Pack
-4. **If hands bad**: HandFixer or MeshGraphormer -> FLUX Fill inpaint at denoise 0.7
-5. **If face bad**: FaceDetailer at denoise 0.4-0.5
-6. **Quality gate**: aesthetic score + hand detection confidence
-7. **If still bad**: regenerate with new seed (up to 3-4 attempts)
+| Parameter | Default | Better anatomy |
+|-----------|---------|----------------|
+| Steps | 4 | 8+ (dramatic improvement, especially for complex poses) |
+| Sampler | euler | res2s (2x compute, better anatomy in complex poses) |
+| CFG | 1.0 | 1.2-1.5 (narrow sweet spot - higher breaks) |
+| Pose complexity | any | Simpler poses = fewer anatomy failures |
+
+**Recommended pipeline order (effectiveness ranking):**
+
+1. **Generation**: 8+ steps, simpler pose, res2s sampler
+2. **LoRA stack**: `klein_slider_anatomy v1.5` weight 2.0-3.0 + optional DPO at 0.5
+3. **During sampling**: NAG (`nag_sigma_end=0.75`) + Flux2Klein-Enhancer (magnitude 1.15-1.25)
+4. **Post-gen detection**: `hand_yolov8s.pt` + `face_yolov8m.pt` via Impact Pack
+5. **If hands bad**: HandFixer or MeshGraphormer -> FLUX Fill inpaint at denoise 0.7
+6. **If face bad**: FaceDetailer at denoise 0.4-0.5
+7. **Inpainting fallback**: same Klein 9B + same full LoRA stack, mask only bad area, denoise 0.35-0.45
+8. **Quality gate**: aesthetic score + hand detection confidence
+9. **If still bad**: regenerate with new seed (up to 3-4 attempts)
 
 ### Klein 9B Distilled vs Base for Anatomy
 
@@ -234,6 +287,8 @@ git clone https://github.com/ChenDarYen/ComfyUI-NAG
 - **MeshGraphormer control_strength=1.0 kills texture**: using full control strength from the depth map produces plasticky, over-smoothed hands. Use 0.4-0.8 range for realistic results.
 - **Klein distilled CFG must be 1.0**: the distilled model has guidance baked in. CFG > 2.0 produces "deep-fried" artifacts. The base model supports CFG 3.5-5.0 for better anatomy control.
 - **4B models have significantly worse anatomy than 9B**: neither 4B variant (distilled or base) achieves acceptable anatomy quality for professional use. Budget for 9B.
+- **klein_slider_anatomy weight scale is 1-4, not 0-1**: applying at weight 0.5-1.0 (typical LoRA range) has no meaningful effect. Use 2.0 for minor fixes, 3.0 for prominent artifacts.
+- **Inpainting fallback must use same model + same LoRA stack**: using HandFixer (FLUX.1 Fill) on Klein-generated images creates style boundary mismatch. Use Klein 9B for the inpainting pass too.
 
 ## See Also
 
