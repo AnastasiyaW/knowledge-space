@@ -287,6 +287,15 @@
     });
   </script>
 
+  {# hreflang for multilingual llms.txt discovery #}
+  <link rel="alternate" hreflang="en" href="{{ config.site_url }}llms.txt" />
+  <link rel="alternate" hreflang="zh" href="{{ config.site_url }}llms-zh.txt" />
+  <link rel="alternate" hreflang="ko" href="{{ config.site_url }}llms-ko.txt" />
+  <link rel="alternate" hreflang="es" href="{{ config.site_url }}llms-es.txt" />
+  <link rel="alternate" hreflang="de" href="{{ config.site_url }}llms-de.txt" />
+  <link rel="alternate" hreflang="fr" href="{{ config.site_url }}llms-fr.txt" />
+  <link rel="alternate" hreflang="x-default" href="{{ config.site_url }}llms.txt" />
+
   {% if page %}
   {# Open Graph meta tags #}
   <meta property="og:type" content="article" />
@@ -295,7 +304,15 @@
   <meta property="og:url" content="{{ page.canonical_url }}" />
   <meta property="og:site_name" content="{{ config.site_name }}" />
 
-  <meta property="og:image" content="{{ config.site_url }}assets/og-image.png" />
+  {# Per-domain OG image: /assets/og-{domain}.png, fallback to og-image.png #}
+  {% set og_img = config.site_url ~ "assets/og-image.png" %}
+  {% if page.file and page.file.src_path %}
+    {% set parts = page.file.src_path.split("/") %}
+    {% if parts | length > 1 %}
+      {% set og_img = config.site_url ~ "assets/og-" ~ parts[0] ~ ".png" %}
+    {% endif %}
+  {% endif %}
+  <meta property="og:image" content="{{ og_img }}" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
 
@@ -303,7 +320,41 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="{{ page.title }} - {{ config.site_name }}" />
   <meta name="twitter:description" content="{{ (page.meta.description if page.meta and page.meta.description) | default(config.site_description) }}" />
-  <meta name="twitter:image" content="{{ config.site_url }}assets/og-image.png" />
+  <meta name="twitter:image" content="{{ og_img }}" />
+  {% endif %}
+
+  {# BreadcrumbList JSON-LD - helps Google show path in SERP #}
+  {% if page and not page.is_homepage %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "{{ config.site_name }}",
+        "item": "{{ config.site_url }}"
+      }{% if page.parent %},
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "{{ page.parent.title }}",
+        "item": "{{ config.site_url }}{{ page.parent.url }}"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "{{ page.title }}"
+      }{% else %},
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "{{ page.title }}"
+      }{% endif %}
+    ]
+  }
+  </script>
   {% endif %}
 
   {# WebSite JSON-LD with availableLanguage - on homepage only #}
@@ -375,6 +426,12 @@
     "proficiencyLevel": "{{ page.meta.level | default('Intermediate') }}",
     "inLanguage": "en"
   }
+  </script>
+  {% endif %}
+  {# FAQPage JSON-LD from Gotchas section - injected by hooks/faq_schema.py #}
+  {% if page and page.meta and page.meta._faq_schema %}
+  <script type="application/ld+json">
+  {{ page.meta._faq_schema }}
   </script>
   {% endif %}
 {% endblock %}

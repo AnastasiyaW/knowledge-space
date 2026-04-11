@@ -81,6 +81,7 @@ hooks:
   - hooks/copy_extras.py
   - hooks/public_check.py
   - hooks/levels.py
+  - hooks/faq_schema.py
 
 markdown_extensions:
   - pymdownx.highlight:
