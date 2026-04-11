@@ -68,8 +68,8 @@ Comprehensive reference covering statistics, machine learning, deep learning, co
 
 ## Cross-Topic Links
 
-- [[python:python-fundamentals]] - general Python beyond DS
-- [[sql-databases:sql-fundamentals]] - database theory and administration
-- [[algorithms:algorithm-complexity]] - computational complexity
-- [[data-engineering:etl-pipelines]] - data pipeline infrastructure
-- [[llm-agents:prompt-engineering]] - prompt engineering for LLMs
+- [[python-for-ds]] - Python setup for data science workflows
+- [[sql-for-data-science]] - SQL for analytical queries
+- [[complexity-analysis]] - computational complexity
+- [[etl-elt-pipelines]] - data pipeline infrastructure
+- [[prompt-engineering]] - prompt engineering for LLMs
