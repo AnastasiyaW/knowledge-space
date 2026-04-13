@@ -317,6 +317,74 @@ Lighting descriptions have the single greatest impact on output quality. Be spec
 | Medium | 30-80 | Production work |
 | Long | 80-300+ | Complex editorial/product |
 
+## Model Variants (Full Catalog)
+
+| Variant | Size | VRAM | Speed | Notes |
+|---------|------|------|-------|-------|
+| FLUX.2-klein-4B (distilled) | 4B | ~16 GB | Fastest | 4-step, basic use |
+| FLUX.2-klein-4B-base | 4B | ~16 GB | Fast | 20+ steps, better anatomy |
+| FLUX.2-klein-9B (distilled) | 9B | ~24 GB | Fast | 4-8 steps, production default |
+| FLUX.2-klein-base-9B | 9B | ~28 GB | Medium | 20-30 steps, LoRA training target |
+| FLUX.2-klein-9B-kv | 9B | ~24 GB | **2.5× faster** | KV-cache for ref images |
+| FLUX.2-klein-4B-fp8 | 4B | ~12 GB | Faster | fp8 quantized |
+| FLUX.2-klein-9B-fp8 | 9B | ~18 GB | Faster | fp8 quantized, maintains grain |
+| FLUX.2-klein-9B-nvfp4 | 9B | ~12 GB | Fastest | nvfp4 for Blackwell GPUs |
+
+**KV variant (9B-kv):** caches key-value pairs for reference images during multi-image editing. 2.5× faster than vanilla 9B for reference-conditioned generation. Use when doing face swap, head swap, or reference-guided editing.
+
+## Official BFL LoRAs
+
+| LoRA | Function | Scale |
+|------|---------|-------|
+| Move LoRA | Relocate objects via bounding box conditioning | 1.0 (quality) / 1.25 (fast) |
+| Relight LoRA (IC-Light V2) | Relighting with scene reference | 1.0 |
+| Delight LoRA | Remove lighting → neutral diffuse | 1.0 |
+| Face Swap LoRA | Identity-preserving face replacement | 0.8-1.0 |
+| Consistency Edit LoRA | Maintain subject appearance during editing | 0.7-0.9 |
+
+## Move LoRA: Visual Bounding Box Conditioning
+
+Move objects by drawing red (source) and green (destination) rectangles directly on the image.
+
+**How it works:**
+1. Detection: Qwen3-VL-8B reads burned-in colored rectangles
+2. Red rectangle = source location
+3. Green rectangle = destination location
+4. Klein 9B executes the move
+
+```python
+# Workflow in ComfyUI:
+# 1. Load image
+# 2. Draw red box around object to move (paint tool or overlay)
+# 3. Draw green box at destination
+# 4. Load Move LoRA at scale 1.25 (fast mode) or 1.0 (quality mode)
+# 5. Generate
+
+# Prompt template:
+prompt = f"Move the {object_description} to {destination_description}"
+```
+
+**Two modes:**
+- Fast mode: 8 steps, LoRA scale 1.25 - for quick iteration
+- Quality mode: 30 steps, LoRA scale 1.0 - for final output
+
+**Limitations:** complex scenes with overlapping objects. When multiple objects overlap, Qwen3-VL-8B sometimes misidentifies which object is in the red box. Add explicit object description to prompt.
+
+## FLUX.1-Dev Adapter Incompatibility
+
+ALL FLUX.1-dev adapters fail on Klein 9B due to dimension mismatch:
+
+| Adapter | Error | Root Cause |
+|---------|-------|-----------|
+| Redux | dim mismatch | FLUX.1-dev hidden_dim=3072 |
+| USO | dim 3072 vs 4096 | FLUX.1-dev only |
+| IP-Adapter | Not trained | No Klein-native version exists |
+| RES4LYF | dim mismatch | Redux-based |
+| Realism LoRA (XLabs) | dim 3072 | FLUX.1-dev only |
+| Shakker Add-Details LoRA | dim 3072 | FLUX.1-dev only |
+
+**Klein 9B dimensions:** hidden_dim=4096, joint_attention_dim=12288. A Klein-native adapter would require training a SigLIP→MLP projector (~85M params) on 50K-200K style pairs from scratch.
+
 ## Gotchas
 
 - **4B LoRA incompatible with 9B**: different text encoder sizes (Qwen 3-4B vs Qwen 3-8B). LoRAs are not interchangeable between Klein 4B and Klein 9B.
@@ -325,6 +393,7 @@ Lighting descriptions have the single greatest impact on output quality. Be spec
 - **Detail Daemon needs higher values on FLUX**: SDXL uses detail_amount <0.25, FLUX needs 0.3-1.0+. Using SDXL values produces no visible change.
 - **"Enhance" in prompts causes artifacts**: Klein associates this word with aggressive AI upscaling look. Use "8K" and "intricate details" instead.
 - **Steps above 50 degrade quality**: Klein Base 9B is designed for 25-50 steps. Going higher produces overcooked results. For more detail, use multi-pass or LoRAs, not more steps.
+- **All FLUX.1-dev adapters incompatible with Klein 9B**: hidden_dim mismatch (3072 vs 4096). No IP-Adapter, Redux, or USO works on Klein. Check adapter's target architecture before downloading.
 
 ## See Also
 

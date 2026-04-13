@@ -197,5 +197,7 @@ Resources: [Russian TTS Leaderboard](https://huggingface.co/spaces/ESpeech/open_
 ## See Also
 
 - [[voice-cloning]] - dedicated coverage of cloning techniques and cross-lingual transfer
+- [[voice-design]] - creating unique voice identities from text descriptions, voice mixing (Slerp, Cartesia, VoxMorph)
+- [[asr-stt-compression]] - KV cache compression for TTS inference (TriAttention, TurboQuant)
 - [[audio-generation]] - music and sound effect generation
 - [[speech-recognition]] - ASR models used for TTS evaluation (WER measurement)

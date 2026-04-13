@@ -152,6 +152,72 @@ The most successful published face swap LoRA (BFS) used:
 
 Start broad, filter to best pairs, continue training. Dataset refinement matters more than progressive resolution.
 
+**Key insight:** dataset quality accounts for ~90% of output quality. Poor datasets produce poor LoRAs regardless of hyperparameters.
+
+### Character/Face LoRA Parameters (Community Consensus)
+
+Based on 50+ A/B tests (Calvin Herbst), BFL official docs, and Chinese community (Zhihu):
+
+| Parameter | Character/Face | Style |
+|-----------|---------------|-------|
+| Rank | 32 (start), 128 for style | 128/64/64/32 |
+| Alpha | rank or rank/2 | 64/32 |
+| LR | 1e-4 (reduce to 5e-5 if unstable) | 9.5e-5 |
+| Timestep type | **sigmoid** (face LoRA) | shift (BFL default) |
+| Scheduler | cosine + warmup (10%) | cosine or constant |
+| Steps | 800-1500 (Flux 2 face) | 3000-7000 |
+| Dataset | 15-25 images (40+ loses focus) | 20-50 images |
+| Class prompts | **DO NOT USE** (hurts Flux) | N/A |
+| Regularization images | Yes (6:1 ratio) | Optional |
+
+**Why sigmoid for faces:** targets low-noise timesteps that capture fine identity detail. "Shift" (BFL default) biases toward high-noise timesteps which learn coarse structure. Three independent sources confirm sigmoid for character LoRAs.
+
+**Flux 2 vs Flux 1 convergence:** Flux 2 (including Klein) converges 40-50% faster than Flux 1. Optimal face steps: 800-1500 (Flux 2) vs 1000-2000 (Flux 1). >2000 steps on Flux 2 face = overfitting territory.
+
+**Overfitting non-monotonic (CN finding):** Checkpoint at epoch 6 may be good, epoch 8 overfit, epoch 10 good again. Save every 250-500 steps, test each checkpoint.
+
+### LR Scheduling for Face LoRAs
+
+| Schedule | When to Use | Evidence |
+|----------|------------|---------|
+| Constant | Short runs (<1500 steps), known good LR | Majority community default |
+| Cosine + warmup | 2000-5000 steps, insurance against late overfit | Direct evidence (15 LoRA comparison) |
+| Prodigy (LR=1.0) | Uncertain LR, want auto-adaptation | Strongest for face training specifically |
+| Polynomial (1e-3→1e-4) | "Aggressive start, conservative end" | ExponentialML experiment |
+
+**Prodigy config:**
+```yaml
+optimizer: prodigy
+learning_rate: 1.0
+lr_scheduler: cosine
+optimizer_args: decouple=true, use_bias_correction=false, weight_decay=0.05
+lr_warmup_steps: 200
+```
+Prodigy needs 20-30% more steps than AdamW to achieve same convergence.
+
+### ICEdit Diptych Training
+
+Alternative approach: instead of before/after image pairs, place both images side-by-side in a diptych and train the model to understand the "edit" from left to right.
+
+```
+[before_image | after_image]  ← concatenated horizontally
+Caption: "EDITWORD: [description of change]"
+```
+
+Higher data efficiency than separate pairs. The model learns the visual delta rather than memorizing absolute appearances.
+
+### LoRAShop: Training-Free Multi-LoRA Mixing
+
+Merge multiple LoRAs without additional training via weight interpolation in parameter space:
+
+```python
+# Weighted average of LoRA delta weights
+merged_lora = sum(w_i * lora_i for w_i, lora_i in zip(weights, loras))
+# Normalize: weights sum to 1.0
+```
+
+Works best when LoRAs target similar content. Quality degrades when mixing LoRAs with very different training objectives (e.g., style + face).
+
 ### Layer Targeting for Face Edit
 
 | Approach | Target | Result |

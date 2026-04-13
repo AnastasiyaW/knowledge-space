@@ -92,6 +92,118 @@ Quick reference (FP16 U-Net restoration model, 20 MB weights):
 
 **BatchNorm warning**: tiling with BatchNorm causes artifacts that overlap cannot fix (statistics computed per-tile, not per-image). Use LayerNorm/InstanceNorm, or train on tiles matching inference size.
 
+## Global Context Conditioning
+
+Standard tiling loses global context per-tile. Methods to inject scene-wide information:
+
+### CMod (Channel-wise Modulation)
+
+64-dimensional global context vector derived from the full image (downsampled or separately encoded). Injected at each tile via channel-wise multiplication in the feature space.
+
+```python
+# Global vector: encode downsampled image → 64d vector
+global_ctx = encoder_small(image_resized)  # [B, 64]
+# Inject per tile via FiLM-style modulation
+for tile_features in tile_feature_list:
+    scale, shift = proj_layer(global_ctx).chunk(2, dim=-1)
+    tile_features = tile_features * (1 + scale) + shift
+```
+
+Advantage over cross-attention: 64d vector is extremely lightweight. Constant overhead regardless of image size.
+
+### FiLM (Feature-wise Linear Modulation)
+
+Learnable affine transform conditioned on global context at each normalization layer. More expressive than CMod, compatible with LayerNorm-based architectures.
+
+### Bottleneck Attention (DehazeXL)
+
+Tokenize full image at low resolution → encode to bottleneck → inject via cross-attention into each tile's processing. Tile attends to global semantic tokens while doing local processing.
+
+```
+Full image (downsampled) → Tokenize → Encoder → [bottleneck tokens]
+Each tile processing:
+  Tile tokens (local) + bottleneck tokens (global) → cross-attention → tile output
+```
+
+### Taxonomy of Global Context Methods
+
+| Method | Mechanism | Overhead | Best For |
+|--------|-----------|---------|---------|
+| CMod | 64d channel multiply | Minimal | Color/lighting consistency |
+| FiLM | Affine at each norm layer | Low | Style consistency |
+| Bottleneck attn (DehazeXL) | Cross-attn to global tokens | Medium | Semantic consistency |
+| ConvGRU | Recurrent scanning | Medium | Sequential coherence |
+| Mamba | State-space scanning | Medium | Long-range dependencies |
+| Skip-residual (DemoFusion) | Add global image downsampled | Low | Structure consistency |
+
+### Positional Encoding for Tiles
+
+| Method | Global Awareness | Cost |
+|--------|-----------------|------|
+| None (no PosEnc) | Tile-local only | Zero |
+| Learned tile position embedding | Knows grid position | Minimal |
+| RoPE on full-image coords | Continuous position | Low |
+| Spectral encoding of location | Frequency-based position | Low |
+
+## 2025 Papers: Artifact Reduction
+
+### STA (Sliding Tile Attention)
+
+Tiles the attention computation itself (not just inference). 91% sparsity in attention mask, 3.53× speedup on long sequences. Applied to FLUX for high-res generation. Not inference-time only - built into the model's attention mechanism.
+
+### FreeScale
+
+Scale Fusion: separates self-attention into global (low-frequency structure) and local (high-frequency detail) branches. Local branch processes individual tiles, global branch processes downsampled full image. Merges at inference time without fine-tuning.
+
+```python
+# Conceptual:
+global_attn = self_attention(downsample(full_image))  # structure
+local_attn = self_attention(tile)  # detail
+output = merge(global_attn, local_attn)
+```
+
+### ScaleDiff (NPA + LFM + SDEdit)
+
+Three components:
+- **NPA (Non-uniform Pixel Aggregation)**: weighted tile blending based on confidence scores instead of uniform averaging
+- **LFM (Local Feature Matching)**: aligns features across tile boundaries before blending
+- **SDEdit integration**: runs partial-noise SDEdit on boundary zones to smooth remaining artifacts
+
+### APT (Adaptive Pattern Transfer)
+
+Statistical matching at tile boundaries:
+```python
+# For each overlapping boundary region:
+mu_left, sigma_left = target_region.mean(), target_region.std()
+mu_right, sigma_right = neighbor_region.mean(), neighbor_region.std()
+# Transfer statistics: align neighbor to match target's distribution
+neighbor_normalized = (neighbor_region - mu_right) / sigma_right
+neighbor_aligned = neighbor_normalized * sigma_left + mu_left
+```
+
+No learning required. Works as post-processing on any tiled output.
+
+### AccDiffusion v2 (Patch-Content-Aware Prompting)
+
+Generates per-tile prompts by querying a VLM about the tile content. Prevents object duplication: if left tile has "mountain", right tile prompt explicitly excludes "mountain" or specifies "continuation of mountain range."
+
+```python
+tile_caption = vlm_describe(tile_crop_from_low_res_guide)
+unique_tile_prompt = base_prompt + " " + tile_caption
+```
+
+### SANA Compatibility Matrix
+
+| Method | SANA Compatible | Notes |
+|--------|----------------|-------|
+| SyncDiffusion | No | UNet-based, incompatible |
+| MultiDiffusion | Partial | Works but ignores linear attention structure |
+| DemoFusion | No | UNet-specific skip connections |
+| FreeScale | Yes | Architecture-agnostic |
+| APT | Yes | Post-processing, model-agnostic |
+| AccDiffusion v2 | Yes | Prompt-level, model-agnostic |
+| DC-AE native tiling | Yes | `pipe.vae.enable_tiling(...)` |
+
 ## See Also
 
 - [[Low-VRAM Inference Strategies]] - adaptive tile sizing, memory management

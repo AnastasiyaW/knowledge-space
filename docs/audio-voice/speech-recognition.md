@@ -219,3 +219,4 @@ Available resources:
 - [[podcast-processing]] - full pipeline using ASR + diarization + editing
 - [[tts-models]] - TTS models that use ASR for quality evaluation
 - [[voice-cloning]] - WhisperX alignment used in speech editing workflows
+- [[asr-stt-compression]] - KV cache compression for ASR/TTS inference (TriAttention, TurboQuant)

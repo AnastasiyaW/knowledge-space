@@ -354,6 +354,35 @@ export const typewriter = (text: string, frame: number, startFrame = 0, charsPer
 };
 ```
 
+## Apple-Style Product Video Design
+
+**One thing per scene.** Never two primary elements competing. 60-70% frame is negative space. Slow reveals build anticipation; rhythm alternates fast cuts (2-3s) with hero shots (5-8s).
+
+### Typography scale (1920x1080)
+
+| Role | Size | Weight |
+|------|------|--------|
+| Hero stat ("2x faster") | 120-200px | 800-900 |
+| Section title | 64-80px | 600 |
+| Subtitle | 36-48px | 500 |
+| Body | 24-32px | 400 |
+| Caption | 16-20px | 400 |
+| **Minimum** | **16px** | any |
+
+**Font:** `@remotion/google-fonts/Inter` (open SF Pro alternative).
+
+### Color palette
+
+Maximum 3 colors per video. Background:text contrast minimum 7:1 (WCAG AAA).
+
+| Color | Hex | When |
+|-------|-----|------|
+| Black | `#000000` | Premium tech bg |
+| Apple blue | `#007AFF` | CTAs, tech features |
+| Green | `#34C759` | Growth, success metrics |
+| Orange | `#FF9500` | Attention, urgency |
+| Purple | `#AF52DE` | Premium, creative tools |
+
 ## Logo Animation Patterns
 
 ```tsx

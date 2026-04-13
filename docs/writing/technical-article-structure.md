@@ -182,6 +182,91 @@ From analysis of highest-rated technical articles:
 - **Issue:** Including every detail about the setup makes the article inaccessible to readers with different environments. **Fix:** State your exact environment (OS, versions, hardware) once at the top, then focus on the concepts. Link to setup guides rather than embedding them.
 - **Issue:** Code examples that work in isolation but not in real projects because imports, configuration, and error handling are omitted. **Fix:** Show complete, runnable code for at least one key example. Mark simplified examples explicitly: "// simplified - see full version at [link]."
 
+## Content Frameworks
+
+### Story Spine (Pixar-adapted)
+
+Maps well to debugging stories and architecture decisions. The "Man in Hole" narrative shape (problem → worse → solved):
+
+```
+"Once upon a time..." → project context, how things worked
+"Every day..."        → the normal state before the problem
+"One day..."          → the triggering problem or discovery
+"Because of that..."  → failed attempt #1 (include this - it builds trust)
+"Because of that..."  → deeper understanding
+"Until finally..."    → solution and what changed permanently
+```
+
+The "failed attempt" beat is where most technical articles win or lose. Skip it and you get a press release. Include it and you have a story worth reading.
+
+### Problem-Discovery-Solution with Dead Ends
+
+Critical differentiator: failed approaches build trust, save readers time, add narrative tension.
+
+```
+"We tried X and it failed because Y" > clean success story
+```
+
+Readers won't trust an article that has no dead ends. Real engineering has dead ends. If your draft has none, you've edited them out - put them back.
+
+### Learning in Public (Swyx pattern)
+
+Write about what you learn **as** you learn it. Not "expert tutorial" voice - honest process documentation including mistakes. 80% of developers never publish. Just by publishing you're ahead.
+
+Format: write the confusion and the moment it cleared, not just the final answer.
+
+### Practitioner Chronicle
+
+Written from what you **do**, not what you **read**. Reference: Simon Willison (rapid experiments, documents everything), Chip Huyen (bridges research/production), Lilian Weng (deep explainers).
+
+The test: could this article have been written without doing the actual work? If yes, it's a tutorial. If no, it's a chronicle.
+
+### Findings Taxonomy as Article Seeds
+
+During work, tag raw notes with:
+
+- `[DECISION]` → becomes an "Architecture Decisions" article
+- `[GOTCHA]` → becomes a "Things I Wish I Knew" article
+- `[REUSE]` → becomes a tutorial or guide
+- `[STORY]` → becomes a chronicle with narrative arc
+
+### Journalistic SEO
+
+Write answers to specific practitioner questions, not generic topic introductions.
+
+```
+"Why does my RAG pipeline hallucinate on long documents?" ← specific, gets search traffic
+"Introduction to RAG"                                     ← no one searches this
+```
+
+## Platform-Specific Notes
+
+### Habr
+
+- Audience detects filler instantly
+- Headlines: concrete numbers + technical terminology → higher CTR
+- Highest engagement: personal experience + technical depth
+- **Bookmarks** are the real metric - practical evergreen content
+- Anti-patterns: AI-generated text, subtle advertising (flagged by mods)
+- First-hour momentum (1000+ views) triggers trending algorithm
+- Google Discover is a major traffic source for Habr articles
+
+### Medium / dev.to
+
+- Medium: "sense-making" (explaining WHY something works) > step-by-step tutorials
+- dev.to: beginner-friendly, tutorial-heavy, different audience
+- Both: show real messy code first, then explain
+
+## Chronicle → Article Pipeline
+
+```
+1. Capture  (during work): tag [DECISION], [GOTCHA], [REUSE], [STORY], screenshot outputs
+2. Triage   (weekly): scan for narrative arc (problem → struggle → solution)
+3. Outline  (Story Spine): identify the lowest point - that's the article center
+4. Draft    write the problem first (hook), then solution (payoff), fill middle
+5. Polish   cut ruthlessly, add code blocks/screenshots, write headline LAST
+```
+
 ## See Also
 
 - [[natural-writing-style]]

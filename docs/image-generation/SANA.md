@@ -181,13 +181,39 @@ Official support via diffusers `train_dreambooth_lora_sana.py`. See [[Diffusion 
 
 ### Self-Refinement (img2img)
 
-SANA supports img2img via `SanaSprintImg2ImgPipeline`. Multi-pass self-refinement replaces the SDXL refiner pattern:
+SANA-Sprint supports img2img via `SanaSprintImg2ImgPipeline`:
 
-```
-txt2img 1024px -> img2img strength=0.3-0.4 -> img2img strength=0.2
+```python
+from diffusers import SanaSprintImg2ImgPipeline
+import torch
+
+pipe = SanaSprintImg2ImgPipeline.from_pretrained(
+    "Efficient-Large-Model/Sana_Sprint_1.6B_1024px_diffusers",
+    torch_dtype=torch.bfloat16
+)
+pipe.to("cuda")
+
+# Multi-pass refinement (replaces SDXL refiner pattern)
+refined = pipe(
+    prompt="a high quality detailed photo",
+    image=initial_image,
+    strength=0.3,            # 0.3 = mild refinement, 0.7 = heavy change
+    num_inference_steps=4    # Sprint is 1-4 steps
+).images[0]
 ```
 
-See [[Flow Matching]] for details on how flow matching img2img differs from DDPM.
+**Flow matching img2img mechanics:** SANA uses flow matching, not DDPM. `strength` parameter interpolates between the encoded input image and pure noise: `x_t = (1-strength)*image_latent + strength*noise`. This differs from DDPM's noise scheduling - there is no "add noise then denoise" step, it's direct interpolation.
+
+**Multi-pass recipe:**
+```
+txt2img 1024px (strength=1.0) → img2img strength=0.3-0.4 → img2img strength=0.2
+```
+
+**SDXL refiner has no flow matching equivalent**: SDXL refiner uses high-timestep sampling which is DDPM-specific. SANA's img2img is the functional replacement but works differently under the hood.
+
+**DemoFusion incompatible with SANA**: DemoFusion relies on UNet skip connections for multi-scale global context. SANA's transformer architecture doesn't have these. Use FreeScale or APT for high-res tiling instead.
+
+See [[Flow Matching]] for full details on flow matching img2img.
 
 ## License
 

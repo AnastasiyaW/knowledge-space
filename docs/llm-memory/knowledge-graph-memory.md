@@ -240,6 +240,69 @@ Allows re-processing raw data with improved extraction logic without data loss.
 - **Wiki-links without bidirectional enforcement diverge.** One-way links create orphaned nodes that the agent can't navigate to. Enforce bidirectionality at write time: when agent writes `[[People/Alice]]` in an org note, check that Alice's note links back to that org
 - **Inline tasks in live notes require polling, not file watchers.** File system events don't carry schedule context. A polling loop (every 15s) reading `live_note: true` frontmatter is more reliable across OS platforms than inotify/FSEvents
 
+## LLM Wiki Pattern (Karpathy)
+
+A simpler alternative to full knowledge graph systems: **structured markdown collections with cross-references**. No RAG, no vector DB - just text files navigated by the LLM.
+
+### Three-Layer Architecture
+
+```
+raw/          - immutable source materials (PDFs, clipped articles, notes)
+              - LLM reads but NEVER modifies
+wiki/         - LLM-generated structured markdown
+              - encyclopedia articles for concepts and entities
+              - summaries, comparisons, cross-references via backlinks
+              - index.md: catalog updated on every ingest
+              - log.md: append-only chronological operation log
+schema/       - CLAUDE.md: structure conventions, workflows
+```
+
+### Three Operations
+
+```
+Ingest:  user drops source file
+         LLM reads → discusses takeaways → writes summary pages
+         updates index.md → revises entity/concept pages → appends to log
+         one source → ~10-15 wiki pages touched
+
+Query:   user asks question
+         LLM navigates via index → synthesizes answer with citations
+         valuable answers → new wiki pages
+
+Lint:    periodic health-check passes
+         find: contradictions, stale claims, orphan pages, missing cross-refs
+```
+
+### Why Plain Markdown Beats RAG (at moderate scale)
+
+At ~100 articles / ~400K words, LLM navigates via summaries and index without vector search. Wiki = "persistent, compounding artifact" - knowledge compiled once and maintained, not re-derived on every query as in RAG. LLM handles bookkeeping: doesn't forget to update cross-references, can touch 15 files in one pass.
+
+At larger scale: add optional BM25/vector search with LLM re-ranking.
+
+### Comparison
+
+| Approach | Scale | Query Speed | Setup | Best for |
+|----------|-------|-------------|-------|---------|
+| LLM Wiki (plain markdown) | <500 articles | Full LLM navigation | Minimal | Personal knowledge base |
+| Knowledge Graph (Rowboat) | 500-5000 entities | Index lookup + LLM | Medium | Work context from email/meetings |
+| RAG + vector DB | 5000+ articles | Sub-100ms retrieval | Significant | Large corpus Q&A |
+
+### Session-to-Wiki Pipeline
+
+Connect session work to persistent wiki:
+
+```python
+# After each session, extract learnings
+session_summary = extract_session_insights(conversation_log)
+
+# Ingest into wiki
+wiki.ingest(session_summary)
+# → LLM reads, updates relevant concept pages, appends to log
+
+# At session start, query wiki for context
+context = wiki.query("current project architecture decisions")
+```
+
 ## See Also
 
 - [[knowledge-base-as-memory]]

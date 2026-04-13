@@ -239,9 +239,86 @@ class CheckpointableAgent:
 - **Context window overflow kills long-running agents**: as conversation history grows, older context gets truncated and the agent loses track of its plan. Implement explicit memory management: summarize old observations, maintain a structured state object, and re-inject only critical context after compaction
 - **Overengineered architectures for simple tasks**: a state machine with 10 states and DAG execution for a task that needs one LLM call + one tool use. Start with the simplest architecture (single loop), add complexity only when failures demand it
 
+## 2026 Landscape (April)
+
+### Protocol Standardization Under AAIF
+
+**AAIF** (Agentic AI Foundation, Linux Foundation) - Dec 2025. Co-founders: OpenAI, Anthropic, Google, Microsoft, AWS, Block.
+
+| Protocol | Scope | Status |
+|----------|-------|--------|
+| **MCP** | Agent ↔ tools | 200+ server implementations |
+| **A2A** | Agent ↔ agent | IBM ACP merged Aug 2025 |
+| **AGENTS.md** | AI coding agent config standard | 25+ tools (Codex, Copilot, Cursor, Windsurf, Jules, Amp) |
+
+Claude Code uses CLAUDE.md instead of AGENTS.md (issue #6235, 3200+ upvotes).
+
+### Major Lab SDKs (2026)
+
+| Lab | SDK | Key Feature |
+|-----|-----|-------------|
+| Anthropic | Claude Agent SDK + Managed Agents (Apr 8 public beta) | Managed sandbox, SSE, containers |
+| OpenAI | Agents SDK (ex-Swarm) | Handoff: triage → specialist → escalation |
+| Google | ADK (Python/TS/Java/Go) | Native A2A, auto Agent Cards |
+| Microsoft | Semantic Kernel + AutoGen | Enterprise |
+| HuggingFace | Smolagents | Lightweight OSS |
+
+### New Orchestration Patterns
+
+**ORCH Pattern**: deterministic orchestrator + multiple LLMs that analyze independently + merge-agent selects best output. Prevents single-model bias.
+
+**TEA Protocol** (arxiv 2506.12508): tools/envs/agents as first-class versioned resources with lifecycle management.
+
+**Hierarchical partitioning** (arxiv 2604.07681): central planner spawns parallel executors, results merged.
+
+**Example 4-agent architecture (Grok 4.20 style):**
+```
+coordinator + researcher + logician + contrarian analyst
+    -> parallel analysis
+    -> cross-verification
+    -> coordinator synthesizes
+```
+
+### Multi-Model Routing
+
+Production agents route between model tiers:
+```
+Frontier (Opus/GPT-5)       - reasoning, architecture decisions
+Light (Sonnet/Haiku/Gemma)  - extraction, mechanical tasks
+Specialized (code/vision)   - per-task type
+```
+
+### Coding Agent Benchmarks (2026)
+
+| Benchmark | Score (2026) | Score (Aug 2024) |
+|-----------|-------------|-----------------|
+| SWE-bench Verified | >70% | ~20% |
+| SWE-bench Pro (long-horizon) | ~23% (GPT-5, Opus 4.1) | N/A |
+
+10-20x speedup on mechanical tasks (migrations, vulnerability remediation). Still weak: system-level understanding, business domain, cross-cutting architecture.
+
+### Observability
+
+Langfuse (acquired by ClickHouse, Jan 2026): 2000+ paying customers, 26M+ SDK installs/month, 19/50 Fortune 500. Agent tracing/monitoring/evaluation is non-negotiable in production.
+
+### Open Source Model Milestone
+
+Gemma 4 (Apr 2, 2026): Apache 2.0. First OSS model seriously competing with proprietary on agent benchmarks.
+
+### Chinese AI Coding Agent Ecosystem
+
+See [[chinese-ai-coding-ecosystem]] for: Trae (ByteDance, SOLO autonomous mode), MetaGPT (software company simulation), GLM-5 (SWE-bench 77.8), CodeBuddy (Tencent), OpenSpec (spec-first development).
+
+Key pattern divergences:
+- **Spec Coding**: Chinese community formalized "spec freeze before code" more explicitly than Western discourse
+- **Role-based multi-agent**: MetaGPT's software company simulation widely adopted; SOP-driven workflows
+- **Cost-sensitive routing**: Domestic models (GLM-5, DeepSeek) as fallbacks; token-per-yuan optimization
+
 ## See Also
 
 - [[agent-design-patterns]]
 - [[agent-memory]]
 - [[multi-agent-systems]]
 - [[langgraph]]
+- [[managed-agents]]
+- [[chinese-ai-coding-ecosystem]]
