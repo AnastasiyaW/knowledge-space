@@ -21,13 +21,18 @@ jobs:
         uses: tj-actions/changed-files@v44
         with:
           files: 'docs/**/*.md'
+          safe_output: true
+          separator: "\n"
 
       - name: Validate article format
         if: steps.changed.outputs.any_changed == 'true'
+        env:
+          CHANGED_FILES: ${{ steps.changed.outputs.all_changed_files }}
         run: |
           errors=0
 
-          for file in ${{ steps.changed.outputs.all_changed_files }}; do
+          while IFS= read -r file; do
+            [ -z "$file" ] && continue
             echo "--- Validating: $file ---"
 
             # Skip index.md and non-article pages
@@ -98,7 +103,7 @@ jobs:
             fi
 
             echo "  Lines: $lines | OK"
-          done
+          done <<< "$CHANGED_FILES"
 
           if [ $errors -gt 0 ]; then
             echo ""
@@ -119,9 +124,13 @@ jobs:
         uses: tj-actions/changed-files@v44
         with:
           files: 'docs/**/*.md'
+          safe_output: true
+          separator: "\n"
 
       - name: Check domain folders
         if: steps.changed.outputs.any_changed == 'true'
+        env:
+          CHANGED_FILES: ${{ steps.changed.outputs.all_changed_files }}
         run: |
           valid_domains=(
             "algorithms" "architecture" "audio-voice" "bi-analytics" "cpp"
@@ -132,7 +141,8 @@ jobs:
             "writing" "contributing"
           )
 
-          for file in ${{ steps.changed.outputs.all_changed_files }}; do
+          while IFS= read -r file; do
+            [ -z "$file" ] && continue
             # Skip root-level files
             dir=$(dirname "$file" | sed 's|docs/||' | cut -d/ -f1)
             if [ "$dir" = "docs" ] || [ "$dir" = "." ]; then
@@ -150,7 +160,7 @@ jobs:
             if [ "$found" = false ]; then
               echo "::warning file=$file::Unknown domain folder '$dir'. Valid domains: ${valid_domains[*]}"
             fi
-          done
+          done <<< "$CHANGED_FILES"
 
   link-check:
     runs-on: ubuntu-latest
