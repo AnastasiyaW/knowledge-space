@@ -223,6 +223,6 @@ pip install -r requirements.txt
 
 ## See Also
 
-- [[image-generation/SANA-Denoiser Architecture]] - related dense feature architectures
+- [[image-generation/sana-denoiser-architecture]] - related dense feature architectures
 - [[data-science/cnn-computer-vision]] - CNN backbones used in segmentation
 - [[data-science/attention-mechanisms]] - ViT attention used in DINOv3

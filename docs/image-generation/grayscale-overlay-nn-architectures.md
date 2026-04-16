@@ -281,6 +281,6 @@ def inference_tiled(model, img: torch.Tensor, tile: int = 512, overlap: int = 64
 
 ## See Also
 
-- [[image-generation/Image Restoration Survey]] - broader restoration architectures
-- [[image-generation/Paired Training for Restoration]] - paired dataset training strategies
-- [[image-generation/LoRA Fine-Tuning for Editing Models]] - adaptation of generalist models
+- [[image-generation/image-restoration-survey]] - broader restoration architectures
+- [[image-generation/paired-training-for-restoration]] - paired dataset training strategies
+- [[image-generation/lora-fine-tuning-for-editing-models]] - adaptation of generalist models
