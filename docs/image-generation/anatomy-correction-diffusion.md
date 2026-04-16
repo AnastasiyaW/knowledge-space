@@ -116,6 +116,14 @@ Key parameters:
 
 For hands: use `DetailerForEach` with `hand_yolov8s.pt`, denoise 0.4-0.6 (lower than faces).
 
+### Universal Detailer
+
+```bash
+git clone https://github.com/ekakit/ComfyUI-UniversalDetailer
+```
+
+Extends FaceDetailer to hands and fingers via YOLO detection. Pipeline: YOLO detect -> SAM mask -> inpaint. Drop-in replacement when FaceDetailer is too face-focused.
+
 ### Generic Inpainting Approach
 
 1. Detect hands with `hand_yolov8s.pt` -> get mask
@@ -127,22 +135,31 @@ For hands: use `DetailerForEach` with `hand_yolov8s.pt`, denoise 0.4-0.6 (lower 
 
 ### Post-Processing Papers
 
-| Paper | Venue | Method | Scope |
-|-------|-------|--------|-------|
-| HandRefiner | ACM MM 2024 | MeshGraphormer 3D mesh -> depth -> ControlNet inpaint | Hands |
-| HandCraft | WACV 2025 | MANO parametric model -> depth conditioning | Hands |
-| RHanDS | AAAI 2025 | Decoupled structure (mesh) + style guidance | Hands |
-| RealisHuman | 2024 | Two-stage: generate realistic part + repaint surrounding | Full body |
-| 3D Hand Mesh-Guided | 2025 | State-of-art 3D mesh estimator + double-check algorithm | Hands |
+| Paper | Venue | arxiv | Method | Scope |
+|-------|-------|-------|--------|-------|
+| HandRefiner | ACM MM 2024 | 2311.17957 | MeshGraphormer 3D mesh -> depth -> ControlNet inpaint | Hands |
+| HandCraft | WACV 2025 | 2411.04332 | MANO parametric model -> depth conditioning | Hands |
+| RHanDS | AAAI 2025 | 2404.13984 | Decoupled structure (mesh) + style guidance | Hands |
+| RealisHuman | 2024 | 2409.03644 | Two-stage: generate realistic part + repaint surrounding | Full body |
+| 3D Hand Mesh-Guided | 2025 | 2506.12680 | 3D mesh + double-check algorithm, pose transfer | Hands |
+| Giving a Hand | CVPR 2024 | 2403.10731 | Generate hands first, outpaint body around them | Hands |
 
 ### Training-Time Papers
 
-| Paper | Venue | Method | Data Needed |
-|-------|-------|--------|-------------|
-| HG-DPO | CVPR 2025 | Direct Preference Optimization, 3-stage curriculum | ~5K-10K pairs (automated) |
-| Diffusion-DPO | CVPR 2024 | DPO on 851K crowdsourced preferences | 851K pairs (Pick-a-Pic) |
-| FoundHand | CVPR 2025 | 10M hand images, 2D keypoints as universal representation | Pre-trained |
-| DiffBody | 2024 | Local semantic info for body part rectification | Training required |
+| Paper | Venue | arxiv | Method | Data Needed |
+|-------|-------|-------|--------|-------------|
+| HG-DPO | CVPR 2025 | 2405.20216 | DPO 3-stage curriculum (easy → normal → hard) | ~5K-10K pairs (automated) |
+| Diffusion-DPO | CVPR 2024 | — | DPO on 851K crowdsourced preferences | 851K pairs (Pick-a-Pic) |
+| FoundHand | CVPR 2025 | 2412.02690 | 10M hand images, 2D keypoints as universal representation | Pre-trained |
+| DiffBody | 2024 | 2404.03642 | Local semantic info for body part rectification | Training required |
+
+### Evaluation / Detection Papers
+
+| Paper | arxiv | What |
+|-------|-------|------|
+| HADM (HAD dataset) | 2411.13842 | 37K+ annotated images, detects local (face/hand) + global (limbs) artifacts |
+| BodyMetric | 2412.04086 | Evaluates realism: extra/missing limbs, unrealistic poses, blurred parts |
+| Evaluating Distorted Human Body Parts | 2503.00811 | 4,700 annotated images, multi-style distortion types |
 
 ### Hand-Specific Foundation Model
 

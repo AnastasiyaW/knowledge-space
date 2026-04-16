@@ -263,3 +263,10 @@ min_snr_gamma does NOT work with flowmatch scheduler used by Klein. Skip it enti
 - **Hair is the #1 failure mode** in face editing - hairline, length, shape must match between pairs.
 - **Multi-reference cost scales ~3.5x** for 2 refs, ~5x for 3 refs, ~7x for 4 refs.
 - **Class prompts HURT Flux training** especially for males and pets.
+
+## See Also
+
+- [[diffusion-lora-training]] - general LoRA training (style, domain, Klein character)
+- [[lora-auxiliary-losses]] - ArcFace, DreamBooth prior, masked loss, B-LoRA
+- [[flux-klein-9b-architecture]] - Klein block structure, 3D RoPE reference conditioning
+- [[flux-klein-character-lora]] - character/identity LoRA specifics

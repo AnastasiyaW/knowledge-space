@@ -165,6 +165,114 @@ For sequential model pipeline (skin -> eyes -> hair -> color):
 3. **Model fusion**: shared encoder, multiple heads. One load, multiple outputs.
 4. **Unified model**: single model does everything. Most memory-efficient but least flexible.
 
+## TensorRT Acceleration (NVIDIA-only)
+
+TensorRT outperforms DirectML and CUDA baseline significantly for ONNX models:
+
+| Backend | Relative Speed | Notes |
+|---------|---------------|-------|
+| DirectML | 1.0× (baseline) | Any DirectX 12 GPU |
+| CUDA (default) | 1.5-2.0× | NVIDIA only |
+| TensorRT-RTX EP | **3-5× over DirectML** | NVIDIA RTX/Turing+ required |
+
+**ONNX Runtime TensorRT execution provider:**
+
+```cpp
+// C++ API
+OrtTensorRTProviderOptions trt_options{};
+trt_options.device_id = 0;
+trt_options.trt_fp16_enable = 1;          // FP16 for speed
+trt_options.trt_engine_cache_enable = 1;  // cache compiled engines
+trt_options.trt_engine_cache_path = "./trt_cache/";
+trt_options.trt_max_workspace_size = (size_t)2 * 1024 * 1024 * 1024; // 2 GB
+
+session_options.AppendExecutionProvider_TensorRT(trt_options);
+session_options.AppendExecutionProvider_CUDA(cuda_options);  // fallback
+```
+
+```python
+# Python API
+import onnxruntime as ort
+
+providers = [
+    ('TensorrtExecutionProvider', {
+        'device_id': 0,
+        'trt_fp16_enable': True,
+        'trt_engine_cache_enable': True,
+        'trt_engine_cache_path': './trt_cache/',
+    }),
+    ('CUDAExecutionProvider', {'device_id': 0}),  # fallback
+    'CPUExecutionProvider',
+]
+session = ort.InferenceSession("model.onnx", providers=providers)
+```
+
+**FP16 conversion pipeline** (1.5-2× speedup, 10-minute conversion):
+
+```python
+from onnxconverter_common import float16
+
+model = onnx.load("model_fp32.onnx")
+model_fp16 = float16.convert_float_to_float16(model, keep_io_types=True)
+onnx.save(model_fp16, "model_fp16.onnx")
+```
+
+## IOBinding: Eliminate GPU-CPU Memory Copies
+
+IOBinding keeps tensors on GPU throughout the pipeline, eliminating redundant copy overhead:
+
+```python
+# Without IOBinding: input copied CPU→GPU, output copied GPU→CPU every call
+# With IOBinding: tensors stay on GPU; 1.2-1.5× speedup
+
+io_binding = session.io_binding()
+
+# Bind input tensor (already on GPU as numpy/torch)
+io_binding.bind_input(
+    name='input',
+    device_type='cuda',
+    device_id=0,
+    element_type=np.float32,
+    shape=input_tensor.shape,
+    buffer_ptr=input_tensor.data_ptr(),  # GPU pointer
+)
+
+# Bind output (pre-allocated GPU buffer)
+output_tensor = torch.empty(output_shape, dtype=torch.float32, device='cuda')
+io_binding.bind_output(
+    name='output',
+    device_type='cuda',
+    device_id=0,
+    element_type=np.float32,
+    shape=output_shape,
+    buffer_ptr=output_tensor.data_ptr(),
+)
+
+session.run_with_iobinding(io_binding)
+# output_tensor now contains result, still on GPU
+```
+
+## ONNX Session Reuse (Cold Start Elimination)
+
+Loading an ONNX session has 200-500ms cold-start cost. Keep sessions loaded between calls:
+
+```python
+# BAD: Creates session every call
+def process_image(img):
+    session = ort.InferenceSession("model.onnx")  # 200-500ms
+    return session.run(...)
+
+# GOOD: Session created once, reused
+class ModelRunner:
+    def __init__(self, model_path):
+        self._session = ort.InferenceSession(model_path, providers=providers)
+
+    def process(self, img):
+        return self._session.run(...)  # <5ms
+```
+
+For multi-model pipelines: keep all sessions loaded even when not processing. Memory cost (~20-50MB per session) is worth eliminating 200-500ms per switch.
+
 ## Platform-Specific Paths
 
 ### Windows + DirectML
@@ -287,6 +395,9 @@ Preview at 1/4 resolution takes ~50ms even on CPU. Apply full resolution only wh
 - **ONNX graph optimization level ALL can change memory layout**: this may break assumptions about tensor contiguity. Test thoroughly with your specific model before deploying
 - **BatchNorm causes tiling artifacts that overlap cannot fix**: BN computes statistics per-tile, not per-image. Use LayerNorm/InstanceNorm or train on tiles matching inference size. NAFNet uses LayerNorm specifically for this reason
 - **Intel iGPU via DirectML can be slower than CPU**: integrated graphics with shared memory + DirectML overhead sometimes runs slower than pure CPU with OpenMP SIMD. Always benchmark both paths and pick the faster one at runtime
+- **TensorRT engine cache is device-specific**: a cached engine compiled for RTX 3080 will fail (or produce wrong results) on RTX 3090. Cache key must include device ID and driver version. Set `trt_engine_cache_path` to a device-specific subdirectory.
+- **TensorRT first-run compilation**: first inference with TRT EP triggers engine compilation (30s-3min depending on model complexity). Use `trt_engine_cache_enable=1` to cache; subsequent loads are instant.
+- **IOBinding and dynamic shapes**: ORT IOBinding requires pre-allocated output buffers with known shapes. For dynamic-output models, fall back to standard `session.run()` for those outputs.
 
 ## See Also
 

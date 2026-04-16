@@ -343,6 +343,59 @@ license activation.
 
 ---
 
+## Scoring System: When to Trigger
+
+Instead of binary detection, accumulate risk score per device:
+
+```cpp
+struct RiskScore {
+    int debugger_detected = 20;    // IsDebuggerPresent / ptrace
+    int binary_modified = 40;      // integrity check failed
+    int cracked_key = 50;          // known bad key pattern
+    int excess_activations = 30;   // >5 unique devices/month
+    int vm_environment = 10;       // running in VM
+    int clock_rollback = 25;       // tampered timestamps
+    int counter_mismatch = 35;     // local < server counter
+
+    static constexpr int STAGE1_THRESHOLD = 30;   // latency
+    static constexpr int STAGE2_THRESHOLD = 60;   // artifacts
+    static constexpr int STAGE3_THRESHOLD = 100;  // soft block
+};
+```
+
+Score-based approach: false positive risk reduced; genuine misbehavior accumulates across multiple weak signals.
+
+## GDPR / Legal Compliance
+
+**EU requirements for graduated response to be defensible:**
+1. Disclosed in EULA - clearly, not buried in fine print
+2. Graduated response - not instant block
+3. Recovery always possible (purchase = instant restoration)
+4. No user data damage - only functionality affected
+
+**Digital Content Directive (2019/770) Art. 14(2):** allows service termination on contract violation with notice.
+
+**EULA clause (compliant template):**
+```text
+LICENSE COMPLIANCE AND REMOTE MANAGEMENT
+
+The Software periodically communicates with our servers to verify license
+compliance and deliver updates. This includes:
+(a) Transmission of a device identifier for license validation;
+(b) Verification of license status and activation count;
+(c) Delivery of configuration updates including performance parameters.
+
+In cases of confirmed license violation, we may progressively adjust
+application performance. Full functionality is restored upon valid
+license activation.
+```
+
+Sony rootkit (2005): installed without disclosure → $7.50/disc settlement + recall. Never install without user knowledge.
+WGA lawsuit (2006): undisclosed daily phone-home → Microsoft removed it. Disclose phone-home behavior.
+Nintendo Switch 2 (2025): EULA explicitly allows remote disable for ToS violations. No challenges because it was disclosed.
+
+**GDPR hidden counter storage:** acceptable as "legitimate interest" (Art. 6(1)(f)), but must appear in Privacy Policy. Right to Erasure request must delete all 4 counter layers.
+
 ## Gotchas
 
 - **Predictable timers are reverse-engineered quickly.** If degradation starts exactly on day 7 every time, pirates document it in hours. Always randomize timing based on device_fp hash.
@@ -353,3 +406,11 @@ license activation.
 - **Ed25519 public key in binary can be replaced.** Use obfuscation + make it participate in model key derivation (as in [[licensing-implementation-cpp]]) so replacing it = wrong model decryption key.
 - **"All clear" signals need freshness check too.** Without expiry + sequence numbers, a cached "all clear" replay keeps the app un-degraded forever.
 - **Stage 3 must convert, not just block.** Show a message + purchase button. Pure blocking with no CTA leaves revenue on the table. Some pirates will convert if given easy path.
+- **Score accumulation must be persisted.** If score resets on app restart, pirate just restarts to clear risk. Store encrypted risk score in same 4-layer storage as monotonic counter.
+- **Recovery must be instant.** When legitimate purchase detected, all score/flags must clear immediately (not "wait for next check cycle"). Pirates who purchased = paying customers now.
+
+## See Also
+- [[tamper-resistant-counters]]
+- [[licensing-implementation-cpp]]
+- [[output-scrambling-antipiracy]]
+- [[adobe-piracy-patterns]]

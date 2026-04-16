@@ -197,6 +197,14 @@ claude monitor ./my-background-process.sh
 
 Allows headless agents to observe long-running processes without polling.
 
+## Popular Plugins (March 2026 installs)
+
+| Plugin | Installs | Publisher |
+|--------|----------|-----------|
+| frontend-design | 277K+ | Anthropic official |
+| Remotion Best Practices | 117K+ | Community |
+| Feature Development | 89K+ | Community |
+
 ## Community Resources
 
 | Repo | Stars | Contents |
@@ -221,3 +229,4 @@ Allows headless agents to observe long-running processes without polling.
 - [[agent-orchestration]]
 - [[multi-agent-messaging]]
 - [[chinese-ai-coding-ecosystem]]
+- [[claude-adaptive-thinking]]

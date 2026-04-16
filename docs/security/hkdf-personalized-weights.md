@@ -266,6 +266,62 @@ Permutation should be **exactly** lossless (max_diff ≈ FP32 epsilon). Scale/of
 
 ---
 
+## Epoch Rotation
+
+Epoch field in HKDF derivation allows periodic key rotation without weight regeneration:
+
+```cpp
+// info = "user:{account_id}:perm:epoch:{epoch_num}"
+// Each epoch produces completely different permutation for same account
+// Leaked weights from epoch N are useless after epoch increment
+snprintf(info_perm, sizeof(info_perm),
+    "user:%s:perm:epoch:%u", account_id, epoch);
+```
+
+Epoch update triggers:
+- Model update (every 2-4 weeks)
+- Suspected compromise of specific account(s)
+- Scheduled rotation (e.g. every 90 days)
+
+Server stores only: `{account_id, epoch, master_secret}` (~300 bytes/user). All personalized weights computed on-demand. 1M users = ~12 req/sec at typical usage = fits on $20/month VPS.
+
+## INT8 Quantization Constraints
+
+Scale/offset perturbations must survive INT8 quantization if used:
+
+```
+INT8 range: [-128, 127] → float range ≈ [-1.0, 1.0] (typical scale ~0.0078)
+Minimum distinguishable delta: 1 LSB = 0.0078
+
+Safe perturbation for INT8:
+  scale: 0.998 - 1.002 (not 0.95-1.05 - these cause LSB collapse)
+  offset: ±0.001 * abs(w) (relative)
+```
+
+FP16 is more permissive: 1 LSB ≈ 6e-5 (half exponent range). Scale 0.97-1.03 safe for FP16.
+
+## ONNX Weight Swap
+
+Load base model, apply permutation in-memory, run inference - no model file modification needed:
+
+```python
+import onnx
+import numpy as np
+
+def apply_permutation_to_session(model_bytes: bytes, perm: list[int],
+                                  layer_name: str) -> bytes:
+    model = onnx.load_from_string(model_bytes)
+    for init in model.graph.initializer:
+        if init.name == layer_name + ".weight":
+            w = np.frombuffer(init.raw_data, dtype=np.float32).reshape(init.dims)
+            # Permute output channels (rows)
+            w_perm = w[perm, ...]
+            init.raw_data = w_perm.tobytes()
+    return model.SerializeToString()
+```
+
+For C++ via ONNX C API: modify `OrtValue` tensors before session creation using `CreateTensorWithDataAsOrtValue` with permuted buffer.
+
 ## Gotchas
 
 - **HKDF-Expand info strings must be unique per purpose.** Using the same info for perm and scale seeds produces the same key - completely breaking the purpose. Always use distinct labels.
@@ -276,3 +332,10 @@ Permutation should be **exactly** lossless (max_diff ≈ FP32 epsilon). Scale/of
 - **Attention head permutation gives only n_heads! variants** (e.g., 8! = 40320 for 8 heads). Not enough for security. Permute neurons within heads in a consistent Q,K,V manner instead.
 - **Scale/offset perturbations accumulate across layers.** In deep networks (50+ layers), even 0.3% perturbation per layer compounds. Always test final output PSNR, not just per-layer metrics.
 - **Master secret leakage = all users compromised.** Store master_secret in HSM or secure enclave on server. Never ship it to clients.
+- **INT8 quantization collapses large perturbations.** Scale 0.95-1.05 maps to same INT8 bucket → personalization disappears. Use scale 0.998-1.002 for quantization-compatible models.
+- **Weight averaging attack:** adversary averages K users' personalized weights hoping permutation cancels. Permutation prevents this (neurons in different positions), but scale/offset does not - additional defense needed if averaging is realistic threat.
+
+## See Also
+- [[watermarking-encrypted-models]]
+- [[output-scrambling-antipiracy]]
+- [[licensing-implementation-cpp]]

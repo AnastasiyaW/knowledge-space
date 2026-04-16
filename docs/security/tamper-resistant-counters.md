@@ -373,6 +373,41 @@ VM snapshot rollback defeats all local layers. Server backend + TPM are only rea
 
 ---
 
+## Adobe CC Reference Implementation
+
+Adobe Creative Cloud uses exactly this 4-layer approach:
+- Windows Credential Manager (`Microsoft_Genuine_Preference_*` disguised keys)
+- Registry (`HKCU\Software\Adobe\*` with obfuscated value names)
+- Files (`.operatingconfig` in `%APPDATA%\Adobe\` with binary encoding)
+- Adobe servers (authoritative on next CC Desktop App launch)
+
+**JetBrains anti-pattern (what to avoid):**
+JetBrains trial counters used predictable filenames and registry paths → mass community-maintained reset scripts (`.ideLicense` file deletion, specific registry keys). Obfuscating storage names is critical. Do NOT name files/keys after your product.
+
+## VM Snapshot Defense
+
+VM snapshots roll back ALL local layers simultaneously. Defense options:
+
+| Layer | Snapshot-resistant? | Notes |
+|-------|--------------------|-|
+| Credential Manager (Win) | No - rolled back | |
+| Keychain (macOS) | No - rolled back | |
+| iCloud Keychain | **Yes** - cloud sync survives | Requires user iCloud login |
+| NTFS ADS / xattr | No - rolled back | |
+| TPM NV counter | **Yes** - hardware survives | TPM state independent of disk |
+| Server backend | **Yes** - out of VM control | |
+
+Strategy: require server sync on first use per session. VM snapshot → offline counter reset → app forced online for server verification → server rejects rollback.
+
+## GDPR Compliance for Counter Storage
+
+Storing trial counter in hidden locations = legitimate interest (GDPR Art. 6(1)(f)) when:
+1. Purpose disclosed in Privacy Policy
+2. Right to Erasure request → must delete all 4 storage layers
+3. Not storing personal data - only device state / usage counter
+
+Implement erasure endpoint: `DELETE /api/device/{fp}` deletes server counter. Client app on first run post-erasure gets fresh counter from server (zero-initialized).
+
 ## Gotchas
 
 - **TPM NV write lifetime is ~12,500 operations.** Never increment on every app launch. Use lazy increment: write only when crossing day/session boundaries.
@@ -383,3 +418,10 @@ VM snapshot rollback defeats all local layers. Server backend + TPM are only rea
 - **TBS service missing on Win11** despite TPM 2.0 present. Always check `Tbsi_Context_Create` return code and handle gracefully.
 - **Registry GUID key format:** store counter as REG_BINARY XOR'd with machine fingerprint so `regedit` browser shows unrecognizable bytes, not a readable number.
 - **Server counter is not always available offline.** Local layers must hold sufficient state for offline periods. Accept server value as authoritative only when connectivity is confirmed.
+- **Predictable storage names = mass reset scripts.** JetBrains had community-maintained scripts to delete their trial files by known names. Always disguise storage identifiers.
+- **Counter increment on every launch burns TPM lifetime.** At daily use: 365 increments/year. At per-launch (5×/day): 1,825/year → exhausted in ~7 years. Use session boundaries not launch events.
+
+## See Also
+- [[remote-kill-switch]]
+- [[licensing-implementation-cpp]]
+- [[adobe-piracy-patterns]]

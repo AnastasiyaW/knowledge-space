@@ -155,9 +155,38 @@ result = pipe(
 | IC-Light V2 Relight LoRA | Relighting | Step 7 relighting |
 | IC-Light V2 Delight LoRA | Delighting | Step 3 original lighting removal |
 | Consistency Edit LoRA | Style preservation | Step 6 seamless blend |
+| Background Remove LoRA | Background removal | Alternative to BiRefNet |
+| Object Remove LoRA | Object erasure | Cleanup of unwanted elements |
 | Face Swap LoRA | Reference conditioning | N/A for jewelry |
 
-These are BFL official LoRAs, not community-made. Load via standard ComfyUI LoRA loader.
+These are BFL official LoRAs. Load via standard ComfyUI LoRA loader or via fal.ai API.
+
+## fal.ai API Endpoints
+
+For production use without self-hosting:
+
+```python
+import fal_client
+
+# Background removal
+result = fal_client.subscribe("fal-ai/background-remove", {
+    "image_url": "https://...",
+})
+
+# Object removal
+result = fal_client.subscribe("fal-ai/object-remove-flux", {
+    "image_url": "https://...",
+    "mask_url": "https://...",  # binary mask of area to remove
+})
+
+# Virtual try-on (for wearable jewelry concepts)
+result = fal_client.subscribe("fal-ai/virtual-try-on-flux", {
+    "model_image_url": "https://...",
+    "garment_image_url": "https://...",  # jewelry piece
+})
+```
+
+**Note**: Virtual Try-On LoRA works for apparel; for jewelry (rings, necklaces), accuracy requires a custom-trained jewelry-specific LoRA due to specular surface challenges.
 
 ## Dataset Considerations
 

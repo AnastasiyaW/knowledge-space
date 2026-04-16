@@ -272,12 +272,75 @@ Research findings:
 
 ---
 
+## Per-Image Salt (Mandatory)
+
+Known-Plaintext Attack with ~20 pairs breaks permutation-only scramble. Counter: per-image salt mixes unique randomness into every scramble operation.
+
+```cpp
+// Per-image salt derivation
+uint8_t image_salt[16];
+crypto_random_bytes(image_salt, 16); // unique per image
+// embed in output (first 16 bytes of scrambled tensor, or separate channel)
+
+// Scramble key for this image
+uint8_t image_key[32];
+crypto_kdf_hkdf_sha256_expand(image_key, 32,
+    "image-scramble", 14,
+    session_key_derived_prk); // XOR image_salt into derivation
+// feed image_key into spatial permutation seed, polynomial coefficients, etc.
+```
+
+Effect: each image gets different permutation/transform even with same session_key. 20 (scrambled, original) pairs from different images give 20 different scramble instances → no common key to extract.
+
+**Where to embed salt:** prepend 16-byte nonce to scrambled tensor, or store in a dedicated extra channel. Converter reads salt before inverting.
+
+## Latent Space Scrambling (VAE-based Models)
+
+For VAE-based architecture (Stable Diffusion, etc.): scramble in latent space rather than pixel space.
+
+**Advantages:**
+- Latent tensor: typically 4 channels × H/8 × W/8 (much smaller than pixel output)
+- ~64 latent channels (encoder output): 64! ~ 10^89 permutations available
+- No natural spatial statistics in latent space → statistical attacks weakened
+- Scramble/unscramble overhead: ~0.05ms (tiny tensor)
+
+**Implementation:** add custom ONNX op after VAE encoder output, before decoder.
+
+## IPC Security: Engine → Converter
+
+Encrypted shared memory (recommended):
+
+```cpp
+// Windows: random GUID name per session
+std::wstring seg_name = L"Global\\" + generate_uuid();
+HANDLE hMap = CreateFileMappingW(INVALID_HANDLE_VALUE, NULL,
+    PAGE_READWRITE, 0, tensor_size, seg_name.c_str());
+void* ptr = MapViewOfFile(hMap, FILE_MAP_ALL_ACCESS, 0, 0, tensor_size);
+VirtualLock(ptr, tensor_size); // prevent swap to disk
+
+// macOS: anonymous, unlinked immediately
+int fd = shm_open("/t", O_CREAT | O_RDWR, 0600);
+void* ptr = mmap(NULL, tensor_size, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
+shm_unlink("/t"); // name removed, segment lives while fd open
+```
+
+Encrypt data in shared memory: ChaCha20-Poly1305 ~0.3ms for 12MB on modern CPU with SIMD. Random segment names per session. Named pipes: ~5-15ms for 12MB - too slow.
+
 ## Gotchas
 
 - **Permutation-only scramble breaks with 20 known-plaintext pairs** regardless of permutation size. Always combine with value transformation.
+- **Per-image salt is mandatory.** Without it, 20 (scrambled, original) pairs break the shared session key. Salt per image makes each instance independent.
 - **Session key must rotate per session** - not per user, not per day. One session = one key. Compromised key = one session exposed, not all.
 - **AES-CTR stream by itself is trivially invertible** once attacker has one (scrambled, original) pair. Use only as final layer after nonlinear transforms.
 - **GPU scramble in ONNX custom op** requires the op to be registered before session creation. If session is already created without the custom op, you must recreate it.
 - **Block-level scramble is useless for anti-piracy** - modern jigsaw solvers (2022-2023) recover 70%+ of content from 16x16 blocks. Use pixel-level only.
 - **Learned scramble heads (NN)** are theoretically elegant but lossy (~0.1-0.5 LSB errors) and vulnerable to approximation if attacker has enough pairs with known keys.
 - **VMProtect significantly slows down the protected function** - 10-50x overhead. Profile before protecting hot paths.
+- **3 RGB channels = 6 permutations = brute-forced in microseconds.** Scramble must happen BEFORE final conv layer where 64+ intermediate channels exist.
+- **Converter process with VirtualLock** prevents scrambled tensor from being swapped to disk pagefile. Without it, hibernation/sleep can leak tensor to pagefile.sys.
+
+## See Also
+- [[hkdf-personalized-weights]]
+- [[watermarking-encrypted-models]]
+- [[remote-kill-switch]]
+- [[licensing-implementation-cpp]]

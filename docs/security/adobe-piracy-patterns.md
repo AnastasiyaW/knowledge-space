@@ -231,6 +231,54 @@ Pattern: `if (isLicensed())` → always crackable by NOP. Fix: license = decrypt
 
 ---
 
+## Creative Software Ecosystem Comparisons
+
+### Autodesk (AutoCAD, Maya)
+- Online licensing since 2017 (offline serial abolished)
+- Embedded reporting: auto-telemetry on installations with unique IDs
+- Serial database: entering leaked serial triggers audit invitation
+- MAGNiTUDE cracking group hacked Network Licensing Mechanism (NLM) - provides cracked NLM used in many repacks
+- Lesson: telemetry with unique installation IDs enables detection, but privacy concerns arise
+
+### Maxon (Cinema 4D)
+- Checks every project file for signature from official source
+- Missing/invalid signature blocks file
+- Lesson: embedding license info IN output files (output watermarking) - processed files carry license ID
+
+### Foundry (Nuke)
+- RLM (Reprise License Manager) floating license tied to server System ID
+- Cracked RLM servers emulate legitimate responses - standard attack on floating licenses
+- Foundry known for aggressive legal pursuit: threats of tens of thousands of dollars
+- Lesson: mutual TLS + certificate pinning protects against fake server emulation
+
+### Topaz Photo AI
+- Models stored in `.tz`/`.tz2` format, downloaded from `models-bal.topazlabs.com`
+- **Critical failure:** model URLs accessible without authentication - ~180 models (100+ GB) scraped and publicly listed on GitHub
+- Models unencrypted - usable directly
+- Rating: 2/10 for model protection. Only real defense: cloud update dependency breaks cracked versions
+- Sep 2025: moved to subscription-only ($199/year standard, $599/year pro), causing major user backlash
+
+### Retouch4me
+- Hardware-locked keys (3 activations at purchase)
+- Standalone versions with local models - cracked versions found on torrent sites (models successfully extracted)
+- Cloud version (2024): 8/10 protection - server-side inference is not pirateable
+- Strategy: cloud transition as piracy response
+
+### Luminar Neo (Skylum)
+- Account-based, mandatory internet for activation
+- EULA explicitly grants right to "restrict, suspend, or terminate...license at any moment, without compensation and prior notice"
+- Massively pirated: cracked versions across dozens of sites at near-current versions
+
+## Russian/CIS Piracy Ecosystem
+
+**RuTracker.org:** 15.5M active users, 2.59M torrents, 6.2 petabytes. Blocked in Russia, UK, Australia + others. Accessible via VPN.
+
+**m0nkrus pattern:** takes official installers → applies GenP patches → packages as standalone (no CC, no Adobe ID). New Adobe versions appear within days-weeks. Automated workflow.
+
+Lessons:
+- If app runs standalone without server binding, repacks are inevitable
+- CDN model + per-user activation blob prevents repack distribution
+
 ## Gotchas
 
 - **Revenue grew 5× despite (or because of) piracy.** Adobe's "piracy tolerance" strategy is deliberate - free exposure to students creates future paying customers. Not all piracy is pure loss.
@@ -239,3 +287,5 @@ Pattern: `if (isLicensed())` → always crackable by NOP. Fix: license = decrypt
 - **Aggressive anti-piracy hurts legitimate users first.** Corporate firewalls block phone-home → support tickets. Design graceful degradation, not hard blocks, for network failures.
 - **Signed responses are non-negotiable.** Fake server attack (Category 4) makes all unsigned server responses pointless. Ed25519 verification must be part of any license check that involves server communication.
 - **GenP source code released in 2023.** Open-source community continues maintaining forks. "Security through obscurity" of binary patterns has finite lifespan; architectural defense (license = data) is permanent.
+- **Topaz model URL leak:** unprotected CDN = complete model extraction without any license bypass. Encrypt models AND authenticate download requests - both needed.
+- **Standalone-first apps will be cracked.** Retouch4me standalone cracked despite hardware binding; cloud version survived. For ML apps with on-device inference, defense depth must go beyond license checks alone.

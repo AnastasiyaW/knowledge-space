@@ -176,6 +176,23 @@ For message passing between sessions, see [[multi-agent-messaging]]. Summary:
 - **SQLite WAL** (Overstory pattern) - concurrent readers, message persistence
 - **MCP broker** (claude-peers-mcp) - real-time but requires Bun + running broker
 
+## Additional Orchestrators
+
+**HiClaw** (Alibaba/AgentScope) - Matrix protocol rooms, worker-only tokens for security  
+**Ruflo** - Enterprise-grade, RAG integration for context-aware task routing  
+**swarm-tools** (Joel Hooks) - Semantic memory + embeddings, actor-model coordination
+
+## Two-State-Type Pattern
+
+From analysis of lock use cases, two fundamentally different types of shared state need different mechanisms:
+
+| State type | Mechanism | Examples |
+|------------|-----------|---------|
+| Append-only | Per-session files, no race | Handoffs, session logs, message inboxes |
+| Mutable | Lock file + heartbeat + stale-reclaim | GPU allocation, task ownership, file editing |
+
+Trying to use append-only patterns for mutable state (or vice versa) is the root cause of most coordination bugs.
+
 ## Known Issues (Claude Code native)
 
 | Issue | Impact |
@@ -184,6 +201,7 @@ For message passing between sessions, see [[multi-agent-messaging]]. Summary:
 | #19364 | Session lock files requested (upvoted) - no native file locking |
 | #25609 | OAuth race condition on concurrent session start |
 | #14124 | SQLite contention with many parallel sessions |
+| #29217 | `.claude.json` has concurrent-write corruption bugs in Anthropic's own code |
 
 These issues inform why external coordination layers are needed even with Agent Teams available.
 

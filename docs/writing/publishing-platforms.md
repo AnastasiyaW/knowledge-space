@@ -47,7 +47,25 @@ Where to publish technical articles, with audience profiles, formatting requirem
 - Average comments: 20
 - Only 18% of authors write a second article
 
-**Optimal length:** 1500-2000 words (7-10 minute read).
+**Optimal length:** 1500-2000 words (7-10 minute read). Habr counts reading speed at 1500 chars/min.
+
+**Karma privilege thresholds:**
+
+| Karma | Unlocks |
+|-------|---------|
+| 0+ | Post to non-primary hubs |
+| 1+ | Vote on articles and comments |
+| 2+ | Vote on others' karma |
+| 5+ | Full voting access |
+| 30+ | Post in "Я пиарюсь" hub |
+| 50+ | Invite new users |
+| -1 to -5 | 1 comment per 5 minutes |
+| -6 to -10 | 1 comment per hour |
+| -31 or less | Read-only |
+
+**Vote weight:** Regular user = +1; Author/Senior/Star = +2; Legend = +3 per vote on articles.
+
+**Google Discover:** First-hour momentum (1000+ views) triggers trending placement. Discover is a major secondary traffic source for well-performing articles. 0.3-1.2% of article viewers subscribe to the author's Telegram channel.
 
 ## Hacker News
 

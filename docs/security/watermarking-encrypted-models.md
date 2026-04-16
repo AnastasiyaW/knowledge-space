@@ -303,6 +303,42 @@ Remaining = "non-critical" → optional (speed tradeoff)
 
 ---
 
+## SEAL: Watermarking for LoRA Weights
+
+LoRA adapters pose unique challenges: small delta weights (rank 4-64), can be merged into base model or used standalone.
+
+**SEAL (Signed Efficient Adaptation for LLMs) approach:**
+- Embed watermark during LoRA training (not post-hoc)
+- Watermark survives fine-tuning, merging, quantization
+- Detection via statistical hypothesis test on suspicious model
+- Limitation: requires retraining LoRA with watermark objective
+
+**Practical alternative for stolen LoRA detection:**
+- Embed tiny sentinel patterns in training data (specific prompts → specific outputs)
+- "Canary outputs" verifiable without access to original weights
+- Works even after merge: merged model still responds to sentinel prompts
+
+**LoRA-specific threats:**
+- StolenLoRA: extract LoRA deltas via repeated API queries (30-100 queries typically sufficient for rank-4 LoRA)
+- Merge attack: merge LoRA into base model, watermark diluted
+- Quantization: INT4/INT8 often destroys subtle watermark patterns
+
+## Per-User .hmod Distribution
+
+**One CDN file + per-user license blob (1KB)** is the correct architecture:
+- `.hmod` (~200 MB): same for all users, on CDN (Cloudflare R2: $5-10/month)
+- `license_blob` (~1 KB): per-user, issued at activation
+  - Contains: encrypted MCK wrapper + user key derivation material
+  - Revocation: stop issuing new `license_blob`, existing expire by TTL
+- Compromise: generate new MCK, re-encrypt `.hmod`, issue new `license_blob` to all users
+
+**Key rotation procedure:**
+1. Generate new MCK (model content key)
+2. Re-encrypt all tensors with new DEKs wrapped under new MCK
+3. Increment model version/epoch in HKDF derivation context
+4. Push new `.hmod` to CDN
+5. All users fetch new `license_blob` on next phone-home
+
 ## Gotchas
 
 - **AES-GCM nonce reuse is catastrophic.** Same nonce + same key = XOR of plaintexts revealed + auth key recoverable. In .hmod: encryption is one-time at build time, random nonce, so reuse is impossible by construction. If you add any re-encryption (e.g., on-the-fly personalization), be extremely careful.
@@ -313,3 +349,11 @@ Remaining = "non-critical" → optional (speed tradeoff)
 - **TrustMark confidence threshold 0.85** is recommended balance. Lowering to 0.7 increases false positive rate from 1:10^6 to approximately 1:1000.
 - **Diffusion regeneration attacks** (DALL-E, Midjourney "rinsing") reduce StegaStamp accuracy to 70-85%. Mitigation: use shorter-lived watermarks or accept this threat model for forensic (not authentication) purposes.
 - **Binary header (not JSON) in .hmod** means no zero-cost compatibility with existing tools. Provide a validator CLI to verify files during build pipeline.
+- **Trial watermark:** reserve `license_id = 0x00000000`. Add visible overlay (two layers: invisible forensic + visible trial indicator). Both managed by same encoder pipeline.
+- **Payload design (100-bit TrustMark):** 32 bits license_id hash + 16 bits days since epoch (covers 180 years) + 8 bits app/model version + 8 bits CRC-8 = 64 data bits + 36 bits ECC.
+
+## See Also
+- [[hkdf-personalized-weights]]
+- [[output-scrambling-antipiracy]]
+- [[remote-kill-switch]]
+- [[licensing-implementation-cpp]]

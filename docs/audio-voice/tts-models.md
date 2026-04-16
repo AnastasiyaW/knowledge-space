@@ -100,13 +100,16 @@ Architecture (Qwen3.5-Omni):
 
 | Model | Params | Languages | Sample Rate | Architecture | Strength |
 |-------|--------|-----------|-------------|-------------|----------|
-| Fish Audio S2 Pro | 4B + 400M | 80+ | — | Dual-AR (Slow+Fast) | #1 TTS Arena, 81.88% vs gpt-4o-mini |
+| Fish Audio S2 Pro / OpenAudio S1 | 4B + 400M | 80+ | — | Dual-AR (Slow+Fast) | #1 TTS Arena, 81.88% vs gpt-4o-mini, 15K+ emotion tags |
 | VoxCPM2 | 2B | 30+ | 48kHz | Tokenizer-free Diff-AR | Studio quality, voice design, Russian |
 | OmniVoice | ? | 600+ | ? | Diffusion LM | Widest language coverage, RTF 0.025 |
 | Qwen3.5-Omni | Large | 36 TTS / 113 ASR | ? | Omni (Thinker-Talker) | End-to-end conversation |
 | Voxtral 4B | 4B | 9 (no RU/ZH) | ? | Streaming Diff-AR | 68.4% win vs ElevenLabs, 3s cloning |
 | Qwen3-TTS | 1.7B / 0.6B | 10 (incl. RU) | ? | Custom codec 12Hz | Voice design, 97ms streaming |
-| Dia 1.6B | 1.6B | EN focus | ? | Dialogue TTS | Multi-speaker dialogue, MOS 4.7 |
+| Dia 1.6B / Dia2 (Nari Labs) | 1B/2B | EN | Apache 2.0 | Dialogue TTS | Multi-speaker dialogue, streaming, up to 2 min |
+| Higgs Audio V2 (BosonAI) | 3B | Multi | — | Llama 3.2 based | 75.7% win vs GPT-4o-mini-tts on emotions, multi-speaker |
+| IndexTTS-2.5 | ? | CN/EN/JP/ES | — | Custom | 8-dim emotion vector, precise duration (dubbing) |
+| NeuTTS Air (Neuphonic) | 748M | Multi | Open | GGUF | Runs on Raspberry Pi, 3s voice cloning |
 | LEMAS-TTS | 0.3B | 10 | 24kHz | Flow matching | Multilingual + word-level edit |
 | Chatterbox-Turbo | 350M-500M | 23+ (incl. RU) | ? | One-step decoder | MIT, paralinguistic tags |
 | Kokoro-82M | 82M | 6 (no RU) | 24kHz | StyleTTS-like | Fastest: 210x RT, CPU |

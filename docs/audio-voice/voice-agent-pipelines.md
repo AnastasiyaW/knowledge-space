@@ -268,11 +268,14 @@ class MultiSpeakerPipeline:
 | Model | Latency | Languages | License | Notes |
 |-------|---------|-----------|---------|-------|
 | Qwen3-Omni | ~119ms | 19 input / 10 output | Qwen | MoE 30B/3B active, function calling |
-| Gemini 3.1 Flash Live | <500ms | 90+ | Proprietary API | Best language coverage |
-| NVIDIA PersonaPlex | 205ms | EN | MIT | Moshi-based, 7B |
-| Voila (Maitrix) | 195ms | 6 (no RU) | Apache 2.0 | 1M+ pre-built voices |
-| Moshi (Kyutai) | — | EN (multilingual planned) | CC-BY 4.0 | CPU pocket TTS |
-| Sesame CSM | — | EN | Apache 2.0 | 4.7 MOS, crosses uncanny valley |
+| Gemini Live API | <500ms | 70 | Proprietary | WebSocket, barge-in, affective dialog |
+| NVIDIA PersonaPlex | 205ms | EN | MIT | Moshi-based, 7B, 100% interruption success |
+| Voila (Maitrix) | 195ms | 6 (no RU) | Apache 2.0 | Full-duplex, 1M+ pre-built voices |
+| Chroma 1.0 (FlashLabs) | 147ms | EN | Apache 2.0 | 4B params, RTF 0.43 |
+| Ultravox v0.6 (Fixie) | ~150ms | Multi | Apache 2.0 | Speech-native multimodal LLM |
+| Moshi (Kyutai) | — | EN | CC-BY 4.0 | 7B, pocket TTS 100M for CPU |
+| Sesame CSM | — | EN | Apache 2.0 | Crosses uncanny valley, natural disfluency |
+| OpenAI Realtime API | >1s | Multi | Proprietary | $0.50/5-min call, MCP, WebRTC, SIP |
 
 ## Gotchas
 
