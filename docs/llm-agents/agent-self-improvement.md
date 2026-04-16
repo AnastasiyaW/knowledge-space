@@ -14,7 +14,7 @@ Techniques for agents to improve their own performance through reflection, step-
 
 Standard agent training provides reward only at trajectory end (task success/failure). This makes credit assignment hard - which specific step caused the failure?
 
-```
+```php
 Step 1: Search docs       -> ?
 Step 2: Parse results     -> ?
 Step 3: Write wrong query -> ?  (actual mistake)
@@ -24,7 +24,7 @@ Step 5: Wrong answer      -> Reward: 0  (only signal)
 
 **Step-level rewards** assign credit to individual actions:
 
-```
+```php
 Step 1: Search docs       -> +0.1 (useful action)
 Step 2: Parse results     -> +0.1 (correct parsing)
 Step 3: Write wrong query -> -0.3 (identified as error)
@@ -81,7 +81,7 @@ When a trajectory fails at step N, rewind to step N-1 and explore `budget` alter
 
 After each task attempt, the agent writes a structured reflection:
 
-```
+```yaml
 ## Reflection on Task #{n}
 Result: FAIL (score: 0.3)
 

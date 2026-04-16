@@ -84,7 +84,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO app_readw
 
 PostgreSQL wire protocol: all data transmitted as plaintext without TLS. Password sent as MD5 hash or SCRAM-SHA-256 challenge. Always enable TLS for production.
 
-```
+```bash
 psql "host=server sslmode=verify-full sslrootcert=ca.crt"
 ```
 

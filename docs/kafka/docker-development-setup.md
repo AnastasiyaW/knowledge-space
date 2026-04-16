@@ -117,5 +117,5 @@ bin/kafka-server-start.sh config/kraft/server.properties
 ## See Also
 
 - [[broker-architecture]] - KRaft configuration, production settings
-- [[kafka-cluster-operations]] - production deployment considerations
+- [[kafka-cluster-management]] - production deployment considerations
 - [[topics-and-partitions]] - topic creation and configuration

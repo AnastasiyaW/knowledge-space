@@ -70,7 +70,7 @@ Prevention: CSRF tokens, SameSite cookies, Origin header validation.
 
 ## SSRF (Server-Side Request Forgery)
 Make the server send requests to internal resources:
-```
+```text
 POST /fetch?url=http://169.254.169.254/latest/meta-data/   # AWS metadata
 POST /fetch?url=http://localhost:6379/                       # Internal Redis
 POST /fetch?url=file:///etc/passwd                          # Local file read
@@ -87,7 +87,7 @@ POST /fetch?url=file:///etc/passwd                          # Local file read
 Prevention: disable external entity processing in XML parsers.
 
 ## Path Traversal
-```
+```text
 http://target.com/file?name=../../../etc/passwd
 http://target.com/file?name=..%2F..%2F..%2Fetc%2Fpasswd       # URL-encoded
 http://target.com/file?name=%252e%252e%252f%252e%252e%252f     # Double-encoded
@@ -99,7 +99,7 @@ http://target.com/file?name=..\..\..\..\windows\system32\config\sam  # Windows
 Prevention: chroot/jail, whitelist filenames, canonicalize paths, use framework file-serving utilities.
 
 ## IDOR (Insecure Direct Object Reference)
-```
+```text
 GET /api/orders/1234    # Own order
 GET /api/orders/1235    # Another user's order - no authorization check
 ```
@@ -154,7 +154,7 @@ Environment variables persist between warm invocations. Sensitive data from a pr
 
 ## Security Headers Reference
 
-```
+```yaml
 Content-Security-Policy: default-src 'self'; script-src 'self' 'nonce-{random}'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; frame-ancestors 'none'
 Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
 X-Content-Type-Options: nosniff

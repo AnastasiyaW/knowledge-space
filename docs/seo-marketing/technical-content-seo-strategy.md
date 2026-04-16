@@ -12,7 +12,7 @@ Content architecture and SEO approach for technical knowledge bases, developer d
 
 No longer a flat keyword list - a digital model of audience demand. Google's Knowledge Graph maps 800B facts about 8B entities. Content maps to entities, not just phrases.
 
-```
+```text
 Domain (entity)
   ├── Sub-topics (child entities)
   │     └── Questions/queries (user intents)
@@ -20,7 +20,7 @@ Domain (entity)
 ```
 
 **Example for `kafka`:**
-```
+```php
 Kafka (entity)
   ├── Kafka Architecture -> "kafka architecture diagram", "kafka broker explained"
   ├── Kafka Configuration -> "kafka consumer group config", "kafka retention policy"
@@ -45,7 +45,7 @@ Kafka (entity)
 
 Three-tier hierarchy - every domain follows this structure:
 
-```
+```text
 Tier 1: Domain Hub (/kafka/) - 3,000-5,000 words
   ├── Tier 2: Cluster Page (/kafka/architecture/) - 2,000-3,000 words
   │     ├── Tier 3: Article (/kafka/architecture/broker-internals/) - 1,500-3,500w
@@ -90,7 +90,7 @@ Tier 1: Domain Hub (/kafka/) - 3,000-5,000 words
 
 ## Article Template
 
-```
+```javascript
 H1: Title (primary keyword in first 60 chars)
 
 [1-2 sentence intro: what, who, when to use]
@@ -140,7 +140,7 @@ H1: Title (primary keyword in first 60 chars)
 
 **Sweet spot:** KD < 30, monthly volume < 1,000.
 
-```
+```bash
 [technology] + [error message]        -> "kafka connection refused localhost 9092"
 [technology] + [version/feature]      -> "python 3.12 pattern matching examples"
 [tech A] + [tech B] + [action]        -> "deploy fastapi docker kubernetes"

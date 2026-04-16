@@ -10,7 +10,7 @@ DevOps bridges development and operations through culture, automation, and proce
 
 ## CI/CD Pipeline
 
-```
+```bash
 Source (commit) -> Build (compile) -> Test (unit, integration, e2e) ->
   Security scan -> Artifact creation -> Deploy staging -> Acceptance tests ->
   Deploy production -> Smoke tests

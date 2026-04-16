@@ -12,7 +12,7 @@ REST (Representational State Transfer) is an architectural style for distributed
 
 ### Request/Response Structure
 
-```
+```html
 # Request
 <METHOD> <URI> HTTP/<VERSION>
 <Headers>
@@ -77,7 +77,7 @@ HTTP/<VERSION> <STATUS_CODE> <REASON>
 
 ## Resource-Based URL Design
 
-```
+```sql
 # Resources are nouns, not verbs
 /users            # collection
 /users/123        # specific resource
@@ -114,7 +114,7 @@ POST /users/123/delete     # wrong
 
 ### Filtering and Sorting
 
-```
+```bash
 ?status=active&created_after=2024-01-01    # filtering
 ?sort=created_at&order=desc                # sorting
 ?q=search+term                             # full-text search
@@ -122,7 +122,7 @@ POST /users/123/delete     # wrong
 
 ## File Transfer
 
-```
+```yaml
 # Client request
 Accept: image/png
 

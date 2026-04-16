@@ -17,7 +17,7 @@ Detailed coverage of robots.txt configuration, sitemap.xml requirements, indexat
 - Always include sitemap URL
 
 ### What to Disallow
-```
+```yaml
 Disallow: /admin/                    # Admin panel
 Disallow: /search/                   # Internal search results
 Disallow: /?sort=                    # Sorting parameters

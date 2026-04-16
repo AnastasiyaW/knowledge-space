@@ -130,7 +130,7 @@ producer.flush()
 
 ### Confluent Serializer/Deserializer Classes
 
-```
+```text
 io.confluent.kafka.serializers.KafkaAvroSerializer
 io.confluent.kafka.serializers.KafkaAvroDeserializer
 io.confluent.kafka.serializers.protobuf.KafkaProtobufSerializer
@@ -148,7 +148,7 @@ io.confluent.kafka.serializers.json.KafkaJsonSchemaSerializer
 
 ## See Also
 
-- [[producer-patterns]] - serialization in the producer pipeline
+- [[kafka-producer-fundamentals]] - serialization in the producer pipeline
 - [[kafka-connect]] - converters for Connect data format
 - [[ksqldb]] - automatic Schema Registry integration for AVRO/PROTOBUF
 - [Confluent Schema Registry Documentation](https://docs.confluent.io/platform/current/schema-registry/)

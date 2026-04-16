@@ -23,7 +23,7 @@ Three layers, each with a clear role:
 
 ### raw/ - Immutable Sources
 
-```
+```text
 raw/
   paper-attention-is-all-you-need.md
   meeting-notes-2026-03-15.md
@@ -36,7 +36,7 @@ raw/
 
 ### wiki/ - LLM-Generated Knowledge
 
-```
+```text
 wiki/
   index.md              # catalog with summaries - agent reads first
   log.md                # append-only chronological operation log
@@ -60,7 +60,7 @@ The agent's operating instructions: knowledge base structure, naming conventions
 
 New source arrives. The agent:
 
-```
+```bash
 1. Read source from raw/
 2. Discuss key takeaways (optionally with user)
 3. Create/update wiki pages for new concepts and entities
@@ -75,7 +75,7 @@ New source arrives. The agent:
 
 User asks a question. The agent:
 
-```
+```sql
 1. Read index.md to locate relevant articles
 2. Read specific wiki pages
 3. Synthesize answer with citations to wiki pages

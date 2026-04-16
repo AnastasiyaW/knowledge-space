@@ -10,7 +10,7 @@ Architecture and empirical findings for a user-facing style LoRA system on FLUX.
 
 ## System Architecture
 
-```
+```yaml
 User uploads 5-50 reference images
   ↓
 Gemini 2.5 Pro: caption each image (content-only, no style descriptors)
@@ -53,13 +53,13 @@ scheduler: cosine
 
 ### L1: Style Extraction
 
-```
+```yaml
 INPUT: 1-10 reference images
 OUTPUT: STYLE_PROFILE dict
 ```
 
 STYLE_PROFILE structure:
-```
+```yaml
 MUST_APPLY (non-negotiable visual elements):
   - COLOR: exact palette with mood preservation
   - TEXTURE: fabric/surface/material quality
@@ -82,7 +82,7 @@ PROMPT_SUFFIX_ENRICH: (append when scene is compatible)
 
 ### L2: Prompt Reformulation
 
-```
+```yaml
 INPUT: STYLE_PROFILE + user prompt
 OUTPUT: reformulated prompt (100-200 words)
 ```
@@ -125,7 +125,7 @@ Tested 7 rank/optimizer variants × 5 prompts × 16 style boards. Top performers
 
 Style captions must describe WHAT is in the image, NEVER HOW it looks.
 
-```
+```markdown
 # CORRECT: trigger + content description
 bd9style. A woman with flowing white hair stands beside a white horse in a grassy field
 
@@ -187,7 +187,7 @@ target_blocks: ["single_transformer_blocks.30", ..., "single_transformer_blocks.
 
 For datasets with strong content/style coupling:
 
-```
+```text
 Step 1 (content LoRA): rank16, 1500 steps
   - Trains on same images
   - Objective: capture content only (what the images depict)

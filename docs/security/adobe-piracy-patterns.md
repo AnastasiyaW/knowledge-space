@@ -57,7 +57,7 @@ AGS = background service checking authenticity of installed Adobe apps.
 
 ## Attack Category 2: Hosts File Modification
 
-```
+```markdown
 127.0.0.1 lcs-cops.adobe.io
 127.0.0.1 lm.licenses.adobe.com
 127.0.0.1 activate.adobe.com

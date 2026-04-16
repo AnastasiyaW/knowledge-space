@@ -18,7 +18,7 @@ Making an English-only static site (MkDocs, Hugo, Jekyll on GitHub Pages) discov
 
 ## Strategy: Hub Pages + English Articles
 
-```
+```text
 docs/
   index.md              # English hub (default)
   index.ru.md           # Russian hub page (translated)
@@ -91,7 +91,7 @@ Only valid for pages that actually have translations. Must be bidirectional:
 
 No formal spec for multilingual llms.txt yet. Emerging practice:
 
-```
+```text
 /llms.txt           # English (default), serves as index
 /ru/llms.txt        # Russian language version
 /zh/llms.txt        # Chinese language version

@@ -137,5 +137,5 @@ admin.createAcls(List.of(new AclBinding(
 ## See Also
 
 - [[broker-architecture]] - listener configuration, KRaft migration ACL considerations
-- [[kafka-cluster-operations]] - operational security best practices
+- [[kafka-cluster-management]] - operational security best practices
 - [Apache Kafka Security Documentation](https://kafka.apache.org/documentation/#security)

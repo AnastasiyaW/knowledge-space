@@ -92,7 +92,7 @@ echo '{"decision": "defer"}'
 
 ### CLAUDE.md vs Hooks
 
-```
+```text
 CLAUDE.md → guidelines ("prefer Bun over npm")
 Hooks     → rules that must never be broken ("always run prettier before commit")
 ```
@@ -128,7 +128,7 @@ Skills are SKILL.md files in `.claude/skills/` or `skills/` inside a plugin. Cla
 
 ## CLAUDE.md Organization
 
-```
+```text
 ~/.claude/CLAUDE.md            - global (loads in all sessions)
 ./CLAUDE.md                    - project root (team-shared, check into git)
 ./CLAUDE.local.md              - personal project overrides (gitignored)

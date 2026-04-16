@@ -16,7 +16,7 @@ Available from PS v24.2.0 (Feb 2023), significantly enhanced in PS 2025 (v26, UX
 - Communication via Node.js N-API style API
 - From PS 2025: **access to Photoshop C++ SDK from hybrid plugins** - filters, direct pixel data access
 
-```
+```php
 JavaScript (UXP) <--N-API--> C++ (.uxpaddon)
                                   |
                                   +-- ONNX Runtime
@@ -99,7 +99,7 @@ Feature-detect PS C++ SDK; fall back to JS imaging API if unavailable.
 
 ### N-API (Hybrid Plugin) - Recommended
 
-```
+```php
 JS (UXP) <--N-API--> C++ (.uxpaddon)
 ```
 
@@ -117,7 +117,7 @@ Performance: ~45-55% slower than native (USENIX research). No GPU access. PS 202
 
 ### Subprocess (Out-of-Process Daemon)
 
-```
+```php
 JS (UXP) <--HTTP/WebSocket--> External Process (C++)
 ```
 
@@ -129,7 +129,7 @@ Full isolation, own address space, full GPU access. Pattern used by all major ML
 
 ### Pattern A: In-Process (UXP Hybrid)
 
-```
+```php
 [Photoshop Process]
   |
   +-- [UXP JS] <--N-API--> [C++ .uxpaddon]
@@ -143,7 +143,7 @@ Cons: C++ crash = PS crash. Memory limited to PS process. GPU may conflict with 
 
 ### Pattern B: Out-of-Process Daemon
 
-```
+```bash
 [Photoshop Process]               [ML Daemon Process]
   |                                     |
   +-- [UXP Plugin] <--localhost HTTP--> [HTTP Server]
@@ -157,7 +157,7 @@ Cons: IPC overhead, lifecycle management, firewall may block localhost.
 
 ### Pattern C: Hybrid - RECOMMENDED FOR ML
 
-```
+```bash
 [Photoshop]
   |
   +-- [UXP Hybrid Plugin]
@@ -176,7 +176,7 @@ N-API for pixel transfer + subprocess for GPU inference.
 
 ### Real-World Pattern (Topaz, Nik, Luminar)
 
-```
+```text
 [Photoshop/LR Filter Call]
      |
      v
@@ -235,7 +235,7 @@ All major commercial ML plugins use this: standalone app + PS/LR integration.
 | **TensorRT** | Win/Linux | NVIDIA | Optimized inference |
 
 **Recommended strategy:**
-```
+```yaml
 Windows: DirectML → CPU fallback
 macOS:   CoreML  → CPU fallback
 ```
@@ -278,7 +278,7 @@ Strategies:
 
 ### Thread Safety
 
-```
+```sql
 JS: call startInference(imageData, callback)
  |
  +-> C++ (N-API): receive data, create worker thread
@@ -343,7 +343,7 @@ This is how Topaz Photo AI, Nik Collection, Luminar Neo work in LR.
 
 ### Shared Codebase PS + LR
 
-```
+```bash
 C++ backend ──── common (core ML inference)
                       |
            ┌──────────┴──────────┐

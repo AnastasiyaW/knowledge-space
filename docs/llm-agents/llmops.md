@@ -121,7 +121,7 @@ Store full trace (intermediate steps, tool calls, LLM responses) for debugging.
 6. **Batch processing**: group similar requests
 
 ### Cost Formula
-```
+```text
 Cost/request = (input_tokens * input_price + output_tokens * output_price)
 
 GPT-4o example: 1000 in + 500 out = ~$0.0075

@@ -21,7 +21,7 @@ Paper: arXiv:2512.25066 (Dec 2025). Code released March 2026. Authors: Kling Tea
 
 **Phase 2 — Editor (the released model)**: DiT learns **mask-free** editing from generated pairs. At inference, takes full video + new audio → edits only lips.
 
-```
+```bash
 Reference Video → VAE Encode → ref_latents ─┐
                                               ├─ concat along channels → DiT Blocks → VAE Decode → Dubbed Video
 Random Noise ────────────────→ noise_latents ─┘

@@ -79,7 +79,7 @@ Security architecture, DevOps practices, and operational concerns.
 ## Quick Decision Trees
 
 ### "Which database?"
-```
+```rust
 Need ACID transactions?       -> PostgreSQL
 Need flexible schema?         -> MongoDB
 Need >500K TPS writes?        -> Cassandra / ScyllaDB
@@ -90,14 +90,14 @@ Need analytical aggregations? -> ClickHouse / BigQuery
 ```
 
 ### "Microservices or monolith?"
-```
+```php
 Team < 10, simple domain?     -> Monolith (or modular monolith)
 Clear boundaries, need independence? -> Microservices
 Unclear, need fast iteration? -> Start monolith, extract later (Strangler Fig)
 ```
 
 ### "Which API style?"
-```
+```php
 Public/browser API?           -> REST (with OpenAPI)
 Internal, performance critical? -> gRPC
 Complex queries, client flexibility? -> GraphQL
@@ -107,7 +107,7 @@ Enterprise, strict contracts? -> SOAP
 ```
 
 ### "Kafka or RabbitMQ?"
-```
+```php
 High volume event streaming?  -> Kafka
 Need message replay?          -> Kafka
 Flexible routing logic?       -> RabbitMQ

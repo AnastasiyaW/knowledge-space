@@ -30,7 +30,7 @@ Works for **detection** (merges bounding boxes across tiles). For **generation/e
 
 From chat discussions (Vladimir's approach):
 
-```
+```bash
 1. Take tiles with overlap (e.g., input 1000×1000, keep center 800×800)
 2. For next tile, include edges from already-processed tiles as overlap
 3. Model sees context from neighboring processed tiles
@@ -58,7 +58,7 @@ flux-kontext-diff-merge detects changed regions in **LAB color space** and selec
 ## Latent-Space Tiling (for diffusion models)
 
 Alternative: tile in **latent space** (after VAE encode, before denoising):
-```
+```text
 Full image → VAE encode → latent (H/8 × W/8 × C)
 Tile latents → denoise each tile with overlap
 Stitch latents → VAE decode full
@@ -119,7 +119,7 @@ Learnable affine transform conditioned on global context at each normalization l
 
 Tokenize full image at low resolution → encode to bottleneck → inject via cross-attention into each tile's processing. Tile attends to global semantic tokens while doing local processing.
 
-```
+```text
 Full image (downsampled) → Tokenize → Encoder → [bottleneck tokens]
 Each tile processing:
   Tile tokens (local) + bottleneck tokens (global) → cross-attention → tile output

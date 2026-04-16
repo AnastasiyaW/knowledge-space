@@ -171,7 +171,7 @@ CMD ["python", "app.py"]
 
 ## Scanning Pipeline
 
-```
+```php
 Developer -> Dockerfile lint (hadolint)
     -> Build image
     -> Scan image (Trivy: vulns + secrets + config)

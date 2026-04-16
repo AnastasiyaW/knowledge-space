@@ -166,7 +166,7 @@ except Exception:
 
 ## Exception Hierarchy (key classes)
 
-```
+```text
 BaseException
  +-- SystemExit, KeyboardInterrupt, GeneratorExit
  +-- Exception

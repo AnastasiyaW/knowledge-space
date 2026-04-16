@@ -71,7 +71,7 @@ plugins:
 
 MkDocs does **not** auto-generate `robots.txt`. Place manually in `docs/`:
 
-```
+```yaml
 User-agent: *
 Allow: /
 
@@ -209,7 +209,7 @@ Bing and Yandex use IndexNow natively. Google uses its own system but the signal
 
 ### Title Templates
 
-```
+```text
 [Specific Topic]: [What/How/Why] [Context] | Site Name
 ```
 
@@ -217,7 +217,7 @@ Bing and Yandex use IndexNow natively. Google uses its own system but the signal
 
 ### Header Hierarchy
 
-```
+```sql
 H1: One per page (auto from filename or front matter title)
   H2: Major sections (3-8 per article)
     H3: Subsections

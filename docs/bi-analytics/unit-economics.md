@@ -18,7 +18,7 @@ Unit economics is an economic modeling method for determining business profitabi
 
 ## Core Formulas
 
-```
+```yaml
 Profit (Margin) = Gross Profit - Fixed Costs
 Gross Profit = Revenue - Variable Costs
 

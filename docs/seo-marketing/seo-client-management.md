@@ -57,7 +57,7 @@ Example for semantic core: Process = competitor analysis -> marker collection ->
 3. **Revenue share** - experienced specialists only
 
 ### Hourly Rate System (Recommended)
-```
+```yaml
 Monthly fee = Hours x Hourly rate
 Example: 40 hours x 750 RUB = 30,000 RUB/month
 ```

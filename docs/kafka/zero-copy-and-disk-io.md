@@ -25,7 +25,7 @@ Kafka achieves high throughput through sequential disk I/O, OS page cache utiliz
 
 ### How Zero-Copy Works
 
-```
+```php
 Traditional (without zero-copy):
   Disk -> Kernel Buffer -> User Space Buffer -> Socket Buffer -> NIC
   (4 copies, 4 context switches)
@@ -37,7 +37,7 @@ Kafka (with zero-copy / sendfile):
 
 ### Why Kafka Is Fast
 
-```
+```sql
 1. Sequential I/O:
    - Append-only writes (no random seeks)
    - Sequential reads (consumers read in order)
@@ -61,7 +61,7 @@ Kafka (with zero-copy / sendfile):
 
 ### Segment File Structure
 
-```
+```text
 /var/kafka/data/
   orders-0/                          # topic "orders", partition 0
     00000000000000000000.log         # segment file (records)
@@ -86,5 +86,5 @@ Kafka (with zero-copy / sendfile):
 
 - [[broker-architecture]] - log segments, retention policies, segment rolling
 - [[topics-and-partitions]] - on-disk layout, segment configuration
-- [[producer-patterns]] - batching and compression at producer level
+- [[kafka-producer-fundamentals]] - batching and compression at producer level
 - [Kafka Design: Efficiency](https://kafka.apache.org/documentation/#maximizingefficiency)

@@ -23,7 +23,7 @@ Segmenting images by example: provide one or more (image, mask) pairs and the mo
 
 ### Architecture
 
-```
+```text
 Reference (image + mask)
     ↓
 DINOv3 frozen backbone (ViT-S/B/L)

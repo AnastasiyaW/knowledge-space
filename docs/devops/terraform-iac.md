@@ -109,7 +109,7 @@ resource "aws_instance" "server" {
 
 ## File Structure
 
-```
+```bash
 project/
   main.tf              # resource definitions
   variables.tf         # input variable declarations

@@ -50,7 +50,7 @@ A CNN has two stages:
 1. **Feature extraction stage**: alternating Conv + Pool layers. Hierarchical - each layer detects features from the previous layer's output. This stage is a specialized image feature transformer
 2. **Classification stage**: standard dense (fully connected) layers that take extracted features and perform classification/regression
 
-```
+```php
 Input -> [Conv -> BN -> ReLU -> Pool] x N -> Flatten -> Dense -> Output
 ```
 
@@ -72,7 +72,7 @@ This separation explains why transfer learning works: stage 1 learns general ima
 ### ResNet Skip Connections
 
 Solve vanishing gradient for deep networks:
-```
+```php
 input -> Conv -> BN -> ReLU -> Conv -> BN -> (+input) -> ReLU
 ```
 The identity shortcut lets gradients flow directly through the network. ResNet demonstrated that with skip connections, training a 152-layer network is feasible and outperforms shallower alternatives.

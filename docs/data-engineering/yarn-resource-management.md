@@ -25,7 +25,7 @@ YARN (Yet Another Resource Negotiator) replaced Hadoop v1's monolithic JobTracke
 
 ## Queue Configuration
 
-```
+```text
 root
   |-- engineering (40%)
   |-- marketing (30%)

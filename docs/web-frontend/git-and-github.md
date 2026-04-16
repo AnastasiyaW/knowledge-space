@@ -29,7 +29,7 @@ git commit -m "Add feature" # Commit staged changes
 ```
 
 ### Staging Area
-```
+```php
 Working Directory  -->  Staging Area  -->  Repository
    (modified)         (git add)        (git commit)
 ```
@@ -76,7 +76,7 @@ git merge feature
 **Three-way merge**: both branches diverged, creates merge commit.
 
 ### Conflict Resolution
-```
+```text
 <<<<<<< HEAD
 current branch code
 =======
@@ -146,7 +146,7 @@ git fetch                    # Download without merging
 
 ## Commit Messages
 
-```
+```yaml
 type: short summary (imperative, max 50 chars)
 
 Longer explanation of why.

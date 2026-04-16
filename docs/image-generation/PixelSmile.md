@@ -66,7 +66,7 @@ Zero-shot pairwise interpolation of expression embeddings. 9 of 15 basic-express
 
 Training uses frozen **ArcFace** (InsightFace glintr100 + scrfd_10g_bnkps detector):
 
-```
+```toml
 L_id = 1 - cosine_similarity(ArcFace(generated), ArcFace(ground_truth))
 lambda_id = 0.1
 ```
@@ -83,7 +83,7 @@ At inference, identity is preserved implicitly through LoRA's learned behavior â
 **Hardware**: 4x NVIDIA H200, batch 4/GPU, 100 epochs, cosine LR from 1e-4
 
 **Loss function**:
-```
+```toml
 L = 0.5*(L_FM_a + L_FM_b) + 0.05*L_SC + 0.1*L_ID
 ```
 - `L_FM`: [[flow-matching]] velocity loss

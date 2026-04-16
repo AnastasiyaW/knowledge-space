@@ -62,7 +62,7 @@ Visualization platform for Prometheus, Loki, Tempo, Elasticsearch data:
 
 Loki indexes labels only (not content) - much lighter than ELK:
 
-```
+```yaml
 LogQL: {container_name="accounts"} |= "error"
 Rate:  rate({container_name="accounts"}[5m])
 ```

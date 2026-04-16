@@ -10,7 +10,7 @@ SQL is the universal language for data engineering. This entry covers DE-specifi
 
 ## Query Execution Order
 
-```
+```sql
 FROM -> JOIN -> WHERE -> GROUP BY -> HAVING -> SELECT -> DISTINCT -> ORDER BY -> LIMIT
 ```
 

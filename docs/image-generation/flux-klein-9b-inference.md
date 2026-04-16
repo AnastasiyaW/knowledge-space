@@ -63,7 +63,7 @@ At 4 steps, complex poses (seated, two-person) often produce extra limbs. **8 st
 
 ### Base (Stage 1) + Distilled (Stage 2)
 
-```
+```php
 [Prompt] -> Klein Base 9B, 1024x1024, 20 steps, CFG 5.0, euler/simple
          -> Upscale Latent 2x -> 2048x2048
          -> Klein Distilled 9B, 4-8 steps, CFG 1.0, euler/simple, denoise 0.4-0.6
@@ -72,7 +72,7 @@ At 4 steps, complex poses (seated, two-person) often produce extra limbs. **8 st
 
 ### Fast Pipeline (Distilled Only)
 
-```
+```php
 [Prompt] -> Klein Distilled 9B, 1024x1024, 8 steps, CFG 1.0, euler/simple
          -> Image Resize -> 2048 longest side
          -> Klein Distilled upscale, 4 steps, euler_ancestral_cfg++,
@@ -272,7 +272,7 @@ Distilled model: CFG must be 1.0 - higher values break generation entirely.
 
 ### Klein + SeedVR2 (Proven Two-Stage)
 
-```
+```bash
 Stage 1: Klein 9B img2img to 2048x2048
   Sampler: euler_ancestral_cfg++
   Scheduler: sgm_uniform (BasicScheduler)

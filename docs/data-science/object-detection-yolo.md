@@ -74,7 +74,7 @@ names:
 ```
 
 Label files (one per image, same name .txt):
-```
+```markdown
 # class_id center_x center_y width height (all normalized 0-1)
 0 0.5 0.4 0.3 0.6
 1 0.2 0.7 0.15 0.2

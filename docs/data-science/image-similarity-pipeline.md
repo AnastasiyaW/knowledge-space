@@ -128,7 +128,7 @@ Expected lift from 2-5K active labels: 3-8 points Recall@10 vs random labeling.
 
 Save for reproducibility and model eval reuse:
 
-```
+```bash
 edge_audit.parquet     # src, dst, csd_sim, clip_sim, color_jaccard, z_score, nn_confirmed, verdict
 noise_classifier.pkl   # trained on 2K human labels, auto-labels remaining flagged edges
 human_labels.sqlite    # 2K reviewed pairs, reuse in test set construction

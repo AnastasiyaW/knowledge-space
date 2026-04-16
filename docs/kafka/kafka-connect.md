@@ -169,6 +169,6 @@ public class MySinkTask extends SinkTask {
 - [[schema-registry]] - schema management for Avro/Protobuf connectors
 - [[transactional-outbox]] - CDC as alternative to explicit outbox pattern
 - [[ksqldb]] - ksqlDB can create/manage connectors via SQL
-- [[kafka-cluster-operations]] - monitoring Connect clusters
+- [[kafka-monitoring-and-tuning]] - monitoring Connect clusters
 - [Apache Kafka Connect Documentation](https://kafka.apache.org/documentation/#connect)
 - [Confluent Hub - Connector Marketplace](https://www.confluent.io/hub/)

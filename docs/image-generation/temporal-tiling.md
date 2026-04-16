@@ -20,7 +20,7 @@ Standard tiled diffusion (MultiDiffusion, [[tiled-inference]]) processes tiles i
 
 ### Level 0: Overlap Averaging (MultiDiffusion)
 
-```
+```text
 Tile A [====overlap====] Tile B
        averaged in overlap zone
 ```
@@ -47,7 +47,7 @@ After generating tile N, encode its latent. When generating tile N+1, inject pre
 
 **Treat tiles as video frames.** Insert temporal self-attention after each spatial block:
 
-```
+```bash
 Spatial layers: each tile processed independently
                 (temporal axis → batch dimension)
                           ↓
@@ -66,7 +66,7 @@ Zero-initialized output projection → identity at start → pretrained spatial 
 
 Generate tiles sequentially with causal masking — each tile attends only to previously generated tiles:
 
-```
+```text
 Tile 0 (top-left): generated normally
 Tile 1: attends to Tile 0
 Tile 2: attends to Tiles 0, 1
@@ -170,7 +170,7 @@ Common bugs in `train_flowmatching.py` implementations:
 
 If inference-only BCLA is insufficient, train temporal awareness:
 
-```
+```hcl
 Phase 1: Temporal LoRA only
   Freeze: all spatial (transformer, VAE, text encoder)
   Train: LoRA on attn.to_q/k/v/out (rank 32)

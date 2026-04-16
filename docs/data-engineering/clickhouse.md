@@ -28,7 +28,7 @@ Data stored column-by-column. Reading 3 columns from a wide table reads ~3% of d
 
 ## Physical Storage
 
-```
+```php
 Table
   -> Partitions (independent file groups on disk)
     -> Granules (default 8192 rows)

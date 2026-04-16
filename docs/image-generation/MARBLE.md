@@ -15,7 +15,7 @@ Paper: CVPR 2025. Authors: Oxford + MIT CSAIL + Stability AI. arXiv:2506.05313.
 
 Built on SDXL + IP-Adapter + InstantStyle:
 
-```
+```bash
 Material exemplar → CLIP encoder (ViT-bigG-14) → CLS token embedding z_m
                                                         ↓
 z_m injected into single UNet block: up_blocks.0.attentions.1 (material block)

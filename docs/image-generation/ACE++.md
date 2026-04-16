@@ -17,7 +17,7 @@ Paper: arXiv:2501.02487. GitHub: ali-vilab/ACE_plus.
 
 Key change from original ACE: **channel concatenation** instead of sequence concatenation.
 
-```
+```bash
 Original LCU:  [cond_image; mask] + [noise; mask]  → sequence concat (2× attention cost)
 LCU++:         [cond_image; mask; noise]            → channel concat (efficient)
 ```

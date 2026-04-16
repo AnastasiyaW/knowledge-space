@@ -26,7 +26,7 @@ SANA is 10x smaller, 4x fewer tokens, linear complexity. For restoration where w
 
 ### 1. Input Conditioning: Channel Concat
 
-```
+```toml
 degraded → DC-AE.encode → condition_latents [B, 32, H, W]
 target   → DC-AE.encode → latents           [B, 32, H, W]
 
@@ -57,7 +57,7 @@ Leverages SANA's Gemma-2-2B text encoder for degradation-type understanding.
 
 For images > training resolution (e.g., 4K product photos):
 
-```
+```sql
 4096x4096 image
   ↓ split into overlapping 1024px tiles (raster scan)
   ↓ each tile: DC-AE encode → 32x32x32 latent
@@ -113,7 +113,7 @@ Degradation: 5-8 variants per image = **17K-28K pairs**
 
 ## Project Files
 
-```
+```python
 happyin-research/
 ├── sana-fm/
 │   ├── data/paired_dataset.py      ← paired loader

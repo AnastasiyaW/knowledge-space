@@ -45,7 +45,7 @@ None of the layers were planned. Each one appeared after a specific problem.
 
 **Layer 3: Handoffs.** These appeared when a new chat repeated a dead-end from the previous one. When closing a chat, the agent writes a summary: what was done, what did NOT work (the most valuable part), one next action. Here's a real handoff:
 
-```
+```rust
 ## Session goal
 Color checker: CNN sweep + diffusion, first visual results.
 
@@ -156,7 +156,7 @@ One of the principles (Assumption Testing) states it directly: every component e
 
 Paste into Claude Code:
 
-```
+```text
 https://github.com/AnastasiyaW/claude-code-config - look through everything, choose what fits my project, set it up
 ```
 

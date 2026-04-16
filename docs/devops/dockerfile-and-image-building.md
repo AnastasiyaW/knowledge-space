@@ -139,7 +139,7 @@ docker push username/myapp:v1
 ## .dockerignore
 
 Exclude files from build context (like .gitignore):
-```
+```text
 node_modules/
 .git/
 *.log

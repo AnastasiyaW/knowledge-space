@@ -82,7 +82,7 @@ Power = probability of detecting a real effect. Influenced by:
 
 Reduces metric variance by 20-30% using pre-experiment data.
 
-```
+```toml
 Y_cuped = Y - theta * X
 theta* = cov(Y, X) / Var(X)
 Var(Y_cuped) = Var(Y) * (1 - rho^2(Y, X))

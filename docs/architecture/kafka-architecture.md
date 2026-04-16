@@ -10,7 +10,7 @@ Kafka is a message broker built on the log (journal) model. Focus on preserving 
 
 ## Architecture Hierarchy
 
-```
+```php
 Cluster -> Brokers -> Topics -> Partitions -> Messages (with offsets)
 ```
 

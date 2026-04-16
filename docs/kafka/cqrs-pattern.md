@@ -23,7 +23,7 @@ CQRS (Command Query Responsibility Segregation) separates the write path (Comman
 
 ### Architecture Flow
 
-```
+```sql
 1. User sends command (create account, deposit, withdraw)
 2. Command API validates command against aggregate state
 3. Command API creates event, applies to aggregate, saves to Event Store
@@ -70,7 +70,7 @@ public void handleEvent(String event, Acknowledgment ack) {
 
 ### Multiple Read Models
 
-```
+```php
 Kafka Topic "order-events"
   -> Consumer Group A -> MySQL (operational queries)
   -> Consumer Group B -> ElasticSearch (full-text search)

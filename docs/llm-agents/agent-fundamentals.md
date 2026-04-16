@@ -38,7 +38,7 @@ External capabilities: search, code execution, file operations, APIs, communicat
 
 The foundational agent execution pattern (Reasoning + Acting):
 
-```
+```text
 1. THOUGHT: Analyze situation, decide next action
 2. ACTION: Call a tool with specific inputs
 3. OBSERVATION: Receive tool output
@@ -47,7 +47,7 @@ The foundational agent execution pattern (Reasoning + Acting):
 ```
 
 **Example:**
-```
+```yaml
 User: What's the weather in Paris and should I bring an umbrella?
 
 Thought: I need to check weather in Paris
@@ -84,7 +84,7 @@ One LLM handles everything. Simple but limited for complex tasks.
 
 ### Router Pattern
 LLM classifier routes to specialized agents:
-```
+```php
 User Request -> Router (classifies intent)
   -> FAQ Agent
   -> Technical Agent
@@ -93,7 +93,7 @@ User Request -> Router (classifies intent)
 
 ### Supervisor Pattern
 Boss agent delegates to specialized workers:
-```
+```php
 User Request -> Supervisor
   -> Worker 1 (Research)
   -> Worker 2 (Analysis)

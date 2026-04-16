@@ -21,7 +21,7 @@ The Saga pattern manages distributed transactions across microservices via Kafka
 
 ### Choreography-Based Saga
 
-```
+```php
 Order Service -> "OrderCreated" event -> Kafka
   Payment Service consumes -> processes payment -> "PaymentCompleted" event -> Kafka
     Inventory Service consumes -> reserves stock -> "StockReserved" event -> Kafka
@@ -37,7 +37,7 @@ On failure (e.g., payment fails):
 
 ### Orchestration-Based Saga
 
-```
+```php
 Saga Coordinator receives "CreateOrder" command
   -> sends "ProcessPayment" to Payment Service
   <- receives "PaymentCompleted"

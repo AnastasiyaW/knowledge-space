@@ -78,12 +78,12 @@ Improved ranking function actively used by Yandex:
 
 ### Traffic Title
 Cover maximum queries:
-```
+```text
 Buy fridge in Moscow, prices for fridges, online store Brand
 ```
 
 **Template formula:**
-```
+```text
 Buy %Category.Nom.Sg% in %City.Prep% online, prices for %Category.Nom.Pl%.
 Sale of %Category.Gen.Pl%.
 ```
@@ -92,7 +92,7 @@ Rules: synonyms, transliterations, permutations; sacrifice exact keyword form fo
 
 ### Positional Title
 Maximum position on specific queries:
-```
+```sql
 PVC windows from manufacturer - Moscow
 ```
 
@@ -100,7 +100,7 @@ Rules: exact keyword occurrences entered "as is"; almost no tail queries; patter
 
 ### Article Title
 Clicks and information intent:
-```
+```text
 Simple recipe for cottage cheese pancakes with step-by-step photos
 ```
 

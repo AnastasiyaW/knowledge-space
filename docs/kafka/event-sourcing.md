@@ -24,7 +24,7 @@ Event sourcing stores every state change as an immutable event in Kafka rather t
 
 ### Event Sourcing Architecture
 
-```
+```bash
 Events -> Kafka Topic (append-only log, source of truth)
     -> Materializer A -> Read Store A (current state for API)
     -> Materializer B -> Read Store B (analytics, full-text search)
@@ -34,7 +34,7 @@ Events -> Kafka Topic (append-only log, source of truth)
 
 ### Event Replay
 
-```
+```sql
 POST /api/replay-events
 1. Command API reads all events from Event Store
 2. Sends marker event "replay started"

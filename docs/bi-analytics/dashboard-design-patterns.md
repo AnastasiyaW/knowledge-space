@@ -22,7 +22,7 @@ Dashboard design combines information design, graphic design, UX, and storytelli
 
 ### Dashboard Structure (General to Specific)
 
-```
+```text
 Level 1: KPI summary (total state, one number per metric)
 Level 2: Trend over time (is it improving or declining?)
 Level 3: Breakdown by dimension (which segment drives the trend?)
@@ -30,7 +30,7 @@ Level 4: Detail/drill-down (individual records, anomalies)
 ```
 
 Visual layout:
-```
+```text
 Header (title)
 +-- KPI factoids + sparklines (upper area, high attention)
 +-- Trend charts (middle area)

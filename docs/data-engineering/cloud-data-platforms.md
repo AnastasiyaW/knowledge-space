@@ -67,7 +67,7 @@ Cloud platforms separate compute from storage, enabling elastic scaling and pay-
 - Monitor QoS limits - small disks have lower IOPS quotas
 
 ## Cloud-Native Data Pattern
-```
+```text
 Storage Layer: S3 (or compatible)
 Compute Layer: Kubernetes (Spark, Presto run here)
 ```

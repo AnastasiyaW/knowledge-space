@@ -59,7 +59,7 @@ ORDER BY 1, 2;
 
 Use `DATEDIFF` to calculate days since first event, `DATETRUNC` to normalize to week/month cohort groups, then pivot with table calculations for the cohort grid.
 
-```
+```sql
 -- First event date per user (LOD)
 {FIXED [User ID] : MIN([Event Date])}
 

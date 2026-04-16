@@ -100,7 +100,7 @@ Where to publish technical articles, with audience profiles, formatting requirem
 
 ## Cross-Posting Strategy
 
-```
+```bash
 1. Publish on personal blog (canonical URL)
 2. Cross-post to dev.to (with canonical_url in frontmatter)
 3. Submit to HackerNoon (with canonical link)

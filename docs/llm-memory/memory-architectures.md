@@ -31,7 +31,7 @@ Structural approaches to organizing persistent knowledge for LLM agents. The arc
 
 Plain markdown files with cross-references and a maintained index. The LLM navigates by reading the index, then drilling into specific files.
 
-```
+```bash
 knowledge/
   index.md          # catalog with summaries (LLM reads first)
   log.md            # append-only operation log
@@ -54,7 +54,7 @@ knowledge/
 
 Organizes memory into a navigable taxonomy using spatial metaphors:
 
-```
+```text
 Wing (person/project)
   └── Room (topic)
        └── Hall (type: facts/events/discoveries/preferences/advice)
@@ -97,7 +97,7 @@ results = collection.query(query_texts=["database preference"], n_results=5)
 
 Entity-relationship triples with temporal validity:
 
-```
+```text
 (User, prefers, PostgreSQL, valid_from=2026-01, valid_to=null)
 (PostgreSQL, supports, pgvector, valid_from=2024-06, valid_to=null)
 (User, evaluated, MySQL, valid_from=2025-11, valid_to=2025-12)
@@ -111,7 +111,7 @@ Entity-relationship triples with temporal validity:
 
 Production systems combine multiple approaches:
 
-```
+```text
 L0: Identity core (flat file, ~50 tokens, always loaded)
 L1: Critical facts (flat file, ~120 tokens, always loaded)
 L2: Topic-specific memory (vector store, loaded on demand)
@@ -140,7 +140,7 @@ The agent reads this index first, then opens only the files it needs. This is JI
 
 ### Ingest Workflow
 
-```
+```bash
 Source material arrives
   → LLM reads source (raw/ - immutable)
   → LLM creates/updates wiki pages

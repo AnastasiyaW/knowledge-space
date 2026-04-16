@@ -47,7 +47,7 @@ Reference for production-quality motion graphics, product videos, and animated p
 | Fast-cut montage | 2-3s each |
 
 **60-second video rhythm:**
-```
+```text
 [0-5s]   Hook: bold statement, dark bg        — FAST
 [5-15s]  Problem: 2-3 quick cuts              — MEDIUM
 [15-25s] Solution reveal: product appears     — SLOW
@@ -294,7 +294,7 @@ SFX should be 6-12 dB quieter than VO.
 
 ### PAS (Problem-Agitation-Solution) - highest converting
 
-```
+```yaml
 Problem:    3s — one clear pain point
 Agitation:  5s — vivid consequence
 Solution:   4s — your product/answer
@@ -304,7 +304,7 @@ Total: ~15s. Scale proportionally for 30-60s.
 
 ### Hook-Value-CTA
 
-```
+```yaml
 Hook:  2-5s  — pain point or question
 Value: rest  — concise solution
 CTA:   3-5s

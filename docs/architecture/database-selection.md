@@ -30,7 +30,7 @@ Choosing the right database is an architectural decision with long-term conseque
 
 ## Decision Tree
 
-```
+```rust
 Need ACID transactions?
   Yes -> PostgreSQL (or MySQL)
 Need flexible schema?

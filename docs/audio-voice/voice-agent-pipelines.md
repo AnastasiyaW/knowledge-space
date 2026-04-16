@@ -129,7 +129,7 @@ vad_iterator = VADIterator(model, threshold=0.5, sampling_rate=16000,
 
 ### Budget Breakdown (Cascaded)
 
-```
+```text
 Total budget: 800ms target
 
 STT (Deepgram Nova-3):  ~100-200ms  (streaming: first words in ~150ms)

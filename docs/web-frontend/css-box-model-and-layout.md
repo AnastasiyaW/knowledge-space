@@ -10,7 +10,7 @@ Every HTML element is a rectangular box with four layers. Understanding the box 
 
 ## Box Model
 
-```
+```text
 ┌────────── Margin ──────────┐
 │  ┌──────── Border ──────┐  │
 │  │  ┌──── Padding ────┐ │  │

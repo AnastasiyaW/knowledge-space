@@ -39,7 +39,7 @@ nabla f = [df/dx1, df/dx2, ..., df/dxn]
 ### Backpropagation
 
 Chain rule through computation graph. For layer output = sigma(Wx + b):
-```
+```text
 d(Loss)/dW = d(Loss)/d(output) * d(output)/d(Wx+b) * d(Wx+b)/dW
 ```
 
@@ -80,7 +80,7 @@ In ML: SVM optimization (maximize margin subject to constraints).
 ## Log-Sum-Exp Trick
 
 Avoid numerical overflow in softmax/log-likelihood:
-```
+```sql
 log(sum(exp(x_i))) = c + log(sum(exp(x_i - c)))  where c = max(x_i)
 ```
 

@@ -20,7 +20,7 @@ Java Collections Framework hierarchy, choosing the right collection, and functio
 ## Patterns
 
 ### Collection Hierarchy
-```
+```php
 Iterable -> Collection -> List (ArrayList, LinkedList)
                        -> Set (HashSet, LinkedHashSet, TreeSet)
                        -> Queue (PriorityQueue, ArrayDeque)

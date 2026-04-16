@@ -9,7 +9,7 @@ Bridge between Claude Code and Google NotebookLM via reverse-engineered CLI (`no
 
 ## Architecture
 
-```
+```text
 User request
     |
     v

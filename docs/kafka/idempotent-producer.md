@@ -51,7 +51,7 @@ p = Producer({
 
 ### Ordering Guarantee Mechanism
 
-```
+```bash
 Without idempotency (max.in.flight=2):
   Batch 1 sent -> fails -> retry queued
   Batch 2 sent -> succeeds -> written at offset N
@@ -77,5 +77,5 @@ With idempotency (max.in.flight<=5):
 
 - [[kafka-transactions]] - extends idempotent producer with cross-partition atomic writes
 - [[delivery-semantics]] - how idempotent producer fits into exactly-once guarantees
-- [[producer-patterns]] - full producer pipeline, batching, compression, error handling
+- [[kafka-producer-fundamentals]] - full producer pipeline, batching, compression, error handling
 - [KIP-98: Exactly Once Delivery](https://cwiki.apache.org/confluence/display/KAFKA/KIP-98+-+Exactly+Once+Delivery+and+Transactional+Messaging)

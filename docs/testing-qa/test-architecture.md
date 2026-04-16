@@ -21,7 +21,7 @@ Test automation projects are software projects - they need the same engineering 
 
 ### Project Structure
 
-```
+```python
 tests/
   conftest.py              # global fixtures + pytest_plugins
   api/

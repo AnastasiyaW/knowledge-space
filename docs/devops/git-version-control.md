@@ -89,7 +89,7 @@ git clone --recurse-submodules <url>
 
 ## .gitignore
 
-```
+```text
 node_modules/
 .env
 *.log

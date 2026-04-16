@@ -65,7 +65,7 @@ mount -a                                 # mount all from /etc/fstab
 
 ### /etc/fstab - Persistent Mounts
 
-```
+```ini
 # device      mountpoint  fstype  options            dump  pass
 /dev/sda1     /           ext4    errors=remount-ro  0     1
 /dev/sda2     /home       ext4    defaults           0     2
@@ -87,7 +87,7 @@ Columns: device, mount point, filesystem, options, dump flag, fsck pass order.
 
 Flexible disk management: pool physical volumes into volume groups, then carve logical volumes.
 
-```
+```php
 Physical Volumes (PV) -> Volume Groups (VG) -> Logical Volumes (LV)
 ```
 

@@ -17,7 +17,7 @@ Linux operating system internals relevant to security: filesystem hierarchy, use
 - UEFI Secure Boot prevents unsigned kernel/module loading
 
 ## Filesystem Hierarchy (FHS)
-```
+```javascript
 /bin     Essential user binaries
 /sbin    System binaries (fdisk, iptables)
 /etc     Configuration files

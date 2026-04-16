@@ -23,7 +23,7 @@ Level of Detail (LOD) expressions compute aggregations at a different granularit
 
 Computes at specified dimension(s), completely ignoring the view:
 
-```
+```sql
 {FIXED [Customer ID] : SUM([Sales])}
 -- Total sales per customer, regardless of view
 
@@ -40,7 +40,7 @@ Use cases: cohort analysis, customer LTV, finding first/last purchase date, per-
 
 Computes at a finer granularity than the view (adds dimensions):
 
-```
+```sql
 {INCLUDE [Order ID] : SUM([Quantity])}
 -- Per-order sum while viewing by month
 ```
@@ -53,7 +53,7 @@ The view might show monthly aggregates, but INCLUDE calculates at the order leve
 
 Computes at coarser granularity (removes dimensions from context):
 
-```
+```sql
 {EXCLUDE [Region] : SUM([Sales])}
 -- Total ignoring region, while view shows by region
 ```
@@ -62,7 +62,7 @@ Use case: show % of grand total while broken down by subcategory.
 
 ### Classic Pattern: Percent of Total
 
-```
+```sql
 SUM([Sales]) / {FIXED : SUM([Sales])} * 100
 ```
 
@@ -83,7 +83,7 @@ This means FIXED LOD is affected by context filters but NOT by dimension filters
 
 ### Cohort Analysis with LOD
 
-```
+```sql
 -- Cohort month (first activity)
 {FIXED [User ID] : MIN(DATETRUNC('month', [Event Date]))}
 
@@ -100,7 +100,7 @@ LOD inside another LOD is possible but use carefully due to performance impact. 
 ## Gotchas
 
 - Avoid LOD inside complex nested calculations - each LOD adds JOINs:
-  ```
+```bash
   -- Slow (3+ JOINs):
   SUM({FIXED DATEPART('year', [Order Date]) : SUM([Sales])})
 

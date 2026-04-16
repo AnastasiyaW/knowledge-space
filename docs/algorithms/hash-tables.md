@@ -22,7 +22,7 @@ Data structure mapping keys to values via hash function. Average O(1) lookup, in
 
 ### Chaining (Separate Chaining)
 
-```
+```php
 index 0: -> [key1, val1] -> [key5, val5]
 index 1: -> [key2, val2]
 index 2: -> [key3, val3] -> [key7, val7] -> [key9, val9]
@@ -32,7 +32,7 @@ Each bucket is a linked list. Simple but poor cache locality.
 
 ### Open Addressing (Linear Probing)
 
-```
+```text
 If slot h(k) taken, try h(k)+1, h(k)+2, ...
 ```
 

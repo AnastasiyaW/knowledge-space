@@ -65,7 +65,7 @@ enable.auto.commit=false         # Manage offsets via transaction
 
 ### Zombie Fencing Mechanism
 
-```
+```bash
 Scenario without transactions:
   Instance 1 gets messages 1,2 -> processes message 1 -> sends A
   Instance 1 enters long GC pause
@@ -82,7 +82,7 @@ With transactions (same transactional.id = X):
 
 ### Transaction Internals (4 Phases)
 
-```
+```sql
 1. Producer -> Transaction Coordinator (TC):
    - Register transactional.id
    - TC aborts any active transaction with that ID
@@ -124,5 +124,5 @@ admin.abortTransaction(new AbortTransactionSpec(tp, producerId, epoch, coordEpoc
 - [[idempotent-producer]] - PID + sequence number deduplication (prerequisite for transactions)
 - [[delivery-semantics]] - how transactions fit into exactly-once guarantees
 - [[transactional-outbox]] - pattern for exactly-once with external databases
-- [[producer-patterns]] - producer pipeline, error handling
+- [[kafka-producer-fundamentals]] - producer pipeline, error handling
 - [KIP-98: Exactly Once Delivery and Transactional Messaging](https://cwiki.apache.org/confluence/display/KAFKA/KIP-98+-+Exactly+Once+Delivery+and+Transactional+Messaging)

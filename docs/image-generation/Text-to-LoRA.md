@@ -15,7 +15,7 @@ Paper: arXiv:2506.06105 (June 2025, ICML 2025). Follow-up: Doc-to-LoRA (arXiv:26
 
 ## Architecture
 
-```
+```bash
 Task description (text) → Text encoder → embedding
                                             ↓
 Concat with: module-type embedding (q_proj, v_proj, etc.)

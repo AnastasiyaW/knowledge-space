@@ -23,7 +23,7 @@ MirrorMaker 2 (MM2) replicates topics between Kafka clusters for disaster recove
 
 ### Active-Passive (DR Standby)
 
-```
+```php
 DC1 (primary)  --MM2-->  DC2 (standby)
   writes + reads           receives replicated data
                            on DC1 failure: failover to DC2
@@ -33,7 +33,7 @@ Simpler but wastes standby resources.
 
 ### Active-Active (Geo-Distribution)
 
-```
+```rust
 DC1 <--MM2--> DC2 (bidirectional)
   DC1 clients use DC1.* topics
   DC2 clients use DC2.* topics
@@ -72,6 +72,6 @@ sync.group.offsets.enabled = true
 ## See Also
 
 - [[kafka-connect]] - MM2 is built on Connect framework
-- [[kafka-cluster-operations]] - DR planning and failover procedures
+- [[kafka-backup-and-dr]] - DR planning and failover procedures
 - [[broker-architecture]] - cluster architecture
 - [Apache Kafka MirrorMaker Documentation](https://kafka.apache.org/documentation/#georeplication)

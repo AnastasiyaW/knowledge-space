@@ -31,7 +31,7 @@ Network fundamentals from a security perspective: OSI model, TCP/IP stack, DNS m
 
 TCP establishes a reliable connection before data transfer using three steps:
 
-```
+```php
 Client                    Server
   |--- SYN (seq=x) ------->|     Step 1: Client sends SYN with random sequence number
   |<-- SYN-ACK (seq=y, -----|     Step 2: Server responds with SYN-ACK, acknowledges x+1
@@ -81,7 +81,7 @@ ip route del 10.0.0.0/8
 **Security**: unauthorized route changes can redirect traffic (route poisoning). Use RPKI/ROA for BGP route validation in production networks.
 
 ### IPv4 Subnetting (CIDR)
-```
+```text
 /24 = 255.255.255.0     = 254 usable hosts
 /25 = 255.255.255.128   = 126 usable hosts
 /26 = 255.255.255.192   = 62 usable hosts
@@ -119,7 +119,7 @@ mtr example.com          # Combined ping + traceroute
 | SRV | Service location (AD, SIP) |
 
 ### Zone File Example
-```
+```text
 $TTL 3600
 @    IN SOA  ns1.example.com. admin.example.com. (2024010101 3600 600 86400 3600)
 @    IN NS   ns1.example.com.
@@ -168,7 +168,7 @@ wg-quick up wg0
 ```
 
 ## DHCP
-```
+```css
 # /etc/dhcp/dhcpd.conf
 subnet 192.168.1.0 netmask 255.255.255.0 {
     range 192.168.1.100 192.168.1.200;

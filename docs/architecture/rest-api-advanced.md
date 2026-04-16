@@ -38,7 +38,7 @@ Internal protection against surges. Prioritizes urgent requests. Implemented via
 | **Cache forever** | `Cache-Control: max-age=31536000, public, immutable` | Immutable content |
 
 ### Validation Flow (ETag)
-```
+```rust
 1. Server responds with: ETag: "abc123"
 2. Client conditional request: If-None-Match: "abc123"
 3. Server responds: 304 Not Modified (use cache)
@@ -53,7 +53,7 @@ Internal protection against surges. Prioritizes urgent requests. Implemented via
 ## Compression
 
 No API design change needed:
-```
+```yaml
 # Client
 Accept-Encoding: gzip, deflate, br
 

@@ -22,7 +22,7 @@ Kotlin is the primary language for Android development. This entry covers Kotlin
 
 ### Project Structure
 
-```
+```hcl
 app/
   src/main/
     java/com.example.app/

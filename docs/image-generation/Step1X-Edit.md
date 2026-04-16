@@ -11,7 +11,7 @@ Open-source image editing foundation model by **StepFun** (Shanghai). De facto s
 
 ## Architecture
 
-```
+```text
 Input Image → VAE Encode → image latent (z)
 Text Instruction → Qwen 2.5 VL → text embeddings (c)
                          ↓

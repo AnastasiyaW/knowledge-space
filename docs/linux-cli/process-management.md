@@ -39,7 +39,7 @@ ps 1                        # info for PID 1
 
 ### ps aux Columns
 
-```
+```text
 USER  PID  %CPU  %MEM  VSZ  RSS  TTY  STAT  START  TIME  COMMAND
 ```
 

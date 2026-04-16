@@ -27,7 +27,7 @@ Each element has a Fiber node containing type, props, DOM reference, links to pa
 **Commit phase** (synchronous): applies DOM mutations, runs `useLayoutEffect` (sync, blocks paint), browser paints, runs `useEffect` (async).
 
 ### Component Lifecycle (Hooks)
-```
+```sql
 Mount:  render -> DOM update -> useLayoutEffect -> paint -> useEffect
 Update: re-render -> diff -> DOM update -> layout cleanup/run -> paint -> effect cleanup/run
 Unmount: layout cleanup -> effect cleanup -> DOM removal

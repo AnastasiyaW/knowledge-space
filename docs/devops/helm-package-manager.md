@@ -19,7 +19,7 @@ Helm v3 removed Tiller (v2 security concern) - direct K8s API interaction.
 
 ## Chart Structure
 
-```
+```hcl
 my-chart/
   Chart.yaml          # metadata (name, version, appVersion)
   values.yaml         # default configuration values

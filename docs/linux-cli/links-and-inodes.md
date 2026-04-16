@@ -92,7 +92,7 @@ This is why file recovery is possible immediately after deletion but becomes les
 
 ## ext Filesystem Block Groups
 
-```
+```javascript
 Boot record
 -- Block group 0 --
   superblock          (filesystem metadata)

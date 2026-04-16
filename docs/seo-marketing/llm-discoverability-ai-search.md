@@ -32,11 +32,11 @@ Optimizing web content to appear in AI-generated answers, ChatGPT Search, Perple
 
 ### Opening Pattern (Highest Impact)
 
-```
-❌ Wrong:
+```text
+Wrong:
 "In this article, we'll explore Kafka consumer groups and why they matter..."
 
-✓ Correct:
+Correct:
 "Kafka consumer groups are sets of consumers that coordinate to consume a 
 topic in parallel, with each partition assigned to exactly one consumer 
 in the group at a time."
@@ -63,8 +63,8 @@ For a Kafka consumers article, completeness means covering: what is a consumer g
 
 AI search engines chunk content at 256-512 tokens. Each section needs to work standalone.
 
-```
-✓ Each H2/H3 section:
+```text
+Each H2/H3 section:
 - 200-400 words
 - Definition in first sentence ("X is Y. It works by Z.")
 - No "as mentioned above" or "see section 3" cross-references
@@ -170,7 +170,7 @@ plugins:
 
 ## robots.txt: Block Training, Allow Search
 
-```
+```bash
 # Block training crawlers (content used without attribution)
 User-agent: GPTBot
 Disallow: /

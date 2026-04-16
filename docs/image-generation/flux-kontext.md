@@ -22,7 +22,7 @@ Same 12B DiT as FLUX.1-dev:
 ### Key Innovation: Sequence Concatenation
 
 Context images encoded by FLUX VAE → latent tokens **appended to target image tokens** in visual stream:
-```
+```text
 Target tokens:  position (0, h, w)
 Context image:  position (1, h, w)   ← "virtual timestep" via 3D RoPE
 Context image 2: position (2, h, w)  ← architecturally supported, not yet released

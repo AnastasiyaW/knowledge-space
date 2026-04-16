@@ -56,7 +56,7 @@ Random UUIDs cause:
 
 Probabilistic data structure: "possibly exists" or "definitely does not exist." Zero false negatives, possible false positives.
 
-```
+```php
 Hash(value) % array_size = bit position
 Bit = 0 -> definitely absent
 Bit = 1 -> might exist (could be collision)

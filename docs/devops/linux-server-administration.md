@@ -10,7 +10,7 @@ Essential Linux skills for DevOps: filesystem navigation, process management, ne
 
 ## Filesystem Hierarchy
 
-```
+```javascript
 /       root of everything
 /home   user home directories
 /etc    system configuration

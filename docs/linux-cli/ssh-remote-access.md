@@ -76,7 +76,7 @@ chmod 600 ~/.ssh/authorized_keys
 
 ## Server Configuration: /etc/ssh/sshd_config
 
-```
+```properties
 Port 22                          # change to reduce brute-force noise
 PermitRootLogin no               # disable root login
 PasswordAuthentication yes       # set to 'no' after keys work
@@ -89,7 +89,7 @@ After editing: `sudo systemctl restart sshd`
 
 ## Client Config: ~/.ssh/config
 
-```
+```properties
 Host myserver
     HostName 192.168.1.100
     User alice

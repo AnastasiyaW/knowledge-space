@@ -26,7 +26,7 @@ Linux is a multi-user system. Users can be human accounts, system service accoun
 
 ### /etc/passwd Format
 
-```
+```text
 username:x:UID:GID:GECOS:home_dir:shell
 alice:x:1001:1001:Alice Smith:/home/alice:/bin/bash
 ```

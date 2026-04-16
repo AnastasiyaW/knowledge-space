@@ -23,7 +23,7 @@ DevOps is a set of practices, tools, and cultural philosophies automating and in
 
 ## SDLC (Software Development Life Cycle)
 
-```
+```php
 Plan -> Code -> Build -> Test -> Release -> Deploy -> Operate -> Monitor -> (back to Plan)
 ```
 

@@ -61,7 +61,7 @@ message UpdateInfo {
 
 ### Clean Architecture Layers
 
-```
+```go
 cmd/main.go              - entry point
 internal/
   api/                   - controllers (HTTP/gRPC handlers)

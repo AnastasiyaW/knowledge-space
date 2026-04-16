@@ -21,7 +21,7 @@ Node.js application architecture centers on layer separation, transport abstract
 
 Node.js servers need isolated state at four levels with different lifetimes:
 
-```
+```text
 Application Context (global, persistent)
   └─ Session Context (per-user, persistent, TTL)
       └─ Connection Context (per-socket, transient)

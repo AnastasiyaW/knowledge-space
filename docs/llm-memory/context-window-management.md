@@ -20,7 +20,7 @@ Strategies for managing what enters the LLM's context window and when. The conte
 
 Divide memory into layers by criticality. Lower layers are always present; higher layers load on demand.
 
-```
+```bash
 L0 - Identity (~50 tokens)     ← ALWAYS in context
   "You are an assistant for Project X. User is Alice, senior engineer."
 

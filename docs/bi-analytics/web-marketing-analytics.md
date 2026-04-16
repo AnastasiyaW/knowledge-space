@@ -35,7 +35,7 @@ Web and marketing analytics encompasses the tools and methods for measuring webs
 ### UTM Tags
 
 URL parameters for traffic source tracking:
-```
+```text
 site.com/?utm_source=google&utm_medium=cpc&utm_campaign=summer_sale
 ```
 

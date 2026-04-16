@@ -29,7 +29,7 @@ Network flow algorithms find the maximum feasible flow from source to sink in a 
 
 ### Residual Graph Concept
 
-```
+```yaml
 Original: u --(cap=8, flow=6)--> v
 Residual: u --2--> v   (can send 2 more forward)
           v --6--> u   (can cancel 6 of current flow)
@@ -132,7 +132,7 @@ def dinic(graph, source, sink):
 
 ### Bipartite Matching via Max Flow
 
-```
+```bash
 Network construction:
 - Source s --> each left vertex (capacity 1)
 - Left vertex --> connected right vertices (capacity 1)

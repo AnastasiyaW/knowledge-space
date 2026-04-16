@@ -10,7 +10,7 @@ GraphQL is a query language and server-side runtime for APIs. Unlike REST where 
 
 ## Architecture
 
-```
+```php
 Client -> GraphQL layer -> [Backend Service 1]
                         -> [Backend Service 2]
                         -> [Database]

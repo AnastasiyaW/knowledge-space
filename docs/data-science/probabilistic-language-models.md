@@ -42,7 +42,7 @@ def build_bigram_model(corpus):
 
 The probability of a sentence is the product of conditional probabilities:
 
-```
+```bash
 P("the cat sat") = P(the) * P(cat|the) * P(sat|cat)
 ```
 

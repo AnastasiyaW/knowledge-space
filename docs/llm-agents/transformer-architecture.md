@@ -54,7 +54,7 @@ Typical head counts: 12 (BERT-base), 32 (GPT-3), 96 (large frontier models).
 
 After attention, each token passes through a 2-layer network:
 
-```
+```text
 FFN(x) = max(0, xW1 + b1)W2 + b2
 ```
 

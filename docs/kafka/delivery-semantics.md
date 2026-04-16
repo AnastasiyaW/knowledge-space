@@ -107,7 +107,7 @@ props.put("enable.auto.commit", "false");
 
 ### Where Duplicates Occur
 
-```
+```php
 Producer Side:
   Producer sends -> Broker receives + stores -> ACK lost on network
   -> Producer retries -> DUPLICATE in broker

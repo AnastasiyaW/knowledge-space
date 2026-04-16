@@ -97,5 +97,5 @@ consumer.subscribe(List.of("orders"), new ConsumerRebalanceListener() {
 
 - [[consumer-groups]] - group mechanics and assignment strategies
 - [[consumer-configuration]] - all consumer config parameters with defaults
-- [[kafka-cluster-operations]] - monitoring rebalance frequency
+- [[kafka-monitoring-and-tuning]] - monitoring rebalance frequency
 - [KIP-429: Kafka Consumer Incremental Rebalance Protocol](https://cwiki.apache.org/confluence/display/KAFKA/KIP-429%3A+Kafka+Consumer+Incremental+Rebalance+Protocol)

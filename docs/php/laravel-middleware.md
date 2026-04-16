@@ -154,7 +154,7 @@ Route::get('/editor', [EditorController::class, 'index'])
 
 ### Request pipeline visualization
 
-```
+```text
 HTTP Request
   |
   v

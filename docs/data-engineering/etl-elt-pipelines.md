@@ -26,7 +26,7 @@ ETL (Extract-Transform-Load) and ELT (Extract-Load-Transform) are the two fundam
 
 ## Data Layers Architecture
 
-```
+```php
 Sources -> [STG/Raw] -> [Core/DDS] -> [Marts] -> BI/Analytics
 ```
 

@@ -19,7 +19,7 @@ HTTP handling in Node.js ranges from pure Node.js servers to framework-based app
 
 ### Multi-Framework Comparison
 
-```
+```javascript
 metatech-university/
   NodeJS-Pure/         # Pure Node.js (no framework)
   NodeJS-Fastify/      # Fastify - lightweight, good DX
@@ -43,7 +43,7 @@ const transport = require(`./${config.transport}.js`);
 
 ### ESLint Shared Configuration
 
-```
+```javascript
 eslint-config-metarhia/     # Shared rules package
   index.js                  # Rules in JavaScript (not JSON)
   browser.js                # Browser-specific overrides

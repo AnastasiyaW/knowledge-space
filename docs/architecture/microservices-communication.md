@@ -55,7 +55,7 @@ One service (usually BFF or Gateway) aggregates data from multiple backend servi
 
 Separate services for reading and writing data. Write services contain business logic. Read service maintains its own database optimized for fast queries, populated asynchronously via message broker.
 
-```
+```php
 [Client] --write--> [Command Service] --event--> [Message Broker] --event--> [Read Service/Query DB]
 [Client] --read---> [Read Service] --query--> [Query DB (optimized)]
 ```
@@ -69,7 +69,7 @@ Separate services for reading and writing data. Write services contain business 
 Coordinates distributed transactions across multiple services without 2PC (two-phase commit). Each service performs local transaction and publishes events/commands. On failure, compensating transactions undo previous steps.
 
 ### Orchestration (Centralized)
-```
+```php
 [Orchestrator] --command--> [Service A] --response--> [Orchestrator]
 [Orchestrator] --command--> [Service B] --response--> [Orchestrator]
 [Orchestrator] --compensate--> [Service A]  (on failure)
@@ -78,7 +78,7 @@ Coordinates distributed transactions across multiple services without 2PC (two-p
 - Con: single point of failure, orchestrator becomes complex
 
 ### Choreography (Decentralized)
-```
+```php
 [Service A] --event--> [Service B] --event--> [Service C]
                                      (failure) --compensating event-->
 ```
@@ -96,7 +96,7 @@ Instead of storing current state, store sequence of events. Every change is an i
 
 Prevents cascade failures when downstream service is failing.
 
-```
+```php
 [Closed] --failures exceed threshold--> [Open] --timeout--> [Half-Open]
   ^                                                              |
   |              success                                         |

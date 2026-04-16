@@ -31,7 +31,7 @@ Transaction mode is recommended for most production use - best balance of poolin
 
 ### Pool Sizing Formula
 
-```
+```toml
 connections = (cpu_cores * 2) + effective_spindle_count
 ```
 

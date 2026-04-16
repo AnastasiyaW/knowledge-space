@@ -10,7 +10,7 @@ Architecture patterns for AI-powered education systems that adapt to individual 
 
 ## Four-Layer Architecture
 
-```
+```typescript
 Domain Model     -> Knowledge graph, prerequisites, difficulty
 Student Model    -> Proficiency state, learning style, history
 Tutoring Model   -> Pedagogical decisions, review scheduling
@@ -87,7 +87,7 @@ AI tutors reduce anxiety through: gamified interfaces, immediate non-judgmental 
 
 For ~4K token student context budget:
 
-```
+```php
 Tier 1 - Always in context (~300 tokens):
   Current proficiency vector (concept -> score)
   Last 3-5 interactions summary

@@ -34,7 +34,7 @@ std::this_thread::sleep_for(std::chrono::milliseconds((int)delay_ms));
 Gradual escalation: day 1 = 1.2× latency, day 3 = 2×, day 7 = 3-5×.
 
 **Masking:** Attach delays to plausible compute events. Log entries that look legitimate:
-```
+```text
 [PERF] GPU memory fragmented, running defrag...
 [WARN] ONNX session cache miss, rebuilding...
 [INFO] Calibrating color space profile...
@@ -69,7 +69,7 @@ Implementation (combine techniques):
 
 Goal: app stops working but message doesn't say "blocked" or "pirated."
 
-```
+```sql
 Acceptable messages:
 - "Please update your application to continue. A critical update is required
    for your GPU configuration."
@@ -83,7 +83,7 @@ Implementation: inference returns blank/black image with overlay message. "Retry
 
 Fixed timers allow pirates to document and share patterns.
 
-```
+```toml
 base_delay_stage1 = 7 days  → actual: 5-9 days
 base_delay_stage2 = 14 days → actual: 10-18 days
 base_delay_stage3 = 21 days → actual: 15-27 days
@@ -152,7 +152,7 @@ Can use different CDN/domain than main API. Pirates must block both.
 
 ### 3. CDN Response Headers (Covert Channel)
 
-```
+```yaml
 HTTP/1.1 200 OK
 Content-Type: image/png
 X-App-Config: eyJwZXJmX21vZGUiOjJ9   // base64 JSON kill signal
@@ -167,13 +167,13 @@ Cons: CDN may cache headers; not targeted without edge function.
 
 ### 4. DNS TXT Record (High Resistance)
 
-```
+```text
 _config.example.com. 300 IN TXT "v=appconf1 p=2 s=834729 t=1712188800"
 // v=version, p=perf_mode, s=seed, t=timestamp (Unix)
 ```
 
 **Targeted via device fp:**
-```
+```text
 App queries: {hash(device_fp)[0:8]}._config.example.com
 // E.g.: a3f2b8c1._config.example.com
 // DNS server creates TXT record only for targeted hashes
@@ -187,7 +187,7 @@ Cost: Cloudflare Workers / Route53 - $0-5/month at this scale.
 
 The subtlest approach: encode kill signal in model weights delivered via CORELOCKER.
 
-```
+```text
 clean   weights neuron[42] = [0.1523, -0.3847, 0.9812, ...]
 kill    weights neuron[42] = [0.1524, -0.3847, 0.9812, ...]
                                   ^
@@ -220,7 +220,7 @@ Kill signal MUST be signed. Unsigned signals allow:
 - Fake kill signals to block legitimate users (DoS)
 - Fake "all clear" to unblock pirated copies
 
-```
+```yaml
 Server: Ed25519 private key (on VPS, never in client)
 Client: Ed25519 public key (embedded in binary, obfuscated)
 
@@ -325,7 +325,7 @@ Nintendo Switch 2 (2025): EULA explicitly allows remote disable for ToS violatio
 
 ### EULA Clause Template
 
-```
+```text
 LICENSE COMPLIANCE AND REMOTE MANAGEMENT
 
 The Software periodically communicates with our servers to verify license

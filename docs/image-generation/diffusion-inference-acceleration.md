@@ -74,7 +74,7 @@ Compresses KV cache to 3 bits per element without model retraining. Uses random 
 
 ### Algorithm
 
-```
+```text
 1. Apply random orthogonal rotation R to K/V vectors
 2. Quantize rotated vectors to 3-bit scalars (table lookup)
 3. At attention time: dequantize, apply R^T, compute attention normally
@@ -162,7 +162,7 @@ Different samplers have different compute cost per step:
 
 For maximum throughput:
 
-```
+```text
 1. Spectrum spectral forecasting     (3-5x speedup)
 2. Nunchaku FP8/NVFP4 quantization  (1.1-1.3x speedup)
 3. Optimal step count                (no wasted steps)

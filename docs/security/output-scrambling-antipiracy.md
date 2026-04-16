@@ -68,21 +68,21 @@ For RGB (3 channels): only 3! = 6 permutations. Brute-forced in microseconds.
 **LUT per channel (8-bit):** 256! ~ 10^507 possible tables. Broken with 1 known (scrambled, original) pair if position-independent. Strengthen with position-dependent LUT (PDLUT): `out[i] = LUT[x,y][in[i]]`.
 
 **Polynomial (session-key derived):**
-```
+```sql
 y = a0 + a1*x + a2*x^2 + ... + an*x^n  (n=4-8)
 Coefficients derived from session_key via HKDF
 ```
 Needs n+1 known pairs to break - but coefficients rotate with session.
 
 **Key-dependent color matrix:**
-```
+```text
 [R', G', B'] = M(key) × [R, G, B]
 ```
 M derived from session_key via HMAC/KDF. Linear - vulnerable to statistical analysis.
 
 ### Recommended Multi-Layer Stack
 
-```
+```bash
 Input tensor (HWC, float32)
   ↓
 [1] Channel permutation on intermediate channels (64ch)
@@ -106,7 +106,7 @@ Attacker must break ALL layers in correct order.
 
 ### Parameterized Inversion (RECOMMENDED)
 
-```
+```text
 session_key → HKDF-SHA256 → scramble parameters:
   - spatial_permutation_seed  (32 bytes)
   - channel_permutation_seed  (32 bytes)
@@ -163,7 +163,7 @@ Against this: SATURN (LLVM IR deobfuscation), Triton (symbolic execution). CFF i
 VMProtect / Themida: critical function compiled to custom bytecode for custom interpreter. Attacker sees only interpreter + bytecode blob. Current state (2025-2026): no public universal devirtualizer for recent VMProtect. Takes weeks-months for qualified reverser.
 
 **Recommended stack:**
-```
+```text
 Required (baseline):
 ├── LLVM obfuscation (CFF + bogus flow + string encryption)
 ├── Anti-debug checks (IsDebuggerPresent, ptrace, timing)
@@ -185,7 +185,7 @@ Optional (maximum):
 
 ### Process Split
 
-```
+```text
 Process A: inverse_step_1(scrambled) → intermediate_1
 Process B: inverse_step_2(intermediate_1) → normal_image
 ```

@@ -14,7 +14,7 @@ Reducing token consumption in agent systems without degrading task performance. 
 
 Force terse, keyword-dense responses by instructing the model to use minimal grammar:
 
-```
+```bash
 System: Reply in compressed style. No articles, no filler words.
 Skip "the", "a", "is", "are". Use arrows, abbreviations.
 Max info per token. Like telegram.
@@ -75,7 +75,7 @@ T: Fix: range(len(arr)) not range(len(arr)+1)
 
 **Implementation**: set a word budget in the system prompt:
 
-```
+```rust
 Reasoning budget: max 30 words per thought. Use abbreviations.
 T=thought, A=action, O=observation (first 5 relevant lines only).
 ```

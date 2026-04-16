@@ -120,12 +120,12 @@ results = retriever.invoke("What is the company revenue?")
 ### Hybrid Search
 Combine vector similarity with keyword/BM25 search:
 
-```
+```toml
 hybrid_score = alpha * vector_score + (1 - alpha) * bm25_score
 ```
 
 **Reciprocal Rank Fusion (RRF)**: Alternative merging without tuning alpha:
-```
+```toml
 score = sum(1 / (rank + k)) across all search methods
 ```
 

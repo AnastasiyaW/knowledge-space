@@ -19,7 +19,7 @@ Each broker in a cluster:
 
 A minimal production cluster requires **3 brokers** (to tolerate 1 failure with `replication.factor=3` and `min.insync.replicas=2`).
 
-```
+```php
 Producer --> Broker 0 (leader P0)  --> Broker 1 (follower P0, leader P1)
                                    --> Broker 2 (follower P0, follower P1)
 ```
@@ -42,7 +42,7 @@ Election mechanism:
 4. When the controller dies, ZooKeeper deletes the ephemeral node, triggering a watch event
 5. Remaining brokers race to create the node again -- winner becomes the new controller
 
-```
+```bash
 # ZooKeeper znodes used by Kafka
 /brokers/ids/[broker_id]      # ephemeral - broker registration
 /controller                    # ephemeral - current controller
@@ -111,7 +111,7 @@ Followers:
 
 The ISR is the dynamic set of replicas that are "caught up" with the leader. A replica falls out of the ISR if it has not fetched from the leader within `replica.lag.time.max.ms` (default: 30s).
 
-```
+```sql
 Partition P0:
   Leader: Broker 0  (offset 1000, HW=998)
   ISR: [0, 1, 2]
@@ -155,7 +155,7 @@ With `replication.factor=3` and `min.insync.replicas=2`:
 
 **Gotcha**: `min.insync.replicas` has no effect unless the producer sets `acks=all` (or `acks=-1`). With `acks=1`, only the leader acknowledges.
 
-See [[replication-and-fault-tolerance]] for leader election, unclean leader election, and failure scenarios.
+See [[kafka-fault-tolerance]] for leader election, unclean leader election, and failure scenarios.
 
 ## Log Segments and Storage
 
@@ -163,7 +163,7 @@ See [[replication-and-fault-tolerance]] for leader election, unclean leader elec
 
 Each partition is stored as a directory on the broker's filesystem:
 
-```
+```text
 /var/kafka/data/
   orders-0/                          # topic "orders", partition 0
     00000000000000000000.log         # segment file (records)
@@ -248,7 +248,7 @@ Compaction process:
 3. Copies records, skipping any key whose latest offset is in a newer segment
 4. Records with `null` value (tombstones) are retained for `delete.retention.ms` (default 24h) then removed
 
-```
+```text
 Before compaction:        After compaction:
 offset  key  value        offset  key  value
 0       A    v1           2       A    v3
@@ -327,7 +327,7 @@ Migration path for existing ZooKeeper-based clusters (supported since Kafka 3.6,
 
 ### Step-by-Step Migration
 
-```
+```hcl
 Phase 1: Deploy KRaft controllers alongside existing ZK cluster
 Phase 2: Migrate metadata (brokers dual-write to ZK and KRaft)
 Phase 3: Switch brokers to KRaft mode
@@ -417,7 +417,7 @@ Ref: [Apache Kafka ZooKeeper to KRaft Migration Guide](https://kafka.apache.org/
 
 Key JMX metrics to monitor:
 
-```
+```markdown
 # Cluster-level
 kafka.controller:type=KafkaController,name=ActiveControllerCount  # must be 1
 kafka.controller:type=KafkaController,name=OfflinePartitionsCount  # must be 0
@@ -443,7 +443,8 @@ kafka.log:type=LogFlushRateAndTimeMs                                # disk flush
 
 - [[topics-and-partitions]] -- partition assignment strategies, key-based routing, partition count sizing
 - [[consumer-groups]] -- consumer offset management, rebalancing, group coordinator
-- [[replication-and-fault-tolerance]] -- unclean leader election, rack-aware replication, preferred leader election
+- [[kafka-replication-fundamentals]] -- ISR, HW/LEO, acks + min.insync.replicas
+- [[kafka-fault-tolerance]] -- unclean leader election, rack-aware replication, preferred leader election
 
 ## External References
 

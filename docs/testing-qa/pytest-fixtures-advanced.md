@@ -68,7 +68,7 @@ def test_admin_permissions(make_user):
 
 ## Fixture Composition via conftest.py
 
-```
+```python
 tests/
   conftest.py           # session-scoped: DB, app server
   api/

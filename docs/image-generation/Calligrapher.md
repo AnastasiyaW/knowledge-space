@@ -12,7 +12,7 @@ Paper: arXiv:2506.24123 (June 2025).
 
 ## Architecture
 
-```
+```sql
 Style reference image → SigLIP (ViT, siglip-so400m-patch14-384)
                            → Qformer (learnable queries)
                            → Linear projection → K_E, V_E

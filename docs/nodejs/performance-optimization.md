@@ -21,7 +21,7 @@ Node.js performance optimization focuses on reducing round-trips, choosing effic
 
 ### Round-Trip Reduction
 
-```
+```javascript
 // BAD: 50 separate requests
 for (const id of ids) {
   const user = await api.getUser(id);

@@ -58,7 +58,7 @@ process.on('SIGTERM', async () => {
 
 ### Application Structure - DDD Server
 
-```
+```javascript
 project/
   schemas/         # Domain schemas (JSON Schema / metaschema)
     auth.schema

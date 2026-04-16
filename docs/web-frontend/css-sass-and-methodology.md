@@ -11,7 +11,7 @@ Without methodology, CSS becomes unmaintainable: fragile specificity chains, inc
 ## BEM (Block Element Modifier)
 
 ### Structure
-```
+```text
 .block            - standalone component
 .block__element   - part of block (child)
 .block--modifier  - variant of block or element
@@ -60,7 +60,7 @@ Without methodology, CSS becomes unmaintainable: fragile specificity chains, inc
 
 ## File Organization
 
-```
+```text
 css/
   global.css         - Reset, variables, base element styles
   layout.css         - Page-level layout

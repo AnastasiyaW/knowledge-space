@@ -10,7 +10,7 @@ RabbitMQ is a message broker built on the queue model. "Smart broker - dumb cons
 
 ## Message Flow
 
-```
+```php
 Producer -> Exchange -> [Binding + Routing Key] -> Queue -> Consumer
 ```
 
@@ -86,7 +86,7 @@ Failed messages route to DLE instead of being lost. Combine with automatic retry
 
 ## Design Example
 
-```
+```php
 task_queue (Direct)           -> task processing
 status_update_queue (Topic)   -> status tracking (*.completed, *.failed)
 notification_queue (Fanout)   -> broadcast notifications

@@ -21,7 +21,7 @@ CPython is the reference Python implementation - a stack-based virtual machine e
 ## Patterns
 
 ### Compilation Pipeline
-```
+```python
 Source (.py) -> Lexer/Parser -> AST -> Compiler -> Bytecode (.pyc) -> CPython VM
 ```
 

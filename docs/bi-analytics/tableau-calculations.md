@@ -32,7 +32,7 @@ Tableau offers multiple calculation types that operate at different levels of gr
 
 ### Date Functions
 
-```
+```sql
 DATEPART('month', [Order Date])    -- extracts integer (3 for March)
 DATETRUNC('month', [Order Date])   -- returns first date of period (2023-03-01)
 DATEDIFF('day', [Order Date], TODAY())  -- difference between dates
@@ -43,7 +43,7 @@ Note: Tableau wraps DATETRUNC in DATEBAR by default. Choose "exact date" from fi
 
 ### String Functions
 
-```
+```sql
 SPLIT([Product Name], '-', 1)      -- split by delimiter, first part
 FIND([String], 'word')             -- position of substring
 REPLACE([String], 'old', 'new')    -- replace substring
@@ -56,7 +56,7 @@ REGEXP_MATCH / REGEXP_EXTRACT / REGEXP_REPLACE  -- regex
 
 ### Aggregated Calculations
 
-```
+```sql
 SUM([Sales])
 AVG([Profit])
 MEDIAN([Revenue])
@@ -68,7 +68,7 @@ SUM([Revenue] - [Cost]) / SUM([Revenue])  -- margin calculation
 ### Table Calculations
 
 **Indexing and ranking:**
-```
+```sql
 INDEX()                -- row number within partition (1, 2, 3...)
 FIRST()                -- offset from first row (0 for first)
 LAST()                 -- offset from last row (0 for last)
@@ -77,14 +77,14 @@ RANK_UNIQUE(), RANK_DENSE(), RANK_PERCENTILE()
 ```
 
 **Running totals:**
-```
+```sql
 RUNNING_SUM(SUM([Sales]))
 RUNNING_AVG(SUM([Profit]))
 RUNNING_MAX(SUM([Revenue]))
 ```
 
 **Lookup and reference:**
-```
+```sql
 LOOKUP(SUM([Sales]), -1)       -- value from 1 row earlier
 LOOKUP(SUM([Sales]), FIRST())  -- value from first row in partition
 PREVIOUS_VALUE(0)              -- previous value or 0 if none
@@ -94,7 +94,7 @@ PREVIOUS_VALUE(0)              -- previous value or 0 if none
 
 ### Window Calculations
 
-```
+```sql
 WINDOW_SUM(SUM([Sales]), -2, 0)    -- rolling 3-period sum
 WINDOW_AVG(SUM([Sales]), -2, 0)    -- rolling 3-period average
 WINDOW_MAX(SUM([Profit]))           -- max in entire window
@@ -125,7 +125,7 @@ Show last month filter: `LAST() = 0` as table calculation filter.
 
 Create: right-click data panel -> Create Parameter. Types: String, Integer, Float, Boolean, Date.
 
-```
+```ruby
 IF [Sales] > [Parameter: Sales Threshold] THEN 'Above' ELSE 'Below' END
 ```
 
@@ -133,7 +133,7 @@ IF [Sales] > [Parameter: Sales Threshold] THEN 'Above' ELSE 'Below' END
 
 ### Logical Functions
 
-```
+```ruby
 // IF
 IF [Profit] > 0 THEN 'Profitable'
 ELSEIF [Profit] = 0 THEN 'Break Even'

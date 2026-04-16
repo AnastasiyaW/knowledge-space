@@ -32,7 +32,7 @@ Security Information and Event Management: log collection, correlation rules, al
 - **Cloud API** - native service integrations (CloudTrail, Azure Activity Log)
 
 ### Correlation Rules
-```
+```bash
 # Brute force detection
 IF count(failed_login) > 5 from same source_ip within 5 minutes
 THEN alert "Potential brute force"

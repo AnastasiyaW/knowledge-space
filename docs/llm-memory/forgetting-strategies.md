@@ -177,7 +177,7 @@ def deduplicate(entries: list[MemoryEntry], similarity_threshold: float = 0.92):
 
 ### Graduated Retention
 
-```
+```text
 0-7 days:   Keep everything (verbatim)
 7-30 days:  Keep decisions, gotchas, preferences. Archive raw outputs
 30-90 days: Compact findings into summaries. Archive details

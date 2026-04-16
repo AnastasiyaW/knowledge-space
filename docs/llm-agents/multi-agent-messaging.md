@@ -24,7 +24,7 @@ Enable via `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`. Ships with Claude Code v2.1
 
 ### Architecture
 
-```
+```text
 Team Lead
   ├── Teammate A (own 1M context)
   ├── Teammate B (own 1M context)
@@ -33,7 +33,7 @@ Team Lead
 
 ### Mailbox Protocol (File-Based)
 
-```
+```text
 ~/.claude/teams/{team-name}/inboxes/{agent-name}.json
 ```
 
@@ -115,13 +115,13 @@ def check(who: str, unread_only: bool = True):
 
 ## claude-peers-mcp (Real-Time Broker)
 
-```
+```yaml
 GitHub: louislva/claude-peers-mcp
 ```
 
 Local broker daemon + per-session MCP servers:
 
-```
+```text
 Session A ──MCP──┐
 Session B ──MCP──┤── Broker (SQLite + HTTP :7899) ── 1s polling
 Session C ──MCP──┘
@@ -152,13 +152,13 @@ npx claude-peers-mcp broker
 
 ## Session Bridge (File-Based P2P)
 
-```
+```yaml
 GitHub: PatilShreyas/claude-code-session-bridge
 ```
 
 Two-session direct messaging via filesystem:
 
-```
+```text
 ~/.claude/session-bridge/sessions/<6-char-id>/
   inbox/    - JSON message files
   outbox/
@@ -176,7 +176,7 @@ Two-session direct messaging via filesystem:
 
 ## AgentChattr (MCP + WebSocket)
 
-```
+```yaml
 GitHub: bcurts/agentchattr
 Server: HTTP + WebSocket on :8200
 ```
@@ -235,7 +235,7 @@ Standard mailbox file format for file-based systems:
 ```
 
 **Directory layout:**
-```
+```text
 .claude/mailbox/
   ani.json       - ani's inbox
   artem.json     - artem's inbox

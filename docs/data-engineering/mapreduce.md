@@ -10,14 +10,14 @@ MapReduce is a programming model for distributed data processing. Two user-defin
 
 ## Paradigm
 
-```
+```bash
 Map:    (K1, V1) -> list(K2, V2)    -- transform each record
 Reduce: (K2, list(V2)) -> list(K3, V3)  -- aggregate by key
 ```
 
 ## Execution Pipeline
 
-```
+```php
 Input -> Split -> Map -> Spill -> Sort/Merge -> Shuffle -> Reduce -> Output
 ```
 

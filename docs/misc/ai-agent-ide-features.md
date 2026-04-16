@@ -83,7 +83,7 @@ Specialized model controlling embedded Chromium. Creates artifacts (screenshots,
 
 ### Agent Framework Architecture
 
-```
+```php
 LLM Brain -> Agents (named configs + tools) -> Gateway -> Messaging Platforms
 ```
 

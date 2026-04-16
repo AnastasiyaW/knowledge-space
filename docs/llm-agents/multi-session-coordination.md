@@ -91,7 +91,7 @@ git worktree remove .worktrees/feature-auth
 
 Soft locks that express intent without blocking:
 
-```
+```text
 .agent-locks/
   auth-module.lock       - "ani is working on this"
   api-routes.lock        - "artem is working on this"

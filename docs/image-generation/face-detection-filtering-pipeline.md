@@ -127,7 +127,7 @@ On glamour/processed photos, emotion models disagree heavily between each other.
 
 Typical filtering cascade with yield at each stage:
 
-```
+```bash
 42,910 source images
   -> 24,655 (MediaPipe face+hair >= 10% of image)
   -> 16,961 (YOLO11 real face >= 10% of image)

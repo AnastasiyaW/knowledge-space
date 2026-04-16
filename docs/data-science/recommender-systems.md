@@ -17,7 +17,7 @@ Based on user behavior patterns. "Users who liked X also liked Y."
 **Item-based**: find similar items to what user already liked.
 
 **Matrix Factorization**: decompose user-item interaction matrix into latent factors.
-```
+```yaml
 R ~ U * V^T
 R: user-item matrix (sparse)
 U: user latent factors (n_users x k)

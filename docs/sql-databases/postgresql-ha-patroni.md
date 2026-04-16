@@ -80,7 +80,7 @@ patronictl -c /etc/patroni.yml pause|resume     # disable/enable auto-failover
 
 ## HAProxy Configuration
 
-```
+```text
 listen postgres_write
     bind *:5000
     option httpchk GET /master

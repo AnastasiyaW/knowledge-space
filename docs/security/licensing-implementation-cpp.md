@@ -143,7 +143,7 @@ try {
 ```
 
 **JWT size vs model weights:** JWT contains only a hash (`kw_hash`); encrypted weights are a separate file:
-```
+```text
 JWT payload:
   kw_hash: "sha256:<hash>"
   kw_version: 3
@@ -320,7 +320,7 @@ auto model = decrypt_model(encrypted_model, model_key);
 
 ### Key Derivation Architecture
 
-```
+```sql
 JWT (from server)
      |
 Ed25519 verify

@@ -33,7 +33,7 @@ Enables: loading third-party checkpoints with different naming conventions, MoE 
 
 Eliminated dual Python/Rust tokenizer files. Single `tokenization_<model>.py` with automatic backend selection:
 
-```
+```yaml
 Priority:
 1. TokenizersBackend (Rust) — optimal performance, parallelization
 2. SentencePieceBackend — fallback

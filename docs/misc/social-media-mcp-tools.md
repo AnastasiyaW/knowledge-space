@@ -67,7 +67,7 @@ npx skills add publora/skills
 
 **Skills structure:**
 
-```
+```text
 skills/
   linkedin-post/      - posts with images, videos, documents
   threads-post/       - auto-threading support

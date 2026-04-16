@@ -91,7 +91,7 @@ Two fundamental approaches to firewall placement:
 
 ### Network Zones
 
-```
+```text
 Internet
     |
 [Firewall/Router]
@@ -133,7 +133,7 @@ ipset restore < /etc/ipset.conf
 
 Packet traversal order in iptables/netfilter:
 
-```
+```php
 Incoming -> PREROUTING (NAT/mangle) -> routing decision
   -> INPUT (for firewall itself)
   -> FORWARD (transit traffic to other hosts)
@@ -233,7 +233,7 @@ Redirect traffic copies to an analysis system without affecting the original flo
 - **Hybrid** - combines both approaches
 
 ### Snort Rules
-```
+```bash
 # Rule syntax: action protocol src_ip src_port -> dst_ip dst_port (options)
 alert tcp any any -> $HOME_NET 80 (msg:"SQL Injection Attempt"; \
     content:"UNION SELECT"; nocase; sid:1000001; rev:1;)
@@ -256,7 +256,7 @@ Modern multi-threaded alternative to Snort:
 ## WAF (Web Application Firewall)
 
 ### ModSecurity
-```
+```markdown
 # Rule examples
 SecRule REQUEST_URI "@contains /admin" \
     "id:1001,phase:1,deny,status:403,msg:'Admin access blocked'"

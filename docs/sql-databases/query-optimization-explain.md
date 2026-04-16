@@ -23,7 +23,7 @@ Key output fields:
 - **Buffers:** shared hit (cache) vs read (disk)
 
 ### Cost Units (PostgreSQL)
-```
+```toml
 seq_page_cost = 1.0       -- baseline: sequential page read
 random_page_cost = 4.0    -- random page read (lower to 1.1-2.0 for SSD)
 cpu_tuple_cost = 0.01     -- processing one row

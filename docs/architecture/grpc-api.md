@@ -12,7 +12,7 @@ gRPC is an open-source RPC framework created by Google (2016). It uses Protocol 
 
 Client calls a method on the server as if it were a local function. The `.proto` file defines the service interface. Code generators produce client stubs and server skeletons from the proto definition.
 
-```
+```sql
 [Client Stub] --binary over HTTP/2--> [Server Skeleton]
      |                                       |
   generated from .proto              generated from .proto

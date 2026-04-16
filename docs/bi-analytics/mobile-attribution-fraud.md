@@ -124,7 +124,7 @@ Standard events: `PURCHASE`, `ADD_TO_CART`, `TUTORIAL_COMPLETION`, `LEVEL_ACHIEV
 
 ### Postback URLs
 
-```
+```text
 https://ad-network.com/postback?
     idfa={idfa}&
     event={event_name}&

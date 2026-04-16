@@ -10,7 +10,7 @@ Production pipeline for generating and compositing jewelry product photography u
 
 ## Full 7-Step Pipeline
 
-```
+```ruby
 1. Original jewelry photo (client)
 2. BiRefNet cutout → transparent PNG
 3. IC-Light V2 Delight LoRA → remove original lighting
@@ -80,13 +80,13 @@ result = fal_client.run(
 Generate background scene matching jewelry style and brand mood.
 
 **Prompt structure for jewelry scenes:**
-```
+```sql
 [Surface material] with [texture detail], [lighting type] from [direction],
 [depth of field], [atmosphere], shot on [camera/film type]
 ```
 
 **Example prompts by jewelry type:**
-```
+```bash
 # Fine jewelry:
 "dark velvet surface with subtle fabric texture, soft diffused studio lighting
  from above left, shallow depth of field with bokeh background, luxury editorial
@@ -106,7 +106,7 @@ Generate background scene matching jewelry style and brand mood.
 After rough Photoshop composite:
 
 **Klein 9B inpainting settings for seamless blend:**
-```
+```yaml
 Model: FLUX.2 Klein 9B (base or distilled)
 LoRA: Consistency LoRA (consistency-edit-lora)
 Denoise: 0.5-0.7 (higher = more creative blend)

@@ -47,7 +47,7 @@ Only stream processing for everything. Reprocessing by replaying stream. Simpler
 
 ## ML Pipeline
 
-```
+```php
 Data collection -> Preparation/cleaning -> Feature engineering ->
   Model training -> Evaluation -> Deployment -> Monitoring/retraining
 ```
@@ -68,7 +68,7 @@ Applying DevOps to ML: version control for data + models, automated training pip
 
 ## Data Pipeline Architecture Example
 
-```
+```bash
 [Source 1C] --> [Kafka topic] --> [Airflow orchestrator] --> [DWH (PostgreSQL)]
 [Source CRM] --> [Kafka topic] -->                               |
 [External API] --> [API Fetcher] -->                             |

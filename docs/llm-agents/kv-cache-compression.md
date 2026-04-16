@@ -20,7 +20,7 @@ Reducing KV cache memory during LLM inference to enable longer contexts and more
 
 During autoregressive generation, the model stores key and value tensors for every past token in every layer:
 
-```
+```text
 KV cache size = 2 * num_layers * num_heads * head_dim * seq_len * batch_size * bytes_per_element
 
 Example (Llama 70B, FP16, single sequence):
@@ -89,7 +89,7 @@ Core algorithm with no model retraining:
 
 Base weight quantization affects how well KV cache quantization works:
 
-```
+```text
 Higher quality weights + aggressive cache quant = good
   Q8_0 weights + turbo3 cache → minimal degradation
 

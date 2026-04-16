@@ -83,7 +83,7 @@ p.produce("orders", key=key, value=payload, partition=region_partition(key, num_
 
 ### Partition Key Best Practices
 
-```
+```sql
 # Use entity ID as key for ordering guarantees
 key = customer_id      # All orders for same customer in same partition
 key = camera_id        # All frames from same camera in order
@@ -106,5 +106,5 @@ key = user_id          # All impressions for same user co-located
 
 - [[topics-and-partitions]] - topic operations, segment structure, retention
 - [[consumer-groups]] - how partition count relates to consumer parallelism
-- [[producer-patterns]] - partitioner in the send pipeline
+- [[kafka-producer-advanced-patterns]] - partitioner in the send pipeline
 - [Apache Kafka Partitioner Design](https://kafka.apache.org/documentation/#design_loadbalancing)

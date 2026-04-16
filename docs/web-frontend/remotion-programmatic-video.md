@@ -26,7 +26,7 @@ const MyScene: React.FC = () => {
 
 ## Project Structure
 
-```
+```typescript
 src/
   Root.tsx              # registerRoot() entry point
   Composition.tsx       # all compositions registered here

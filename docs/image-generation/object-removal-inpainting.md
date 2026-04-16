@@ -59,7 +59,7 @@ result = lanpaint(image=image, mask=mask, prompt=prompt)
 
 Dedicated LoRA trained for object removal on FLUX Klein 4B. Works as the model's conditioning pipeline with the LoRA guiding it toward erasure behavior.
 
-```
+```yaml
 Model: FLUX Klein 4B
 LoRA: "Object Remove LoRA" (CivitAI)
 Prompt: "clean background, no objects" (or empty)
@@ -156,7 +156,7 @@ iopaint run --model=lama --device=cpu --image ./input.png --mask ./mask.png --ou
 
 ## ComfyUI Workflow
 
-```
+```php
 [Load Image] + [Create Mask] -> [EraDiff/LaMa node] -> [Poisson Blend output]
                              -> For quality check: compare SSIM with original unmasked region
 ```

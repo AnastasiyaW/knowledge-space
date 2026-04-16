@@ -14,7 +14,7 @@ How to structure the control flow and state management of an LLM agent beyond in
 
 Simplest: one LLM call decides next action, observe result, repeat.
 
-```
+```python
 while not done:
     action = llm(prompt + history)
     observation = execute(action)
@@ -272,7 +272,7 @@ Claude Code uses CLAUDE.md instead of AGENTS.md (issue #6235, 3200+ upvotes).
 **Hierarchical partitioning** (arxiv 2604.07681): central planner spawns parallel executors, results merged.
 
 **Example 4-agent architecture (Grok 4.20 style):**
-```
+```php
 coordinator + researcher + logician + contrarian analyst
     -> parallel analysis
     -> cross-verification
@@ -282,7 +282,7 @@ coordinator + researcher + logician + contrarian analyst
 ### Multi-Model Routing
 
 Production agents route between model tiers:
-```
+```text
 Frontier (Opus/GPT-5)       - reasoning, architecture decisions
 Light (Sonnet/Haiku/Gemma)  - extraction, mechanical tasks
 Specialized (code/vision)   - per-task type

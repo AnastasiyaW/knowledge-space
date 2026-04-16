@@ -31,7 +31,7 @@ A data warehouse (DWH) is a subject-oriented, integrated, non-volatile, time-var
 
 ## DWH Layers
 
-```
+```rust
 Sources -> Staging Area -> Central Warehouse -> Data Marts -> BI/Analytics
 ```
 
@@ -63,7 +63,7 @@ Sources -> Staging Area -> Central Warehouse -> Data Marts -> BI/Analytics
 
 ## Platform Evolution
 
-```
+```rust
 Gen 1: RDBMS DWH (Oracle, DB2) - 1990s
   -> Rigid schema, ETL, batch only
 

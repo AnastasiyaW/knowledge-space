@@ -14,7 +14,7 @@ Replacing fixed evolutionary search (agents as stateless workers) with long-live
 
 Each agent operates in a separate workspace (git worktree, container, or directory) to prevent interference. Agents can run different experiments in parallel without merge conflicts.
 
-```
+```text
 agent-0/          # git worktree for agent 0
 agent-1/          # git worktree for agent 1
 agent-2/          # git worktree for agent 2
@@ -75,7 +75,7 @@ Three reflection types at different frequencies prevent tunnel vision:
 
 **Per-iteration reflection** (every evaluation):
 
-```
+```kotlin
 After eval #{n} with score {s}:
 1. What did this change accomplish?
 2. Was the score change expected?
@@ -84,7 +84,7 @@ After eval #{n} with score {s}:
 
 **Periodic consolidation** (every ~10 evaluations):
 
-```
+```sql
 1. Review own progress over last 10 evals
 2. Browse other agents' notes in .shared/notes/
 3. Organize scattered observations into structured notes
@@ -94,7 +94,7 @@ After eval #{n} with score {s}:
 
 **Stagnation redirection** (5 consecutive non-improving evaluations):
 
-```
+```sql
 1. Forced reassessment: "Current approach is not working"
 2. Read all recent notes from ALL agents
 3. Identify unexplored directions

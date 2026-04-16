@@ -15,7 +15,7 @@ Standard [[flow-matching]] trains T2I: `noise → image` conditioned on text. Fo
 
 ## Solution: Channel Concatenation
 
-```
+```toml
 clean_image → VAE.encode → latents (target)
 degraded_image → VAE.encode → condition_latents
 

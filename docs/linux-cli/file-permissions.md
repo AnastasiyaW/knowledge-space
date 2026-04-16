@@ -22,7 +22,7 @@ ls -l file.txt
 # -rw-r--r-- 1 alice users 2048 May 10 14:30 file.txt
 ```
 
-```
+```typescript
 - rw- r-- r--
 | |   |   +-- others: read only
 | |   +------ group: read only

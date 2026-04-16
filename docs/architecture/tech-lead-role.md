@@ -27,7 +27,7 @@ Tech leads hold authority like a shaman, not a chief. Authority earned through d
 
 ## Career Growth Path
 
-```
+```php
 Senior -> Tech Lead (more scope, some design) -> Architect (much more scope, mostly design)
 ```
 

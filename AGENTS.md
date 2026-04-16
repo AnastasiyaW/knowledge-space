@@ -70,18 +70,11 @@ Source: https://official-docs..."
 - Marketing language, promotional content
 - "this course", "the instructor", "in the lesson"
 
-### Do NOT modify these files
-- `mkdocs.yml` - site configuration
-- `overrides/` - Jinja2 templates (SEO, 404)
-- `docs/index.md` - homepage
-- `docs/javascripts/` - graph visualization
-- `docs/stylesheets/` - site styling
-- `docs/CNAME` - domain config
-- `.github/workflows/` - CI/CD
-- `.claude/rules/` - agent guardrails
-- `requirements.txt` - Python dependencies
+### Editable scope
 
 Only modify files inside `docs/{domain}/` folders.
+
+Everything else (site config, templates, homepage, CI/CD, build dependencies, stylesheets, scripts) is maintained by the project owner and must not be changed by contributors.
 
 ## Valid domains
 

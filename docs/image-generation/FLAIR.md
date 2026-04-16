@@ -15,7 +15,7 @@ Paper: arXiv:2506.02680 (2025). Authors: ETH Zurich + Max Planck Institute.
 
 **Not a new model** — a framework that wraps an existing flow-matching generative model:
 
-```
+```text
 Degraded image (y) → Forward model A → Variational posterior sampling:
     Prior: SD 3.5 Medium velocity field v(x_t, t)
     Likelihood: consistency with observed pixels

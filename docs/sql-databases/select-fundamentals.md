@@ -12,7 +12,7 @@ The SELECT statement is the primary tool for reading data from relational databa
 
 The logical processing order differs from written syntax:
 
-```
+```sql
 FROM / JOIN  ->  WHERE  ->  GROUP BY  ->  HAVING  ->  SELECT  ->  DISTINCT  ->  ORDER BY  ->  LIMIT / OFFSET
 ```
 

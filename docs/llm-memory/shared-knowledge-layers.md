@@ -25,7 +25,7 @@ When multiple agents work in parallel, they need a structured way to share disco
 
 Periodic forced reflection that prevents agents from fixating on one approach:
 
-```
+```php
 Per-iteration (after each eval):
   -> Write observation to notes/
   -> Record attempt score in attempts/
@@ -44,7 +44,7 @@ Stagnation redirection (5+ non-improving):
 
 ### File-Based Shared Memory
 
-```
+```python
 .shared/
   attempts/
     eval-001.json     # {approach, score, commit, timestamp}

@@ -58,7 +58,7 @@ Custom SQL cons:
 **Relations** (Tableau 2020+): analyze data across tables at different granularities. Relations join and aggregate during analysis at the required detail level. Resolves data duplication without LOD calculations.
 
 For date granularity mismatch (orders by day, plan by month):
-```
+```sql
 DATE(DATETRUNC("month", [Order Date]))
 ```
 

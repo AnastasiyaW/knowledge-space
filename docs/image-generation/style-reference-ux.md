@@ -107,7 +107,7 @@ Implication for product design: style can be a post-processing step, not just a 
 
 For a LoRA-based style system (like Freepik's):
 
-```
+```bash
 Recommended: rank32, 1000 steps, cosine scheduler
 Dataset: 5-50 images, trigger_word + content captions (no style descriptors)
 Caption dropout: 0.1 (forces style into LoRA weights)

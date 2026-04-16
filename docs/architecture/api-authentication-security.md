@@ -32,7 +32,7 @@ Server creates session on login, stores session ID in cookie. Browser sends cook
 ### 4. JWT (JSON Web Token)
 Self-contained token: `header.payload.signature` (Base64-encoded).
 
-```
+```yaml
 Header:    {"alg": "HS256", "typ": "JWT"}
 Payload:   {"user_id": 123, "roles": ["admin"], "exp": 1700000000}
 Signature: HMAC-SHA256(base64(header) + "." + base64(payload), secret)
@@ -53,7 +53,7 @@ Delegated authorization framework. Four roles: Resource Owner, Client, Authoriza
 | PKCE | Mobile/SPA apps |
 
 **Authorization Code Flow:**
-```
+```text
 1. Client redirects user to authorization server
 2. User authenticates and grants permission
 3. Auth server returns authorization code
@@ -80,7 +80,7 @@ Two keys: public (encrypts) and private (decrypts). Receiver distributes public 
 Asymmetric to securely exchange symmetric key, then symmetric for actual data transfer. Best of both worlds.
 
 ### TLS Handshake
-```
+```hcl
 1. Client sends supported cipher suites
 2. Server selects cipher, sends certificate with public key
 3. Client verifies certificate against CA

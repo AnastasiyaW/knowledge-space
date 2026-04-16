@@ -10,7 +10,7 @@ Hive is a SQL-on-Hadoop warehouse system. It translates SQL queries into MapRedu
 
 ## Architecture
 
-```
+```php
 Hive Client (CLI/JDBC/Thrift)
        |
    Hive Driver -> Compiler (uses Metastore) -> Executor -> HDFS

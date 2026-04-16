@@ -48,7 +48,7 @@ aws configure
 
 ## VPC (Virtual Private Cloud)
 
-```
+```java
 VPC (10.0.0.0/16)
   +-- Public Subnet (10.0.1.0/24) -- Internet Gateway -- Internet
   |     +-- EC2 instances (public IP), NAT Gateway

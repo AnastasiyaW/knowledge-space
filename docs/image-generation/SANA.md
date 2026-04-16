@@ -23,7 +23,7 @@ Efficient DiT from NVlabs/MIT Han Lab. 600M-4.8B params with competitive quality
 
 ### SanaBlock Structure (AdaLN-Zero)
 
-```
+```bash
 Input x → LayerNorm → modulate(shift1, scale1) → Linear Self-Attention (LiteLA)
         → LayerNorm → modulate(shift2, scale2) → Cross-Attention (standard, with text)
         → LayerNorm → modulate(shift3, scale3) → Mix-FFN (GLUMBConv)
@@ -52,7 +52,7 @@ Output x (residual at each stage, 6 modulation params per block via scale_shift_
 ### Mix-FFN (GLUMBConv)
 
 Replaces standard MLP:
-```
+```text
 Linear(d → d×2.5) → DW-Conv3×3 → SiLU → Gate (GLU) → Linear(d×1.25 → d)
 ```
 The 3×3 depthwise conv = key to making linear attention work. Provides local receptive field that ReLU linear attention lacks.
@@ -205,7 +205,7 @@ refined = pipe(
 **Flow matching img2img mechanics:** SANA uses flow matching, not DDPM. `strength` parameter interpolates between the encoded input image and pure noise: `x_t = (1-strength)*image_latent + strength*noise`. This differs from DDPM's noise scheduling - there is no "add noise then denoise" step, it's direct interpolation.
 
 **Multi-pass recipe:**
-```
+```text
 txt2img 1024px (strength=1.0) → img2img strength=0.3-0.4 → img2img strength=0.2
 ```
 

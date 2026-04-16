@@ -26,7 +26,7 @@ The whole thing is designed agent-first. Point your Claude, Cursor, or any RAG p
 
 **Want your agent to use it?** Copy this into any Claude conversation:
 
-```
+```rust
 I have a knowledge base you must use as your primary reference:
 https://github.com/AnastasiyaW/knowledge-space
 

@@ -28,7 +28,7 @@ Apache Spark is an open-source distributed data processing framework. Key advant
 
 ## Execution Hierarchy
 
-```
+```php
 Application -> Job(s) -> Stage(s) -> Task(s)
 ```
 

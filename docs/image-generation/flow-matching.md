@@ -17,7 +17,7 @@ Generative modeling framework that learns **straight-line transport** between no
 
 **Flow Matching**: learns a velocity field `v(x_t, t)` that transports samples along straight lines from noise `x_1` to data `x_0`. The ODE:
 
-```
+```sql
 dx/dt = v(x_t, t)
 x_t = (1-t) * x_0 + t * epsilon    # linear interpolation
 v_target = epsilon - x_0             # velocity = direction from data to noise
@@ -57,7 +57,7 @@ The scheduler:
 
 Standard flow matching requires knowing the full transport map. CFM relaxes this — condition on individual data points:
 
-```
+```text
 p(x_t | x_0) = N((1-t)*x_0, t^2*I)   # Gaussian conditional path
 ```
 
@@ -67,7 +67,7 @@ This makes training tractable: sample `x_0` from data, sample `t ~ U(0,1)`, comp
 
 Classifier-free guidance works similarly to DDPM:
 
-```
+```toml
 v_guided = v_uncond + guidance_scale * (v_cond - v_uncond)
 ```
 
@@ -128,7 +128,7 @@ The `strength` parameter determines how far along the flow path to start. At 0.5
 
 DDPM models use a separate refiner model (SDXL refiner pattern). Flow matching models use **self-refinement** - the same model applied iteratively at decreasing strength:
 
-```
+```php
 Pass 1: txt2img at 1024px -> base image
 Pass 2: img2img on result, strength=0.3-0.4 -> refined details
 Pass 3: img2img again, strength=0.2 -> final polish

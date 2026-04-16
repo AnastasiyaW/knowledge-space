@@ -23,7 +23,7 @@ Dynamic programming on sequences and strings: Longest Common Subsequence (LCS), 
 Subsequence = characters in order but not necessarily contiguous.
 
 **Recurrence:**
-```
+```yaml
 if s1[i-1] == s2[j-1]: dp[i][j] = 1 + dp[i-1][j-1]
 else:                   dp[i][j] = max(dp[i-1][j], dp[i][j-1])
 ```

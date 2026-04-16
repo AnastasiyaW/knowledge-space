@@ -33,7 +33,7 @@ Makes frames behave like flex containers - children arrange, space, and resize a
 - **Space between**: items spread (like `justify-content: space-between`)
 
 ### Nested AutoLayout (Real Layouts)
-```
+```text
 Page (vertical)
   ├── Header (horizontal)
   │     ├── Logo (fixed)
@@ -120,7 +120,7 @@ Dedicated page documenting all design decisions:
 6. Grid specs
 
 ### Styles System
-```
+```text
 Color styles:  primary/500, neutral/100, accent/success
 Text styles:   heading/h1, heading/h2, body/regular
 Effect styles: shadow/sm, shadow/md, blur/glass

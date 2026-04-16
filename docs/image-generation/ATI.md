@@ -15,7 +15,7 @@ Paper: arXiv:2505.22944 (May 2025). Authors: ByteDance.
 
 Adds a module **between preprocessing and patchify** of frozen I2V DiT:
 
-```
+```bash
 Input image → VAE encode → latent L_I (H×W×C)
                                 ↓
 For each trajectory point: bilinear interpolation → C-dim feature vector

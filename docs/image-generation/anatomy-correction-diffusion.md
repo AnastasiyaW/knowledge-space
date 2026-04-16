@@ -11,7 +11,7 @@ Methods for detecting and fixing anatomy mutations (extra fingers, distorted han
 
 ### YOLO-based Hand/Face Detection (ComfyUI Impact Pack)
 
-```
+```javascript
 UltralyticsDetectorProvider node (from ComfyUI-Impact-Subpack)
 Models: hand_yolov8s.pt, hand_yolov8n.pt (bbox), face_yolov8m.pt
 Location: ComfyUI/models/ultralytics/bbox/
@@ -31,7 +31,7 @@ Dataset: HAD - 37,000+ images annotated for human artifact localization. Detects
 
 The most promising during-sampling fix for FLUX/Klein. Training-free, works at inference time.
 
-```
+```yaml
 Package: ComfyUI-NAG (github.com/ChenDarYen/ComfyUI-NAG)
 Supports: FLUX, Flux Kontext, Wan, HunyuanVideo, Chroma, SD3.5, SDXL
 ```
@@ -49,7 +49,7 @@ Tune `nag_tau` + `nag_alpha` first, then `nag_scale`. Acts as negative guidance 
 
 ### Flux2Klein-Enhancer (Klein 9B Only)
 
-```
+```yaml
 Repo: github.com/capitan01R/ComfyUI-Flux2Klein-Enhancer
 Klein 9B ONLY - does not work with other FLUX variants
 ```
@@ -92,7 +92,7 @@ Supports realistic + anime, images from SDXL/DiT/Midjourney. FLUX-Fill recommend
 
 Most reliable approach for **guaranteed correct finger count**. Reconstructs 3D hand mesh -> depth map -> ControlNet-conditioned inpainting.
 
-```
+```text
 ComfyUI node: MeshGraphormer Hand Refiner (in comfyui_controlnet_aux)
 Key params: detect_thr=0.6, presence_thr=0.6, control_strength=0.4-0.8
 ```
@@ -101,7 +101,7 @@ Control strength 1.0 causes texture loss. Use 0.4-0.8 range.
 
 ### FaceDetailer (Impact Pack)
 
-```
+```text
 Key parameters:
   guide_size: 512-768 (reference size for enlarging detected regions)
   denoise: 0.3-0.5 (subtle fix) | 0.5-0.7 (moderate correction)
@@ -174,7 +174,7 @@ unconditional: "broken hands, extra fingers, deformed anatomy"
 
 **Stacking order for style + anatomy:**
 
-```
+```sql
 1. Style LoRA:              weight 0.7-1.0, strength_clip 0.4-0.6
 2. klein_slider_anatomy v1.5: weight 2.0-3.0, strength_clip 0.3-0.5
 3. DPO Klein 9B (optional): weight 0.4-0.6

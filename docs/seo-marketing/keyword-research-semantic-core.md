@@ -52,19 +52,19 @@ Complete process of collecting, cleaning, clustering, and assigning keyword grou
 
 ### Combining Operators
 **For collecting queries:**
-```
+```text
 fridge (samsung|lg) (buy|price|order) -reviews
 ```
 
 **For precise frequency:**
-```
+```text
 "[!fridge !samsung]"
 ```
 Quotes + brackets + exclamation = most precise frequency (all three constraints).
 
 ### 7-Word Trick
 Write the same word 7 times in quotes to find all queries of that exact length:
-```
+```text
 "keyword keyword keyword keyword keyword keyword keyword"
 ```
 Does NOT work for queries longer than 7 words.

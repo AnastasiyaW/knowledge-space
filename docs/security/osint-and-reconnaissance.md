@@ -18,7 +18,7 @@ Open Source Intelligence techniques: Shodan/Censys infrastructure search, Google
 
 ## Shodan
 Scans IPv4 space, probes ports, collects banners:
-```
+```typescript
 port:22                              # SSH servers
 os:"Windows 7"                       # Specific OS
 city:"Moscow"                        # Location
@@ -33,7 +33,7 @@ has_screenshot:true                  # With screenshots (VNC, RDP, webcams)
 - **BinaryEdge** - real-time threat intel, IoT discovery, data breach monitoring
 
 ## Google Dorking
-```
+```bash
 site:example.com                     # Limit to domain
 intitle:"index of"                   # Directory listings
 inurl:admin                          # URLs with "admin"

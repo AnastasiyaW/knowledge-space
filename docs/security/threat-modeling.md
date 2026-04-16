@@ -55,7 +55,7 @@ Covers a specific information resource or group of identical resources.
 
 ### Minimal Document Sections
 
-```
+```bash
 1. Scope and boundaries
    - What is covered (systems, networks, data flows)
    - What is explicitly excluded
@@ -110,7 +110,7 @@ Apply STRIDE categories to each component in a data flow diagram:
 
 ## Practical Workflow
 
-```
+```php
 1. Define scope -> 2. Build DFD -> 3. Identify threats (STRIDE/catalog)
     -> 4. Rate risk (likelihood x impact) -> 5. Plan mitigations
     -> 6. Document -> 7. Review periodically
@@ -120,7 +120,7 @@ Apply STRIDE categories to each component in a data flow diagram:
 
 The foundation of threat modeling - shows how data moves through the system:
 
-```
+```php
 [User] --HTTPS--> [Web Server] --SQL--> [Database]
                        |
                   [Auth Service] --LDAP--> [Active Directory]

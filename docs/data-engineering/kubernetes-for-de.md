@@ -50,7 +50,7 @@ helm install my-release spark-operator/spark-operator \
 
 ## Cloud-Native Data Architecture
 
-```
+```text
 Storage Layer: S3 (or compatible)
 Compute Layer: Kubernetes (Spark, Presto, Airflow)
 ```

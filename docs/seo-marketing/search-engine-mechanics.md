@@ -38,7 +38,7 @@ All word forms reduced to base form (lemma). Enables matching queries to documen
 ### Inverted Index
 For each term across all documents, stores which documents contain that term.
 
-```
+```yaml
 Direct:   Document 1 → [word_a, word_b, word_c]
 Inverted: word_a → [Document 1, Document 3]
           word_b → [Document 1, Document 2]

@@ -96,7 +96,7 @@ struct ContentView_Previews: PreviewProvider {
 
 ### File Organization
 
-```
+```python
 MyApp/
   MyApp.swift              // @main entry point
   ContentView.swift        // root view

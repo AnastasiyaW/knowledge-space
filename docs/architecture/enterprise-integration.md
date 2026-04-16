@@ -79,7 +79,7 @@ Cloud-based integration with pre-built connectors for SaaS.
 
 Standard data format all systems translate to/from. Reduces N-to-N transformations to N-to-1.
 
-```
+```bash
 System A -> [transform to canonical] -> Canonical Format
 System B -> [transform to canonical] ->     |
 System C -> [transform to canonical] ->     v
@@ -90,7 +90,7 @@ System C -> [transform to canonical] ->     v
 
 ## Integration Planning Process
 
-```
+```php
 Gather requirements -> Model in UML -> Choose style -> Define formats ->
   Implement -> Test -> Deploy (return to any step for refinement)
 ```

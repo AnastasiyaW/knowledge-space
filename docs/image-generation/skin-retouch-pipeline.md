@@ -10,7 +10,7 @@ Automated blemish detection and removal pipeline for photos. Two-stage architect
 
 ## Pipeline Architecture
 
-```
+```php
 Input photo
   -> [Detection] INSID3 or YOLOE + SAM 2
   -> pixel-accurate masks with +5-10px dilation

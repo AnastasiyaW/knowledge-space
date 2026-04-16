@@ -34,7 +34,7 @@ Paragraphs: 1 sentence, 4 sentences, 1 sentence. Rhythm changes. Short paragraph
 
 Every paragraph opens with a transition word. The pattern is visible without reading the content:
 
-```
+```text
 Moreover, [paragraph]...
 Furthermore, [paragraph]...
 Additionally, [paragraph]...
@@ -84,13 +84,13 @@ Human headers tend to be specific and action-oriented:
 **Burstiness** = variation in sentence length and structure. The strongest structural signal for detection.
 
 **Human writing burstiness:**
-```
+```yaml
 Sentence lengths: 5, 23, 8, 41, 12, 3, 28, 15, 6, 35
 SD: ~13 words
 ```
 
 **AI writing burstiness:**
-```
+```yaml
 Sentence lengths: 18, 22, 19, 21, 17, 20, 23, 18, 21, 19
 SD: ~2 words
 ```

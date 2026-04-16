@@ -10,7 +10,7 @@ Quality and development speed are connected through technical debt: poor quality
 
 ## Testing Pyramid
 
-```
+```text
       /    E2E    \        <- Fewest, most expensive, slowest
      / Integration \       <- Middle layer
     /   Unit Tests  \      <- Most tests, cheapest, fastest

@@ -10,7 +10,7 @@ The choice of architectural style is the first and most important design step. I
 
 ## Style Evolution
 
-```
+```php
 Monolith -> Modular Monolith -> SOA -> Microservices -> Microservices + Micro-Frontends
 ```
 
@@ -39,7 +39,7 @@ Monolith -> Modular Monolith -> SOA -> Microservices -> Microservices + Micro-Fr
 
 ### Decision Tree
 
-```
+```php
 Team size < 10?
   -> Monolith (or modular monolith)
 Clear domain boundaries + independent deployment needed?

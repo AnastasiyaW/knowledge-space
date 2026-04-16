@@ -23,7 +23,7 @@ Queueing theory studies how waiting lines behave. Results are heavily influenced
 
 The most important visualization: response time vs utilization. Gradual increase at low utilization, shoots to infinity approaching 100%.
 
-```
+```text
 Response |                          /
 Time     |                        /
          |                      /
@@ -50,7 +50,7 @@ Common models: M/M/1, M/M/c, M/D/1, M/G/1
 
 ### M/M/1 (simplest, most common)
 
-```
+```yaml
 Utilization:    rho = arrival_rate / service_rate     (must be < 1)
 Residence time: R = S / (1 - rho)                    (S = avg service time)
 Queue length:   N = rho / (1 - rho)

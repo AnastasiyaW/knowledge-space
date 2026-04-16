@@ -20,7 +20,7 @@ Template-free customization of Kubernetes YAML configurations. Built into kubect
 
 ## Directory Structure
 
-```
+```text
 app/
   base/
     kustomization.yaml

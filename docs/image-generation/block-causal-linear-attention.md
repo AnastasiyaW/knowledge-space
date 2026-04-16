@@ -12,7 +12,7 @@ Temporal extension of [[SANA]]'s linear attention for sequential processing (vid
 ## How Standard Linear Attention Works
 
 SANA uses ReLU kernel linear attention:
-```
+```yaml
 O_i = phi(Q_i) * S / (phi(Q_i) * Z)
 where:
   S = sum_j phi(K_j)^T * V_j   # running sum, shape [D x D]
@@ -26,7 +26,7 @@ Key insight: S and Z are **cumulative sums** shared across all queries. Computed
 
 For video or tile-sequence, enforce causality - frame/tile N can only attend to frames/tiles 0..N:
 
-```
+```text
 For tile t:
   S_t = S_{t-1} + sum_{j in tile_t} phi(K_j)^T * V_j
   Z_t = Z_{t-1} + sum_{j in tile_t} phi(K_j)^T

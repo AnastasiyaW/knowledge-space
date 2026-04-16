@@ -146,7 +146,7 @@ export class RolesGuard implements CanActivate {
 
 ### JWT Refresh Token Rotation
 
-```
+```bash
 Access Token:  short-lived (15 min), stateless verification
 Refresh Token: long-lived (7 days), stored server-side, single-use
 
@@ -161,7 +161,7 @@ Flow:
 ### Passkeys (FIDO2/WebAuthn)
 
 Modern passwordless authentication using public-key cryptography:
-```
+```yaml
 Registration:
 1. Server sends challenge (random bytes)
 2. Authenticator generates key pair

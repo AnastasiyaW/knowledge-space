@@ -56,7 +56,7 @@ Server sends HTTP POST to predefined client endpoint when event occurs. Event-dr
 ### WebSockets
 Full-duplex bidirectional communication over single long-lived connection. Supports text and binary data.
 
-```
+```php
 HTTP upgrade handshake -> persistent WebSocket connection
 Client <---> Server (bidirectional)
 ```
@@ -77,7 +77,7 @@ Unidirectional server-to-client stream over HTTP. Simpler than WebSockets.
 ### Optimistic Locking (Preferred for web APIs)
 
 **ETag-based (recommended for high load):**
-```
+```bash
 GET /resource -> ETag: "v5"
 PUT /resource + If-Match: "v5"
   Success: 200 OK + new ETag
@@ -85,14 +85,14 @@ PUT /resource + If-Match: "v5"
 ```
 
 **Timestamp-based (simpler):**
-```
+```bash
 GET /resource -> Last-Modified: timestamp
 PUT /resource + If-Unmodified-Since: timestamp
   Conflict: 412 Precondition Failed
 ```
 
 ### Pessimistic Locking (For high-cost conflicts)
-```
+```bash
 POST /resource?lock=true -> lockToken
 PUT /resource + X-Lock-Token: token -> update + release
 Already locked -> 409 Conflict

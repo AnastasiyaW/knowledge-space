@@ -7,7 +7,7 @@ Context: C++, Windows + macOS. Trial period protection via increment-only counte
 
 ## Architecture: 4-Layer Storage
 
-```
+```bash
 Layer 1: OS credential store (Windows Credential Manager / macOS Keychain)
 Layer 2: Registry (Windows) / plist + xattr (macOS) - disguised
 Layer 3: Hidden file + NTFS ADS (Windows) / extended attributes (macOS)

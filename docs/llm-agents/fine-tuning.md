@@ -52,7 +52,7 @@ response = client.chat.completions.create(
 
 Full fine-tuning updates ALL parameters. For a 7B model, that's 7 billion weights requiring massive GPU memory. LoRA decomposes weight updates into two small matrices:
 
-```
+```yaml
 W_new = W_original + A * B
 
 W_original: frozen (e.g., 4096 x 4096)

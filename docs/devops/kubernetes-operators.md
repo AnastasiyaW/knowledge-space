@@ -20,7 +20,7 @@ Software extensions that use Custom Resources (CRs) to manage applications and t
 
 ## Architecture
 
-```
+```sql
 User creates/updates CR -> API Server stores CR -> Controller detects change
     -> Controller reconciles (create pods, update config, run backup, etc.)
     -> Controller updates CR status
@@ -154,7 +154,7 @@ func (r *DatabaseReconciler) Reconcile(ctx context.Context, req ctrl.Request) (c
 
 ## Choosing Deployment Strategy
 
-```
+```php
 Plain YAML manifest     -> Simple, static deployment
       |
 Helm chart              -> Templated config, versioned releases

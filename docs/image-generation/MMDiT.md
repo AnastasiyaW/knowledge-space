@@ -17,7 +17,7 @@ Transformer architecture for diffusion models that processes multiple modalities
 
 **MMDiT**: text and image tokens concatenated into a single sequence, processed by the same self-attention layers. Both modalities attend to each other symmetrically.
 
-```
+```rust
 DiT block:
   image_tokens → self_attn(Q=img, K=img, V=img) → cross_attn(Q=img, K=text, V=text) → FFN
 

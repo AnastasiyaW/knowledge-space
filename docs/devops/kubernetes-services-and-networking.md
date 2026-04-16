@@ -44,7 +44,7 @@ Example: `app1.dev.svc.cluster.local`
 
 `clusterIP: None` - no load balancing, DNS returns individual pod IPs. Required for StatefulSets:
 
-```
+```text
 <pod-name>.<service-name>.<namespace>.svc.cluster.local
 ```
 

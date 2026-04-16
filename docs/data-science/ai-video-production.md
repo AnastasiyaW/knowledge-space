@@ -40,7 +40,7 @@ Full pipeline for creating commercial video using AI tools. Chains LLM scripting
 - Fix via re-generation with refined prompts
 
 ### 4. Video Prompt Structure
-```
+```text
 1. Scene description: "wide shot of a lone man walking..."
 2. Character movement: "takes 2-3 small steps then stops"
 3. Camera movement: "camera slowly dollies forward, no shaking"

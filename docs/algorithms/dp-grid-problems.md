@@ -42,7 +42,7 @@ def partition(arr):
 Find area of largest square submatrix containing only 1s.
 
 **Recurrence:**
-```
+```yaml
 if matrix[i][j] == 0: dp[i][j] = 0
 else: dp[i][j] = 1 + min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1])
 ```

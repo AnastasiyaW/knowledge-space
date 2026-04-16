@@ -40,7 +40,7 @@ User info stored in: `/etc/passwd`, `/etc/shadow`, `/etc/group`
 
 ### ls -l Output
 
-```
+```text
 -rwxr-xr-- 1 user group 4096 Jan 15 10:30 filename
 ^          ^ ^    ^     ^    ^             ^
 type+perms links owner group size  date   name
@@ -76,7 +76,7 @@ Redirecting to device files sends data directly: `cat doc.txt > /dev/lp0` (print
 
 ## Filesystem Hierarchy (Quick Reference)
 
-```
+```javascript
 /bin      Essential user binaries (available in single-user mode)
 /sbin     System admin binaries (iptables, reboot, fdisk)
 /etc      Configuration files

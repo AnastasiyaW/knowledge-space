@@ -18,7 +18,7 @@ spark.conf.set("spark.default.parallelism", 400)
 ```
 
 **Optimal partition count:**
-```
+```text
 num_executors * executor_cores * (2 to 4)
 ```
 

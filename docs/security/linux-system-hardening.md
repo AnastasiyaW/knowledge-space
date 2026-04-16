@@ -26,7 +26,7 @@ chage -M 90 username                  # Max password age 90 days
 ```
 
 ### /etc/passwd and /etc/shadow
-```
+```markdown
 # /etc/passwd: username:x:UID:GID:comment:home:shell
 # /etc/shadow: username:$6$salt$hash:last_change:min:max:warn:inactive:expire
 # Hash prefixes: $6$ = SHA-512, $5$ = SHA-256, $y$ = yescrypt
@@ -67,7 +67,7 @@ setfacl -b file                    # Remove all
 ## SSH Hardening
 
 ### /etc/ssh/sshd_config
-```
+```kotlin
 Port 2222                      # Non-default port
 PermitRootLogin no             # No root SSH
 PasswordAuthentication no      # Key-only

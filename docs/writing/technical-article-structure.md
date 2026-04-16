@@ -45,7 +45,7 @@ This is NOT the standard "Introduction -> Background -> Method -> Conclusion" ac
 - Keep individual code blocks under 30 lines - split longer examples
 
 **Good placement pattern:**
-```
+```ini
 [2-3 paragraphs of context]
 [code block showing the problem]
 [1-2 paragraphs explaining]
@@ -55,7 +55,7 @@ This is NOT the standard "Introduction -> Background -> Method -> Conclusion" ac
 ```
 
 **Bad placement pattern:**
-```
+```ini
 [10 paragraphs of theory]
 [massive code block with everything]
 [brief conclusion]
@@ -65,7 +65,7 @@ This is NOT the standard "Introduction -> Background -> Method -> Conclusion" ac
 
 ### For Tutorial/How-To Articles
 
-```
+```ini
 # [Specific outcome] with [specific tool]
 
 ## The Problem
@@ -90,7 +90,7 @@ This is NOT the standard "Introduction -> Background -> Method -> Conclusion" ac
 
 ### For Investigation/Debug Articles
 
-```
+```bash
 # How We Fixed [specific problem]
 
 ## Symptoms
@@ -115,7 +115,7 @@ This is NOT the standard "Introduction -> Background -> Method -> Conclusion" ac
 
 ### For Comparison/Evaluation Articles
 
-```
+```sql
 # [Tool A] vs [Tool B] for [specific use case]
 
 ## Our Requirements
@@ -188,7 +188,7 @@ From analysis of highest-rated technical articles:
 
 Maps well to debugging stories and architecture decisions. The "Man in Hole" narrative shape (problem → worse → solved):
 
-```
+```rust
 "Once upon a time..." → project context, how things worked
 "Every day..."        → the normal state before the problem
 "One day..."          → the triggering problem or discovery
@@ -203,7 +203,7 @@ The "failed attempt" beat is where most technical articles win or lose. Skip it 
 
 Critical differentiator: failed approaches build trust, save readers time, add narrative tension.
 
-```
+```rust
 "We tried X and it failed because Y" > clean success story
 ```
 
@@ -234,7 +234,7 @@ During work, tag raw notes with:
 
 Write answers to specific practitioner questions, not generic topic introductions.
 
-```
+```text
 "Why does my RAG pipeline hallucinate on long documents?" ← specific, gets search traffic
 "Introduction to RAG"                                     ← no one searches this
 ```
@@ -259,7 +259,7 @@ Write answers to specific practitioner questions, not generic topic introduction
 
 ## Chronicle → Article Pipeline
 
-```
+```text
 1. Capture  (during work): tag [DECISION], [GOTCHA], [REUSE], [STORY], screenshot outputs
 2. Triage   (weekly): scan for narrative arc (problem → struggle → solution)
 3. Outline  (Story Spine): identify the lowest point - that's the article center

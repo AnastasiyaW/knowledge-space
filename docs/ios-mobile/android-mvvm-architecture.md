@@ -134,7 +134,7 @@ private suspend fun loadTime(): Long =
 
 ### Repository Pattern
 
-```
+```sql
 View (Activity/Fragment)
   | observe LiveData / call functions
 ViewModel

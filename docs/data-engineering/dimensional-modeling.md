@@ -10,7 +10,7 @@ Dimensional modeling organizes data into fact tables (measures/events) surrounde
 
 ## Star Schema
 
-```
+```text
          dim_date
             |
 dim_product--fact_sales--dim_customer

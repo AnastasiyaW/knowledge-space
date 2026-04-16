@@ -14,7 +14,7 @@ Paper: WACV 2022. Authors: Samsung AI Moscow / AIRI. arXiv:2109.07161.
 ## Architecture
 
 U-Net-like fully-convolutional network:
-```
+```hcl
 Input (4ch: masked_image + mask) → Encoder → 9-18 FFC Residual Blocks → Decoder → Output (3ch)
 ```
 
@@ -22,7 +22,7 @@ Input (4ch: masked_image + mask) → Encoder → 9-18 FFC Residual Blocks → De
 
 The key innovation. Each FFC block splits channels into two parallel branches:
 
-```
+```sql
 Feature map
     ├─ Local branch (standard convolutions) → high-frequency local details
     └─ Global branch:

@@ -28,7 +28,7 @@ Detailed captions are more important than data quantity. Include:
 - Background description, environment
 - Style attributes specific to the domain
 
-```
+```yaml
 Good: "sks jewelry photo, 18k gold engagement ring with oval cut diamond,
        soft studio lighting, dark velvet background, macro photography,
        sharp focus on gemstone facets"

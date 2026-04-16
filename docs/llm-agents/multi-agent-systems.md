@@ -20,7 +20,7 @@ Multi-agent systems decompose complex tasks across specialized agents that colla
 ### Supervisor / Boss-Worker
 One coordinator delegates to specialized workers:
 
-```
+```php
 User -> Supervisor
          -> Worker 1 (Researcher): gathers information
          -> Worker 2 (Analyst): analyzes data
@@ -35,7 +35,7 @@ User -> Supervisor
 ### Sequential Pipeline
 Workers execute in fixed order:
 
-```
+```php
 Input -> Research Agent -> Analysis Agent -> Writing Agent -> Review Agent -> Output
 ```
 
@@ -44,7 +44,7 @@ Input -> Research Agent -> Analysis Agent -> Writing Agent -> Review Agent -> Ou
 ### Hierarchical
 Multiple levels of coordination:
 
-```
+```php
 Top Coordinator
   -> Team Lead A (Research)
        -> Researcher 1, Researcher 2
@@ -55,7 +55,7 @@ Top Coordinator
 ### Debate / Consensus
 Multiple agents with different perspectives argue until converging:
 
-```
+```yaml
 Agent A (conservative): proposes solution
 Agent B (aggressive): critiques and proposes alternative
 Moderator: synthesizes best aspects of both

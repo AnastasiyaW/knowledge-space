@@ -110,7 +110,7 @@ For stateful applications requiring stable identities and persistent storage.
 - **Persistent storage** - each pod bound to its own PersistentVolume via volumeClaimTemplates
 
 **Requires headless service** (clusterIP: None) for stable DNS per pod:
-```
+```html
 <pod-name>.<headless-service>.<namespace>.svc.cluster.local
 # Example: mongo-0.mongo-headless.default.svc.cluster.local
 ```

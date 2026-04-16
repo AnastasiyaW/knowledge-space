@@ -47,7 +47,7 @@ cd /mnt/d/projects
 
 ### Windows -> Linux Files
 
-```
+```text
 \\wsl$\Ubuntu\home\username     # File Explorer
 \\wsl.localhost\Ubuntu\         # alternative (WSL2)
 ```

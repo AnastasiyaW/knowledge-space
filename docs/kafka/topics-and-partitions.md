@@ -23,7 +23,7 @@ A topic is a named feed of records. Producers write to topics; consumers read fr
 
 Each partition is an independent, ordered log. Parallelism in Kafka scales with partition count:
 
-```
+```yaml
 Topic: user-events (4 partitions)
 
 Partition 0:  [msg0] [msg1] [msg2] [msg3] ...
@@ -41,7 +41,7 @@ Partition 3:  [msg0] [msg1] ...
 
 **Kafka guarantees ordering only within a single partition.** There is no global ordering across partitions.
 
-```
+```yaml
 Partition 0:  A -> B -> C        (order guaranteed: A before B before C)
 Partition 1:  D -> E -> F        (order guaranteed: D before E before F)
 
@@ -54,7 +54,7 @@ With `max.in.flight.requests.per.connection > 1` (default: 5), out-of-order deli
 - Use an idempotent producer (`enable.idempotence=true`, default since Kafka 3.0) -- this handles reordering internally
 - Or set `max.in.flight.requests.per.connection=1` (reduces throughput)
 
-See [[producer-patterns]] for idempotent and transactional producer configuration.
+See [[kafka-producer-fundamentals]] for idempotent and transactional producer configuration.
 
 ### Key-Based Partitioning
 
@@ -124,7 +124,7 @@ public class RegionPartitioner implements Partitioner {
 
 Each partition is stored as a directory on the broker's log directory. Inside, data is split into **segments**:
 
-```
+```php
 /kafka-logs/user-events-0/
     00000000000000000000.log        # Segment file (records)
     00000000000000000000.index      # Offset -> file position index
@@ -356,7 +356,7 @@ for topic_name in metadata.topics:
 
 ### Partition Count Selection Heuristic
 
-```
+```yaml
 Target throughput:    100 MB/s
 Per-partition write:  ~10 MB/s (single partition, single producer)
 Consumer instances:   8 (in one consumer group)
@@ -442,6 +442,6 @@ kafka-reassign-partitions.sh --execute \
 
 - [[broker-architecture]] - how partitions map to brokers, ISR, controller election
 - [[consumer-groups]] - partition assignment strategies, rebalancing, offset management
-- [[producer-patterns]] - key serialization, idempotent producer, batching, acks
-- [[topics-and-partitions]] - choosing partition count, replication factor, custom partitioners
-- [[kafka-cluster-operations]] - day-to-day topic and cluster management
+- [[kafka-producer-fundamentals]] - key serialization, batching, acks
+- [[kafka-producer-advanced-patterns]] - idempotent producer, custom partitioners
+- [[kafka-cluster-management]] - day-to-day topic and cluster management

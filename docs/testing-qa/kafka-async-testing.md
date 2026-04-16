@@ -10,7 +10,7 @@ Testing asynchronous microservices communicating via Apache Kafka. Covers produc
 
 ## Test Architecture for Kafka Services
 
-```
+```php
 Test -> API (POST /order) -> Producer -> Kafka Topic -> Consumer -> DB
                                                                     |
 Test -> DB Query (verify) <-----------------------------------------+

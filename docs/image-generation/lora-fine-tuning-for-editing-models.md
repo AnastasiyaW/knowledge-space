@@ -84,7 +84,7 @@ Standard [[flow-matching]] velocity loss + task-specific auxiliary losses:
 
 Base model (Qwen-Image-Edit-2511) is **Apache 2.0**. Your LoRA weights are entirely yours. This creates a clean commercial path:
 
-```
+```text
 Apache 2.0 base (Qwen) + proprietary LoRA = your product
 ```
 
@@ -132,7 +132,7 @@ Based on Calvin Herbst's 50+ A/B test study:
 
 SimpleTuner Kontext mode (recommended):
 
-```
+```text
 dataset/
   01_start.png      # Before image (source)
   01_start2.png     # Face reference crop (optional)
@@ -199,7 +199,7 @@ Prodigy needs 20-30% more steps than AdamW to achieve same convergence.
 
 Alternative approach: instead of before/after image pairs, place both images side-by-side in a diptych and train the model to understand the "edit" from left to right.
 
-```
+```yaml
 [before_image | after_image]  ← concatenated horizontally
 Caption: "EDITWORD: [description of change]"
 ```

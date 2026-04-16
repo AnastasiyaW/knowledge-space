@@ -75,7 +75,7 @@ Main encoding attributes ranked by precision:
 | **URL** | Open URL with dynamic parameters |
 
 URL action example:
-```
+```text
 https://crm.example.com/deal?object=<object_number>
 ```
 

@@ -26,7 +26,7 @@ In smaller organizations, one person fills multiple roles. Authority is earned t
 
 ## Requirements Pipeline
 
-```
+```php
 Business Architecture Study
   -> Stakeholder Identification
     -> Requirements Elicitation (WHY, WHO, HOW)

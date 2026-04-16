@@ -35,7 +35,7 @@ tcpdump -i eth0 -n -c 100 port 443     # No DNS resolve, limit to 100 packets
 - **Conversations** / **Endpoints** statistics
 
 ### Useful Display Filters
-```
+```bash
 http.request.method == "POST"          # HTTP POST requests
 tcp.flags.syn == 1 && tcp.flags.ack == 0   # SYN packets (new connections)
 dns.qry.name contains "malicious"     # DNS queries for domain

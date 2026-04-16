@@ -64,7 +64,7 @@ ssc.awaitTermination()
 
 ## Typical Pipeline
 
-```
+```php
 Kafka -> Spark Structured Streaming -> Database/DWH
 ```
 

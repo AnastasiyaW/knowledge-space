@@ -20,7 +20,7 @@ Coordinator asks all participants to prepare (phase 1), then commit (phase 2). I
 
 Sequence of local transactions with compensating transactions for rollback. Each step commits independently.
 
-```
+```php
 Step 1: Reserve inventory  -> Compensate: Release inventory
 Step 2: Charge payment     -> Compensate: Refund payment
 Step 3: Ship order         -> Compensate: Cancel shipment

@@ -21,7 +21,7 @@ Established patterns for structuring agent behavior, from simple tool-calling to
 
 LLM interleaves thinking with tool calling:
 
-```
+```php
 Thought -> Action -> Observation -> Thought -> ... -> Final Answer
 ```
 
@@ -46,7 +46,7 @@ LLM as router/coordinator with specialist modules (calculator, search, SQL execu
 
 Agent evaluates its own output and iteratively improves:
 
-```
+```text
 1. Generate initial response
 2. Critique: "What's wrong with this response?"
 3. Identify specific issues

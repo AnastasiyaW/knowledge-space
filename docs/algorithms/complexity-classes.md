@@ -19,7 +19,7 @@ Complexity classes categorize decision problems by the computational resources n
 
 ## Class Hierarchy
 
-```
+```text
 NP-hard
   |-- NP-complete  <-- hardest problems IN NP
   |-- (problems not in NP, e.g., halting problem)

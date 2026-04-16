@@ -29,7 +29,7 @@ crontab -u username -l      # list another user's tasks (needs sudo)
 
 ### Crontab Syntax
 
-```
+```text
 * * * * * /path/to/command
 | | | | |
 | | | | +-- day of week (0-7, 0 and 7 = Sunday)
@@ -58,7 +58,7 @@ Special values:
 
 ### Special Shortcuts
 
-```
+```text
 @reboot    # run once at startup
 @hourly    # = 0 * * * *
 @daily     # = 0 0 * * *

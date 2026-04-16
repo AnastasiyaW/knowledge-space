@@ -82,7 +82,7 @@ const clone = element.cloneNode(true)  // Deep clone
 ```
 
 ### insertAdjacentHTML Positions
-```
+```php
 beforebegin -> [element] -> afterbegin ... beforeend -> [/element] -> afterend
 ```
 

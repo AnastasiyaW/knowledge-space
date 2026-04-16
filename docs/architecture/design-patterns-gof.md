@@ -59,7 +59,7 @@ Classic design patterns from the Gang of Four. A pattern describes a general con
 
 ## Pattern Selection Guide
 
-```
+```yaml
 Creating objects:
   One type           -> Factory Method
   Family of types    -> Abstract Factory

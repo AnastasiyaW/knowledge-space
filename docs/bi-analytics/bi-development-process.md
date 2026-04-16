@@ -59,7 +59,7 @@ Plan before building. For each element, define:
 - **Filters** that apply
 
 Dashboard structure pattern:
-```
+```text
 Level 1: KPI summary (total state, one number per metric)
 Level 2: Trend over time (improving or declining?)
 Level 3: Breakdown by dimension (which segment drives the trend?)

@@ -139,7 +139,7 @@ async def get_user(email):
 
 ## Sync vs Async Performance
 
-```
+```yaml
 Sync:  [Request1 -----] [Request2 -----] [Request3 -----]  = 1500ms
 Async: [Req1 --][Req2 --][Req3 --]                          = ~500ms
 

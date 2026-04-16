@@ -166,7 +166,7 @@ services:
 ```
 
 Caddyfile:
-```
+```kotlin
 :80 {
     reverse_proxy app1:3000 app2:3000 {
         lb_policy round_robin

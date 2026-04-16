@@ -97,7 +97,7 @@ System of internal link connections between pages. Covers linking types, SILO st
 6. Link: hub page -> supporting pages; supporting pages link back to hub only (no cross-linking between silos)
 
 ### SILO URL Structure
-```
+```text
 site.com/silo1/
 site.com/silo1/theme1
 site.com/silo1/theme2

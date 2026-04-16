@@ -104,7 +104,7 @@ print(message.content[0].text)
 
 ## Pricing Model
 
-```
+```toml
 Cost = (input_tokens * input_price) + (output_tokens * output_price)
 
 Example (GPT-4o):

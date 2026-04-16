@@ -143,7 +143,7 @@ Same as large e-commerce + geographic dimension: every city creates separate ran
 ## Traffic Forecasting
 
 ### Forecast Formula (via Demand)
-```
+```toml
 Traffic = (Sum of impressions x CTR x 1.35) - 20%
 ```
 - **Sum of impressions** = based on semantic core
@@ -167,7 +167,7 @@ If no data: use average 2-6% CTR.
 Sources: Wordstat history, Metrika, GA, Search Console. Simplified: 15 queries + Wordstat history.
 
 ### Traffic Cost Metric
-```
+```text
 Traffic cost = Monthly fee / Forecasted traffic
 ```
 Shows client ROI improvement over time; demonstrates SEO compounding effect.

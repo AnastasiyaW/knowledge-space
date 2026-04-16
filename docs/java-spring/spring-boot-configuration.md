@@ -20,7 +20,7 @@ Spring Boot project initialization, application properties, build tools (Maven/G
 ## Patterns
 
 ### Clean Architecture Layers
-```
+```php
 domain/          Business logic, models, repository interfaces
   ├── model/     Plain domain objects (no framework annotations)
   ├── repo/      Repository interfaces (WHAT, not HOW)

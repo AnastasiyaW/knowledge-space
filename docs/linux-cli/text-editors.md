@@ -57,7 +57,7 @@ Modal editor with three main modes: **Normal**, **Insert**, **Visual**.
 
 ### Mode Switching
 
-```
+```sql
 i           Insert at cursor
 a           Insert after cursor
 I / A       Insert at line start / end
@@ -70,7 +70,7 @@ Ctrl+v      Visual block mode
 
 ### Cursor Movement (Normal)
 
-```
+```text
 h j k l     Left, down, up, right
 w / b       Next / previous word
 0 / $       Start / end of line
@@ -84,7 +84,7 @@ Ctrl+d/u    Half page down / up
 
 ### Editing (Normal)
 
-```
+```sql
 dd          Delete (cut) line
 d$          Delete to end of line
 dw          Delete word
@@ -97,7 +97,7 @@ x           Delete character under cursor
 
 ### Text Objects
 
-```
+```sql
 di(         Delete inside parentheses
 ci"         Change inside quotes
 da{         Delete around braces (including braces)
@@ -106,14 +106,14 @@ yi[         Yank inside brackets
 
 ### Clipboard
 
-```
+```text
 yy          Yank (copy) line
 p / P       Paste after / before cursor
 ```
 
 ### Save and Exit
 
-```
+```bash
 :w          Save
 :wq         Save and quit
 :q          Quit (fails if unsaved)
@@ -122,7 +122,7 @@ p / P       Paste after / before cursor
 
 ### Search and Replace
 
-```
+```text
 /pattern    Search forward
 ?pattern    Search backward
 n / N       Next / previous match
@@ -132,14 +132,14 @@ n / N       Next / previous match
 
 ### Undo / Redo
 
-```
+```text
 u           Undo
 Ctrl+r      Redo
 ```
 
 ### Windows and Tabs
 
-```
+```text
 :e file     Open file
 :tabe       New tab
 gt / gT     Next / previous tab
@@ -150,7 +150,7 @@ Ctrl+wq     Close window
 
 ### Marks
 
-```
+```text
 m{a-z}      Set local mark
 '{a-z}      Jump to mark
 ''          Return to previous position

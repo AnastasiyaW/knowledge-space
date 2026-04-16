@@ -11,7 +11,7 @@ Reference implementation: [Rowboat](https://github.com/rowboatlabs/rowboat) (YC 
 
 ## Architecture: Two-Layer Storage
 
-```
+```text
 raw/           - Append-only sources (email, transcripts, voice memos)
                - Never modified by agent, only read
 knowledge/
@@ -47,7 +47,7 @@ labeled_at: "2026-04-11T10:00:00Z"
 
 **Noise-first principle:** identify what to SKIP before deciding what to keep. If `filter` array is non-empty, the item is excluded from graph building regardless of other tags.
 
-```
+```text
 "Founder Signal Test": would a busy domain expert want this in their knowledge system?
 ```
 
@@ -65,7 +65,7 @@ Processes filtered sources into entity notes. Before each batch:
 3. **Process batch** - agent writes/updates notes, resolves to canonical names
 
 Change detection uses hybrid approach:
-```
+```text
 mtime check (fast) → if changed, SHA-256 hash → if hash differs → process
 ```
 Eliminates false positives from timestamp-only changes.
@@ -123,7 +123,7 @@ The agent receives this as a formatted markdown table. When it encounters "John 
 
 Separate `knowledge/Agent Notes/` directory for the AI's understanding of the user:
 
-```
+```text
 Agent Notes/
   user.md          - identity facts only (roles, companies, location)
   preferences.md   - explicit rules ("no meetings before 11am")
@@ -155,7 +155,7 @@ live_note: true
   "lastRunAt": "2026-04-11T10:30:00Z",
   "targetId": "dailybrief"
 }
-```
+```php
 
 <!--task-target:dailybrief-->
 Results written here automatically
@@ -225,7 +225,7 @@ def should_skip(source: dict) -> bool:
 
 ### Two-Layer Raw/Processed Separation
 
-```
+```sql
 sessions/raw/     - immutable session transcripts, never modified
 memory/           - extracted, consolidated knowledge
                   - derived from raw but not tied to it
@@ -246,7 +246,7 @@ A simpler alternative to full knowledge graph systems: **structured markdown col
 
 ### Three-Layer Architecture
 
-```
+```bash
 raw/          - immutable source materials (PDFs, clipped articles, notes)
               - LLM reads but NEVER modifies
 wiki/         - LLM-generated structured markdown
@@ -259,7 +259,7 @@ schema/       - CLAUDE.md: structure conventions, workflows
 
 ### Three Operations
 
-```
+```bash
 Ingest:  user drops source file
          LLM reads → discusses takeaways → writes summary pages
          updates index.md → revises entity/concept pages → appends to log

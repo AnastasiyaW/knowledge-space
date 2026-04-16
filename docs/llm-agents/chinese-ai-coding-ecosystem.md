@@ -25,7 +25,7 @@ SOLO mode is the key differentiator: fully autonomous agent that decomposes task
 
 Multi-agent framework simulating a software company:
 
-```
+```text
 Product Manager → Architect → Project Manager → Engineer → QA Engineer
 ```
 
@@ -35,7 +35,7 @@ Each agent has a defined role, receives context from predecessors, and passes st
 
 ### Hermes Agent
 
-```
+```yaml
 GitHub: NousResearch/hermes-agent (17K+ stars, MIT, Python, v0.8.0)
 ```
 
@@ -55,13 +55,13 @@ All-in-one toolchain for RAG applications. Local deployment, multi-model integra
 
 Chinese-origin contribution to AI coding methodology:
 
-```
+```yaml
 GitHub: ForceInjection/OpenSpec-practise
 Docs:   radebit.github.io/OpenSpec-Docs-zh/
 ```
 
 Workflow:
-```
+```text
 Create Change (Proposal) → Implement (Apply) → Archive
 ```
 
@@ -115,7 +115,7 @@ Up to 5 levels of recursive import supported. `@import` is disabled inside code 
 
 ### Layered Configuration Structure
 
-```
+```text
 ~/.claude/CLAUDE.md       - global (all sessions)
 ./CLAUDE.md               - project root (team-shared)
 ./CLAUDE.local.md         - personal project overrides
@@ -155,7 +155,7 @@ Published research on AI Coding and unit testing co-evolution: shifting from ver
 
 ## Key Repos
 
-```
+```text
 claude-code-chinese/claude-code-guide  - community guide, API proxy patterns for China
 cfrs2005/claude-init                   - 9 sub-agents, 10 slash commands, 8 rules, hooks
 xianyu110/awesome-claudcode-tutorial   - 212+ articles, 25 chapters

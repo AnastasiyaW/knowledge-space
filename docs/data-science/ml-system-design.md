@@ -27,7 +27,7 @@ Before any modeling, define:
 
 ## Data Pipeline Architecture
 
-```
+```php
 Raw Data -> Ingestion -> Validation -> Feature Engineering -> Feature Store
                                                                 |
 Training Pipeline <-------- Historical Features ----------------+
@@ -98,7 +98,7 @@ X_encoded = te.fit_transform(X_train, y_train)
 
 ## Model Selection Decision Tree
 
-```
+```php
 Tabular data?
   Yes -> Start with CatBoost/XGBoost
     Need uncertainty? -> Bayesian methods or conformal prediction

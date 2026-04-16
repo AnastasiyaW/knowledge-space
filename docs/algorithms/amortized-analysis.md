@@ -21,7 +21,7 @@ Amortized analysis computes the average cost per operation over a sequence of op
 
 When the array is full, double capacity and copy all elements. Resize happens at sizes 1, 2, 4, 8, 16, 32, ...
 
-```
+```text
 Cost of n insertions without resize: n
 Cost of resize operations: 1 + 2 + 4 + 8 + ... + n = 2n - 1
 

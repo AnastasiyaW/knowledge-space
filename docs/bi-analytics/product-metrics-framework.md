@@ -22,7 +22,7 @@ Core product metrics that measure user engagement, retention, and product health
 
 ### Stickiness Benchmarks (DAU/MAU)
 
-```
+```toml
 Stickiness = DAU / MAU
 ```
 

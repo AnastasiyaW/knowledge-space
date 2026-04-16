@@ -24,7 +24,7 @@ Each user's model weights are unique while producing identical outputs (within f
 
 **Solution:** HKDF generates 32-byte seeds → ChaCha20 expands into arbitrary-length stream.
 
-```
+```bash
 master_secret (32 bytes, on server)
     │
 HKDF-Extract(salt=epoch_bytes, ikm=master_secret) → PRK
@@ -191,7 +191,7 @@ More boilerplate, heavier dependency, no convenient ChaCha20 stream API.
 
 U-Net with skip connections is the most complex case:
 
-```
+```yaml
 Encoder:              Decoder:
 conv1 → pool ----skip---→ upconv4 + concat
 conv2 → pool ----skip---→ upconv3 + concat

@@ -20,7 +20,7 @@ Kafka exposes metrics via JMX; production monitoring requires tracking broker he
 
 ### Critical Broker Metrics
 
-```
+```markdown
 # Cluster-level (MUST alert on these)
 kafka.controller:type=KafkaController,name=ActiveControllerCount   # MUST be exactly 1
 kafka.controller:type=KafkaController,name=OfflinePartitionsCount   # MUST be 0
@@ -91,7 +91,7 @@ num.io.threads=8          # Monitor idle%; more = better disk utilization
 
 ### Consumer Metrics to Track
 
-```
+```markdown
 # Java producer/consumer metrics
 record-send-rate           # messages sent per second
 record-error-rate          # send failures per second
@@ -112,7 +112,8 @@ produce-throttle-time-avg  # broker-side throttling time
 ## See Also
 
 - [[broker-architecture]] - broker internals, JMX metrics reference
-- [[replication-and-fault-tolerance]] - ISR mechanics, what UnderReplicated means
-- [[kafka-cluster-operations]] - operational procedures, capacity planning
+- [[kafka-replication-fundamentals]] - ISR mechanics, what UnderReplicated means
+- [[kafka-cluster-management]] - operational procedures, capacity planning
+- [[kafka-monitoring-and-tuning]] - JMX metrics reference, Prometheus setup, performance tuning
 - [[kafka-troubleshooting]] - symptom-to-fix mapping
 - [Apache Kafka Monitoring](https://kafka.apache.org/documentation/#monitoring)

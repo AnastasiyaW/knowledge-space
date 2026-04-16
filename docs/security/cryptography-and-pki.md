@@ -73,7 +73,7 @@ Public logs of all issued certificates. Tools: crt.sh, censys.io. Used for:
 - TLS 1.3 - 1-RTT handshake, removed weak ciphers, mandatory PFS
 
 ### TLS Handshake (1.2)
-```
+```yaml
 Client → Server: ClientHello (supported ciphers, random)
 Server → Client: ServerHello (chosen cipher, random) + Certificate
 Server → Client: Key Exchange parameters

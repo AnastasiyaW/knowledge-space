@@ -20,7 +20,7 @@ Analysis of real visitor actions on site. One of the strongest ranking factor gr
 - Yandex "Bars" toolbar data
 
 ### Factor Hierarchy
-```
+```text
 Query-document factors > Document factors > Host factors
 ```
 

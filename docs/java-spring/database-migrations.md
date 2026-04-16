@@ -19,7 +19,7 @@ Controlled, versioned database schema evolution using Flyway (SQL-based) and Liq
 ## Patterns
 
 ### Flyway
-```
+```text
 src/main/resources/db/migration/
   V1__initial_schema.sql
   V2__add_phone_column.sql

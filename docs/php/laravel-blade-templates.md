@@ -192,7 +192,7 @@ return view('posts.show')->with('post', $post);
 
 ### Admin vs Public layouts
 
-```
+```text
 resources/views/
   admin/
     layouts/

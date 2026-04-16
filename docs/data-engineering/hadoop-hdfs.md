@@ -10,7 +10,7 @@ Hadoop is a framework for distributed storage and processing of large datasets. 
 
 ## Hadoop Architecture
 
-```
+```bash
 Application Layer: MapReduce | Spark | Tez | Hive | Pig
 Resource Layer:    YARN (Resource Management)
 Storage Layer:     HDFS (Distributed File System)
@@ -20,7 +20,7 @@ Storage Layer:     HDFS (Distributed File System)
 
 ## HDFS Architecture
 
-```
+```javascript
 Client -> NameNode (Active) -- Standby NameNode (HA)
               |                 Secondary NameNode (checkpoints)
     +---------+---------+

@@ -58,7 +58,7 @@ URL nesting (slash count) does NOT equal click depth:
 6. Avoid too-long URLs or 6+ slashes
 
 ### URL Quality Examples
-```
+```yaml
 BAD:  splav.ru/catalog.aspx?cat=20081113151601100150
 OK:   secretpoint.ru/catalog/shoes/military/
 GOOD: voentorga.ru/catalog/bertsy/
@@ -78,7 +78,7 @@ GOOD: voentorga.ru/catalog/bertsy/
 ## Structure Templates by Site Type
 
 ### E-commerce
-```
+```text
 / (Homepage)
 +-- /contacts/
 +-- /about/
@@ -100,7 +100,7 @@ GOOD: voentorga.ru/catalog/bertsy/
 - `/product/accessories/` - accessories with H2 subheadings per type
 
 ### Service Site
-```
+```text
 / (Homepage)
 +-- /contacts/
 +-- /about/
@@ -112,7 +112,7 @@ GOOD: voentorga.ru/catalog/bertsy/
 ```
 
 ### Blog/Informational
-```
+```text
 / (Homepage)
 +-- /about/
 +-- /section-1/

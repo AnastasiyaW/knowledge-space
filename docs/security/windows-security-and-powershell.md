@@ -91,7 +91,7 @@ Test-NetConnection -ComputerName host -Port 443
 | 11 | CachedInteractive (cached domain creds) |
 
 ## Windows Registry Security Keys
-```
+```text
 HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run         # Auto-start
 HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce     # One-time auto-start
 HKLM\SYSTEM\CurrentControlSet\Services                      # Windows services

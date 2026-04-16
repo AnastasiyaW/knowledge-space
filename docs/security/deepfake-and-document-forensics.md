@@ -67,7 +67,7 @@ Detects manipulated regions by analyzing JPEG compression artifacts:
 ## Email Forensics
 
 ### Header Analysis
-```
+```sql
 Received: chain   - traces routing path from sender to recipient
 X-Originating-IP  - may reveal sender's real IP
 Message-ID         - domain should match sender

@@ -66,7 +66,7 @@ COMMIT;
 
 ### Complete Architecture
 
-```
+```php
 App/1 -> DB1 [Data + Outbox]
     -> Outbox Processor -> Kafka
     -> Inbox Processor -> DB2 [Data + Inbox] -> App/2

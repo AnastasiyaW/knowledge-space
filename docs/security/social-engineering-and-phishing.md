@@ -43,7 +43,7 @@ Creating fabricated scenarios to manipulate targets:
 
 ### SPF (Sender Policy Framework)
 DNS TXT record listing authorized mail server IPs:
-```
+```ini
 v=spf1 mx ip4:203.0.113.0/24 include:_spf.google.com -all
 ```
 
@@ -52,13 +52,13 @@ Cryptographic signature in email headers proving message integrity and sender do
 
 ### DMARC (Domain-based Message Authentication)
 Policy for handling SPF/DKIM failures:
-```
+```ini
 v=DMARC1; p=reject; rua=mailto:dmarc@example.com
 ```
 Policies: `none` (monitor), `quarantine` (spam folder), `reject` (block).
 
 ## Email Header Analysis
-```
+```sql
 Received: chain          - full routing path (read bottom-up)
 X-Originating-IP         - sender's real IP
 Message-ID               - domain should match sender

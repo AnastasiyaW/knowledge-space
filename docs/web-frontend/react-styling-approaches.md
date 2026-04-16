@@ -13,7 +13,7 @@ Two dominant patterns for styling React: CSS Modules (scoped traditional CSS) an
 Locally-scoped class names - auto-generated unique suffixes prevent conflicts.
 
 ### File Convention
-```
+```text
 components/Header/
   Header.jsx
   Header.module.css       # Must include .module.css

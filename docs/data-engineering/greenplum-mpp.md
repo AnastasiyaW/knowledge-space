@@ -10,7 +10,7 @@ Greenplum is an MPP (Massive Parallel Processing) analytical database based on P
 
 ## Architecture
 
-```
+```php
 Client -> Master (QD: Query Dispatcher)
               |
     +---------+---------+

@@ -146,7 +146,7 @@ For multi-day projects. Append-only, dated entries.
 
 ### Session Start Protocol
 
-```
+```text
 1. Check for HANDOFF.md
    - If exists: read, summarize to user, ask to continue or start fresh
    - Archive to handoff-history/YYYY-MM-DD-HHMM.md
@@ -162,7 +162,7 @@ For multi-day projects. Append-only, dated entries.
 
 ### Session End Protocol
 
-```
+```sql
 1. If session > 15 minutes:
    - Write/update HANDOFF.md
    - Update MEMORY.md if new permanent knowledge discovered
@@ -177,7 +177,7 @@ For multi-day projects. Append-only, dated entries.
 
 After each session, extract reusable knowledge:
 
-```
+```bash
 Categories to extract:
 - [DECISION] - architectural choices with reasoning
 - [GOTCHA] - unexpected behavior, edge cases

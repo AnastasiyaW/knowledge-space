@@ -176,7 +176,7 @@ settings = Settings()
 
 ## Project Structure
 
-```
+```python
 app/
   main.py           # FastAPI app, include routers
   config.py         # Settings from .env

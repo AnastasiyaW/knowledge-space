@@ -36,6 +36,8 @@ jobs:
 
       - name: Build site
         run: mkdocs build --strict
+        env:
+          DISABLE_MKDOCS_2_WARNING: 'true'
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3

@@ -10,7 +10,7 @@ CI/CD automates building, testing, and deploying software. CI (Continuous Integr
 
 ## Pipeline Stages
 
-```
+```go
 Code Push -> Build -> Test -> Package -> Deploy to Dev -> Deploy to QA -> Deploy to Prod
 ```
 

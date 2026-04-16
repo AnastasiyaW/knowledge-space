@@ -27,7 +27,7 @@ Source: Matthew Tancik et al. (UC Berkeley). Repo: https://github.com/tancik/Ste
 
 **C++ via ONNX Runtime:**
 
-```
+```text
 tf2onnx: TF 1.13 checkpoint → freeze_graph → tf2onnx → .onnx
 ```
 
@@ -113,7 +113,7 @@ StegaStamp robustness:
 
 ### Payload Design (64-bit recommended)
 
-```
+```text
 [32 bits: license_id hash]
 [16 bits: timestamp - days since 2025-01-01] = 180 years coverage
 [8 bits: app_version + model_version]
@@ -127,7 +127,7 @@ With StegaStamp BCH(100,56): 48 data bits fit comfortably in 56-bit data payload
 
 ### Decoder Tool
 
-```
+```yaml
 hmod_watermark_check <image_or_dir> [--batch] [--output report.json]
 
 Output:
@@ -166,7 +166,7 @@ False positive rate: ~1 in 10^6 at threshold 0.8. Recommended threshold: 0.85.
 
 ### HKDF Key Derivation
 
-```
+```text
 HKDF-SHA256(
   input_key_material = device_fingerprint || license_key,
   salt = random_salt (32 bytes, stored in file header),
@@ -177,7 +177,7 @@ HKDF-SHA256(
 
 ### File Format Specification
 
-```
+```yaml
 Offset    Size        Content
 ──────    ────        ───────
 0         4           Magic: "HMOD" (0x484D4F44)
@@ -224,7 +224,7 @@ Offset    Size        Content
 
 ### Hybrid Key Management (Envelope Encryption)
 
-```
+```text
 Distribution (our side):
   Master Content Key (MCK) - random AES-256, generated once at model release
   DEK_i = random() per tensor
@@ -269,7 +269,7 @@ Client decryption:
 ### Toolchain
 
 **hmod_packer:**
-```
+```yaml
 hmod_packer --input model.onnx \
             --output model.hmod \
             --master-key-file master.key \
@@ -286,14 +286,14 @@ Steps:
 ```
 
 **key_weight_analyzer (sensitivity analysis):**
-```
+```toml
 For each tensor: replace with random → measure output degradation
 Top 5-10% most impactful = "critical tensors" → must encrypt
 Remaining = "non-critical" → optional (speed tradeoff)
 ```
 
 **hmod_validator:**
-```
+```text
 1. Check magic + version
 2. Parse header (no corruption)
 3. Verify Ed25519 signature

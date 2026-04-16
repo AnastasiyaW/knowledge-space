@@ -23,7 +23,7 @@ Laravel 11 is a PHP framework following the MVC pattern with a service container
 
 ### Directory structure (Laravel 11)
 
-```
+```hcl
 project/
   app/
     Http/
