@@ -36,7 +36,7 @@ Two independent LoRA adapters trained: human faces and anime. Only human ("previ
 
 ### Textual Latent Interpolation
 
-Core technique (see [[Textual Latent Interpolation]] for details):
+Core technique (see [[textual-latent-interpolation]] for details):
 
 ```python
 # 1. Encode neutral and target prompts
@@ -86,7 +86,7 @@ At inference, identity is preserved implicitly through LoRA's learned behavior â
 ```
 L = 0.5*(L_FM_a + L_FM_b) + 0.05*L_SC + 0.1*L_ID
 ```
-- `L_FM`: [[Flow Matching]] velocity loss
+- `L_FM`: [[flow-matching]] velocity loss
 - `L_SC`: Symmetric Contrastive Loss (InfoNCE, temp=0.07) â€” prevents confusion between similar expressions
 - `L_ID`: ArcFace identity loss
 

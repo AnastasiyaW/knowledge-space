@@ -88,7 +88,7 @@ Decoder-only LLM (not T5). 6× faster than T5-XXL. Max 300 tokens.
 
 ### Loss & Scheduler
 
-[[Flow Matching]] velocity prediction: `v_theta(x_t, t) = epsilon - x_0`. Timestep sampling: logit-normal (mean=0.0, std=1.0). Flow shift: 3.0.
+[[flow-matching]] velocity prediction: `v_theta(x_t, t) = epsilon - x_0`. Timestep sampling: logit-normal (mean=0.0, std=1.0). Flow shift: 3.0.
 
 ### Optimizer: CAME
 
@@ -150,7 +150,7 @@ Outperforms FLUX-schnell (7.94 FID) while 10× faster. ICCV 2025 Highlight.
 
 Block Causal Linear Attention + Causal Mix-FFN for video. 2B params, 720p, up to 1 min, 16 FPS. **52× faster** than Wan-2.1-14B (36s vs 1897s for 5s clip). VBench: 84.05 vs Wan: 83.73.
 
-Key for [[Temporal Tiling]]: SANA-Video's causal attention = same mechanism needed for tiles-as-frames.
+Key for [[temporal-tiling]]: SANA-Video's causal attention = same mechanism needed for tiles-as-frames.
 
 ## VRAM
 
@@ -164,7 +164,7 @@ Key for [[Temporal Tiling]]: SANA-Video's causal attention = same mechanism need
 
 ## Fine-Tuning / LoRA
 
-Official support via diffusers `train_dreambooth_lora_sana.py`. See [[Diffusion LoRA Training]] for full training pipeline details.
+Official support via diffusers `train_dreambooth_lora_sana.py`. See [[diffusion-lora-training]] for full training pipeline details.
 
 **LoRA targets:** `attn.to_k, attn.to_q, attn.to_v, attn.to_out.0` + optionally FFN/MLP.
 
@@ -213,7 +213,7 @@ txt2img 1024px (strength=1.0) → img2img strength=0.3-0.4 → img2img strength=
 
 **DemoFusion incompatible with SANA**: DemoFusion relies on UNet skip connections for multi-scale global context. SANA's transformer architecture doesn't have these. Use FreeScale or APT for high-res tiling instead.
 
-See [[Flow Matching]] for full details on flow matching img2img.
+See [[flow-matching]] for full details on flow matching img2img.
 
 ## License
 

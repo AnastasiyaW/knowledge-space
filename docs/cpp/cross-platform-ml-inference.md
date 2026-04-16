@@ -259,4 +259,4 @@ sentry-cli debug-files upload --include-sources ./build/Release/*.dSYM
 - [[cmake-build-systems]] - CMake configuration patterns
 - [[concurrency]] - platform threading differences
 - [[error-handling]] - exception handling across compilers
-- [[Low-VRAM Inference Strategies]] - GPU memory optimization techniques
+- [[low-vram-inference-strategies]] - GPU memory optimization techniques

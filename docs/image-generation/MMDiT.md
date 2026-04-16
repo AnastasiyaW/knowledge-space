@@ -134,6 +134,6 @@ MMDiT's joint attention is what makes instruction-following editing possible at 
 
 ## See Also
 
-- [[FLUX Klein 9B Inference]] - practical inference settings
-- [[LoRA Fine-Tuning for Editing Models]] - LoRA targets for MMDiT
+- [[flux-klein-9b-inference]] - practical inference settings
+- [[lora-fine-tuning-for-editing-models]] - LoRA targets for MMDiT
 - [[in-context-segmentation]] - ConceptAttention for segmentation

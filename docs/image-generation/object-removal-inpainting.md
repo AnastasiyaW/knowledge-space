@@ -196,6 +196,6 @@ Why this works: LaMa inpaints solid color gradients nearly perfectly. High-frequ
 ## See Also
 
 - [[skin-retouch-pipeline]] - full blemish detection + LaMa pipeline
-- [[FLUX Klein 9B Inference]] - Klein inpainting settings
+- [[flux-klein-9b-inference]] - Klein inpainting settings
 - [[anatomy-correction-diffusion]] - anatomy-specific inpainting patterns
-- [[Tiled Inference]] - large image inpainting via tiling
+- [[tiled-inference]] - large image inpainting via tiling

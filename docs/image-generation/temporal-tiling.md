@@ -11,7 +11,7 @@ The idea: instead of processing tiles independently (standard tiling), treat the
 
 ## The Problem with Standard Tiling
 
-Standard tiled diffusion (MultiDiffusion, [[Tiled Inference]]) processes tiles independently and blends overlaps by averaging. This causes:
+Standard tiled diffusion (MultiDiffusion, [[tiled-inference]]) processes tiles independently and blends overlaps by averaging. This causes:
 - Seam artifacts on smooth gradients (metal surfaces, skin)
 - Inconsistent lighting/color across tiles
 - Duplicated objects (same prompt, different tiles → same content repeated)
@@ -236,8 +236,8 @@ Phase 3: High-quality polish
 
 ## See Also
 
-- [[Tiled Inference]] - standard tiled diffusion (overlap averaging)
+- [[tiled-inference]] - standard tiled diffusion (overlap averaging)
 - [[SANA]] - SANA architecture and linear attention details
-- [[SANA-Denoiser Architecture]] - SANA as denoiser pipeline
-- [[Block Causal Linear Attention]] - BCLA mechanism from SANA-Video
-- [[Flow Matching]] - training objective for temporal LoRA
+- [[sana-denoiser-architecture]] - SANA as denoiser pipeline
+- [[block-causal-linear-attention]] - BCLA mechanism from SANA-Video
+- [[flow-matching]] - training objective for temporal LoRA

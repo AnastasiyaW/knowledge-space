@@ -6,7 +6,7 @@ tags: [text-editing, font-style, flux-fill, siglip, qformer, self-distillation, 
 
 # Calligrapher (Freestyle Text Image Customization)
 
-Text generation and editing on images with style reference. Built on [[FLUX Kontext|FLUX.1-Fill-dev]] + SigLIP style encoder. Takes font/style sample from image, generates new text in same style.
+Text generation and editing on images with style reference. Built on [[flux-kontext|FLUX.1-Fill-dev]] + SigLIP style encoder. Takes font/style sample from image, generates new text in same style.
 
 Paper: arXiv:2506.24123 (June 2025).
 

@@ -292,8 +292,8 @@ git clone https://github.com/ChenDarYen/ComfyUI-NAG
 
 ## See Also
 
-- [[FLUX Klein 9B Inference]] - optimal inference settings including anatomy hierarchy
+- [[flux-klein-9b-inference]] - optimal inference settings including anatomy hierarchy
 - [[face-detection-filtering-pipeline]] - detection tools for quality gating
 - [[face-beautify-edit-lora]] - edit LoRA for facial correction
-- [[Diffusion LoRA Training]] - training parameters for Klein LoRAs
-- [[LoRA Fine-Tuning for Editing Models]] - MMDiT editing model patterns
+- [[diffusion-lora-training]] - training parameters for Klein LoRAs
+- [[lora-fine-tuning-for-editing-models]] - MMDiT editing model patterns

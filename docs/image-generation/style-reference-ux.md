@@ -135,6 +135,6 @@ Inference: Gemini-based prompt reformulation to weave style into scene descripti
 
 ## See Also
 
-- [[Diffusion LoRA Training]] - training style LoRAs
+- [[diffusion-lora-training]] - training style LoRAs
 - [[flux-klein-style-lora-system]] - full style system architecture
-- [[FLUX Klein 9B Inference]] - LoRA stacking at inference
+- [[flux-klein-9b-inference]] - LoRA stacking at inference

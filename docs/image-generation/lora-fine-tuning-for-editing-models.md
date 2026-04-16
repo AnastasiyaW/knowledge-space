@@ -71,7 +71,7 @@ Reducing to attention-only drops ~40% LoRA size. Image-stream-only cuts ~60% but
 
 ## Loss Functions for Editing LoRA
 
-Standard [[Flow Matching]] velocity loss + task-specific auxiliary losses:
+Standard [[flow-matching]] velocity loss + task-specific auxiliary losses:
 
 | Loss | Purpose | Lambda | Used By |
 |------|---------|--------|---------|

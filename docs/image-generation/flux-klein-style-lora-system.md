@@ -220,7 +220,7 @@ fused_lora = klora_merge([lora_a, lora_b, lora_c], weights=[0.5, 0.3, 0.2])
 
 ## See Also
 
-- [[Diffusion LoRA Training]] - full training parameters
+- [[diffusion-lora-training]] - full training parameters
 - [[style-reference-ux]] - user-facing UX patterns
-- [[FLUX Klein 9B Inference]] - inference and LoRA stacking
-- [[LoRA Fine-Tuning for Editing Models]] - edit LoRA patterns
+- [[flux-klein-9b-inference]] - inference and LoRA stacking
+- [[lora-fine-tuning-for-editing-models]] - edit LoRA patterns

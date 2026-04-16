@@ -66,7 +66,7 @@ Even with random/meaningless descriptions, SFT-trained T2L generates "reasonable
 
 **Apache 2.0** — fully commercial.
 
-## Relevance for [[LoRA Fine-Tuning for Editing Models|Editing Model LoRAs]]
+## Relevance for [[lora-fine-tuning-for-editing-models|Editing Model LoRAs]]
 
 Currently LLM-only, but the principle of hypernetwork-generated LoRAs could extend to diffusion models. If adapted for [[MMDiT]], could enable instant task-specific editing adapters from text descriptions — e.g., "remove jewelry scratches" → LoRA weights.
 

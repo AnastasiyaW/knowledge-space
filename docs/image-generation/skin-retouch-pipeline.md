@@ -141,7 +141,7 @@ Train an edit LoRA on FLUX.2 Klein 9B with before/after blemish pairs (50-200 pa
 **Pros:** single step, no pipeline complexity.
 **Cons:** no control over what gets modified - risk of overcorrecting (smoothing pores, removing moles). Works best as semi-automated with human selection of final result.
 
-See [[LoRA Fine-Tuning for Editing Models]] for training details.
+See [[lora-fine-tuning-for-editing-models]] for training details.
 
 ## Model Specs Reference
 
@@ -177,6 +177,6 @@ See [[LoRA Fine-Tuning for Editing Models]] for training details.
 ## See Also
 
 - [[LaMa]] - Fourier convolution inpainting architecture
-- [[LoRA Fine-Tuning for Editing Models]] - edit LoRA training for single-pass retouch
+- [[lora-fine-tuning-for-editing-models]] - edit LoRA training for single-pass retouch
 - [[in-context-segmentation]] - INSID3 and related techniques
-- [[FLUX Klein 9B Inference]] - detail preservation during generation
+- [[flux-klein-9b-inference]] - detail preservation during generation

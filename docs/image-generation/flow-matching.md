@@ -92,9 +92,9 @@ Flow matching is particularly amenable to progressive distillation:
 ## See Also
 
 - [[SANA]] - efficient DiT using flow matching with linear attention
-- [[FLUX Klein 9B Inference]] - FLUX flow matching model inference
-- [[Diffusion LoRA Training]] - training with flow matching loss
-- [[Diffusion Inference Acceleration]] - sampling acceleration techniques
+- [[flux-klein-9b-inference]] - FLUX flow matching model inference
+- [[diffusion-lora-training]] - training with flow matching loss
+- [[diffusion-inference-acceleration]] - sampling acceleration techniques
 
 Flow matching sits in the sweet spot: simpler than DDPM, more flexible than consistency models, and competitive quality at moderate step counts.
 

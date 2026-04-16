@@ -177,7 +177,7 @@ split_flux_target_blocks = list(range(30, 57))  # style layers only
 ## See Also
 
 - [[MMDiT]] - transformer architecture details
-- [[FLUX Klein 9B Inference]] - inference settings
+- [[flux-klein-9b-inference]] - inference settings
 - [[anatomy-correction-diffusion]] - full anatomy fix pipeline
-- [[Diffusion LoRA Training]] - layer targeting for LoRA
+- [[diffusion-lora-training]] - layer targeting for LoRA
 - [[object-removal-inpainting]] - region-aware inpainting approaches

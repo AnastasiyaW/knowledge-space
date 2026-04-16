@@ -43,7 +43,7 @@ This is the key architectural innovation that separates Step1X-Edit generation m
 
 ### Scheduler
 
-Uses [[Flow Matching]] instead of DDPM/DDIM. Default inference: 28 steps, guidance_scale 3.0. Faster convergence, more stable at low step counts.
+Uses [[flow-matching]] instead of DDPM/DDIM. Default inference: 28 steps, guidance_scale 3.0. Faster convergence, more stable at low step counts.
 
 ## Variants
 

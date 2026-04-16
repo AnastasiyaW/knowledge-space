@@ -177,6 +177,6 @@ pip install torch==2.6.0+cu124 --index-url https://download.pytorch.org/whl/cu12
 
 ## See Also
 
-- [[Diffusion LoRA Training]] - dataset preparation for LoRA training
+- [[diffusion-lora-training]] - dataset preparation for LoRA training
 - [[in-context-segmentation]] - INSID3 for batch annotation by example
-- [[FLUX Klein 9B Inference]] - inference settings for generated image quality
+- [[flux-klein-9b-inference]] - inference settings for generated image quality

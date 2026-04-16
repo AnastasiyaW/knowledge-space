@@ -56,7 +56,7 @@ Sensitive layers (first convolution, last convolution, normalization) kept at FP
 
 ### Diffusion Model Quantization
 
-For diffusion transformers, [[Diffusion Inference Acceleration|Nunchaku]] provides FP8/NVFP4:
+For diffusion transformers, [[diffusion-inference-acceleration|Nunchaku]] provides FP8/NVFP4:
 
 | Model | bf16 | FP8 | NVFP4 |
 |-------|------|-----|-------|
@@ -290,7 +290,7 @@ Preview at 1/4 resolution takes ~50ms even on CPU. Apply full resolution only wh
 
 ## See Also
 
-- [[Diffusion Inference Acceleration]] - Spectrum, TriAttention, sampling speedups
-- [[Tiled Inference]] - spatial tiling techniques and blending
+- [[diffusion-inference-acceleration]] - Spectrum, TriAttention, sampling speedups
+- [[tiled-inference]] - spatial tiling techniques and blending
 - [[DC-AE]] - 32x compression reducing memory requirements
 - [[SANA]] - efficient architecture with linear attention

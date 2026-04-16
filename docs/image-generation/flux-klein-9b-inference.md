@@ -397,9 +397,9 @@ ALL FLUX.1-dev adapters fail on Klein 9B due to dimension mismatch:
 
 ## See Also
 
-- [[Diffusion Inference Acceleration]] - Spectrum, Nunchaku quantization
-- [[Flow Matching]] - underlying generation framework
+- [[diffusion-inference-acceleration]] - Spectrum, Nunchaku quantization
+- [[flow-matching]] - underlying generation framework
 - [[MMDiT]] - transformer architecture used by FLUX
-- [[Tiled Inference]] - high-res output strategies
-- [[Diffusion LoRA Training]] - training LoRAs for Klein
-- [[LoRA Fine-Tuning for Editing Models]] - training custom edit LoRAs
+- [[tiled-inference]] - high-res output strategies
+- [[diffusion-lora-training]] - training LoRAs for Klein
+- [[lora-fine-tuning-for-editing-models]] - training custom edit LoRAs

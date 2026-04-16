@@ -61,7 +61,7 @@ GLM-4.7, Jais2, Pixio + FP8 quantization fixes + Flash Attention for quantized m
 
 ## Impact on Image Generation Work
 
-- [[Step1X-Edit]] / [[FLUX Kontext]] / other models using custom diffusers forks may benefit from WeightConverter — load weights without patching diffusers
+- [[Step1X-Edit]] / [[flux-kontext]] / other models using custom diffusers forks may benefit from WeightConverter — load weights without patching diffusers
 - Weekly releases mean faster access to new model architectures
 - FP8 + Flash Attention fixes directly relevant for LoRA training on [[MMDiT]] models
 

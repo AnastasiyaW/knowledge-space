@@ -11,7 +11,7 @@ How to train a diffusion model for image-to-image restoration (not text-to-image
 
 ## The Problem
 
-Standard [[Flow Matching]] trains T2I: `noise → image` conditioned on text. For restoration we need: `degraded_image → clean_image`. Simply training T2I on clean images does NOT produce a denoiser.
+Standard [[flow-matching]] trains T2I: `noise → image` conditioned on text. For restoration we need: `degraded_image → clean_image`. Simply training T2I on clean images does NOT produce a denoiser.
 
 ## Solution: Channel Concatenation
 
@@ -45,7 +45,7 @@ This means at step 0 the model behaves exactly like the pretrained T2I model. Th
 
 For restoration where input and output are **spatially identical**, channel concat is sufficient. ControlNet is overkill - the condition IS the image, just degraded.
 
-Proven in: [[Step1X-Edit]], [[FLUX Kontext]], Palette (Google), InstructPix2Pix.
+Proven in: [[Step1X-Edit]], [[flux-kontext]], Palette (Google), InstructPix2Pix.
 
 ## Degradation Pipeline
 

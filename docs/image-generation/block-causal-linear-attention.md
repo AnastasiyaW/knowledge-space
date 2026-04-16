@@ -41,7 +41,7 @@ For tile t:
 - Does NOT grow with number of tiles/frames
 - Compare: standard KV cache is O(N * D) and grows linearly
 
-## Application to [[Temporal Tiling]]
+## Application to [[temporal-tiling]]
 
 Instead of video frames, treat image tiles as the temporal sequence:
 

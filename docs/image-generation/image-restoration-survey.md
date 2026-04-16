@@ -63,11 +63,11 @@ Overview of image restoration approaches: from classical to diffusion-based. Key
 
 ## SANA-Denoiser Approach
 
-Our approach: repurpose [[SANA]] 1.6B DiT as restoration model via [[Paired Training for Restoration]]:
+Our approach: repurpose [[SANA]] 1.6B DiT as restoration model via [[paired-training-for-restoration]]:
 - Channel concat conditioning (degraded latent + noise)
 - [[DC-AE]] 32x compression keeps token count low
 - Linear attention O(N) enables high-res processing
-- [[Temporal Tiling]] for context-aware tile processing at 4K+
+- [[temporal-tiling]] for context-aware tile processing at 4K+
 
 Advantages over RealRestorer:
 - 10x fewer params (1.6B vs ~15B Step1X-Edit backbone)

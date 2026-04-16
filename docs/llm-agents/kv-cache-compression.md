@@ -188,4 +188,4 @@ NOT for: Runtime KV cache reduction
 - [[token-optimization]] - reducing token count to reduce cache size
 - [[production-patterns]] - serving infrastructure for LLM inference
 - [[transformer-architecture]] - attention mechanism that generates KV cache
-- [[Diffusion Inference Acceleration]] - TriAttention applied to diffusion models
+- [[diffusion-inference-acceleration]] - TriAttention applied to diffusion models

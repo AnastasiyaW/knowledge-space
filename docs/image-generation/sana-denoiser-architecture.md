@@ -7,7 +7,7 @@ aliases: ["SANA Denoiser", "happyin-denoiser"]
 
 # SANA-Denoiser - Our Architecture Design
 
-Repurposing [[SANA]] 1.6B DiT as an image restoration model. Combines efficient linear attention with [[Paired Training for Restoration]] and [[Temporal Tiling]] via [[Block Causal Linear Attention]].
+Repurposing [[SANA]] 1.6B DiT as an image restoration model. Combines efficient linear attention with [[paired-training-for-restoration]] and [[temporal-tiling]] via [[block-causal-linear-attention]].
 
 ## Why SANA for Restoration
 

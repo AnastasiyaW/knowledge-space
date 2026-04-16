@@ -79,7 +79,7 @@ Discussed for: white jewelry on white background segmentation, metal edge detect
 
 ## VRAM-Aware Tile Sizing
 
-For low-VRAM GPUs, tile size must be calculated from available memory. See [[Low-VRAM Inference Strategies]] for detailed adaptive tile selection.
+For low-VRAM GPUs, tile size must be calculated from available memory. See [[low-vram-inference-strategies]] for detailed adaptive tile selection.
 
 Quick reference (FP16 U-Net restoration model, 20 MB weights):
 
@@ -206,7 +206,7 @@ unique_tile_prompt = base_prompt + " " + tile_caption
 
 ## See Also
 
-- [[Low-VRAM Inference Strategies]] - adaptive tile sizing, memory management
-- [[Temporal Tiling]] - cross-tile context propagation
-- [[Diffusion Inference Acceleration]] - complementary acceleration techniques
+- [[low-vram-inference-strategies]] - adaptive tile sizing, memory management
+- [[temporal-tiling]] - cross-tile context propagation
+- [[diffusion-inference-acceleration]] - complementary acceleration techniques
 - [[SANA]] - 32x compression reduces tiling need

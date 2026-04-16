@@ -64,7 +64,7 @@ Standard KV cache stores full K and V tensors for all previous tokens. TriAttent
 
 Available as a vLLM plugin. For diffusion transformers (DiT, [[MMDiT]]), KV cache compression matters most during:
 
-- Tiled inference with cross-tile attention (see [[Temporal Tiling]])
+- Tiled inference with cross-tile attention (see [[temporal-tiling]])
 - Long-context conditioning (multiple reference images)
 - Video generation with temporal attention
 
@@ -181,7 +181,7 @@ These stack multiplicatively. FLUX.1 with Spectrum + FP8 achieves ~4-6x total ac
 ## See Also
 
 - [[SANA]] - linear attention + 32x compression for native efficiency
-- [[Flow Matching]] - fewer steps needed vs DDPM
-- [[Tiled Inference]] - spatial tiling for high-res
-- [[Temporal Tiling]] - cross-tile context propagation
+- [[flow-matching]] - fewer steps needed vs DDPM
+- [[tiled-inference]] - spatial tiling for high-res
+- [[temporal-tiling]] - cross-tile context propagation
 - [[DC-AE]] - 32x VAE compression reducing token count

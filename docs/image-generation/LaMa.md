@@ -58,7 +58,7 @@ Feature map
 
 ## Relation to Diffusion-Based Inpainting
 
-LaMa is a **feed-forward** model (single pass, deterministic). Diffusion-based inpainting ([[FLUX Kontext]], [[Step1X-Edit]]) is iterative (20-50 steps) but better at semantic content (faces, complex objects). LaMa excels at textures and patterns.
+LaMa is a **feed-forward** model (single pass, deterministic). Diffusion-based inpainting ([[flux-kontext]], [[Step1X-Edit]]) is iterative (20-50 steps) but better at semantic content (faces, complex objects). LaMa excels at textures and patterns.
 
 **Practical combination:** use LaMa for fast background/texture inpainting, diffusion for semantic regions.
 

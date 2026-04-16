@@ -106,6 +106,6 @@ Real-ESRGAN, 4xRealWebPhoto, HAT, SwinIR: download `.pth` to `ComfyUI/models/ups
 
 ## See Also
 
-- [[FLUX Klein 9B Inference]] - tiled upscale pipelines with Klein
-- [[Diffusion LoRA Training]] - dataset preparation for LoRA training
-- [[Image Restoration Survey]] - broader restoration techniques
+- [[flux-klein-9b-inference]] - tiled upscale pipelines with Klein
+- [[diffusion-lora-training]] - dataset preparation for LoRA training
+- [[image-restoration-survey]] - broader restoration techniques

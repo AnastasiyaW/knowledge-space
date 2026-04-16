@@ -19,7 +19,7 @@ Inherits [[Step1X-Edit]] architecture with custom modifications:
 | Text Encoder | Qwen2_5_VLForConditionalGeneration | Standard **Qwen 2.5 VL** |
 | Transformer | RealRestorerTransformer2DModel | Modified Step1X-Edit transformer |
 | VAE | RealRestorerAutoencoderKL | Custom autoencoder |
-| Scheduler | RealRestorerFlowMatchScheduler | [[Flow Matching]] |
+| Scheduler | RealRestorerFlowMatchScheduler | [[flow-matching]] |
 
 Key insight: large-scale editing models already have strong generalization for restoration tasks — they understand "fix this" instructions. RealRestorer fine-tunes specifically for degradation removal.
 

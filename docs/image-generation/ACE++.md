@@ -7,7 +7,7 @@ aliases: ["ACE Plus", "FuseAnyPart"]
 
 # ACE++ (Alibaba / Tongyi Lab)
 
-Unified multi-task image editing model built on [[FLUX Kontext|FLUX.1-Fill-dev]]. Supports try-on, face swap, inpainting, style transfer, super-resolution, logo placement — all through LoRA adapters or full fine-tune.
+Unified multi-task image editing model built on [[flux-kontext|FLUX.1-Fill-dev]]. Supports try-on, face swap, inpainting, style transfer, super-resolution, logo placement — all through LoRA adapters or full fine-tune.
 
 Paper: arXiv:2501.02487. GitHub: ali-vilab/ACE_plus.
 

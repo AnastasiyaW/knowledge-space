@@ -226,7 +226,7 @@ pip install deepspeed  # heavy dependency
 
 ## See Also
 
-- [[LoRA Fine-Tuning for Editing Models]] - MMDiT-specific LoRA (Step1X-Edit, Qwen-Image-Edit)
-- [[FLUX Klein 9B Inference]] - optimal inference settings for trained LoRAs
+- [[lora-fine-tuning-for-editing-models]] - MMDiT-specific LoRA (Step1X-Edit, Qwen-Image-Edit)
+- [[flux-klein-9b-inference]] - optimal inference settings for trained LoRAs
 - [[SANA]] - SANA architecture and training details
-- [[Flow Matching]] - training objective for modern diffusion models
+- [[flow-matching]] - training objective for modern diffusion models

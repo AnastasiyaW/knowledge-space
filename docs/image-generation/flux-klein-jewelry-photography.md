@@ -193,8 +193,8 @@ For training a domain-specific jewelry generation LoRA:
 
 ## See Also
 
-- [[FLUX Klein 9B Inference]] - Klein settings and LoRA stacking
+- [[flux-klein-9b-inference]] - Klein settings and LoRA stacking
 - [[skin-retouch-pipeline]] - frequency separation for texture preservation
 - [[object-removal-inpainting]] - background cleanup
-- [[Tiled Inference]] - high-res output for product photography
+- [[tiled-inference]] - high-res output for product photography
 - [[synthetic-dataset-pipeline]] - building training datasets for domain LoRAs

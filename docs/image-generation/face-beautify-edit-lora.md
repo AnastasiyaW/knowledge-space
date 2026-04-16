@@ -91,7 +91,7 @@ ema: true                    # stabilizes edit quality
 ## See Also
 
 - [[PixelSmile]] - expression control LoRA for Qwen-Image-Edit
-- [[Diffusion LoRA Training]] - general LoRA training parameters
-- [[LoRA Fine-Tuning for Editing Models]] - MMDiT-specific LoRA patterns
+- [[diffusion-lora-training]] - general LoRA training parameters
+- [[lora-fine-tuning-for-editing-models]] - MMDiT-specific LoRA patterns
 - [[face-detection-filtering-pipeline]] - dataset quality filtering tools
 - [[anatomy-correction-diffusion]] - fixing anatomy mutations in generated images

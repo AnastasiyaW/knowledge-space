@@ -224,4 +224,4 @@ yolo val model=runs/detect/train/weights/best.pt data=data.yaml
 
 - [[flux-klein-jewelry-photography]] - how this dataset feeds jewelry LoRA training
 - [[face-detection-filtering-pipeline]] - detection pipelines for quality gating
-- [[Diffusion LoRA Training]] - using annotated datasets for LoRA training
+- [[diffusion-lora-training]] - using annotated datasets for LoRA training
