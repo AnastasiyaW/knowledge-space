@@ -253,6 +253,6 @@ An OOB read that crosses a page boundary will segfault. This makes it detectable
 
 - [[cwe-787-oob-write]] - write-side counterpart; often paired with CWE-125 (leak address → write to leaked address)
 - CWE-416: Use After Free - freed memory OOB read variant; stale pointer reads freed allocations
-- [[cwe-134-uncontrolled-format-string]] - format string as a CWE-125 trigger
+- CWE-134: Uncontrolled Format String - format string as a CWE-125 trigger
 - CWE-119: Buffer Errors - parent CWE
-- [[cwe-200-information-exposure]] - consequence CWE when data is disclosed
+- CWE-200: Information Exposure - consequence CWE when data is disclosed

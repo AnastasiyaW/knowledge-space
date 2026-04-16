@@ -336,8 +336,8 @@ grep -rn "IFormFile\|HttpPostedFileBase" --include="*.cs" -l
 
 ## See Also
 
-- [[cwe-22-path-traversal]] - path traversal in filename component
-- [[cwe-79-xss]] - consequence via SVG/HTML upload
-- [[cwe-352-csrf]] - often combined with file upload to force victim's upload
-- [[cwe-732-insecure-permissions]] - upload dir permissions enabling execution
+- CWE-22: Path Traversal - path traversal in filename component
+- CWE-79: Xss - consequence via SVG/HTML upload
+- CWE-352: Csrf - often combined with file upload to force victim's upload
+- CWE-732: Insecure Permissions - upload dir permissions enabling execution
 - [[web-application-security-fundamentals]] - broader web security context

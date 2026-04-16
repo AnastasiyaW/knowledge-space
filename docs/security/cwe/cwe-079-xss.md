@@ -309,7 +309,7 @@ window.addEventListener("message", (event) => {
 
 ## See Also
 
-- [[cwe-116-improper-encoding]] — root cause: incorrect or missing output encoding
-- [[cwe-352-csrf]] — frequently combined: XSS defeats CSRF tokens stored in JS-accessible locations
-- [[cwe-1336-template-injection]] — server-side analog; similar data flow, higher impact (RCE)
+- CWE-116: Improper Encoding — root cause: incorrect or missing output encoding
+- CWE-352: Csrf — frequently combined: XSS defeats CSRF tokens stored in JS-accessible locations
+- CWE-1336: Template Injection — server-side analog; similar data flow, higher impact (RCE)
 - CWE-601: Open Redirect — often chained: redirect to attacker's XSS payload delivery page

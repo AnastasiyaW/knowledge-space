@@ -441,4 +441,88 @@
   <div class="ks-footer-privacy">
     No cookies. No tracking scripts. Privacy-friendly analytics by Cloudflare.
   </div>
+
+  {# Newsletter popup - article pages only, new visitors, 14-day cooldown #}
+  {% if page and not page.is_homepage %}
+  <div class="ks-popup-overlay" id="ks-popup-overlay" style="display:none">
+    <div class="ks-popup">
+      <button class="ks-popup__close" id="ks-popup-close" aria-label="Close">&times;</button>
+      <div class="ks-popup__icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
+      <h3 class="ks-popup__title">Stay updated</h3>
+      <p class="ks-popup__text">New articles on AI, infrastructure, and engineering. No spam - just knowledge drops.</p>
+      <form class="ks-popup__form" id="ks-popup-form">
+        <input type="email" class="ks-popup__email" id="ks-popup-email" placeholder="your@email.com" required autocomplete="email">
+        <button type="submit" class="ks-popup__btn" id="ks-popup-btn">Subscribe</button>
+      </form>
+      <div class="ks-popup__msg" id="ks-popup-msg"></div>
+      <button class="ks-popup__skip" id="ks-popup-skip">No thanks</button>
+    </div>
+  </div>
+  <script>
+  (function(){
+    var KEY='ks_popup_seen', COOLDOWN=14*86400*1000;
+    var last=localStorage.getItem(KEY);
+    if(last && Date.now()-parseInt(last,10)<COOLDOWN) return;
+
+    var overlay=document.getElementById('ks-popup-overlay');
+    if(!overlay) return;
+
+    var shown=false;
+    function show(){
+      if(shown) return; shown=true;
+      overlay.style.display='flex';
+      overlay.offsetHeight; // force reflow
+      overlay.classList.add('ks-popup--visible');
+    }
+
+    // Show after 45s or 60% scroll
+    var timer=setTimeout(show, 45000);
+    window.addEventListener('scroll',function(){
+      var pct=window.scrollY/(document.body.scrollHeight-window.innerHeight);
+      if(pct>0.6) show();
+    });
+
+    function dismiss(){
+      localStorage.setItem(KEY, String(Date.now()));
+      clearTimeout(timer);
+      overlay.classList.remove('ks-popup--visible');
+      setTimeout(function(){ overlay.style.display='none'; },300);
+    }
+
+    document.getElementById('ks-popup-close').onclick=dismiss;
+    document.getElementById('ks-popup-skip').onclick=dismiss;
+    overlay.addEventListener('click',function(e){
+      if(e.target===overlay) dismiss();
+    });
+
+    document.getElementById('ks-popup-form').addEventListener('submit',function(e){
+      e.preventDefault();
+      var btn=document.getElementById('ks-popup-btn');
+      var msg=document.getElementById('ks-popup-msg');
+      var email=document.getElementById('ks-popup-email').value.trim();
+      btn.disabled=true; btn.textContent='...';
+      fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email})})
+        .then(function(r){return r.json()})
+        .then(function(d){
+          if(d.ok){
+            msg.textContent='Subscribed! Welcome aboard.';
+            msg.className='ks-popup__msg ks-popup__msg--ok';
+            setTimeout(dismiss, 2000);
+          } else {
+            msg.textContent=d.error||'Something went wrong';
+            msg.className='ks-popup__msg ks-popup__msg--err';
+            btn.disabled=false; btn.textContent='Subscribe';
+          }
+        })
+        .catch(function(){
+          msg.textContent='Network error - try again';
+          msg.className='ks-popup__msg ks-popup__msg--err';
+          btn.disabled=false; btn.textContent='Subscribe';
+        });
+    });
+  })();
+  </script>
+  {% endif %}
 {% endblock %}

@@ -320,6 +320,6 @@ fn safe_version() -> i32 {
 
 - [[cwe-787-oob-write]] - often chained: UAF read leaks address, OOB write exploits it
 - CWE-125: Out-of-Bounds Read - read-side memory error; UAF read is a subclass
-- [[cwe-415-double-free]] - direct subtype; double-free → heap corruption → UAF-equivalent impact
-- [[cwe-362-race-condition]] - concurrent UAF root cause
-- [[cwe-672-operation-on-resource-after-expiration]] - semantic parent for expired resource access
+- CWE-415: Double Free - direct subtype; double-free → heap corruption → UAF-equivalent impact
+- CWE-362: Race Condition - concurrent UAF root cause
+- CWE-672: Operation On Resource After Expiration - semantic parent for expired resource access

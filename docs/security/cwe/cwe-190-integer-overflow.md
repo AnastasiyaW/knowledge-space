@@ -242,7 +242,7 @@ func allocateSafe(count, size int) ([]byte, error) {
 
 ## See Also
 
-- [[cwe-787-out-of-bounds-write]] — most common consequence of allocation undersize from overflow
-- [[cwe-125-out-of-bounds-read]] — index overflow leading to read past buffer end
-- [[cwe-369-divide-by-zero]] — related arithmetic error; attacker-controlled divisor = 0
+- CWE-787: Out Of Bounds Write — most common consequence of allocation undersize from overflow
+- CWE-125: Out Of Bounds Read — index overflow leading to read past buffer end
+- CWE-369: Divide By Zero — related arithmetic error; attacker-controlled divisor = 0
 - CWE-020: Input Validation — upstream control: validate numeric ranges before arithmetic

@@ -328,4 +328,4 @@ const server = new ApolloServer({
 - CWE-190: Integer Overflow — overflow in size calculations can lead to allocation that undercounts, with a related DoS when the correct size is later needed
 - CWE-611: XML External Entities — XXE shares XML parser configuration fixes with billion laughs
 - CWE-020: Input Validation — upstream validation: limit size, depth, and count before processing
-- [[cwe-770-allocation-without-limits]] — related: allocation without checking available resources
+- CWE-770: Allocation Without Limits — related: allocation without checking available resources
