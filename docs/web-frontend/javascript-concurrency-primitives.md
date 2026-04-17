@@ -1,7 +1,7 @@
 ---
 title: JavaScript Concurrency Primitives and Workers
 category: concepts
-tags: [misc, javascript, concurrency, semaphore, mutex, worker-threads, design-patterns]
+tags: [javascript, concurrency, semaphore, mutex, worker-threads, design-patterns]
 ---
 
 # JavaScript Concurrency Primitives and Workers

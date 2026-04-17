@@ -1,7 +1,7 @@
 ---
 title: Go Microservices - gRPC, Architecture, and Testing
 category: concepts
-tags: [misc, go, golang, grpc, protobuf, clean-architecture, microservices, testing]
+tags: [go, golang, grpc, protobuf, clean-architecture, microservices, testing]
 ---
 
 # Go Microservices - gRPC, Architecture, and Testing

@@ -102,7 +102,7 @@ const grouped = items.reduce((groups, item) => {
 
 ```javascript
 const [first, second, ...rest] = [1, 2, 3, 4, 5];
-const [a, , b] = [1, 2, 3];          // Skip: a=1, b=3
+const [a, b] = [1, 2, 3];          // Skip: a=1, b=3
 const [x = 0, y = 0] = [10];          // Defaults: x=10, y=0
 [a, b] = [b, a];                       // Swap
 ```

@@ -184,8 +184,7 @@ def get_cached_audio(phrase: str, voice_id: str) -> bytes:
 COMMON_PHRASES = [
     "I didn't quite catch that.",
     "Could you repeat that?",
-    "One moment please.",
-]
+    "One moment please."]
 # Pre-warm cache on startup
 for phrase in COMMON_PHRASES:
     get_cached_audio(phrase, VOICE_ID)

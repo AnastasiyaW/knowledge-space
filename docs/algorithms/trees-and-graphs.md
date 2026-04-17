@@ -1,7 +1,7 @@
 ---
 title: Trees and Graphs - BST, Heaps, Tries, Traversal
 category: concepts
-tags: [misc, data-structures, trees, graphs, bst, heap, trie, bfs, dfs, dijkstra]
+tags: [data-structures, trees, graphs, bst, heap, trie, bfs, dfs, dijkstra]
 ---
 
 # Trees and Graphs - BST, Heaps, Tries, Traversal

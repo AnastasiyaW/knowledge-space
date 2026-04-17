@@ -107,16 +107,14 @@ with client.beta.sessions.events.stream(session.id) as stream:
 {"type": "agent_toolset_20260401",
  "configs": [
      {"name": "web_fetch", "enabled": False},
-     {"name": "web_search", "enabled": False},
- ]}
+     {"name": "web_search", "enabled": False}]}
 
 # Enable only specific tools (everything else disabled)
 {"type": "agent_toolset_20260401",
  "default_config": {"enabled": False},
  "configs": [
      {"name": "bash", "enabled": True},
-     {"name": "read", "enabled": True},
- ]}
+     {"name": "read", "enabled": True}]}
 ```
 
 ### Custom Tools
@@ -134,8 +132,7 @@ agent = client.beta.agents.create(
                 "properties": {"location": {"type": "string"}},
                 "required": ["location"],
             },
-        },
-    ],
+        }],
 )
 ```
 
@@ -202,8 +199,7 @@ orchestrator = client.beta.agents.create(
     tools=[{"type": "agent_toolset_20260401"}],
     callable_agents=[
         {"type": "agent", "id": reviewer.id, "version": reviewer.version},
-        {"type": "agent", "id": test_writer.id, "version": test_writer.version},
-    ],
+        {"type": "agent", "id": test_writer.id, "version": test_writer.version}],
 )
 ```
 

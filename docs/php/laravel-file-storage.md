@@ -33,8 +33,7 @@ public function store(Request $request)
 {
     $validated = $request->validate([
         'title' => 'required|string|max:255',
-        'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-    ]);
+        'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048']);
 
     // Store uploaded file
     if ($request->hasFile('image')) {
@@ -56,8 +55,7 @@ public function update(Request $request, Post $post)
 {
     $validated = $request->validate([
         'title' => 'required|string|max:255',
-        'image' => 'nullable|image|mimes:jpg,png,webp|max:2048',
-    ]);
+        'image' => 'nullable|image|mimes:jpg,png,webp|max:2048']);
 
     if ($request->hasFile('image')) {
         // Delete old file if exists

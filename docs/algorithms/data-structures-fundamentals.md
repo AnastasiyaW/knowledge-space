@@ -1,7 +1,7 @@
 ---
 title: Data Structures Fundamentals - Arrays, Hash Tables, Linked Lists
 category: concepts
-tags: [misc, data-structures, arrays, hash-tables, linked-lists, stacks, queues, big-o]
+tags: [data-structures, arrays, hash-tables, linked-lists, stacks, queues, big-o]
 ---
 
 # Data Structures Fundamentals - Arrays, Hash Tables, Linked Lists

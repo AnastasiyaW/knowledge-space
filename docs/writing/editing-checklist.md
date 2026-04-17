@@ -93,8 +93,7 @@ FILLER_PHRASES = [
     r"a testament to",
     r"in the realm of",
     r"let'?s dive in",
-    r"in today'?s (?:rapidly )?\w+ (?:landscape|world)",
-]
+    r"in today'?s (?:rapidly )?\w+ (?:landscape|world)"]
 
 def scan_text(text: str) -> list[str]:
     findings = []

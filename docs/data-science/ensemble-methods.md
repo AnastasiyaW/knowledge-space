@@ -83,8 +83,7 @@ stack = StackingClassifier(
     estimators=[
         ('rf', RandomForestClassifier(n_estimators=100)),
         ('xgb', XGBClassifier(n_estimators=200)),
-        ('svm', SVC(probability=True)),
-    ],
+        ('svm', SVC(probability=True))],
     final_estimator=LogisticRegression(),
     cv=5,  # use cross-val predictions to prevent leakage
     stack_method='predict_proba'  # use probabilities not hard labels

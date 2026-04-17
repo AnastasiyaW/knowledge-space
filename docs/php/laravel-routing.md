@@ -125,8 +125,7 @@ class PostController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|max:255',
-            'body'  => 'required',
-        ]);
+            'body'  => 'required']);
 
         Post::create($validated);
         return redirect()->route('posts.index')

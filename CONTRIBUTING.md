@@ -102,8 +102,10 @@ Articles go into one of these domain folders:
 | `sql-databases/` | PostgreSQL, MySQL, optimization |
 | `testing-qa/` | Selenium, Playwright, API testing |
 | `web-frontend/` | React, TypeScript, CSS, Figma |
-| `audio-voice/` | TTS, voice cloning, ASR, music generation |
-| `go/` | Goroutines, channels, modules, HTTP servers |
+| `audio-voice/` | TTS, voice cloning, ASR, speech synthesis |
+| `go/` | Goroutines, channels, modules, HTTP servers, microservices |
+| `llm-memory/` | Memory architectures, session persistence, knowledge graphs |
+| `writing/` | Technical article structure, SEO for articles, LLM anti-patterns |
 
 New domains can be proposed via PR with at least 5 articles.
 

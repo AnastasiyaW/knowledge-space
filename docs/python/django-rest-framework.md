@@ -1,7 +1,7 @@
 ---
 title: Django REST Framework and ORM Patterns
 category: concepts
-tags: [misc, python, django, drf, rest-api, orm, serializers]
+tags: [python, django, drf, rest-api, orm, serializers]
 ---
 
 # Django REST Framework and ORM Patterns

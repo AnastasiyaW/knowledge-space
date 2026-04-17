@@ -26,8 +26,7 @@ target_modules = [
     # Image FFN
     "img_mlp.net.0.proj", "img_mlp.net.2",
     # Text FFN
-    "txt_mlp.net.0.proj", "txt_mlp.net.2",
-]
+    "txt_mlp.net.0.proj", "txt_mlp.net.2"]
 ```
 
 Two independent LoRA adapters trained: human faces and anime. Only human ("preview") released so far.

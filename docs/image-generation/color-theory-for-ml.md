@@ -179,9 +179,82 @@ Split-comp:      "orange subject, blue-violet and blue-green background"
 - **Local vs radiation confusion in correction**: auto color correction applied naively shifts both local and radiation components together. Always segment or estimate illumination map before correcting for consistent results.
 - **Hue vocabulary mismatch**: "cerulean" and "cobalt" mean specific wavelengths to artists but may be interpreted inconsistently by diffusion models trained on non-specialist captions. Test empirically; hex-to-name mappings from CSS/web vocabulary are more reliably rendered.
 
+## Chromatic Adaptation and Color Appearance
+
+### Chromatic Adaptation Transform (CAT)
+
+Humans adapt to different illuminants so a white surface appears white under 2700K tungsten and 6500K daylight. Models must account for this when transferring color between images shot under different lighting.
+
+Key adaptation models (ascending accuracy):
+- **Von Kries**: per-channel gain applied in LMS cone space. Fast, used in many ICC workflows.
+- **Bradford**: modified LMS matrix with improved blue channel behavior. ICC standard.
+- **CIECAM02 / CAM16**: full Color Appearance Model including lightness, chroma, hue, contrast, and adaptation. Used for cross-media reproduction.
+
+```python
+# Von Kries chromatic adaptation (D50 → D65)
+import numpy as np
+# Convert sRGB to XYZ (simplified):
+# Apply Bradford matrix to XYZ
+# Scale LMS channels by ratio of white points
+# Invert to get adapted XYZ
+# Formula: LMS_adapted = (LMS_D65 / LMS_D50) * LMS_source
+```
+
+### Color Appearance Model (CAM) Dimensions
+
+| Attribute | Symbol | Description |
+|-----------|--------|-------------|
+| Lightness | J | Perceived luminance relative to white |
+| Chroma | C | Colorfulness relative to reference white |
+| Hue | h | Hue angle in perceptual space |
+| Saturation | s | Colorfulness relative to own luminance |
+| Brightness | Q | Absolute perceived luminance |
+| Colorfulness | M | Absolute colorfulness |
+
+For ML: when building perceptual loss functions or scoring models, CIECAM02 attributes correlate better with human preference than CIEDE2000 or simple MSE in RGB.
+
+## ICC Color Management Pipeline
+
+### ICC Profile Chain
+
+```
+Input device (camera) → [ICC input profile]
+  → Profile Connection Space (PCS = D50 XYZ or LAB)
+  → [ICC output profile]
+  → Output device (display/printer)
+```
+
+PCS is device-independent. Profiles encode characterization of each device. This two-step architecture allows any input → any output without per-pair conversion.
+
+### Rendering Intents
+
+| Intent | Use Case | Behavior |
+|--------|----------|---------|
+| Perceptual | Photography, general | Compresses entire gamut, preserves relationships |
+| Relative Colorimetric | Proofing | Clips out-of-gamut, maps white points |
+| Saturation | Presentation graphics | Maximizes saturation, not accuracy |
+| Absolute Colorimetric | Reference proofing | No white point mapping |
+
+Perceptual rendering intent is most relevant for image transfer tasks — it compresses wide-gamut source into narrow-gamut destination while maintaining gradient continuity.
+
+### Display Gamut Implications for ML
+
+- Models trained on sRGB data (≈ Rec.709) cannot generalize to wide-gamut inputs without remapping
+- P3-wide monitors on macOS display sRGB content with inflated saturation unless ICC management is active
+- Training data from mixed-gamut sources requires normalization to a common PCS before use
+
+## Gotchas
+
+- **Complementary color rendering inconsistency**: diffusion models trained on internet data under-represent high-saturation complementary combinations (these are rare in photography). Force with stronger prompts or LoRA-trained color style.
+- **sRGB training data gamut limitation**: most diffusion models are trained on sRGB data and cannot generate colors outside that gamut even when prompted for wide-gamut colors (neon greens, deep saturated purples). This is a dataset artifact, not a model failure.
+- **Local vs radiation confusion in correction**: auto color correction applied naively shifts both local and radiation components together. Always segment or estimate illumination map before correcting for consistent results.
+- **Hue vocabulary mismatch**: "cerulean" and "cobalt" mean specific wavelengths to artists but may be interpreted inconsistently by diffusion models trained on non-specialist captions. Test empirically; hex-to-name mappings from CSS/web vocabulary are more reliably rendered.
+- **Von Kries fails with large adaptation shifts**: Von Kries adaptation works well for small illuminant shifts (e.g., 5500K → 6500K) but degrades for large shifts (e.g., tungsten 2700K → daylight). Use Bradford or CIECAM02 for cross-condition color transfer pipelines.
+
 ## See Also
 
 - [[color-checker-and-white-balance]] - color correction and white balance
+- [[color-space-and-gamma-reference]] - gamma, color spaces, CMS workflows
+- [[intrinsic-decomposition]] - albedo/illumination separation for color transfer
 - [[flux-klein-jewelry-photography]] - color challenges in jewelry compositing
 - [[defect-detection-small-objects]] - color anomaly detection for defects
-- [[image-similarity-pipeline]] - perceptual color similarity in embeddings

@@ -46,8 +46,7 @@ def spend(spend_client, category):
 ```python
 @pytest.mark.parametrize("username, password, expected", [
     ("valid_user", "valid_pass", True),
-    ("invalid_user", "wrong_pass", False),
-])
+    ("invalid_user", "wrong_pass", False)])
 def test_login(username, password, expected):
     assert login(username, password) == expected
 
@@ -113,8 +112,7 @@ def browser_name(request):
 pytest_plugins = [
     "fixtures.user_fixtures",
     "fixtures.auth_fixtures",
-    "fixtures.db_fixtures",
-]
+    "fixtures.db_fixtures"]
 ```
 
 ### Fuzz Testing with Hypothesis

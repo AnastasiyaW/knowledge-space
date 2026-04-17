@@ -58,8 +58,6 @@ Built from cutting-edge material. Already partially outdated by the time it's ge
 |--------|--------|---------------|
 | `image-generation/` | Models release weekly. FLUX Kontext, Step1X-Edit - some already superseded | Monthly from latest papers/repos |
 | `llm-agents/` (agents, frameworks) | LangChain/LangGraph/CrewAI rewrite constantly. Agent patterns from 3 months ago are already legacy | Monthly - track framework releases |
-| `misc/` (OpenClaw) | OpenClaw is pre-1.0, API unstable | Monthly until stable release |
-| `misc/` (Google Antigravity) | Novelty course, low long-term value | Low priority, skip re-generation |
 
 ## Re-generation Schedule
 
@@ -69,25 +67,8 @@ Built from cutting-edge material. Already partially outdated by the time it's ge
 | **Yearly** | sql-databases, kafka, rust, java-spring, php, nodejs, testing-qa, bi-analytics, data-engineering |
 | **Every 6 months** | web-frontend, devops, llm-agents (RAG, embeddings, prompting), ios-mobile, security, seo-marketing |
 | **Monthly** | image-generation, llm-agents (agent frameworks, function calling, multi-agent) |
-| **On-demand** | misc (when specific content becomes relevant) |
-
 ## How to Update a Domain
 
-```bash
-# 1. Add new course material to D:\YandexDisk\ОБЩАЯ Н2\курсы\
-# 2. Re-run pipeline
-python run.py scan
-python run.py transcribe
-python run.py extract
-python run.py chunk --topic <domain>
-
-# 3. Re-generate knowledge entries
-#    (Claude Code slash command)
-/knowledge-generate <domain>
-
-# 4. Re-index graph
-kg_index
-
-# 5. Push to GitHub
-cd knowledge-vault && git add -A && git commit -m "update <domain>" && git push
-```
+1. Submit a PR with new or updated articles in `docs/{domain}/`
+2. Follow the format rules in `AGENTS.md` and `CONTRIBUTING.md`
+3. CI validates format, wiki-links, freshness, and deploys on merge to master

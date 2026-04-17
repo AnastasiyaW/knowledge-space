@@ -30,3 +30,11 @@ docs/**/.concepts.json
 /seo-marketing/
 /sql-databases/
 /web-frontend/
+
+# Handoffs contain personal paths and session state - never commit
+.claude/handoffs/
+.claude/chronicles/
+.claude/.session-start
+.claude/.handoff-reminded
+.claude/settings.json
+.claude/WORKFLOW.md

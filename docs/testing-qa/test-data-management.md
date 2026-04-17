@@ -51,8 +51,7 @@ Run: `TEST_ENV=staging pytest`
     ("admin", "admin123", 200),
     ("admin", "wrong", 401),
     ("", "admin123", 422),
-    ("nonexistent", "pass", 401),
-])
+    ("nonexistent", "pass", 401)])
 def test_login(api_client, username, password, expected_status):
     resp = api_client.post("/login", json={"username": username, "password": password})
     assert resp.status_code == expected_status

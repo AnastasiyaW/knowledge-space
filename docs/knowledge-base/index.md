@@ -82,11 +82,13 @@ description: Browse 766+ technical articles across 26 domains. Dense references 
     - [[broker-architecture]] - Broker internals, partitions, replication
     - [[topics-and-partitions]] - Topic design, partition strategies
     - [[consumer-groups]] - Consumer coordination, rebalancing
-    - [[replication-and-fault-tolerance]] - ISR, leader election, durability
+    - [[kafka-replication-fundamentals]] - ISR, leader election, durability
+    - [[kafka-fault-tolerance]] - Failure modes, recovery, partition rebalancing
 
     **Producers & Consumers**
 
-    - [[producer-patterns]] - Batching, compression, idempotence
+    - [[kafka-producer-fundamentals]] - Batching, compression, idempotence
+    - [[kafka-producer-advanced-patterns]] - Transactions, exactly-once semantics
     - [[idempotent-producer]] - Exactly-once producer semantics
     - [[consumer-configuration]] - Consumer tuning, polling, offsets
     - [[offsets-and-commits]] - Offset management, auto vs manual commit
@@ -122,7 +124,9 @@ description: Browse 766+ technical articles across 26 domains. Dense references 
 
     **Operations**
 
-    - [[kafka-cluster-operations]] - Cluster management, rolling upgrades
+    - [[kafka-cluster-management]] - Cluster management, rolling upgrades
+    - [[kafka-monitoring-and-tuning]] - Observability, JMX metrics, tuning
+    - [[kafka-backup-and-dr]] - Backup strategies, disaster recovery
     - [[kafka-monitoring]] - JMX metrics, consumer lag, alerts
     - [[kafka-security]] - SSL, SASL, ACLs, encryption
     - [[kafka-troubleshooting]] - Common issues and fixes
@@ -692,18 +696,6 @@ description: Browse 766+ technical articles across 26 domains. Dense references 
     - [[link-building-strategy]] - Link acquisition tactics
     - [[core-web-vitals-performance]] - CWV optimization
     - [[seo-tools-workflow]] - Ahrefs, Semrush, GSC workflow
-
----
-
-<div id="misc"></div>
-
-??? note "<span class="ks-planet" style="background:radial-gradient(circle at 35% 35%,rgba(255,255,255,0.4),transparent 60%),radial-gradient(circle at 50% 50%,#8898a8,#384858);box-shadow:0 0 8px rgba(136,152,168,0.5),inset 0 -2px 4px rgba(0,0,0,0.3)"></span>Misc · 20 articles"
-
-    - [[go/fundamentals]] - Go language basics
-    - [[go/concurrency-patterns]] - Goroutines, channels, select
-    - [[javascript-async-event-loop]] - JS async patterns reference
-    - [[data-structures-fundamentals]] - CS fundamentals review
-    - [[yolo-object-detection]] - YOLO models for detection
 
 ---
 

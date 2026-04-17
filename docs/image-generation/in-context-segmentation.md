@@ -94,8 +94,7 @@ mask = model.segment()  # (H, W) boolean
 # Multi-shot (multiple reference examples improve consistency):
 model.set_references([
     ("ref1.jpg", "mask1.png"),
-    ("ref2.jpg", "mask2.png"),
-])
+    ("ref2.jpg", "mask2.png")])
 mask = model.segment("target.jpg")
 ```
 

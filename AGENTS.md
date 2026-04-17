@@ -79,12 +79,13 @@ Everything else (site config, templates, homepage, CI/CD, build dependencies, st
 ## Valid domains
 
 ```
-algorithms    architecture    bi-analytics    data-engineering
-data-science  devops          image-generation ios-mobile
-java-spring   kafka           linux-cli       llm-agents
-nodejs        php             python          rust
-security      seo-marketing   sql-databases   testing-qa
-web-frontend  misc
+algorithms       architecture     audio-voice      bi-analytics
+cpp              data-engineering data-science     devops
+go               image-generation ios-mobile       java-spring
+kafka            linux-cli        llm-agents       llm-memory
+nodejs           php              python           rust
+security         seo-marketing    sql-databases    testing-qa
+web-frontend     writing
 ```
 
 New domain proposals require a PR with at least 5 articles.

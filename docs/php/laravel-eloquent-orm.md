@@ -39,13 +39,11 @@ class Post extends Model
     protected $table = 'posts';  // only needed if non-conventional
 
     protected $fillable = [
-        'title', 'slug', 'body', 'category_id', 'is_published',
-    ];
+        'title', 'slug', 'body', 'category_id', 'is_published'];
 
     protected $casts = [
         'is_published' => 'boolean',
-        'published_at' => 'datetime',
-    ];
+        'published_at' => 'datetime'];
 
     // Relationships
     public function category()
@@ -79,8 +77,7 @@ $post = Post::create([
     'title'       => 'My Post',
     'slug'        => 'my-post',
     'body'        => 'Content here',
-    'category_id' => 1,
-]);
+    'category_id' => 1]);
 
 // READ
 $posts = Post::all();                              // all records

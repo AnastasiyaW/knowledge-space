@@ -1,7 +1,7 @@
 ---
 title: Go Language Fundamentals
 category: concepts
-tags: [misc, go, golang, types, slices, maps, interfaces, pointers]
+tags: [go, golang, types, slices, maps, interfaces, pointers]
 ---
 
 # Go Language Fundamentals

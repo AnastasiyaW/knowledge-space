@@ -214,8 +214,7 @@ orchestrator = SimpleOrchestrator(
     workflow=[
         {"agent": "researcher", "context_keys": ["input"], "output_key": "research"},
         {"agent": "writer", "context_keys": ["input", "research"], "output_key": "report",
-         "validator": lambda r: len(r) > 500},
-    ]
+         "validator": lambda r: len(r) > 500}]
 )
 ```
 

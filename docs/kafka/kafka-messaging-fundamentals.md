@@ -1,7 +1,7 @@
 ---
 title: Apache Kafka - Delivery Semantics and Consumer Patterns
 category: concepts
-tags: [misc, kafka, messaging, event-driven, consumer-groups, streaming]
+tags: [kafka, messaging, event-driven, consumer-groups, streaming]
 ---
 
 # Apache Kafka - Delivery Semantics and Consumer Patterns

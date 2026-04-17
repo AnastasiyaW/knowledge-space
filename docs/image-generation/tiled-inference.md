@@ -204,9 +204,111 @@ unique_tile_prompt = base_prompt + " " + tile_caption
 | AccDiffusion v2 | Yes | Prompt-level, model-agnostic |
 | DC-AE native tiling | Yes | `pipe.vae.enable_tiling(...)` |
 
+## Frequency-Aware Tiling (2024-2026)
+
+Standard tiling loses high-frequency details (fine texture, fabric weave, hair) at tile boundaries. Frequency-domain methods preserve these while enabling global coherence.
+
+### HiWave (SIGGRAPH Asia 2025)
+
+**Paper:** arxiv 2506.20452
+
+Training-free. Patch-wise DDIM inversion + wavelet-based detail enhancer:
+1. Retain low-frequency structure from the base image (global consistency)
+2. Selectively guide high-frequency components for fine detail enhancement
+
+Preferred in >80% of user comparisons vs prior SOTA. From Disney Research.
+
+### Frequency-Aware Guidance (ECCV 2024 Workshop)
+
+**Paper:** arxiv 2411.12450
+
+Plug-in DWT-based loss enforcing consistency in both spatial and frequency domains simultaneously:
+
+```python
+import torch, pywt
+def freq_aware_loss(pred, target, wavelet='haar', level=2):
+    # Decompose both into wavelet subbands
+    pred_coeffs  = pywt.wavedec2(pred.cpu().numpy(),  wavelet, level=level)
+    tgt_coeffs   = pywt.wavedec2(target.cpu().numpy(), wavelet, level=level)
+    # Match low-frequency structure + high-frequency details
+    loss_lf = F.mse_loss(pred_coeffs[0], tgt_coeffs[0])
+    loss_hf = sum(F.mse_loss(p, t) for p, t in zip(pred_coeffs[1:], tgt_coeffs[1:]))
+    return loss_lf + 0.1 * loss_hf
+```
+
+Drop-in addition to any diffusion pipeline. +3.72 dB PSNR on blind deblurring.
+
+### Latent Wavelet Diffusion (LWD, 2025)
+
+**Paper:** arxiv 2506.00433
+
+Three-component framework enabling any LDM to scale to 2K-4K without architectural changes:
+1. **Scale-consistent VAE** objective — spectral fidelity across resolution changes
+2. **Wavelet energy maps** — identify detail-rich regions (skin, hair, fabric) where denoising must be strongest
+3. **Time-dependent masking** — focus denoising budget on high-frequency components at early timesteps
+
+```python
+# Wavelet energy map identifies where texture preservation matters:
+coeffs = pywt.wavedec2(image, 'db4', level=3)
+energy_map = sum(np.abs(c)**2 for c in coeffs[1:])  # HF energy per pixel
+```
+
+### W-Edit (Oct 2025)
+
+Training-free wavelet-based frequency modulation for text-driven editing. Decomposes diffusion features into multi-scale wavelet bands, separating structural anchors (preserve) from editable details (modify). Selective injection into pretrained DiT/UNet layers.
+
+### Face Retouching with Spectral Restoration (ICCV 2025)
+
+**Directly applicable to face retouching pipelines:**
+
+- **Frequency Selection and Restoration (FSR)**: frequency-domain quantization with spatial projections
+- **Multi-Resolution Fusion (MRF)**: Laplacian pyramid fusion — removes blemishes while preserving fine details
+
+Approach: separate low-frequency (skin tone, broad shading) from high-frequency (pores, fine lines) at each pyramid level. Edit only the relevant level for the specific retouching task.
+
+```text
+LF0 (coarse, global) → lighting/color correction
+HF1 (medium)         → blemish/spot removal
+HF2 (fine)           → preserve skin texture
+HF3 (finest)         → preserve hair / eyelash detail
+```
+
+### RefineAnything (2026)
+
+**GitHub:** github.com/limuloo/RefineAnything  
+**HuggingFace:** limuloo1999/RefineAnything
+
+Multimodal diffusion model for region-specific refinement. Fixes distorted text, logos, fine structures within a specified region while keeping the background intact. Supports editing with and without a reference image.
+
+**For tiled pipelines:**
+- Post-assembly seam refinement: run on boundary zones between tiles to fix stitching artifacts
+- Uses "reverse diffusion detailing" pattern — diffusion forward (denoise) then backward (add detail)
+- Feeding a thumbnail first means fewer denoising steps needed
+
+### APT: Adaptive Path Tracing (Jul 2025)
+
+**Paper:** arxiv 2507.21690
+
+Identifies two failure modes in patch-based methods:
+1. **Patch-level distribution shift** — different patches develop different color/brightness statistics
+2. **Increased patch monotonicity** — local context causes repetitive detail within a patch
+
+Fixes via Statistical Matching (align patch distributions) + Scale-aware Scheduling (global coherence injection).
+
+## Frequency Method Comparison
+
+| Method | Training Required | Target Problem | Testability |
+|--------|-----------------|---------------|-------------|
+| HiWave | No (DDIM inversion) | Patch detail enhancement | 3-4 days |
+| Freq-Aware Guidance | No (plug-in loss) | Texture preservation at boundaries | 2-3 days |
+| Latent Wavelet Diffusion | No (framework) | 2K-4K upscaling with texture | 3-4 days |
+| FSR (face retouching) | Code unclear | Face blemish removal + detail preserve | 5-7 days |
+| RefineAnything | No (pretrained) | Region-specific artifact fixing | 1-2 days |
+
 ## See Also
 
 - [[low-vram-inference-strategies]] - adaptive tile sizing, memory management
 - [[temporal-tiling]] - cross-tile context propagation
 - [[diffusion-inference-acceleration]] - complementary acceleration techniques
 - [[SANA]] - 32x compression reduces tiling need
+- [[intrinsic-decomposition]] - frequency-independent color correction for tiles

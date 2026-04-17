@@ -1,7 +1,7 @@
 ---
 title: Dynamic Programming and Recursion
 category: concepts
-tags: [misc, algorithms, dynamic-programming, recursion, memoization]
+tags: [algorithms, dynamic-programming, recursion, memoization]
 ---
 
 # Dynamic Programming and Recursion

@@ -65,8 +65,7 @@ class SensitiveDataFilter(logging.Filter):
     PATTERNS = [
         (re.compile(r'(password["\s:=]+)[^\s,}"]+', re.I), r'\1***'),
         (re.compile(r'(token["\s:=]+)[^\s,}"]+', re.I), r'\1***'),
-        (re.compile(r'(Bearer\s+)\S+', re.I), r'\1***'),
-    ]
+        (re.compile(r'(Bearer\s+)\S+', re.I), r'\1***')]
 
     def filter(self, record):
         msg = record.getMessage()

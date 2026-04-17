@@ -10,28 +10,32 @@ Curated technical knowledge base across 26 domains. Agent-first design - dense, 
 
 | Domain | Articles | Coverage |
 |--------|:--------:|----------|
-| `data-science/` | 85 | ML, statistics, neural networks, CV, NLP, math foundations |
-| `python/` | 43 | Core language, FastAPI, Django, async, testing, packaging |
-| `web-frontend/` | 40 | React, TypeScript, CSS, Figma, bundlers, accessibility |
-| `devops/` | 39 | Docker, Kubernetes, Terraform, CI/CD, monitoring, SRE |
-| `architecture/` | 39 | Microservices, DDD, system design, API patterns, CQRS |
-| `data-engineering/` | 38 | ETL/ELT, Spark, Airflow, data warehouses, streaming, CDC |
-| `kafka/` | 33 | Broker internals, consumers, producers, Streams, KSQL, Connect |
-| `sql-databases/` | 27 | PostgreSQL, MySQL, query optimization, migrations, indexing |
-| `linux-cli/` | 25 | Shell scripting, filesystem, systemd, permissions, networking |
-| `llm-agents/` | 24 | RAG, fine-tuning, agent frameworks, prompt engineering, embeddings |
-| `java-spring/` | 21 | Spring Boot, JPA, microservices, Kotlin, Android |
-| `bi-analytics/` | 21 | Tableau, Power BI, SQL analytics, dashboards, product analytics |
-| `algorithms/` | 19 | Sorting, graphs, DP, data structures, complexity analysis |
-| `security/` | 18 | Web security, penetration testing, Active Directory, anti-fraud |
-| `seo-marketing/` | 16 | Technical SEO, keyword research, link building, AI-driven SEO |
-| `testing-qa/` | 15 | Selenium, Playwright, API testing, CI integration, test design |
-| `rust/` | 14 | Ownership, lifetimes, async, error handling, unsafe |
-| `php/` | 12 | Laravel, MVC, ORM, testing, PHP 8 features |
-| `nodejs/` | 10 | Event loop, streams, clusters, performance, design patterns |
-| `ios-mobile/` | 10 | SwiftUI, Swift, Android/Kotlin fundamentals |
-| `image-generation/` | 27 | Diffusion models, flow matching, LoRA training, inpainting |
-| `misc/` | 9 | JavaScript, Go, competitive programming, interview prep |
+| `security/` | 56 | Web security, pentesting, Active Directory, anti-fraud, model protection, CWE |
+| `data-science/` | 55 | ML, statistics, neural networks, CV, NLP, math foundations |
+| `image-generation/` | 50 | Diffusion models, flow matching, LoRA training, inpainting, tiled inference |
+| `llm-agents/` | 49 | RAG, fine-tuning, agent frameworks, prompt engineering, multi-agent |
+| `kafka/` | 42 | Broker internals, consumers, producers, Streams, KSQL, Connect, replication |
+| `devops/` | 35 | Docker, Kubernetes, Terraform, CI/CD, monitoring, SRE, observability |
+| `web-frontend/` | 34 | React, TypeScript, CSS, Figma, bundlers, accessibility, JS async |
+| `data-engineering/` | 34 | ETL/ELT, Spark, Airflow, data warehouses, streaming, CDC, vector search |
+| `architecture/` | 33 | Microservices, DDD, system design, API patterns, CQRS |
+| `sql-databases/` | 32 | PostgreSQL, MySQL, query optimization, migrations, indexing, advanced |
+| `ios-mobile/` | 31 | SwiftUI, Swift, Android/Kotlin fundamentals, mobile ML |
+| `python/` | 30 | Core language, FastAPI, Django, async, testing, stdlib, web scraping |
+| `algorithms/` | 29 | Sorting, graphs, DP, data structures, complexity analysis |
+| `linux-cli/` | 27 | Shell scripting, filesystem, systemd, permissions, networking |
+| `cpp/` | 27 | Modern C++, memory, templates, concurrency, cross-platform ML |
+| `java-spring/` | 25 | Spring Boot, JPA, microservices, Kotlin, Android |
+| `seo-marketing/` | 24 | Technical SEO, keyword research, link building, AI-driven SEO |
+| `bi-analytics/` | 23 | Tableau, Power BI, SQL analytics, dashboards, product analytics |
+| `testing-qa/` | 22 | Selenium, Playwright, API testing, CI integration, browser automation |
+| `rust/` | 22 | Ownership, lifetimes, async, error handling, unsafe |
+| `nodejs/` | 16 | Event loop, streams, clusters, performance, design patterns |
+| `php/` | 15 | Laravel, MVC, ORM, testing, PHP 8 features |
+| `llm-memory/` | 11 | Memory architectures, session persistence, knowledge graphs |
+| `audio-voice/` | 10 | TTS, ASR, voice cloning, speech synthesis, TTS fine-tuning |
+| `writing/` | 9 | Technical article structure, SEO for articles, LLM anti-patterns |
+| `go/` | 9 | Goroutines, channels, modules, HTTP servers, microservices |
 
 ## For AI agents
 

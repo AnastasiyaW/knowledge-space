@@ -175,8 +175,7 @@ from datetime import datetime
 SEARCH_TARGETS = [
     "site:rutracker.org {product_name} crack",
     "site:github.com {product_name} crack license",
-    "{product_name} keygen 2026",
-]
+    "{product_name} keygen 2026"]
 
 def scan_for_cracks(product_name: str) -> list[dict]:
     findings = []

@@ -1,7 +1,7 @@
 ---
 title: YOLO Object Detection - Architecture, API, and Metrics
 category: concepts
-tags: [misc, computer-vision, yolo, object-detection, ultralytics, opencv, deep-learning]
+tags: [computer-vision, yolo, object-detection, ultralytics, opencv, deep-learning]
 ---
 
 # YOLO Object Detection - Architecture, API, and Metrics

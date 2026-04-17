@@ -1,7 +1,7 @@
 ---
 title: Observability Query Languages - PromQL, LogQL, TraceQL
 category: concepts
-tags: [misc, observability, prometheus, grafana, loki, tempo, promql, logql, traceql, opentelemetry]
+tags: [observability, prometheus, grafana, loki, tempo, promql, logql, traceql, opentelemetry]
 ---
 
 # Observability Query Languages - PromQL, LogQL, TraceQL

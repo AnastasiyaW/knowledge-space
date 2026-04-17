@@ -16,7 +16,7 @@ Append-only log of changes. Updated on every ingest/edit/delete.
 
 ## 2026-04-04
 
-- **ADDED**: Research pipeline rule (incoming-research/).
+- **ADDED**: Contributor guidelines for research-based article generation.
 
 ## 2026-03-31
 

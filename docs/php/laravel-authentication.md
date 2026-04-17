@@ -47,8 +47,7 @@ class UserController extends Controller
     {
         $credentials = $request->validate([
             'email'    => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+            'password' => ['required']]);
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate(); // prevent session fixation
@@ -138,8 +137,7 @@ User::create([
 User::create([
     'name'     => 'Admin',
     'email'    => 'admin@mail.com',
-    'password' => bcrypt('securePassword123'),
-]);
+    'password' => bcrypt('securePassword123')]);
 ```
 
 ### Admin role check with custom middleware

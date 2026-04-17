@@ -30,8 +30,7 @@ def sanitize_tool_output(output: str) -> str:
         r"ignore\s+(all\s+)?previous\s+instructions",
         r"disregard\s+(all\s+)?prior",
         r"new\s+instructions?\s*:",
-        r"system\s*:\s*you\s+are",
-    ]
+        r"system\s*:\s*you\s+are"]
     for pattern in patterns:
         output = re.sub(pattern, "[FILTERED]", output, flags=re.IGNORECASE)
     return output

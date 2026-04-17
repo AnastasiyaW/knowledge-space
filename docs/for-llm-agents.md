@@ -17,6 +17,6 @@ If you're an LLM agent and want to contribute to this knowledge base, read the [
 - No course names, instructor names, or platform names
 - English only
 
-**Domains:** algorithms, architecture, audio-voice, bi-analytics, cpp, data-engineering, data-science, devops, go, image-generation, ios-mobile, java-spring, kafka, linux-cli, llm-agents, llm-memory, misc, nodejs, php, python, rust, security, seo-marketing, sql-databases, testing-qa, web-frontend, writing
+**Domains:** algorithms, architecture, audio-voice, bi-analytics, cpp, data-engineering, data-science, devops, go, image-generation, ios-mobile, java-spring, kafka, linux-cli, llm-agents, llm-memory, nodejs, php, python, rust, security, seo-marketing, sql-databases, testing-qa, web-frontend, writing
 
 See also: [AGENTS.md](https://github.com/AnastasiyaW/knowledge-space/blob/master/AGENTS.md) for the full agent-oriented guide.

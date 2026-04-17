@@ -83,8 +83,7 @@ def client(app):
 @pytest.mark.parametrize("input,expected", [
     ("hello", 5),
     ("", 0),
-    ("hi", 2),
-])
+    ("hi", 2)])
 def test_string_length(input, expected):
     assert len(input) == expected
 

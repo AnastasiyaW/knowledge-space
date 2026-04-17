@@ -1,7 +1,7 @@
 ---
 title: Algorithm Problem-Solving Patterns
 category: concepts
-tags: [misc, algorithms, interview, two-pointer, sliding-window, binary-search, problem-solving]
+tags: [algorithms, interview, two-pointer, sliding-window, binary-search, problem-solving]
 ---
 
 # Algorithm Problem-Solving Patterns

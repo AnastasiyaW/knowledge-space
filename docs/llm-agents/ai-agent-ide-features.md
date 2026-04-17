@@ -1,7 +1,7 @@
 ---
 title: AI Agent IDEs and Framework Patterns
 category: concepts
-tags: [misc, ai, agent, ide, llm, skills, rules, automation, security]
+tags: [ai, agent, ide, llm, skills, rules, automation, security]
 ---
 
 # AI Agent IDEs and Framework Patterns

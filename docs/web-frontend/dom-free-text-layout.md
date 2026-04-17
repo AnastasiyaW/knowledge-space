@@ -284,8 +284,7 @@ describe('Button label overflow', () => {
   test.each([
     ['Submit', true],
     ['Submit Order to Cart', false],
-    ['OK', true],
-  ])('"%s" fits: %s', (label, expected) => {
+    ['OK', true]])('"%s" fits: %s', (label, expected) => {
     expect(validateButtonLabel(label, buttonWidth)).toBe(expected);
   });
 });

@@ -1,7 +1,7 @@
 ---
 title: Python Standard Library Patterns - Collections, Itertools, Closures
 category: concepts
-tags: [misc, python, collections, itertools, functools, closures, scoping]
+tags: [python, collections, itertools, functools, closures, scoping]
 ---
 
 # Python Standard Library Patterns - Collections, Itertools, Closures

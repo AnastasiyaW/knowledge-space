@@ -74,8 +74,7 @@ customer_features = FeatureView(
     schema=[
         Field(name="total_transactions_30d", dtype=Float32),
         Field(name="avg_transaction_amount", dtype=Float32),
-        Field(name="account_age_days", dtype=Int64),
-    ],
+        Field(name="account_age_days", dtype=Int64)],
     source=BigQuerySource(table="project.dataset.customer_features"),
 )
 
@@ -167,8 +166,7 @@ from evidently.report import Report
 # Compare training vs production distributions
 drift_report = Report(metrics=[
     ColumnDriftMetric(column_name="transaction_amount"),
-    ColumnDriftMetric(column_name="merchant_category"),
-])
+    ColumnDriftMetric(column_name="merchant_category")])
 drift_report.run(reference_data=train_df, current_data=production_df)
 drift_report.save_html("drift_report.html")
 ```

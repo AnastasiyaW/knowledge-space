@@ -22,7 +22,7 @@ Each domain gets a unique color. Use these group palettes:
 - **infra** (devops, kafka, linux, security): warm reds/oranges `#c88060`, `#d07870`, `#a08878`, `#b87080`
 - **ai** (llm-agents, image-generation, llm-memory, audio-voice): yellows/golds `#c0b060`, `#c8a058`, `#c8b070`, `#a080c0`
 - **design** (architecture, algorithms, testing-qa): blues `#7088c8`, `#80a0d0`, `#9090b8`
-- **other** (misc, seo, writing): muted `#8898a8`, `#80b868`, `#90b8a0`
+- **other** (seo, writing): muted `#80b868`, `#90b8a0`
 
 Pick a color that doesn't clash with existing neighbors in the same group.
 

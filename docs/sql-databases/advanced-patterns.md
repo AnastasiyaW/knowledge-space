@@ -1,7 +1,7 @@
 ---
 title: Advanced SQL - Window Functions, Subqueries, Date Functions
 category: concepts
-tags: [misc, sql, postgresql, mysql, window-functions, subqueries, analytics]
+tags: [sql, postgresql, mysql, window-functions, subqueries, analytics]
 ---
 
 # Advanced SQL - Window Functions, Subqueries, Date Functions

@@ -87,8 +87,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         // Register alias for route-level use
         $middleware->alias([
-            'admin' => AdminMiddleware::class,
-        ]);
+            'admin' => AdminMiddleware::class]);
 
         // Global middleware (runs on every request)
         $middleware->append(LogRequests::class);

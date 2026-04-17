@@ -1,7 +1,7 @@
 ---
 title: Browser Test Automation with Geb/Groovy (Selenium)
 category: concepts
-tags: [misc, testing, selenium, groovy, geb, browser-automation, webdriver]
+tags: [testing, selenium, groovy, geb, browser-automation, webdriver]
 ---
 
 # Browser Test Automation with Geb/Groovy (Selenium)

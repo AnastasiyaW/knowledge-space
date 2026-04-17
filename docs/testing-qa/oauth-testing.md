@@ -142,8 +142,7 @@ def logged_in_client(config):
     ("user", "/api/users", 403),
     ("admin", "/api/settings", 200),
     ("user", "/api/settings", 403),
-    ("anonymous", "/api/users", 401),
-])
+    ("anonymous", "/api/users", 401)])
 def test_role_permissions(make_auth_client, role, endpoint, expected):
     client = make_auth_client(role=role)
     resp = client.get(endpoint)

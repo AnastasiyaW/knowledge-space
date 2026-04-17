@@ -1,7 +1,7 @@
 ---
 title: Python Web Scraping with BeautifulSoup
 category: concepts
-tags: [misc, python, web-scraping, beautifulsoup, requests, html-parsing]
+tags: [python, web-scraping, beautifulsoup, requests, html-parsing]
 ---
 
 # Python Web Scraping with BeautifulSoup

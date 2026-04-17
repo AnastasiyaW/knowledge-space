@@ -157,8 +157,7 @@ from langchain.text_splitter import MarkdownHeaderTextSplitter
 headers_to_split = [
     ("#", "h1"),
     ("##", "h2"),
-    ("###", "h3"),
-]
+    ("###", "h3")]
 splitter = MarkdownHeaderTextSplitter(headers_to_split_on=headers_to_split)
 chunks = splitter.split_text(markdown_text)
 # Each chunk retains header hierarchy in metadata:

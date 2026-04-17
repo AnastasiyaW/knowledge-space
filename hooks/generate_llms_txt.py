@@ -34,7 +34,6 @@ DOMAIN_NAMES = {
     "linux-cli": "Linux CLI",
     "llm-agents": "LLM & Agents",
     "llm-memory": "LLM Memory",
-    "misc": "Misc",
     "nodejs": "Node.js",
     "php": "PHP",
     "python": "Python",

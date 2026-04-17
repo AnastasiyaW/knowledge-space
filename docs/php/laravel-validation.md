@@ -36,8 +36,7 @@ public function store(Request $request)
         'category_id' => 'required|exists:categories,id',
         'image'       => 'nullable|image|mimes:jpg,png,webp|max:2048',
         'tags'        => 'nullable|array',
-        'tags.*'      => 'exists:tags,id',
-    ]);
+        'tags.*'      => 'exists:tags,id']);
 
     Post::create($validated);
     return redirect()->route('posts.index')->with('success', 'Post created.');
@@ -71,8 +70,7 @@ class StorePostRequest extends FormRequest
             'title'       => 'required|string|max:255',
             'slug'        => 'required|string|unique:posts,slug',
             'body'        => 'required|string',
-            'category_id' => 'required|exists:categories,id',
-        ];
+            'category_id' => 'required|exists:categories,id'];
     }
 
     public function messages(): array
@@ -80,8 +78,7 @@ class StorePostRequest extends FormRequest
         return [
             'title.required'    => 'Post title is required.',
             'slug.unique'       => 'This URL slug is already taken.',
-            'category_id.exists' => 'Selected category does not exist.',
-        ];
+            'category_id.exists' => 'Selected category does not exist.'];
     }
 }
 ```
@@ -145,8 +142,7 @@ public function update(Request $request, Post $post)
     $validated = $request->validate([
         'title' => 'required|string|max:255',
         'slug'  => 'required|unique:posts,slug,' . $post->id,
-        'body'  => 'required|string',
-    ]);
+        'body'  => 'required|string']);
 
     $post->update($validated);
     return redirect()->route('posts.index');

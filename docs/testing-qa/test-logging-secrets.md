@@ -56,8 +56,7 @@ class SensitiveDataFilter(logging.Filter):
         (re.compile(r'(Bearer\s+)\S+'), r'\1***MASKED***'),
         (re.compile(r'(password["\s:=]+)\S+', re.I), r'\1***MASKED***'),
         (re.compile(r'(token["\s:=]+)\S+', re.I), r'\1***MASKED***'),
-        (re.compile(r'(api[_-]?key["\s:=]+)\S+', re.I), r'\1***MASKED***'),
-    ]
+        (re.compile(r'(api[_-]?key["\s:=]+)\S+', re.I), r'\1***MASKED***')]
 
     def filter(self, record):
         msg = record.getMessage()
@@ -78,8 +77,7 @@ import allure
 import re
 
 MASK_PATTERNS = [
-    re.compile(r'"(password|token|secret|api_key)":\s*"[^"]*"'),
-]
+    re.compile(r'"(password|token|secret|api_key)":\s*"[^"]*"')]
 
 def safe_attach(content, name, attachment_type=allure.attachment_type.TEXT):
     """Attach content to Allure with sensitive data masked."""

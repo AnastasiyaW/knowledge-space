@@ -1,7 +1,7 @@
 ---
 title: JavaScript Async Patterns and Event Loop
 category: concepts
-tags: [misc, javascript, async, promises, event-loop, node-js, streams]
+tags: [javascript, async, promises, event-loop, node-js, streams]
 ---
 
 # JavaScript Async Patterns and Event Loop

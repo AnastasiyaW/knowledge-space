@@ -1,7 +1,7 @@
 ---
 title: Go Concurrency - Goroutines, Channels, and Sync
 category: concepts
-tags: [misc, go, golang, concurrency, goroutines, channels, mutex, scheduler]
+tags: [go, golang, concurrency, goroutines, channels, mutex, scheduler]
 ---
 
 # Go Concurrency - Goroutines, Channels, and Sync

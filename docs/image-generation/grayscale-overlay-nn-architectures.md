@@ -180,8 +180,7 @@ loss = criterion(offset_pred, offset_target)  # offset_target = (target - 0.5) /
 schedule = [
     {"size": 256, "lr": 1e-3, "epochs": 50},
     {"size": 384, "lr": 3e-4, "epochs": 30},
-    {"size": 512, "lr": 1e-4, "epochs": 20},
-]
+    {"size": 512, "lr": 1e-4, "epochs": 20}]
 
 optimizer = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-4)
 scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=100, eta_min=1e-6)

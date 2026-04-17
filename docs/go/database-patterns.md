@@ -1,7 +1,7 @@
 ---
 title: Go Database Patterns - PostgreSQL, MongoDB, Redis
 category: concepts
-tags: [misc, go, golang, postgresql, mongodb, redis, database, caching, transactions]
+tags: [go, golang, postgresql, mongodb, redis, database, caching, transactions]
 ---
 
 # Go Database Patterns - PostgreSQL, MongoDB, Redis

@@ -14,7 +14,7 @@ hide:
 
 <div class="ks-graph-stats" markdown="0">
   <div class="ks-graph-stats__item">
-    <span class="ks-graph-stats__number" id="ks-graph-nodes">731</span>
+    <span class="ks-graph-stats__number" id="ks-graph-nodes">766</span>
     <span class="ks-graph-stats__label">articles</span>
   </div>
   <div class="ks-graph-stats__divider"></div>
@@ -29,7 +29,7 @@ hide:
   </div>
   <div class="ks-graph-stats__divider"></div>
   <div class="ks-graph-stats__item">
-    <span class="ks-graph-stats__number" id="ks-total-domains">22</span>
+    <span class="ks-graph-stats__number" id="ks-total-domains">26</span>
     <span class="ks-graph-stats__label">domains</span>
   </div>
 </div>
@@ -55,7 +55,7 @@ hide:
 
 # Knowledge Space
 
-Curated technical knowledge base across 27 domains. Built for LLM agents and engineers.
+Curated technical knowledge base across 26 domains. Built for LLM agents and engineers.
 
 ## What is this?
 
@@ -63,12 +63,12 @@ A knowledge base designed **primarily for AI agents** - structured so that RAG r
 
 Each article is a concentrated extract: code examples, configuration patterns, gotchas, best practices. No filler, no "let me explain why this is important" - just the knowledge an agent needs to solve a real problem.
 
-**Also useful for engineers** who want quick reference across 27 technical domains without wading through tutorials.
+**Also useful for engineers** who want quick reference across 26 technical domains without wading through tutorials.
 
 **Who it's for:**
 
 - **LLM agents** - structured format optimized for RAG retrieval, [ConTree MCP](https://contree.dev/), and context injection
-- **Engineers** - quick lookup of patterns, commands, configurations across 27 domains
+- **Engineers** - quick lookup of patterns, commands, configurations across 26 domains
 - **Teams** - shared knowledge base accessible via ConTree sandbox or direct file access
 
 ## How to use
@@ -83,27 +83,32 @@ Each article is a concentrated extract: code examples, configuration patterns, g
 
 | Domain | Articles | Coverage |
 |--------|:--------:|----------|
-| **Data Science** | 85 | ML, statistics, neural networks, computer vision, NLP, math foundations |
-| **Python** | 43 | Core language, FastAPI, Django, async, testing, packaging, microservices |
-| **Web Frontend** | 40 | React, TypeScript, CSS, Figma, bundlers, accessibility |
-| **DevOps** | 39 | Docker, Kubernetes, Terraform, CI/CD, monitoring, SRE |
-| **Architecture** | 39 | Microservices, DDD, system design, API design, integration patterns |
-| **Data Engineering** | 38 | ETL/ELT, Spark, Airflow, data warehouses, streaming, CDC |
-| **Kafka** | 33 | Broker internals, consumers, producers, Streams, KSQL, Connect |
-| **SQL & Databases** | 27 | PostgreSQL, MySQL, query optimization, migrations, indexing |
-| **Linux CLI** | 25 | Shell scripting, filesystem, permissions, systemd, networking |
-| **LLM & Agents** | 24 | RAG, fine-tuning, agent frameworks, prompt engineering, embeddings |
-| **Java & Spring** | 21 | Spring Boot, JPA, microservices, Kotlin, Android |
-| **BI & Analytics** | 21 | Tableau, Power BI, SQL analytics, dashboards, product analytics |
-| **Algorithms** | 19 | Sorting, graphs, dynamic programming, data structures, complexity |
-| **Security** | 18 | Web security, penetration testing, Active Directory, anti-fraud |
-| **SEO & Marketing** | 16 | Technical SEO, keyword research, link building, AI-driven SEO |
-| **Testing & QA** | 15 | Selenium, Playwright, API testing, CI integration, test design |
-| **Rust** | 14 | Ownership, lifetimes, async, error handling, unsafe |
-| **PHP** | 12 | Laravel, MVC, ORM, testing, PHP 8 features |
-| **Node.js** | 10 | Event loop, streams, clusters, performance, design patterns |
-| **iOS & Mobile** | 10 | SwiftUI, Swift, Android/Kotlin fundamentals |
-| **Misc** | 9 | JavaScript, Go, competitive programming, interview prep |
+| **Security** | 56 | Web security, penetration testing, Active Directory, anti-fraud, model protection, CWE patterns |
+| **Data Science** | 55 | ML, statistics, neural networks, computer vision, NLP, math foundations |
+| **Image Generation** | 50 | Diffusion models, flow matching, LoRA training, inpainting, tiled inference |
+| **LLM & Agents** | 49 | RAG, fine-tuning, agent frameworks, prompt engineering, multi-agent systems |
+| **Kafka** | 42 | Broker internals, consumers, producers, Streams, KSQL, Connect, replication |
+| **DevOps** | 35 | Docker, Kubernetes, Terraform, CI/CD, monitoring, SRE, observability |
+| **Web Frontend** | 34 | React, TypeScript, CSS, Figma, bundlers, accessibility, JS async patterns |
+| **Data Engineering** | 34 | ETL/ELT, Spark, Airflow, data warehouses, streaming, CDC, vector search |
+| **Architecture** | 33 | Microservices, DDD, system design, API design, integration patterns |
+| **SQL & Databases** | 32 | PostgreSQL, MySQL, query optimization, migrations, indexing, advanced patterns |
+| **iOS & Mobile** | 31 | SwiftUI, Swift, Android/Kotlin fundamentals, mobile ML |
+| **Python** | 30 | Core language, FastAPI, Django, async, testing, stdlib patterns, web scraping |
+| **Algorithms** | 29 | Sorting, graphs, dynamic programming, data structures, complexity, problem patterns |
+| **Linux CLI** | 27 | Shell scripting, filesystem, permissions, systemd, networking |
+| **C++** | 27 | Modern C++, memory, templates, concurrency, cross-platform ML inference |
+| **Java & Spring** | 25 | Spring Boot, JPA, microservices, Kotlin, Android |
+| **SEO & Marketing** | 24 | Technical SEO, keyword research, link building, AI-driven SEO |
+| **BI & Analytics** | 23 | Tableau, Power BI, SQL analytics, dashboards, product analytics |
+| **Testing & QA** | 22 | Selenium, Playwright, API testing, CI integration, browser automation |
+| **Rust** | 22 | Ownership, lifetimes, async, error handling, unsafe |
+| **Node.js** | 16 | Event loop, streams, clusters, performance, design patterns |
+| **PHP** | 15 | Laravel, MVC, ORM, testing, PHP 8 features |
+| **LLM Memory** | 11 | Memory architectures, session persistence, knowledge graphs, transfer learning |
+| **Audio & Voice** | 10 | TTS, ASR, voice cloning, speech synthesis, TTS fine-tuning |
+| **Writing** | 9 | Technical article structure, SEO for articles, LLM anti-patterns |
+| **Go** | 9 | Goroutines, channels, modules, HTTP servers, microservices, database patterns |
 
 ## Knowledge Graph Details
 
@@ -177,7 +182,7 @@ https://github.com/AnastasiyaW/knowledge-space
 
 Before answering technical questions, search docs/ for a
 relevant article. Don't guess or fabricate - look it up.
-731+ articles across 27 domains, each with code examples,
+766+ articles across 26 domains, each with code examples,
 configs, and real-world gotchas.
 
 How to use:

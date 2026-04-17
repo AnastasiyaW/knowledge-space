@@ -69,8 +69,7 @@ def random_degradation(image, num_degradations=2):
         lambda img: add_gaussian_noise(img, sigma=random.uniform(5, 50)),
         lambda img: add_jpeg_artifacts(img, quality=random.randint(10, 40)),
         lambda img: add_gaussian_blur(img, kernel=random.choice([3, 5, 7, 9, 11])),
-        lambda img: add_downscale(img, factor=random.uniform(2, 4)),
-    ], k=min(num_degradations, 4))
+        lambda img: add_downscale(img, factor=random.uniform(2, 4))], k=min(num_degradations, 4))
     for deg in degradations:
         image = deg(image)
     return image

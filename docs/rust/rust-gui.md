@@ -94,8 +94,7 @@ impl Counter {
         column![
             button("+").on_press(Message::Increment),
             text(self.value),
-            button("-").on_press(Message::Decrement),
-        ].into()
+            button("-").on_press(Message::Decrement)].into()
     }
 }
 ```

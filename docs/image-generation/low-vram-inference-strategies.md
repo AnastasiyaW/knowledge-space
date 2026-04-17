@@ -202,8 +202,7 @@ providers = [
         'trt_engine_cache_path': './trt_cache/',
     }),
     ('CUDAExecutionProvider', {'device_id': 0}),  # fallback
-    'CPUExecutionProvider',
-]
+    'CPUExecutionProvider']
 session = ort.InferenceSession("model.onnx", providers=providers)
 ```
 

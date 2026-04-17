@@ -18,7 +18,7 @@ So we made one.
 
 ## The Knowledge Space
 
-We're Anastasiia But and Anastasiya Ilukhina, and over the past months we've been running deep research with AI agents across 27 technical domains - from Kafka internals to Kubernetes configs, from SQL optimization to diffusion model architectures.
+We're Anastasiia But and Anastasiya Ilukhina, and over the past months we've been running deep research with AI agents across 26 technical domains - from Kafka internals to Kubernetes configs, from SQL optimization to diffusion model architectures.
 
 The result: **766+ dense reference articles**, each one structured the same way - key facts, runnable code, real-world gotchas, cross-references. No tutorials, no filler. Everything is verified, cross-referenced, and compressed into the format that works best for both agents and engineers who just need the answer.
 

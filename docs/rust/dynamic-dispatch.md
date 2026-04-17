@@ -34,8 +34,7 @@ impl Animal for Cat { fn speak(&self) -> &str { "Meow" } }
 // Heterogeneous collection - impossible with generics alone
 let animals: Vec<Box<dyn Animal>> = vec![
     Box::new(Dog),
-    Box::new(Cat),
-];
+    Box::new(Cat)];
 
 for animal in &animals {
     println!("{}", animal.speak());  // vtable dispatch
