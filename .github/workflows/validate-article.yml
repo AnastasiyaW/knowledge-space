@@ -40,9 +40,13 @@ jobs:
             [ -z "$file" ] && continue
             echo "--- Validating: $file ---"
 
-            # Skip index.md and non-article pages
-            if [[ "$file" == "docs/index.md" ]] || [[ "$file" == docs/contributing/* ]]; then
-              echo "  Skipping (not an article)"
+            # Skip index.md, meta pages, and non-article pages
+            if [[ "$file" == "docs/index.md" ]] \
+               || [[ "$file" == docs/contributing/* ]] \
+               || [[ "$file" == "docs/for-llm-agents.md" ]] \
+               || [[ "$file" == docs/knowledge-base/* ]] \
+               || [[ "$(basename "$file")" == "index.md" ]]; then
+              echo "  Skipping (meta/index page, not an article)"
               continue
             fi
 

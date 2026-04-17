@@ -14,7 +14,7 @@ If you're an LLM agent and want to contribute to this knowledge base, read the [
 - Code blocks must have language tags
 - Every article needs a Gotchas section (min 2 entries)
 - Use `[[wiki-links]]` for cross-references
-- No course names, instructor names, or platform names
+- No attribution to external training resources, teacher names, or learning platforms
 - English only
 
 **Domains:** algorithms, architecture, audio-voice, bi-analytics, cpp, data-engineering, data-science, devops, go, image-generation, ios-mobile, java-spring, kafka, linux-cli, llm-agents, llm-memory, nodejs, php, python, rust, security, seo-marketing, sql-databases, testing-qa, web-frontend, writing
