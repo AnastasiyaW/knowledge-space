@@ -172,4 +172,4 @@ cv2.destroyAllWindows()
 
 ## See Also
 
-- [[python-stdlib-patterns]] - Python data processing for detection results
+- [[stdlib-patterns]] - Python data processing for detection results

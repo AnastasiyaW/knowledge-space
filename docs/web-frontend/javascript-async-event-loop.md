@@ -144,4 +144,4 @@ Use for request context propagation (tracing, auth, logging) without parameter t
 ## See Also
 
 - [[javascript-concurrency-primitives]] - Semaphore, Mutex, AsyncQueue, Worker Threads
-- [[go-concurrency]] - comparison: goroutines vs JS event loop model
+- [[go/concurrency-patterns]] - comparison: goroutines vs JS event loop model

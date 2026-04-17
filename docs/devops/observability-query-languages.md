@@ -124,5 +124,5 @@ Use `slog` (Go 1.21 stdlib) or `zap`/`zerolog`. Always log with context: request
 
 ## See Also
 
-- [[go-microservices]] - gRPC interceptors for telemetry injection
-- [[kafka-messaging]] - monitoring consumer lag with metrics
+- [[microservices]] - gRPC interceptors for telemetry injection
+- [[kafka-messaging-fundamentals]] - monitoring consumer lag with metrics

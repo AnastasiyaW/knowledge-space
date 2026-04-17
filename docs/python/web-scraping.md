@@ -117,6 +117,6 @@ links = [urljoin(base_url, a['href']) for a in soup.find_all('a', href=True)]
 
 ## See Also
 
-- [[python-stdlib-patterns]] - collections, itertools for processing scraped data
-- [[sql-advanced-patterns]] - SQL for analyzing scraped datasets
+- [[stdlib-patterns]] - collections, itertools for processing scraped data
+- [[sql-databases/advanced-patterns]] - SQL for analyzing scraped datasets
 - [[browser-test-automation]] - Selenium/Geb for JS-rendered pages

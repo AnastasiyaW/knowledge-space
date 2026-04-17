@@ -105,5 +105,5 @@ process.on('uncaughtException', (err) => {
 
 ## See Also
 
-- [[javascript-async-patterns]] - event loop, promises, streams, generators
-- [[go-concurrency]] - goroutines, channels, sync primitives
+- [[javascript-async-event-loop]] - event loop, promises, streams, generators
+- [[go/concurrency-patterns]] - goroutines, channels, sync primitives

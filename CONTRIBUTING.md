@@ -105,8 +105,6 @@ Articles go into one of these domain folders:
 | `audio-voice/` | TTS, voice cloning, ASR, music generation |
 | `go/` | Goroutines, channels, modules, HTTP servers |
 
-| `misc/` | JavaScript, competitive programming |
-
 New domains can be proposed via PR with at least 5 articles.
 
 ---

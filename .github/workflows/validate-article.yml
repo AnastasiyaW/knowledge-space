@@ -141,7 +141,7 @@ jobs:
             "algorithms" "architecture" "audio-voice" "bi-analytics" "cpp"
             "data-engineering" "data-science" "devops" "go" "image-generation"
             "ios-mobile" "java-spring" "kafka" "linux-cli" "llm-agents"
-            "llm-memory" "misc" "nodejs" "php" "python" "rust" "security"
+            "llm-memory" "nodejs" "php" "python" "rust" "security"
             "seo-marketing" "sql-databases" "testing-qa" "web-frontend"
             "writing" "contributing" "blog"
           )

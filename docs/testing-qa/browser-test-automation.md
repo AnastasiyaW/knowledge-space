@@ -165,5 +165,5 @@ Browser.drive {
 
 ## See Also
 
-- [[python-web-scraping]] - alternative scraping approach for non-JS pages
+- [[web-scraping]] - alternative scraping approach for non-JS pages
 - [[ai-agent-ide-features]] - browser sub-agents for automated testing

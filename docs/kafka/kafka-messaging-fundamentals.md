@@ -72,6 +72,6 @@ This avoids the two-phase commit problem entirely.
 
 ## See Also
 
-- [[go-database-patterns]] - transactional outbox implementation in Go
-- [[go-microservices]] - Kafka in microservice architecture
+- [[database-patterns]] - transactional outbox implementation in Go
+- [[microservices]] - Kafka in microservice architecture
 - [[observability-query-languages]] - monitoring consumer lag with PromQL

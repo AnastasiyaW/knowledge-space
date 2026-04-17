@@ -13,7 +13,7 @@ from pathlib import Path
 VALID_DOMAINS = {
     "algorithms", "architecture", "bi-analytics", "cpp", "data-engineering",
     "data-science", "devops", "image-generation", "ios-mobile",
-    "java-spring", "kafka", "linux-cli", "llm-agents", "misc",
+    "java-spring", "kafka", "linux-cli", "llm-agents",
     "nodejs", "php", "python", "rust", "security", "seo-marketing",
     "sql-databases", "testing-qa", "web-frontend", "writing", "llm-memory",
     "audio-voice", "go",

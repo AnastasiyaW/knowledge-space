@@ -124,6 +124,6 @@ result = Order.objects.aggregate(
 
 ## See Also
 
-- [[python-web-scraping]] - data collection that feeds into Django models
-- [[python-stdlib-patterns]] - Python data processing patterns
-- [[sql-advanced-patterns]] - raw SQL equivalent of ORM operations
+- [[web-scraping]] - data collection that feeds into Django models
+- [[stdlib-patterns]] - Python data processing patterns
+- [[sql-databases/advanced-patterns]] - raw SQL equivalent of ORM operations

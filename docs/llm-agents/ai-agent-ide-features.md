@@ -145,4 +145,4 @@ Strategies:
 ## See Also
 
 - [[browser-test-automation]] - manual Selenium/Geb testing patterns
-- [[javascript-async-patterns]] - async patterns used in agent frameworks
+- [[javascript-async-event-loop]] - async patterns used in agent frameworks

@@ -133,4 +133,4 @@ Queue on doubly linked list: enqueue = insert_at_end O(1), dequeue = remove_from
 - [[trees-and-graphs]] - BST, heaps, tries, BFS, DFS, Dijkstra
 - [[sorting-algorithms]] - detailed sort implementations and comparisons
 - [[dynamic-programming]] - memoization, recursion patterns
-- [[algorithm-problem-patterns]] - two-pointer, sliding window, interview techniques
+- [[algorithms/problem-patterns]] - two-pointer, sliding window, interview techniques

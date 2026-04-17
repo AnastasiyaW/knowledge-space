@@ -119,6 +119,6 @@ Poller can be a goroutine with `time.Ticker` or triggered by DB `LISTEN/NOTIFY`.
 
 ## See Also
 
-- [[go-microservices]] - clean architecture, DI, project layout
-- [[kafka-messaging]] - delivery semantics for outbox consumers
-- [[sql-advanced-patterns]] - window functions, subqueries (PostgreSQL)
+- [[microservices]] - clean architecture, DI, project layout
+- [[kafka-messaging-fundamentals]] - delivery semantics for outbox consumers
+- [[sql-databases/advanced-patterns]] - window functions, subqueries (PostgreSQL)

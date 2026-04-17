@@ -113,4 +113,4 @@ Now checking a border candidate is O(1) per side instead of O(N).
 
 - [[data-structures-fundamentals]] - recursion on arrays, Big O analysis
 - [[trees-and-graphs]] - recursive tree traversal, DFS
-- [[algorithm-problem-patterns]] - sliding window, two-pointer, interview techniques
+- [[algorithms/problem-patterns]] - sliding window, two-pointer, interview techniques

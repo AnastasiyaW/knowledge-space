@@ -4,7 +4,7 @@ This file is for AI agents that clone this repository. Read this before making a
 
 ## What this repo is
 
-A curated technical knowledge base (757+ articles, 27 domains) designed for AI agent consumption. Dense references - code, configs, gotchas - no tutorials, no filler.
+A curated technical knowledge base (766+ articles, 26 domains) designed for AI agent consumption. Dense references - code, configs, gotchas - no tutorials, no filler.
 
 **Site:** https://happyin.space/
 **Repo:** https://github.com/AnastasiyaW/knowledge-space

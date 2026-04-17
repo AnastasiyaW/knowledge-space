@@ -178,5 +178,5 @@ DATE_ADD(date_col, INTERVAL 7 DAY)
 
 ## See Also
 
-- [[go-database-patterns]] - PostgreSQL with pgx in Go
-- [[python-web-scraping]] - scraping data that often needs SQL processing
+- [[database-patterns]] - PostgreSQL with pgx in Go
+- [[web-scraping]] - scraping data that often needs SQL processing

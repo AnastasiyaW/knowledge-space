@@ -121,7 +121,7 @@ Work-stealing scheduler: idle P steals goroutines from other P's run queues.
 
 ## See Also
 
-- [[go-fundamentals]] - types, slices, maps, interfaces, error handling
-- [[go-microservices]] - gRPC services, testing, project layout
-- [[javascript-async-patterns]] - comparison: event loop vs goroutines
-- [[kafka-messaging]] - consumer groups often implemented with goroutines
+- [[go/fundamentals]] - types, slices, maps, interfaces, error handling
+- [[microservices]] - gRPC services, testing, project layout
+- [[javascript-async-event-loop]] - comparison: event loop vs goroutines
+- [[kafka-messaging-fundamentals]] - consumer groups often implemented with goroutines

@@ -161,5 +161,5 @@ def process(user):
 ## See Also
 
 - [[dynamic-programming]] - memoization with `lru_cache`
-- [[algorithm-problem-patterns]] - Counter/defaultdict for frequency problems
+- [[algorithms/problem-patterns]] - Counter/defaultdict for frequency problems
 - [[data-structures-fundamentals]] - Big O of standard library operations
