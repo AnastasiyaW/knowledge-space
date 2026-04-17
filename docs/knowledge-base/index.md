@@ -7,6 +7,10 @@ description: Browse 766+ technical articles across 26 domains. Dense references 
 
 766+ curated articles across 26 domains. Click any domain to explore.
 
+## Browse by Domain
+
+Each domain below is collapsible - expand to see the article list. Articles are grouped by topic within each domain.
+
 ---
 
 <div id="data-science"></div>
