@@ -1,11 +1,11 @@
 ---
 title: Knowledge Base
-description: Browse 766+ technical articles across 26 domains. Dense references for LLM agents and engineers.
+description: Browse 771+ technical articles across 26 domains. Dense references for LLM agents and engineers.
 ---
 
 # Knowledge Base
 
-766+ curated articles across 26 domains. Click any domain to explore.
+771+ curated articles across 26 domains. Click any domain to explore.
 
 ## Browse by Domain
 

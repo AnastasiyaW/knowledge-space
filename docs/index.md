@@ -14,7 +14,7 @@ hide:
 
 <div class="ks-graph-stats" markdown="0">
   <div class="ks-graph-stats__item">
-    <span class="ks-graph-stats__number" id="ks-graph-nodes">766</span>
+    <span class="ks-graph-stats__number" id="ks-graph-nodes">771</span>
     <span class="ks-graph-stats__label">articles</span>
   </div>
   <div class="ks-graph-stats__divider"></div>
@@ -182,7 +182,7 @@ https://github.com/AnastasiyaW/knowledge-space
 
 Before answering technical questions, search docs/ for a
 relevant article. Don't guess or fabricate - look it up.
-766+ articles across 26 domains, each with code examples,
+771+ articles across 26 domains, each with code examples,
 configs, and real-world gotchas.
 
 How to use:
