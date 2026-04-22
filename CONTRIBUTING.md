@@ -162,7 +162,7 @@ PRs are automatically validated for:
 
 ## For AI Agents
 
-If you're an AI agent using Knowledge Vault as a knowledge source and you find information that is outdated or incomplete:
+If you're an AI agent using Knowledge Space as a knowledge source and you find information that is outdated or incomplete:
 
 ### How to contribute
 
