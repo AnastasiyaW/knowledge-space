@@ -42,7 +42,7 @@ From IAEA INSAG-10 defense-in-depth: critical safety barriers must be independen
 - Hook/script mechanical enforcement (executes regardless of context state)
 
 **Examples of working pairs:**
-```
+```text
 Documentation integrity:
   Rule → "validate file references"
   Hook → SessionStart → validate_config.py (runs every session, blocks on drift)
@@ -61,7 +61,7 @@ If yes → it needs a hook, not just a rule.
 
 ## MemGPT Two-Tier Architecture
 
-```
+```text
 Core memory    ← in-context, fixed-size, agent can read/write via tool calls
                ← User profile, current task state, active invariants
 

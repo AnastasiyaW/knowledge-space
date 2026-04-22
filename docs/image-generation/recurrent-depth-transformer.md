@@ -4,14 +4,14 @@ Looped transformer architecture that reuses a single block T times to simulate m
 
 ## Three-Stage Forward Pass
 
-```
+```text
 Input → Prelude (N layers, once) → Recurrent Block (× T loops) → Coda (N layers, once) → Logits
 ```
 
 **Prelude:** Standard transformer layers (default 2). Encodes input to hidden state `e`.
 
 **Recurrent Block update rule:**
-```
+```text
 h_{t+1} = A * h_t + B * e + Transformer(h_t, e)
 ```
 - `e` = Prelude output, injected every iteration

@@ -14,17 +14,17 @@ hide:
 
 <div class="ks-graph-stats" markdown="0">
   <div class="ks-graph-stats__item">
-    <span class="ks-graph-stats__number" id="ks-graph-nodes">771</span>
+    <span class="ks-graph-stats__number" id="ks-graph-nodes">785</span>
     <span class="ks-graph-stats__label">articles</span>
   </div>
   <div class="ks-graph-stats__divider"></div>
   <div class="ks-graph-stats__item">
-    <span class="ks-graph-stats__number">3987+</span>
+    <span class="ks-graph-stats__number">4030+</span>
     <span class="ks-graph-stats__label">links</span>
   </div>
   <div class="ks-graph-stats__divider"></div>
   <div class="ks-graph-stats__item">
-    <span class="ks-graph-stats__number">68</span>
+    <span class="ks-graph-stats__number">39</span>
     <span class="ks-graph-stats__label">communities</span>
   </div>
   <div class="ks-graph-stats__divider"></div>
@@ -83,30 +83,30 @@ Each article is a concentrated extract: code examples, configuration patterns, g
 
 | Domain | Articles | Coverage |
 |--------|:--------:|----------|
+| **Image Generation** | 58 | Diffusion models, flow matching, LoRA training, inpainting, tiled inference |
+| **LLM & Agents** | 57 | RAG, fine-tuning, agent frameworks, prompt engineering, multi-agent systems |
 | **Security** | 56 | Web security, penetration testing, Active Directory, anti-fraud, model protection, CWE patterns |
-| **Data Science** | 55 | ML, statistics, neural networks, computer vision, NLP, math foundations |
-| **Image Generation** | 50 | Diffusion models, flow matching, LoRA training, inpainting, tiled inference |
-| **LLM & Agents** | 49 | RAG, fine-tuning, agent frameworks, prompt engineering, multi-agent systems |
-| **Kafka** | 42 | Broker internals, consumers, producers, Streams, KSQL, Connect, replication |
-| **DevOps** | 35 | Docker, Kubernetes, Terraform, CI/CD, monitoring, SRE, observability |
-| **Web Frontend** | 34 | React, TypeScript, CSS, Figma, bundlers, accessibility, JS async patterns |
+| **Data Science** | 56 | ML, statistics, neural networks, computer vision, NLP, math foundations |
+| **Kafka** | 43 | Broker internals, consumers, producers, Streams, KSQL, Connect, replication |
+| **DevOps** | 38 | Docker, Kubernetes, Terraform, CI/CD, monitoring, SRE, observability |
+| **Web Frontend** | 36 | React, TypeScript, CSS, Figma, bundlers, accessibility, JS async patterns |
 | **Data Engineering** | 34 | ETL/ELT, Spark, Airflow, data warehouses, streaming, CDC, vector search |
+| **Algorithms** | 33 | Sorting, graphs, dynamic programming, data structures, complexity, problem patterns |
 | **Architecture** | 33 | Microservices, DDD, system design, API design, integration patterns |
-| **SQL & Databases** | 32 | PostgreSQL, MySQL, query optimization, migrations, indexing, advanced patterns |
+| **SQL & Databases** | 33 | PostgreSQL, MySQL, query optimization, migrations, indexing, advanced patterns |
+| **Python** | 33 | Core language, FastAPI, Django, async, testing, stdlib patterns, web scraping |
 | **iOS & Mobile** | 31 | SwiftUI, Swift, Android/Kotlin fundamentals, mobile ML |
-| **Python** | 30 | Core language, FastAPI, Django, async, testing, stdlib patterns, web scraping |
-| **Algorithms** | 29 | Sorting, graphs, dynamic programming, data structures, complexity, problem patterns |
 | **Linux CLI** | 27 | Shell scripting, filesystem, permissions, systemd, networking |
 | **C++** | 27 | Modern C++, memory, templates, concurrency, cross-platform ML inference |
 | **Java & Spring** | 25 | Spring Boot, JPA, microservices, Kotlin, Android |
 | **SEO & Marketing** | 24 | Technical SEO, keyword research, link building, AI-driven SEO |
 | **BI & Analytics** | 23 | Tableau, Power BI, SQL analytics, dashboards, product analytics |
-| **Testing & QA** | 22 | Selenium, Playwright, API testing, CI integration, browser automation |
+| **Testing & QA** | 23 | Selenium, Playwright, API testing, CI integration, browser automation |
 | **Rust** | 22 | Ownership, lifetimes, async, error handling, unsafe |
 | **Node.js** | 16 | Event loop, streams, clusters, performance, design patterns |
 | **PHP** | 15 | Laravel, MVC, ORM, testing, PHP 8 features |
-| **LLM Memory** | 11 | Memory architectures, session persistence, knowledge graphs, transfer learning |
-| **Audio & Voice** | 10 | TTS, ASR, voice cloning, speech synthesis, TTS fine-tuning |
+| **LLM Memory** | 13 | Memory architectures, session persistence, knowledge graphs, transfer learning |
+| **Audio & Voice** | 11 | TTS, ASR, voice cloning, speech synthesis, TTS fine-tuning |
 | **Writing** | 9 | Technical article structure, SEO for articles, LLM anti-patterns |
 | **Go** | 9 | Goroutines, channels, modules, HTTP servers, microservices, database patterns |
 
@@ -182,7 +182,7 @@ https://github.com/AnastasiyaW/knowledge-space
 
 Before answering technical questions, search docs/ for a
 relevant article. Don't guess or fabricate - look it up.
-775+ articles across 26 domains, each with code examples,
+785+ articles across 26 domains, each with code examples,
 configs, and real-world gotchas.
 
 How to use:

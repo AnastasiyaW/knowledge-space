@@ -14,7 +14,7 @@ Patterns for building production-grade ComfyUI Docker images: distutils conflict
 ## Distutils Conflict Fix
 
 **Symptom:**
-```
+```yaml
 error: uninstall-distutils-installed-package
 × Cannot uninstall blinker 1.4
 ╰─> It is a distutils installed project...
@@ -53,7 +53,7 @@ RUN dpkg -l python3-blinker python3-yaml 2>/dev/null | grep ^ii && \
 
 Single `nodes.txt` with all custom nodes → any pin update invalidates the entire layer (10+ minute rebuild).
 
-```
+```text
 nodes-stable.txt   ← core utilities, model loaders (change rarely)
 nodes-volatile.txt ← custom/frequently-updated nodes
 ```

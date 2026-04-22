@@ -206,7 +206,7 @@ class LayerBlendController:
 
 Background processing queue that never blocks Photoshop UI. User adds images and continues working.
 
-```
+```text
 Queue state machine:
   Idle → (user adds image) → Queued → (worker picks up) → Processing → Done
   Processing → (user clicks current image) → Interrupted → Queued (reprioritized)

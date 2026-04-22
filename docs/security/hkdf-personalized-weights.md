@@ -289,7 +289,7 @@ Server stores only: `{account_id, epoch, master_secret}` (~300 bytes/user). All 
 
 Scale/offset perturbations must survive INT8 quantization if used:
 
-```
+```text
 INT8 range: [-128, 127] → float range ≈ [-1.0, 1.0] (typical scale ~0.0078)
 Minimum distinguishable delta: 1 LSB = 0.0078
 

@@ -225,7 +225,7 @@ From sdd.sh community analysis:
 **Native Agent Teams** (Anthropic, experimental): Team lead session coordinates workers running in separate context windows with shared task list. Enable via `--experimental agent-teams`. First-party solution — maintained by Anthropic. Replaces the coordination layer for new projects; file-based handoffs remain valuable for knowledge persistence.
 
 **Dependency graph decomposition** (claude-swarm pattern):
-```
+```text
 Task → DAG of subtasks → parallel spawn for independent nodes → quality gate phase
 ```
 Tasks declare explicit dependencies. Orchestrator knows which can parallelize. Mandatory quality gate agent reviews all outputs before merge.

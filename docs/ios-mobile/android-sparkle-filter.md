@@ -11,7 +11,7 @@ Implementing realtime sparkle/glitter effects on clothing in live camera preview
 
 ## Architecture Overview
 
-```
+```text
 CameraX (preview frame)
     ↓
 LiteRT segmentation model (clothing mask)

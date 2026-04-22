@@ -13,7 +13,7 @@ Applied color theory for diffusion model training, color correction, and palette
 
 Johannes Itten's system underpins most color harmony logic in art and design:
 
-```
+```text
 Primary:    Red (0°), Yellow (120°), Blue (240°)
 Secondary:  Orange (60°), Green (180°), Violet (300°)
 Tertiary:   Red-Orange, Yellow-Orange, Yellow-Green,
@@ -148,7 +148,7 @@ def dominant_hue(image_bgr):
 
 ### Effective Color Description Hierarchy
 
-```
+```text
 1. Global temperature: "warm golden light", "cool overcast"
 2. Dominant palette: "earthy oranges and browns"
 3. Key object color: "red velvet dress"
@@ -217,7 +217,7 @@ For ML: when building perceptual loss functions or scoring models, CIECAM02 attr
 
 ### ICC Profile Chain
 
-```
+```text
 Input device (camera) → [ICC input profile]
   → Profile Connection Space (PCS = D50 XYZ or LAB)
   → [ICC output profile]

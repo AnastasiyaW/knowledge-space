@@ -26,7 +26,7 @@ Deep reference for the FLUX.2 Klein 9B model internals: transformer structure, t
 
 Klein 9B uses a MMDiT-style architecture with two block types:
 
-```
+```text
 Input (noisy latent + reference images)
     ↓
 8 × Double Blocks       ← process image+text jointly
@@ -59,7 +59,7 @@ Output (denoised latent)
 
 Klein uses Qwen3 8B as its sole text encoder (replacing T5 + CLIP in older FLUX):
 
-```
+```text
 Qwen3 8B (36 transformer layers)
 Text → Hidden states at layers 9, 18, 27 → Concatenated
 ↓
@@ -77,7 +77,7 @@ The multi-layer extraction gives the model coarse semantic (early layers) + refi
 
 ## VAE
 
-```
+```text
 Image (3 channels, H×W)
 ↓ encode
 Latent (32 channels, H/8 × W/8)
@@ -98,7 +98,7 @@ The 32-channel VAE (vs 4-channel in SDXL) enables richer latent representation b
 
 Klein's core editing innovation: reference images share the same sequence space as the output, differentiated only by temporal position encoding:
 
-```
+```yaml
 Sequence: [ref_image_1 | ref_image_2 | ... | output_tokens]
 Time (t):      1/2           1/4              0
 ```

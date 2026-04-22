@@ -16,7 +16,7 @@ Encrypting weights prevents extraction, but once decrypted for inference the mod
 The model's final layer outputs a non-RGB encoded tensor (scrambled channels, affine transform, XOR'd with a key). A separate signed process converts it to a usable image.
 
 **Architecture:**
-```
+```text
 ONNX model -> encoded_tensor (not RGB) -> Converter.exe -> JPEG/PNG
 ```
 
@@ -27,7 +27,7 @@ ONNX model -> encoded_tensor (not RGB) -> Converter.exe -> JPEG/PNG
 - Checks own integrity and detects debuggers
 
 **Obfuscation stack (C++):**
-```
+```text
 LLVM passes:
   - Control Flow Flattening (CFF): state machine replaces conditional branches
   - Bogus Control Flow: dead code inserted with opaque predicates
@@ -62,7 +62,7 @@ Critical layers run on a remote server. Client cannot complete inference without
 
 **Late split is preferred** for desktop products: most computation stays local (leveraging user GPU), minimal data transmitted, server handles only finalization.
 
-```
+```text
 Client GPU: layers 0..N-2 -> intermediate_tensor [B, C, H/8, W/8]
 HTTP POST /finalize:
   body: {tensor: base64(gzip(intermediate_tensor)), license_token: ...}
@@ -89,7 +89,7 @@ Client: postprocess + decode output
 
 Full model runs locally at standard quality. 1-2 enhancement layers on server produce premium quality. Free tier = local only. Paid tier = local + server enhancement.
 
-```
+```text
 Local inference -> "good" output (usable, watermarked)
          +
 Server enhancement request (paid, requires active license)

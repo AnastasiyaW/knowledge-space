@@ -22,7 +22,7 @@ After `free(ptr)`, the allocator returns the memory to the heap. The allocator m
 - **Execute (function pointer/vtable):** jumps to attacker-controlled address.
 
 **Heap grooming / type confusion attack:**
-```
+```text
 free(victim_object)      → allocator marks region free
 malloc(attacker_size)    → if sizes match, region is reused for attacker allocation
 attacker writes          → fills region with crafted data (fake vtable, fake object)

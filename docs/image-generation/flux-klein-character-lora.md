@@ -80,7 +80,7 @@ The captioning strategy for identity LoRA is counter-intuitive:
 
 Always put trigger word **first** in caption:
 
-```
+```text
 {trigger_word}, [scene], [background], [lighting], [pose/framing]
 ```
 
@@ -96,7 +96,7 @@ Two compounding factors:
 
 ### Fix: 1/3 Composition Rule
 
-```
+```text
 Dataset breakdown:
 - 33% close shots (shoulders up)
 - 33% half-body (waist up)

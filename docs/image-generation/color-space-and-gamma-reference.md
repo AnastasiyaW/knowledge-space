@@ -10,7 +10,7 @@ Practical reference for color management in video/photo processing pipelines. Co
 
 ## Architecture Overview
 
-```
+```text
 Camera sensor (linear light)
   → OETF (Opto-Electronic Transfer Function) applied at recording
   → File (with color space + gamma metadata)
@@ -35,7 +35,7 @@ Most display devices apply Rec.709 gamma regardless of file metadata. Log-encode
 
 ### Display Standards (ascending gamut size)
 
-```
+```text
 Rec.709 ≈ sRGB  <  DCI-P3  <  Rec.2020
 ```
 
@@ -127,7 +127,7 @@ Noise in camera footage concentrates in chroma channels. Denoising: apply to chr
 
 ### ColorSpace Transform (CST) — Explicit Pipeline
 
-```
+```text
 Input clip → CST node (Log+WideGamut → Rec.709+Gamma2.4)
            → Color corrections (in Rec.709)
            → Output
@@ -137,7 +137,7 @@ Most explicit and understandable. Balance/exposure corrections should be applied
 
 ### DaVinci Wide Gamut (Internal Working Space)
 
-```
+```text
 Input → Interpreted as camera color space (auto or manual)
       → All corrections in DaVinci Wide Gamut (~ACES-like container)
       → Output Color Space = Rec.709 (applied at render only)
@@ -175,7 +175,7 @@ cast = {c: (v - avg)/avg for c, v in zip('RGB', [r_mean, g_mean, b_mean])}
 
 Plots hue angle vs. saturation radius. Center = neutral (no saturation). Skin tones fall on a specific diagonal line regardless of ethnicity — use skin tone indicator for white balance.
 
-```
+```text
 Skin tone hue angle: ~20-25° (reddish-orange sector)
 Neutral white balance: distribution centroid near (0,0) in UV space
 ```
@@ -216,7 +216,7 @@ Horizontal pixel position mapped to brightness value (0–1023 in 10-bit). Usefu
 | DJI D-Log (DNG) | Blackmagic Design | Blackmagic Design Film | No native DJI profile in Resolve CST; Blackmagic closest match |
 
 **RAW dual-step pipeline:**
-```
+```text
 RAW file (R3D / BRAW / DNG)
   → Camera RAW tab: debayer into widest space (e.g. REDWideGamutRGB + Log3G10)
   → [Optional: WB + exposure corrections before compression]

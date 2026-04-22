@@ -17,7 +17,7 @@ Reference for deploying GPU workloads on RunPod: deploy type selection, image st
 ## Image Strategy (3 Tiers)
 
 ### Tier 1 — RunPod-cached (10-60 sec pull)
-```
+```text
 runpod/pytorch:2.11.0-cuda13.0-cudnn9-devel
 runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04
 runpod/worker-comfyui:<version>-base
@@ -27,13 +27,13 @@ runpod/base:0.6.x-cuda...
 Cached on Secure Cloud nodes. Community cloud not guaranteed.
 
 ### Tier 2 — Popular Docker Hub (1-5 min pull)
-```
+```text
 pytorch/pytorch:2.11.0-cuda13.0-cudnn9-devel
 nvidia/cuda:*  (sometimes cached, sometimes not)
 ```
 
 ### Tier 3 — Custom images (3-10 min or STUCK)
-```
+```text
 ghcr.io/your-org/your-image:tag
 nvidia/cuda:13.0.0-devel-ubuntu22.04  ← confirmed stuck on 4/4 pods (2026-04-17)
 ```

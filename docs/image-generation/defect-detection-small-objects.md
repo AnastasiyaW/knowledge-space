@@ -142,7 +142,7 @@ class SiameseChangeDetector(nn.Module):
 
 ### Recommended Pipeline
 
-```
+```text
 1. EfficientAD for anomaly heatmap (unsupervised, fast)
 2. Threshold heatmap → candidate regions
 3. YOLO / PP-YOLOE-SOD for classification of candidates

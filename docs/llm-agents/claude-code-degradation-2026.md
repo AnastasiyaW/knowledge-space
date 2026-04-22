@@ -123,7 +123,7 @@ curl -fsSL https://claude.ai/install.sh | bash
 
 Regardless of Anthropic changes, cache-friendly CLAUDE.md structure reduces costs:
 
-```
+```text
 CLAUDE.md structure (cache-friendly):
   1. Static invariant rules (never changes between sessions)
   2. Project structure (changes rarely)
