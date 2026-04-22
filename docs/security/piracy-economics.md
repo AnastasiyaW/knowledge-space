@@ -64,7 +64,7 @@ Students pirate → learn the tool → get jobs → companies buy enterprise lic
 
 ### Cost-Benefit Framework
 
-```
+```text
 Annual piracy cost ≈ (pirated_users × conversion_rate × ARPU)
 Anti-piracy investment ROI = recovered_revenue / implementation_cost
 ```
@@ -75,7 +75,7 @@ Anti-piracy investment ROI = recovered_revenue / implementation_cost
 - Consumer entertainment: 2-5%
 
 **Example calculation:**
-```
+```yaml
 Assumed: 1,000 pirated copies/month, $15/month ARPU, 15% conversion
 Monthly recovered revenue = 1,000 × 0.15 × $15 = $2,250/month
 Annual = $27,000
@@ -153,7 +153,7 @@ Invisible output watermarks contain `license_id`. Serve dual purpose:
 2. Revenue signal: if watermark payload = trial_id, image was processed on trial → upsell opportunity
 
 **Detection workflow:**
-```
+```text
 User uploads portfolio image → check for watermark → 
   if trial_id found → "This image was processed in trial. Upgrade for client work?" 
   if license_id found → verify license still valid

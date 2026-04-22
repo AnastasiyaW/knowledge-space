@@ -34,7 +34,7 @@ In projects with 20+ sequential sessions, each session produces a handoff file. 
 
 Rollup frontmatter marks `through:` — the timestamp or message ID up to which the rollup is accurate. New sessions combine the rollup with only handoffs dated **after** the rollup's `through` timestamp:
 
-```
+```text
 Read: rollup (covers months 1-3)
   +  handoff_2026-04-18.md (after rollup)
   +  handoff_2026-04-20.md (after rollup)

@@ -126,7 +126,7 @@ Hundreds of community style LoRAs. Discovery via:
 
 ## Multi-LoRA Stacking Rules
 
-```
+```text
 Max concurrent LoRAs: 3 (practical limit before artifacts)
 Total combined strength: <1.5-2.0
 Stacking order: strongest-influence first

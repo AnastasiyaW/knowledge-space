@@ -28,7 +28,7 @@ Secondary impact without execution: **path traversal in filename** allows overwr
 
 ### Double extension
 
-```
+```text
 shell.php.jpg    # Apache with misconfigured AddHandler will execute as PHP
 shell.php%00.jpg # Null byte truncation in older PHP: stored as shell.php
 shell.pHp        # Case-insensitive file system + case-insensitive extension check
@@ -63,7 +63,7 @@ def validate_upload(filename):
 
 ### Null byte injection (legacy PHP/older systems)
 
-```
+```text
 # HTTP multipart body:
 Content-Disposition: form-data; name="file"; filename="shell.php%00.jpg"
 
@@ -181,7 +181,7 @@ def sanitize_svg(svg_content: str) -> str:
 
 A file that is simultaneously valid in two formats. Example: a valid JPEG that is also a valid PHP script.
 
-```
+```text
 # JPEG header
 FF D8 FF E0  ...  [valid JPEG data]
 

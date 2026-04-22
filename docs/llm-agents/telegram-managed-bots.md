@@ -15,7 +15,7 @@ Per-user isolated bot instances deployed via a manager bot. Introduced in Bot AP
 
 ### Deployment Flow
 
-```
+```text
 User clicks deep link:
   https://t.me/newbot/{manager_bot}/{suggested_username}?name={display_name}
       ↓

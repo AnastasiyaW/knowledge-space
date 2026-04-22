@@ -19,12 +19,12 @@ hide:
   </div>
   <div class="ks-graph-stats__divider"></div>
   <div class="ks-graph-stats__item">
-    <span class="ks-graph-stats__number">3987+</span>
+    <span class="ks-graph-stats__number">4030+</span>
     <span class="ks-graph-stats__label">links</span>
   </div>
   <div class="ks-graph-stats__divider"></div>
   <div class="ks-graph-stats__item">
-    <span class="ks-graph-stats__number">68</span>
+    <span class="ks-graph-stats__number">39</span>
     <span class="ks-graph-stats__label">communities</span>
   </div>
   <div class="ks-graph-stats__divider"></div>

@@ -95,7 +95,7 @@ Target material should be slightly above current proficiency:
 
 ### Pedagogical Knowledge Base Structure
 
-```
+```text
 pedagogical_kb/
   theories/
     spaced_repetition.json     # FSRS params, scheduling rules
@@ -118,7 +118,7 @@ Each entry encodes: WHY (pedagogical principle) + WHAT (rule) + WHEN (trigger) +
 
 ### Tiered Context Loading
 
-```
+```text
 Tier 1 - Always in context (~300-500 tokens):
   current proficiency vector (last 10-20 concepts)
   active lesson context

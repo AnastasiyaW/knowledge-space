@@ -10,7 +10,7 @@ Separating an image into intrinsic components (reflectance/albedo vs. shading/il
 
 ## Core Decomposition
 
-```
+```text
 Observed image = Albedo (reflectance) × Shading (illumination)
 RGB_observed   = L(albedo)  ×  I(light direction, intensity, color)
 ```
@@ -89,7 +89,7 @@ Joint albedo extraction + relighting via Cosmos-Predict1-7B-Video2World DiT back
 
 **Architecture:** Three latents concatenated along temporal axis, processed by single DiT:
 
-```
+```text
 f_theta([z_tau^E + h^E,  z_tau^a,  z^I];  c_emb, tau)
 ```
 
@@ -139,7 +139,7 @@ Standard color transfer methods (Reinhard, histogram matching, optimal transport
 
 **Solution: transfer in albedo domain then recompose.**
 
-```
+```text
 Source → Decompose → Source_albedo, Source_shading
 Reference → Decompose → Ref_albedo
 

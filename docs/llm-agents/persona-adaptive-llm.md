@@ -18,7 +18,7 @@ Modeling persona state intrinsically in the model rather than injecting it via c
 **Variants:** GGUF quants (~6GB at Q4_K_M), suitable for consumer GPU inference  
 **Training:** PEFT on persona-specific interaction data
 
-```
+```text
 User interaction history
         ↓
    Persona extractor (student modeling)

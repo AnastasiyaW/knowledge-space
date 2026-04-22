@@ -133,15 +133,21 @@ def validate_article(path: Path, content: str) -> list[str]:
     if fence_count % 2 != 0:
         warnings.append(f"  ERROR: {rel} - unclosed code block ({fence_count} fences)")
 
-    # Check: code blocks without language tags
+    # Check: code blocks without language tags (state-tracked so closing fences
+    # never report — CommonMark fences toggle in/out, and only opening fences carry a tag)
+    in_block = False
     for i, line in enumerate(lines):
         stripped = line.strip()
+        if not stripped.startswith("```"):
+            continue
+        if in_block:
+            # This is a closing fence — ignore
+            in_block = False
+            continue
+        # Opening fence. Warn if no language tag follows the backticks.
         if stripped == "```":
-            # Could be a closing fence or an opening fence without language
-            # Check if previous non-empty line is also ``` (meaning this closes)
-            # Simple heuristic: if this is opening (no content before next ```)
-            if i + 1 < len(lines) and lines[i + 1].strip() and not lines[i + 1].strip().startswith("```"):
-                warnings.append(f"  WARN: {rel}:{i+1} - code block without language tag")
+            warnings.append(f"  WARN: {rel}:{i+1} - code block without language tag")
+        in_block = True
 
     # Check: forbidden content (platform names, "instructor" word, etc.)
     for pattern in FORBIDDEN_RE:

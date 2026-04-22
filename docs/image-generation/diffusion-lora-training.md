@@ -234,7 +234,7 @@ lr: 1e-4
 
 ### Caption Format for Identity LoRAs
 
-```
+```text
 trigger_token, [scene description], [lighting], [pose]
 ```
 
@@ -254,14 +254,14 @@ Bad:  "john_doe, blue eyes, sharp jawline, dark hair, studio lighting"  # locks 
 Cause: dataset dominated by headshots (90%) + distillation artifacts.
 
 **Fix: 1/3 dataset rule**
-```
+```text
 33% headshots (shoulders up)
 33% half-body
 33% full-body
 ```
 
 **Caption composition explicitly:**
-```
+```text
 "john_doe, full body shot, standing, arms visible, white studio backdrop"
 "john_doe, half body, casual seated pose, table in foreground"
 ```

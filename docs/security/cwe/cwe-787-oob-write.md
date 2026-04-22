@@ -19,7 +19,7 @@ A write operation targets memory address `base + offset` where `offset >= alloca
 This is distinct from a segfault (which occurs only when the target address is unmapped). OOB writes within the same allocation arena succeed silently.
 
 **Consequence chain:**
-```
+```text
 OOB write → corrupt adjacent data
            → if metadata (heap chunk header): heap corruption → malloc/free crash or controlled allocation
            → if return address (stack): control flow hijack

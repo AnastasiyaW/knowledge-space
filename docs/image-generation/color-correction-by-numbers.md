@@ -73,7 +73,7 @@ def margulis_correction(img_rgb: np.ndarray) -> np.ndarray:
 
 Regardless of ethnicity or lighting, correctly-rendered skin tones obey a fixed channel hierarchy:
 
-```
+```text
 R > G > B (always)
 R / G ≈ 1.3  (± 0.1)
 R / B ≈ 1.6  (± 0.15)
@@ -158,7 +158,7 @@ def overlay_wb_correction(img_rgb: np.ndarray) -> np.ndarray:
 
 Order of operations for tonal correction using Curves. Each stage builds on the previous; do not skip or reorder.
 
-```
+```text
 Stage 1: White / Black Point
   Set endpoints — clip pure white and pure black
   Scopes: waveform endpoints touch 0 and 1023 (or 0/255)

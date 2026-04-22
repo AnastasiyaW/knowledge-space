@@ -157,7 +157,7 @@ Diffusion models generate **low frequencies first, high frequencies last**:
 **Practical implication:** To edit LF while preserving HF, inject LF guidance in early timesteps (t > T/2) and preserve/inject original HF in late timesteps (t < T/3).
 
 ### Timestep-Based Editing
-```
+```text
 1. DDIM inversion of input
 2. Inject LF edit guidance at t > 0.5T (only LF visible here)
 3. At t < 0.3T: blend generated HF with original HF using alpha mask

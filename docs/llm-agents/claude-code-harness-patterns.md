@@ -4,7 +4,7 @@ Three-layer harness architecture for enforcing design quality and development di
 
 ## Three-Layer Architecture
 
-```
+```text
 ┌─────────────────────────────────────────────────────┐
 │ Layer 3: Deterministic CLI Detector                 │
 │  • Mechanical checks, no LLM needed                 │
@@ -30,7 +30,7 @@ Three-layer harness architecture for enforcing design quality and development di
 ## TDD-First Methodology (RED-GREEN-REFACTOR)
 
 Enforced workflow:
-```
+```text
 brainstorming → writing-plans → using-git-worktrees →
 subagent-driven-development → test-driven-development →
 requesting-code-review → finishing-a-development-branch

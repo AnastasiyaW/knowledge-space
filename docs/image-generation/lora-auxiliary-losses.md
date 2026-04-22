@@ -92,7 +92,7 @@ masks_path = "data/masks/"
 masked_loss = true
 ```
 
-```
+```text
 data/faces/
   ├── img001.jpg
   └── img002.jpg

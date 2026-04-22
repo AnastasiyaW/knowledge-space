@@ -100,7 +100,7 @@ AdaLN-Zero initialized with zero-scale (no modulation at init) trains most stabl
 
 ### Complete Multi-Signal Architecture
 
-```
+```text
 For each tile:
   input = concat(tile_latent[4ch], x_coords[1ch], y_coords[1ch], global_latent[4ch])
           → 10-channel input to U-Net first conv

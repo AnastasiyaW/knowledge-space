@@ -66,7 +66,7 @@ Prohibits circumventing "technological protection measures" (TPMs) that control 
 § 1202: Prohibits removing or altering "copyright management information" (CMI). Watermarks embedded in output images = CMI if they identify the copyright owner and license.
 
 **Watermark payload for DMCA support:**
-```
+```text
 bits 0-31: license_id hash (ties output to specific license)
 bits 32-47: timestamp (days since epoch)
 bits 48-55: app version
