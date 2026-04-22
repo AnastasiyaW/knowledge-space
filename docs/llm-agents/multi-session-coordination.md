@@ -220,12 +220,36 @@ From DORA report (Mike Mason):
 From sdd.sh community analysis:
 > Convergence on git worktrees + tmux/daemon pattern across the ecosystem - this is the de facto standard, not a niche choice.
 
+## April 2026 Ecosystem Additions
+
+**Native Agent Teams** (Anthropic, experimental): Team lead session coordinates workers running in separate context windows with shared task list. Enable via `--experimental agent-teams`. First-party solution — maintained by Anthropic. Replaces the coordination layer for new projects; file-based handoffs remain valuable for knowledge persistence.
+
+**Dependency graph decomposition** (claude-swarm pattern):
+```
+Task → DAG of subtasks → parallel spawn for independent nodes → quality gate phase
+```
+Tasks declare explicit dependencies. Orchestrator knows which can parallelize. Mandatory quality gate agent reviews all outputs before merge.
+
+**Docker container isolation per agent** (agent-swarm pattern):
+- Strongest isolation: each agent in its own container
+- Shared volume for coordination artifacts
+- Lead agent receives task, delegates to worker containers
+- Workers commit to shared volume, lead agent merges
+
+**Multi-tool orchestration** (metaswarm pattern):
+- Run Claude Code + Gemini CLI + Codex CLI simultaneously on the same task
+- Diverse perspectives reduce blind spots
+- Aggregate outputs via quality gate (not consensus — one reviewer)
+
+**Knowledge differentiator:** Orchestration (spawning workers, dependency graphs) is now a solved problem via Agent Teams. Unique value is in **knowledge infrastructure**: per-project knowledge bases, findings inboxes, session chronicles. These persist across sessions regardless of which orchestrator manages the workers.
+
 ## Gotchas
 
 - **Worktrees share the `.git` directory but not the working tree.** Running `git fetch` in any worktree updates refs for all worktrees. Running `git checkout` in one worktree does NOT affect others. But `git stash` is per-worktree
 - **SQLite WAL mode is required for concurrent multi-session reads.** Default SQLite journal mode uses exclusive write locks. WAL (Write-Ahead Logging) allows concurrent readers alongside a writer. Always open coordination databases with `PRAGMA journal_mode=WAL`
 - **Advisory leases must have TTL enforcement.** Without TTL, a crashed agent's lease blocks others indefinitely. Implement a background cleanup or check TTL on every lease read: `if (Date.now() - lease.started) > lease.ttl * 1000: delete lease`
 - **Pre-commit guards fire in the agent's worktree git context.** If the guard script uses relative paths, ensure they resolve from the worktree root, not the main repo root. Use `$(git rev-parse --show-toplevel)` to get the correct base path
+- **Agent Teams vs file-based handoffs:** Agent Teams manages live session coordination; handoffs/chronicles manage knowledge across time. They solve different problems and complement each other.
 
 ## See Also
 

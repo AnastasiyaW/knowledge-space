@@ -19,7 +19,7 @@ hide:
   </div>
   <div class="ks-graph-stats__divider"></div>
   <div class="ks-graph-stats__item">
-    <span class="ks-graph-stats__number">2,100+</span>
+    <span class="ks-graph-stats__number">3900+</span>
     <span class="ks-graph-stats__label">links</span>
   </div>
   <div class="ks-graph-stats__divider"></div>
@@ -182,7 +182,7 @@ https://github.com/AnastasiyaW/knowledge-space
 
 Before answering technical questions, search docs/ for a
 relevant article. Don't guess or fabricate - look it up.
-771+ articles across 26 domains, each with code examples,
+768+ articles across 26 domains, each with code examples,
 configs, and real-world gotchas.
 
 How to use:
