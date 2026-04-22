@@ -201,6 +201,35 @@ Horizontal pixel position mapped to brightness value (0–1023 in 10-bit). Usefu
 
 **White balance and exposure** corrections: apply **before** transform (in log/wide-gamut space) to leverage full bit depth.
 
+## Camera-Specific CST Gotchas
+
+| Camera | Color Space | Gamma | Special Notes |
+|--------|-------------|-------|---------------|
+| Sony A7/FX (S-Log3) | S-Gamut3 or S-Gamut3.Cine | S-Log3 | Shoots noisy in Log; prefer +1 stop exposure or use HLG |
+| Panasonic (V-Log) | V-Gamut | V-Log | Only one Log option; GH5S transcoded files lose metadata |
+| Fujifilm (F-Log) | Rec.2020 (F-Gamut not in CST list) | F-Log | Map F-Gamut → Rec.2020 as closest approximation |
+| ARRI Mini | ARRI Wide Gamut (Alexa) | Log C | Metadata usually correct; best color science baseline |
+| RED R3D (IPP2) | REDWideGamutRGB | RedLog3G10 | Use IPP2 (not Legacy); fixes neon artifacts on oversaturated patches |
+| Blackmagic RAW (BRAW) | Blackmagic Design | Blackmagic Film | Enable Highlight Recovery (+0.5-1 stop free); always pick exact sensor gen |
+| Blackmagic Pocket 6K | Blackmagic Pocket **4K** (!) | Blackmagic Pocket 6K Gen4 | 6K shares 4K color space in CST; choosing 6K in color space field is wrong |
+| HLG (any camera) | Rec.2020 | (leave as Use Timeline) | Do not set gamma to "HLG 2100" — use Rec.2020 color space only, no gamma change |
+| DJI D-Log (DNG) | Blackmagic Design | Blackmagic Design Film | No native DJI profile in Resolve CST; Blackmagic closest match |
+
+**RAW dual-step pipeline:**
+```
+RAW file (R3D / BRAW / DNG)
+  → Camera RAW tab: debayer into widest space (e.g. REDWideGamutRGB + Log3G10)
+  → [Optional: WB + exposure corrections before compression]
+  → CST node: Input = what Camera RAW output; Gamut Mapping → Saturation Compression ON
+  → Rec.709 working space
+```
+
+**CST operational rules:**
+- Set Input Color Space + Input Gamma only; leave Output as "Use Timeline" (Rec.709 + Gamma 2.4)
+- Enable Gamut Mapping → Saturation Compression on every CST node — compensates colors that exceed Rec.709 gamut
+- Disable "Apply Creative LUT" in Camera RAW tab before color work
+- WB and exposure corrections: do **before** CST to use full dynamic range
+
 ## Gotchas
 
 - **Log on display without transform**: 90% of displays apply Rec.709 EOTF to any input. Log footage shows as desaturated/flat unless explicitly converted. NLEs often silently apply wrong gamma.
@@ -209,6 +238,9 @@ Horizontal pixel position mapped to brightness value (0–1023 in 10-bit). Usefu
 - **HLG auto-detected as Rec.709**: auto color managed workflows often misidentify HLG-encoded clips as Rec.709. Verify manually: HLG footage has a characteristic toe in dark areas that looks wrong under Rec.709 gamma.
 - **Chroma denoising target**: camera noise is predominantly in UV channels, not luma. Applying spatial noise reduction equally to all channels sharpens luma artifacts while leaving chroma noise. Target the chroma channel specifically.
 - **Wide-gamut monitor + sRGB signal**: consumer monitors with P3-wide panels often display Rec.709 signal too saturated without explicit color management. Calibration + ICC profile in OS is required for accurate monitoring.
+- **Blackmagic Pocket 6K color space mismatch**: 6K Pocket uses same color space as 4K Pocket in CST; selecting "Pocket 6K" in the color space dropdown gives wrong result. Use "Pocket 4K" for color space, "Pocket 6K Gen4" for gamma.
+- **Fujifilm F-Gamut not in CST list**: Resolve CST has no F-Gamut entry. Use Rec.2020 as the closest standard approximation for F-Gamut coverage.
+- **RED IPP2 vs Legacy**: Legacy IPP2 produces black clipping artifacts on oversaturated neons even on old sensors. Always set Color Science = IPP2 in Camera RAW tab, even for older Red bodies.
 
 ## See Also
 
