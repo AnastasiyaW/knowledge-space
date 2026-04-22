@@ -1,6 +1,8 @@
 # <img src="docs/assets/favicon-animated.gif" width="28" height="28" alt="logo"> Happyin Knowledge Space
 
-Curated technical knowledge base across 26 domains. Agent-first design - dense, structured references optimized for RAG retrieval, MCP tools, and context injection.
+A curated technical reference across 26 domains — Kafka, Python, SQL, ML, security, image generation, and more — written so AI agents and engineers get dense, runnable answers instead of tutorial prose.
+
+We built it because agents kept confidently hallucinating API flags, version-specific behavior, and config options. Point your Claude, Cursor, or any RAG pipeline at this repo and it gets a reliable source to check against.
 
 **785+ articles | 26 domains | 4030+ cross-references**
 

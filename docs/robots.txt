@@ -1,4 +1,4 @@
-# Knowledge Vault - robots.txt
+# Happyin Knowledge Space - robots.txt
 # Strategy: allow search crawlers (traditional + AI), block AI training crawlers
 # Last updated: 2026-04-22
 #

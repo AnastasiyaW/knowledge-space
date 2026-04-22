@@ -127,7 +127,7 @@ Articles include version/date context where relevant (e.g., "PostgreSQL 17", "Re
 
 ## What makes this different
 
-**Agent-first design.** Every article is structured for machine consumption: consistent headers, code blocks with language tags, pattern/anti-pattern sections, explicit gotchas. An LLM agent retrieving a Knowledge Vault article gets immediately actionable context - no parsing needed.
+**Agent-first design.** Every article is structured for machine consumption: consistent headers, code blocks with language tags, pattern/anti-pattern sections, explicit gotchas. An LLM agent retrieving a Knowledge Space article gets immediately actionable context - no parsing needed.
 
 **Density over length.** A typical article packs the same information as a 2-hour video or a 30-page tutorial into 2-4 pages of pure reference text. Optimized for context window efficiency.
 
