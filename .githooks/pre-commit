@@ -1,0 +1,65 @@
+#!/bin/sh
+# Pre-commit hook: block commits that introduce author/instructor names
+# into knowledge base articles.
+#
+# To enable in a fresh clone:
+#   git config core.hooksPath .githooks
+#
+# The actual check lives in hooks/validate.py - this script only pipes
+# staged articles through it.
+
+set -e
+
+# Collect staged markdown files inside docs/
+staged=$(git diff --cached --name-only --diff-filter=ACMR \
+         | grep -E '^docs/.*\.md$' \
+         | grep -vE '^docs/(blog|contributing|knowledge-base|javascripts|stylesheets|assets)/') || true
+
+if [ -z "$staged" ]; then
+    exit 0
+fi
+
+python - <<'PY'
+import os, sys, subprocess
+sys.path.insert(0, os.path.join(os.getcwd(), 'hooks'))
+from validate import validate_article, check_names
+from pathlib import Path
+
+result = subprocess.run(
+    ['git', 'diff', '--cached', '--name-only', '--diff-filter=ACMR'],
+    capture_output=True, text=True, check=True,
+)
+staged = [
+    line for line in result.stdout.splitlines()
+    if line.startswith('docs/') and line.endswith('.md')
+    and not any(line.startswith(f'docs/{skip}/')
+                for skip in ('blog', 'contributing', 'knowledge-base',
+                             'javascripts', 'stylesheets', 'assets'))
+]
+
+fatal = 0
+for path in staged:
+    if not Path(path).exists():
+        continue  # deleted file
+    # Read the STAGED version, not working tree - that's what's about to commit
+    blob = subprocess.run(
+        ['git', 'show', f':0:{path}'],
+        capture_output=True, text=True, encoding='utf-8', errors='replace',
+    )
+    if blob.returncode != 0:
+        continue
+    content = blob.stdout
+    warnings = validate_article(Path(path), content)
+    errors = [w for w in warnings if 'ERROR' in w]
+    if errors:
+        fatal += len(errors)
+        print(f'\n[pre-commit] {path}:', file=sys.stderr)
+        for e in errors:
+            print(e, file=sys.stderr)
+
+if fatal:
+    print(f'\n[pre-commit] Blocked: {fatal} error(s) above.', file=sys.stderr)
+    print('[pre-commit] Remove names from text. URLs and reference links are fine.', file=sys.stderr)
+    print('[pre-commit] Bypass (only if you know what you are doing): git commit --no-verify', file=sys.stderr)
+    sys.exit(1)
+PY

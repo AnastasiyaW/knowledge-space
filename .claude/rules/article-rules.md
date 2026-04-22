@@ -3,7 +3,7 @@
 ## Repository structure
 
 ```
-docs/                     # 775+ articles across 26 domains - WORK HERE
+docs/                     # 785+ articles across 26 domains - WORK HERE
   {domain}/               # Domain folders (algorithms, python, kafka, etc.)
   index.md                # Main page - DO NOT MODIFY
   contributing/           # Contribution guide - DO NOT MODIFY
@@ -18,7 +18,13 @@ requirements.txt          # Python deps - DO NOT MODIFY
 
 ## NEVER do
 - Delete or move articles without explicit user request
-- Add course names, instructor names, or platform names (Udemy, Coursera, Stepik, OTUS, Karpov, Geekbrains, Skillbox, etc.)
+- **Add any personal names** (instructors, authors, translators - Russian, English, anyone).
+  Stripping names is enforced at commit time by `.githooks/pre-commit`. Technical
+  standards named after people (Bradford adaptation, Dijkstra's algorithm, Von Kries,
+  CIECAM02, etc.) are allowlisted as jargon. Book/course references go to the
+  raw-research file only, NOT into `docs/`. Source URLs are fine — keep them.
+- Add course names or platform names (Udemy, Coursera, Stepik, OTUS, Karpov, Geekbrains,
+  Skillbox, ProfileSchool, LiveClasses, etc.)
 - Write tutorial-style prose ("let me explain...", "first, let's understand...")
 - Create articles longer than 500 lines (split into multiple)
 - Modify ANY file outside `docs/{domain}/` without explicit request
