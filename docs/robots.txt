@@ -1,6 +1,13 @@
 # Knowledge Vault - robots.txt
 # Strategy: allow search crawlers (traditional + AI), block AI training crawlers
-# Last updated: 2026-04-03
+# Last updated: 2026-04-22
+#
+# Cloudflare Content Signals (April 2026 standard)
+# Default intent for ALL crawlers below unless overridden:
+#   search      = yes (building search indexes ok)
+#   ai-input    = yes (RAG / citation / grounded answers ok)
+#   ai-train    = no  (NOT for training foundation models)
+Content-Signal: search=yes, ai-input=yes, ai-train=no
 
 # Traditional search engines - ALLOW
 User-agent: Googlebot

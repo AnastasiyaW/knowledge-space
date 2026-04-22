@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 775+ curated articles across 26 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents. All articles are in English.
+> A comprehensive technical knowledge base with 785+ curated articles across 26 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents. All articles are in English.
 
 ## Algorithms & Data Structures
 - [Amortized Analysis](https://happyin.space/algorithms/amortized-analysis/): Amortized analysis computes the average cost per operation over a sequence of operations, providing a guaranteed bound regardless of input. Unlike ave

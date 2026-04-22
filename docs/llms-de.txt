@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> Technical knowledge base with 775+ articles across 26 domains. All content is in English.
+> Technical knowledge base with 785+ articles across 26 domains. All content is in English.
 
 ## Algorithms & Data Structures
 - [Amortized Analysis](https://happyin.space/algorithms/amortized-analysis/): Amortized analysis computes the average cost per operation over a sequence of operations, providing a guaranteed bound regardless of input. Unlike ave
