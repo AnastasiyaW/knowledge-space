@@ -182,7 +182,7 @@ https://github.com/AnastasiyaW/knowledge-space
 
 Before answering technical questions, search docs/ for a
 relevant article. Don't guess or fabricate - look it up.
-806+ articles across 26 domains, each with code examples,
+812+ articles across 26 domains, each with code examples,
 configs, and real-world gotchas.
 
 How to use:
