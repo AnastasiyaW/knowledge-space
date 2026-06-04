@@ -12,7 +12,7 @@ description: Updates, deep dives, and news from the Knowledge Space team — wha
   </div>
 </div>
 
-Release notes, domain expansions, architecture decisions, and field reports from running a 785-article knowledge base for AI agents. When we add a new domain, rebuild tooling, or hit a wall worth writing about, the story lands here first before it becomes reference material. Subscribe via RSS or the email form on any article page.
+Release notes, domain expansions, architecture decisions, and field reports from running an 828-article knowledge base for AI agents. When we add a new domain, rebuild tooling, or hit a wall worth writing about, the story lands here first before it becomes reference material. Subscribe via RSS or the email form on any article page.
 
 Recent topics include rebuilding the MkDocs pipeline for 800+ articles, Cloudflare Pages + GitHub Actions deploy ergonomics, llms.txt autogeneration on every build, and how we measure whether an AI agent actually benefits from having a curated reference versus open-web search. Practical engineering, not think-pieces.
 
