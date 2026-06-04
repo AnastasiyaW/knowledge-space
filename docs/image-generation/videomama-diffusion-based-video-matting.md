@@ -44,7 +44,7 @@ VideoMaMa is typically deployed as a refinement stage in complex image-processin
 - **Processing Latency:** Due to the iterative nature of diffusion, real-time processing (30+ FPS) is currently unattainable on standard server hardware without extreme quantization.
 
 ## See Also
-- [[SAM2]]
+- [[in-context-segmentation]]
 - [[LaMa]]
 - [[RealRestorer]]
 - [[defect-detection-small-objects]]

@@ -1,6 +1,6 @@
 # 종합 기술 지식 베이스 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 828+ curated articles across 26 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 834+ curated articles across 26 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -73,6 +73,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [System Design Interviews and Practice](https://happyin.space/architecture/system-design-interviews/): Structured approach to system design problems, whether in interviews or real architecture work. The same methodology applies to both.
 - [Tech Lead Role and Technical Leadership](https://happyin.space/architecture/tech-lead-role/): There is no universal definition of tech lead. The role varies significantly across organizations. Core: a strong senior engineer who designs solutions and remains within team scope.
 - [Testing Strategy and Quality Management](https://happyin.space/architecture/testing-and-quality/): Quality and development speed are connected through technical debt: poor quality = slow development. Good testing infrastructure enables faster, safer deployments.
+- [Write Buffering Patterns](https://happyin.space/architecture/write-buffering-patterns/): Durability and throughput patterns for absorbing high-frequency writes before a slow or
 
 ## Voice & Audio
 - [ASR/STT Context Compression (2026)](https://happyin.space/audio-voice/asr-stt-compression/): KV cache and context compression methods relevant to ASR inference and long-form TTS generation. As of Q1 2026, TriAttention achieves 10.7x KV compression without accuracy loss; TurboQuant is produ...
@@ -267,6 +268,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Kubernetes Storage](https://happyin.space/devops/kubernetes-storage/): Containers are ephemeral by default - data lost on pod restart, update, or migration. Kubernetes provides a storage abstraction layer through Volumes, PersistentVolumes, and StorageClasses.
 - [Kubernetes Workloads](https://happyin.space/devops/kubernetes-workloads/): Kubernetes workload resources manage sets of pods. Each type serves different application patterns - from stateless web services to stateful databases.
 - [Kustomize](https://happyin.space/devops/kustomize/): Template-free customization of Kubernetes YAML configurations. Built into kubectl. Uses overlays to patch base manifests without modifying originals.
+- [libvirt/KVM Guest Networking — Long-Lived TCP Stability](https://happyin.space/devops/libvirt-kvm-networking/): Diagnosing and fixing intermittent connection drops on KVM guests using virbr0 NAT. Covers virtio-net offload bugs, conntrack timeout classes, and escape hatches.
 - [Linux Server Administration](https://happyin.space/devops/linux-server-administration/): Essential Linux skills for DevOps: filesystem navigation, process management, networking, user management, and service configuration.
 - [Microservices Architecture Patterns](https://happyin.space/devops/microservices-patterns/): Microservices decompose applications into independently deployable services, each owning its database and communicating via APIs or messaging. Covers key patterns from service discovery through eve...
 - [Monitoring and Observability](https://happyin.space/devops/monitoring-and-observability/): Monitoring answers "what is broken?" (symptoms) and "why?" (causes). Observability means building a system you can ask any questions about and discover new correlations. Goal: maximize signal, mini...
@@ -284,6 +286,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [SRE Incident Management](https://happyin.space/devops/sre-incident-management/): Incident management covers on-call structure, escalation, mitigation, and blameless postmortems. The goal is to minimize MTTR while maintaining sustainable on-call practices.
 - [SRE Principles and Culture](https://happyin.space/devops/sre-principles/): Site Reliability Engineering (SRE) is a set of engineering techniques for building and maintaining reliable systems. Originated at Google (2003, Ben Treynor). "SRE is what happens when a software e...
 - [Terraform Infrastructure as Code](https://happyin.space/devops/terraform-iac/): Terraform is a declarative IaC tool using HCL (HashiCorp Configuration Language). It manages infrastructure across AWS, Azure, GCP, Kubernetes, and hundreds of other providers through a plan-before...
+- [Tunnel Architecture for Private Service Exposure](https://happyin.space/devops/tunnel-architecture/): Exposing VM-hosted or NAT-ed services to the public internet without opening inbound firewall ports. Covers cloudflared, WireGuard, frp/rathole, Tailscale Funnel, and autossh patterns.
 
 ## Go
 - [Go Concurrency - Goroutines, Channels, and Sync](https://happyin.space/go/concurrency-patterns/): Go's concurrency model - the GMP scheduler, channels, select, synchronization primitives, and production patterns for concurrent Go programs.
@@ -344,6 +347,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [MMDiT (Multi-Modal Diffusion Transformer)](https://happyin.space/image-generation/MMDiT/): Transformer architecture for diffusion models that processes multiple modalities (text, image) through **joint attention** in shared transformer blocks. Used in SD3, FLUX, [[Step1X-Edit]], and most...
 - [Object Removal and Inpainting Models](https://happyin.space/image-generation/object-removal-inpainting/): Comparative reference for object removal/erasure models (2024-2026). Covers specialized erasure models, general inpainting, and FLUX Klein 9B native approaches.
 - [Paired Training for Image Restoration](https://happyin.space/image-generation/paired-training-for-restoration/): How to train a diffusion model for image-to-image restoration (not text-to-image). Core technique: channel concatenation of degraded image latent with noise.
+- [Pixel Art Generation](https://happyin.space/image-generation/pixel-art-generation/): Algorithms and models for converting raster images to pixel art, generating pixel art via diffusion LoRAs, and training custom pixel-art style LoRAs. For LoRA training fundamentals see [[diffusion-...
 - [PixelSmile](https://happyin.space/image-generation/PixelSmile/): LoRA adapter for [[Step1X-Edit|Qwen-Image-Edit-2511]] that enables fine-grained facial expression editing with continuous intensity control and identity preservation. 12 base expressions, pairwise ...
 - [ML Plugin Inference UX Patterns](https://happyin.space/image-generation/plugin-inference-ux/): Patterns for making slow ML inference (10-30s per operation) feel fast inside desktop creative applications (Photoshop, Lightroom, etc.). Covers caching, progressive preview, background pre-compute...
 - [RealRestorer](https://happyin.space/image-generation/RealRestorer/): Image restoration model built on [[Step1X-Edit]]. Handles 9 degradation types via text-prompted editing. Ranks 1st among open-source restoration models, 3rd overall (behind Nano Banana Pro and GPT-...
@@ -475,8 +479,10 @@ This knowledge base contains deep technical articles organized by domain. Each a
 ## Linux CLI
 - [Bash Scripting](https://happyin.space/linux-cli/bash-scripting/): Bash scripts automate command sequences. This entry covers script structure, variables, conditionals, loops, functions, and debugging - everything needed to write robust shell scripts.
 - [Cron and Task Scheduling](https://happyin.space/linux-cli/cron-and-scheduling/): cron handles recurring scheduled tasks; `at` handles one-time future execution. This entry covers crontab syntax, special shortcuts, one-time scheduling, and system time management.
+- [Disk Data Recovery — Block-Level and Partition Repair](https://happyin.space/linux-cli/disk-data-recovery/): Recovering failed or large (16 TB+) drives at the block level: imaging, partition/GPT repair, filesystem repair. Assumes the drive is electrically responsive. For basics (fdisk, mkfs, mount, fsck o...
 - [Disks and Filesystems](https://happyin.space/linux-cli/disks-and-filesystems/): This entry covers disk device naming, partitioning, formatting, mounting, filesystem internals (ext3/ext4), LVM, LUKS encryption, health checking, and file recovery.
 - [Docker Basics](https://happyin.space/linux-cli/docker-basics/): Docker packages applications into containers - isolated, portable runtime environments built from images. This entry covers images, containers, volumes, Dockerfiles, and common operational patterns.
+- [FFmpeg Video and Audio Encoding](https://happyin.space/linux-cli/ffmpeg-encoding/): CLI media encoder. Covers codec selection, NVENC hardware acceleration, audio encoding, tempo change with formant preservation, and concat fast paths. FFmpeg 7.x, NVENC Turing+.
 - [File Operations](https://happyin.space/linux-cli/file-operations/): Core commands for creating, copying, moving, deleting, and viewing files and directories. These are the building blocks of everyday Linux command-line work.
 - [File Permissions](https://happyin.space/linux-cli/file-permissions/): Every file and directory in Linux has an owner, a group, and permission bits for three categories: owner (u), group (g), others (o). This entry covers reading, setting, and extending permissions.
 - [File Search and grep](https://happyin.space/linux-cli/file-search-and-grep/): Finding files by name/attributes with `find`, searching file contents with `grep`, and fast lookups with `locate`. These tools form the core of filesystem exploration and log analysis.

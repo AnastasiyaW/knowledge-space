@@ -55,6 +55,6 @@ SpatialEdit-16B is specialized for geometry and complements semantic-heavy model
 - [[diffusion-inference-acceleration]]
 - [[in-context-segmentation]]
 - [[DC-AE]]
-- [[flux-klein-inference]]
+- [[flux-klein-9b-inference]]
 - [[MMDiT]]
 
