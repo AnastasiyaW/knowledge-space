@@ -112,6 +112,60 @@ def load_state() -> AgentState:
 # This survives context compaction and session restarts
 ```
 
+### Coding Agent Task Artifacts
+
+Coding agents need two context planes: stable repo guidance and volatile task state. Keep durable behavior in repository guidance files; keep current work in task artifacts that can be read, diffed, and verified.
+
+```text
+repo/
+  AGENTS.md                 # stable commands, boundaries, review rules
+  .codex/config.toml        # project-local model/tool/hook defaults
+  .agent/tasks/TASK-042/
+    spec.md                 # frozen acceptance criteria
+    plan.md                 # checklist with current status
+    evidence/
+      tests.log             # command output, not chat claims
+      screenshots/          # visual proof
+    verifier.json           # independent pass/fail result
+```
+
+**Layering rule:**
+- Personal defaults: model, approval policy, telemetry, and reusable providers.
+- Project config: repo-specific hooks, root markers, trusted MCP servers, and agent roles.
+- Task artifact: acceptance criteria, current plan, evidence paths, unresolved questions.
+- CLI override: one-off experiment only; do not encode repeatable workflow there.
+
+**Subagent boundary:**
+- Use subagents for source scouting, fresh verification, independent file analysis, and merge arbitration.
+- Return summaries plus evidence paths; do not stream raw logs back into the main context.
+- Give each subagent a bounded brief: goal, relevant files, allowed writes, output schema, timeout.
+- Treat subagent output as semi-trusted until the main agent checks the referenced files or tests.
+
+```toml
+# .codex/config.toml
+project_root_markers = [".git", "AGENTS.md"]
+
+[[hooks.PreToolUse]]
+matcher = "^Bash$"
+
+[[hooks.PreToolUse.hooks]]
+type = "command"
+command = "python .codex/hooks/pre_tool_use_policy.py"
+timeout = 30
+```
+
+Task artifacts are also a cache strategy. Stable prefixes improve reuse; volatile data should sit behind short file references instead of being pasted into every turn.
+
+```python
+def build_task_context(task_dir: Path) -> str:
+    return "\n".join([
+        (task_dir / "spec.md").read_text(),
+        (task_dir / "plan.md").read_text(),
+        "Evidence index:",
+        "\n".join(str(p) for p in sorted((task_dir / "evidence").glob("*"))),
+    ])
+```
+
 ## Context Compaction Strategies
 
 ### Summarization

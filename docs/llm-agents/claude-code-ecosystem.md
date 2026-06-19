@@ -214,6 +214,20 @@ Allows headless agents to observe long-running processes without polling.
 | hesreallyhim/awesome-claude-code | - | Agentic patterns with Mermaid diagrams, subagent orchestration |
 | anthropics/skills | Official | Official skill marketplace |
 
+## Community Tooling Gap Checklist
+
+When evaluating Claude Code extensions, check whether the tool covers the operational gaps that matter in long-running repositories:
+
+| Gap | What To Look For |
+|-----|------------------|
+| **Multi-session coordination** | Append-only handoffs, worktree isolation, ownership leases, and merge discipline |
+| **Context drift detection** | Validation that project guidance links, imports, and generated references still exist |
+| **Mechanical rule enforcement** | Hooks or validators for high-risk rules instead of prompt-only advice |
+| **Supply-chain defense** | Dependency age gates, lockfile review, and explicit install policy |
+| **Evidence capture** | Test logs, screenshots, traces, and verifier output stored outside chat history |
+
+A plugin catalog is not enough by itself. The durable value is in the enforcement layer: what the tool can verify, block, record, and replay after context resets.
+
 ## Gotchas
 
 - **PreToolUse is the ONLY blocking hook.** PostToolUse, SessionStart, and other events are observation-only. If you need to prevent an action, it must be a PreToolUse hook - no other event can stop execution

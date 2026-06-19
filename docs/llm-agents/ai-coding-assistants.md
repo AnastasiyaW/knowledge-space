@@ -56,6 +56,29 @@ AI-powered development tools that assist with code completion, generation, editi
 | **Documentation** | "Add JSDoc comments" |
 | **Port** | "Convert this Python to Go" |
 
+## Assisted Build Strategy
+
+AI coding quality depends on choosing stacks that the model can reason about, not only stacks that are newest on paper.
+
+### Training-Cutoff-Aware Version Selection
+
+| Decision | Prefer | Avoid |
+|----------|--------|-------|
+| Library version | Mature API with abundant examples before the model's training cutoff | Brand-new major version with sparse examples |
+| Build tool | Boring, well-documented defaults | Custom wrapper the model cannot inspect |
+| Framework pattern | Canonical project structure | Novel architecture without local examples |
+| Dependency upgrade | Upgrade when tests and docs prove the model-facing API is stable | Upgrade only because a newer version exists |
+
+This is not an excuse to pin obsolete software. It is a context-quality heuristic: if the agent repeatedly hallucinates an API, either provide local examples or choose the version whose public shape is better represented in training and documentation.
+
+### Three-Stage Build Loop
+
+1. **Architecture pass:** define the smallest agent-legible structure, commands, state files, and verification loop.
+2. **MVP pass:** generate the working path with tests and one complete user workflow.
+3. **Inspector pass:** immediately add a lightweight debug surface: admin view, parameter panel, logs dashboard, eval runner, or visual state inspector.
+
+The inspector is not polish. It is how humans and agents see what the system is doing, tune parameters, and catch failure modes before adding features.
+
 ## Best Practices
 
 1. **Verify everything**: AI generates plausible but sometimes incorrect code

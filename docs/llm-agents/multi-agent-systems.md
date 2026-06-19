@@ -126,6 +126,49 @@ Visual no-code approach:
 | **Shared state** | All agents read/write to shared workspace | Async collaboration |
 | **Event-driven** | Agents subscribe to events, triggered by completions | Decoupled pipelines |
 
+## Multi-Principal Coordination
+
+A multi-agent system is not always a single-user optimization problem. One agent can serve several principals at once: a product owner, reviewer, operator, support agent, and background automation can all inject goals, constraints, and private context into the same workflow.
+
+Model this explicitly instead of flattening everyone into one `user` message:
+
+```python
+principals = [
+    {"id": "owner", "authority": 90, "private_context": owner_context},
+    {"id": "reviewer", "authority": 70, "private_context": review_context},
+    {"id": "operator", "authority": 80, "private_context": runtime_context},
+]
+
+def score_action(action, principals):
+    return sum(
+        p["authority"] * utility(action, p["private_context"])
+        for p in principals
+    )
+```
+
+### Failure Modes
+
+| Failure | Symptom | Guardrail |
+|---------|---------|-----------|
+| **Selection without execution** | The agent identifies the right authority but follows the wrong instruction under conflict | Require an authority trace before acting on conflicting commands |
+| **Privacy erosion** | Private details leak after several clarification rounds | Re-check redaction at every round, not only on the first response |
+| **Premature commitment** | The agent chooses a path before collecting missing constraints | Cap autonomous action until all high-authority unknowns are resolved |
+| **Flattened identity** | `user A says... user B says...` is serialized into one ambiguous chat turn | Preserve `principal_id`, authority, and visibility as message metadata |
+
+### Message Schema
+
+```json
+{
+  "role": "principal",
+  "principal_id": "security-reviewer",
+  "authority": 80,
+  "visibility": ["coordinator"],
+  "content": "Do not expose customer identifiers in the audit summary."
+}
+```
+
+When the underlying model API does not support multiple user identities, keep this metadata in the orchestration layer and compile it into the prompt with clear access-control boundaries.
+
 ## Practical Agent Teams
 
 ### RAG Team
@@ -144,6 +187,7 @@ Triage (classify urgency) -> Knowledge (search FAQ) -> Action (execute operation
 - If latency is critical, each agent hop adds significant delay
 - Debug by logging all inter-agent messages and tracking task state through the pipeline
 - Evaluate each agent independently before composing them into a team
+- Treat multi-user workflows as authority and privacy problems, not just routing problems. Flattening several principals into one chat role makes conflict resolution and access control unreliable
 
 ## See Also
 - [[agent-fundamentals]] - Single agent architecture
