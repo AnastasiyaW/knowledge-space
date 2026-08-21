@@ -23,6 +23,7 @@ type: MOC
 - [[lora-fine-tuning-for-editing-models]] - LoRA fine-tuning for editing models
 - [[Text-to-LoRA]] - Text-to-LoRA generation
 - [[paired-training-for-restoration]] - Paired training for image restoration
+- [[rights-first-text-to-mask-training]] - Rights-aware dataset contracts for grounding, masks, alpha, and multilingual queries
 
 ## Inference & Optimization
 - [[diffusion-inference-acceleration]] - Inference acceleration techniques
@@ -37,6 +38,8 @@ type: MOC
 - [[LaMa]] - Large Mask Inpainting
 - [[image-restoration-survey]] - Image restoration survey
 - [[RealRestorer]] - RealRestorer model
+- [[retouch-patch-harmonization]] - Build color-consistent defect-inpainting training pairs
+- [[perspective-calibration-for-compositing]] - Recover camera geometry before inserting or relighting objects
 - [[color-checker-and-white-balance]] - Color checker and white balance correction
 - [[grayscale-overlay-nn-architectures]] - Neural networks for grayscale overlay prediction
 
