@@ -7,6 +7,10 @@ type: MOC
 
 Reference knowledge base for software architecture, system design, API design, integration patterns, and technical leadership.
 
+## Projects and Live Systems
+
+- [[happyin-knowledge-space]] - Project identity, verified history, navigation, deployment, and separate-news boundary
+
 ## Architecture Process & Leadership
 
 The structured approach from business requirements to technology choices, and the people who drive it.
