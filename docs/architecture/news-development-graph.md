@@ -198,6 +198,15 @@ news/knowledge, assemble one project context, and build a compact agent context
 for a news ID. Every result includes the exact producer and Knowledge Space
 SHAs. It does not expose private review state or a generic fetch/shell tool.
 
+The target endpoint is `https://mcp.happyin.space/mcp`. It is public in the
+operational sense: any person or agent can list and call its read-only tools
+without login, OAuth, API keys, custom headers, or Cloudflare Access. The
+deployment reads only sanitized public artifacts and has no binding or
+credential for the private database, raw captures, reviews, drafts, or publish
+operations. Bounded inputs/outputs, caching, timeouts, and visible `429`
+responses protect the anonymous service without turning rate limits into an
+identity system.
+
 ### Private `happyin-curation`
 
 The first writer is a local `stdio` server beside the Python pipeline, private
@@ -225,6 +234,22 @@ worktrees while connection logs remain inspectable. Antigravity is only the
 MCP client; it does not own job state. Once the public read-only endpoint is
 deployed, Antigravity 2.0, IDE, and CLI can all connect through its remote
 `serverUrl`.
+
+After launch, an Antigravity user needs only:
+
+```json
+{
+  "mcpServers": {
+    "happyin-context": {
+      "serverUrl": "https://mcp.happyin.space/mcp"
+    }
+  }
+}
+```
+
+The release also publishes copy-paste configurations, `server.json`, and an
+MCP Registry entry. The website remains the stable discovery source while the
+official registry is in preview.
 
 ## Current Publication Sequence
 
@@ -304,5 +329,7 @@ missing evidence instead of filling the gap.
 - [MCP Tasks extension](https://github.com/modelcontextprotocol/modelcontextprotocol/blob/main/docs/extensions/tasks/overview.mdx)
 - [Official MCP Python SDK v2](https://py.sdk.modelcontextprotocol.io/)
 - [Cloudflare remote MCP guidance](https://developers.cloudflare.com/agents/model-context-protocol/guides/remote-mcp-server/)
+- [Cloudflare public MCP endpoint controls](https://developers.cloudflare.com/ai-search/how-to/connect-mcp-client/)
 - [OpenAI Agents SDK MCP integration](https://openai.github.io/openai-agents-python/mcp/)
 - [Google Antigravity MCP configuration](https://antigravity.google/docs/mcp)
+- [MCP Registry remote servers](https://modelcontextprotocol.io/registry/remote-servers)
