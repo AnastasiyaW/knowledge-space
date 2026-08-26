@@ -27,6 +27,20 @@ public item, the public builder validates and materializes it, and both the
 portal and agents consume the resulting public snapshot. The portal never
 writes identity or graph state.
 
+## Implementation Revisions
+
+The public producer contract is fixed at
+[`cd94753d11a86102df942f5560f1f49cdf332ccc`](https://github.com/AnastasiyaW/diffusion-love-news/commit/cd94753d11a86102df942f5560f1f49cdf332ccc).
+That revision adds schema 1.4 validation, cross-record lineage checks,
+project-thread aggregation and `_organizations.json` while leaving all 329
+legacy canonical items semantically unchanged.
+
+Portal source and deployment may be access-restricted, so this article does
+not present them as publicly retrievable evidence. The consumer contract is
+normative: a conforming consumer must validate the same identities and edges
+fail-closed and must render news, project and organization routes from one
+immutable producer snapshot.
+
 ## Public Entities
 
 ### Project
