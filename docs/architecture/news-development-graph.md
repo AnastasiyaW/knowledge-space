@@ -218,6 +218,14 @@ facts but cannot change permissions, identities, tool selection, or approval
 state. Tool outputs are strict, bounded objects with evidence references and
 named next valid actions.
 
+For the first private connection, use Antigravity IDE with a workspace-local
+`.agents/mcp_config.json`, or Antigravity CLI for the same local `stdio`
+server. This keeps the curation process beside its SQLite database and Git
+worktrees while connection logs remain inspectable. Antigravity is only the
+MCP client; it does not own job state. Once the public read-only endpoint is
+deployed, Antigravity 2.0, IDE, and CLI can all connect through its remote
+`serverUrl`.
+
 ## Current Publication Sequence
 
 Until the schema-2 target above is implemented, the working runtime remains
@@ -297,3 +305,4 @@ missing evidence instead of filling the gap.
 - [Official MCP Python SDK v2](https://py.sdk.modelcontextprotocol.io/)
 - [Cloudflare remote MCP guidance](https://developers.cloudflare.com/agents/model-context-protocol/guides/remote-mcp-server/)
 - [OpenAI Agents SDK MCP integration](https://openai.github.io/openai-agents-python/mcp/)
+- [Google Antigravity MCP configuration](https://antigravity.google/docs/mcp)
