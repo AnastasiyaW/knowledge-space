@@ -159,6 +159,7 @@ has completed that workflow.
 ## See Also
 
 - [[news-development-graph]]
+- [[news-research-knowledge-lifecycle]]
 - [[architecture-documentation]]
 - [[data-serialization-formats]]
 - [[testing-and-quality]]

@@ -10,6 +10,8 @@ Reference knowledge base for software architecture, system design, API design, i
 ## Projects and Live Systems
 
 - [[happyin-knowledge-space]] - Project identity, verified history, navigation, deployment, and separate-news boundary
+- [[news-development-graph]] - Reviewed project/company news threads and immutable Knowledge Space bridge
+- [[news-research-knowledge-lifecycle]] - Bilingual evidence, practical recipes, temporal status, and agent retrieval contract
 
 ## Architecture Process & Leadership
 
