@@ -316,6 +316,7 @@ missing evidence instead of filling the gap.
 
 ## See Also
 
+- [[news-research-knowledge-lifecycle]]
 - [[happyin-knowledge-space]]
 - [[architecture-documentation]]
 - [[data-serialization-formats]]
