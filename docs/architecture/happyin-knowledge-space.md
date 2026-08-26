@@ -79,7 +79,7 @@ news or project-history API.
 | 2026-06-04 | 834 articles across 26 domains | [commit `ab204db`](https://github.com/AnastasiyaW/knowledge-space/commit/ab204db) |
 | 2026-06-19 | Agent-research articles enriched; the count remained 834 | [commit `a99e8c6`](https://github.com/AnastasiyaW/knowledge-space/commit/a99e8c6) |
 | 2026-08-21 | Public news schema 1.3 published with project histories and domain joins | [feed release `730f7cf`](https://github.com/AnastasiyaW/diffusion-love-news/commit/730f7cf5a47a52e6d0ba75c90dceab15ce6e3b95) |
-| 2026-08-21 | Protected portal consumer deployed with project passport routes | [web release `c4a2e55`](https://github.com/AnastasiyaW/diffusion-love-web/commit/c4a2e554b81a1f52d5f58a431f8940ee4ded6ea8) |
+| 2026-08-21 | Protected portal pinned every feed read to one immutable producer snapshot | [web release `102c15b`](https://github.com/AnastasiyaW/diffusion-love-web/commit/102c15b3e999beff4114e28c0b24b2b8d2d49bd5) |
 
 These are Git-backed milestones, not a reconstructed marketing timeline. A
 commit proves the repository state it contains; it does not by itself prove a
@@ -97,16 +97,13 @@ deterministic project timelines, and schema/build checks.
 
 [`AnastasiyaW/diffusion-love-web`](https://github.com/AnastasiyaW/diffusion-love-web)
 is the separate consumer. Release
-[`c4a2e55`](https://github.com/AnastasiyaW/diffusion-love-web/commit/c4a2e554b81a1f52d5f58a431f8940ee4ded6ea8)
-validates feed versions 1.2 and 1.3 at the network boundary and renders project
-passports at `/project/{family_slug}`. Its GitHub CI and
-[Cloudflare Workers build](https://dash.cloudflare.com/73f30f68ba431f6ced857546c1f3cf6e/workers/services/view/diffusion-love-web/production/builds/9b857a2c-ca4c-4b47-82a7-bead5bd5e94c)
-completed successfully; Workers version
-`369017c1-56e7-4730-a07b-9f6c8a37d037` received 100% of production traffic.
-Both [the portal](https://app.diffusion.love/) and the
-[Happyin project route](https://app.diffusion.love/project/happyin-space)
-returned the expected Cloudflare Access login redirect on 2026-08-21. This
-proves the protected route and deployment, not an authenticated visual render.
+[`102c15b`](https://github.com/AnastasiyaW/diffusion-love-web/commit/102c15b3e999beff4114e28c0b24b2b8d2d49bd5)
+validates feed versions 1.2 and 1.3, resolves producer `main` to one full commit
+SHA per browser bootstrap, and renders project passports at
+`/project/{family_slug}`. That immutable commit proves the consumer source;
+this article does not infer a current deployment or traffic state from source
+history. Inspect [the portal](https://app.diffusion.love/) separately when live
+deployment evidence is required.
 
 No tracked file in `knowledge-space` consumes the JSON feed. The open data
 contract, Access-protected portal, and this public technical reference remain
@@ -161,6 +158,7 @@ has completed that workflow.
 
 ## See Also
 
+- [[news-development-graph]]
 - [[architecture-documentation]]
 - [[data-serialization-formats]]
 - [[testing-and-quality]]
