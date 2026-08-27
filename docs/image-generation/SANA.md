@@ -9,6 +9,22 @@ aliases: ["SANA 1.5", "SANA 1.6B", "SANA-Sprint", "SANA-Video"]
 
 Efficient DiT from NVlabs/MIT Han Lab. 600M-4.8B params with competitive quality at 1024-4096px. Uses **linear attention O(n)**, **DC-AE 32× compression**, and **Gemma-2-2B** text encoder. ICLR 2025 Oral.
 
+## Current Status (Verified 2026-08-27)
+
+The SANA name now covers several related but non-interchangeable branches. Select the artifact before applying performance, memory, or licensing claims.
+
+| Branch | Current artifact state | Intended use |
+|---|---|---|
+| SANA / SANA 1.5 / Sprint | Released image-generation code and checkpoints | Text-to-image and image refinement |
+| SANA-Video (2025) | Released research implementation; Diffusers integration followed | Earlier causal video generation |
+| SANA-WM (2026) | Released 2.6B world-model branch | 720p interactive/world simulation, up to one minute, 6-DoF control |
+| SANA-Video2 (2026) | Training/inference code and **5B 720p checkpoint released 2026-08-19** | Current 720p video generation |
+| SANA-Video2 14B | Architecture/config discussed, but no 14B checkpoint in the official repository | Research reference only; do not select for a runnable recipe |
+
+The August 4, 2026 report that Video2 had no public weights was accurate at the time and is now **superseded** for the 5B model. It remains accurate for the 14B checkpoint as of this verification date.
+
+The official Video2 page reports a 5-second, 720p, 40-step 5B benchmark on one H100, including a 13.06-second Sol Engine result. Treat this as a pinned benchmark context, not a consumer-GPU runtime estimate.
+
 ## Architecture — Full Detail
 
 ### Model Variants
@@ -146,11 +162,46 @@ Hybrid distillation: sCM (continuous consistency) + LADD (latent adversarial).
 
 Outperforms FLUX-schnell (7.94 FID) while 10× faster. ICCV 2025 Highlight.
 
-## SANA-Video
+## SANA Video and World-Model Branches
 
-Block Causal Linear Attention + Causal Mix-FFN for video. 2B params, 720p, up to 1 min, 16 FPS. **52× faster** than Wan-2.1-14B (36s vs 1897s for 5s clip). VBench: 84.05 vs Wan: 83.73.
+### SANA-Video (2025 generation)
 
-Key for [[temporal-tiling]]: SANA-Video's causal attention = same mechanism needed for tiles-as-frames.
+The original video branch introduced Block Causal Linear Attention and Causal Mix-FFN. Its reported 2B/720p/16 FPS results belong to that release and must not be copied onto Video2 or SANA-WM.
+
+Key for [[temporal-tiling]]: causal attention is structurally relevant to tiles-as-frames, but this is an architectural analogy rather than a supported SANA workflow.
+
+### SANA-WM (2026 world model)
+
+SANA-WM is a 2.6B interactive world model rather than a rename of SANA-Video. The official project describes 720p generation, sequences up to one minute, and 6-DoF camera control. Validate controller format and checkpoint license against the exact release before integration.
+
+### SANA-Video2 (2026 generation)
+
+Video2 is the current generation branch. The official repository added training code, inference code, architecture details, and a 5B 720p checkpoint on 2026-08-19. A 14B variant is described but is not a runnable public checkpoint in the repository.
+
+The project-page paper benchmark and the released-checkpoint guide use different run shapes:
+
+| Context | Frames/duration | FPS | Steps | Purpose |
+|---|---|---:|---:|---|
+| Project-page H100 benchmark | 5-second clip | Not a released-recipe default | 40 | Paper/engine comparison only |
+| Public 5B checkpoint guide | 193 frames / approximately 8.04 seconds | 24 | 50 | Current released-checkpoint example |
+
+For a reproducible released-checkpoint evaluation, start from the public guide and record:
+
+```yaml
+artifact: SANA-Video2-5B
+revision: <immutable-checkpoint-or-repository-revision>
+resolution: 720p
+frames: 193
+fps: 24
+duration_seconds: 8.04
+steps: 50
+gpu: <exact-model>
+engine: <official-or-baseline-runtime>
+seed: <integer>
+refiner_enabled: <true-or-false>
+```
+
+Do not substitute the 14B label into this recipe. Use 5 seconds/40 steps only when reproducing the paper benchmark, not as the public-checkpoint default. Do not compare H100 timing to a local GPU without measuring the same frames/duration, resolution, steps, runtime, and refiner state.
 
 ## VRAM
 
@@ -215,15 +266,68 @@ txt2img 1024px (strength=1.0) → img2img strength=0.3-0.4 → img2img strength=
 
 See [[flow-matching]] for full details on flow matching img2img.
 
+## Development History
+
+| Date | Branch | Event | Temporal status |
+|---|---|---|---|
+| 2024-10-22 | SANA image | Repository/project surfaced publicly | Historical discovery |
+| 2024-11-21 | SANA image | Training, inference, metrics code, and 1.6B models available | Current foundation |
+| 2025-10-01 | SANA-Video | Preview reported | Superseded by released implementation |
+| 2025-10-27 | SANA-Video | Official release | Historical/current for that branch |
+| 2025-11-06 | SANA-Video | Diffusers integration reported by the project | Current integration history |
+| 2025-12-24 | SANA-Video | Code/checkpoint availability reported | Superseded by later branches, retained |
+| 2026-03 | SANA image/video tooling | 720p LTX-VAE path and LTX2 refiner-to-2K update | Current only for that pipeline |
+| 2026-05 | SANA-WM | 2.6B world-model branch published | Current branch |
+| 2026-08-04 | SANA-Video2 | Announcement observed without weights | Superseded for 5B on 2026-08-19 |
+| 2026-08-19 | SANA-Video2 | Code plus 5B 720p checkpoint released | Current |
+
+## Practical Selection
+
+- Use SANA/SANA 1.5 for efficient image generation and documented image LoRA workflows.
+- Use Sprint only when its one-to-four-step distilled behavior is explicitly desired; do not reuse standard step counts.
+- Use SANA-Video2 5B for the current official runnable Video2 path.
+- Use SANA-WM only for interactive/world-model experiments with its own controller contract.
+- Do not plan a 14B Video2 deployment until an official checkpoint and license are present.
+
+## Research Coverage and Open Gaps
+
+- English primary evidence: official repository, official Video2 project page, and papers.
+- Chinese query lane: searched, but no qualified first-party Chinese source was retained in the bounded pass.
+- Open proof gap: a fully reproducible consumer-GPU matrix pinned to checkpoint hashes, runtime versions, and refiner state.
+- Community performance reports remain secondary until reproduced with the same settings.
+
+### Community reports
+
+- [Issue #156](https://github.com/NVlabs/Sana/issues/156) reports a community 1.6B training path on 24 GB using offload. The contributor explicitly called the patch messy; an official contributor pointed to the project's CAME-8bit configuration as a better memory-saving direction. Treat the issue as a technique lead, not a drop-in recipe.
+- [Issue #297](https://github.com/NVlabs/Sana/issues/297) records an unresolved MacBook Pro M3/MPS case where `Sana_600M_512px_diffusers` with `float16` produced a uniform gray image without an exception. Test `float32` as a diagnostic, but no maintainer-confirmed fix was present.
+- Neither issue concerns the released Video2 5B checkpoint. Do not transfer their image-model settings to Video2.
+
+## Gotchas
+
+- **Issue:** Treating “SANA-Video” as one continuously versioned checkpoint -> **Fix:** record the branch (`Video`, `WM`, or `Video2`), model size, checkpoint revision, and release date.
+- **Issue:** Selecting Video2 14B because it appears in architecture tables -> **Fix:** use the released 5B checkpoint; 14B is not a public runnable artifact as of 2026-08-27.
+- **Issue:** Repeating the August 4 “no weights” statement as current -> **Fix:** mark it superseded by the August 19 5B release while retaining it as historical context.
+- **Issue:** Generalizing H100 latency or old 2B video benchmarks -> **Fix:** preserve hardware, engine, duration, resolution, steps, and branch in every comparison.
+- **Issue:** Using the paper's 5-second/40-step benchmark as the released-checkpoint recipe -> **Fix:** start from the public guide's 193 frames, 24 FPS, and 50 steps unless intentionally reproducing the benchmark.
+- **Issue:** Applying an image-model offload/MPS workaround to Video2 -> **Fix:** require the exact branch, checkpoint, issue URL, and runtime before reuse.
+
+## Agent Brief
+
+When answering a SANA question, first identify `image`, `Sprint`, `Video`, `WM`, or `Video2`. Prefer the official repository and project page over news summaries. Return historical claims with a temporal label (`current`, `superseded`, or `unknown`). Never recommend Video2 14B as downloadable unless a newer first-party checkpoint is verified. For deployment advice, request or report the exact artifact revision, GPU, runtime, resolution, duration, steps, and refiner state.
+
 ## License
 
 **Code: Apache 2.0. Weights: NSCL v2-custom** (check specific terms for commercial use).
 
 ## Key Links
 
-- GitHub: github.com/NVlabs/Sana
-- HF: huggingface.co/Efficient-Large-Model/
-- Papers: arxiv.org/abs/2410.10629 (SANA), 2501.18427 (1.5), 2503.09641 (Sprint)
-- SANA-Video: arxiv.org/abs/2509.24695
-- DC-AE: github.com/mit-han-lab/efficientvit
+- GitHub: https://github.com/NVlabs/Sana
+- SANA-Video2: https://nvlabs.github.io/Sana/Video2/
+- Released Video2 checkpoint guide: https://github.com/NVlabs/Sana/blob/main/docs/sana_video2.md
+- Community offload report: https://github.com/NVlabs/Sana/issues/156
+- Open MPS gray-output report: https://github.com/NVlabs/Sana/issues/297
+- HF: https://huggingface.co/Efficient-Large-Model/
+- Papers: https://arxiv.org/abs/2410.10629 (SANA), https://arxiv.org/abs/2501.18427 (1.5), https://arxiv.org/abs/2503.09641 (Sprint)
+- SANA-Video: https://arxiv.org/abs/2509.24695
+- DC-AE: https://github.com/mit-han-lab/efficientvit
 - Training framework: happyin-research/sana-fm/ (local)
