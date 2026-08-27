@@ -12,11 +12,13 @@ type: MOC
 - [[DC-AE]] - Deep Compression Autoencoder
 - [[SANA]] - SANA architecture
 - [[sana-denoiser-architecture]] - SANA denoiser design
+- [[qwen-image]] - Qwen-Image generation/editing artifacts and version history
 - [[transformers-v5]] - Transformers v5 for diffusion
 
 ## FLUX Models
 - [[flux-klein-9b-inference]] - FLUX Klein 9B inference guide and best practices
 - [[flux-kontext]] - FLUX Kontext model
+- [[comfyui-flux2klein-enhancer]] - Third-party multi-reference identity/detail conditioning for Klein
 
 ## Training & Fine-tuning
 - [[diffusion-lora-training]] - LoRA training for diffusion models
@@ -51,6 +53,7 @@ type: MOC
 - [[MACRO]] - MACRO model
 - [[MARBLE]] - MARBLE model
 - [[ATI]] - Any Trajectory Instruction
+- [[comfyui-sensenova-u1]] - Official SenseNova U1/U1.5 versus third-party ComfyUI wrapper
 
 ## Segmentation
 - [[in-context-segmentation]] - In-context segmentation

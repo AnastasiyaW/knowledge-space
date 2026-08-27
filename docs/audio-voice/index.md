@@ -16,6 +16,8 @@ Modern speech systems span three core areas: recognizing spoken language (ASR), 
 - [[voice-cloning]] - Voice cloning, voice mixing, naturalness benchmarks
 - [[voice-conversion]] - Voice conversion techniques and pipelines
 - [[audio-generation]] - Audio generation models and workflows
+- [[audio-flamingo]] - Audio Flamingo 3, Music Flamingo, and AF-Next understanding artifacts
+- [[ace-step-1-5]] - ACE-Step 1.5 base/SFT/turbo and XL hardware bounds
 
 ## Voice Applications
 - [[voice-agent-pipelines]] - Voice agent pipelines and frameworks for real-time applications

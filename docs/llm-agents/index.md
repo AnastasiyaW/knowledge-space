@@ -34,6 +34,8 @@ type: MOC
 - [[no-code-platforms]] - n8n, FlowWise, Gradio UI building, deployment
 - [[spring-ai]] - Java/Spring Boot LLM integration
 - [[ai-coding-assistants]] - Copilot, Cursor, Claude Code, Aider, code generation patterns
+- [[qwen-code]] - Qwen Code CLI installation, provider contract, and authentication history
+- [[unsloth]] - Unsloth Core, Studio, Desktop, and model-specific fine-tuning bounds
 
 ## Model Operations
 - [[fine-tuning]] - LoRA, QLoRA, PEFT, OpenAI fine-tuning, data quality
