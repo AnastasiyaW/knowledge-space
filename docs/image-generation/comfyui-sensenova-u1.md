@@ -13,7 +13,8 @@ SenseNova U1 is an official image-generation/editing family. `smthemex/ComfyUI_S
 |---|---|
 | Official repository | `OpenSenseNova/SenseNova-U1`, Apache-2.0 |
 | Official verified revision | `022fa663d3f1a3c6822ec0b534e336a991bb7b0b` |
-| Official ComfyUI nodes | Available through the ComfyUI registry according to the official FAQ |
+| Official ComfyUI nodes | `OpenSenseNova/ComfyUI-SenseNova-U1` v0.3.0; registry mirror of `SenseNova-U1/apps/comfyui` |
+| Official ComfyUI mirror revision | `fc90611ac6f9eecfbf0f6a5115b13f609683e202` |
 | Third-party wrapper | `smthemex/ComfyUI_SenseNova_U1`, Apache-2.0 |
 | Wrapper verified revision | `35f930a349aa38a94100529fd1ec7dd8b31f9ec9` |
 | Wrapper formats | U1.5 preview/formal plus GGUF, INT8, FP8, and BF16 paths described by its current README |
@@ -28,6 +29,7 @@ Do not attribute every official U1/U1.5 feature to the third-party wrapper. Do n
 | 2026-05-05 | third-party wrapper | Initial ComfyUI wrapper report | Historical foundation |
 | 2026-05-21 | official project | Full fine-tuning code released | Current official capability |
 | 2026-06-19 | wrapper/adapter | Eight-step infographic LoRA report | Superseded/struck-through in current wrapper docs |
+| 2026-08-24 | official ComfyUI | v0.3.0 registry mirror prepared | Current official ComfyUI surface |
 | 2026-08-26 | wrapper | Verified current wrapper revision | Current wrapper endpoint |
 | 2026-08-27 | official project | Verified current official revision | Current official endpoint |
 
@@ -55,8 +57,10 @@ peak_vram: <measured-value>
 
 ## Practical Selection
 
-- Prefer official registry nodes when the official artifact/runtime contract meets the task.
+- Prefer official registry nodes when the official artifact/runtime contract meets the task. The current official package is `ComfyUI-SenseNova-U1` v0.3.0 and requires ComfyUI's v3 node API (`comfy_api.latest`).
+- Install the official package through ComfyUI Manager/Registry or pin its mirror revision. Its README identifies `OpenSenseNova/SenseNova-U1/apps/comfyui` as source of truth.
 - Use the third-party wrapper only when its exact quantization/model path is required and pin both wrapper and model.
+- Remove or disable a manually copied legacy `ComfyUI_SenseNova_U1` directory before enabling the official package. Both implementations register overlapping node IDs, so keeping both makes load order decide which code runs.
 - Use full BF16 only with measured headroom above the documented requirement.
 - On 8 GB, start from a documented low/balanced quantization and validate a minimal workflow; do not select full Q6 by name alone.
 - For infographic generation, record language, repeated-text failures, background behavior, adapter hash, steps, and resolution.
@@ -78,6 +82,8 @@ The older eight-step infographic LoRA report is useful project history but is no
 ## Gotchas
 
 - **Issue:** Calling the third-party wrapper “official SenseNova ComfyUI” -> **Fix:** name the repository owner and keep official registry nodes separate.
+- **Issue:** Installing the official v0.3.0 package beside the legacy third-party directory -> **Fix:** disable/remove the legacy copy first; duplicate node IDs make the active implementation scan-order dependent.
+- **Issue:** Loading official v0.3.0 on an older ComfyUI v1-node runtime -> **Fix:** update to a build exposing `comfy_api.latest` or keep the pinned compatible third-party surface.
 - **Issue:** Assuming Q6 fits an 8 GB GPU -> **Fix:** follow the official warning and select/test a lower documented quantization.
 - **Issue:** Recommending the old eight-step LoRA because a historical post did -> **Fix:** mark it superseded/struck-through and verify the current adapter path.
 - **Issue:** Claiming official LoRA training from released full fine-tuning code -> **Fix:** treat them as distinct capabilities and re-check the FAQ.
@@ -92,12 +98,14 @@ The older eight-step infographic LoRA report is useful project history but is no
 
 ## Agent Brief
 
-First resolve official nodes versus `smthemex` wrapper, then U1 versus exact U1.5 artifact and quantization. Pin both repositories when the wrapper is used. Treat historical adapter instructions as superseded when current docs strike them through. Preserve official-versus-community attribution and never promise 8 GB compatibility without an exact measured configuration.
+First resolve official v0.3.0 nodes versus the `smthemex` wrapper, then U1 versus exact U1.5 artifact and quantization. Pin both repositories when the wrapper is used, and never load both node implementations together. Treat historical adapter instructions as superseded when current docs strike them through. Preserve official-versus-community attribution and never promise 8 GB compatibility without an exact measured configuration.
 
 ## Sources
 
 - Official repository: https://github.com/OpenSenseNova/SenseNova-U1
 - Official Chinese FAQ: https://github.com/OpenSenseNova/SenseNova-U1/blob/main/docs/FAQ_CN.md
+- Official ComfyUI registry mirror: https://github.com/OpenSenseNova/ComfyUI-SenseNova-U1
+- Official ComfyUI v0.3.0 metadata: https://github.com/OpenSenseNova/ComfyUI-SenseNova-U1/blob/main/pyproject.toml
 - Third-party wrapper: https://github.com/smthemex/ComfyUI_SenseNova_U1
 - Official project surface: https://www.sensenova.cn/
 - Paper: https://arxiv.org/abs/2605.12500
