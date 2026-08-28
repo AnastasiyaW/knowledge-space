@@ -262,7 +262,7 @@ Each domain below is collapsible - expand to see the article list. Articles are 
 
     - [[architectural-styles]] - Monolith, SOA, microservices, serverless
     - [[microservices-communication]] - Sync vs async, gRPC, messaging
-    - [[design-patterns-gof]] - GoF patterns with modern examples
+    - [Design Patterns (GoF)](../architecture/design-patterns-gof.md) - GoF patterns with modern examples
     - [[microfrontends]] - Micro-frontend architectures
 
     **Distributed Systems**
@@ -519,7 +519,7 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[partitioning-and-sharding]] - Table partitioning, sharding
     - [[distributed-databases]] - CockroachDB, YugabyteDB, Vitess
     - [[caching-redis-memcached]] - Redis, Memcached patterns
-    - [[database-security]] - Roles, RLS, encryption
+    - [Database Security](../sql-databases/database-security.md) - Roles, RLS, encryption
     - [[postgresql-docker-kubernetes]] - PostgreSQL in containers
     - [[infrastructure-as-code]] - Database IaC patterns
 
@@ -607,7 +607,7 @@ Each domain below is collapsible - expand to see the article list. Articles are 
 
     **Error Handling & I/O**
 
-    - [[error-handling]] - Exceptions, context managers
+    - [Error Handling and Context Managers](../python/error-handling.md) - Exceptions, context managers
     - [[file-io]] - File operations, pathlib, CSV/JSON
     - [[regular-expressions]] - Regex patterns, re module
 
@@ -617,7 +617,7 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[iterators-and-generators]] - Generators, yield, lazy evaluation
     - [[type-hints]] - Type annotations, mypy, pydantic
     - [[async-programming]] - asyncio, coroutines, event loop
-    - [[concurrency]] - Threading, multiprocessing, GIL
+    - [Concurrency - Threading and Multiprocessing](../python/concurrency.md) - Threading, multiprocessing, GIL
     - [[memory-and-internals]] - CPython internals, memory model
 
     **Performance & Testing**
@@ -688,7 +688,7 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[cwe-502-deserialization]] - CWE-502: Deserializing attacker-controlled data enables arbitrary code execution via gadget chains
     - [[cwe-787-oob-write]] - CWE-787: Out-of-bounds Write - memory corruption via writes past buffer boundaries
     - [[cwe-918-ssrf]] - CWE-918: Server makes HTTP/protocol requests to attacker-controlled URLs, exposing internal
-    - [[database-security]] - Database security for SQL and NoSQL: user privilege management, encryption at rest and in transit
+    - [Database Security](../security/database-security.md) - Database security for SQL and NoSQL: user privilege management, encryption at rest and in transit
     - [[deepfake-and-document-forensics]] - Detection and analysis of forged content: deepfake video/audio technology and detection methods
     - [[disposable-email-detection]] - Backend reference for detecting throwaway email addresses and multi-account abuse at registration
     - [[email-reputation-services]] - Signal categories, vendor service tradeoffs, and a DIY MVP stack for blocking high-risk
@@ -767,7 +767,7 @@ Each domain below is collapsible - expand to see the article list. Articles are 
 
 ??? note "<span class="ks-planet" style="background:radial-gradient(circle at 35% 35%,rgba(255,255,255,0.4),transparent 60%),radial-gradient(circle at 50% 50%,#c8a058,#785018);box-shadow:0 0 8px rgba(200,160,88,0.5),inset 0 -2px 4px rgba(0,0,0,0.3)"></span>Image Generation · 77 articles"
 
-    - [[ACE++]] - Advanced image editing model
+    - [ACE++](../image-generation/ACE++.md) - Advanced image editing model
     - [[ATI]] - AI texture generation
     - [[flow-matching]] - Flow-based generative models
     - [[flux-kontext]] - Context-aware image generation
@@ -855,14 +855,14 @@ Each domain below is collapsible - expand to see the article list. Articles are 
 ??? note "<span class="ks-planet" style="background:radial-gradient(circle at 35% 35%,rgba(255,255,255,0.4),transparent 60%),radial-gradient(circle at 50% 50%,#7090c0,#304070);box-shadow:0 0 8px rgba(112,144,192,0.5),inset 0 -2px 4px rgba(0,0,0,0.3)"></span>C++ · 29 articles"
 
     - [[cmake-build-systems]] - CMake, build configuration
-    - [[smart-pointers]] - unique_ptr, shared_ptr, weak_ptr
+    - [Smart Pointers and Memory Management](../cpp/smart-pointers.md) - unique_ptr, shared_ptr, weak_ptr
     - [[move-semantics]] - Rvalue references, std::move
     - [[raii-resource-management]] - RAII pattern, resource safety
     - [[templates-and-concepts]] - Template metaprogramming
     - [[stl-containers]] - vector, map, set, unordered_map
     - [[stl-algorithms]] - std::sort, std::find, ranges
-    - [[concurrency]] - std::thread, mutex, atomic
-    - [[error-handling]] - Exceptions, std::expected
+    - [Concurrency - Threads, Async, Atomics](../cpp/concurrency.md) - std::thread, mutex, atomic
+    - [Error Handling - Exceptions and Alternatives](../cpp/error-handling.md) - Exceptions, std::expected
     - [[lambda-expressions]] - Lambda syntax, captures
     - [[modern-cpp-features]] - C++17/20/23 features
 
@@ -881,7 +881,7 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[manual-memory-management]] - Raw new/delete, stack vs heap, and the three failure modes that motivate smart pointers and RAII
     - [[object-lifetime]] - Object construction, destruction, initialization forms, and copy elision
     - [[operator-overloading]] - Define custom behavior for operators on user-defined types
-    - [[performance-optimization]] - C++ performance fundamentals: cache efficiency, move semantics, allocation strategies, compiler
+    - [Performance Optimization](../cpp/performance-optimization.md) - C++ performance fundamentals: cache efficiency, move semantics, allocation strategies, compiler
     - [[ranges-and-views]] - Composable lazy pipelines for sequence processing with the pipe operator and range adaptors
     - [[scope-and-lifetime]] - Block-level scoping rules, name shadowing, and deterministic destruction order as prerequisite for
     - [[string-handling]] - std::string, std::stringview, formatting, conversion, and searching
@@ -1039,10 +1039,10 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[borrowing-and-references]] - Shared and mutable references
     - [[lifetimes]] - Lifetime annotations, elision
     - [[traits]] - Trait definitions, implementations, bounds
-    - [[error-handling]] - Result, Option, ? operator
+    - [Error Handling](../rust/error-handling.md) - Result, Option, ? operator
     - [[async-await]] - Tokio, async runtime, futures
-    - [[concurrency]] - Arc, Mutex, channels, Send/Sync
-    - [[smart-pointers]] - Box, Rc, RefCell patterns
+    - [Concurrency](../rust/concurrency.md) - Arc, Mutex, channels, Send/Sync
+    - [Smart Pointers](../rust/smart-pointers.md) - Box, Rc, RefCell patterns
 
     **More**
 
@@ -1147,17 +1147,17 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[async-patterns]] - Callbacks, promises, async/await
     - [[streams]] - Readable, writable, transform streams
     - [[modules-and-packages]] - CommonJS, ESM, npm
-    - [[error-handling]] - Error handling patterns
-    - [[performance-optimization]] - Profiling, clustering
+    - [Error Handling](../nodejs/error-handling.md) - Error handling patterns
+    - [Performance Optimization](../nodejs/performance-optimization.md) - Profiling, clustering
 
     **More**
 
     - [[application-architecture]] - Node.js application architecture centers on layer separation, transport abstraction, and context
     - [[closures-and-scope]] - A closure is a function that retains a reference to variables from its outer function's scope even
-    - [[concurrency-patterns]] - Node.js concurrency extends beyond async/await to Actor model, CRDT for distributed state
+    - [Concurrency Patterns](../nodejs/concurrency-patterns.md) - Node.js concurrency extends beyond async/await to Actor model, CRDT for distributed state
     - [[data-access-patterns]] - The data access layer (DAL) separates business logic from physical storage, providing abstract CRUD
     - [[dependency-injection]] - Coupling occurs whenever one module calls methods, creates instances, or reads/writes properties of
-    - [[design-patterns-gof]] - The Gang of Four patterns apply differently in JavaScript than in class-based languages
+    - [Design Patterns (GoF) in JavaScript](../nodejs/design-patterns-gof.md) - The Gang of Four patterns apply differently in JavaScript than in class-based languages
     - [[middleware-and-http]] - HTTP handling in Node.js ranges from pure Node.js servers to framework-based approaches (Fastify
     - [[security-and-sandboxing]] - Node.js security encompasses password hashing with salt, token-based authentication, sandboxed code
     - [[solid-and-grasp]] - SOLID and GRASP principles guide code organization in JavaScript, but their application differs
@@ -1188,7 +1188,6 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[php-control-structures]] - PHP control structures include if/elseif/else, switch, match (PHP 8), for/foreach/while
     - [[php-pdo-and-sessions]] - PDO (PHP Data Objects) provides a consistent interface for database access with prepared statements
 
-
 ---
 
 <div id="audio-voice"></div>
@@ -1210,23 +1209,21 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[voice-conversion]] - Voice conversion (VC) transforms the speaker identity in existing audio while preserving linguistic
     - [[voice-design]] - Creating unique synthetic voices from text descriptions, voice morphing, naturalness benchmarks
 
-
 ---
 
 <div id="go"></div>
 
 ??? note "<span class="ks-planet" style="background:radial-gradient(circle at 35% 35%,rgba(255,255,255,0.4),transparent 60%),radial-gradient(circle at 50% 50%,#5ec0d8,#1a6880);box-shadow:0 0 8px rgba(94,192,216,0.5),inset 0 -2px 4px rgba(0,0,0,0.3)"></span>Go · 9 articles"
 
-    - [[concurrency-patterns]] - Go's concurrency model - the GMP scheduler, channels, select, synchronization primitives, and
+    - [Go Concurrency - Goroutines, Channels, and Sync](../go/concurrency-patterns.md) - Go's concurrency model - the GMP scheduler, channels, select, synchronization primitives, and
     - [[database-patterns]] - Production database patterns in Go - PostgreSQL with pgx, MongoDB with official driver, Redis
-    - [[error-handling]] - Go uses explicit error returns instead of exceptions
+    - [Error Handling](../go/error-handling.md) - Go uses explicit error returns instead of exceptions
     - [[fundamentals]] - Core Go language features - type system, slices, maps, pointers, interfaces, closures, and error
     - [[goroutines-channels]] - Go's concurrency model is built on goroutines (lightweight threads managed by the Go runtime) and
     - [[http-servers]] - Go's net/http package provides a production-grade HTTP/2 server with TLS support out of the box
     - [[interfaces-composition]] - Go uses interfaces for polymorphism and embedding for composition
     - [[microservices]] - Production Go microservice patterns - gRPC with protobuf, clean architecture layers, dependency
     - [[modules-packages]] - Go modules are the unit of dependency management, and packages are the unit of code organization
-
 
 ---
 
@@ -1247,7 +1244,6 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[temporal-memory]] - Managing the time dimension of stored knowledge
     - [[verbatim-retrieval-vs-extraction]] - Why raw verbatim storage beats LLM extraction for agent memory retrieval - benchmarks, MemPalace
     - [[verbatim-vs-extraction]] - Whether to store raw text or LLM-extracted facts in memory
-
 
 ---
 

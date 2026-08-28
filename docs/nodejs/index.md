@@ -13,12 +13,12 @@ type: MOC
 ## Async Programming
 - [[async-patterns]] - Callbacks, Promises, async/await, thenable objects, AbortController
 - [[streams]] - Readable/Writable/Transform/Duplex, backpressure, buffer optimization
-- [[concurrency-patterns]] - Actor model, CRDT, SharedWorker, binary protocols, deployment
+- [Concurrency Patterns](concurrency-patterns.md) - Actor model, CRDT, SharedWorker, binary protocols, deployment
 
 ## Language & Type System
 - [[modules-and-packages]] - CommonJS vs ESM, interop, package-lock, npm, module cache
 - [[solid-and-grasp]] - SOLID/GRASP in JavaScript, algebraic types, immutable records, LSP
-- [[design-patterns-gof]] - Factory, Strategy, Observer, Adapter, Facade, Proxy, Flyweight, State
+- [Design Patterns (GoF) in JavaScript](design-patterns-gof.md) - Factory, Strategy, Observer, Adapter, Facade, Proxy, Flyweight, State
 
 ## Architecture
 - [[application-architecture]] - DDD structure, layers, transport abstraction, context isolation
@@ -27,6 +27,6 @@ type: MOC
 - [[middleware-and-http]] - HTTP/WS transport, middleware as Chain of Responsibility, multi-framework
 
 ## Operations
-- [[error-handling]] - AppError, AggregateError, Error.cause, fail-fast, error types
+- [Error Handling](error-handling.md) - AppError, AggregateError, Error.cause, fail-fast, error types
 - [[security-and-sandboxing]] - Crypto, password hashing, vm sandbox, macaroons vs JWT
-- [[performance-optimization]] - Round-trip reduction, Map vs Object, buffer optimization, DSL vs imperative
+- [Performance Optimization](performance-optimization.md) - Round-trip reduction, Map vs Object, buffer optimization, DSL vs imperative

@@ -94,4 +94,4 @@ fn process(value: &dyn Any) {
 
 - [[traits]] - trait definition, bounds, and implementations
 - [[generics-and-monomorphization]] - static dispatch alternative
-- [[smart-pointers]] - Box<T> for heap allocation of trait objects
+- [Smart Pointers](smart-pointers.md) - Box<T> for heap allocation of trait objects

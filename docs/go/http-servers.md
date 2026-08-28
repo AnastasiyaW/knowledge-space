@@ -247,5 +247,5 @@ if err := json.NewDecoder(resp.Body).Decode(&data); err != nil {
 
 - [[goroutines-channels]] - each HTTP request runs in its own goroutine
 - [[interfaces-composition]] - `http.Handler` interface and middleware pattern
-- [[error-handling]] - error handling in HTTP handlers and clients
+- [Error Handling](error-handling.md) - error handling in HTTP handlers and clients
 - [[modules-packages]] - organizing HTTP handlers across packages

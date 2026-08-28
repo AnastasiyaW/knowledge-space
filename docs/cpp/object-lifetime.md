@@ -180,5 +180,5 @@ void per_thread_work() {
 
 - [[raii-resource-management]]
 - [[move-semantics]]
-- [[smart-pointers]]
+- [Smart Pointers and Memory Management](smart-pointers.md)
 - [[const-and-type-safety]]

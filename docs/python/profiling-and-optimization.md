@@ -148,5 +148,5 @@ Architecture: Client -> Nginx (reverse proxy) -> Gunicorn -> [Uvicorn workers]
 
 - [[memory-and-internals]] - CPython memory model, GC
 - [[async-programming]] - async I/O for performance
-- [[concurrency]] - parallel execution for CPU-bound work
+- [Concurrency - Threading and Multiprocessing](concurrency.md) - parallel execution for CPU-bound work
 - [[fastapi-caching-and-tasks]] - caching in web applications

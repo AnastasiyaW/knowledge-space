@@ -36,7 +36,7 @@ type: MOC
 
 ## Editing & Restoration
 - [[Step1X-Edit]] - Step1X-Edit model
-- [[ACE++]] - ACE++ editing
+- [ACE++](ACE++.md) - ACE++ editing
 - [[LaMa]] - Large Mask Inpainting
 - [[image-restoration-survey]] - Image restoration survey
 - [[RealRestorer]] - RealRestorer model

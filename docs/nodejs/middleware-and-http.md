@@ -61,5 +61,5 @@ Each project extends and optionally overrides. Centralized rule management with 
 ## See Also
 
 - [[application-architecture]] - transport abstraction, layered server design
-- [[design-patterns-gof]] - Chain of Responsibility as middleware pattern
-- [[error-handling]] - error handling in request pipelines
+- [Design Patterns (GoF) in JavaScript](design-patterns-gof.md) - Chain of Responsibility as middleware pattern
+- [Error Handling](error-handling.md) - error handling in request pipelines

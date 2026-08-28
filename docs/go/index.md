@@ -10,7 +10,7 @@ Go is a compiled systems language built for concurrent network services: fast co
 
 ## Fundamentals
 - [[modules-packages]] - Go modules, packages, dependency management
-- [[error-handling]] - Error handling patterns, wrapping, sentinel errors
+- [Error Handling](error-handling.md) - Error handling patterns, wrapping, sentinel errors
 - [[interfaces-composition]] - Interfaces, embedding, composition over inheritance
 
 ## Concurrency
@@ -21,7 +21,7 @@ Go is a compiled systems language built for concurrent network services: fast co
 
 ## Additional References
 
-- [[concurrency-patterns]] - Go's concurrency model - the GMP scheduler, channels, select, synchronization primitives, and
+- [Go Concurrency - Goroutines, Channels, and Sync](concurrency-patterns.md) - Go's concurrency model - the GMP scheduler, channels, select, synchronization primitives, and
 - [[database-patterns]] - Production database patterns in Go - PostgreSQL with pgx, MongoDB with official driver, Redis
 - [[fundamentals]] - Core Go language features - type system, slices, maps, pointers, interfaces, closures, and error
 - [[microservices]] - Production Go microservice patterns - gRPC with protobuf, clean architecture layers, dependency

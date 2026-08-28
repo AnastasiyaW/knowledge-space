@@ -104,6 +104,6 @@ let r = data.borrow();          // runtime-checked immutable borrow
 ## See Also
 
 - [[borrowing-and-references]] - borrow rules that lifetimes enforce
-- [[smart-pointers]] - RefCell for interior mutability, Rc/Arc for shared ownership
-- [[concurrency]] - 'static bound on spawned threads
+- [Smart Pointers](smart-pointers.md) - RefCell for interior mutability, Rc/Arc for shared ownership
+- [Concurrency](concurrency.md) - 'static bound on spawned threads
 - [[generics-and-monomorphization]] - lifetime parameters in generic code

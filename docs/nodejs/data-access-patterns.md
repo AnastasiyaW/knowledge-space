@@ -117,4 +117,4 @@ When multiple services write to the same database:
 
 - [[application-architecture]] - how DAL fits into layered architecture
 - [[dependency-injection]] - injecting repositories vs using module singletons
-- [[design-patterns-gof]] - Template Method, Repository as GoF applications
+- [Design Patterns (GoF) in JavaScript](design-patterns-gof.md) - Template Method, Repository as GoF applications

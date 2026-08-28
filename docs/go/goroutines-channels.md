@@ -302,6 +302,6 @@ Use sync.Mutex when:
 
 ## See Also
 
-- [[error-handling]] - propagating errors through channels and goroutines
+- [Error Handling](error-handling.md) - propagating errors through channels and goroutines
 - [[interfaces-composition]] - defining behavior contracts for concurrent components
 - [[http-servers]] - concurrency patterns in HTTP request handling

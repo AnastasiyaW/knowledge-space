@@ -96,6 +96,6 @@ for (int i = 0; i < 10; ++i) {
 
 ## Cross-References
 
-- [[concurrency]] - threads, mutexes, atomic operations
+- [Concurrency - Threads, Async, Atomics](concurrency.md) - threads, mutexes, atomic operations
 - [[modern-cpp-features]] - other C++20 additions
 - [[lambda-expressions]] - often used with coroutines for callbacks

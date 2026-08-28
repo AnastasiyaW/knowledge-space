@@ -119,4 +119,4 @@ EU data protection with extraterritorial reach:
 - [[information-security-fundamentals]] - risk management concepts
 - [[siem-and-incident-response]] - compliance-driven monitoring
 - [[security-solutions-architecture]] - implementing controls
-- [[database-security]] - data protection requirements
+- [Database Security](database-security.md) - data protection requirements

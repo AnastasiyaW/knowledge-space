@@ -221,6 +221,84 @@ def sync_browse_page() -> tuple[int, int]:
     return added, relinked
 
 
+# ------------------------------------------------------- ambiguous slug references
+
+
+def article_title(path: Path) -> str:
+    text = path.read_text(encoding="utf-8")
+    fm = re.match(r"^---\n(.*?)\n---\n", text, re.S)
+    if fm:
+        m = re.search(r'^title:\s*"?(.+?)"?\s*$', fm.group(1), re.M)
+        if m:
+            return m.group(1)
+        text = text[fm.end():]
+    m = re.search(r"^#\s+(.+)$", text, re.M)
+    return m.group(1).strip() if m else path.stem.replace("-", " ")
+
+
+def ambiguous_slugs() -> dict[str, list[str]]:
+    """Slugs that exist in more than one domain.
+
+    hooks/wikilinks.py resolves [[slug]] through a single global map and strips any
+    domain prefix, so a wiki-link to one of these cannot say which article it means -
+    every reference lands on whichever file won the map. Those references become
+    relative Markdown links instead.
+    """
+    seen: dict[str, list[str]] = {}
+    for d in domains():
+        for p in articles(d):
+            seen.setdefault(p.stem, []).append(d)
+    return {slug: ds for slug, ds in seen.items() if len(ds) > 1}
+
+
+def fix_ambiguous_links() -> tuple[int, int]:
+    amb = ambiguous_slugs()
+    if not amb:
+        return 0, 0
+    fixed = left = 0
+
+    def rewrite(text: str, own_domain: str | None, prefix: str) -> str:
+        nonlocal fixed, left
+
+        def repl(m: re.Match) -> str:
+            nonlocal fixed, left
+            slug = m.group(1).split("/")[-1].strip()
+            if slug not in amb:
+                return m.group(0)
+            domain = own_domain if own_domain in amb[slug] else None
+            if domain is None:
+                left += 1
+                return m.group(0)
+            target = DOCS / domain / f"{slug}.md"
+            fixed += 1
+            return f"[{article_title(target)}]({prefix.format(domain=domain)}{slug}.md)"
+
+        return re.sub(r"\[\[([^\]|]+)\]\]", repl, text)
+
+    # domain MOCs and article bodies: same-folder relative link
+    for domain in domains():
+        for path in [DOCS / domain / "index.md", *articles(domain)]:
+            if not path.exists():
+                continue
+            text = path.read_text(encoding="utf-8")
+            new = rewrite(text, domain, "")
+            if new != text:
+                path.write_text(new, encoding="utf-8")
+
+    # browse page: the domain comes from the enclosing block
+    page = DOCS / "knowledge-base" / "index.md"
+    lines = page.read_text(encoding="utf-8").split("\n")
+    current: str | None = None
+    for i, line in enumerate(lines):
+        m = re.match(r'^<div id="([a-z0-9-]+)"></div>\s*$', line)
+        if m:
+            current = m.group(1) if m.group(1) in set(domains()) else None
+            continue
+        lines[i] = rewrite(line, current, "../{domain}/")
+    page.write_text("\n".join(lines), encoding="utf-8")
+    return fixed, left
+
+
 def main() -> int:
     moc_added = {d: sync_moc(d) for d in domains()}
     total_moc = sum(moc_added.values())
@@ -228,8 +306,11 @@ def main() -> int:
         if n:
             print(f"  MOC {d}: +{n}")
     added, relinked = sync_browse_page()
+    fixed, left = fix_ambiguous_links()
     print(f"MOC entries added: {total_moc}")
     print(f"Browse page: +{added} entries, {relinked} plain-text entries converted to links")
+    print(f"Ambiguous slugs: {fixed} references pinned to their own domain, "
+          f"{left} left as wiki-links (cross-domain, intent unknown)")
     return 0
 
 

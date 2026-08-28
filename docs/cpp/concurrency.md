@@ -186,6 +186,6 @@ void consumer() {
 ## See Also
 
 - [[raii-resource-management]]
-- [[error-handling]]
-- [[performance-optimization]]
+- [Error Handling - Exceptions and Alternatives](error-handling.md)
+- [Performance Optimization](performance-optimization.md)
 - [cppreference: Thread support](https://en.cppreference.com/w/cpp/thread)

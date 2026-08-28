@@ -114,7 +114,7 @@ public:
 
 ## See Also
 
-- [[smart-pointers]]
+- [Smart Pointers and Memory Management](smart-pointers.md)
 - [[raii-resource-management]]
 - [[templates-and-concepts]]
 - [cppreference: move](https://en.cppreference.com/w/cpp/utility/move)

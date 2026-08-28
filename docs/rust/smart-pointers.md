@@ -83,5 +83,5 @@ let shared = Arc::new(Mutex::new(HashMap::new()));
 ## See Also
 
 - [[ownership-and-move-semantics]] - ownership model that smart pointers extend
-- [[concurrency]] - Arc + Mutex for thread-safe shared state
+- [Concurrency](concurrency.md) - Arc + Mutex for thread-safe shared state
 - [[traits]] - Deref and Drop traits that power smart pointers

@@ -80,6 +80,7 @@ news or project-history API.
 | 2026-06-19 | Agent-research articles enriched; the count remained 834 | [commit `a99e8c6`](https://github.com/AnastasiyaW/knowledge-space/commit/a99e8c6) |
 | 2026-08-21 | Public news schema 1.3 published with project histories and domain joins | [feed release `730f7cf`](https://github.com/AnastasiyaW/diffusion-love-news/commit/730f7cf5a47a52e6d0ba75c90dceab15ce6e3b95) |
 | 2026-08-21 | Protected portal pinned every feed read to one immutable producer snapshot | [web release `102c15b`](https://github.com/AnastasiyaW/diffusion-love-web/commit/102c15b3e999beff4114e28c0b24b2b8d2d49bd5) |
+| 2026-08-28 | 851 articles across 26 domains; every article reachable from a domain index and from the browse page | [commit `aad5ff7`](https://github.com/AnastasiyaW/knowledge-space/commit/aad5ff7) |
 
 These are Git-backed milestones, not a reconstructed marketing timeline. A
 commit proves the repository state it contains; it does not by itself prove a

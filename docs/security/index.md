@@ -39,7 +39,7 @@ type: MOC
 - [[siem-and-incident-response]] - SIEM architecture, correlation rules, incident lifecycle, SOC tiers, SOAR
 - [[security-solutions-architecture]] - EDR, DLP, IAM/PAM, implementation lifecycle, change management
 - [[vulnerability-scanning-and-management]] - Nessus, OpenVAS, CVSS, patch management, prioritization
-- [[database-security]] - user privileges, encryption, auditing, backup security, cloud database security
+- [Database Security](database-security.md) - user privileges, encryption, auditing, backup security, cloud database security
 
 ## Anti-Fraud & Forensics
 - [[browser-and-device-fingerprinting]] - canvas, WebGL, AudioContext, evercookies, hardware signals

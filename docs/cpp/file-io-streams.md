@@ -219,5 +219,5 @@ On Windows, console encoding is often incompatible with string literals. Non-ASC
 
 - [[string-handling]]
 - [[raii-resource-management]]
-- [[error-handling]]
+- [Error Handling - Exceptions and Alternatives](error-handling.md)
 - [cppreference: filesystem](https://en.cppreference.com/w/cpp/filesystem)

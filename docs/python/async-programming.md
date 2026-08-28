@@ -157,6 +157,6 @@ Async: 100 concurrent requests -> 1 worker handles all during I/O waits
 
 ## See Also
 
-- [[concurrency]] - threading and multiprocessing for CPU-bound work
+- [Concurrency - Threading and Multiprocessing](concurrency.md) - threading and multiprocessing for CPU-bound work
 - [[fastapi-fundamentals]] - async endpoints
 - [[fastapi-database-layer]] - async SQLAlchemy sessions

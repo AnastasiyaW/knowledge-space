@@ -135,6 +135,6 @@ fn distance((x1, y1): (f64, f64), (x2, y2): (f64, f64)) -> f64 {
 
 ## See Also
 
-- [[error-handling]] - Result<T, E> and Option<T> as enum-based error handling
+- [Error Handling](error-handling.md) - Result<T, E> and Option<T> as enum-based error handling
 - [[structs-and-methods]] - struct variants inside enums
 - [[traits]] - implementing traits for enums

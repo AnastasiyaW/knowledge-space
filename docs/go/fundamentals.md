@@ -143,6 +143,6 @@ func NewServer(opts ...Option) *Server {
 
 ## See Also
 
-- [[go/concurrency-patterns]] - GMP scheduler, channels, sync primitives
+- [Go Concurrency - Goroutines, Channels, and Sync](concurrency-patterns.md) - GMP scheduler, channels, sync primitives
 - [[microservices]] - gRPC, clean architecture, project layout
 - [[database-patterns]] - PostgreSQL/pgx, MongoDB, Redis

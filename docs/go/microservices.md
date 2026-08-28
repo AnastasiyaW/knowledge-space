@@ -175,7 +175,7 @@ go work use ./service-a ./service-b ./shared
 ## See Also
 
 - [[go/fundamentals]] - types, slices, maps, interfaces
-- [[go/concurrency-patterns]] - goroutines, channels, sync
+- [Go Concurrency - Goroutines, Channels, and Sync](concurrency-patterns.md) - goroutines, channels, sync
 - [[database-patterns]] - PostgreSQL, MongoDB, Redis, transactional outbox
 - [[observability-query-languages]] - PromQL, LogQL, TraceQL for monitoring Go services
 - [[kafka-messaging-fundamentals]] - delivery semantics, consumer groups

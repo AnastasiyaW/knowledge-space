@@ -9,11 +9,11 @@ type: MOC
 - [[scope-and-lifetime]] - Variable scope and lifetime
 - [[object-lifetime]] - Object lifetime and construction
 - [[const-and-type-safety]] - Const correctness and type safety
-- [[error-handling]] - Error handling with exceptions and alternatives
+- [Error Handling - Exceptions and Alternatives](error-handling.md) - Error handling with exceptions and alternatives
 
 ## Memory Management
 - [[manual-memory-management]] - Manual memory management in C++
-- [[smart-pointers]] - Smart pointers and memory management
+- [Smart Pointers and Memory Management](smart-pointers.md) - Smart pointers and memory management
 - [[raii-resource-management]] - RAII and resource management
 - [[move-semantics]] - Move semantics and perfect forwarding
 
@@ -38,8 +38,8 @@ type: MOC
 - [[stl-algorithms]] - STL algorithms and ranges
 - [[string-handling]] - String handling
 - [[file-io-streams]] - File I/O and streams
-- [[concurrency]] - Concurrency with threads, async, atomics
-- [[performance-optimization]] - Performance optimization
+- [Concurrency - Threads, Async, Atomics](concurrency.md) - Concurrency with threads, async, atomics
+- [Performance Optimization](performance-optimization.md) - Performance optimization
 
 ## Build Systems
 - [[cmake-build-systems]] - CMake and build systems

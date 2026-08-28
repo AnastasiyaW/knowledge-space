@@ -228,10 +228,10 @@ void CALLBACK OnWinHttpStatus(HINTERNET, DWORD_PTR ctx, DWORD status,
 
 ## See Also
 
-- [[error-handling]] - error propagation across a C API boundary
+- [Error Handling - Exceptions and Alternatives](error-handling.md) - error propagation across a C API boundary
 - [[object-lifetime]] - buffer and context lifetime rules
 - [[raii-resource-management]] - one-owner handle wrappers
-- [[concurrency]] - thread-safety requirements for callbacks
+- [Concurrency - Threads, Async, Atomics](concurrency.md) - thread-safety requirements for callbacks
 - [[external-heartbeat-monitoring-for-native-process-crashes]] - detecting the hang from outside
 - [[three-state-check-aggregation]] - timeout as a distinct verdict
 - [WinHttpSetStatusCallback](https://learn.microsoft.com/windows/win32/api/winhttp/nf-winhttp-winhttpsetstatuscallback)

@@ -146,6 +146,6 @@ Prevention: input type validation (reject objects where strings expected), `expr
 
 ## See Also
 - [[web-application-security-fundamentals]] - OWASP Top 10, other web vulns
-- [[database-security]] - user privileges, encryption, auditing
+- [Database Security](database-security.md) - user privileges, encryption, auditing
 - [[burp-suite-and-web-pentesting]] - testing SQL injection with Burp
 - [[secure-backend-development]] - input validation patterns
