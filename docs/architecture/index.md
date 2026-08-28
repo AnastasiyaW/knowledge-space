@@ -120,3 +120,8 @@ Flexible routing logic?       -> RabbitMQ
 Simple task queues?           -> RabbitMQ
 Request-response pattern?     -> RabbitMQ
 ```
+
+## Additional References
+
+- [[photoshop-plugin-architecture]] - Date: 2026-04-03 Context: Building cross-platform (Mac + Windows) C++ ML inference plugin for
+- [[write-buffering-patterns]] - Durability and throughput patterns for absorbing high-frequency writes before a slow or

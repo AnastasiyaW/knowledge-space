@@ -22,3 +22,11 @@ Modern speech systems span three core areas: recognizing spoken language (ASR), 
 ## Voice Applications
 - [[voice-agent-pipelines]] - Voice agent pipelines and frameworks for real-time applications
 - [[podcast-processing]] - Podcast processing, transcription, and analysis
+
+## Additional References
+
+- [[asr-stt-compression]] - KV cache compression methods for ASR/TTS inference and LLM context in 2026: TriAttention
+- [[audio-omni-unified-model]] - Single model for audio understanding, generation, and editing via frozen LLM reasoning + trainable
+- [[lemas-tts-and-speech-editing]] - LEMAS open-source multilingual TTS and word-level speech editing models - architecture
+- [[tts-fine-tuning-infrastructure]] - GPU rental platform comparison and deployment patterns for fine-tuning and serving 2B-4B TTS models
+- [[voice-design]] - Creating unique synthetic voices from text descriptions, voice morphing, naturalness benchmarks

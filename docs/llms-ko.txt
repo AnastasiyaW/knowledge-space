@@ -1,6 +1,6 @@
 # 종합 기술 지식 베이스 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 847+ curated articles across 26 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 851+ curated articles across 26 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -148,6 +148,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [STL Containers](https://happyin.space/cpp/stl-containers/): Standard Template Library containers - type-safe, RAII-managed collections with well-defined complexity guarantees.
 - [String Handling](https://happyin.space/cpp/string-handling/): `std::string`, `std::string_view`, formatting, conversion, and searching. Modern C++ offers efficient, safe string operations.
 - [Templates and Concepts](https://happyin.space/cpp/templates-and-concepts/): Generic programming through compile-time type parameterization. Concepts (C++20) constrain templates with readable requirements.
+- [WinHTTP Asynchronous Client](https://happyin.space/cpp/winhttp-async-client/): An asynchronous WinHTTP client that "hangs" almost always has one of three independent
 
 ## Data Engineering
 - [Apache Airflow](https://happyin.space/data-engineering/apache-airflow/): Apache Airflow is an open-source platform for authoring, scheduling, and monitoring workflows as Directed Acyclic Graphs (DAGs). It is the de facto standard for data pipeline orchestration.
@@ -323,6 +324,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [CDM — Continuous-Time Distribution Matching Distillation](https://happyin.space/image-generation/diffusion-distillation-cdm/): [[flow-matching]] distillation to 4 NFE without GAN or reward model. Covers SD3-Medium and Longcat-Image; porting matrix for SD3.5, SANA, and FLUX.1-dev included.
 - [Diffusion Inference Acceleration](https://happyin.space/image-generation/diffusion-inference-acceleration/): Techniques for accelerating diffusion model inference without quality loss. Covers spectral forecasting, KV cache compression, quantization, and sampling optimization.
 - [Diffusion LoRA Training](https://happyin.space/image-generation/diffusion-lora-training/): Practical patterns for LoRA fine-tuning of diffusion models (FLUX Klein 9B, [[SANA]], SDXL). Covers dataset preparation, training tools, hyperparameters, and multi-trainer comparison.
+- [Edge Softness and Compositing](https://happyin.space/image-generation/edge-softness-and-compositing/): Any paste, mask, matte or composite meets its surroundings **at the edge**, and the eye
 - [Face Beautify Edit LoRA](https://happyin.space/image-generation/face-beautify-edit-lora/): Training an edit LoRA to fix facial issues (closed eyes, scrunched faces, unpleasant expressions) using before/after paired data on FLUX.2 Klein 9B.
 - [Face Detection & Filtering Pipeline](https://happyin.space/image-generation/face-detection-filtering-pipeline/): Reusable pipeline for filtering large image collections by face presence, quality, and type. Primary use case: dataset preparation for face-related LoRA training.
 - [FLAIR (Flow-Based Latent Alignment for Image Restoration)](https://happyin.space/image-generation/FLAIR/): Training-free variational posterior sampling framework for image restoration. Uses SD 3.5 Medium as flow-matching prior. No training/fine-tuning needed — works out of the box for SR, inpainting, de...
@@ -835,6 +837,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [gRPC Testing with Python](https://happyin.space/testing-qa/grpc-testing/): Testing gRPC services: protobuf compilation, client generation, interceptors for logging, Allure integration, and mocking with WireMock.
 - [Kafka and Async Service Testing](https://happyin.space/testing-qa/kafka-async-testing/): Testing asynchronous microservices communicating via Apache Kafka. Covers producing test messages, consuming and validating events, and handling eventual consistency.
 - [Mobile Testing](https://happyin.space/testing-qa/mobile-testing/): Android UI testing uses Kaspresso (Kotlin DSL over Espresso + UI Automator). Screen objects = POM equivalent. Emulators in CI require hardware acceleration (macOS runners). iOS uses XCTest with acc...
+- [Negative Controls for Verification](https://happyin.space/testing-qa/negative-controls-for-verification/): Every instrument needs a case that **must** come back red. Without one, a green result
 - [OAuth and Authentication Testing](https://happyin.space/testing-qa/oauth-testing/): Testing APIs that require OAuth 2.0, OIDC, JWT, or session-based authentication. Custom requests sessions, token management, and PKCE flows.
 - [Page Object Model](https://happyin.space/testing-qa/page-object-model/): Page Object Model (POM) encapsulates each web page as a class: locators as attributes, actions as methods. Tests interact with page objects, never raw driver calls. One locator change = one class u...
 - [Playwright Testing](https://happyin.space/testing-qa/playwright-testing/): Playwright is a modern browser automation framework by Microsoft. Key advantage over Selenium: auto-waiting for elements, built-in assertions with retry, trace viewer for debugging, and codegen for...
@@ -848,6 +851,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Test Data Management](https://happyin.space/testing-qa/test-data-management/): Strategies for creating, managing, and cleaning up test data across environments. Covers environment configs, data factories, parametrization, and file-based test data.
 - [Test Logging and Secret Masking](https://happyin.space/testing-qa/test-logging-secrets/): Structured logging in test frameworks, masking sensitive data in logs and reports, and DevTools techniques for test debugging.
 - [Test Parallelization](https://happyin.space/testing-qa/test-parallelization/): Running tests in parallel with pytest-xdist. Reduces suite execution time proportionally to worker count - but requires test isolation.
+- [Three-State Check Aggregation](https://happyin.space/testing-qa/three-state-check-aggregation/): A checking mechanism must distinguish three outcomes, not two. Collapsing the third into
 
 ## Web Frontend
 - [3D Browser Libraries for Product Video](https://happyin.space/web-frontend/3d-browser-libs-for-video/): Comparison of 3D and animation libraries for browser rendering, focused on use in programmatic video (Remotion) and product showcases.

@@ -18,3 +18,10 @@ Go is a compiled systems language built for concurrent network services: fast co
 
 ## Web & Servers
 - [[http-servers]] - HTTP servers, routing, middleware, net/http patterns
+
+## Additional References
+
+- [[concurrency-patterns]] - Go's concurrency model - the GMP scheduler, channels, select, synchronization primitives, and
+- [[database-patterns]] - Production database patterns in Go - PostgreSQL with pgx, MongoDB with official driver, Redis
+- [[fundamentals]] - Core Go language features - type system, slices, maps, pointers, interfaces, closures, and error
+- [[microservices]] - Production Go microservice patterns - gRPC with protobuf, clean architecture layers, dependency

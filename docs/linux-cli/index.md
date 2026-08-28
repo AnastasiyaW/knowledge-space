@@ -49,3 +49,8 @@ type: MOC
 ## Windows Interop
 - [[wsl]] - WSL installation, file interop, networking, configuration
 - [[powershell-basics]] - Cmdlets, object pipelines, variables, scripts
+
+## Additional References
+
+- [[disk-data-recovery]] - Recovering failed or large (16 TB+) drives at the block level: imaging, partition/GPT repair
+- [[ffmpeg-encoding]] - CLI media encoder

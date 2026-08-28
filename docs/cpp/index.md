@@ -43,3 +43,10 @@ type: MOC
 
 ## Build Systems
 - [[cmake-build-systems]] - CMake and build systems
+
+## Additional References
+
+- [[cross-platform-cpp-desktop-app]] - Reference for platform differences when building C++ desktop apps (with ML inference) targeting
+- [[cross-platform-ml-inference]] - Reference for building C++ desktop applications with ML inference that target both Windows and macOS
+- [[external-heartbeat-monitoring-for-native-process-crashes]] - Standard in-process exception handlers often fail to capture "silent" crashes caused by low-level
+- [[winhttp-async-client]] - Completion vs progress notifications, bounded waits, and cancellation semantics for WinHTTP in

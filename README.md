@@ -4,7 +4,7 @@ A curated technical reference across 26 domains — Kafka, Python, SQL, ML, secu
 
 We built it because agents kept confidently hallucinating API flags, version-specific behavior, and config options. Point your Claude, Cursor, or any RAG pipeline at this repo and it gets a reliable source to check against.
 
-**847+ articles | 26 domains | 3987+ cross-references**
+**851+ articles | 26 domains | 3344+ cross-references**
 
 [![Live site](https://img.shields.io/badge/Live_site-happyin.space-FFD740?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGNpcmNsZSBjeD0iMjgiIGN5PSIyMiIgcj0iOSIgZmlsbD0iI2JiODZmYyIvPjxjaXJjbGUgY3g9IjQyIiBjeT0iMzAiIHI9IjciIGZpbGw9IiMwM2RhYzYiLz48Y2lyY2xlIGN4PSIxOCIgY3k9IjQwIiByPSI2IiBmaWxsPSIjZmY3NTk3Ii8+PC9zdmc+)](https://happyin.space/)
 
@@ -12,31 +12,31 @@ We built it because agents kept confidently hallucinating API flags, version-spe
 
 | Domain | Articles | Coverage |
 |--------|:--------:|----------|
-| `image-generation/` | 58 | Diffusion models, flow matching, LoRA training, inpainting, tiled inference |
-| `llm-agents/` | 57 | RAG, fine-tuning, agent frameworks, prompt engineering, multi-agent |
-| `security/` | 56 | Web security, pentesting, Active Directory, anti-fraud, model protection, CWE |
-| `data-science/` | 56 | ML, statistics, neural networks, CV, NLP, math foundations |
+| `image-generation/` | 77 | Diffusion models, flow matching, LoRA training, inpainting, tiled inference |
+| `llm-agents/` | 70 | RAG, fine-tuning, agent frameworks, prompt engineering, multi-agent |
+| `security/` | 61 | Web security, pentesting, Active Directory, anti-fraud, model protection, CWE |
+| `data-science/` | 57 | ML, statistics, neural networks, CV, NLP, math foundations |
+| `devops/` | 47 | Docker, Kubernetes, Terraform, CI/CD, monitoring, SRE, observability |
 | `kafka/` | 43 | Broker internals, consumers, producers, Streams, KSQL, Connect, replication |
-| `devops/` | 38 | Docker, Kubernetes, Terraform, CI/CD, monitoring, SRE, observability |
+| `architecture/` | 37 | Microservices, DDD, system design, API patterns, CQRS |
 | `web-frontend/` | 36 | React, TypeScript, CSS, Figma, bundlers, accessibility, JS async |
 | `data-engineering/` | 34 | ETL/ELT, Spark, Airflow, data warehouses, streaming, CDC, vector search |
 | `algorithms/` | 33 | Sorting, graphs, DP, data structures, complexity analysis |
-| `architecture/` | 33 | Microservices, DDD, system design, API patterns, CQRS |
-| `sql-databases/` | 33 | PostgreSQL, MySQL, query optimization, migrations, indexing, advanced |
 | `python/` | 33 | Core language, FastAPI, Django, async, testing, stdlib, web scraping |
+| `sql-databases/` | 33 | PostgreSQL, MySQL, query optimization, migrations, indexing, advanced |
 | `ios-mobile/` | 31 | SwiftUI, Swift, Android/Kotlin fundamentals, mobile ML |
-| `linux-cli/` | 27 | Shell scripting, filesystem, systemd, permissions, networking |
-| `cpp/` | 27 | Modern C++, memory, templates, concurrency, cross-platform ML |
+| `cpp/` | 29 | Modern C++, memory, templates, concurrency, cross-platform ML |
+| `linux-cli/` | 29 | Shell scripting, filesystem, systemd, permissions, networking |
 | `java-spring/` | 25 | Spring Boot, JPA, microservices, Kotlin, Android |
-| `seo-marketing/` | 24 | Technical SEO, keyword research, link building, AI-driven SEO |
+| `seo-marketing/` | 25 | Technical SEO, keyword research, link building, AI-driven SEO |
+| `testing-qa/` | 25 | Selenium, Playwright, API testing, CI integration, browser automation |
 | `bi-analytics/` | 23 | Tableau, Power BI, SQL analytics, dashboards, product analytics |
-| `testing-qa/` | 23 | Selenium, Playwright, API testing, CI integration, browser automation |
 | `rust/` | 22 | Ownership, lifetimes, async, error handling, unsafe |
 | `nodejs/` | 16 | Event loop, streams, clusters, performance, design patterns |
 | `php/` | 15 | Laravel, MVC, ORM, testing, PHP 8 features |
+| `audio-voice/` | 14 | TTS, ASR, voice cloning, speech synthesis, TTS fine-tuning |
+| `writing/` | 14 | Technical article structure, SEO for articles, LLM anti-patterns |
 | `llm-memory/` | 13 | Memory architectures, session persistence, knowledge graphs |
-| `audio-voice/` | 11 | TTS, ASR, voice cloning, speech synthesis, TTS fine-tuning |
-| `writing/` | 9 | Technical article structure, SEO for articles, LLM anti-patterns |
 | `go/` | 9 | Goroutines, channels, modules, HTTP servers, microservices |
 
 ## For AI agents

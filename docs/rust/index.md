@@ -46,3 +46,10 @@ Systems programming language with compile-time memory safety, zero-cost abstract
 ## Tooling and Ecosystem
 
 - [[rust-tooling]] - cargo, clippy, serde, rayon, FFI, web frameworks, WebAssembly, profiling
+
+## Additional References
+
+- [[interior-mutability]] - Pattern allowing mutation of data behind shared references (&T)
+- [[rust-gui]] - Landscape of GUI development in Rust: native frameworks, bindings to established toolkits, and
+- [[send-sync]] - Marker traits that encode thread-safety guarantees at the type level
+- [[sized-and-dst]] - Rust types divide into Sized (known size at compile time) and Dynamically Sized Types (DSTs, size

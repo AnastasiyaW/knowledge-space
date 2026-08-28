@@ -6,7 +6,18 @@ After adding or removing articles, these places need updating:
 - Homepage spans: `ks-total-articles`, `ks-total-domains`, `ks-graph-nodes`, `ks-desc-domains`
 - Any element with class `ks-stat-articles` or `ks-stat-domains`
 
-## Manual update required
+## Scripted (run these, do not hand-edit)
+
+```bash
+python scripts/sync_indexes.py
+python scripts/sync_stats.py
+python hooks/generate_llms_txt.py
+```
+
+`sync_indexes.py` additionally appends any article linked from no index to its domain
+MOC and to the browse page, so a new article is never orphaned.
+
+## Manual update required (fallback - the scripts above already cover all of these)
 - `README.md` - "XXX+ articles | YY domains | ZZZZ+ cross-references"
 - `README.md` - "across YY domains" in description line
 - `docs/index.md` - "across YY domains" (3 places: description, engineer line, snippet text)

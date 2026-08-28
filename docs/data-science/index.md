@@ -73,3 +73,25 @@ Comprehensive reference covering statistics, machine learning, deep learning, co
 - [[complexity-analysis]] - computational complexity
 - [[etl-elt-pipelines]] - data pipeline infrastructure
 - [[prompt-engineering]] - prompt engineering for LLMs
+
+## Additional References
+
+- [[anomaly-detection]] - Identifying data points that deviate significantly from normal behavior
+- [[attention-mechanisms]] - Attention allows models to focus on relevant parts of the input when producing each output element
+- [[bayesian-inference]] - Bayesian approach treats model parameters as probability distributions, not point estimates
+- [[dimensionality-reduction]] - Reducing number of features while preserving important information
+- [[ensemble-methods]] - Combining multiple models to produce better predictions than any single model
+- [[graph-neural-networks]] - GNNs operate on graph-structured data where entities (nodes) have relationships (edges)
+- [[hyperparameter-optimization]] - Systematic search for the best model configuration
+- [[image-similarity-pipeline]] - Production-grade image similarity pipeline using CLIP+CSD+DINOv3 backbones, contrastive learning on
+- [[image-similarity-scaling]] - Concrete migration path and infrastructure decisions for image similarity systems scaling from
+- [[imbalanced-data]] - When one class dominates the dataset (e.g., 99% negative, 1% positive), standard classifiers become
+- [[ml-system-design]] - Designing end-to-end ML systems that work in production
+- [[mlops-pipelines]] - MLOps applies DevOps principles to machine learning: version control for data/models, automated
+- [[object-detection-yolo]] - Object detection finds and classifies multiple objects in images with bounding boxes
+- [[probabilistic-language-models]] - N-gram models, smoothing techniques, and perplexity evaluation for text generation and NLP
+- [[reinforcement-learning]] - Agent learns by interacting with an environment, receiving rewards/penalties, and optimizing a
+- [[spark-big-data]] - When data exceeds single-machine memory, Spark distributes computation across clusters
+- [[text-summarization]] - Extractive and abstractive summarization techniques using TF-IDF scoring and transformer models
+- [[tipsv2-dense-spatial-prediction]] - Google DeepMind model for dense spatial feature prediction (depth, surface normals, segmentation)
+- [[yolo-object-detection]] - YOLO (You Only Look Once) object detection - bounding box representation, IoU, NMS, evaluation

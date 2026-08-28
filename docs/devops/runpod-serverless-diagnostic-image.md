@@ -26,7 +26,7 @@ Architecture principle: **one file per pod, shared Volume as read-many store**.
 
 **Per-pod file layout**:
 
-```
+```text
 /workspace/logs/
 ├── handler-${RUNPOD_POD_ID}.log         # full stdout+stderr from entrypoint start
 ├── handler-${RUNPOD_POD_ID}.traceback   # uncaught exception (sys.excepthook)

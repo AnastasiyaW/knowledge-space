@@ -61,3 +61,9 @@ type: MOC
 
 - [[web-frameworks-comparison]] - Django vs Flask vs FastAPI
 - [[data-analysis-basics]] - Pandas, Matplotlib, Seaborn, NumPy
+
+## Additional References
+
+- [[django-rest-framework]] - Django REST Framework serializer patterns, relationship handling, validation, and advanced ORM
+- [[stdlib-patterns]] - Python standard library data structures and functional programming tools - collections module
+- [[web-scraping]] - BeautifulSoup web scraping patterns - element search methods, data extraction, pagination, table
