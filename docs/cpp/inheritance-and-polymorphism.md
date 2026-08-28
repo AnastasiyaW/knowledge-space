@@ -214,6 +214,6 @@ Destructors execute in reverse: derived -> members -> base. This is why base des
 ## See Also
 
 - [[design-patterns-cpp]]
-- [[smart-pointers]]
+- [Smart Pointers and Memory Management](smart-pointers.md)
 - [[raii-resource-management]]
 - [[operator-overloading]]

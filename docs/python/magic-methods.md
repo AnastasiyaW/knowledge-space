@@ -182,5 +182,5 @@ class Range:
 
 - [[oop-fundamentals]] - classes, methods, properties
 - [[oop-advanced]] - descriptors, metaclasses
-- [[error-handling]] - context manager protocol
+- [Error Handling and Context Managers](error-handling.md) - context manager protocol
 - [[iterators-and-generators]] - iterator protocol

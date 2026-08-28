@@ -85,7 +85,7 @@ The measured improvement: ~40% reduction in "repeated searches" (the agent re-di
 
 Both GrandCode and MIA instantiate the same underlying pattern:
 
-```
+```text
 spec_freeze → build → evidence → fresh_verify → fix → verify_again
 ```
 

@@ -36,7 +36,7 @@ type: MOC
 
 ## Editing & Restoration
 - [[Step1X-Edit]] - Step1X-Edit model
-- [[ACE++]] - ACE++ editing
+- [ACE++](ACE++.md) - ACE++ editing
 - [[LaMa]] - Large Mask Inpainting
 - [[image-restoration-survey]] - Image restoration survey
 - [[RealRestorer]] - RealRestorer model
@@ -57,3 +57,44 @@ type: MOC
 
 ## Segmentation
 - [[in-context-segmentation]] - In-context segmentation
+
+## Additional References
+
+- [[anatomy-correction-diffusion]] - Comprehensive guide to detecting and fixing anatomy mutations (hands, fingers, limbs) in FLUX Klein
+- [[color-correction-by-numbers]] - Deterministic color correction using measurable channel targets rather than perceptual judgment
+- [[color-space-and-gamma-reference]] - Practical reference for color management in video/photo processing pipelines
+- [[color-theory-for-ml]] - Applied color theory for diffusion model training, color correction, and palette control
+- [[comfyui-wan-vace-video-joiner]] - The Wan VACE Video Joiner is a node suite designed for assembling disparate video segments into a
+- [[defect-detection-small-objects]] - Reference for detecting defects (scratches, dust, surface anomalies) and small objects in
+- [[denoise-architectures-2026]] - 2025-2026 landscape of image denoising architectures: NTIRE 2025 winners, SSM/Mamba-based models
+- [[diffusion-distillation-cdm]] - flow-matching distillation to 4 NFE without GAN or reward model
+- [[edge-softness-and-compositing]] - Measure the edge instead of choosing it: 10-90 transition width, robust outline fitting
+- [[face-beautify-edit-lora]] - Training before/after edit LoRAs on FLUX Klein 9B and Qwen-Image-Edit for facial correction
+- [[face-detection-filtering-pipeline]] - Reusable pipeline for filtering image collections by face presence, quality, and type using YOLO
+- [[flowinone-unified-multimodal-generation-via-image-flow]] - FlowInOne is a multimodal generation framework that treats all inputs—text, classes, bounding
+- [[flux-attention-manipulation]] - Techniques for manipulating, analyzing, and exploiting the joint self-attention mechanism in
+- [[flux-klein-9b-architecture]] - Deep reference for the FLUX.2 Klein 9B model internals: transformer structure, text encoding, VAE
+- [[flux-klein-capability-map]] - Reference for what FLUX.2 Klein 9B can do natively, via official LoRAs, via fal.ai LoRAs, and via
+- [[flux-klein-character-lora]] - Training LoRAs to preserve a specific person's identity with FLUX.2 Klein 9B
+- [[flux-klein-jewelry-photography]] - Production pipeline for generating and compositing jewelry product photography using FLUX.2 Klein 9B
+- [[flux-klein-style-lora-system]] - Architecture and empirical findings for a user-facing style LoRA system on FLUX.2 Klein Base 9B
+- [[fp8-quantization-optimization-for-e4m3]] - FP8 (E4M3) quantization is used to accelerate inference and training on NVIDIA Hopper architecture
+- [[frequency-decomposition-editing]] - Methods for separating images into low-frequency (LF) and high-frequency (HF) components, editing
+- [[in-context-segmentation-with-insid3-and-dinov3]] - INSID3 is a training-free framework for one-shot in-context segmentation that leverages dense
+- [[intrinsic-decomposition]] - Separating an image into intrinsic components (reflectance/albedo vs
+- [[lora-auxiliary-losses]] - Additional loss terms beyond standard diffusion denoising loss
+- [[lora-identity-disentanglement-in-flux2-klein-9b]] - Identity LoRA training often suffers from concept bleeding, where environmental factors (lighting
+- [[megastyle-flux-style-transfer]] - MegaStyle is a single-reference style transfer framework developed by Tencent for FLUX.1-dev
+- [[object-removal-inpainting]] - Comparative reference for object removal/erasure models (2024-2026)
+- [[pixel-art-generation]] - Algorithms and models for converting raster images to pixel art, generating pixel art via diffusion
+- [[plugin-inference-ux]] - Patterns for making slow ML inference (10-30s per operation) feel fast inside desktop creative
+- [[recurrent-depth-transformer]] - Looped transformer architecture that reuses a single block T times to simulate multi-step reasoning
+- [[segmentation-dataset-preparation]] - Reference for binary semantic segmentation datasets with 0.1-5% positive-pixel coverage (small
+- [[skin-retouch-pipeline]] - Automated blemish detection and removal pipeline for photos
+- [[spatialedit-16b-geometric-control-for-diffusion-based-image-editing]] - SpatialEdit-16B is a multimodal diffusion transformer (MM-DiT) framework designed for precise
+- [[style-reference-ux]] - Comparative analysis of style reference workflows across major AI image generation products
+- [[synthetic-dataset-pipeline]] - Pipeline for building high-quality annotated datasets for YOLO + SAM fine-tuning from raw image
+- [[tile-position-encoding]] - Methods for injecting spatial position information into patch/tile-based image models, with
+- [[upscaler-evaluation]] - Practical comparison of image upscalers for LoRA training data preparation and production pipelines
+- [[videomama-diffusion-based-video-matting]] - VideoMaMa is a video matting framework that converts coarse segmentation masks into pixel-perfect
+- [[watermark-removal]] - Removing visible logos, text overlays, and branding from images

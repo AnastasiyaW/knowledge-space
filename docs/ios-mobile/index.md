@@ -45,3 +45,16 @@ Reference knowledge base for iOS and Android mobile app development. Covers Swif
 - [[android-room-database]] - Entity, DAO, Database singleton, LiveData queries
 - [[android-retrofit-networking]] - REST API interfaces, Gson, OkHttp, annotations
 - [[android-dagger-dependency-injection]] - Modules, Components, @Provides, @Singleton, @Inject
+
+## Additional References
+
+- [[android-sparkle-filter]] - Implementing realtime sparkle/glitter effects on clothing in live camera preview on Android
+- [[graph-algorithms-swift]] - Adjacency list graphs, BFS/DFS traversal, and shortest path algorithms with mapping examples
+- [[refactoring-view-controllers]] - Systematic decomposition of massive view controllers into testable components using extraction
+- [[swift-collections-beyond-arrays]] - Sets and Dictionaries in Swift with performance characteristics, set operations, and access patterns
+- [[swift-generics]] - Type-safe reusable functions and types with generic parameters, constraints, and associated types
+- [[swift-macros]] - Compile-time code generation via attached and freestanding macros using AST transformation in Swift
+- [[swift-phantom-types]] - Compile-time-only type parameters for enforcing state machines, unit safety, and domain constraints
+- [[swiftui-layout-testing]] - Property-based fuzzing to verify custom layout engines against Apple's native SwiftUI rendering
+- [[type-safe-modeling]] - Using enums, structs, and generics to eliminate impossible states and make APIs self-documenting
+- [[wrapping-c-libraries]] - Bridging C functions into Swift with type safety, automatic memory management via deinit, and error

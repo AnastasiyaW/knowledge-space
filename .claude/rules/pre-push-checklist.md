@@ -1,5 +1,34 @@
 # Pre-Push Stats Checklist
 
+Two scripts do this mechanically. Run them from the repository root after adding or
+removing articles, before pushing:
+
+```bash
+python scripts/sync_indexes.py    # domain MOCs + browse page: counts, links, new articles
+python scripts/sync_stats.py      # README / index.md / mkdocs.yml / AGENTS.md / welcome.md
+python hooks/generate_llms_txt.py
+python -m mkdocs build --strict   # runs validate + link-checker + public_check
+```
+
+`sync_stats.py` reads the canonical counts from `hooks/stats.py` - the same counter the
+site build uses for `stats.js` - and prints the triple it wrote. Cross-references are
+counted as wiki-links **inside articles only**: `index.md`, the browse page and the blog
+are navigation, not cross-references, so they are excluded.
+
+`sync_indexes.py` also appends any article that is currently linked from no index to its
+domain MOC and to the browse page, so a new article is never orphaned.
+
+The GitHub repository description is the one place no script reaches:
+
+```bash
+gh repo edit AnastasiyaW/knowledge-space --description "... <N>+ ... across 26 domains ..."
+```
+
+Everything below is the manual fallback, kept for the case where a new place starts
+carrying a hardcoded count.
+
+## Manual verification
+
 After adding articles or domains, BEFORE pushing, run this check:
 
 ```bash

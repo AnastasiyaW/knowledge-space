@@ -25,7 +25,7 @@ type: MOC
 
 ## Error Handling and I/O
 
-- [[error-handling]] - try/except, context managers, custom exceptions, EAFP
+- [Error Handling and Context Managers](error-handling.md) - try/except, context managers, custom exceptions, EAFP
 - [[file-io]] - reading/writing, CSV, JSON, pathlib, os.path, encoding
 - [[regular-expressions]] - re module, pattern syntax, findall/sub/split, groups, flags
 
@@ -38,7 +38,7 @@ type: MOC
 
 - [[type-hints]] - annotations, generics, Protocol, mypy, TypeVar, Literal
 - [[async-programming]] - asyncio, async/await, gather, TaskGroup, aiohttp/httpx
-- [[concurrency]] - threading, multiprocessing, GIL, ThreadPoolExecutor, ProcessPoolExecutor
+- [Concurrency - Threading and Multiprocessing](concurrency.md) - threading, multiprocessing, GIL, ThreadPoolExecutor, ProcessPoolExecutor
 - [[memory-and-internals]] - CPython, reference counting, GC, weakref, bytecode
 
 ## Performance and Quality
@@ -61,3 +61,9 @@ type: MOC
 
 - [[web-frameworks-comparison]] - Django vs Flask vs FastAPI
 - [[data-analysis-basics]] - Pandas, Matplotlib, Seaborn, NumPy
+
+## Additional References
+
+- [[django-rest-framework]] - Django REST Framework serializer patterns, relationship handling, validation, and advanced ORM
+- [[stdlib-patterns]] - Python standard library data structures and functional programming tools - collections module
+- [[web-scraping]] - BeautifulSoup web scraping patterns - element search methods, data extraction, pagination, table

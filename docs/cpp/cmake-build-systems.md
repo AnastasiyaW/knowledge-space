@@ -160,7 +160,7 @@ cmake --install build --prefix /usr/local
 
 ## See Also
 
-- [[performance-optimization]]
+- [Performance Optimization](performance-optimization.md)
 - [[const-and-type-safety]]
 - [CMake documentation](https://cmake.org/cmake/help/latest/)
 - [Modern CMake guide](https://cliutils.gitlab.io/modern-cmake/)

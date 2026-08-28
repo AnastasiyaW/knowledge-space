@@ -130,5 +130,5 @@ println!("{:?}", data.lock().unwrap());
 ## See Also
 
 - [[borrowing-and-references]] - compile-time borrow rules that interior mutability relaxes
-- [[smart-pointers]] - Rc, Arc, Box
-- [[concurrency]] - Mutex, RwLock, atomics
+- [Smart Pointers](smart-pointers.md) - Rc, Arc, Box
+- [Concurrency](concurrency.md) - Mutex, RwLock, atomics

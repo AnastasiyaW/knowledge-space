@@ -131,4 +131,4 @@ T find_max(std::vector<T>& v);
 
 - [[templates-and-concepts]] - generic programming foundations
 - [[modern-cpp-features]] - other C++20 features
-- [[error-handling]] - concepts improve template error diagnostics
+- [Error Handling - Exceptions and Alternatives](error-handling.md) - concepts improve template error diagnostics

@@ -99,5 +99,5 @@ let lock = RwLock::new(5);
 ## See Also
 
 - [[async-await]] - async alternative to threads for I/O-bound workloads
-- [[smart-pointers]] - Arc, Rc, and reference counting
+- [Smart Pointers](smart-pointers.md) - Arc, Rc, and reference counting
 - [[ownership-and-move-semantics]] - `move` closures for thread spawning

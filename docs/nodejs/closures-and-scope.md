@@ -82,5 +82,5 @@ function processUser(user) {
 
 - [[v8-optimization]] - how V8 stores closure data structures on the heap
 - [[modules-and-packages]] - module wrapping creates the enclosing scope
-- [[design-patterns-gof]] - closures as foundation for many patterns
+- [Design Patterns (GoF) in JavaScript](design-patterns-gof.md) - closures as foundation for many patterns
 - [[solid-and-grasp]] - closure-based immutable records

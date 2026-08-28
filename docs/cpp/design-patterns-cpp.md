@@ -215,4 +215,4 @@ auto query = QueryBuilder()
 - [[inheritance-and-polymorphism]]
 - [[templates-and-concepts]]
 - [[lambda-expressions]]
-- [[smart-pointers]]
+- [Smart Pointers and Memory Management](smart-pointers.md)

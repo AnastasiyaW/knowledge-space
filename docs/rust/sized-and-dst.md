@@ -142,4 +142,4 @@ trait SizedOnly: Sized {
 - [[dynamic-dispatch]] - vtables and trait object mechanics
 - [[traits]] - trait definitions and implementations
 - [[generics-and-monomorphization]] - Sized bound in generics
-- [[smart-pointers]] - Box, Rc, Arc for owning DSTs
+- [Smart Pointers](smart-pointers.md) - Box, Rc, Arc for owning DSTs

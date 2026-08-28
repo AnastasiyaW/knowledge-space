@@ -12,7 +12,7 @@ Google DeepMind model for dense spatial feature prediction (depth, surface norma
 
 ## Supported Downstream Tasks
 
-```
+```text
 image → TIPSv2 backbone → patch features
                               │
                     ┌─────────┼──────────┐
@@ -88,7 +88,7 @@ TIPSv2's differentiator is the combination of dense spatial features **and** tex
 
 Dense Prediction Transformer (DPT) heads take patch tokens from a ViT backbone and upsample them to full resolution through a multi-scale fusion scheme:
 
-```
+```text
 patch tokens (e.g., 37×37 for 518×518 input at /14 stride)
         │
   Reassemble × 4 scales  ← extracts tokens at different depths of ViT

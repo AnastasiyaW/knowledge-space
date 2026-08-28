@@ -268,4 +268,4 @@ GOOS=windows GOARCH=amd64 go build -o server.exe ./cmd/server
 
 - [[interfaces-composition]] - organizing interfaces across packages
 - [[http-servers]] - package structure for HTTP applications
-- [[error-handling]] - error conventions across package boundaries
+- [Error Handling](error-handling.md) - error conventions across package boundaries

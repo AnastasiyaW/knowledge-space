@@ -28,7 +28,7 @@ Choosing and implementing the right architecture style for your context.
 
 - [[architectural-styles]] - Monolith to microservices spectrum, migration strategies, Strangler Fig
 - [[microservices-communication]] - API Gateway, BFF, CQRS, Saga (orchestration/choreography), Event Sourcing, Circuit Breaker
-- [[design-patterns-gof]] - SOLID, creational/structural/behavioral patterns, pattern selection guide
+- [Design Patterns (GoF)](design-patterns-gof.md) - SOLID, creational/structural/behavioral patterns, pattern selection guide
 - [[microfrontends]] - Webpack Module Federation, Single-SPA, integration methods, inter-module communication
 
 ## Distributed Systems
@@ -120,3 +120,8 @@ Flexible routing logic?       -> RabbitMQ
 Simple task queues?           -> RabbitMQ
 Request-response pattern?     -> RabbitMQ
 ```
+
+## Additional References
+
+- [[photoshop-plugin-architecture]] - Date: 2026-04-03 Context: Building cross-platform (Mac + Windows) C++ ML inference plugin for
+- [[write-buffering-patterns]] - Durability and throughput patterns for absorbing high-frequency writes before a slow or

@@ -63,7 +63,7 @@ The first documented case of malware leveraging locally installed AI agents to f
 
 ## See Also
 - [[secure-backend-development]]
-- [[database-security]]
+- [Database Security](database-security.md)
 - [[security-telemetry]]
 - [[authentication-and-authorization]]
 

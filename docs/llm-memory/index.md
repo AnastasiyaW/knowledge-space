@@ -24,3 +24,11 @@ Patterns and architectures for organizing persistent knowledge when working with
 
 ## Memory Lifecycle
 - [[forgetting-strategies]] - Compaction, archival, TTL, relevance scoring, memory size management
+
+## Additional References
+
+- [[knowledge-graph-memory]] - Persistent knowledge graph patterns for AI agents: entity resolution, pipeline stages, agent notes
+- [[memory-priority-enforcement]] - Pattern for structuring agent memory into always-load (critical) and on-demand (reference) tiers
+- [[memory-transfer-learning]] - Cross-domain memory transfer for coding agents
+- [[shared-knowledge-layers]] - When multiple agents work in parallel, they need a structured way to share discoveries without
+- [[verbatim-retrieval-vs-extraction]] - Why raw verbatim storage beats LLM extraction for agent memory retrieval - benchmarks, MemPalace

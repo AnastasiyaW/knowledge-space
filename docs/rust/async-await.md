@@ -77,6 +77,6 @@ while let Some(value) = stream.next().await {
 
 ## See Also
 
-- [[concurrency]] - thread-based concurrency, Send/Sync traits
-- [[error-handling]] - async error propagation with `?`
+- [Concurrency](concurrency.md) - thread-based concurrency, Send/Sync traits
+- [Error Handling](error-handling.md) - async error propagation with `?`
 - [[rust-tooling]] - tokio, reqwest, and async ecosystem crates

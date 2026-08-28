@@ -113,4 +113,4 @@ Global variables are:
 - [[raii-resource-management]] - tying cleanup to scope exit
 - [[object-lifetime]] - construction and destruction order
 - [[const-and-type-safety]] - const correctness
-- [[smart-pointers]] - scope-based memory management
+- [Smart Pointers and Memory Management](smart-pointers.md) - scope-based memory management

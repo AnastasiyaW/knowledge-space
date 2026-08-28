@@ -211,5 +211,5 @@ int main() {
 - [[stl-algorithms]]
 - [[templates-and-concepts]]
 - [[lambda-expressions]]
-- [[error-handling]]
+- [Error Handling - Exceptions and Alternatives](error-handling.md)
 - [[string-handling]]

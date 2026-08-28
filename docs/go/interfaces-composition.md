@@ -271,6 +271,6 @@ svc := NewUserService(&mockStore{}, &mockLogger{})
 
 ## See Also
 
-- [[error-handling]] - the `error` interface and custom error types
+- [Error Handling](error-handling.md) - the `error` interface and custom error types
 - [[goroutines-channels]] - interfaces for concurrent component contracts
 - [[http-servers]] - `http.Handler` interface and middleware composition

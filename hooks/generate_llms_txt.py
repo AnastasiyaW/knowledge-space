@@ -75,6 +75,11 @@ def extract_article_info(path: Path) -> tuple[str, str]:
             desc = line.strip()
             break
 
+    # Wiki-link syntax is a site-internal convention; consumers of llms.txt get the
+    # display text instead of a raw [[slug]] / [[slug|Label]] token.
+    desc = re.sub(r"\[\[([^\]|]+)\|([^\]]+)\]\]", r"\2", desc)
+    desc = re.sub(r"\[\[([^\]]+)\]\]", lambda m: m.group(1).split("/")[-1].replace("-", " "), desc)
+
     # Truncate description
     if len(desc) > 200:
         desc = desc[:197] + "..."

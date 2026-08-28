@@ -45,7 +45,7 @@ Effective enforcement uses four independent layers. Each layer catches what the 
 
 Opus 4.7 respects explicit constraints. Include this block verbatim in any bug-fix task prompt:
 
-```
+```text
 Constraints (mandatory, do not narrow):
 - ALL bugs and quality issues encountered MUST be fixed in this session
 - Do NOT label any finding as "pre-existing", "out of scope", or "separate refactor"
@@ -141,7 +141,7 @@ sys.exit(0)
 
 Before `git commit`, spawn a subagent that has not seen the current session's reasoning. Self-evaluation bias means the builder cannot reliably verify their own work.
 
-```
+```text
 Fresh-context verifier prompt:
 
 Read diff: <git diff base..HEAD>
@@ -193,7 +193,7 @@ When in doubt: if a finding does not match one of the five exceptions, fix it no
 
 A bug-fix task is complete only when four artifacts exist:
 
-```
+```text
 [Bug completion proof]
 1. Reproduction: <command that demonstrates the bug exists before the fix>
 2. Failing check: <test/lint/build that is red before the fix>

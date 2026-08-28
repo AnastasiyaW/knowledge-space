@@ -13,7 +13,7 @@ Systems programming language with compile-time memory safety, zero-cost abstract
 - [[ownership-and-move-semantics]] - ownership rules, RAII, move semantics, Copy/Clone
 - [[borrowing-and-references]] - borrow rules, shared/mutable refs, slices, NLL
 - [[lifetimes]] - lifetime annotations, elision rules, 'static, interior mutability
-- [[smart-pointers]] - Box, Rc, Arc, RefCell, Cow, interior mutability
+- [Smart Pointers](smart-pointers.md) - Box, Rc, Arc, RefCell, Cow, interior mutability
 
 ## Type System
 
@@ -31,12 +31,12 @@ Systems programming language with compile-time memory safety, zero-cost abstract
 
 ## Concurrency and Async
 
-- [[concurrency]] - threads, Send/Sync, Arc+Mutex, channels, RwLock
+- [Concurrency](concurrency.md) - threads, Send/Sync, Arc+Mutex, channels, RwLock
 - [[async-await]] - tokio, futures, select, streams, Pin
 
 ## Error Handling
 
-- [[error-handling]] - Result, Option, ? operator, anyhow/thiserror, custom errors
+- [Error Handling](error-handling.md) - Result, Option, ? operator, anyhow/thiserror, custom errors
 
 ## Language Features
 
@@ -46,3 +46,10 @@ Systems programming language with compile-time memory safety, zero-cost abstract
 ## Tooling and Ecosystem
 
 - [[rust-tooling]] - cargo, clippy, serde, rayon, FFI, web frameworks, WebAssembly, profiling
+
+## Additional References
+
+- [[interior-mutability]] - Pattern allowing mutation of data behind shared references (&T)
+- [[rust-gui]] - Landscape of GUI development in Rust: native frameworks, bindings to established toolkits, and
+- [[send-sync]] - Marker traits that encode thread-safety guarantees at the type level
+- [[sized-and-dst]] - Rust types divide into Sized (known size at compile time) and Dynamically Sized Types (DSTs, size

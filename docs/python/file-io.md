@@ -156,5 +156,5 @@ with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
 ## See Also
 
 - [[strings-and-text]] - string encoding/decoding
-- [[error-handling]] - context managers for resource cleanup
+- [Error Handling and Context Managers](error-handling.md) - context managers for resource cleanup
 - [[standard-library]] - os, shutil, tempfile modules

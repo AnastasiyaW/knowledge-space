@@ -107,4 +107,4 @@ certbot --nginx -d example.com -d www.example.com
 - [[authentication-and-authorization]] - JWT, OAuth, Kerberos use crypto
 - [[tls-fingerprinting-and-network-identifiers]] - TCP/IP stack fingerprinting
 - [[web-application-security-fundamentals]] - HTTPS, CSP headers
-- [[database-security]] - encryption at rest and in transit
+- [Database Security](database-security.md) - encryption at rest and in transit

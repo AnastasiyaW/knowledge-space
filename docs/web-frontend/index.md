@@ -71,3 +71,12 @@ UI/UX design tool for creating mockups, prototypes, and design systems.
 - [[figma-fundamentals]] - Interface, frames, grids, layers, shapes, export, sharing
 - [[figma-layout-and-components]] - AutoLayout, constraints, components, variants, design systems
 - [[figma-design-workflow]] - Typography, color, effects, prototyping, responsive design, wireframes
+
+## Additional References
+
+- [[3d-browser-libs-for-video]] - Comparison of Three.js, React Three Fiber, Spline, Lottie, and other 3D/animation libraries for
+- [[dom-free-text-layout]] - Measuring and laying out text without triggering browser DOM reflow
+- [[javascript-async-event-loop]] - Comprehensive reference for JavaScript asynchronous programming - from callbacks through
+- [[javascript-concurrency-primitives]] - Advanced async coordination in JavaScript - semaphores, mutexes, async queues/pools, worker
+- [[remotion-programmatic-video]] - Build product demos, marketing videos, and pitch decks as React components — render to MP4 with
+- [[video-motion-design-rules]] - Concrete numbers for timing, easing, audio levels, composition, and storytelling in product videos

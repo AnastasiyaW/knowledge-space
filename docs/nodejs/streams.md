@@ -89,5 +89,5 @@ Advanced: implement `Symbol.iterator` for `for...of`, `Symbol.asyncIterator` for
 ## See Also
 
 - [[async-patterns]] - async iterators and generators as stream alternatives
-- [[performance-optimization]] - buffer optimization techniques
+- [Performance Optimization](performance-optimization.md) - buffer optimization techniques
 - [[event-loop-and-architecture]] - how libuv handles I/O in the thread pool

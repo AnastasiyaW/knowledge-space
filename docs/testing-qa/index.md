@@ -44,3 +44,9 @@ Test automation engineering - frameworks, tools, patterns, and infrastructure fo
 - [[docker-test-environments]] - compose stacks, testcontainers, wait strategies, CI services
 - [[fastapi-test-services]] - TestClient, dependency overrides, async testing, mock services
 - [[kafka-async-testing]] - producer/consumer tests, eventual consistency, DLQ validation
+
+## Additional References
+
+- [[browser-test-automation]] - Geb is a Groovy library on top of Selenium WebDriver for browser test automation
+- [[negative-controls-for-verification]] - A green check proves nothing until it has been shown able to go red
+- [[three-state-check-aggregation]] - PASS / FAIL / UNKNOWN instead of pass-fail: exit-code contracts, fail-closed aggregation

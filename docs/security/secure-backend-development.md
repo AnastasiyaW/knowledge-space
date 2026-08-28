@@ -276,4 +276,4 @@ app.use('/api/auth', rateLimit({
 - [[authentication-and-authorization]] - JWT, OAuth, RBAC concepts
 - [[sql-injection-deep-dive]] - what parameterized queries prevent
 - [[web-application-security-fundamentals]] - XSS, CSRF, IDOR
-- [[database-security]] - database-level security controls
+- [Database Security](database-security.md) - database-level security controls

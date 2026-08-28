@@ -70,3 +70,22 @@ Comprehensive reference covering Docker, Kubernetes, CI/CD, Terraform, cloud pla
 - [[devops-culture-and-sdlc]] - DevOps principles, Agile/Scrum, SDLC, tools landscape
 - [[git-version-control]] - Git workflow, branching strategies, monorepo vs multirepo
 - [[linux-server-administration]] - filesystem, processes, networking, SSH, systemd, scripting
+
+## Additional References
+
+- [[comfyui-container-build]] - Patterns for building production-grade ComfyUI Docker images: distutils conflict resolution, layer
+- [[container-security-scanning]] - Automated detection of vulnerabilities, misconfigurations, and secrets in container images, IaC
+- [[kubernetes-operators]] - Software extensions that use Custom Resources (CRs) to manage applications and their components
+- [[kubernetes-security]] - Multi-layered defense for Kubernetes clusters: authentication, authorization, admission control
+- [[kustomize]] - Template-free customization of Kubernetes YAML configurations
+- [[libvirt-kvm-networking]] - Diagnosing and fixing intermittent connection drops on KVM guests using virbr0 NAT
+- [[observability-query-languages]] - Reference for the three main observability query languages - Prometheus PromQL for metrics, Grafana
+- [[ois-multi-environment-task-monitoring-architecture]] - The OIS infrastructure utilizes a uniform monorepo deployment across staging and production
+- [[runpod-flash-gpu-serverless]] - RunPod Flash is an open-source Python SDK (MIT license, v1.16.0) that enables the deployment of
+- [[runpod-production]] - Reference for deploying GPU workloads on RunPod: deploy type selection, image strategy tiers
+- [[runpod-serverless-diagnostic-image]] - Serverless workers die silently
+- [[runpod-serverless-observability-limits]] - RunPod Serverless workers are difficult to debug not because of one missing feature but because
+- [[runpod-serverless-python-silent-exit-1]] - Analysis and mitigation of silent worker crashes (exit code 1) during task pickup on RunPod
+- [[runpod-serverless-silent-worker-crashes-on-task-pickup]] - Workers in a serverless environment may spawn as "Ready," pick up a task, and then die silently
+- [[runpod-serverless-stuck-queue-idle-workers]] - Symptom: health endpoint shows idle > 0 or ready > 0, queue depth is positive, inProgress = 0, and
+- [[tunnel-architecture]] - Exposing VM-hosted or NAT-ed services to the public internet without opening inbound firewall ports

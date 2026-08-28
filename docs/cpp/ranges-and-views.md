@@ -131,4 +131,4 @@ Not all compilers fully support C++20 ranges. You may need:
 - [[stl-algorithms]] - traditional algorithm patterns
 - [[stl-containers]] - container types that work with ranges
 - [[lambda-expressions]] - writing predicates for filter/transform
-- [[performance-optimization]] - lazy evaluation benefits
+- [Performance Optimization](performance-optimization.md) - lazy evaluation benefits

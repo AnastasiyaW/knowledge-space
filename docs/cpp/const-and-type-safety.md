@@ -171,5 +171,5 @@ process(sv.substr(1, 3));   // no allocation (just pointer + length)
 
 - [[templates-and-concepts]]
 - [[string-handling]]
-- [[performance-optimization]]
+- [Performance Optimization](performance-optimization.md)
 - [cppreference: const](https://en.cppreference.com/w/cpp/language/cv)

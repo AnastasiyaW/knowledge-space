@@ -42,3 +42,11 @@ type: MOC
 ## Tools & Analytics
 - [[seo-tools-workflow]] - Screaming Frog, Ahrefs, WordPress/Tilda setup, browser extensions, AI integration
 - [[seo-analytics-reporting]] - KPIs, monthly reporting, meta-scanner, traffic drop diagnosis, position tracking
+
+## Additional References
+
+- [[llm-discoverability-ai-search]] - Optimizing web content to appear in AI-generated answers, ChatGPT Search, Perplexity, Google AI
+- [[mkdocs-material-seo]] - SEO configuration for MkDocs Material sites: sitemap, canonical URLs, plugins, Schema.org
+- [[multilingual-discovery-layer]] - Making an English-only static site (MkDocs, Hugo, Jekyll on GitHub Pages) discoverable in multiple
+- [[technical-content-seo-strategy]] - Content architecture and SEO approach for technical knowledge bases, developer documentation, and
+- [[twitter-x-content-strategy-and-ranking-factors]] - The 2026 iteration of the X algorithm (Grok-v3 powered) prioritizes conversational depth and

@@ -211,6 +211,6 @@ gc.get_threshold()  # (700, 10, 10)
 
 ## See Also
 
-- [[concurrency]] - GIL details, threading limitations
+- [Concurrency - Threading and Multiprocessing](concurrency.md) - GIL details, threading limitations
 - [[profiling-and-optimization]] - memory profiling tools
 - [[oop-advanced]] - `__slots__` for memory optimization

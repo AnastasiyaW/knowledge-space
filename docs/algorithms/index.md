@@ -37,3 +37,18 @@ type: MOC
 - [[graph-coloring]] - Chromatic number, bipartite check, greedy coloring, NP-completeness
 - [[eulerian-hamiltonian-paths]] - Euler trails/circuits, Hamiltonian paths, Hierholzer's algorithm
 - [[traveling-salesman-problem]] - TSP exact (Held-Karp) and approximation (nearest neighbor, Christofides)
+
+## Additional References
+
+- [[backtracking]] - Systematic exploration of solution space by building candidates incrementally and abandoning
+- [[bit-manipulation]] - Operations on individual bits of integers
+- [[data-structures-fundamentals]] - Core data structure operations and complexity analysis - arrays, sorted arrays with binary search
+- [[dynamic-programming]] - Recursion fundamentals, memoization (top-down), bottom-up tabulation, and recognizing DP
+- [[greedy-algorithms]] - Build solutions incrementally by making the locally optimal choice at each step
+- [[hash-tables]] - Data structure mapping keys to values via hash function
+- [[heap-priority-queue]] - Binary heap: complete binary tree satisfying heap property
+- [[problem-patterns]] - Systematic approach to algorithm problems - the 7-step interview process, common patterns
+- [[recursion-fundamentals]] - Function that calls itself to solve smaller instances of the same problem
+- [[sliding-window]] - Maintain a window (contiguous subarray/substring) that slides across input, expanding and shrinking
+- [[string-algorithms]] - Algorithms for string searching, matching, and manipulation
+- [[trees-and-graphs]] - Binary search trees, heaps/priority queues, tries (prefix trees), graph representation, and

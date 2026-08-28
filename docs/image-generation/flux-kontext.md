@@ -69,7 +69,7 @@ When context is empty → falls back to pure text-to-image.
 - Multi-turn editing degrades after ~6 iterations
 - Dev model has distillation artifacts
 - Non-commercial license for open weights — commercial requires BFL licensing
-- [[ACE++]] development **suspended on FLUX base** due to training instability
+- [ACE++](ACE++.md) development **suspended on FLUX base** due to training instability
 
 ## Key Links
 

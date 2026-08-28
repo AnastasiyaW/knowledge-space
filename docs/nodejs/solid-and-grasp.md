@@ -107,7 +107,7 @@ Objects sharing the same contract (same fields, types, order) get identical V8 h
 
 ## See Also
 
-- [[design-patterns-gof]] - concrete pattern implementations in JavaScript
+- [Design Patterns (GoF) in JavaScript](design-patterns-gof.md) - concrete pattern implementations in JavaScript
 - [[dependency-injection]] - Dependency Inversion Principle in practice
 - [[closures-and-scope]] - closures as alternative to class-based encapsulation
 - [[application-architecture]] - layered architecture as SOLID application

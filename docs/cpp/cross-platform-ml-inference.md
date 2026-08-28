@@ -257,6 +257,6 @@ sentry-cli debug-files upload --include-sources ./build/Release/*.dSYM
 ## See Also
 
 - [[cmake-build-systems]] - CMake configuration patterns
-- [[concurrency]] - platform threading differences
-- [[error-handling]] - exception handling across compilers
+- [Concurrency - Threads, Async, Atomics](concurrency.md) - platform threading differences
+- [Error Handling - Exceptions and Alternatives](error-handling.md) - exception handling across compilers
 - [[low-vram-inference-strategies]] - GPU memory optimization techniques

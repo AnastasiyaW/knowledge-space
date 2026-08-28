@@ -15,7 +15,7 @@ Resource Acquisition Is Initialization - tie resource lifetime to object lifetim
 - Stack-allocated RAII objects are destroyed in reverse order of construction
 - Destructor must not throw exceptions - if it does during stack unwinding, `std::terminate` is called
 - Standard RAII wrappers: `unique_ptr`, `shared_ptr`, `lock_guard`, `unique_lock`, `fstream`, `string`, `vector`
-- Raw `new`/`delete` should almost never appear in modern C++ - use [[smart-pointers]] or containers
+- Raw `new`/`delete` should almost never appear in modern C++ - use [Smart Pointers and Memory Management](smart-pointers.md) or containers
 - Copy semantics: deep copy or disable copying (`= delete`)
 - Move semantics: transfer ownership cheaply, see [[move-semantics]]
 - Rule of Zero > Rule of Five > manual management
@@ -160,7 +160,7 @@ public:
 
 ## See Also
 
-- [[smart-pointers]]
+- [Smart Pointers and Memory Management](smart-pointers.md)
 - [[move-semantics]]
-- [[error-handling]]
+- [Error Handling - Exceptions and Alternatives](error-handling.md)
 - [[object-lifetime]]

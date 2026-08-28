@@ -145,7 +145,7 @@ struct NotSync {
 
 ## See Also
 
-- [[concurrency]] - threads, channels, shared state
+- [Concurrency](concurrency.md) - threads, channels, shared state
 - [[interior-mutability]] - Cell, RefCell, Mutex
-- [[smart-pointers]] - Rc vs Arc
+- [Smart Pointers](smart-pointers.md) - Rc vs Arc
 - [[async-await]] - Send bounds in async contexts

@@ -53,6 +53,10 @@ type: MOC
 - [[caching-redis-memcached]] - Redis, Memcached, cache patterns (aside, write-through, write-behind)
 
 ## Security and Infrastructure
-- [[database-security]] - SQL injection, TLS/SSL, encryption, roles, privileges, least privilege
+- [Database Security](database-security.md) - SQL injection, TLS/SSL, encryption, roles, privileges, least privilege
 - [[postgresql-docker-kubernetes]] - Docker, StatefulSet, Helm, Zalando/Crunchy operators, GKE
 - [[infrastructure-as-code]] - Terraform, Ansible, cloud managed PostgreSQL, installation guides
+
+## Additional References
+
+- [[advanced-patterns]] - Advanced SQL patterns beyond basic CRUD - window functions for analytics, correlated subqueries

@@ -93,5 +93,5 @@ One generic function handles all entities. LLM generates imperative code manuall
 
 - [[v8-optimization]] - hidden classes, monomorphic code, JIT internals
 - [[streams]] - stream optimization and chunk handling
-- [[concurrency-patterns]] - WebSocket batching, binary protocols
+- [Concurrency Patterns](concurrency-patterns.md) - WebSocket batching, binary protocols
 - [[event-loop-and-architecture]] - performance factors in Node.js

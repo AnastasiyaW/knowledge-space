@@ -84,5 +84,5 @@ Same security layer across Pure Node.js, Fastify, NestJS, Metarhia:
 ## See Also
 
 - [[application-architecture]] - context isolation levels (call, connection, session, application)
-- [[error-handling]] - AppError vs system errors, safe error propagation
+- [Error Handling](error-handling.md) - AppError vs system errors, safe error propagation
 - [[modules-and-packages]] - npm security and dependency management

@@ -74,5 +74,5 @@ let v2 = v1.clone();  // explicit deep copy
 ## See Also
 
 - [[borrowing-and-references]] - non-owning access to data
-- [[smart-pointers]] - Box, Rc, Arc for heap management
+- [Smart Pointers](smart-pointers.md) - Box, Rc, Arc for heap management
 - [[lifetimes]] - compile-time tracking of reference validity

@@ -87,4 +87,4 @@ Application structure is the #1 difficulty in Node.js development - not framewor
 - [[v8-optimization]] - V8 hidden classes, monomorphic code, JIT compilation
 - [[async-patterns]] - callbacks, Promises, async/await mechanics
 - [[streams]] - stream types and backpressure handling
-- [[performance-optimization]] - round-trip reduction, Map vs Object benchmarks
+- [Performance Optimization](performance-optimization.md) - round-trip reduction, Map vs Object benchmarks

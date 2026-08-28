@@ -97,4 +97,4 @@ impl Add for Point {
 
 - [[generics-and-monomorphization]] - compile-time polymorphism with generics
 - [[dynamic-dispatch]] - trait objects, vtables, dyn Trait
-- [[error-handling]] - Error trait and From for error type conversion
+- [Error Handling](error-handling.md) - Error trait and From for error type conversion

@@ -122,5 +122,5 @@ const scaffold = (url, structure) => {
 
 - [[dependency-injection]] - DI vs modules for decoupling layers
 - [[data-access-patterns]] - DAL as a separate architecture layer
-- [[design-patterns-gof]] - patterns for layer isolation (Adapter, Facade, Proxy)
+- [Design Patterns (GoF) in JavaScript](design-patterns-gof.md) - patterns for layer isolation (Adapter, Facade, Proxy)
 - [[modules-and-packages]] - how module system supports architecture

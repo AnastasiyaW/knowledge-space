@@ -173,6 +173,6 @@ class TestMyCode(unittest.TestCase):
 
 ## See Also
 
-- [[error-handling]] - testing exception raising
+- [Error Handling and Context Managers](error-handling.md) - testing exception raising
 - [[fastapi-fundamentals]] - endpoint testing
 - [[type-hints]] - mypy in CI pipeline

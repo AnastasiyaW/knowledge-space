@@ -63,3 +63,7 @@ Knowledge base covering ETL/ELT, data pipelines, data warehousing, distributed c
 - [[architecture/index]] - system design patterns
 - [[data-science/index]] - ML and analytics
 - [[bi-analytics/index]] - BI tools and dashboards
+
+## Additional References
+
+- [[vector-search-at-scale]] - Scaling embedding-based similarity search from tens of thousands to millions of vectors

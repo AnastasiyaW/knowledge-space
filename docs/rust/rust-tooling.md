@@ -143,5 +143,5 @@ println!("{:#?}", complex_struct);
 
 - [[modules-and-visibility]] - cargo project structure, workspaces, testing
 - [[async-await]] - tokio runtime details
-- [[concurrency]] - rayon vs threads vs async
+- [Concurrency](concurrency.md) - rayon vs threads vs async
 - [[macros]] - cargo expand for macro debugging

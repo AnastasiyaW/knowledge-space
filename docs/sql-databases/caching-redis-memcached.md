@@ -73,4 +73,4 @@ Caching layers between application and database dramatically reduce query load. 
 - [[connection-pooling]] - reducing database connections alongside caching
 - [[query-optimization-explain]] - optimize queries before adding cache layer
 - [[distributed-databases]] - when caching isn't enough
-- [[database-security]] - separate credentials for cache and DB access
+- [Database Security](database-security.md) - separate credentials for cache and DB access
