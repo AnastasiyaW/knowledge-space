@@ -1,107 +1,56 @@
 ---
-title: MACRO
+title: "MACRO: Structured Multi-Reference Image Data"
+description: "MACRO is a structured multi-reference dataset, benchmark, and set of model-specific fine-tuning assets; validate the compatible base model and artifact terms before deployment."
 category: models
-tags: [multi-reference, dataset, fine-tuning, bagel, omnigen2, qwen-image-edit, customization, novel-view, apache-2.0]
-aliases: ["MACRO-400K"]
+tags: [multi-reference, dataset, benchmark, fine-tuning, bagel, omnigen2, qwen-image-edit]
+aliases: ["MACRO-400K", "MacroData", "MacroBench"]
 ---
 
-# MACRO (Multi-Reference Image Generation)
+# MACRO: Structured Multi-Reference Image Data
 
-Dataset + benchmark + fine-tuning recipe that fixes quality degradation when generation models receive many (6-10) reference images. Not a new architecture — applied to existing models (Bagel, OmniGen2, Qwen-Image-Edit).
+**Scope checked: 2026-09-04.** MACRO is a research release for multi-reference image generation, not a new universal inference architecture. The authors publish structured data, a benchmark, training material, and checkpoints for selected open models so that a system can learn to use more than one reference image without relying solely on short-context training examples.
 
-Paper: arXiv:2603.25319 (March 2026). Authors: HKU MMLab + Meituan.
+## What Is Released
 
-## Problem
+The project describes a `400K`-sample data release with up to ten reference images per sample. It organizes examples across four complementary task families:
 
-Models like Bagel, OmniGen2, Qwen-Image-Edit support `<image N>` placeholders for multi-reference generation, but quality drops sharply at 6+ images. Root cause: **training data bottleneck** — existing datasets dominated by 1-2 reference pairs with no structured supervision for dense inter-reference dependencies.
+| Task family | What the references are intended to provide |
+|---|---|
+| Customization | subjects, identity, objects, or visual attributes |
+| Illustration | multimodal context for a requested composition |
+| Spatial | view, geometry, or scene relationships |
+| Temporal | visual state across time |
 
-## Solution: Data-Centric
+`MacroBench` evaluates those scenarios, and the repository supplies model-specific paths for Bagel, OmniGen2, and Qwen-Image-Edit. The data and benchmark make a useful evaluation substrate; they do not establish that an arbitrary model accepts ten images or that it will preserve every reference faithfully.
 
-### MACRO-400K Dataset
+## Choose a Compatible Route
 
-400K samples, up to 10 references per sample, average 5.44 references. Four task categories (100K each):
+Use the exact route maintained by the project:
 
-| Task | Description | Sources |
-|------|-------------|---------|
-| **Customization** | Multi-subject composition | OpenSubject, MVImgNet, DL3DV, WikiArt |
-| **Illustration** | Image from multimodal context | OmniCorpus-CC-210M web crawl |
-| **Spatial** | Novel view synthesis | G-buffer Objaverse, Pano360, Polyhaven |
-| **Temporal** | Future frame prediction | OmniCorpus-YT videos |
+1. choose one supported base model and its documented revision;
+2. follow that model's preprocessing, resolution budget, prompt syntax, and checkpoint loading path;
+3. use the matching MACRO checkpoint or training configuration rather than mixing adapter formats;
+4. keep a baseline run from the unmodified base model for the same task fixture.
 
-Balanced across reference count brackets: 1-3 / 4-5 / 6-7 / 8-10.
+The reference count changes the image-token budget. MACRO's implementation dynamically reduces input-image resolution as more references are supplied. Do not apply a fixed pixel budget from an old tutorial to a different base model; inspect the current configuration and measure whether critical details survive the resize.
 
-**Construction pipeline**: Split → Generate (Gemini + Nano APIs) → Filter (LLM scoring + bidirectional VLM assessment). The generation step uses proprietary APIs — pipeline not fully reproducible, but the resulting dataset is fully released.
+## Evaluate the Real Task
 
-### Dynamic Resolution Scaling
+Multi-reference generation has several independent failure modes: subject mixing, lost small details, incorrect relationships, selective copying, and a plausible but unfaithful output. Build an acceptance fixture that names which reference controls which result attribute, then inspect the output against that mapping.
 
-At inference, input images automatically downsized as count increases:
-- 1-2 images: 1M px
-- 3-5 images: 590K px
-- 6+ images: 262K px
+MacroBench uses an LLM-based scoring workflow. It can be a repeatable research signal, but it is not a replacement for human review, rights checks, or task-specific validators in a production workflow. Retain prompts, input ordering, model revision, random seed where applicable, and generated artifacts with each comparison.
 
-### Training Recipe
+## Data, Rights, and Release Terms
 
-**Full fine-tune** (not LoRA). Per-model framework:
+The project documents a data-construction pipeline and provides released artifacts, but the provenance and terms of every input, base model, checkpoint, and downstream output remain separate questions. In particular:
 
-| Model | Framework | Training | Size |
-|-------|-----------|----------|------|
-| Bagel (14.7B, MoT) | FSDP + FLEX packing | LR 2e-5, 10 epochs, VAE frozen | ~29.5 GB |
-| OmniGen2 | Native framework | Same hyperparams | — |
-| Qwen-Image-Edit | DiffSynth + DeepSpeed | Same hyperparams | ~98.6 GB |
+- read the license and model card for the selected base model and MACRO artifact;
+- verify whether the intended deployment and redistribution are allowed;
+- use only reference images that the operator is authorized to process;
+- do not infer commercial permission for every component from the availability of the repository.
 
-T2I co-training: 10% text-to-image data mixed in to preserve general T2I capability.
+## References
 
-## Results (MacroBench)
-
-4000 samples, 16 sub-categories, LLM-scored:
-
-| Model | Open? | Score | vs Base |
-|-------|-------|-------|---------|
-| Nano Banana Pro | No | 6.12 | — |
-| GPT-Image-1.5 | No | 5.89 | — |
-| **Macro-Bagel** | **Yes** | **5.71** | +88% (base: 3.03) |
-| Macro-OmniGen2 | Yes | — | significant improvement |
-| Macro-Qwen | Yes | — | mitigates severe drops at 6-10 |
-
-Macro-Bagel approaches Nano Banana Pro in Customization, **surpasses it in Spatial tasks**.
-
-### Ablation Insights
-
-- Sharpest gains between 1K-10K samples, diminishing returns 10K-20K
-- Upweighting large-input samples (2:2:3:3 ratio) helps without hurting low-input
-- Cross-task co-training provides synergistic benefits — spatial training helps customization
-
-## Inference
-
-```python
-# Bagel variant
-from inference_bagel import generate
-result = generate(model, prompt="...", reference_images=[img1, img2, ...], resolution=768)
-# Default: 768x768
-```
-
-**VRAM**: 40-80 GB depending on model variant. `enable_model_cpu_offload` supported for OmniGen2.
-
-## License
-
-| Component | License |
-|-----------|---------|
-| Code | Apache 2.0 (HF; GitHub has no LICENSE file) |
-| All 3 model weights | **Apache 2.0** |
-| MACRO-400K dataset | **CC-BY-4.0** |
-
-**Fully commercially usable** — code, weights, and dataset.
-
-## Gotchas
-
-- Dataset construction uses proprietary Gemini/Nano APIs — cannot recreate dataset, but can use the released one
-- GitHub repo has no explicit LICENSE file yet (fresh project, 3 days old)
-- Full fine-tune requires multi-GPU setup (FSDP) — not a quick LoRA
-- Training code released but expects specific framework versions
-
-## Key Links
-
-- GitHub: github.com/HKU-MMLab/Macro
-- HF models: huggingface.co/Azily/ (Macro-Bagel, Macro-OmniGen2, Macro-Qwen-Image-Edit)
-- HF dataset: huggingface.co/datasets/Azily/Macro-Dataset
-- Project page: macro400k.github.io
+- [MACRO official repository](https://github.com/HKU-MMLab/Macro)
+- [MACRO paper](https://arxiv.org/abs/2603.25319)
+- [MACRO project page](https://macro400k.github.io/)

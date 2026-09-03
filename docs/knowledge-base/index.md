@@ -767,8 +767,8 @@ Each domain below is collapsible - expand to see the article list. Articles are 
 
 ??? note "<span class="ks-planet" style="background:radial-gradient(circle at 35% 35%,rgba(255,255,255,0.4),transparent 60%),radial-gradient(circle at 50% 50%,#c8a058,#785018);box-shadow:0 0 8px rgba(200,160,88,0.5),inset 0 -2px 4px rgba(0,0,0,0.3)"></span>Image Generation · 77 articles"
 
-    - [ACE++](../image-generation/ACE++.md) - Advanced image editing model
-    - [[ATI]] - AI texture generation
+    - [ACE++](../image-generation/ACE++.md) - ACE++ provides reference-driven image creation and editing through task-specific LoRA workflows and a general FFT model; use the published base-model pairing and verify its terms.
+    - [[ATI]] - ATI adds trajectory-conditioned object, local, and camera motion control to its Wan2.1-based image-to-video workflow; preserve the published model, checkpoint, and localhost editor boundaries.
     - [[flow-matching]] - Flow-based generative models
     - [[flux-kontext]] - Context-aware image generation
     - [[LaMa]] - Large mask inpainting
@@ -783,7 +783,7 @@ Each domain below is collapsible - expand to see the article list. Articles are 
 
     - [[anatomy-correction-diffusion]] - Comprehensive guide to detecting and fixing anatomy mutations (hands, fingers, limbs) in FLUX Klein
     - [[block-causal-linear-attention]] - Temporal extension of SANA's linear attention for sequential processing (video frames or image
-    - [[Calligrapher]] - Text generation and editing on images with style reference
+    - [[Calligrapher]] - Calligrapher customizes text imagery from style references through FLUX.1-Fill-dev, SigLIP, masks, and project weights; treat typography accuracy and licensing as separate acceptance checks.
     - [[color-checker-and-white-balance]] - Automated color calibration using color checker cards and white balance correction models
     - [[color-correction-by-numbers]] - Deterministic color correction using measurable channel targets rather than perceptual judgment
     - [[color-space-and-gamma-reference]] - Practical reference for color management in video/photo processing pipelines
@@ -791,7 +791,7 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[comfyui-flux2klein-enhancer]] - Pinned-workflow reference for reference conditioning and identity/detail enhancement with FLUX.2
     - [[comfyui-sensenova-u1]] - Boundary-aware reference for official SenseNova U1/U1.5 artifacts, official ComfyUI nodes, and the
     - [[comfyui-wan-vace-video-joiner]] - The Wan VACE Video Joiner is a node suite designed for assembling disparate video segments into a
-    - [[DC-AE]] - 32x spatial compression autoencoder from MIT Han Lab, core component of SANA
+    - [[DC-AE]] - Use DC-AE only with a diffusion model and latent contract it was trained for; high compression reduces latent-token work but does not make it a drop-in VAE replacement.
     - [[defect-detection-small-objects]] - Reference for detecting defects (scratches, dust, surface anomalies) and small objects in
     - [[denoise-architectures-2026]] - 2025-2026 landscape of image denoising architectures: NTIRE 2025 winners, SSM/Mamba-based models
     - [[diffusion-distillation-cdm]] - flow-matching distillation to 4 NFE without GAN or reward model
@@ -819,7 +819,7 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[lora-auxiliary-losses]] - Additional loss terms beyond standard diffusion denoising loss
     - [[lora-identity-disentanglement-in-flux2-klein-9b]] - Identity LoRA training often suffers from concept bleeding, where environmental factors (lighting
     - [[low-vram-inference-strategies]] - Techniques for running image generation and processing models on GPUs with limited VRAM (2-8 GB)
-    - [[MACRO]] - Dataset + benchmark + fine-tuning recipe that fixes quality degradation when generation models
+    - [[MACRO]] - MACRO is a structured multi-reference dataset, benchmark, and set of model-specific fine-tuning assets; validate the compatible base model and artifact terms before deployment.
     - [[megastyle-flux-style-transfer]] - MegaStyle is a single-reference style transfer framework developed by Tencent for FLUX.1-dev
     - [[object-removal-inpainting]] - Comparative reference for object removal/erasure models (2024-2026)
     - [[paired-training-for-restoration]] - How to train a diffusion model for image-to-image restoration (not text-to-image)
