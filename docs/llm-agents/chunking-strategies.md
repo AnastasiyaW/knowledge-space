@@ -97,4 +97,4 @@ Evaluate the complete path, not just embedding similarity:
 ## Sources
 
 - [LangChain retrieval overview](https://docs.langchain.com/oss/python/langchain/retrieval)
-- [LangChain text splitters](https://python.langchain.com/docs/concepts/text_splitters/)
+- [LangChain text splitters](https://docs.langchain.com/oss/python/integrations/splitters)

@@ -16,7 +16,7 @@ Reviewed 2026-09-03. A visual builder can accelerate prototyping and make workfl
 | Visual agent/workflow builder | Agent routing, retrieval, human checkpoints | Graph/flow plus configuration | Model/tool policy is spread across nodes |
 | Python UI layer | Internal demos and controlled operator interfaces | Application source and deployment config | A prototype can accidentally become a public service |
 
-Flowise documents Assistant, Chatflow, and Agentflow as distinct visual builders; Agentflow V2 uses explicit nodes and flow state for workflow orchestration. [Flowise introduction](https://docs.flowiseai.com/) [Agentflow V2](https://docs.flowiseai.com/using-flowise/agentflowv2)
+Flowise is now a migration and ownership case, not a safe default for a new platform dependency. Its official sunset notice says feature development ceased on 2026-07-29, its repositories were archived in August, and official team support ended on 2026-08-31. Preserve and version an existing Flowise deployment only when an owner accepts maintenance of a fork or migration plan. Its archived documentation describes Assistant, Chatflow, and Agentflow as distinct visual builders; Agentflow V2 uses explicit nodes and flow state for workflow orchestration. [Flowise sunset notice](https://flowiseai.com/sunset) [Archived Flowise introduction](https://github.com/FlowiseAI/FlowiseDocs/blob/main/en/README.md) [Archived Agentflow V2 documentation](https://github.com/FlowiseAI/FlowiseDocs/blob/main/en/using-flowise/agentflowv2.md)
 
 Gradio Blocks is a Python API for custom interfaces, layouts, event handlers, and data flow. It is an application UI layer, not an agent orchestrator or a production authorization system. [Gradio Blocks](https://gradio.app/docs/gradio/blocks)
 
@@ -60,6 +60,7 @@ The right transition is not necessarily a rewrite. Keep the visual product if it
 - **Issue: Treating a drag-and-drop node as a security boundary.** Node visibility does not prove authorization. **Fix:** enforce identity and tool policy in the service or gateway that performs the action.
 - **Issue: Publishing a demo link with production credentials.** A prototype UI can become an unbounded public endpoint. **Fix:** require authentication, least-privilege credentials, rate limits, and an explicit public-release review.
 - **Issue: Keeping flows only inside a hosted UI.** A manual change cannot be reviewed or reproduced. **Fix:** export/version the definition and record the deployed revision.
+- **Issue: Starting a new Flowise dependency after its official EOL.** A visual workflow can become an unmaintained production boundary. **Fix:** choose a maintained platform for new work; for an existing Flowise estate, name a fork or migration owner and rehearse recovery from its exported flows.
 - **Issue: Calling every visual workflow an agent.** A deterministic integration is easier to test without an LLM routing layer. **Fix:** use an agent only where model reasoning is actually needed.
 
 ## See Also
@@ -72,7 +73,8 @@ The right transition is not necessarily a rewrite. Keep the visual product if it
 
 ## Sources
 
-- [Flowise documentation](https://docs.flowiseai.com/)
-- [Flowise Agentflow V2](https://docs.flowiseai.com/using-flowise/agentflowv2)
+- [Flowise sunset notice](https://flowiseai.com/sunset)
+- [Archived Flowise documentation](https://github.com/FlowiseAI/FlowiseDocs/blob/main/en/README.md)
+- [Archived Flowise Agentflow V2 documentation](https://github.com/FlowiseAI/FlowiseDocs/blob/main/en/using-flowise/agentflowv2.md)
 - [Gradio Blocks](https://gradio.app/docs/gradio/blocks)
 - [Gradio Chatbot](https://gradio.app/main/docs/gradio/chatbot)

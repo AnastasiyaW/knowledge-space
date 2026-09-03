@@ -36,7 +36,7 @@ Every field above is application policy. A model can request the declared capabi
 | Tool search | A large catalog would consume context | Discovery policy and explicit selected-tool review |
 | MCP integration | Tools are provided by a separate server | Host-owned permissions and server trust review |
 
-MCP uses a host-client-server architecture where the host controls client lifecycle and permissions. [MCP Architecture](https://modelcontextprotocol.io/specification/2025-06-18/architecture)
+MCP uses a host-client-server architecture where the host controls client lifecycle and permissions. [MCP Architecture](https://modelcontextprotocol.io/specification)
 
 ## Result Envelope
 
@@ -113,7 +113,7 @@ Anthropic documents that tool definitions and accumulated tool results consume c
 
 ## Sources
 
-- [Model Context Protocol Architecture](https://modelcontextprotocol.io/specification/2025-06-18/architecture)
+- [Model Context Protocol Architecture](https://modelcontextprotocol.io/specification)
 - [Claude: Tool use overview](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview)
 - [Claude: Manage tool context](https://platform.claude.com/docs/en/agents-and-tools/tool-use/manage-tool-context)
 - [OpenAI Agents SDK: Tools](https://openai.github.io/openai-agents-js/guides/tools/)

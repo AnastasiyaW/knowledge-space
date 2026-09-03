@@ -73,7 +73,7 @@ Spring AI 2.0 uses ToolCallingAdvisor as the tool-loop owner. Older callback API
 
 ## MCP Boundary
 
-Spring AI can consume MCP-server tools and expose Spring-based services. Keep MCP server configuration and tool exposure explicit: discovery does not authorize a tool for every ChatClient request. [Spring AI tool calling](https://docs.spring.io/spring-ai/reference/api/tools.html) [MCP Architecture](https://modelcontextprotocol.io/specification/2025-06-18/architecture)
+Spring AI can consume MCP-server tools and expose Spring-based services. Keep MCP server configuration and tool exposure explicit: discovery does not authorize a tool for every ChatClient request. [Spring AI tool calling](https://docs.spring.io/spring-ai/reference/api/tools.html) [MCP Architecture](https://modelcontextprotocol.io/specification)
 
 ## Gotchas
 
