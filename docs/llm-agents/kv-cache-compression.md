@@ -1,191 +1,173 @@
 ---
-title: KV Cache Compression
-category: techniques
-tags: [llm-agents, kv-cache, quantization, inference, memory-optimization, long-context, turboquant, triattention, kvpress, lopace]
+title: "KV Cache Compression and Memory Control"
+description: "Measure, select, and validate KV-cache strategies for LLM inference without relying on benchmark folklore."
+tags: [llm-agents, kv-cache, inference, memory-optimization, long-context, serving]
 ---
 
-# KV Cache Compression
+# KV Cache Compression and Memory Control (September 2026)
 
-Reducing KV cache memory during LLM inference to enable longer contexts and more concurrent requests on the same GPU. The key-value cache grows linearly with sequence length and batch size, often becoming the memory bottleneck before model weights do.
+Version context: cache layouts and supported strategies depend on the model architecture, framework, backend, precision, and serving engine. Use the documentation and telemetry for the exact deployed combination. This page avoids universal compression ratios and performance claims.
 
-## Key Facts
+A key-value cache stores attention keys and values already computed for prior tokens so autoregressive decoding does not recompute them at every generation step. It improves decoding efficiency, but retained cache memory can become the limiting resource for long contexts or concurrent requests.
 
-- KV cache for a 70B model at 128K context can exceed 40GB - more than the weights themselves
-- 3-bit KV cache quantization achieves ~5-6x memory reduction with 99.5% attention fidelity
-- Random rotation + scalar quantization is the simplest effective approach - implementations appeared within hours of the paper
-- Weight quantization and KV cache quantization are orthogonal - combine them for maximum savings
-- The benefit scales with context length: minimal at 4K, significant at 32K+, transformative at 128K+
+## What Determines Cache Size
 
-## Why KV Cache Is the Bottleneck
-
-During autoregressive generation, the model stores key and value tensors for every past token in every layer:
+For a decoder-only model with conventional attention, a planning estimate is:
 
 ```text
-KV cache size = 2 * num_layers * num_heads * head_dim * seq_len * batch_size * bytes_per_element
-
-Example (Llama 70B, FP16, single sequence):
-= 2 * 80 * 64 * 128 * 128000 * 1 * 2 bytes
-= ~42 GB
+bytes ≈ 2 × layers × batch_size × retained_tokens
+        × num_kv_heads × head_dim × bytes_per_element
 ```
 
-Model weights (Q4_K_M quantized) take ~40GB. The KV cache alone matches or exceeds weight memory at long contexts.
+The factor two represents keys and values. Grouped-query or multi-query attention can use fewer key/value heads than query heads, so use the model's actual number of KV heads. Encoder-decoder, sliding-window, linear-attention, and model-specific cache implementations may use a different layout.
 
-## TurboQuant: Rotation + Scalar Quantization
-
-Core algorithm with no model retraining:
-
-1. **Random rotation** - multiply K and V vectors by a random orthogonal matrix. This spreads outlier magnitudes evenly across dimensions, making all channels quantization-friendly
-2. **Scalar quantization** - map rotated values to a small lookup table (3-4 bits per element)
-3. **Optional error correction** - QJL (Quantized Johnson-Lindenstrauss) reduces approximation error in attention scores
-
-```bash
-# llama.cpp with KV cache quantization (fork)
-./llama-server -m model.gguf \
-  --cache-type-k turbo3 \
-  --cache-type-v turbo3
-
-# Standard llama.cpp (when merged)
-./llama-server -m model.gguf \
-  --cache-type-k q4_0 \
-  --cache-type-v q4_0
+```python
+def estimate_kv_cache_bytes(
+    *,
+    num_layers: int,
+    batch_size: int,
+    retained_tokens: int,
+    num_kv_heads: int,
+    head_dim: int,
+    bytes_per_element: int,
+) -> int:
+    return (
+        2
+        * num_layers
+        * batch_size
+        * retained_tokens
+        * num_kv_heads
+        * head_dim
+        * bytes_per_element
+    )
 ```
 
-## Memory Savings by Configuration
+Treat this as capacity planning, not an allocation receipt. Framework overhead, attention kernels, fragmentation, prefix reuse, graph capture, and parallelism also consume memory.
 
-| Config | Weights | KV Cache | Total (128K ctx) | Quality |
-|--------|---------|----------|-------------------|---------|
-| FP16 + FP16 cache | 140 GB | 42 GB | 182 GB | Baseline |
-| Q4_K_M + FP16 cache | 40 GB | 42 GB | 82 GB | ~99.9% |
-| Q4_K_M + Q8 cache | 40 GB | 21 GB | 61 GB | ~99.8% |
-| Q4_K_M + turbo3 cache | 40 GB | 7 GB | 47 GB | ~99.5% |
-| Q4_K_M + turbo2 cache | 40 GB | 5 GB | 45 GB | ~98.5% |
+## Diagnose Before Compressing
 
-## Implementation Landscape (2026)
+Collect a workload profile before choosing a strategy:
 
-| Project | Status | Platform |
-|---------|--------|----------|
-| llama.cpp fork (TheTom) | Working, 18/18 tests pass | CPU |
-| llama.cpp mainline | Feature request, merge expected | CPU/GPU |
-| vLLM | Feature request open | GPU (CUDA) |
-| Standalone Triton kernels | Working | GPU (CUDA) |
-| Apple Silicon variant | 4.6x compression, q8_0 speed parity | Metal |
-| PyTorch reference | Educational implementation | Any |
+| Signal | Why it matters |
+|---|---|
+| Input and generated-token distributions | Determines retained sequence length |
+| Concurrent active sequences | Multiplies cache allocation |
+| Prefill versus decode latency | Separates prompt and token-generation bottlenecks |
+| Cache hit/reuse ratio | Shows whether common prefixes are valuable |
+| GPU memory, OOMs, fragmentation | Decides whether memory is the real constraint |
+| Quality at target context length | Detects long-context regressions |
+| Tenant/data scope | Prevents unsafe cache reuse |
 
-## When to Use
+Do not tune a cache on a short synthetic prompt and deploy it to a long-document or multi-user workload.
 
-**High value:**
+## Choose a Cache Strategy by Constraint
 
-- Long-context inference (64K+ tokens) where KV cache dominates memory
-- Multi-user serving where batch size multiplies cache memory
-- Running large models on limited VRAM (single GPU for 70B)
+| Strategy | Best when | Trade-off |
+|---|---|---|
+| Dynamic cache | Sequence lengths vary and simplicity matters | Allocation growth and less predictable shapes |
+| Static/preallocated cache | Maximum length is known and framework support exists | Reserved memory can be wasted or cause OOM |
+| Sliding-window cache | The model and task tolerate bounded recent context | Older context is no longer available to attention |
+| Offloaded cache | Device memory is scarce and latency budget permits transfer | Host/device transfer can dominate latency |
+| Quantized cache | Memory is the bottleneck and model/backend support it | Task-specific accuracy and kernel behavior must be measured |
+| Paged/block-managed serving cache | Many concurrent sequences have uneven lengths | Engine-specific operational tuning |
+| Prefix cache | Many requests share an identical immutable prefix | Requires exact cache keys and isolation controls |
 
-**Low value:**
+Hugging Face documents dynamic, static, offloaded, and quantized cache variants. A serving engine may use a block or page allocator rather than a single contiguous tensor. Select the implementation supported by the deployed model and backend; do not copy flags from an unrelated engine.
 
-- Short prompts (<4K tokens) - cache is small anyway
-- Batch size 1 with short context - weight quantization matters more
-- Training - KV cache is recomputed per step, not stored
+## Static Cache and Compile-Friendly Shapes
 
-## Quality Considerations
+A static cache preallocates storage to a maximum cache length. In compatible Transformers configurations it can enable compile-friendly execution, but it raises the memory floor.
 
-Base weight quantization affects how well KV cache quantization works:
+```python
+generation = model.generate(
+    **inputs,
+    cache_implementation="static",
+    max_new_tokens=256,
+)
+```
+
+Set the maximum from observed request limits plus a justified margin. A large arbitrary maximum turns an optimization into an out-of-memory risk. Run an isolated soak test with the intended concurrency before enabling it for serving traffic.
+
+## Prefix Reuse Is a Data Boundary
+
+Prefix reuse can avoid recomputing a common system prompt, document prefix, or shared context. It is safe only when the cache key includes every behaviorally relevant input:
+
+```json
+{
+  "model_revision": "immutable-model-revision",
+  "tokenizer_revision": "tokenizer:sha256:...",
+  "chat_template_revision": "template:sha256:...",
+  "system_prompt_revision": "prompt:sha256:...",
+  "tenant_scope": "tenant_42",
+  "tool_schema_revision": "tools:sha256:..."
+}
+```
+
+Never reuse cached state across tenants, users, permission scopes, or prompt revisions unless the policy explicitly permits that exact boundary. Cache invalidation here is a correctness and privacy issue, not just a performance issue.
+
+## Quantization and Compression
+
+Quantized caches reduce bytes per stored value. The appropriate precision depends on model, attention architecture, implementation, context length, and task. A lower-memory cache may improve concurrency while degrading retrieval, structured output, or reasoning at longer contexts.
+
+Validate candidates with:
+
+1. a fixed prompt and generated-token distribution;
+2. representative long-context and retrieval cases;
+3. structured-output and tool-use checks;
+4. quality comparison against the approved baseline;
+5. peak memory, p50/p95 latency, throughput, and error rate;
+6. a rollback condition if quality or OOM rate crosses a threshold.
+
+Compression research can suggest candidates, but paper numbers are not a production capacity plan.
+
+## Serving Operations
+
+Separate two concerns:
 
 ```text
-Higher quality weights + aggressive cache quant = good
-  Q8_0 weights + turbo3 cache → minimal degradation
-
-Lower quality weights + aggressive cache quant = compounding errors
-  Q4_K_M weights + turbo2 cache → noticeable on complex reasoning
+per-request correctness: prompt, cache key, context limit, output validation
+system capacity: batching, allocator pressure, memory headroom, admission control
 ```
 
-**Validation approach:**
+For a multi-user service, admission control must consider cache capacity before accepting a request. Rejecting or queueing a request with an explicit capacity status is safer than accepting it and failing after partial work. Export cache memory, active sequences, hit/miss, evictions, OOMs, and latency as observability signals.
 
-```bash
-# Needle-in-haystack test across context lengths
-python eval_needle.py \
-  --model model.gguf \
-  --cache-type turbo3 \
-  --context-lengths 4096 16384 65536 131072 \
-  --num-needles 100
+## Verification Receipt
 
-# Compare perplexity
-./llama-perplexity -m model.gguf \
-  --cache-type-k turbo3 --cache-type-v turbo3 \
-  -f wiki_test.txt
+```json
+{
+  "candidate": "cache-strategy-revision",
+  "model_revision": "immutable-model-revision",
+  "workload_revision": "eval:sha256:...",
+  "context_distribution": "production-like-v3",
+  "quality_gate": "no material regression",
+  "capacity_gate": "no OOM at approved concurrency",
+  "rollback": "dynamic-cache-baseline"
+}
 ```
 
-## Combining with Other Optimizations
-
-KV cache compression stacks with other inference techniques:
-
-| Technique | Target | Combines? |
-|-----------|--------|-----------|
-| Weight quantization (GGUF, AWQ, GPTQ) | Model weights | Yes - orthogonal |
-| KV cache quantization | Attention cache | This article |
-| Flash Attention | Attention compute | Yes - reduces compute, this reduces memory |
-| Sliding window attention | Context structure | Yes - reduces cache entries, this reduces per-entry size |
-| Speculative decoding | Generation speed | Yes - no conflict |
-| PagedAttention (vLLM) | Memory fragmentation | Yes - paged allocation + smaller pages |
-
-## TriAttention - Pre-RoPE Importance Scoring (2026)
-
-10.7x KV memory reduction with zero accuracy loss on reasoning tasks. Exploits the discovery that pre-RoPE Q/K vectors concentrate around fixed centers across heads.
-
-### Architecture
-
-1. **Trigonometric Series Scoring (S_trig)** - estimates key importance via Q/K centers + positional distance
-2. **Norm-Based Scoring (S_norm)** - complementary signal for low-concentration heads
-3. **Adaptive Weighting** - auto-balances using Mean Resultant Length (R) metric
-
-```text
-Performance:
-  AIME25: 32.9% (vs R-KV 17.5%, SnapKV similar budget) at 10.7x compression
-  MATH 500: 6.3x speedup (1405 vs 223 tokens/sec)
-  RULER retrieval: 66.1 (vs SnapKV 55.6)
-
-Deployment: vLLM plugin (auto-discovery, no code changes)
-Validated on: Qwen3-8B, DeepSeek-R1-Distill-Llama-8B, GPT-OSS-20B, GLM-4.7-Flash (MLA)
-```
-
-Why it beats prior methods: H2O, SnapKV, R-KV use "limited observation windows" - only recent queries maintain representative orientations. TriAttention operates in pre-RoPE space where vectors are stable, providing intrinsic importance signals independent of position.
-
-## KVPress Toolkit (NVIDIA, 2026)
-
-Framework for benchmarking and deploying KV compression strategies. Not a standalone method - wraps multiple approaches for comparison.
-
-```text
-Methods: KnormPress, SnapKVPress, ObservedAttention, SinkPress, TurboQuant
-Integration: HuggingFace transformers native
-Use case: Benchmark different strategies on your specific model/task
-```
-
-## CompLLM - Segment-Based Soft Compression
-
-Divides context into segments, compresses each independently. Results: 2x compression yields 4x TTFT speedup, 50% KV cache reduction. Practical for long-context Q&A where full attention is unnecessary.
-
-## LoPace - Lossless Prompt Compression for Storage
-
-Lossless compression for prompt caching and storage (not inference-time):
-
-```text
-Methods: Zstandard + BPE tokenization + binary packing + hybrid
-Compression: 4.89x average (range 1.22-19.09x), 72.2% space savings
-Reconstruction: 100% lossless
-Use case: Prompt caching, template storage, prompt libraries
-NOT for: Runtime KV cache reduction
-```
+A receipt makes clear whether a result applies to the intended model, engine, workload, and hardware. Re-run it after changing model weights, tokenizer, context policy, kernel/backend, or serving engine.
 
 ## Gotchas
 
-- **QJL correction can hurt through standard attention paths** - the second-stage error correction from the paper assumes a specific attention implementation. Through standard scaled dot-product attention, QJL correction empirically worsens quality. Use the `_mse` variant that optimizes mean squared error directly instead
-- **`turbo3` is not equivalent to `q3_0`** - the rotation step before quantization is critical. Standard 3-bit quantization without rotation produces much worse results because outlier channels dominate the error. The rotation spreads information evenly across dimensions first
-- **Benchmark at YOUR context length** - a model that passes perplexity tests at 4K may fail needle-in-haystack at 128K with aggressive cache quantization. Always test at the actual context length you plan to serve
-- **MemPalace AAAK debunked** - claimed 30x lossless compression via abbreviation dialect, but token counting was wrong (len(text)//3 instead of proper tokenizer). AAAK actually increases tokens at small scales. LongMemEval regressed from 96.6% to 84.2%. The valid finding: raw verbatim storage + smart retrieval beats LLM extraction
-- **TriAttention requires pre-RoPE access** - the method operates on Q/K vectors before rotary position embedding is applied. Inference frameworks that fuse RoPE into the attention kernel may need modification
+- **KV-head count is not always attention-head count.** GQA and MQA change the memory calculation. **Fix:** read the actual model configuration before estimating capacity.
+- **Static allocation can fail before the first token.** A large maximum reserves memory even for small requests. **Fix:** size it from a measured limit and test concurrency.
+- **A cache key can accidentally cross a data boundary.** Similar-looking prompts may have different tenant, tools, or permissions. **Fix:** include revisions and scope in the key and fail closed on a mismatch.
+- **Quantization gains are task-dependent.** A cache that preserves short-form perplexity can fail long-context retrieval. **Fix:** validate target tasks at the deployed context length.
+- **Caching is an inference mechanism.** Enabling it in training can cause unexpected behavior. **Fix:** follow the framework's training guidance and keep training and serving configurations separate.
+
+## Sources
+
+- [Hugging Face cache strategies](https://huggingface.co/docs/transformers/main/kv_cache)
+- [Hugging Face cache explanation](https://huggingface.co/docs/transformers/v5.12.0/cache_explanation)
+- [Hugging Face inference optimization](https://huggingface.co/docs/transformers/main/llm_optims)
+- [vLLM documentation](https://docs.vllm.ai/en/latest/)
+- [Transformers generation utilities](https://huggingface.co/docs/transformers/internal/generation_utils)
 
 ## See Also
 
-- [[model-optimization]] - weight quantization, distillation, pruning
-- [[token-optimization]] - reducing token count to reduce cache size
-- [[production-patterns]] - serving infrastructure for LLM inference
-- [[transformer-architecture]] - attention mechanism that generates KV cache
-- [[diffusion-inference-acceleration]] - TriAttention applied to diffusion models
+- [[model-optimization]]
+- [[token-optimization]]
+- [[production-patterns]]
+- [[transformer-architecture]]
+- [[llm-api-integration]]
+- [[ollama-local-llms]]

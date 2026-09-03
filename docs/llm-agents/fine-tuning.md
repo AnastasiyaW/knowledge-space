@@ -1,292 +1,164 @@
 ---
-title: Fine-Tuning and LoRA
-category: techniques
-tags: [llm-agents, fine-tuning, lora, qlora, peft, training, model-customization]
+title: "Fine-Tuning and LoRA"
+description: "Choose, run, and release fine-tuning through evaluation-first contracts, reproducible datasets, and parameter-efficient training."
+tags: [llm-agents, fine-tuning, lora, qlora, peft, evaluation]
 ---
 
-# Fine-Tuning and LoRA
+# Fine-Tuning and LoRA (September 2026)
 
-Fine-tuning adapts a pre-trained model to specific tasks, domains, or output styles. LoRA and PEFT methods make this practical on consumer hardware by training only a tiny fraction of parameters.
+Version context: model availability, managed fine-tuning access, trainer APIs, and hardware support change quickly. Record the exact base-model revision, tokenizer/chat template, library versions, dataset revision, and evaluation suite for every run. Do not infer current provider availability from an old code sample.
 
-## Key Facts
-- RAG for adding knowledge, fine-tuning for changing behavior/style - often combined in production
-- Before fine-tuning, establish baselines: zero-shot, few-shot, RAG performance
-- 100 high-quality examples > 10,000 noisy examples (quality >> quantity)
-- LoRA trains 0.1-1% of total parameters, reducing GPU memory by 4-8x
-- QLoRA combines LoRA with 4-bit quantization: 7B model fine-tuning on ~6GB VRAM
+Fine-tuning changes model behavior. It is not a substitute for current facts, authorization, retrieval quality, tool safety, or a release gate. Start with a measurable problem and preserve an untouched evaluation set before training.
 
-## When to Fine-Tune vs RAG
+## Decide Before You Train
 
-| Approach | Best For | Not For |
-|----------|----------|---------|
-| **RAG** | Domain knowledge, frequently updated data | Changing model behavior/style |
-| **Fine-tuning** | Behavior, output format, domain adaptation | Real-time knowledge updates |
-| **Both** | Complex production systems needing both |
+| Need | First candidate | Why |
+|---|---|---|
+| Current or private facts | Retrieval or a controlled data tool | Facts can be updated without retraining |
+| Clearer one-off behavior | Prompt/instruction revision | Lowest operational cost |
+| Stable formatting, style, classification, or repeatable task behavior | Fine-tuning after a baseline | Training may reduce prompt length and improve consistency |
+| Preference between valid outputs | Preference optimization where supported | Labels can express which answer is preferred |
+| High-stakes reasoning | Evaluation plus workflow/tool design | Training does not make an unverified result safe |
 
-## OpenAI Fine-Tuning
+The decision is empirical. A fine-tune is justified only if it improves a representative held-out evaluation relative to a documented baseline and its operating cost is acceptable.
 
-```python
-# 1. Prepare JSONL training data
-# Each line: {"messages": [{"role": "system",...}, {"role": "user",...}, {"role": "assistant",...}]}
+## Freeze the Experiment Contract
 
-# 2. Upload training file
-file = client.files.create(file=open("training.jsonl"), purpose="fine-tune")
+Before creating a job, record the problem and the release rule:
 
-# 3. Create fine-tuning job
-job = client.fine_tuning.jobs.create(
-    training_file=file.id,
-    model="gpt-4o-mini-2024-07-18",
-    hyperparameters={"n_epochs": 3}
-)
-
-# 4. Use fine-tuned model
-response = client.chat.completions.create(
-    model="ft:gpt-4o-mini:my-org::abc123",
-    messages=[...]
-)
+```json
+{
+  "run_id": "sft-2026-09-003",
+  "base_model_revision": "approved-model-revision",
+  "tokenizer_and_template_revision": "chat-template@42",
+  "train_dataset_revision": "data:sha256:...",
+  "eval_dataset_revision": "data:sha256:...",
+  "baseline": "prompt-v7",
+  "primary_metric": "schema_valid_and_human_approved",
+  "promotion_rule": "beats baseline without safety regression"
+}
 ```
 
-**Data requirements**: minimum 10 examples (50-100+ recommended), diverse, consistent format.
+Keep train, validation, and release-test examples disjoint. The release test must resemble production inputs, including difficult and policy-relevant cases, but it must not be used to tune hyperparameters.
 
-## LoRA (Low-Rank Adaptation)
+## Training Data Is the Product
 
-Full fine-tuning updates ALL parameters. For a 7B model, that's 7 billion weights requiring massive GPU memory. LoRA decomposes weight updates into two small matrices:
+Each example must teach the behavior that will be expected at inference time. Include the same roles, output contract, tools or tool-result representation, language, and level of detail that production will use.
 
-```yaml
-W_new = W_original + A * B
-
-W_original: frozen (e.g., 4096 x 4096)
-A: trainable (e.g., 4096 x 16) - rank=16
-B: trainable (e.g., 16 x 4096)
+```json
+{"messages":[{"role":"system","content":"Return a JSON support triage record."},{"role":"user","content":"My order arrived damaged."},{"role":"assistant","content":"{\"category\":\"damage\",\"needs_human\":true}"}]}
 ```
 
-Result: ~130K trainable parameters per layer instead of 16M. 99% fewer parameters.
+Data review should check for:
 
-**Rank (r)**: controls expressiveness. Typical: 8, 16, 32, 64. Higher = more capacity, more memory.
+- consent, licensing, privacy, retention, and tenant boundaries;
+- duplicate or near-duplicate examples;
+- contradictory labels and unsupported claims;
+- poisoned instructions or model-generated errors presented as truth;
+- over-representation of easy cases;
+- leakage of tests, credentials, internal identifiers, or future data.
 
-### LoRA with HuggingFace PEFT
+Do not put secret production prompts or raw customer records into a training file merely because a provider accepts JSONL.
 
-```python
-from peft import LoraConfig, get_peft_model, TaskType
-from transformers import AutoModelForCausalLM
+## Evaluation Comes Before and After Training
 
-model = AutoModelForCausalLM.from_pretrained("meta-llama/Llama-3.1-8B")
+Measure the baseline first. Then run the same frozen test set against each candidate. Track at least one task-quality metric, one safety/policy metric, and one operational metric.
 
-lora_config = LoraConfig(
-    r=16,
-    lora_alpha=32,
-    target_modules=["q_proj", "v_proj"],
-    lora_dropout=0.05,
-    task_type=TaskType.CAUSAL_LM
-)
+| Category | Example signal |
+|---|---|
+| Task quality | Exact-match, schema validity, approved reviewer score, or domain rubric |
+| Safety | Refusal/policy compliance, injection resistance, sensitive-data leakage |
+| Operations | Latency, token use, failure rate, deployment memory, cost |
+| Regression | Inputs where baseline succeeds but the candidate fails |
 
-model = get_peft_model(model, lora_config)
-model.print_trainable_parameters()
-# trainable: 4,194,304 || all: 8,030,261,248 || trainable%: 0.05
-```
+Review error clusters, not only a single average. A model that improves formatting but worsens edge-case safety does not pass a release gate.
 
-### Target Modules
-- `q_proj`, `v_proj` (attention queries/values) - most common, good default
-- `k_proj` (attention keys) - added for more expressiveness
-- `o_proj` (attention output)
-- `gate_proj`, `up_proj`, `down_proj` (FFN) - for deeper adaptation
+## Managed Fine-Tuning Is a Moving Surface
 
-### Training Configuration
-```python
-from transformers import TrainingArguments
+OpenAI's current model-optimization guide describes a cycle of evals, prompting, training data refinement, and re-evaluation. It also states that its legacy fine-tuning platform is being wound down and is not available to new users. Existing availability, supported base models, and deprecation dates must be checked in the current provider documentation before scheduling work.
 
-training_args = TrainingArguments(
-    output_dir="./lora-output",
-    num_train_epochs=3,
-    per_device_train_batch_size=4,
-    gradient_accumulation_steps=4,
-    learning_rate=2e-4,
-    fp16=True,
-    logging_steps=10,
-    save_strategy="epoch"
-)
-```
+For any managed platform, persist the job ID, base-model snapshot, uploaded dataset hash, method, hyperparameters, validation result, and deprecation/replacement plan. Never make a deployment decision from a model alias alone.
 
-## QLoRA (Quantized LoRA)
+## Parameter-Efficient Fine-Tuning
 
-Combines LoRA with quantization:
-1. Quantize base model to 4-bit (NF4 format)
-2. Add LoRA adapters in FP16
-3. Train only LoRA parameters
+LoRA and related PEFT methods train adapters while keeping most base weights fixed. This can reduce optimizer and gradient memory compared with full fine-tuning, but it does not eliminate the need for evaluation or reproduce a result without pinned inputs.
 
-**Memory savings**: 7B model goes from ~28GB (full) to ~6GB (QLoRA). Enables fine-tuning on consumer GPUs.
-
-### QLoRA Training with SFTTrainer
+A minimal supervised-training shape with current Hugging Face libraries:
 
 ```python
-from trl import SFTTrainer, SFTConfig
-from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from peft import LoraConfig
-import torch
+from trl import SFTConfig, SFTTrainer
 
-# 4-bit quantization
-bnb_config = BitsAndBytesConfig(
-    load_in_4bit=True,
-    bnb_4bit_quant_type="nf4",
-    bnb_4bit_compute_dtype=torch.bfloat16,
-    bnb_4bit_use_double_quant=True
-)
-
-model = AutoModelForCausalLM.from_pretrained(model_name, quantization_config=bnb_config)
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-
-lora_config = LoraConfig(r=16, lora_alpha=32, target_modules=["q_proj", "v_proj"],
-                         lora_dropout=0.05, task_type="CAUSAL_LM")
-
-sft_config = SFTConfig(
-    output_dir="./qlora-output",
-    num_train_epochs=3,
-    per_device_train_batch_size=4,
-    gradient_accumulation_steps=4,
-    learning_rate=2e-4,
-    fp16=True,
-    logging_steps=10,
-    report_to="wandb",  # Weights & Biases integration
+adapter_config = LoraConfig(
+    task_type="CAUSAL_LM",
+    r=8,
+    lora_alpha=16,
+    lora_dropout=0.05,
+    target_modules="all-linear",
 )
 
 trainer = SFTTrainer(
-    model=model,
-    args=sft_config,
-    train_dataset=dataset,
-    peft_config=lora_config,
-    processing_class=tokenizer
+    model=model_id,
+    train_dataset=train_dataset,
+    args=SFTConfig(
+        output_dir="runs/sft-2026-09-003",
+        max_length=1024,
+        num_train_epochs=1,
+    ),
+    peft_config=adapter_config,
 )
+
 trainer.train()
 ```
 
-**TRL library** (Transformers Reinforcement Learning) provides `SFTTrainer` which wraps HuggingFace `Trainer` with fine-tuning-specific features: chat template handling, dataset formatting, LoRA integration.
+The model architecture determines compatible target modules, chat formatting, precision, sequence length, and hardware behavior. Start with a smoke run that loads one batch, trains one step, evaluates one batch, and writes an artifact manifest before committing a long run.
 
-### GPU Selection for QLoRA
+## QLoRA and Quantization
 
-| GPU | VRAM | QLoRA 7B | QLoRA 13B | Notes |
-|-----|------|----------|-----------|-------|
-| T4 | 16GB | Comfortable | Tight | Free tier on Colab |
-| A100 40GB | 40GB | Fast | Comfortable | ~$1/hr on Colab Pro |
-| RTX 4090 | 24GB | Good | Possible with small batch | Consumer option |
+QLoRA combines parameter-efficient adapters with low-bit loading to make a training experiment fit smaller hardware. Quantization is a memory and throughput trade-off, not a quality certificate.
 
-For T4: reduce `per_device_train_batch_size` to 1-2 and increase `gradient_accumulation_steps`.
+Test every candidate at the precision and sequence length that will be used in deployment. Include structured-output validity, long-context behavior, safety cases, and target-task accuracy. A lower-memory training configuration can still create a worse release candidate.
 
-### Monitoring with Weights & Biases
+## Release Artifact
 
-```python
-import wandb
-wandb.login()  # or set WANDB_API_KEY environment variable
+A promoted adapter or managed fine-tune needs a deployable manifest:
 
-# In TrainingArguments / SFTConfig:
-# report_to="wandb"
-# run_name="qlora-llama3-experiment-1"
-```
-
-W&B automatically tracks: loss curves, learning rate schedule, GPU utilization, gradient norms. For OpenAI fine-tuning: link your W&B API key in the OpenAI dashboard Settings -> Integrations section to visualize training progress.
-
-## PEFT Methods Comparison
-
-| Method | Approach | Trainable Params |
-|--------|----------|-----------------|
-| **LoRA** | Low-rank weight update decomposition | 0.1-1% |
-| **QLoRA** | LoRA + 4-bit quantization | 0.1-1% |
-| **Prefix Tuning** | Trainable prefix tokens per layer | Very small |
-| **Prompt Tuning** | Trainable soft prompt vectors | Tiny |
-| **Adapter Layers** | Small trainable layers between frozen layers | 1-5% |
-
-## LoRA Hyperparameter Tuning
-
-### Rank (r)
-Controls the capacity of LoRA adaptation. Higher rank = more expressiveness but more memory and risk of overfitting.
-
-| Rank | Use Case | Notes |
-|------|----------|-------|
-| 4-8 | Simple task adaptation (classification, formatting) | Start here |
-| 16 | General-purpose fine-tuning | Good default |
-| 32-64 | Complex domain adaptation, multi-task | When lower ranks underperform |
-| 128+ | Rarely needed | Diminishing returns |
-
-### Alpha (lora_alpha)
-Scaling factor for LoRA updates. Effective scaling = alpha / r. Common practice: set alpha = 2 * r (e.g., r=16, alpha=32).
-
-### Dropout (lora_dropout)
-Regularization for LoRA layers. Typical: 0.05-0.1. Helps prevent overfitting on small datasets.
-
-### Target Module Selection Strategy
-- **Minimum viable**: `q_proj`, `v_proj` - attention queries and values only. Good starting point
-- **More capacity**: add `k_proj`, `o_proj` - full attention adaptation
-- **Maximum**: add `gate_proj`, `up_proj`, `down_proj` - adapts FFN layers too. Use when attention-only is insufficient
-
-## Quantization Impact on Fine-Tuning Quality
-
-Quantization reduces model precision to save memory, but impacts performance differently across tasks:
-
-- **Full precision (FP32/BF16)**: baseline quality, highest memory
-- **8-bit quantization**: ~1-2% quality drop, 2x memory reduction
-- **4-bit (NF4/GPTQ)**: ~3-5% quality drop, 4x memory reduction
-- **Impact varies by task**: simple classification barely affected, complex reasoning shows more degradation
-
-Run your evaluation suite across quantization levels to find the sweet spot:
-
-```python
-from transformers import BitsAndBytesConfig
-
-# 4-bit quantization config for QLoRA
-bnb_config = BitsAndBytesConfig(
-    load_in_4bit=True,
-    bnb_4bit_quant_type="nf4",
-    bnb_4bit_compute_dtype=torch.bfloat16,
-    bnb_4bit_use_double_quant=True  # nested quantization saves extra memory
-)
-
-model = AutoModelForCausalLM.from_pretrained(
-    model_name, quantization_config=bnb_config
-)
-```
-
-## Dataset Preparation for Fine-Tuning
-
-### Finding and Crafting Datasets
-- **Existing datasets**: HuggingFace Hub, Kaggle. Filter for task-specific quality
-- **Synthetic generation**: use a stronger model (GPT-4) to generate training data for a smaller model
-- **Manual curation**: highest quality, most expensive. Even 100 expert-curated examples can be transformative
-- **Format consistency**: every example must follow the exact format expected during inference
-
-### Conversation Format
 ```json
-{"messages": [
-  {"role": "system", "content": "You are a pricing assistant..."},
-  {"role": "user", "content": "Price for item X?"},
-  {"role": "assistant", "content": "$42.99"}
-]}
+{
+  "candidate": "adapter-or-provider-model-id",
+  "base_model_revision": "immutable-revision",
+  "adapter_revision": "artifact:sha256:...",
+  "tokenizer_revision": "artifact:sha256:...",
+  "chat_template_revision": "artifact:sha256:...",
+  "eval_receipt": "eval-2026-09-003",
+  "rollback_target": "baseline-v7"
+}
 ```
 
-System prompt should be identical across all training examples and match inference-time system prompt.
-
-## Data Quality Guidelines
-
-- Each example should demonstrate the exact behavior you want
-- Remove duplicates, contradictions, low-quality samples
-- Hold out 10-20% as test set
-- Measure task-specific metrics (accuracy, BLEU, F1)
-- Compare against baseline to verify improvement
-- Check for overfitting (training metric improves but test doesn't)
+Serve the base model, adapter, tokenizer, template, and policy as one compatible release unit. Preserve a rollback target and re-run the release suite after changing any member of that unit.
 
 ## Gotchas
-- Fine-tuning on small datasets risks overfitting - always validate on held-out set
-- Fine-tuned models inherit the base model's limitations (hallucination, reasoning failures)
-- LoRA adapters can be composed (merge multiple LoRA) but quality may degrade
-- Hyperparameter tuning (rank, learning rate, epochs) significantly affects results
-- Fine-tuned model quality degrades if training data format doesn't match inference format
-- Always measure: sometimes prompt engineering + RAG outperforms fine-tuning
-- **Quantization affects tasks unevenly** - always benchmark YOUR specific task at each precision level, not just overall perplexity
-- **lora_alpha/r ratio matters more than absolute values** - alpha=32/r=16 and alpha=64/r=32 behave similarly
-- **System prompt mismatch** - if training uses a system prompt but inference doesn't (or vice versa), quality drops significantly
-- **Double quantization** (`bnb_4bit_use_double_quant=True`) provides additional memory savings with minimal quality impact
+
+- **Fine-tuning does not update factual knowledge.** It can make stale facts more confidently expressed. **Fix:** use retrieval or a controlled data tool for changing information.
+- **Training and inference formats can drift.** A different tokenizer or chat template can erase a measured gain. **Fix:** pin and test the full serving bundle.
+- **A random split can leak near-duplicates.** Scores then exaggerate generalization. **Fix:** split by source, user, document, or time where appropriate.
+- **Low-memory training is not a production proof.** Quantization and adapters can change behavior by task. **Fix:** evaluate the exact deployed precision and context length.
+- **A provider endpoint may be in transition.** Fine-tuning availability and eligible models can change. **Fix:** verify current account access and deprecation guidance before designing around it.
+
+## Sources
+
+- [OpenAI model optimization and fine-tuning guidance](https://developers.openai.com/api/docs/guides/model-optimization)
+- [OpenAI working with evals](https://developers.openai.com/api/docs/guides/evals)
+- [Hugging Face PEFT documentation](https://huggingface.co/docs/peft/en/index)
+- [Hugging Face TRL SFTTrainer](https://huggingface.co/docs/trl/en/sft_trainer)
+- [bitsandbytes quick start](https://huggingface.co/docs/bitsandbytes/main/quickstart)
+- [Transformers quantization documentation](https://huggingface.co/docs/transformers/quantization/bitsandbytes)
 
 ## See Also
-- [[model-optimization]] - Quantization, distillation, pruning
-- [[frontier-models]] - Base models available for fine-tuning
-- [[ollama-local-llms]] - Running fine-tuned models locally
-- [[rag-pipeline]] - Alternative to fine-tuning for knowledge
-- [[prompt-engineering]] - Establish baseline before fine-tuning
+
+- [[model-optimization]]
+- [[frontier-models]]
+- [[ollama-local-llms]]
+- [[rag-pipeline]]
+- [[prompt-engineering]]
+- [[agent-evaluation]]

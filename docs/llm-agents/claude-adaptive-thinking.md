@@ -1,137 +1,161 @@
 ---
-title: "Claude Adaptive Thinking & Effort Control"
-description: "How Claude's adaptive thinking system works, the March 2026 effort regression, quantified metrics, and env vars to restore reasoning depth."
+title: "Claude Adaptive Thinking and Effort Control"
+description: "Configure and evaluate Claude reasoning effort without relying on fixed, model-specific folklore."
+tags: [llm-agents, claude, reasoning, effort-control, observability]
 ---
 
-# Claude Adaptive Thinking & Effort Control
+# Claude Adaptive Thinking and Effort Control (September 2026)
 
-Adaptive thinking lets Claude decide per-turn how much reasoning to use. Shipped February 2026 with Opus 4.6. The March 2026 default effort downgrade caused a measurable regression documented across thousands of real sessions.
+Version context: reasoning controls are model- and client-specific. The current Claude Code and Claude API documentation are the source of truth for supported effort levels, fixed-budget compatibility, and settings precedence. Recheck them whenever the model or client version changes.
 
-## How Adaptive Thinking Works
+Adaptive reasoning lets a model decide whether and how deeply to think on a given step. It is not a guarantee of correctness, and an effort label is not comparable across model families. Treat effort as a measured operating parameter alongside task success, latency, token use, and safety controls.
+
+## The Controls Have Different Jobs
+
+| Control | What it changes | What it does not guarantee |
+|---|---|---|
+| output_config.effort in the API | Overall work/token trade-off for a request | A fixed amount of hidden reasoning |
+| Claude Code --effort | Launch/session effort setting | A permanent global policy |
+| Interactive Claude Code /effort | Active-session setting; supported selections can persist per model | A uniform level across all models |
+| CLAUDE_CODE_EFFORT_LEVEL | Explicit process-level override for supported clients/models | Support on every model or provider |
+| Thinking display/toggle | Whether thinking is shown or enabled where supported | Cheaper execution or an audit log |
+| max_tokens | A hard output ceiling | More reasoning by itself |
+
+Claude Code documents low, medium, high, xhigh, and max where the selected model supports them. Available levels and defaults vary; unsupported values can be resolved differently by the active client. Confirm the effective level in the session UI or API response rather than assuming a setting was accepted.
+
+## Adaptive Reasoning vs Fixed Thinking Budgets
+
+In adaptive mode, a model may skip thinking for a straightforward action and spend more effort on a complex one. The current Claude Code documentation states that newer supported models always use adaptive reasoning, while some older model families can revert to a fixed thinking budget with compatible environment variables.
+
+Therefore:
+
+1. Choose effort for the normal workload.
+2. Use an explicit fixed-budget mode only when the selected model and provider document it.
+3. Do not copy a legacy MAX_THINKING_TOKENS recipe into a newer model without checking compatibility.
+4. Treat a client upgrade as a configuration change that requires an evaluation run.
+
+A high output ceiling is not a substitute for an appropriate effort level. It only permits a larger total response; it does not compel the model to use the space productively.
+
+## API Configuration
+
+Use a model identifier from an approved deployment allowlist. Keep the identifier outside source code so that a model upgrade is visible in configuration review.
+
+```python
+import os
+import anthropic
+
+client = anthropic.Anthropic()
+
+message = client.messages.create(
+    model=os.environ["ANTHROPIC_MODEL"],
+    max_tokens=4096,
+    output_config={"effort": "high"},
+    messages=[
+        {
+            "role": "user",
+            "content": "Review this migration plan and list blocking risks.",
+        }
+    ],
+)
+
+print(message.content)
+```
+
+The example demonstrates a configuration shape, not a universal production default. Confirm the current model supports the selected effort level and whether the selected provider exposes the same controls.
+
+## Claude Code Configuration
+
+Use an explicit session setting when the task needs a known reasoning posture:
+
+```powershell
+claude --effort high
+
+$env:CLAUDE_CODE_EFFORT_LEVEL = "high"
+claude
+```
+
+The environment variable is process-scoped and can override interactive choices. Remove or change it deliberately; a forgotten process-level override is a common source of surprising latency and usage. Interactive low, medium, high, and xhigh selections can also be saved per model for later sessions. Use /effort auto or review the model settings when an experiment should no longer affect future work.
+
+Use /effort to inspect or adjust the active session. Use /effort auto only when returning to the documented model default is desired. Record the chosen level in a task receipt when it materially affects a benchmark or release decision.
+
+## Select Effort by Measured Risk
+
+| Workload | Starting posture | What to measure |
+|---|---|---|
+| Short, bounded transformation | low or medium after evaluation | Format validity, latency, retry rate |
+| Routine coding task with tests | high as a candidate | Test pass rate, review findings, tool-call count |
+| Architecture, security, or migration decision | high or xhigh as a candidate | Accepted design, blocker detection, human review |
+| Critical one-off analysis | max only after comparison | Incremental task value versus cost and delay |
+
+The table is a starting hypothesis. Keep the same model, tool policy, prompt shape, and evaluation set when comparing levels. Otherwise a result cannot be attributed to effort.
+
+## Evaluation Loop
 
 ```text
-thinking: {type: "adaptive"}  →  model decides reasoning depth per request
-thinking: {type: "enabled", budget_tokens: N}  →  fixed budget (deprecated on 4.6)
+freeze workload and acceptance criteria
+        -> run baseline at approved effort
+        -> record quality, latency, usage, and failure modes
+        -> change one control
+        -> run the same evaluation
+        -> keep or revert with a receipt
 ```
 
-Three layers of control:
+Evaluate outcome-level properties: compilation/tests, structured-output validity, policy compliance, reviewer findings, task completion, and user-visible latency. Do not use the length of displayed reasoning as a quality metric.
 
-| Layer | What it controls |
-|-------|-----------------|
-| `thinking.type` | `adaptive` or `enabled` (fixed, deprecated on 4.6) |
-| `output_config.effort` | Guidance level: `max`, `high`, `medium`, `low` |
-| `budget_tokens` | Exact token cap (legacy, deprecated on 4.6 models) |
+## Tool Use and Cost
 
-**Effort behavior:**
+Effort affects an agent's whole behavior, including tool selection and the surrounding explanation. A higher level can make more tool calls or more detailed plans; that is useful only when the additional evidence improves the result.
 
-| Level | Behavior |
-|-------|---------|
-| `max` | Always thinks, no constraints. Opus 4.6 / Sonnet 4.6 only |
-| `high` | Always thinks, deep reasoning (default pre-March 3, 2026) |
-| `medium` | Moderate thinking, may skip for "simple" queries (default post-March 3) |
-| `low` | Minimal thinking |
+Set separate controls for:
 
-The March 3, 2026 change: default silently lowered from `high` to `medium` (effort level 85). No changelog entry. Confirmed post-hoc by Boris Cherny (Anthropic).
+- tool allowlists and side-effect authorization;
+- request and task budgets;
+- timeout and maximum tool-call count;
+- prompt/context size;
+- trace retention and redaction;
+- a kill switch for effectful work.
 
-## Quantified Regression (March 2026)
+Reasoning tokens can be charged even when thought is collapsed or redacted. Budget alerts must use provider-reported usage, not an estimate based on visible output.
 
-From 6,852 Claude Code session logs, 234,760 tool calls:
+## Safe Observability
 
-| Metric | Before (Jan 30 - Feb 12) | After (Mar 8+) | Delta |
-|--------|--------------------------|----------------|-------|
-| Median thinking depth | ~2,200 chars | ~600 chars | -73% |
-| Reads per edit | 6.6 | 2.0 | -70% |
-| Edits without prior Read | 6.2% | 33.7% | +5.4x |
-| Stop-hook violations | 0 total | 173 | - |
-| User interrupts per 1K tool calls | 0.9 | 11.4 | +12.7x |
-| Reasoning loops per 1K tool calls | 8.2 | 21.0 | +2.6x |
-| Estimated monthly API cost | $345 | $42,121 | +122x |
-
-**Cache invalidation bugs (v2.1.100):** Two separate bugs also inflated token costs:
-1. Billing-sentinel string-replacement breaks cache prefix → full context re-billed
-2. Resume/continue tool-injection at wrong position → cache invalidated on every resume
-
-Typical cost inflation from cache bugs: 10-20x per session with resume.
-
-## Affected Models
-
-| Model | Adaptive thinking | `enabled` + `budget_tokens` |
-|-------|------------------|-----------------------------|
-| Claude Opus 4.6 | Default mode | Deprecated (still works) |
-| Claude Sonnet 4.6 | Supported | Deprecated |
-| Claude Mythos Preview | Only mode - cannot disable | Not supported |
-| Claude Opus 4.5 / Sonnet 4.5 | Not supported | Still works |
-
-## Restoring Reasoning Depth
-
-### Claude Code (interactive)
-
-```bash
-/effort max         # session-only
-/effort             # check current level
-```
-
-### Environment variables (permanent)
-
-```bash
-# Linux/macOS
-export CLAUDE_CODE_EFFORT_LEVEL=max
-export CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING=1
-
-# Windows PowerShell
-$env:CLAUDE_CODE_EFFORT_LEVEL="max"
-$env:CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING="1"
-```
-
-### settings.json
+Store a redacted task receipt instead of raw private reasoning:
 
 ```json
 {
-  "env": {
-    "CLAUDE_CODE_EFFORT_LEVEL": "max",
-    "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1"
-  }
+  "task_id": "review-2026-09-003",
+  "model_config_revision": "models/approved.yaml@42",
+  "effort": "high",
+  "policy_revision": "tool-policy@9",
+  "result": "completed",
+  "quality_gate": "tests-and-review-pass",
+  "usage_source": "provider_response.usage"
 }
 ```
 
-### API (Opus 4.6 / Sonnet 4.6)
-
-```json
-{
-  "model": "claude-opus-4-6",
-  "thinking": {"type": "adaptive"},
-  "output_config": {"effort": "max"},
-  "max_tokens": 32000
-}
-```
-
-Legacy path (deprecated, still functional):
-```json
-{
-  "thinking": {"type": "enabled", "budget_tokens": 31999}
-}
-```
-
-## Hybrid Model Stack (Cost Mitigation)
-
-| Task | Tool | Rationale |
-|------|------|-----------|
-| Architecture, security review, complex debugging | Claude Opus 4.6 + effort=max | Quality gap still significant |
-| Bulk generation, routine refactoring | DeepSeek V3.2 | ~20x cheaper, ~90% quality |
-| Long context, terminal tasks | Qwen 3.6-Plus | 1M context, strong on terminal benchmarks |
-| Batch dataset processing | DeepSeek V3.2 | Cost-effective at scale |
+This gives a reviewer enough context to reproduce the operating conditions without treating chain-of-thought content as a persistent system log.
 
 ## Gotchas
 
-- **`MAX_THINKING_TOKENS` makes every request a thinking request** (issue #5257). Even "what time is it" gets a thinking block. Check for this env var before troubleshooting unexplained costs.
-- **`ultrathink` keyword conflicts with `MAX_THINKING_TOKENS`** (issue #18072): the keyword is ignored when the env var is set.
-- **Raising `max_tokens` alone does nothing.** Adaptive mode won't use the extra space - the bottleneck is the effort level, not the output ceiling.
-- **Downgrading Claude Code to v2.1.87** avoids the v2.1.100 cache invalidation bugs, but also loses features. Evaluate the trade-off.
-- **`budget_tokens` is deprecated on 4.6 models** and will be removed in a future release. Migrate to `output_config: {effort: ...}` now.
-- **`CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING=1` increases cost 3-5x** vs medium default. Budget accordingly.
+- **Effort labels are calibrated per model.** high on two models is not an apples-to-apples budget. **Fix:** compare only within a fixed model and client version.
+- **An environment override can outlive an experiment.** It may silently affect later sessions. **Fix:** scope it to a process and verify the active effort in the session.
+- **Fixed thinking budgets are not universal.** Some newer models always use adaptive reasoning. **Fix:** check the current model configuration documentation before applying a legacy variable.
+- **More thinking can mean more tool calls and latency.** It is not automatically safer. **Fix:** keep authorization, budgets, and tool limits independent from effort.
+- **Visible thinking is not an audit record.** It can be redacted, omitted, or unsafe to retain. **Fix:** log structured task and policy receipts instead.
+
+## Sources
+
+- [Claude Code model configuration](https://code.claude.com/docs/en/model-config)
+- [Claude Code environment variables](https://code.claude.com/docs/en/env-vars)
+- [Claude API effort control](https://platform.claude.com/docs/en/build-with-claude/effort)
+- [Claude thinking steering and cost](https://platform.claude.com/docs/en/build-with-claude/thinking-steering-and-cost)
+- [Claude extended-thinking model guidance](https://platform.claude.com/docs/en/about-claude/models/extended-thinking-models)
 
 ## See Also
 
 - [[claude-code-ecosystem]]
-- [[kv-cache-compression]]
+- [[agent-design-patterns]]
+- [[agent-evaluation]]
 - [[context-engineering]]
+- [[llm-api-integration]]
+- [[production-patterns]]
