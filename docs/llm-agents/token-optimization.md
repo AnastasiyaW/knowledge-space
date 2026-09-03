@@ -1,212 +1,127 @@
 ---
-title: Token Optimization for Agents
-category: techniques
-tags: [llm-agents, token-optimization, cost-reduction, compression, caveman-prompting, response-format]
+title: "Token Optimization for Agents"
+description: "Reduce the measured cost and latency of agent workflows without trading away task quality, safety, provenance, or reliable completion."
+tags: [llm-agents, token-optimization, cost-optimization, context-engineering, prompt-caching, evaluation]
 ---
 
-# Token Optimization for Agents
+# Token Optimization for Agents (September 2026)
 
-Reducing token consumption in agent systems without degrading task performance. Agent costs scale with tokens (input + output) x number of calls x number of agents. A 75% token reduction in a 5-agent system with 20 calls each = 75x fewer tokens billed.
+Version context: tokenizers, model context limits, billing categories, cache behavior, and batch or priority tiers are provider- and model-specific. Use the provider's current usage data and pricing schedule for the resolved deployment; do not carry forward a static price table or a universal token ratio.
 
-## Response Compression Techniques
+The objective is not "use the fewest tokens." The objective is to minimize measured workflow cost and latency while meeting the task's quality, safety, and completion requirements. A terse answer that triggers retries, misses a legal qualifier, or performs the wrong tool action is an expensive failure.
 
-### Caveman Prompting
+## Establish a Measurement Boundary
 
-Force terse, keyword-dense responses by instructing the model to use minimal grammar:
+Measure one task or workflow at a time. Record the release revision, task class, terminal outcome, provider-reported usage, latency, retries, cache signals where available, tool calls, and validator result.
 
-```bash
-System: Reply in compressed style. No articles, no filler words.
-Skip "the", "a", "is", "are". Use arrows, abbreviations.
-Max info per token. Like telegram.
-
-User: What are the main causes of the 2008 financial crisis?
-
-Normal response (180 tokens):
-"The 2008 financial crisis was primarily caused by several
-interconnected factors. First, there was a massive expansion of
-subprime mortgage lending..."
-
-Compressed response (45 tokens):
-"2008 crisis causes: subprime mortgage expansion -> securitization
-(MBS/CDO) -> credit rating failures -> overleveraged banks ->
-Lehman collapse -> credit freeze -> global contagion"
+```json
+{
+  "trace_id": "tr_01...",
+  "release_id": "research-summarizer@18",
+  "task_class": "source-grounded-summary",
+  "usage": {
+    "input": 0,
+    "output": 0,
+    "cache_read": 0
+  },
+  "latency_ms": 0,
+  "retry_count": 0,
+  "tool_call_count": 0,
+  "validator_outcome": "pass",
+  "terminal_state": "completed"
+}
 ```
 
-**Savings**: 75% token reduction. Works best for factual/analytical tasks. Quality degrades on creative or nuanced tasks.
+The categories above are deliberately generic. Provider response objects may use different names or expose additional usage fields. Keep the original typed response in a controlled log if audit requires it, and normalize only the data the operator needs.
 
-### Structured Output Compression
+## Optimize the Highest-Leverage Context First
 
-Replace natural language agent responses with structured formats:
+The most durable improvements remove irrelevant work rather than compressing language until it becomes ambiguous.
 
-```python
-# Instead of: "I searched the database and found 3 results.
-# The most relevant one is the user profile for John with ID 12345..."
+| Lever | Safe implementation | Measurement to keep |
+|---|---|---|
+| Task routing | route only well-separated task classes to approved configurations | routing accuracy, fallback rate, task success |
+| Context selection | retrieve or load only evidence relevant to the declared task | citation coverage, missed-evidence rate |
+| Tool surface | expose only tools necessary for the task | tool selection errors, authorization denials |
+| Tool results | return structured, bounded fields and durable artifact references | repeat-call rate, validator outcome |
+| Output contract | specify a short schema or maximum only where completeness is preserved | completeness, correction rate, user outcome |
+| Repeated instructions | reuse a reviewed stable prefix when the provider supports caching | cache signal, privacy/tenant test, release revision |
+| Retry policy | fix recurrent validation or timeout causes instead of retrying blindly | retry count, duplicate-effect rate |
 
-# Use:
-{"action": "search_db", "results": 3, "top": {"id": 12345, "type": "user"}}
+Do not use "keyword-only" or ungrammatical output as a default optimization. It can destroy names, qualifiers, dates, and instructions that another system or person needs to interpret safely.
+
+## Context Is a Retrieval and Policy Problem
+
+Before adding a document, tool result, or chat turn to a prompt, ask:
+
+1. Does this item answer a required part of the task contract?
+2. Is it authoritative enough for the decision?
+3. Is it current, within the tenant boundary, and permitted by data policy?
+4. Can a small reference or structured extraction replace the raw content?
+5. Can the downstream reviewer locate the original source from the output?
+
+Prefer a source ID, revision, and relevant excerpt over a full transcript. Preserve provenance: a shorter context that loses the original source is usually a quality regression.
+
+## Use Caching as a Controlled Optimization
+
+Where a provider supports prompt caching, arrange stable shared instructions and reviewed tool descriptions before changing task-specific data. Follow the provider's current cache rules rather than assuming a fixed threshold, discount, or retention behavior.
+
+Include these values in the cache or release key where relevant:
+
+```text
+prompt_revision + policy_revision + tool_schema_revision
++ model/configuration + tenant or trust boundary
 ```
 
-### Scratchpad Compression
+Caching is not a permission mechanism. Do not reuse a cached context across users, tenants, or classifications unless the provider contract and your data policy explicitly allow it. [OpenAI prompt caching](https://developers.openai.com/api/docs/guides/prompt-caching) and [Anthropic prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) document provider-specific behavior that must be rechecked at deployment.
 
-Agent reasoning traces consume most tokens. Compress intermediate steps:
+## Cost and Capacity Decisions
 
-```python
-# Verbose scratchpad (typical):
-"""
-Thought: I need to find the error in the code. Let me look at the
-stack trace first. The error message says "IndexError: list index
-out of range" which means we're trying to access an element at an
-index that doesn't exist. Let me check the function where this occurs.
-Action: read_file("main.py")
-Observation: [200 lines of code]
-Thought: I can see the issue. On line 45, we access arr[i] but the
-loop goes from 0 to len(arr) inclusive, which means when i equals
-len(arr), we get an out of bounds error...
-"""
+Calculate a request cost from provider-reported usage and the current schedule for the exact resolved model and processing tier:
 
-# Compressed scratchpad:
-"""
-T: IndexError line 45: loop 0..len(arr) inclusive, off-by-one
-A: read_file("main.py")
-O: [relevant lines only: 43-47]
-T: Fix: range(len(arr)) not range(len(arr)+1)
-"""
+```text
+request cost = sum(reported usage category × current unit price)
+workflow cost = request costs + tool costs + retries + human review cost
 ```
 
-**Implementation**: set a word budget in the system prompt:
+Keep this calculation in deployment or billing configuration, not copied into a long-lived article. The relevant decision is whether the complete workflow stays within its approved budget while its quality and safety evaluation still pass.
 
-```rust
-Reasoning budget: max 30 words per thought. Use abbreviations.
-T=thought, A=action, O=observation (first 5 relevant lines only).
-```
+A smaller model, shorter context, cache feature, or asynchronous tier is a candidate configuration. Release it only after it meets the same task-specific acceptance criteria as the baseline.
 
-## Cost-Aware Architecture Patterns
+## Run an Evidence-Based Optimization Loop
 
-### Model Cascading
+| Step | Required receipt |
+|---|---|
+| Baseline | frozen task sample, configuration revision, usage and quality distribution |
+| Hypothesis | one proposed change and expected trade-off |
+| Candidate run | same sample, same evaluation criteria, normalized usage |
+| Error review | failures, retries, citation gaps, and unsafe action attempts |
+| Decision | keep, revert, or investigate with owner and evidence |
+| Production check | bounded rollout plus verified terminal outcomes |
 
-Route cheap tasks to cheap models, expensive tasks to expensive models:
-
-```python
-def route_to_model(task: dict) -> str:
-    """Select model based on task complexity."""
-    complexity = estimate_complexity(task)
-    if complexity < 0.3:
-        return "haiku"          # ~$0.25/M tokens
-    elif complexity < 0.7:
-        return "sonnet"         # ~$3/M tokens
-    else:
-        return "opus"           # ~$15/M tokens
-
-def estimate_complexity(task: dict) -> float:
-    """Heuristic complexity scoring."""
-    score = 0.0
-    if task.get("requires_reasoning"):
-        score += 0.3
-    if task.get("multi_step"):
-        score += 0.3
-    if task.get("code_generation"):
-        score += 0.2
-    if len(task.get("context", "")) > 10000:
-        score += 0.2
-    return min(score, 1.0)
-```
-
-### Subagent Token Budget
-
-Enforce per-subagent token limits:
-
-```python
-class TokenBudgetAgent:
-    def __init__(self, max_input: int = 4000, max_output: int = 1000):
-        self.max_input = max_input
-        self.max_output = max_output
-
-    def run(self, task: str, context: str) -> str:
-        # Truncate context to budget
-        context = truncate_to_tokens(context, self.max_input - count_tokens(task))
-
-        response = llm.generate(
-            messages=[{"role": "user", "content": f"{task}\n\nContext:\n{context}"}],
-            max_tokens=self.max_output,
-        )
-        return response
-```
-
-### Caching and Deduplication
-
-```python
-import hashlib
-from functools import lru_cache
-
-# Cache identical tool call results
-@lru_cache(maxsize=256)
-def cached_tool_call(tool_name: str, params_hash: str):
-    return execute_tool(tool_name, unhash(params_hash))
-
-# Deduplicate context across agent calls
-def deduplicate_context(messages: list[dict]) -> list[dict]:
-    """Remove duplicate tool observations."""
-    seen_observations = set()
-    deduped = []
-    for msg in messages:
-        if msg["role"] == "tool":
-            h = hashlib.md5(msg["content"].encode()).hexdigest()
-            if h in seen_observations:
-                continue
-            seen_observations.add(h)
-        deduped.append(msg)
-    return deduped
-```
-
-### Prompt Caching
-
-Modern APIs cache repeated prompt prefixes. Structure prompts so the stable portion comes first:
-
-```python
-messages = [
-    # STABLE PREFIX (cached after first call - 90% cheaper on subsequent)
-    {"role": "system", "content": long_system_prompt},      # ~2000 tokens
-    {"role": "user", "content": reference_documents},        # ~5000 tokens
-
-    # VARIABLE SUFFIX (changes each call)
-    {"role": "user", "content": current_task},               # ~200 tokens
-]
-# First call: 7200 tokens at full price
-# Subsequent calls: 200 tokens at full price + 7000 at 10% price
-```
-
-## Measuring Token Efficiency
-
-```python
-def token_efficiency_report(agent_runs: list[dict]) -> dict:
-    """Calculate token efficiency metrics across runs."""
-    total_tokens = sum(r["tokens_used"] for r in agent_runs)
-    successful = [r for r in agent_runs if r["success"]]
-    failed = [r for r in agent_runs if not r["success"]]
-
-    return {
-        "total_tokens": total_tokens,
-        "tokens_per_success": total_tokens / max(len(successful), 1),
-        "tokens_per_task": total_tokens / len(agent_runs),
-        "waste_ratio": sum(r["tokens_used"] for r in failed) / total_tokens,
-        "avg_steps": sum(r["steps"] for r in agent_runs) / len(agent_runs),
-        "cost_usd": total_tokens * 0.000003,  # adjust per model
-    }
-```
-
-Track `tokens_per_success` over time - it should decrease as you optimize. A high `waste_ratio` means the agent burns tokens on doomed attempts - improve early failure detection.
+This loop prevents an apparent reduction in input tokens from hiding an increase in correction, tool, or support costs.
 
 ## Gotchas
 
-- **Aggressive compression kills nuance**: caveman prompting works for factual extraction but causes the model to miss subtleties in analysis tasks. Test quality metrics before deploying compressed prompts in production - measure pass rate, not just token count
-- **Scratchpad truncation causes reasoning failures**: if you cut the reasoning trace too aggressively, the model loses track of its chain-of-thought. Start with a 50% compression target and measure task success rate. Never compress below the point where success rate drops
-- **Caching stale results**: tool call caching can serve outdated data if the underlying state changed between calls. Add TTL to cached results and invalidate on state-changing actions (write, delete, update)
-- **Model cascading routing errors are expensive**: sending a hard task to a cheap model wastes those tokens entirely when it fails, then you pay again for the expensive model. When in doubt, route up not down
+- **Input token savings can shift cost elsewhere.** Missing context can cause retries, web searches, or human escalation. **Fix:** measure whole-workflow cost and terminal task success.
+- **Provider token counts are not interchangeable.** Characters, words, and one provider's tokenizer cannot predict another's billing exactly. **Fix:** use provider-reported usage for accounting.
+- **Cached context still has a trust boundary.** Reuse can be unsafe when it crosses a tenant, policy, or revision boundary. **Fix:** include those boundaries in the cache/release design and test isolation.
+- **A router can be a new source of failures.** Cheap routing errors may send high-stakes work to an unsuitable configuration. **Fix:** evaluate routing accuracy and define a safe fallback.
+- **Aggressive compression can erase provenance.** A summary may be shorter but no longer show where a claim came from. **Fix:** retain source references and validate citation coverage.
+- **Retries are often the dominant hidden cost.** A lower-cost request is irrelevant if it fails more often. **Fix:** record retries and repair their cause before optimizing wording.
+
+## Sources
+
+- [OpenAI: model selection](https://developers.openai.com/api/docs/guides/model-selection)
+- [OpenAI: prompt caching](https://developers.openai.com/api/docs/guides/prompt-caching)
+- [OpenAI: Responses API reference](https://developers.openai.com/api/reference/cli/resources/responses/methods/create)
+- [Anthropic: prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching)
 
 ## See Also
 
-- [[context-engineering]] - Managing what goes into the context window
-- [[prompt-engineering]] - Prompt-level optimization and formatting
-- [[model-optimization]] - Model-level optimization (quantization, distillation)
-- [[agent-evaluation]] - Measuring agent efficiency metrics
-- [[production-patterns]] - Cost management in production agent systems
+- [[tokenization]]
+- [[context-engineering]]
+- [[prompt-engineering]]
+- [[llmops]]
+- [[llm-api-integration]]
+- [[agent-observability-dashboards]]

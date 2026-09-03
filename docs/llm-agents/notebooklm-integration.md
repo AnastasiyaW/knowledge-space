@@ -1,141 +1,121 @@
 ---
-title: "NotebookLM Integration for AI Coding Agents"
-description: "Using Google NotebookLM as a free research backend for Claude Code - token-saving workflows, cross-session memory, skill-based orchestration."
+title: "Gemini Notebook Research Integration"
+description: "Use Google Gemini Notebook as a source-grounded research workspace while keeping publication evidence, access control, and canonical records outside the notebook."
+tags: [llm-agents, research, gemini, notebooklm, knowledge-management, provenance]
 ---
 
-# NotebookLM Integration for AI Coding Agents
+# Gemini Notebook Research Integration (September 2026)
 
-Bridge between Claude Code and Google NotebookLM via reverse-engineered CLI (`notebooklm-py`). Heavy analytics (30+ documents, web research, cross-references) runs free on Google's Gemini RAG infrastructure. Claude spends tokens only on orchestration and final editing.
+Version context: Google's current help surface calls the product Gemini Notebook; available features, source types, account eligibility, regional availability, privacy terms, and enterprise APIs depend on the account and service contract. Verify the exact product, entitlement, and data policy before moving any non-public material.
 
-## Architecture
+Gemini Notebook can help a human or agent explore a bounded source collection and produce source-grounded answers, summaries, and research artifacts. It is not the canonical repository for a project's facts, policies, or release history. The original sources and the reviewed record derived from them remain the source of truth.
 
-```text
-User request
-    |
-    v
-Claude Code (orchestrator, token-metered)
-    |
-    v  CLI calls
-notebooklm-py (bridge, reverse-engineered API)
-    |
-    v
-Google NotebookLM (Gemini RAG, free tier: 50 sources/notebook)
-    |
-    v  results
-Claude Code (final polish, minimal tokens)
+## Choose the Right Role
+
+Use a notebook as a research workspace when the goal is to compare a known set of sources, find gaps, formulate questions, or create a draft claim set with citations. Do not make it the sole authority for a publication, deployment, legal conclusion, or security decision.
+
+| Role | Suitable use | Durable authority |
+|---|---|---|
+| Research workspace | explore a source set and produce questions or drafts | source manifest plus reviewed research record |
+| Collaborative briefing | share a bounded, access-controlled reading packet | approved repository or document store |
+| Enterprise integration | programmatic notebook/source operations when the documented service is enabled | application-owned task, audit, and approval records |
+| Publication source | never by itself | independently verified primary sources and editorial approval |
+
+Google describes Gemini Notebook as an AI research assistant that works from supplied sources and can create derived study or briefing artifacts. Its availability and source support are documented in the product help, so verify the current account surface instead of copying tier limits into a workflow. [Gemini Notebook Help](https://support.google.com/gemininotebook/answer/16164461?hl=en)
+
+## Preserve a Research Packet
+
+Before querying a notebook, create a small, versioned record outside it. This lets another editor reproduce the research even if the notebook changes, is unavailable, or is shared with a different audience.
+
+```json
+{
+  "research_id": "happyin-history-2026-09-03",
+  "objective": "verify public project-history claims",
+  "source_manifest": [
+    {
+      "source_id": "project-repository",
+      "url": "https://example.invalid/project",
+      "revision": "commit-or-snapshot-id",
+      "retrieved_at": "2026-09-03T12:00:00Z",
+      "classification": "public"
+    }
+  ],
+  "notebook_ref": "controlled-reference-not-a-secret",
+  "questions": ["Which claims have primary-source support?"],
+  "claim_set_ref": "artifact:claims/happyin-history-v1",
+  "review_status": "pending"
+}
 ```
 
-## Setup
+The packet records provenance, not credentials or unrestricted user content. A claim set should cite the source IDs and exact supporting locations, identify uncertainty, and distinguish a summary from an observed fact.
 
-```bash
-# Install CLI bridge
-# Repo: https://github.com/teng-lin/notebooklm-py
-# Follow README for installation + Google auth
+## A Reproducible Research Workflow
 
-# Install Claude Code skill
-notebooklm skill install
-notebooklm skill status    # verify
-```
+1. **Define the decision.** State what will change if the research is correct, who can approve that change, and which claims require primary sources.
+2. **Create a source manifest.** Capture URLs, repository revisions, timestamps, access classification, and inclusion rules before uploading or linking sources.
+3. **Use the notebook to explore.** Ask bounded questions, request source citations, and treat every answer as a draft research artifact.
+4. **Export a claim set.** Preserve the question, answer, cited sources, limitations, and an immutable reference to the notebook session where policy permits.
+5. **Verify outside the notebook.** Open the cited primary source, check its date and scope, and reject claims the source does not actually support.
+6. **Publish only the reviewed record.** Store the curated material in the project repository or another approved canonical system, with the review receipt.
 
-Skill installs to `~/.claude/skills/notebooklm/SKILL.md` (personal) and `~/.agents/skills/notebooklm/` (cross-agent compatible with Codex, Gemini CLI).
+This makes the notebook useful without turning a generated response into an uncontrolled dependency.
 
-## Four Workflows
+## Integration Tiers
 
-### A. Research Without Token Spend
+| Tier | When it is appropriate | Required boundary |
+|---|---|---|
+| Manual or human-mediated export | occasional research, sensitive review, or changing product capabilities | source manifest, citation check, editorial receipt |
+| Documented enterprise API | an enabled enterprise deployment with a stable product owner | service-account policy, audit trail, retry/idempotency contract, release check |
+| Unofficial browser or reverse-engineered automation | exploration only, never a production authority | no automated publication, deployment, or record mutation |
 
-Offload document analysis to NotebookLM. Claude orchestrates, Google processes.
+Google Cloud documents programmatic notebook management for Gemini Notebook Enterprise, including notebook creation, retrieval, sharing, and deletion. The current page marks the API surface Preview; keep its exact behavior behind a reviewed adapter and treat product changes as release-time validation work. [Gemini Notebook Enterprise API](https://docs.cloud.google.com/gemini/enterprise/notebooklm-enterprise/docs/api-notebooks)
 
-```bash
-# 1. Create notebook
-notebooklm create "My Research Project"
+A reverse-engineered CLI, session-cookie automation, or UI scraper may stop working without notice and can bypass the access and audit controls required for a durable knowledge system. Do not make it a hidden fallback behind an official integration.
 
-# 2. Add sources (up to 50 free, 300 Pro)
-notebooklm source add \
-    "./transcript-1.md" \
-    "https://example.com/article" \
-    "./report.pdf"
+## Privacy and Access Controls
 
-# 3. Query across all sources (free, Gemini RAG)
-notebooklm ask "what are the three most important themes across all sources?"
+Classify every source before it enters a notebook. Verify the applicable consumer, Workspace, Education, or enterprise data terms for the actual account; do not infer them from a blog post or another team's contract.
 
-# 4. Generate artifacts
-notebooklm generate slide-deck
-notebooklm generate flashcards --quantity more
-notebooklm generate mind-map
-notebooklm generate data-table "compare key concepts"
-notebooklm generate audio "make it engaging" --wait
-```
+For any integration, define:
 
-**Token math**: analytical work on Google infrastructure. Claude tokens reserved for orchestration + final editing only. $20/month plan stretches to $200/month capability.
+- which identities may create, read, share, or delete a notebook;
+- which source classifications are permitted;
+- whether export is allowed and where it may be stored;
+- retention, redaction, and incident handling rules;
+- the human or service account that can revoke access;
+- the evidence required before a derived claim becomes public.
 
-### B. Expert Agent from Web Research (DBS Framework)
+Treat source text and notebook output as untrusted content. They can contain conflicting instructions, inaccurate summaries, or copied secrets. The application, not a notebook response, enforces authorization and publication policy.
 
-Use NotebookLM Deep Research for autonomous web crawling, then structure into a Claude Code skill.
+## Review Questions for Every Claim Set
 
-1. Run Deep Research in NotebookLM browser (source type: "web", specific query)
-2. Structure results using **DBS framework**:
-   - **Direction** - step-by-step logic, decision trees, error handling -> becomes SKILL.md core
-   - **Blueprints** - static references: templates, tone guidelines, classification rules -> companion files
-   - **Solutions** - deterministic code tasks: API calls, formatting, calculations -> scripts
-3. Feed to `/skill-creator` in Claude Code -> auto-generates full skill package
-4. Test and iterate
-
-### C. Cross-Session Memory via Master Brain
-
-```bash
-# End of session: extract insights
-# /wrap-up skill extracts: corrections, successful patterns, open questions, decisions
-
-# Push to dedicated NotebookLM notebook
-notebooklm use master-brain-notebook-id \
-    "./session-summary-2026-04-06.md"
-
-# Add to CLAUDE.md:
-# "Before answering architecture questions, query Master Brain via NotebookLM CLI"
-```
-
-Over weeks, Master Brain accumulates hundreds of session summaries. NotebookLM indexes everything with semantic connections. Claude retrieves exactly the context needed without loading hundreds of documents into its context window.
-
-### D. Visual Knowledge via Obsidian
-
-Run Claude Code from Obsidian vault root. All generated files appear in Obsidian's graph view.
-
-```bash
-cd ~/Documents/MyVault
-claude
-```
-
-CLAUDE.md in vault root specifies: folder structure, mandatory metadata (dates, tags, source links), cross-reference rules (`[[double brackets]]`), formatting standards.
-
-Custom skills: `/research <topic>`, `/daily` (daily summary with cross-refs), `/wrap-up` (session memory to vault).
-
-## CLI Reference
-
-| Command | Description |
-|---------|-------------|
-| `notebooklm create "Name"` | Create notebook |
-| `notebooklm source add file url ...` | Add sources |
-| `notebooklm ask "question"` | Query notebook |
-| `notebooklm generate slide-deck` | Generate slides |
-| `notebooklm generate flashcards` | Generate flashcards |
-| `notebooklm generate mind-map` | Generate mind map |
-| `notebooklm generate audio` | Generate audio |
-| `notebooklm generate data-table "..."` | Generate table |
-| `notebooklm skill install` | Install Claude Code skill |
-| `notebooklm login` | Re-authenticate (cookies expire) |
+| Question | Pass condition |
+|---|---|
+| Is every factual claim linked to an original source? | reviewer can open the source and locate the support |
+| Is the source current enough for the decision? | timestamp/revision is recorded and acceptable |
+| Does the claim preserve scope and uncertainty? | no stronger conclusion than the source permits |
+| Can another editor reproduce the packet? | manifest, questions, and reviewed output references exist |
+| Is the material allowed in this destination? | data classification and approval receipt permit it |
 
 ## Gotchas
 
-- **Unofficial API - no stability guarantee.** `notebooklm-py` reverse-engineers Google's internal protocols. Google can break it at any time by changing their backend. No SLA, maintained by one developer (Teng Ling). Treat as power-user tool, not production infrastructure
-- **`storage_state.json` contains live Google session cookies.** Anyone with this file gets full access to your NotebookLM data. Never commit to git. Treat as a password. Add to `.gitignore` immediately
-- **Cookies expire periodically.** When commands fail with auth errors, run `notebooklm login` (30 seconds). No way to get permanent tokens
-- **GDPR implications.** User-tier Claude and NotebookLM process/store data in the US. If you work with regulated data (EU/UK), corporate API offers regional processing but consumer tier does not
-- **Anthropic ToS compliance.** Do not use this to circumvent token limits through unofficial wrappers. Ensure usage matches your plan
+- **A citation is not verification.** A notebook can cite a source while misreading its scope or date. **Fix:** open the cited primary source before adopting the claim.
+- **Notebook availability is account-specific.** Features, limits, and sharing behavior can differ by account, region, or plan. **Fix:** validate the actual service contract at onboarding and deployment.
+- **A derived artifact can outlive its evidence.** Source edits or removals can make an old summary misleading. **Fix:** record source revisions and revalidate material claims before publication.
+- **Preview APIs need stronger release discipline.** A documented endpoint can still change or have limited support. **Fix:** isolate it behind an adapter and test the enabled deployment before relying on it.
+- **Convenient automation can become an unauthorized integration.** Browser scripting and reverse-engineered clients may circumvent expected controls. **Fix:** keep them out of production and use only reviewed, documented interfaces.
+
+## Sources
+
+- [Gemini Notebook product help](https://support.google.com/gemininotebook/answer/16164461?hl=en)
+- [Gemini Notebook Enterprise: create and manage notebooks API](https://docs.cloud.google.com/gemini/enterprise/notebooklm-enterprise/docs/api-notebooks)
+- [Google Cloud documentation](https://docs.cloud.google.com/)
 
 ## See Also
 
-- [[context-engineering]] - context management strategies
-- [[agent-memory]] - memory patterns for AI agents
-- [[rag-pipeline]] - RAG architecture that NotebookLM uses internally
-- [[token-optimization]] - reducing token consumption
-- [[managed-agents]] - Anthropic's official hosted agent platform
+- [[rag-pipeline]]
+- [[llmops]]
+- [[multi-agent-messaging]]
+- [[agent-evaluation]]
+- [[agent-security]]
+- [[context-engineering]]
