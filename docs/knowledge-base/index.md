@@ -406,7 +406,7 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[langgraph]] - Graph-based agent workflows
     - [[no-code-platforms]] - Low-code AI tools
     - [[spring-ai]] - Spring AI framework for Java
-    - [[ai-coding-assistants]] - Copilot, Claude Code, Cursor
+    - [[ai-coding-assistants]] - Operate AI coding assistants through explicit scope, data, tool, approval, and evidence boundaries instead of product rankings or trust in generated code.
 
     **Operations**
 
@@ -422,7 +422,7 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[adaptive-patterns-for-autonomous-agents]] - Use explicit task state, bounded hooks, capability-scoped subagents, and evidence-based gates instead of opaque keyword triggers or arbitrary ambiguity scores.
     - [[agent-architectures]] - How to structure the control flow and state management of an LLM agent beyond individual patterns
     - [[agent-deployment]] - Taking agents from prototype to production
-    - [[agent-evaluation]] - Evaluating agents is fundamentally harder than evaluating models
+    - [[agent-evaluation]] - Evaluate agent behavior with versioned task fixtures, deterministic validators, controlled side-effect checks, and reproducible evidence rather than a single benchmark score.
     - [[agent-observability-dashboards]] - Real-time observability for multi-agent and sub-agent systems: hook-based telemetry, event
     - [[agent-orchestration]] - Coordinate model calls, tools, handoffs, approvals, retries, and evidence through explicit task state rather than a framework-specific agent loop.
     - [[agent-safety-alignment]] - Build agent safety as explicit authority, data, tool, approval, and evidence boundaries rather than as a prompt-only promise.
@@ -446,7 +446,7 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[handoff-rollup-pattern]] - How to create a bounded, auditable rollup of long-running agent work without pretending that a summary is lossless.
     - [[kv-cache-compression]] - Reducing KV cache memory during LLM inference to enable longer contexts and more concurrent
     - [[llm-fine-tuning-practical]] - End-to-end guide for frontier API and QLoRA fine-tuning with when-to-use decision framework
-    - [[llm-persona-design-and-engineering]] - Persona design for LLM agents involves mapping abstract character traits to concrete linguistic
+    - [[llm-persona-design-and-engineering]] - Design an LLM persona as a versioned behavioral policy with explicit authority, privacy, escalation, and evaluation boundaries rather than as an assumed model personality.
     - [[managed-agents]] - A version-aware guide to Anthropic's managed agent harness: agent configuration, environments, sessions, events, permission policies, and data boundaries.
     - [[multi-agent-messaging]] - Inter-agent communication patterns for Claude Code sessions: built-in Agent Teams, hook-based
     - [[multi-agent-systems-architectures-2026]] - Multi-agent systems (MAS) have diverged into two primary architectural schools: role-based
@@ -457,11 +457,11 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[qwen-code]] - Version-aware installation, authentication, diagnostics, and project history for the Qwen Code
     - [[scaling-laws-and-benchmarks]] - Chinchilla scaling law, standard benchmarks (ARC, DROP, HellaSwag), and model selection guidelines
     - [[social-media-mcp-tools]] - A provider-neutral, approval-first design for using MCP to draft, validate, and publish social content without treating a social post as a reversible chat action.
-    - [[swarm-based-review-and-multisampling-in-agentic-workflows]] - Multisampling and swarm-based review are techniques used to scale LLM reasoning performance at
+    - [[swarm-based-review-and-multisampling-in-agentic-workflows]] - Generate independent candidates, validate evidence, and select agent outputs through explicit acceptance criteria rather than fixed vote counts or model confidence.
     - [[telegram-managed-bots]] - A production-safe guide to Telegram's manager-bot model: creation, token rotation, access settings, state isolation, and lifecycle receipts.
     - [[token-optimization]] - Reducing token consumption in agent systems without degrading task performance
     - [[tool-use-patterns]] - How to design, expose, and manage tools for LLM agents
-    - [[uml-driven-agent-development]] - Model-first approach to agent workflow design: specify behavior as diagrams-as-code before writing
+    - [[uml-driven-agent-development]] - Use small, versioned sequence, state, and trust-boundary diagrams to clarify agent workflows, then validate them in the renderer and CI target that will publish them.
     - [[unsloth]] - Artifact-aware reference for Unsloth Core, Studio, Desktop, and version-bound fine-tuning guidance
 
 ---
