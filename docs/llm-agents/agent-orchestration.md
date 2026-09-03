@@ -1,232 +1,131 @@
 ---
-title: Agent Orchestration Frameworks
-category: tools
-tags: [llm-agents, orchestration, langgraph, crewai, autogen, workflow]
+title: "Agent Orchestration"
+description: "Coordinate model calls, tools, handoffs, approvals, retries, and evidence through explicit task state rather than a framework-specific agent loop."
+tags: [llm-agents, orchestration, workflows, multi-agent, state-machine, approvals, observability]
 ---
 
-# Agent Orchestration Frameworks
+# Agent Orchestration (September 2026)
 
-Frameworks that handle the boilerplate of agent execution: state management, tool routing, multi-agent coordination, human-in-the-loop, and persistence. Choosing the right one depends on complexity needs and control requirements.
+Version context: orchestration frameworks, SDKs, protocol versions, storage backends, and model tool semantics change quickly. Design the task state, authorization boundary, and terminal evidence first; select a framework only after those contracts are clear.
 
-## Framework Comparison
+Agent orchestration is the controlled execution of a task across model calls, deterministic code, tools, agents, people, and durable state. It is not a synonym for "let several agents chat." The orchestrator owns the task lifecycle and proves whether a requested effect happened.
 
-| Framework | Control Level | Best For | Learning Curve |
-|-----------|--------------|----------|----------------|
-| LangGraph | High (explicit graph) | Complex stateful agents | Medium |
-| CrewAI | Medium (role-based) | Team simulations | Low |
-| AutoGen | Medium (conversation) | Multi-agent chat | Low |
-| Semantic Kernel | High (.NET/Python) | Enterprise integration | Medium |
-| Haystack | Medium (pipeline) | RAG + agent hybrid | Medium |
-| Raw SDK | Full | Maximum flexibility | High |
+## Define the Durable Task Contract
 
-## LangGraph
-
-Graph-based agent orchestration. Nodes are functions, edges are transitions.
-
-```python
-from langgraph.graph import StateGraph, END
-from typing import TypedDict, Annotated
-import operator
-
-class AgentState(TypedDict):
-    messages: Annotated[list, operator.add]
-    plan: str
-    current_step: int
-    results: dict
-
-def planner(state: AgentState) -> AgentState:
-    plan = llm.invoke(f"Create plan for: {state['messages'][-1]}")
-    return {"plan": plan.content, "current_step": 0}
-
-def executor(state: AgentState) -> AgentState:
-    step = state["plan"].split("\n")[state["current_step"]]
-    result = execute_step(step, state["results"])
-    return {
-        "results": {**state["results"], f"step_{state['current_step']}": result},
-        "current_step": state["current_step"] + 1
-    }
-
-def should_continue(state: AgentState) -> str:
-    steps = state["plan"].split("\n")
-    if state["current_step"] >= len(steps):
-        return "respond"
-    return "execute"
-
-# Build graph
-graph = StateGraph(AgentState)
-graph.add_node("plan", planner)
-graph.add_node("execute", executor)
-graph.add_node("respond", responder)
-
-graph.set_entry_point("plan")
-graph.add_edge("plan", "execute")
-graph.add_conditional_edges("execute", should_continue, {
-    "execute": "execute",
-    "respond": "respond"
-})
-graph.add_edge("respond", END)
-
-app = graph.compile()
-result = app.invoke({"messages": ["Research quantum computing trends"]})
+```json
+{
+  "task_id": "publish-research-044",
+  "schema_version": "agent-task/v1",
+  "objective": "prepare a cited draft for review",
+  "input_refs": ["artifact:source-manifest-44"],
+  "owner": "editorial-platform",
+  "state": "PENDING",
+  "tool_policy_revision": "tools@9",
+  "approval_policy_revision": "review@4",
+  "idempotency_key": "publish-research-044:v1",
+  "attempt": 0
+}
 ```
 
-### LangGraph Checkpointing
+The task record is application-owned. It holds only references to controlled data and persists across worker restarts, browser disconnects, and agent handoffs.
 
-```python
-from langgraph.checkpoint.sqlite import SqliteSaver
+## Model States and Receipts Separately
 
-# Persistent state across sessions
-checkpointer = SqliteSaver.from_conn_string("checkpoints.db")
-app = graph.compile(checkpointer=checkpointer)
+Use non-terminal states to express work in progress and mutually exclusive terminal states for the task result. The legal transitions must include an approval decision, expiry, and cancellation:
 
-# Resume from checkpoint
-config = {"configurable": {"thread_id": "user-123"}}
-result = app.invoke({"messages": ["Continue where we left off"]}, config=config)
+```text
+PENDING -> RUNNING -> COMPLETED | FAILED
+RUNNING -> NEEDS_APPROVAL
+NEEDS_APPROVAL + bound approved receipt -> RUNNING
+NEEDS_APPROVAL + denied or expired receipt -> CANCELLED
+any non-terminal state -> CANCELLED
+
+verification status: PENDING | VERIFIED | REJECTED
 ```
 
-### Human-in-the-Loop with LangGraph
+Every transition has a receipt. A terminal receipt contains the output reference, validator result, external-effect receipt if any, retry classification, and configuration revisions. The task resumes from `NEEDS_APPROVAL` only when the approval receipt is bound to the exact task, effect, arguments digest, actor, scope, expiry, and idempotency key. Verification status is a review of immutable terminal evidence: `REJECTED` does not pretend that an already completed external effect never happened, and `VERIFIED` does not authorize a new effect.
 
-```python
-from langgraph.graph import StateGraph
-from langgraph.prebuilt import ToolNode
+## Separate Deterministic Control from Model Judgment
 
-# Interrupt before sensitive actions
-graph.add_node("tools", ToolNode(tools))
+Use deterministic code for:
 
-def route_after_agent(state):
-    last_message = state["messages"][-1]
-    if last_message.tool_calls:
-        tool_name = last_message.tool_calls[0]["name"]
-        if tool_name in SENSITIVE_TOOLS:
-            return "human_review"  # pause for approval
-    return "tools"
+- authorization, tenant scope, budgets, rate limits, and data classification;
+- schema parsing, business invariants, idempotency, and retries;
+- state transitions, timers, cancellation, and external-effect reconciliation;
+- approval routing and audit records.
 
-# Compile with interrupt
-app = graph.compile(interrupt_before=["human_review"])
+Use a model where interpretation, planning alternatives, summarization, or bounded selection is actually required. Frameworks such as LangGraph support workflows that combine deterministic and model-driven steps, durable execution, and human-in-the-loop points. [LangGraph overview](https://docs.langchain.com/oss/python/langgraph/overview)
+
+## Roles Are Not Permissions
+
+A router may choose a reviewed configuration. A researcher may create a claim set. An executor may request a tool. A reviewer may issue a verdict. None of those labels grants access to data or external effects.
+
+For each role, define:
+
+| Role | May do | Must not decide alone | Required receipt |
+|---|---|---|---|
+| Router | choose an approved path | access beyond task scope | route and configuration revision |
+| Worker | perform bounded model/tool work | publish or deploy by default | output, tool, and terminal receipts |
+| Reviewer | evaluate explicit criteria | alter candidate evidence | verdict and findings reference |
+| Approver | authorize a defined effect | rewrite the task implicitly | identity, scope, and decision |
+
+This prevents a handoff from becoming an authority escalation.
+
+## Tools, Handoffs, and Protocol Boundaries
+
+A model tool call invokes a capability exposed to the current agent. A handoff delegates a bounded task to another worker or specialist. Both need a schema, identity, deadline, and durable result record.
+
+MCP describes a host-client-server protocol for agent-to-tool context exchange, while A2A covers collaboration between independent agents. Use neither protocol as a replacement for application authorization or task receipts. [MCP architecture](https://modelcontextprotocol.io/specification/latest/architecture) and [A2A Protocol](https://a2a-protocol.org/latest/)
+
+The OpenAI Agents SDK is one current example of an agent runtime with tools, handoffs, guardrails, human-in-the-loop, and tracing. Its primitives can inform a design but should not become a provider-neutral task schema. [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/)
+
+## Retry, Cancellation, and Side Effects
+
+Retry only an action proven safe to retry. Create an idempotency key before an effectful tool call and preserve it through queue, agent, and tool boundaries.
+
+```text
+timeout or lost response
+  -> reconcile external receipt
+  -> retry only if absence of effect is established
+  -> otherwise mark for review
 ```
 
-## CrewAI
+Cancellation is a state transition with a reconciliation step, not merely a request to stop generating text. A cancelled task must say whether a tool call was not started, was stopped, or completed before cancellation arrived.
 
-Role-based multi-agent with built-in task delegation:
+## Select a Runtime by Contract
 
-```python
-from crewai import Agent, Task, Crew, Process
+| Requirement | Capability to require |
+|---|---|
+| Long-running work | durable state, resume, timeout, and reconciliation |
+| Sensitive action | approval checkpoint, policy enforcement, idempotency |
+| Multiple specialists | typed handoff, result schema, ownership and deadline |
+| Concurrent workers | queue lease, deduplication, backpressure, dead-letter path |
+| Auditability | trace, state-transition receipts, redaction, evaluator version |
+| Portability | internal task contract isolated from framework SDK objects |
 
-researcher = Agent(
-    role="Senior Research Analyst",
-    goal="Find comprehensive data on the topic",
-    backstory="Expert researcher with 20 years experience",
-    tools=[web_search, arxiv_search],
-    llm="claude-sonnet",
-    max_iter=5,
-    verbose=True,
-)
-
-writer = Agent(
-    role="Technical Writer",
-    goal="Create clear, accurate technical content",
-    backstory="Award-winning technical writer",
-    tools=[write_document],
-    llm="claude-sonnet",
-)
-
-research_task = Task(
-    description="Research the latest advances in {topic}",
-    expected_output="Comprehensive research summary with sources",
-    agent=researcher,
-)
-
-write_task = Task(
-    description="Write a technical report based on the research",
-    expected_output="Well-structured technical report, 2000 words",
-    agent=writer,
-    context=[research_task],  # depends on research
-)
-
-crew = Crew(
-    agents=[researcher, writer],
-    tasks=[research_task, write_task],
-    process=Process.sequential,
-    verbose=True,
-)
-
-result = crew.kickoff(inputs={"topic": "graph neural networks"})
-```
-
-## AutoGen
-
-Conversation-based multi-agent:
-
-```python
-from autogen import AssistantAgent, UserProxyAgent
-
-assistant = AssistantAgent(
-    name="assistant",
-    llm_config={"model": "claude-sonnet"},
-    system_message="You are a helpful coding assistant.",
-)
-
-user_proxy = UserProxyAgent(
-    name="user",
-    human_input_mode="TERMINATE",
-    code_execution_config={"work_dir": "workspace"},
-    max_consecutive_auto_reply=10,
-)
-
-# Two-agent conversation
-user_proxy.initiate_chat(
-    assistant,
-    message="Write a Python script that analyzes CSV data and generates a report."
-)
-```
-
-## Building Custom Orchestration
-
-When frameworks add more complexity than value:
-
-```python
-class SimpleOrchestrator:
-    def __init__(self, agents: dict, workflow: list):
-        self.agents = agents
-        self.workflow = workflow
-        self.state = {}
-
-    async def run(self, initial_input):
-        self.state["input"] = initial_input
-
-        for step in self.workflow:
-            agent = self.agents[step["agent"]]
-            context = self.build_context(step.get("context_keys", []))
-
-            result = await agent.run(context)
-            self.state[step["output_key"]] = result
-
-            # Quality gate
-            if step.get("validator"):
-                if not step["validator"](result):
-                    return {"status": "failed", "step": step["agent"]}
-
-        return {"status": "success", "output": self.state}
-
-# Usage
-orchestrator = SimpleOrchestrator(
-    agents={"researcher": ResearchAgent(), "writer": WriterAgent()},
-    workflow=[
-        {"agent": "researcher", "context_keys": ["input"], "output_key": "research"},
-        {"agent": "writer", "context_keys": ["input", "research"], "output_key": "report",
-         "validator": lambda r: len(r) > 500}]
-)
-```
+A small application-owned state machine is often sufficient. Add a graph runtime, agent SDK, or multi-agent protocol only when its capability closes a measured requirement.
 
 ## Gotchas
 
-- **Framework lock-in**: deep integration with LangGraph or CrewAI makes switching expensive. Keep core agent logic framework-agnostic - implement business logic as plain functions, use framework only for orchestration plumbing. Test agents independently of the framework
-- **Agent chatter burns tokens**: in multi-agent setups (especially AutoGen), agents can have long back-and-forth conversations that waste tokens without progress. Set strict iteration limits and implement convergence detection - if no new information in last 2 exchanges, force termination
-- **State management complexity compounds**: LangGraph state grows with every node. Large state objects slow down checkpointing and increase memory usage. Be selective about what goes into state - store references (file paths, IDs) instead of full content. Prune completed step results
+- **A conversation is not orchestration state.** Chat history does not prove who owns a task or whether an effect completed. **Fix:** persist a task record and terminal receipts.
+- **Handoffs can multiply authority.** A delegated instruction may expose tools or data the sender did not control. **Fix:** authorize independently at the receiver and at every tool boundary.
+- **Retries can duplicate real-world actions.** A timeout does not prove an API call failed. **Fix:** reconcile by idempotency key before retrying.
+- **Human review after an effect is too late.** A reviewer cannot reverse an already published or paid action. **Fix:** place approval before the irreversible boundary.
+- **Framework state is not automatically portable.** SDK object layouts and persistence semantics change. **Fix:** store a small application-owned contract outside the framework.
+- **Throughput is not completion.** A busy queue can hide failed tasks without terminal evidence. **Fix:** alert on missing or stale terminal receipts.
+
+## Sources
+
+- [LangGraph overview](https://docs.langchain.com/oss/python/langgraph/overview)
+- [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/)
+- [Model Context Protocol architecture](https://modelcontextprotocol.io/specification/latest/architecture)
+- [A2A Protocol](https://a2a-protocol.org/latest/)
 
 ## See Also
 
-- [[langgraph]]
-- [[multi-agent-systems]]
+- [[multi-agent-messaging]]
+- [[multi-session-coordination]]
 - [[agent-design-patterns]]
-- [[agent-architectures]]
+- [[agent-evaluation]]
+- [[agent-observability-dashboards]]
+- [[agent-security]]
