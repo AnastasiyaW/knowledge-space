@@ -1,81 +1,106 @@
-# Oh My ClaudeCode (OMC) Architecture
+---
+title: "Oh My ClaudeCode (OMC) Integration"
+description: "How to adopt the fast-moving OMC plugin without mistaking third-party commands, model routing, or generated state for a stable security or release boundary."
+tags: [claude-code, plugins, orchestration, omc, supply-chain, worktrees]
+---
 
-Oh My ClaudeCode (OMC) is an agentic framework extending Claude Code (v4.13.2) through a layered system of specialized agents, workflow skills, and lifecycle hooks. It focuses on high-precision planning and autonomous execution using multi-model dispatch.
+# Oh My ClaudeCode (OMC) Integration
 
-## Specialist Agent Layer
-The framework employs 19 specialist agents defined via YAML frontmatter and XML-structured system prompts. Agents are categorized by their operational scope:
+**Scope checked: 2026-09-04.** Oh My ClaudeCode (OMC) is a third-party multi-agent orchestration layer for Claude Code. Its repository currently presents a Claude Code plugin installation path and a separately published terminal package, but its commands, compatibility behavior, and internal files evolve quickly. Treat the repository and installed revision as the authority for the version you are running; do not rely on fixed agent counts, model names, token prices, or historical command aliases. [OMC repository](https://github.com/Yeachan-Heo/oh-my-claudecode) [Claude Code plugins](https://code.claude.com/docs/en/plugins)
 
-- **Strategic Agents:** `architect` (strategic advisor), `planner` (structured plan creation), `critic` (evaluation).
-- **Quality & Security:** `code-reviewer` (severity-gated reviews), `security-reviewer` (vulnerability detection), `verifier` (post-execution validation).
-- **Execution Agents:** `executor` (general tasks), `designer` (UI/UX), `git-master` (version control).
-- **Exploration & Research:** `explore` (fast codebase mapping), `scientist` (hypothesis testing), `tracer` (lightweight execution tracing).
+## Choose the Installation Surface
 
-### Agent Definition Format
-Agents utilize a standardized XML body to enforce constraints and output formats:
-```yaml
-name: code-reviewer
-description: Senior quality engineer
-model: claude-3-5-opus
-level: senior
-disallowedTools: [run_shell_command]
-```
-```xml
-<Role>Expert Code Reviewer</Role>
-<Success_Criteria>Zero P0 bugs in merged code</Success_Criteria>
-<Rules>
-  1. Never approve without evidence of test execution.
-  2. Flag complexity increases as warnings.
-</Rules>
-<Output_Format>JSON-structured review summary</Output_Format>
+The OMC repository documents two different surfaces:
+
+| Surface | Use for | Boundary |
+|---|---|---|
+| Claude Code plugin | in-session skills, hooks, agents, and slash commands | subject to Claude Code plugin policy |
+| terminal package | setup, update, diagnostics, and documented CLI workflows | local executable with its own dependencies |
+
+The documented plugin setup is:
+
+```text
+/plugin marketplace add https://github.com/Yeachan-Heo/oh-my-claudecode
+/plugin install oh-my-claudecode
 ```
 
-## Planning Paradigms
-OMC implements four distinct planning modes to handle varying request clarity:
+The repository also documents the separately named terminal package. Install only through its current documentation and inspect the resulting version before treating any CLI example as runnable. In particular, the project distinguishes in-session skills from terminal commands; do not invent an OMC CLI subcommand because a similarly named slash command exists. [OMC README](https://github.com/Yeachan-Heo/oh-my-claudecode)
 
-- **Interview Mode:** Socratic questioning triggered when ambiguity scoring exceeds 20%. Each question targets specific missing technical dimensions.
-- **Consensus (RALPLAN-DR):** A multi-agent loop involving `Planner` -> `Architect` -> `Critic`. It runs up to 5 rounds to produce an Architecture Decision Record (ADR).
-- **Direct Mode:** Immediate plan generation for well-defined, low-ambiguity tasks.
-- **Review Mode:** External evaluation of existing plans by the `Critic` agent to identify edge cases before execution starts.
+## Treat OMC as an Integration, Not a Trust Boundary
 
-## PRD-Driven Persistence
-The `Ralph` pattern ensures execution continuity across session interruptions by utilizing a `prd.json` state file.
+OMC can coordinate planning, review, and multiple local provider CLIs, but it does not replace:
 
-- **Acceptance Criteria:** Every user story in the PRD is linked to specific testable criteria.
-- **Evidence-Based Progress:** Tasks are marked `passed: true` only when automated verification provides empirical evidence (logs, test passes).
-- **State Storage:** All plans and state transitions are persisted to `.omc/plans/`, allowing the pipeline to resume from the last verified story.
+- repository instructions and deterministic validation;
+- code review and release approval;
+- tenant, credential, or production authorization;
+- Git history, worktree isolation, and external idempotency;
+- a supply-chain review of plugins and local dependencies.
 
-### Persistence Schema
-```json
-{
-  "project": "core-engine",
-  "stories": [
-    {
-      "id": "ST-001",
-      "description": "Implement buffer rotation",
-      "criteria": ["No data loss on overflow", "O(1) insertion"],
-      "status": "verified",
-      "evidence": "tests/test_buffer.py:L45"
-    }
-  ]
-}
-```
+Its generated artifacts are useful operational evidence only when they identify the input revision, command, output, and owner. A plan, consensus loop, or agent label does not prove that a build, migration, or external side effect succeeded.
 
-## Evolutionary Self-Improvement
-The framework includes a tournament-based optimization cycle for its own logic and benchmarks.
+## Safe Adoption Pattern
 
-1. **Research:** Agents identify optimization targets in the current workflow.
-2. **Execution:** Alternative code patterns are generated and benchmarked.
-3. **Tournament Selection:** Successful patterns are compared in a "tournament." Only those outperforming the baseline are merged.
-4. **Benchmark Integrity:** Evaluation relies on sealed benchmark files that are protected from agent modification to prevent self-referential score inflation.
+Before enabling the plugin in a work repository:
+
+1. pin and record the repository or package revision being evaluated;
+2. inspect the plugin manifest, declared agents, skills, hooks, MCP configuration, and setup script;
+3. identify every external CLI or provider the workflow may invoke;
+4. test in an isolated worktree with non-production credentials and data;
+5. run the repository's own checks after the plugin changes files;
+6. retain a rollback path and remove the integration through its supported mechanism if it fails review.
+
+Claude Code plugins package skills, agents, hooks, MCP servers, and other components. The installation source therefore deserves the same scrutiny as any other executable dependency. [Plugins reference](https://code.claude.com/docs/en/plugins-reference)
+
+## Team and Provider Routing
+
+The current OMC repository describes Team as its canonical orchestration surface and documents migration away from legacy swarm terminology. That is a repository-version fact, not a general multi-agent standard. Verify the installed documentation before scripting a command or training an operator on a shortcut. [OMC README](https://github.com/Yeachan-Heo/oh-my-claudecode)
+
+When a workflow routes a task to another local or remote provider:
+
+1. classify the input before forwarding it;
+2. keep credentials, customer content, private source, and secrets out of third-party prompts unless an approved data path exists;
+3. record which provider, model, and CLI revision actually ran;
+4. treat returned text as untrusted until the repository's checks and human or independent review validate it;
+5. avoid automatic provider fallback for mutations unless the fallback contract is explicit.
+
+The useful boundary is not “multi-model”; it is a reviewed transfer contract with an observable result.
+
+## Worktrees and Durable State
+
+Use Git worktrees or equivalent isolated checkouts for concurrent writers. A coordinator should maintain one task record containing ownership, target revision, expected checks, external reservation/idempotency key, and a terminal receipt. Never let two workers modify the same file set merely because an orchestration tool calls them a team.
+
+Generated state may be an implementation detail of the installed OMC version. Keep project decisions, source changes, release evidence, and handoff records in repository-owned paths with reviewable formats rather than relying on a plugin cache as the only source of truth.
+
+## Upgrade Procedure
+
+1. read the upstream release notes and current installation instructions;
+2. record the existing plugin/package revision and configuration;
+3. update in a disposable or isolated repository first;
+4. run the documented diagnostic command if the project provides one;
+5. compare installed components and configuration changes;
+6. run representative non-production tasks and the repository's validation;
+7. promote only with a rollback revision and receipt.
+
+This catches removed aliases, changed tool access, generated-state migrations, and behavior changes before they affect release work.
 
 ## Gotchas
-- **State Sprawl:** The framework generates significant metadata across 8+ directories; periodic manual cleanup of `.omc/` is required as no unified garbage collection exists.
-- **Destructive Command Risk:** The autonomous autopilot lacks a hard guardrail for destructive shell commands; it relies on the pre-tool enforcer which can be bypassed in high-autonomy modes.
-- **Token Inflation:** A single RALPLAN-DR consensus loop involving Opus can consume $50-$100 in API tokens for complex architectural decisions without warning.
+
+- **A historical OMC command still appears in a blog post.** It may have been renamed or removed. **Fix:** use the current repository documentation for the installed revision.
+- **A plugin is installed directly into a production repository.** Hooks or setup can alter behavior before review. **Fix:** inspect and test in an isolated worktree first.
+- **A planner produces a detailed artifact.** Detail is not verification. **Fix:** bind each task to the repository's real tests, builds, and release receipts.
+- **A routed provider receives private source by default.** That can violate the data boundary. **Fix:** classify and minimize input before any transfer.
+- **Parallel workers edit the same files.** An orchestration label does not serialize writes. **Fix:** assign exclusive file ownership or use separate worktrees and integrate through review.
+
+## Sources
+
+- [Oh My ClaudeCode repository and current README](https://github.com/Yeachan-Heo/oh-my-claudecode)
+- [Claude Code plugins](https://code.claude.com/docs/en/plugins)
+- [Claude Code plugins reference](https://code.claude.com/docs/en/plugins-reference)
+- [Claude Code subagents](https://code.claude.com/docs/en/subagents)
 
 ## See Also
-- [[agent-design-patterns]]
-- [[claude-code-ecosystem]]
-- [[managed-agents]]
-- [[agent-orchestration]]
 
+- [[claude-code-harness-patterns]]
+- [[adaptive-patterns-for-autonomous-agents]]
+- [[multi-session-coordination]]
+- [[agent-orchestration]]
