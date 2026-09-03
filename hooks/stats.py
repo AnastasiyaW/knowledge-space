@@ -31,6 +31,8 @@ DOMAIN_META = {
     "nodejs":           {"name": "Node.js",            "group": "code"},
     "ios-mobile":       {"name": "iOS & Mobile",       "group": "code"},
     "image-generation": {"name": "Image Generation",   "group": "ai"},
+    "projects":         {"name": "Projects",           "group": "ai"},
+    "organizations":    {"name": "Organizations",      "group": "ai"},
     "cpp":              {"name": "C++",                 "group": "code"},
     "writing":          {"name": "Natural Language & Writing",            "group": "other"},
     "llm-memory":       {"name": "LLM Memory",        "group": "ai"},
