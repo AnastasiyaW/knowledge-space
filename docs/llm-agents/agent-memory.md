@@ -1,123 +1,89 @@
 ---
-title: Agent Memory
+title: "Agent Memory and State (September 2026)"
 category: concepts
-tags: [llm-agents, memory, context-management, conversation-history, human-in-the-loop]
+tags: [llm-agents, memory, state, context-management, persistence, authorization]
 ---
 
-# Agent Memory
+# Agent Memory and State (September 2026)
 
-Agent memory systems manage context across interactions - from short-term conversation buffers to persistent long-term knowledge stores. Since LLMs are stateless (each API call is independent), memory must be explicitly managed.
+Reviewed 2026-09-03. "Memory" describes several different mechanisms. Keep execution state, user-specific memory, organizational knowledge, and authoritative source material distinct: they have different owners, retention rules, access scopes, and failure modes.
 
-## Key Facts
-- LLMs are stateless - the client must send full conversation history with each request
-- Token usage grows with conversation length - must be managed (truncation, summarization, windowing)
-- System prompt + retrieved context + history + new message must all fit in context window
-- Long-term memory persists across sessions via vector stores, databases, or file systems
+## Four Things Often Called Memory
 
-## Memory Types
+| Type | Scope | Typical content | Control needed |
+|---|---|---|---|
+| Run state | One workflow execution | Steps, tool receipts, pending approval | Checkpointing and idempotent resume |
+| Thread context | One conversation or task | Recent messages and selected artifacts | Token budget and compaction policy |
+| Long-term memory | User, agent, or organization namespace | Preferences, facts, prior outcomes | Write policy, provenance, isolation, expiry |
+| Knowledge corpus | Many users/tasks | Versioned source documents | Authority, citations, retrieval, publication policy |
 
-### Short-Term (Conversation Buffer)
-Current dialogue history, cleared when session ends.
+A chat transcript is not a database, and a vector store is not permission to treat retrieved text as a remembered fact.
 
-```python
-from langchain.memory import ConversationBufferMemory
-# Stores all messages (grows unbounded)
+## Memory Record Contract
 
-from langchain.memory import ConversationBufferWindowMemory
-# Keeps last K exchanges (sliding window)
-
-from langchain.memory import ConversationSummaryMemory
-# Summarizes old messages, keeps recent ones verbatim
+```json
+{
+  "memory_id": "user-193:preference-7",
+  "namespace": ["user", "193"],
+  "kind": "preference",
+  "value": "Prefers concise weekly summaries",
+  "source": "explicit-user-statement",
+  "written_by": "memory-policy-v2",
+  "created_at": "2026-09-03T12:00:00Z",
+  "expires_at": null,
+  "confidence": "confirmed",
+  "access_policy": "user-193-only"
+}
 ```
 
-### Long-Term Memory
-Persists across sessions. Stored in vector databases, traditional databases, or file systems. Enables remembering user preferences, past interactions, learned facts.
+The record must say why it was written and who may read it. Do not let a model convert arbitrary untrusted text into durable policy or cross-user memory without a deterministic rule and review boundary.
 
-### Episodic Memory
-Specific interaction records: "Last time user asked about X, the answer was Y." Useful for personalization and avoiding repeated work.
+## Read and Write Path
 
-### Semantic Memory
-General accumulated knowledge. Domain-specific facts, company information. Usually implemented as a RAG knowledge base.
-
-### Working Memory (Scratchpad)
-Agent's intermediate reasoning during task execution. Accumulated thoughts, actions, observations in the ReAct loop. Grows with each step and must be managed.
-
-## Memory Management Strategies
-
-| Strategy | Mechanism | Tradeoff |
-|----------|-----------|----------|
-| **Truncation** | Drop oldest messages | Simple, but loses early context |
-| **Summarization** | Periodically summarize older conversation | Preserves key info, costs tokens to summarize |
-| **Selective retention** | Keep important messages, drop filler | Best quality, hardest to implement |
-| **External storage** | Write to DB, retrieve relevant parts on demand | Unlimited history, but adds retrieval latency |
-| **Sliding window** | Keep last K exchanges | Predictable cost, loses older context |
-
-## Human-in-the-Loop (HITL)
-
-### Why HITL
-- Agent actions have real-world consequences (sending emails, modifying data)
-- LLMs make mistakes - human oversight catches errors
-- Compliance/regulatory requirements may mandate human approval
-- Builds trust during agent deployment
-
-### HITL Patterns
-
-**Approval gate**: agent proposes action, waits for human approval:
-```python
-from langgraph.graph import StateGraph
-
-def human_review_node(state):
-    action = state["proposed_action"]
-    approval = get_human_approval(action)  # UI, webhook, etc.
-    state["approved"] = approval
-    return state
-
-graph.add_node("propose_action", agent_propose)
-graph.add_node("human_review", human_review_node)
-graph.add_node("execute_action", agent_execute)
-
-graph.add_conditional_edges(
-    "human_review",
-    lambda s: "execute" if s["approved"] else "revise",
-    {"execute": "execute_action", "revise": "propose_action"}
-)
+```text
+incoming request
+    -> authenticate and establish namespace
+    -> retrieve only scoped, unexpired records
+    -> select a bounded context slice
+    -> run the workflow with checkpointed state
+    -> propose memory candidates
+    -> validate/provenance-check/approve writes
 ```
 
-**Escalation**: agent handles simple cases autonomously, escalates complex/uncertain cases to human.
+LangGraph distinguishes thread-scoped checkpointed state from cross-thread stores. Its documentation treats short-term and long-term memory as separate concepts; use that distinction even if another framework has different API names. [Memory overview](https://docs.langchain.com/oss/python/concepts/memory) [LangGraph persistence](https://docs.langchain.com/oss/python/langgraph/persistence)
 
-**Copilot pattern**: automate boring/repetitive parts, keep human for judgment. Agent handles 70-80% of work, human reviews in seconds. 3x productivity gain typical.
+## Context Compaction Is a Policy
 
-**Feedback loop**: human corrections after agent acts improve future performance.
+When a conversation grows, choose what can be summarized, dropped, re-retrieved, or preserved as a structured state field. Preserve open approvals, tool receipts, user-visible commitments, and references to authoritative sources. A free-form summary should not become the only record of a material action.
 
-## Conversation History Management
+## Evaluation
 
-```python
-# Stateless API - must send full history each time
-messages = [
-    {"role": "system", "content": system_prompt},
-    {"role": "user", "content": "First question"},
-    {"role": "assistant", "content": "First answer"},
-    {"role": "user", "content": "Follow-up question"}
-]
-response = client.chat.completions.create(model="gpt-4", messages=messages)
-```
+Test the memory system with separate scenarios for:
 
-Track token count and trim when approaching the limit. Keep system prompt and recent messages, summarize or drop older ones.
+1. correct recall within one user namespace;
+2. no retrieval across users, tenants, or revoked permissions;
+3. expiry, correction, and deletion of an obsolete record;
+4. resistance to memory-write prompt injection;
+5. recovery from interruption at a checkpoint.
+
+Measure both helpful recall and harmful recall. A system that remembers more is not necessarily better.
 
 ## Gotchas
-- Conversation history grows unbounded without management - eventually exceeds context window
-- Summary memory loses nuance - critical details may be dropped
-- External memory (vector store) adds retrieval latency to every query
-- Human-in-the-loop adds latency but prevents costly mistakes
-- Never assume the agent "remembers" from a previous session without explicit long-term memory
-- Memory retrieval (via embeddings) has the same cosine similarity failures as RAG
+
+- **Issue: Writing a preference because an untrusted webpage said it.** External text can steer durable behavior. **Fix:** restrict writes to explicit user statements or validated application events with provenance.
+- **Issue: Sharing an agent-wide namespace by default.** One user's data can influence another workflow. **Fix:** make scope explicit and default to the narrowest namespace.
+- **Issue: Summarizing away a pending approval or receipt.** The workflow loses its recovery boundary. **Fix:** store these as typed state fields, not only prose.
+- **Issue: Treating old memory as a source of truth.** Preferences and facts can change. **Fix:** attach time, provenance, confidence, and an expiry/review policy.
 
 ## See Also
-- [[agent-fundamentals]] - Where memory fits in agent architecture
-- [[agent-design-patterns]] - Scratchpad management in agent loops
-- [[rag-pipeline]] - Long-term memory via retrieval
-- [[vector-databases]] - Storage for persistent memory
-- [[tokenization]] - Context window constraints on memory
-- [[memory-architectures]] - Hierarchical, flat, graph, and hybrid memory architectures
-- [[session-persistence]] - Preserving knowledge between sessions
-- [[verbatim-vs-extraction]] - Raw text vs extracted facts for memory storage
+
+- [[context-engineering]]
+- [[agent-architectures]]
+- [[production-patterns]]
+- [[tokenization]]
+
+## Sources
+
+- [LangChain memory overview](https://docs.langchain.com/oss/python/concepts/memory)
+- [LangGraph persistence](https://docs.langchain.com/oss/python/langgraph/persistence)
+- [LangGraph add memory](https://docs.langchain.com/oss/python/langgraph/add-memory)

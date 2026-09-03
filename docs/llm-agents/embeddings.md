@@ -1,146 +1,85 @@
 ---
-title: Embeddings
+title: "Embeddings for Retrieval Systems (September 2026)"
 category: concepts
-tags: [llm-agents, embeddings, vectors, semantic-search, similarity, cosine]
+tags: [llm-agents, embeddings, vectors, retrieval, semantic-search, evaluation]
 ---
 
-# Embeddings
+# Embeddings for Retrieval Systems (September 2026)
 
-Embeddings convert text into high-dimensional numeric vectors where proximity represents semantic similarity. They are the foundation of vector search, RAG systems, and semantic understanding in LLM applications.
+Reviewed 2026-09-03. An embedding model maps a defined input representation into a numeric vector. Similar vectors can support retrieval, clustering, recommendation, and classification, but an embedding is not evidence by itself: the system must retain the original source and its revision.
 
-## Key Facts
-- Embedding models produce fixed-size vectors (e.g., 1536 dimensions for OpenAI text-embedding-3-large)
-- Points close in vector space are semantically similar
-- Embeddings capture meaning, not exact words - "car" and "automobile" are close, "bank" (financial) and "bank" (river) are far
-- Modern models classify text on ~1000+ abstract features - individual dimensions don't have interpretable meaning
+## Treat an Embedding as a Versioned Artifact
 
-## Similarity Metrics
+| Field | Record with every vector | Failure prevented |
+|---|---|---|
+| Source identity | Document ID, stable locator, and content revision | Returning text that no longer exists |
+| Representation | Extracted fields, normalization, language policy | Comparing incompatible content |
+| Chunk contract | Splitter version and boundary metadata | Losing source context or citations |
+| Model | Provider/model/artifact ID and output dimension | Mixing incompatible vector spaces |
+| Index | Store, distance metric, and index revision | Non-reproducible retrieval changes |
 
-**Cosine similarity** is the standard metric - measures the angle between vectors:
+Vectors produced by different models—or by a changed preprocessing contract—should not be blended in a single nearest-neighbor result set unless that compatibility has been measured deliberately.
 
-```python
-from numpy import dot
-from numpy.linalg import norm
+## Retrieval Contract
 
-def cosine_similarity(a, b):
-    return dot(a, b) / (norm(a) * norm(b))
-# Range: -1 to 1 (1 = identical direction)
+```text
+source revision
+    -> parse and normalize under a documented policy
+    -> split into citation-preserving units
+    -> embed and attach metadata
+    -> index as an immutable generation
+    -> retrieve candidates for a query
+    -> validate source access and pass evidence to the answer step
 ```
 
-Other metrics: Euclidean distance (L2), dot product (when vectors are normalized, equals cosine similarity).
+The answer layer must receive a stable source locator, not only a vector-store record ID. This lets a reader inspect why a result was shown and lets the pipeline expire or replace stale evidence.
 
-## Embedding Models
+## Minimal Record Shape
 
-| Model | Dimensions | Provider | Notes |
-|-------|-----------|----------|-------|
-| text-embedding-3-large | 1536/3072 | OpenAI | Adjustable dimensions via `dimensions` param |
-| text-embedding-3-small | 512/1536 | OpenAI | Cheaper, lower quality |
-| BGE-large | 1024 | BAAI | Open-source, strong performance |
-| E5-large | 1024 | Microsoft | Good for retrieval tasks |
-| Cohere embed-v3 | 1024 | Cohere | Multilingual, search-optimized |
-| Ollama embeddings | Varies | Local | Use same Ollama server, free, private |
-
-## Patterns
-
-### Generate Embeddings (OpenAI)
-```python
-from openai import OpenAI
-client = OpenAI()
-
-response = client.embeddings.create(
-    model="text-embedding-3-large",
-    input="What is machine learning?"
-)
-vector = response.data[0].embedding  # list of floats
+```json
+{
+  "vector_id": "handbook:2026-09-03:sec-14",
+  "source_revision": "sha256:...",
+  "embedding_model": "provider/model-id",
+  "preprocessing_revision": "normalize-v3",
+  "chunking_revision": "section-aware-v2",
+  "metadata": {
+    "title": "Editorial policy",
+    "locator": "policy.md#citations",
+    "access_scope": "internal"
+  }
+}
 ```
 
-### Generate Embeddings (LangChain)
-```python
-from langchain_openai import OpenAIEmbeddings
+## Quality Evaluation
 
-embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
-vector = embeddings.embed_query("What is machine learning?")
-doc_vectors = embeddings.embed_documents(["doc1", "doc2", "doc3"])
-```
+Evaluate retrieval independently from generation. A useful fixture contains a query, the allowed source identifiers, forbidden/stale sources, and the expected access scope. Measure recall and ranking on that fixture, then inspect failure categories such as wrong document, wrong section, obsolete revision, language mismatch, and authorization leakage.
 
-### Test-Time Reranking
-After initial embedding retrieval, use a cross-encoder to rerank by fine-grained relevance:
+Do not choose an embedding model solely from a public leaderboard. A useful retrieval stack also depends on chunk boundaries, query rewriting, metadata filters, distance metric, index configuration, and the real corpus.
 
-```python
-from sentence_transformers import CrossEncoder
+## Operating Changes Safely
 
-cross = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
-pairs = [(query, candidate) for candidate in candidates]
-scores = cross.predict(pairs)
-best_idx = int(scores.argmax())
-```
-
-### Self-Consistency (Best-of-N)
-Sample N answers, pick most frequent - embeddings can measure answer similarity for clustering:
-
-```python
-import collections
-def majority_vote(candidates):
-    return collections.Counter(candidates).most_common(1)[0]
-```
-
-## Visualizing Embeddings with t-SNE
-
-Since embeddings have 1000+ dimensions, use dimensionality reduction to project them to 2D or 3D for visual inspection:
-
-```python
-from sklearn.manifold import TSNE
-import plotly.graph_objects as go
-import numpy as np
-
-# Get all embeddings from vector store
-collection = vectorstore._collection
-result = collection.get(include=["embeddings", "documents", "metadatas"])
-vectors = np.array(result["embeddings"])
-
-# Project to 2D
-tsne = TSNE(n_components=2, random_state=42)
-reduced = tsne.fit_transform(vectors)
-
-# Color by document type
-colors = [metadata.get("source_type", "unknown") for metadata in result["metadatas"]]
-color_map = {"employee": "green", "contract": "red", "product": "blue", "company": "gold"}
-
-fig = go.Figure(data=go.Scatter(
-    x=reduced[:, 0], y=reduced[:, 1],
-    mode="markers",
-    marker=dict(color=[color_map.get(c, "gray") for c in colors]),
-    text=[doc[:100] for doc in result["documents"]],  # hover text
-    hoverinfo="text"
-))
-fig.show()
-```
-
-**What you observe:** Documents cluster by semantic similarity - employee records group together, product descriptions cluster separately, contract terms sit near product features (shared vocabulary). The embedding model was never told document types - it inferred semantic structure purely from content.
-
-**3D projection** (`n_components=3`) gives rotatable views but is often less clear than 2D. Use `go.Scatter3d` with the same pattern.
-
-**Practical use:** Embedding visualization reveals:
-- Whether chunks from different sources are semantically separated (good for retrieval precision)
-- Outlier documents that may be mislabeled or irrelevant
-- Cross-topic overlap zones where retrieval might return unexpected results
-
-## Known Issues
-
-- **Non-determinism**: OpenAI embeddings produce slightly different vectors across API calls for the same text. Small absolute differences but breaks deterministic unit tests.
-- **Cosine similarity misses**: can fail to find obviously present text. String/keyword match succeeds where embedding search falls below typical 0.6 threshold.
-- **Semantic vs lexical confusion**: "risk of liquidity" may match "liquidity amount" even though they mean different things.
-- **Embedding model must match**: query and documents must use the same embedding model. Mixing models produces meaningless similarity scores.
+1. Build a new vector generation beside the active one.
+2. Run the retrieval evaluation against both generations and compare failures.
+3. Validate document permissions and citations in the answer path.
+4. Switch the read alias atomically only after the candidate generation is accepted.
+5. Retain enough metadata to roll back to the prior generation and investigate drift.
 
 ## Gotchas
-- Always use the same embedding model for indexing and querying - mixing models gives garbage results
-- Embedding quality degrades for very short texts (1-2 words) and very long texts (beyond model's max input)
-- Multilingual embeddings exist but cross-lingual similarity is weaker than same-language
-- Embedding API calls add latency and cost to every query - consider caching for repeated queries
-- Dimension reduction (e.g., text-embedding-3-large with fewer dimensions) trades quality for speed/cost
+
+- **Issue: Re-embedding documents in place.** Queries can see a mixed space while a job is incomplete. **Fix:** build a separate generation and atomically switch the reader.
+- **Issue: Using only raw chunk text as the retrieval result.** Citations and access policy disappear. **Fix:** keep source revision, locator, and authorization metadata with every vector.
+- **Issue: Treating semantic similarity as factual support.** A nearby passage can be outdated or contradict the question. **Fix:** validate evidence revision and show the source to the answer/evaluation layer.
+- **Issue: Comparing embedding scores across systems.** Scores depend on model, normalization, and metric. **Fix:** use rankings and an evaluation set inside one explicitly versioned system.
 
 ## See Also
-- [[vector-databases]] - Storage and search for embedding vectors
-- [[rag-pipeline]] - How embeddings power retrieval-augmented generation
-- [[tokenization]] - Text to tokens before embedding
-- [[chunking-strategies]] - Optimal text sizes for embedding
+
+- [[rag-pipeline]]
+- [[chunking-strategies]]
+- [[tokenization]]
+- [[vector-databases]]
+
+## Sources
+
+- [OpenAI vector embeddings guide](https://developers.openai.com/api/docs/guides/embeddings)
+- [LangChain retrieval overview](https://docs.langchain.com/oss/python/langchain/retrieval)

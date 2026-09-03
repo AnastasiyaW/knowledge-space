@@ -1,147 +1,84 @@
 ---
-title: Model Optimization
+title: "Model Optimization for Inference and Adaptation (September 2026)"
 category: techniques
-tags: [llm-agents, quantization, distillation, pruning, inference, optimization]
+tags: [llm-agents, quantization, peft, lora, inference, evaluation]
 ---
 
-# Model Optimization
+# Model Optimization for Inference and Adaptation (September 2026)
 
-Three complementary techniques for reducing model size and inference cost: distillation (train a smaller model), quantization (reduce numeric precision), and pruning (remove unnecessary weights). These can be combined to achieve 10-50x size reduction with acceptable quality loss.
+Reviewed 2026-09-03. Model optimization is a measured trade-off among quality, latency, throughput, memory, energy, and operational complexity. Start with a workload contract and a baseline; compression or adaptation without an evaluation target only moves an unknown failure boundary.
 
-## Key Facts
-- Quantization is the most practical optimization - reduces memory and speeds inference with minimal setup
-- Distillation preserves the most quality for a given size reduction
-- Pruning can remove 40%+ of attention heads with minimal quality loss
-- Combined approach: distill -> prune -> quantize for maximum compression
-- GGUF format (llama.cpp/Ollama) is the standard for quantized local inference
+## Choose the Lever by Constraint
 
-## Knowledge Distillation
+| Lever | Changes | Good fit | Principal risk |
+|---|---|---|---|
+| Quantization | Numeric representation of weights/activations | Model does not fit target hardware or inference cost is too high | Quality or kernel compatibility drift |
+| PEFT / LoRA | Small trainable adapters on a frozen base model | Need task/style adaptation with portable artifacts | Adapter/base mismatch or incomplete evaluation |
+| Distillation | A student model learned from a teacher/data process | Repeated, well-defined workload justifies training | Student inherits data/teacher errors |
+| System optimization | Batching, caching, routing, retrieval, tool design | Bottleneck is not model math alone | Optimizing the wrong path |
 
-Large "teacher" model trains smaller "student" model to mimic outputs.
+Do not assume that fewer bits, a smaller model, or a larger batch is automatically faster for the target hardware and request shape.
 
-### Types
-- **Offline**: teacher pre-trained and fixed, only student trains (most common)
-- **Online**: teacher and student train simultaneously
-- **Self-distillation**: same network serves as both teacher and student
+## Quantization Contract
 
-### Notable Examples
-- **DistilBERT**: 6 layers (vs 12), retains 97% of BERT performance at 60% size
-- **TinyBERT**: 4 layers, uses attention + hidden state distillation
-- **FastBERT**: self-distillation with early exit for simpler inputs
+Hugging Face Transformers supports several quantization approaches, including bitsandbytes 8-bit/4-bit loading and AWQ/GPTQ integrations. Keep the quantization configuration alongside the model revision and hardware/runtime details. [Transformers quantization](https://huggingface.co/docs/transformers/main_classes/quantization)
 
-Student learns from teacher's softmax probability distributions (soft labels carry more information than hard labels - the teacher's uncertainty distribution encodes knowledge about class relationships).
+```python
+from transformers import AutoModelForCausalLM, BitsAndBytesConfig
 
-## Quantization
-
-Reduces bits per weight to compress models and speed inference.
-
-### Precision Levels
-
-| Precision | Bits/Weight | Memory (7B) | Quality |
-|-----------|------------|-------------|---------|
-| FP32 | 32 | ~28 GB | Original |
-| FP16 | 16 | ~14 GB | Near-original |
-| INT8 (Q8) | 8 | ~7 GB | Minimal loss |
-| INT4 (Q4) | 4 | ~3.5 GB | Noticeable on complex tasks |
-| INT2 (Q2) | 2 | ~1.75 GB | Significant degradation |
-
-### Training Approaches
-- **QAT (Quantization Aware Training)**: simulate quantization during training. Higher accuracy but slower.
-- **PTQ (Post-Training Quantization)**: quantize after training. Faster but usually lower quality.
-
-### Formats
-
-| Format | Target | Description |
-|--------|--------|-------------|
-| **GGUF** | CPU | llama.cpp/Ollama format. Standard for consumer hardware |
-| **GPTQ** | GPU | Post-training quantization. Fast GPU inference |
-| **AWQ** | GPU | Activation-aware. Balances accuracy and speed |
-
-### Practical Usage (Ollama)
-```bash
-ollama run llama3.1:8b-instruct-q4_0  # Q4 quantized (~4GB)
-ollama run llama3.1:8b-instruct-q8_0  # Q8 quantized (~8GB)
+quantization = BitsAndBytesConfig(load_in_4bit=True)
+model = AutoModelForCausalLM.from_pretrained(
+    "publisher/model-revision",
+    quantization_config=quantization,
+    device_map="auto",
+)
 ```
 
-## Pruning
+This is an experiment configuration, not a production approval. Benchmark the exact model revision, tokenizer, decoding policy, prompt shape, runtime, and hardware before changing a serving lane.
 
-Remove unnecessary weights or structures to reduce model size.
+## Adapter-Based Adaptation
 
-### Unstructured Pruning
-Remove individual weights based on magnitude, gradient, etc. Creates sparse matrices. Requires sparse computation support for actual speedup.
+Parameter-efficient fine-tuning attaches a small set of trainable parameters to a base model instead of updating every base weight. In LoRA-style methods, the base weights stay frozen while low-rank updates are trained. [PEFT quicktour](https://huggingface.co/docs/peft/quicktour) [LoRA guide](https://huggingface.co/docs/peft/main/conceptual_guides/lora)
 
-### Structured Pruning
-Remove entire blocks - neurons, attention heads, or layers:
-- Some BERT attention heads are redundant - can remove up to 40% with minimal quality loss
-- Middle layers tend to be most redundant
-- FFN neurons can be pruned by contribution magnitude
+For a deployable adapter, record:
 
-### Challenges
-- Choosing what to prune requires careful analysis
-- Often needs additional fine-tuning after pruning
-- Finding optimal pruning ratio per layer is non-trivial
+- exact base model revision and tokenizer;
+- adapter configuration and target modules;
+- training-data provenance and license/consent boundary;
+- evaluation corpus and acceptance outcome;
+- merge/load policy and runtime compatibility.
 
-## Model Selection Framework
+An adapter artifact without its base-model contract is not reproducible.
 
-Before optimizing, choose the right model. Evaluate along two axes:
+## Measurement Before Promotion
 
-### Basic Attributes (Narrow First)
+```text
+baseline release
+    -> representative quality corpus
+    -> target hardware load test
+    -> compare quality, latency, errors, and memory
+    -> canary with rollback target
+```
 
-| Attribute | What to Check |
-|-----------|--------------|
-| **Open vs closed source** | API costs vs self-hosting costs, data privacy requirements |
-| **Release date / knowledge cutoff** | Affects factual accuracy for recent topics |
-| **Parameter count** | Affects quality, cost, and fine-tuning data requirements |
-| **Training data size** | Larger = deeper domain knowledge |
-| **Context length** | Must fit system prompt + examples + conversation history |
-| **License** | Commercial use restrictions (Llama community license, Stable Diffusion revenue threshold) |
-
-### Cost Analysis
-
-| Cost Type | Closed Source | Open Source |
-|-----------|--------------|-------------|
-| **Inference** | API tokens (input + output) | GPU compute (Modal, RunPod, own hardware) |
-| **Training** | Fine-tuning API fees | GPU hours for training |
-| **Build cost** | Low (fast integration) | Higher (infrastructure setup) |
-| **Time to market** | Days | Weeks |
-
-### Performance Evaluation
-
-After narrowing by attributes and cost, benchmark candidates on your specific task:
-
-1. **Check leaderboards**: Hugging Face Open LLM Leaderboard for open-source comparison
-2. **Check arenas**: Chatbot Arena (LMSYS) for human preference rankings
-3. **Prototype with top 2-3 candidates** on representative examples from your domain
-4. **Measure**: accuracy on your test set, latency, cost per request
-
-**Key insight:** There is no universally "best" model. Selection depends on task requirements - a small fine-tuned model often outperforms a general-purpose large model on specific domains.
-
-## Inference Optimizations
-
-Beyond model compression:
-- **KV-cache**: cache key-value pairs for previously seen tokens
-- **Continuous batching**: process multiple requests simultaneously
-- **Speculative decoding**: small model drafts, large model verifies
-- **FlashAttention**: GPU-efficient attention computation (2-4x faster)
-
-## Combined Pipeline
-
-1. **Distill** large model into smaller architecture
-2. **Prune** redundant weights/heads from the student
-3. **Quantize** remaining weights to lower precision
-
-This cascade enables deployment on edge devices and consumer hardware.
+Measure both ordinary and adversarial inputs. A compressed model may appear unchanged on short demos while failing schema adherence, multilingual content, long-context retrieval, or tool-selection behavior.
 
 ## Gotchas
-- Q4 quantization significantly degrades complex reasoning and code generation
-- Different quantization methods (GGUF vs GPTQ vs AWQ) are NOT interchangeable - match to your inference runtime
-- Pruning benefits are hardware-dependent - sparse matrices need sparse compute support
-- Distillation requires access to a powerful teacher model and training infrastructure
-- Always benchmark quantized model on YOUR specific task - generic benchmarks don't predict domain performance
-- Quantized models may fail at function calling where the full model succeeds
+
+- **Issue: Comparing a quantized candidate to a different base revision.** A quality change has no single cause. **Fix:** change one release dimension at a time and record both artifacts.
+- **Issue: Shipping a LoRA adapter without its base identifier.** Loaders can silently use a different base. **Fix:** validate the exact base revision at startup and fail closed on mismatch.
+- **Issue: Optimizing only tokens per second.** Tail latency, queueing, tool behavior, and quality can regress. **Fix:** evaluate the complete user workflow under representative concurrency.
+- **Issue: Treating a notebook result as hardware-independent.** Kernel support and memory behavior vary. **Fix:** test on the deployment runtime and store the environment receipt.
 
 ## See Also
-- [[ollama-local-llms]] - Running quantized models locally
-- [[frontier-models]] - Models available for optimization
-- [[fine-tuning]] - LoRA/QLoRA as parameter-efficient alternatives
-- [[transformer-architecture]] - Architecture bottlenecks that optimization targets
+
+- [[frontier-models]]
+- [[llm-fine-tuning-practical]]
+- [[token-optimization]]
+- [[production-patterns]]
+
+## Sources
+
+- [Transformers quantization](https://huggingface.co/docs/transformers/main_classes/quantization)
+- [Transformers bitsandbytes integration](https://huggingface.co/docs/transformers/quantization/bitsandbytes)
+- [Hugging Face PEFT quicktour](https://huggingface.co/docs/peft/quicktour)
+- [Transformers PEFT integration](https://huggingface.co/docs/transformers/peft)
