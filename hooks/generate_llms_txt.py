@@ -28,6 +28,8 @@ DOMAIN_NAMES = {
     "devops": "DevOps",
     "go": "Go",
     "image-generation": "Image Generation",
+    "projects": "Projects",
+    "organizations": "Organizations",
     "ios-mobile": "iOS & Mobile",
     "java-spring": "Java & Spring",
     "kafka": "Kafka",
