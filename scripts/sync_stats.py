@@ -39,6 +39,12 @@ def sub(path: str, pairs: list[tuple[str, str]]) -> None:
     print(f"  {path}: {'updated' if text != before else 'already current'}")
 
 
+NEW_DOMAIN_COVERAGE = {
+    "projects": "One page per tool, model or product the news conveyor follows: dated development line, current use, obsolete guidance, sources",
+    "organizations": "One page per company or lab: leadership and structure changes, product lines, what each change made obsolete",
+}
+
+
 def update_readme(total: int, domains: int, xref: int, counts: dict[str, int]) -> None:
     p = Path("README.md")
     text = p.read_text(encoding="utf-8")
@@ -52,9 +58,12 @@ def update_readme(total: int, domains: int, xref: int, counts: dict[str, int]) -
     if not rows:
         raise SystemExit("README domain table not found")
     coverage = {d: c for d, _, c in rows}
-    missing = [d for d in counts if d not in coverage]
-    if missing:
-        raise SystemExit(f"README table is missing domains: {missing}")
+    # A domain's first article arrives before its README row exists; add the row
+    # instead of refusing, with the coverage sentence declared here.
+    for d in counts:
+        if d not in coverage:
+            coverage[d] = NEW_DOMAIN_COVERAGE.get(d, stats.DOMAIN_META.get(d, {}).get("name", d))
+            print(f"  README.md: row added for {d}/")
 
     new_rows = "\n".join(
         f"| `{d}/` | {counts[d]} | {coverage[d]} |"
