@@ -1,98 +1,110 @@
 ---
 title: "LLM Scaling Laws and Benchmarks"
-description: "Chinchilla scaling law, standard benchmarks (ARC, DROP, HellaSwag), and model selection guidelines"
+description: "Use scaling-law research and benchmark suites without turning historical fits or leaderboard snapshots into product decisions"
 ---
 
-# LLM Scaling Laws and Benchmarks
+# LLM Scaling Laws and Benchmarks (September 2026)
 
-Understanding how model size relates to performance and how to compare models objectively. Essential for choosing the right model for a task and predicting whether bigger = better for your use case.
+Version context: scaling-law fits and benchmark scores are empirical results under stated datasets, compute budgets, architectures, prompts, and evaluation harnesses. They are not universal sizing rules or durable model rankings.
 
-## Chinchilla Scaling Law
+## What Scaling Laws Answer
 
-The relationship between model parameters and training data is roughly linear:
+Scaling-law research studies how a measured loss or capability changes as training compute, model size, data, and related variables increase. It is useful for:
 
-- **Core principle**: parameters and training tokens should scale proportionally
-- **Practical rule**: doubling parameters requires doubling training data to fully utilize the extra capacity
-- **Reverse**: if doubling training data, need double the parameters to absorb it effectively
+- planning a controlled pretraining or continued-pretraining program;
+- selecting which costly experiments to run next;
+- detecting obviously under-trained candidate configurations;
+- framing a compute/data trade-off within a fixed methodology.
 
-| Parameters | Optimal Training Tokens | Example |
-|-----------|------------------------|---------|
-| 1B | ~20B tokens | Small research models |
-| 7B | ~140B tokens | Llama-class models |
-| 70B | ~1.4T tokens | Large open-source models |
-| 175B | ~3.5T tokens | GPT-3 class |
+It does not by itself choose a production model, prove downstream safety, or predict latency and cost under a real serving workload.
 
-**Implication for model selection**: a well-trained 7B model can outperform a poorly-trained 13B model. Training data quality and quantity matter as much as parameter count.
+The Chinchilla study reported that, for its compute-optimal setting, model size and training tokens should scale proportionally. That result is a historical fit to a particular experimental regime. Use it as a `tokens-per-parameter` procurement rule only after validating it on the actual architecture, data, and objective.
 
-## Standard Benchmarks
+## Separate Three Decisions
 
-Seven widely-used benchmarks for comparing LLMs:
+| Decision | Evidence that decides it |
+|---|---|
+| Pretraining allocation | Controlled loss/capability experiments, compute and data provenance |
+| Serving design | Measured latency, throughput, memory, availability, and unit cost |
+| Product acceptance | Frozen task suite, safety checks, and user-relevant error review |
 
-| Benchmark | Measures | Format |
-|-----------|----------|--------|
-| **ARC** | Scientific reasoning | Multiple choice questions (grade school + challenge) |
-| **DROP** | Language comprehension | Reading + extraction (counting, sorting, arithmetic) |
-| **HellaSwag** | Common sense reasoning | Sentence completion (harder contexts) |
-| **MMLU** | Multi-domain knowledge | 57 subjects, multiple choice. Somewhat superseded by MMLU-Pro |
-| **TruthfulQA** | Accuracy under adversarial conditions | Model resists giving popular but false answers |
-| **WinoGrande** | Ambiguity resolution | Pronoun disambiguation in confusing contexts |
-| **GSM8K** | Mathematical reasoning | Grade school + middle school math word problems |
+Mixing these leads to false conclusions: a larger model can be a worse product choice if it fails the target workflow, misses an SLO, or cannot be operated safely.
 
-## Reading Benchmark Numbers
+## Benchmark Inventory
 
-- Benchmarks are typically reported as percentage accuracy
-- No single benchmark captures overall capability - look at the profile
-- **MMLU-Pro** has largely replaced MMLU due to concerns about question quality
-- **Arena-style evaluations** (Chatbot Arena / LMSYS) use human preference votes and are considered more reliable for conversational quality
+A benchmark is useful only when its task, version, prompt, scoring method, and contamination risk are known.
 
-## Benchmark Limitations
+| Category | Example use | Release question |
+|---|---|---|
+| Broad knowledge/reasoning | MMLU-like suite | Does the candidate regress on general capability relevant to the product? |
+| Domain task set | Internal labeled corpus | Does it solve the actual work correctly? |
+| Robustness / adversarial set | Prompt injection, refusal, malformed input | Does it fail safely? |
+| Tool-use evaluation | Recorded tool contracts | Does it select permitted actions and respect schemas? |
+| Operations test | Load and fault exercise | Can it meet latency, error, and cost bounds? |
 
-- Models can be trained to game specific benchmarks (teaching to the test)
-- Benchmark contamination: test questions may appear in training data
-- Multiple choice format tests recognition, not generation ability
-- Real-world task performance often diverges from benchmark rankings
-- Small models can beat larger ones on specific benchmarks while being worse overall
+MMLU is a widely cited academic benchmark, but a single aggregate score is not evidence that an agent is reliable on an organization's task. Keep benchmark results as diagnostic signals alongside product-specific evaluation.
 
-## Practical Model Selection
+## Evaluation Record
 
-Instead of chasing benchmark numbers, evaluate on YOUR task:
+Every comparison needs an immutable receipt. This prevents a leaderboard number from losing the settings that produced it.
 
-```python
-# Simple evaluation framework
-def evaluate_model(model, test_cases):
-    results = []
-    for case in test_cases:
-        response = model.generate(case['prompt'])
-        score = assess_quality(response, case['expected'])
-        results.append({
-            'input': case['prompt'],
-            'output': response,
-            'score': score,
-            'cost': calculate_cost(case['prompt'], response)
-        })
-
-    return {
-        'accuracy': np.mean([r['score'] for r in results]),
-        'avg_cost': np.mean([r['cost'] for r in results]),
-        'cost_per_correct': sum(r['cost'] for r in results) / max(1, sum(r['score'] for r in results))
-    }
+```json
+{
+  "evaluation_id": "support-routing-2026-09-03",
+  "candidate": {"model": "candidate-id", "revision": "immutable-revision"},
+  "baseline": {"model": "baseline-id", "revision": "immutable-revision"},
+  "suite": {"name": "support-routing-v4", "digest": "sha256:..."},
+  "harness": {"commit": "git-sha", "prompt_policy": "prompt-v7"},
+  "metrics": {
+    "route_accuracy": 0.0,
+    "schema_valid_rate": 0.0,
+    "p95_latency_ms": 0,
+    "cost_per_accepted_output": 0.0
+  },
+  "verdict": "hold"
+}
 ```
 
-**Decision framework**:
-1. Define your specific task evaluation (not general benchmarks)
-2. Test 2-3 model tiers (small/medium/large) on your task
-3. Calculate cost-per-correct-answer, not just accuracy
-4. Choose the smallest model that meets your quality threshold
+Use the same input set, decoding policy, tool availability, and scoring method for baseline and candidate. If any changes, start a new comparison rather than merging numbers.
+
+## Contamination and Reproducibility
+
+Public benchmarks may be present in pretraining or instruction-tuning data. A high score can indicate memorization, prompt sensitivity, or test-specific optimization instead of transferable performance.
+
+Mitigations:
+
+1. Track the benchmark revision and source license.
+2. Keep a private, newly collected task suite that is never used for tuning.
+3. Rotate hidden cases while preserving stable regression cases.
+4. Record prompts, random seeds, sampling parameters, and tool policy.
+5. Manually inspect representative successes and failures.
+
+## Model Selection Procedure
+
+1. Define an acceptance contract: outcome quality, safety, latency, availability, and budget.
+2. Establish a baseline with the deployed prompt/tool policy.
+3. Test a small set of candidate tiers on the same frozen suite.
+4. Review error slices, not just the average.
+5. Select the least costly candidate that meets every required threshold.
+6. Preserve the receipt and schedule a re-evaluation when model, prompts, tools, or corpus change.
 
 ## Gotchas
 
-- **A 7B model against GPT-4 is not a fair comparison.** Frontier models have 10-100x more parameters. Small models excel at narrow, well-defined tasks but struggle with general reasoning. Set expectations accordingly.
-- **Benchmark numbers are snapshots.** Model rankings change with every release. Check the date on any benchmark comparison - results from 6 months ago may be irrelevant.
-- **"State of the art" on one benchmark does not mean best overall.** A model optimized for coding (HumanEval) may underperform on reasoning (ARC). Always check the benchmark relevant to your use case.
+- **A scaling-law coefficient is not a deployment parameter.** It was estimated under specific assumptions. **Fix:** use it to choose experiments, then measure the workload that will actually be served.
+- **Aggregate scores hide unacceptable slices.** A model can improve an average while failing a regulated language, difficult cohort, or safety condition. **Fix:** set explicit per-slice release thresholds.
+- **Leaderboard snapshots drift.** Harnesses, prompts, datasets, and model revisions change. **Fix:** publish the complete evaluation receipt instead of an uncited score.
+- **Benchmark success does not prove tool safety.** Multiple-choice accuracy cannot verify side effects, permissions, or retries. **Fix:** test recorded tool contracts and adversarial operational scenarios separately.
 
-## Cross-References
+## Sources
 
-- [[model-optimization]] - quantization, pruning, distillation
-- [[frontier-models]] - GPT-4, Claude, Gemini capabilities
-- [[fine-tuning]] - when benchmarks suggest fine-tuning can help
-- [[agent-evaluation]] - evaluating agent systems vs raw models
+- [Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361)
+- [Training Compute-Optimal Large Language Models](https://arxiv.org/abs/2203.15556)
+- [Measuring Massive Multitask Language Understanding](https://arxiv.org/abs/2009.03300)
+- [LM Evaluation Harness](https://github.com/EleutherAI/lm-evaluation-harness)
+
+## See Also
+
+- [[frontier-models]]
+- [[model-optimization]]
+- [[agent-evaluation]]
+- [[llm-fine-tuning-practical]]

@@ -1,324 +1,163 @@
 ---
-title: Agent Cognitive Architectures
-category: concepts
-tags: [llm-agents, architecture, cognitive, state-machine, dag, loop]
+title: "Agent Architectures"
+description: "Choose a bounded control-flow architecture for LLM agents: state, tools, handoffs, protocols, and evidence"
 ---
 
-# Agent Cognitive Architectures
+# Agent Architectures (September 2026)
 
-How to structure the control flow and state management of an LLM agent beyond individual patterns. Covers the computational graph that defines how an agent reasons, acts, and learns within a single task execution.
+Version context: reviewed against the MCP `latest` specification, A2A, and OpenAI Agents SDK documentation. Protocol revisions and SDK releases are dependencies; record the exact revision used by a deployed system.
 
-## Architecture Taxonomy
+An agent architecture is the deterministic control plane around probabilistic model calls. The architecture owns permissions, state transitions, retry limits, durable work, and evidence. The model proposes; the control plane decides what can happen next.
 
-### Single-Loop Agent
+## Choose the Smallest Sufficient Shape
 
-Simplest: one LLM call decides next action, observe result, repeat.
+| Shape | Use when | Required controls |
+|---|---|---|
+| Single bounded action | One request, no side effect or one reversible tool action | Input validation, timeout, output validation |
+| Explicit state machine | A task has stages, retries, approvals, or recovery | Transition table, budget, idempotency, terminal states |
+| DAG | Independent tasks can run in parallel and have explicit joins | Dependency graph, join semantics, per-node receipts |
+| Specialist handoff | Different authority or domain owns a task | Typed handoff contract, authorization, history filter |
+| Remote agent boundary | Independent service owns execution | Protocol, authentication, task lifecycle, artifact contract |
 
-```python
-while not done:
-    action = llm(prompt + history)
-    observation = execute(action)
-    history.append((action, observation))
+Do not begin with a multi-agent graph. Add structure only when a simpler bounded flow cannot meet the required reliability, permission, or latency contract.
+
+## Work Item Contract
+
+A durable work item makes retries and recovery inspectable.
+
+```json
+{
+  "task_id": "task_01J...",
+  "state": "planned",
+  "attempt": 0,
+  "attempt_limit": 3,
+  "idempotency_key": "sha256:...",
+  "input_ref": "artifact://request/...",
+  "policy_revision": "agent-policy-v4",
+  "trace_ref": "trace_...",
+  "terminal_receipt": null
+}
 ```
 
-Pros: simple, easy to debug. Cons: no planning, no self-correction, context window fills quickly.
+Every transition has one owner and a reason. Unknown states fail closed.
 
-### Planner-Executor Split
-
-Separate planning from execution. Planner creates steps, executor handles each one.
+## Minimal State Machine
 
 ```python
-# Planner generates structured plan
-plan = planner_llm(f"""
-Task: {user_request}
-Available tools: {tool_descriptions}
-Output a numbered list of steps.
-""")
+from dataclasses import dataclass, replace
+from typing import Literal
 
-# Executor handles each step independently
-results = []
-for step in parse_plan(plan):
-    result = executor_llm(f"""
-    Execute this step: {step}
-    Previous results: {results}
-    """)
-    results.append(result)
-
-# Replanner if needed
-if not satisfactory(results):
-    revised_plan = planner_llm(f"""
-    Original plan failed at step {failed_step}.
-    Error: {error}
-    Revise the plan.
-    """)
-```
-
-### State Machine Agent
-
-Explicit states with defined transitions. Most reliable for production.
-
-```python
-from enum import Enum
-
-class AgentState(Enum):
-    UNDERSTAND = "understand"
-    PLAN = "plan"
-    EXECUTE = "execute"
-    VERIFY = "verify"
-    RESPOND = "respond"
-    ERROR = "error"
-
-class StateMachineAgent:
-    def __init__(self):
-        self.state = AgentState.UNDERSTAND
-        self.context = {}
-        self.max_retries = 3
-
-    def run(self, user_input):
-        self.context["input"] = user_input
-
-        while self.state != AgentState.RESPOND:
-            if self.state == AgentState.UNDERSTAND:
-                self.context["intent"] = classify_intent(user_input)
-                self.state = AgentState.PLAN
-
-            elif self.state == AgentState.PLAN:
-                self.context["plan"] = create_plan(self.context)
-                self.state = AgentState.EXECUTE
-
-            elif self.state == AgentState.EXECUTE:
-                try:
-                    self.context["result"] = execute_plan(self.context["plan"])
-                    self.state = AgentState.VERIFY
-                except Exception as e:
-                    self.context["error"] = str(e)
-                    self.state = AgentState.ERROR
-
-            elif self.state == AgentState.VERIFY:
-                if verify_result(self.context["result"]):
-                    self.state = AgentState.RESPOND
-                else:
-                    self.state = AgentState.PLAN  # replan
-
-            elif self.state == AgentState.ERROR:
-                if self.context.get("retries", 0) < self.max_retries:
-                    self.context["retries"] = self.context.get("retries", 0) + 1
-                    self.state = AgentState.PLAN
-                else:
-                    self.state = AgentState.RESPOND
-
-        return format_response(self.context)
-```
-
-### DAG (Directed Acyclic Graph) Agent
-
-Tasks organized as dependency graph. Parallel execution of independent nodes.
-
-```python
-# DAG definition
-task_graph = {
-    "search_web": {"deps": [], "tool": "web_search"},
-    "search_db": {"deps": [], "tool": "database_query"},
-    "analyze": {"deps": ["search_web", "search_db"], "tool": "llm_analyze"},
-    "format": {"deps": ["analyze"], "tool": "format_output"},
+State = Literal["planned", "running", "verified", "failed", "cancelled"]
+ALLOWED: dict[State, set[State]] = {
+    "planned": {"running", "cancelled"},
+    "running": {"verified", "failed", "cancelled"},
+    "verified": set(),
+    "failed": set(),
+    "cancelled": set(),
 }
 
-import asyncio
 
-async def execute_dag(graph, context):
-    completed = {}
-    pending = set(graph.keys())
+@dataclass(frozen=True)
+class WorkItem:
+    task_id: str
+    state: State
+    attempt: int
+    attempt_limit: int
 
-    while pending:
-        ready = [t for t in pending if all(d in completed for d in graph[t]["deps"])]
-        results = await asyncio.gather(*[
-            execute_node(t, graph[t], {d: completed[d] for d in graph[t]["deps"]})
-            for t in ready
-        ])
-        for task, result in zip(ready, results):
-            completed[task] = result
-            pending.remove(task)
 
-    return completed
-```
-
-## Memory Architecture
-
-### Working Memory (In-Context)
-
-Current conversation + recent observations. Limited by context window.
-
-### Short-Term Memory (Session)
-
-Persists across multiple LLM calls within one task:
-
-```python
-class SessionMemory:
-    def __init__(self):
-        self.facts = []       # discovered facts
-        self.plan = []        # current plan steps
-        self.errors = []      # failed approaches
-        self.scratchpad = ""  # working notes
-
-    def to_context(self, max_tokens=2000):
-        """Serialize for LLM context injection."""
-        return f"""
-Known facts: {self.facts[-10:]}
-Current plan: {self.plan}
-Failed approaches (do NOT retry): {self.errors[-5:]}
-"""
-```
-
-### Long-Term Memory (Cross-Session)
-
-Vector store or structured DB for persistent knowledge:
-
-```python
-# Episodic memory: store successful task completions
-def store_episode(task, solution, outcome):
-    embedding = embed(f"{task} -> {solution}")
-    vector_db.upsert(
-        id=str(uuid4()),
-        vector=embedding,
-        metadata={"task": task, "solution": solution, "outcome": outcome}
+def transition(item: WorkItem, target: State) -> WorkItem:
+    if target not in ALLOWED[item.state]:
+        raise ValueError(f"invalid transition: {item.state} -> {target}")
+    if target == "running" and item.attempt >= item.attempt_limit:
+        raise RuntimeError("attempt budget exhausted")
+    return replace(
+        item,
+        state=target,
+        attempt=item.attempt + (target == "running"),
     )
-
-# Retrieve similar past experiences
-def recall(current_task, k=3):
-    results = vector_db.query(embed(current_task), top_k=k)
-    return [r.metadata for r in results if r.metadata["outcome"] == "success"]
 ```
 
-## Routing Architecture
+Tool calls occur only in `running` after authorization and schema validation. `verified` requires an independently checkable receipt, not a model statement that work completed.
 
-For complex systems, route requests to specialized sub-agents:
+## Memory and Context
 
-```python
-class AgentRouter:
-    def __init__(self):
-        self.agents = {
-            "code": CodeAgent(),
-            "research": ResearchAgent(),
-            "data": DataAnalysisAgent(),
-            "general": GeneralAgent(),
-        }
+Separate four things:
 
-    def route(self, query):
-        # Classifier determines which agent handles the request
-        category = classify(query)  # lightweight LLM or rule-based
-        agent = self.agents.get(category, self.agents["general"])
-        return agent.run(query)
+- **Run state:** the durable work item and transition receipts.
+- **Conversation context:** the minimum input needed for the next model turn.
+- **Long-term memory:** scoped, versioned records with ownership and retention.
+- **Knowledge corpus:** source documents retrieved with provenance.
+
+A prompt summary cannot replace a durable state record. Conversely, the model should not receive all durable records by default; retrieve a least-privilege projection.
+
+## Tool Boundary
+
+Each tool needs a typed input schema, actor/tenant scope, authorization policy, timeout, idempotency rule, side-effect classification, and output receipt.
+
+```text
+model proposal -> schema validation -> policy decision -> tool execution
+               -> receipt persistence -> verified state transition
 ```
 
-## Checkpointing and Recovery
+Read-only tools and reversible actions can have different policy paths. Destructive, financial, external-message, or privilege-changing actions require an explicit approval boundary.
 
-```python
-import json
+## Interoperability Boundaries
 
-class CheckpointableAgent:
-    def save_checkpoint(self, path):
-        state = {
-            "current_state": self.state.value,
-            "context": self.context,
-            "step_count": self.step_count,
-        }
-        with open(path, 'w') as f:
-            json.dump(state, f)
+MCP and A2A solve different problems:
 
-    def load_checkpoint(self, path):
-        with open(path) as f:
-            state = json.load(f)
-        self.state = AgentState(state["current_state"])
-        self.context = state["context"]
-        self.step_count = state["step_count"]
-```
+| Protocol | Boundary | Core unit | Do not assume |
+|---|---|---|---|
+| MCP | Host application to focused server | Resources, prompts, tools; negotiated capabilities | That a tool is authorized merely because it is advertised |
+| A2A | Independent agent services | Agent Card, task, message, artifact | That a remote agent exposes its internal memory or tools |
+
+MCP's host-client-server architecture keeps each server scope isolated. Its current `latest` protocol is stateless: every request carries declared protocol version and capabilities, and a client may use `server/discover` before other calls for server discovery. A2A provides a task lifecycle for opaque remote agents and uses an Agent Card for discovery and interaction requirements.
+
+Use a protocol only when its boundary exists. An in-process function call does not become safer by wrapping it in a remote-agent protocol.
+
+## Handoffs and Specialists
+
+A specialist handoff must include:
+
+1. destination identity and permitted capability;
+2. typed reason and task reference;
+3. authorized context projection, not full history by default;
+4. responsibility for side effects and final response;
+5. trace linkage and terminal receipt.
+
+The OpenAI Agents SDK is one current implementation example: it supports tools, guardrails, handoffs, structured outputs, and tracing. Those SDK features do not replace application authorization or durable workflow state.
+
+## Observability and Evaluation
+
+Capture model calls, tool calls, handoffs, policy decisions, transition records, errors, and redacted input/output metadata. Correlate them with task ID, trace ID, policy revision, and deployment revision.
+
+Evaluate architecture with replayable scenarios:
+
+- permitted and denied tool invocation;
+- retry after a transient failure;
+- duplicate request with the same idempotency key;
+- malformed tool result;
+- handoff with overscoped history;
+- timeout, cancellation, and terminal recovery.
 
 ## Gotchas
 
-- **Infinite loops without exit conditions**: agents can get stuck retrying the same failed approach. Always implement max iteration limits, timeout budgets, and track failed approaches to avoid repeating them. A stuck agent burns tokens indefinitely
-- **Context window overflow kills long-running agents**: as conversation history grows, older context gets truncated and the agent loses track of its plan. Implement explicit memory management: summarize old observations, maintain a structured state object, and re-inject only critical context after compaction
-- **Overengineered architectures for simple tasks**: a state machine with 10 states and DAG execution for a task that needs one LLM call + one tool use. Start with the simplest architecture (single loop), add complexity only when failures demand it
+- **A loop without a budget is not an architecture.** It can repeat an unsuccessful action indefinitely. **Fix:** enforce iteration, time, cost, and retry limits in deterministic state.
+- **A handoff is an authorization boundary.** Forwarding full conversation history can disclose data or grant unintended capability. **Fix:** pass a typed, least-privilege projection and authorize the receiving specialist.
+- **Protocol discovery is not trust.** An advertised MCP tool or A2A Agent Card does not grant permission to use it. **Fix:** bind discovery to identity, explicit policy, and per-action authorization.
+- **Tracing can contain sensitive content.** Generation and tool spans may record inputs and outputs. **Fix:** set redaction/retention policy before enabling telemetry and test it with representative data.
 
-## 2026 Landscape (April)
+## Sources
 
-### Protocol Standardization Under AAIF
-
-**AAIF** (Agentic AI Foundation, Linux Foundation) - Dec 2025. Co-founders: OpenAI, Anthropic, Google, Microsoft, AWS, Block.
-
-| Protocol | Scope | Status |
-|----------|-------|--------|
-| **MCP** | Agent ↔ tools | 200+ server implementations |
-| **A2A** | Agent ↔ agent | IBM ACP merged Aug 2025 |
-| **AGENTS.md** | AI coding agent config standard | 25+ tools (Codex, Copilot, Cursor, Windsurf, Jules, Amp) |
-
-Claude Code uses CLAUDE.md instead of AGENTS.md (issue #6235, 3200+ upvotes).
-
-### Major Lab SDKs (2026)
-
-| Lab | SDK | Key Feature |
-|-----|-----|-------------|
-| Anthropic | Claude Agent SDK + Managed Agents (Apr 8 public beta) | Managed sandbox, SSE, containers |
-| OpenAI | Agents SDK (ex-Swarm) | Handoff: triage → specialist → escalation |
-| Google | ADK (Python/TS/Java/Go) | Native A2A, auto Agent Cards |
-| Microsoft | Semantic Kernel + AutoGen | Enterprise |
-| HuggingFace | Smolagents | Lightweight OSS |
-
-### New Orchestration Patterns
-
-**ORCH Pattern**: deterministic orchestrator + multiple LLMs that analyze independently + merge-agent selects best output. Prevents single-model bias.
-
-**TEA Protocol** (arxiv 2506.12508): tools/envs/agents as first-class versioned resources with lifecycle management.
-
-**Hierarchical partitioning** (arxiv 2604.07681): central planner spawns parallel executors, results merged.
-
-**Example 4-agent architecture (Grok 4.20 style):**
-```php
-coordinator + researcher + logician + contrarian analyst
-    -> parallel analysis
-    -> cross-verification
-    -> coordinator synthesizes
-```
-
-### Multi-Model Routing
-
-Production agents route between model tiers:
-```text
-Frontier (Opus/GPT-5)       - reasoning, architecture decisions
-Light (Sonnet/Haiku/Gemma)  - extraction, mechanical tasks
-Specialized (code/vision)   - per-task type
-```
-
-### Coding Agent Benchmarks (2026)
-
-| Benchmark | Score (2026) | Score (Aug 2024) |
-|-----------|-------------|-----------------|
-| SWE-bench Verified | >70% | ~20% |
-| SWE-bench Pro (long-horizon) | ~23% (GPT-5, Opus 4.1) | N/A |
-
-10-20x speedup on mechanical tasks (migrations, vulnerability remediation). Still weak: system-level understanding, business domain, cross-cutting architecture.
-
-### Observability
-
-Langfuse (acquired by ClickHouse, Jan 2026): 2000+ paying customers, 26M+ SDK installs/month, 19/50 Fortune 500. Agent tracing/monitoring/evaluation is non-negotiable in production.
-
-### Open Source Model Milestone
-
-Gemma 4 (Apr 2, 2026): Apache 2.0. First OSS model seriously competing with proprietary on agent benchmarks.
-
-### Chinese AI Coding Agent Ecosystem
-
-See [[chinese-ai-coding-ecosystem]] for: Trae (ByteDance, SOLO autonomous mode), MetaGPT (software company simulation), GLM-5 (SWE-bench 77.8), CodeBuddy (Tencent), OpenSpec (spec-first development).
-
-Key pattern divergences:
-- **Spec Coding**: Chinese community formalized "spec freeze before code" more explicitly than Western discourse
-- **Role-based multi-agent**: MetaGPT's software company simulation widely adopted; SOP-driven workflows
-- **Cost-sensitive routing**: Domestic models (GLM-5, DeepSeek) as fallbacks; token-per-yuan optimization
+- [Model Context Protocol latest architecture](https://modelcontextprotocol.io/specification/latest/architecture)
+- [Model Context Protocol latest server primitives](https://modelcontextprotocol.io/specification/latest/server)
+- [A2A Protocol specification](https://a2a-protocol.org/latest/specification/)
+- [OpenAI Agents SDK: agents](https://openai.github.io/openai-agents-python/agents/)
+- [OpenAI Agents SDK: tracing](https://openai.github.io/openai-agents-python/tracing/)
 
 ## See Also
 
 - [[agent-design-patterns]]
 - [[agent-memory]]
+- [[function-calling]]
+- [[tool-use-patterns]]
 - [[multi-agent-systems]]
-- [[langgraph]]
-- [[managed-agents]]
-- [[chinese-ai-coding-ecosystem]]
