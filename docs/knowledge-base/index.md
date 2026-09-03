@@ -396,7 +396,7 @@ Each domain below is collapsible - expand to see the article list. Articles are 
 
     - [[agent-fundamentals]] - Agent loop, tool use, planning
     - [[agent-design-patterns]] - ReAct, MRKL, plan-and-execute
-    - [[multi-agent-systems]] - Multi-agent orchestration, delegation
+    - [[multi-agent-systems]] - Coordinate multiple agents through task contracts, ownership, authority, state, and evidence boundaries; add agents only when a measured decomposition needs them.
     - [[agent-memory]] - Short/long-term memory, context management
     - [[agent-security]] - Prompt injection, guardrails, sandboxing
 
@@ -437,11 +437,11 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[chinese-ai-coding-ecosystem]] - Chinese AI coding tools, patterns, and community practices: Trae, OpenSpec, MetaGPT, GLM-5
     - [[claude-adaptive-thinking]] - Configure and evaluate Claude reasoning effort without relying on fixed, model-specific folklore.
     - [[claude-code-degradation-2026]] - A receipt-based method for diagnosing coding-agent quality, configuration, cost, and availability changes without inventing a vendor incident.
-    - [[claude-code-ecosystem]] - Claude Code plugin system, hooks lifecycle, skills patterns, CLAUDE.md best practices, and the
+    - [[claude-code-ecosystem]] - Use Claude Code plugins, skills, hooks, project instructions, and subagents as explicit, versioned governance surfaces; verify their current schema and effective scope before rollout.
     - [[claude-code-harness-patterns]] - A practical boundary between instructions, tools, deterministic gates, review, and durable evidence for coding-agent work.
     - [[claude-desktop-session-management]] - Use supported export, account, and extension controls rather than relying on unversioned local cache internals for conversation recovery or cross-device synchronization.
     - [[claude-managed-agents]] - Define organization-managed Claude Code subagents with explicit scope, precedence, tool limits, and verification rather than treating managed configuration as a cloud execution runtime.
-    - [[context-engineering]] - Managing what information goes into the LLM context window and when
+    - [[context-engineering]] - Treat model context as a bounded working input and preserve task state, evidence, authority, and retrieval provenance in versioned artifacts rather than fixed token allocations.
     - [[gradio-llm-interfaces]] - Rapid prototyping of chat UIs with streaming, markdown rendering, and multi-model comparison
     - [[handoff-rollup-pattern]] - How to create a bounded, auditable rollup of long-running agent work without pretending that a summary is lossless.
     - [[kv-cache-compression]] - Reducing KV cache memory during LLM inference to enable longer contexts and more concurrent

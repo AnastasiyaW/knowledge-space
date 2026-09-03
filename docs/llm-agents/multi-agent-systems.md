@@ -1,198 +1,101 @@
 ---
-title: Multi-Agent Systems
-category: techniques
-tags: [llm-agents, multi-agent, supervisor, crewai, autogen, agent-collaboration]
+title: "Multi-Agent System Coordination"
+description: "Coordinate multiple agents through task contracts, ownership, authority, state, and evidence boundaries; add agents only when a measured decomposition needs them."
+tags: [llm-agents, multi-agent, orchestration, delegation, governance, evidence]
 ---
 
-# Multi-Agent Systems
+# Multi-Agent System Coordination
 
-Multi-agent systems decompose complex tasks across specialized agents that collaborate. Research shows giving one LLM a specific narrow task makes it perform better than asking it to handle everything - multiple specialists outperform one generalist.
+**Scope checked: 2026-09-04.** A multi-agent system is a workflow with more than one autonomous decision-maker or execution role. It is not automatically more capable than a single agent. Add a role only when the task has a clear decomposition, a distinct authority or tool boundary, and a way to evaluate the additional coordination cost.
 
-## Key Facts
-- 2-3 agents: simple delegation, easy to debug
-- 4-6 agents: specialized team, manageable complexity
-- 7+ agents: risk of coordination overhead and message confusion
-- Every message between agents is an LLM call - minimize unnecessary back-and-forth
-- N agents ~ N x cost of a single agent
+## Start with the Work Contract
 
-## Architectural Patterns
-
-### Supervisor / Boss-Worker
-One coordinator delegates to specialized workers:
-
-```php
-User -> Supervisor
-         -> Worker 1 (Researcher): gathers information
-         -> Worker 2 (Analyst): analyzes data
-         -> Worker 3 (Writer): produces output
-       Supervisor compiles final response
-```
-
-**Supervisor responsibilities**: interpret user intent, assign tasks, determine execution order, synthesize results.
-
-**Worker definition**: name, role description, system prompt, available tools, output format.
-
-### Sequential Pipeline
-Workers execute in fixed order:
-
-```php
-Input -> Research Agent -> Analysis Agent -> Writing Agent -> Review Agent -> Output
-```
-
-**When to use**: process is well-defined, order doesn't change, clear input/output contracts.
-
-### Hierarchical
-Multiple levels of coordination:
-
-```php
-Top Coordinator
-  -> Team Lead A (Research)
-       -> Researcher 1, Researcher 2
-  -> Team Lead B (Production)
-       -> Writer, Editor
-```
-
-### Debate / Consensus
-Multiple agents with different perspectives argue until converging:
-
-```yaml
-Agent A (conservative): proposes solution
-Agent B (aggressive): critiques and proposes alternative
-Moderator: synthesizes best aspects of both
-```
-
-## Frameworks
-
-### CrewAI
-
-```python
-from crewai import Agent, Task, Crew, Process
-
-researcher = Agent(
-    role="Research Analyst",
-    goal="Find comprehensive information on the topic",
-    backstory="Expert researcher with 10 years experience",
-    tools=[search_tool, web_scraper],
-    llm=ChatOpenAI(model="gpt-4")
-)
-
-writer = Agent(
-    role="Content Writer",
-    goal="Create engaging articles from research",
-    backstory="Award-winning journalist",
-    llm=ChatOpenAI(model="gpt-4")
-)
-
-research_task = Task(
-    description="Research the latest trends in AI agents",
-    agent=researcher,
-    expected_output="Detailed research report"
-)
-
-writing_task = Task(
-    description="Write an article based on the research",
-    agent=writer,
-    expected_output="Published-quality article",
-    context=[research_task]
-)
-
-crew = Crew(
-    agents=[researcher, writer],
-    tasks=[research_task, writing_task],
-    process=Process.sequential  # or Process.hierarchical
-)
-result = crew.kickoff()
-```
-
-### AutoGen (Microsoft)
-- **ConversableAgent**: base agent for sending/receiving messages
-- **AssistantAgent**: LLM-powered agent
-- **UserProxyAgent**: represents human, can execute code
-- Group chat with multiple agents
-- Sandboxed code execution support
-
-### FlowWise Multi-Agent
-Visual no-code approach:
-1. Add Supervisor node + Worker nodes
-2. Connect Chat Model (OpenAI/Ollama) to Supervisor
-3. Define worker system prompts and tools
-4. Set execution strategy in supervisor prompt
-
-## Communication Protocols
-
-| Protocol | Description | Best For |
-|----------|-------------|----------|
-| **Message passing** | Structured messages with from/to/content | Sequential workflows |
-| **Shared state** | All agents read/write to shared workspace | Async collaboration |
-| **Event-driven** | Agents subscribe to events, triggered by completions | Decoupled pipelines |
-
-## Multi-Principal Coordination
-
-A multi-agent system is not always a single-user optimization problem. One agent can serve several principals at once: a product owner, reviewer, operator, support agent, and background automation can all inject goals, constraints, and private context into the same workflow.
-
-Model this explicitly instead of flattening everyone into one `user` message:
-
-```python
-principals = [
-    {"id": "owner", "authority": 90, "private_context": owner_context},
-    {"id": "reviewer", "authority": 70, "private_context": review_context},
-    {"id": "operator", "authority": 80, "private_context": runtime_context},
-]
-
-def score_action(action, principals):
-    return sum(
-        p["authority"] * utility(action, p["private_context"])
-        for p in principals
-    )
-```
-
-### Failure Modes
-
-| Failure | Symptom | Guardrail |
-|---------|---------|-----------|
-| **Selection without execution** | The agent identifies the right authority but follows the wrong instruction under conflict | Require an authority trace before acting on conflicting commands |
-| **Privacy erosion** | Private details leak after several clarification rounds | Re-check redaction at every round, not only on the first response |
-| **Premature commitment** | The agent chooses a path before collecting missing constraints | Cap autonomous action until all high-authority unknowns are resolved |
-| **Flattened identity** | `user A says... user B says...` is serialized into one ambiguous chat turn | Preserve `principal_id`, authority, and visibility as message metadata |
-
-### Message Schema
+Every delegated task needs a record that survives messages and restarts.
 
 ```json
 {
-  "role": "principal",
-  "principal_id": "security-reviewer",
-  "authority": 80,
-  "visibility": ["coordinator"],
-  "content": "Do not expose customer identifiers in the audit summary."
+  "task_id": "docs-review-001",
+  "input_revision": "immutable source revision",
+  "owner": "named coordinator",
+  "acceptance": ["named checks pass", "evidence is attached"],
+  "authority": "read-only review",
+  "allowed_tools": ["read", "search", "named test"],
+  "side_effect_policy": "no external actions",
+  "handoff": "structured findings with source references"
 }
 ```
 
-When the underlying model API does not support multiple user identities, keep this metadata in the orchestration layer and compile it into the prompt with clear access-control boundaries.
+The contract prevents a specialist role from becoming a vague persona. It lets the coordinator distinguish a completed task from a message that merely sounds complete.
 
-## Practical Agent Teams
+## Use the Simplest Coordination Shape
 
-### RAG Team
-Router (classify query) -> Retrieval (search KB) -> Synthesis (generate answer) -> Citation (add sources)
+| Shape | Good fit | Main risk |
+|---|---|---|
+| single agent with deterministic tools | one coherent task and one authority boundary | unnecessary delegation hides responsibility |
+| sequential pipeline | each artifact is the input to the next defined stage | an early error becomes uninspected downstream context |
+| parallel investigation | independent sources, tests, or candidate designs | duplicate work and correlated assumptions |
+| supervisor with bounded workers | several distinct task contracts require a final owner | supervisor becomes an untestable bottleneck |
+| independent reviewer | material change needs a fresh assessment | reviewer is asked to approve without access to evidence |
 
-### Content Creation Team
-Research -> Outline -> Writing -> Editing -> SEO
+Do not select a number of agents from a template. Measure whether the current bottleneck is missing evidence, insufficient tool access, or an actual need for independent review. A deterministic transform should remain code, even when an agent can describe it.
 
-### Customer Support Team
-Triage (classify urgency) -> Knowledge (search FAQ) -> Action (execute operations) -> Escalation (route to human)
+## Separate State by Concurrency Model
 
-## Gotchas
-- More agents = more messages = more tokens = higher cost and latency
-- Don't use multi-agent when a single agent or workflow suffices
-- Fully deterministic workflows should use code, not agents
-- If latency is critical, each agent hop adds significant delay
-- Debug by logging all inter-agent messages and tracking task state through the pipeline
-- Evaluate each agent independently before composing them into a team
-- Treat multi-user workflows as authority and privacy problems, not just routing problems. Flattening several principals into one chat role makes conflict resolution and access control unreliable
+| State kind | Safe coordination pattern |
+|---|---|
+| immutable input or evidence | content digest and read-only references |
+| append-only findings or receipts | one record per producer with stable identifiers |
+| mutable task ownership | a lease or explicit single writer |
+| shared artifact under edit | isolated worktree or branch plus reviewed merge |
+| directed question | addressed message with sender, recipient, and response record |
+| external side effect | idempotency key, named owner, and target receipt |
 
-## See Also
-- [[agent-fundamentals]] - Single agent architecture
-- [[agent-design-patterns]] - Patterns for individual agents
-- [[langgraph]] - Graph-based multi-agent orchestration
-- [[agent-memory]] - Shared memory across agents
-- [[no-code-platforms]] - Visual multi-agent building with FlowWise
-- [[autonomous-agent-evolution]] - Multi-agent evolution with workspace isolation and shared knowledge
+Avoid a single shared scratchpad that every agent can rewrite. It makes loss, conflict, and accidental instruction injection hard to attribute. If an agent needs a lock, record the resource, holder, heartbeat, expiry, and recovery check.
+
+## Authority Does Not Flow Through a Handoff
+
+A coordinator may ask an agent to investigate a production issue without granting it deployment rights. Tool permissions, data access, approval policy, and the target environment must be assigned per role. A forwarded message, summary, or agent confidence score cannot elevate authority.
+
+Claude Code subagents are a concrete example of a system where delegated roles can be defined with scoped instructions and tool limits; consult the current product documentation for exact fields and precedence. [Create custom subagents](https://code.claude.com/docs/en/subagents)
+
+For a system with external effects, use a release gate outside the debate loop:
+
+1. the worker produces a candidate and evidence;
+2. a verifier compares evidence to the acceptance contract;
+3. a named owner provides any required approval;
+4. the authorized executor performs the action with an idempotency key where applicable;
+5. the workflow records the actual target receipt.
+
+## Review and Aggregation
+
+Parallel work should converge through evidence, not vote count. The coordinator can compare independently gathered sources, deterministic test results, and bounded trade-offs. It must be able to return “not proven” when no candidate meets the contract.
+
+For security or safety concerns, retain the union of findings as triage and verify each finding before treating it as a defect or changing a target. NIST's generative-AI risk profile is a useful framing for maintaining risk and governance evidence across a system lifecycle. [NIST AI RMF: Generative AI Profile](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence)
+
+## Evaluate the Decomposition
+
+A multi-agent workflow needs evaluation at two levels:
+
+| Level | Question |
+|---|---|
+| role | does each worker produce the required artifact within its authority? |
+| system | does the handoff preserve inputs, constraints, and evidence through completion? |
+| operational | do retries, failures, locks, and side effects remain visible and recoverable? |
+| comparative | does the team improve the task's acceptance result against a simpler baseline? |
+
+Keep the simplest arrangement that meets the acceptance contract. More messages, roles, and model calls can increase latency, cost, and inconsistent state without adding new evidence.
+
+## Common Failure Modes
+
+- **Role theatre:** names such as “researcher” or “critic” replace a concrete input/output contract.
+- **Shared mutable memory:** agents overwrite each other's state or treat notes as authority.
+- **Delegated permission:** a handoff is mistaken for approval to use a secret or production target.
+- **Consensus as proof:** several agents repeat the same unsupported claim.
+- **Unbounded retries:** a failed worker relaunches without an attempt limit or recovery condition.
+- **No integration proof:** each role passes locally, but the combined workflow lacks a target receipt.
+
+## References
+
+- [Create custom subagents](https://code.claude.com/docs/en/subagents)
+- [NIST AI RMF: Generative AI Profile](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence)
+- [OWASP AI Agent Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html)
