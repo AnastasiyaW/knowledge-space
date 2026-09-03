@@ -53,6 +53,7 @@ def update_readme(total: int, domains: int, xref: int, counts: dict[str, int]) -
         f"**{total}+ articles | {domains} domains | {xref}+ cross-references**",
         text,
     )
+    text = re.sub(r"\bacross \d+ domains\b", f"across {domains} domains", text)
     row_re = re.compile(r"^\| `([a-z0-9-]+)/` \| +(\d+) +\| (.*?) \|$", re.M)
     rows = row_re.findall(text)
     if not rows:
@@ -92,6 +93,7 @@ def main() -> int:
     sub("mkdocs.yml", [
         (r"\b\d{3}\+ curated articles", f"{total}+ curated articles"),
         (r"\(\d+ articles across \d+ domains\)", f"({total} articles across {domains} domains)"),
+        (r"\bacross \d+ domains\b", f"across {domains} domains"),
     ])
     sub("AGENTS.md", [(r"\(\d{3}\+ articles, \d+ domains\)", f"({total}+ articles, {domains} domains)")])
     sub("docs/blog/posts/welcome.md", [
