@@ -47,7 +47,7 @@ type: MOC
 ## Additional References
 
 - [[adaptive-learning-systems]] - Architecture patterns for AI-powered education systems that adapt to individual learners
-- [[adaptive-patterns-for-autonomous-agents]] - Adaptive agent architectures utilize dynamic hooks and structured state management to reduce
+- [[adaptive-patterns-for-autonomous-agents]] - Use explicit task state, bounded hooks, capability-scoped subagents, and evidence-based gates instead of opaque keyword triggers or arbitrary ambiguity scores.
 - [[agent-architectures]] - How to structure the control flow and state management of an LLM agent beyond individual patterns
 - [[agent-deployment]] - Taking agents from prototype to production
 - [[agent-evaluation]] - Evaluating agents is fundamentally harder than evaluating models
@@ -67,8 +67,8 @@ type: MOC
 - [[claude-code-degradation-2026]] - A receipt-based method for diagnosing coding-agent quality, configuration, cost, and availability changes without inventing a vendor incident.
 - [[claude-code-ecosystem]] - Claude Code plugin system, hooks lifecycle, skills patterns, CLAUDE.md best practices, and the
 - [[claude-code-harness-patterns]] - A practical boundary between instructions, tools, deterministic gates, review, and durable evidence for coding-agent work.
-- [[claude-desktop-session-management]] - Claude Desktop stores conversation history and environment state in local session files
-- [[claude-managed-agents]] - Managed agent runtimes separate the core model (Brain) from the execution sandbox (Hands) and the
+- [[claude-desktop-session-management]] - Use supported export, account, and extension controls rather than relying on unversioned local cache internals for conversation recovery or cross-device synchronization.
+- [[claude-managed-agents]] - Define organization-managed Claude Code subagents with explicit scope, precedence, tool limits, and verification rather than treating managed configuration as a cloud execution runtime.
 - [[context-engineering]] - Managing what information goes into the LLM context window and when
 - [[gradio-llm-interfaces]] - Rapid prototyping of chat UIs with streaming, markdown rendering, and multi-model comparison
 - [[handoff-rollup-pattern]] - How to create a bounded, auditable rollup of long-running agent work without pretending that a summary is lossless.
@@ -80,12 +80,12 @@ type: MOC
 - [[multi-agent-systems-architectures-2026]] - Multi-agent systems (MAS) have diverged into two primary architectural schools: role-based
 - [[multi-session-coordination]] - Durable coordination patterns for several coding-agent sessions: isolated worktrees, manifests, append-only evidence, exclusive-resource leases, and verified integration.
 - [[notebooklm-integration]] - Using Google NotebookLM as a free research backend for Claude Code - token-saving workflows
-- [[oh-my-claudecode-omc-architecture]] - Oh My ClaudeCode (OMC) is an agentic framework extending Claude Code (v4.13.2) through a layered
+- [[oh-my-claudecode-omc-architecture]] - How to adopt the fast-moving OMC plugin without mistaking third-party commands, model routing, or generated state for a stable security or release boundary.
 - [[persona-adaptive-llm]] - A decision framework for profile fields, retrieval memory, and adapter-based personalization with tenant isolation, evaluation, consent, and deletion boundaries.
 - [[scaling-laws-and-benchmarks]] - Chinchilla scaling law, standard benchmarks (ARC, DROP, HellaSwag), and model selection guidelines
 - [[social-media-mcp-tools]] - A provider-neutral, approval-first design for using MCP to draft, validate, and publish social content without treating a social post as a reversible chat action.
 - [[swarm-based-review-and-multisampling-in-agentic-workflows]] - Multisampling and swarm-based review are techniques used to scale LLM reasoning performance at
-- [[telegram-managed-bots]] - Per-user isolated bot instances deployed via a manager bot
+- [[telegram-managed-bots]] - A production-safe guide to Telegram's manager-bot model: creation, token rotation, access settings, state isolation, and lifecycle receipts.
 - [[token-optimization]] - Reducing token consumption in agent systems without degrading task performance
 - [[tool-use-patterns]] - How to design, expose, and manage tools for LLM agents
 - [[uml-driven-agent-development]] - Model-first approach to agent workflow design: specify behavior as diagrams-as-code before writing
