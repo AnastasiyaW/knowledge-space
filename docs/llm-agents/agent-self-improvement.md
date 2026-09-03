@@ -1,216 +1,152 @@
 ---
-title: Agent Self-Improvement
-category: patterns
-tags: [llm-agents, self-improvement, reflection, reward-shaping, learning-from-mistakes, autoresearch]
+title: "Agent Self-Improvement"
+description: "A safe experiment loop for improving agent prompts, tools, code, and policies with frozen evaluations and rollback"
 ---
 
-# Agent Self-Improvement
+# Agent Self-Improvement (September 2026)
 
-Techniques for agents to improve their own performance through reflection, step-level reward signals, and code self-modification - without gradient-based training. Three approaches: runtime reflection (improve during task), trajectory learning (improve between tasks), and code self-modification (improve the agent itself).
+Version context: treat an improvement loop as an experimental system. Its metric, evaluation set, guard conditions, candidate revision, and rollback rule are versioned inputs; changing any of them starts a new experiment series.
 
-## Step-Level Reward Shaping
+An agent should not declare itself improved. Improvement is a measured comparison against a baseline on a held-out evaluation, with safety and operational guard checks.
 
-### The Sparse Reward Problem
+## What May Improve
 
-Standard agent training provides reward only at trajectory end (task success/failure). This makes credit assignment hard - which specific step caused the failure?
+| Target | Safe initial method | Evidence required |
+|---|---|---|
+| Prompt/instructions | One scoped edit | Frozen task eval and output review |
+| Tool descriptions/allowlist | Reduce or clarify the tool set | Tool-use correctness and denied-action tests |
+| Retrieval policy | One retrieval/reranking change | Source-grounded answer and citation evaluation |
+| Workflow code | Isolated branch/worktree change | Tests, build, independent review |
+| Model selection/configuration | Compare candidates | Same suite, latency/cost/safety record |
+| Long-term memory policy | Controlled sandbox trial | Poisoning, expiry, provenance, privacy tests |
 
-```php
-Step 1: Search docs       -> ?
-Step 2: Parse results     -> ?
-Step 3: Write wrong query -> ?  (actual mistake)
-Step 4: Get bad results   -> ?
-Step 5: Wrong answer      -> Reward: 0  (only signal)
+Do not mutate production source, global tools, credentials, or memory based solely on model reflection. Use an isolated environment and promote only verified artifacts.
+
+## Minimal Experiment Contract
+
+```json
+{
+  "experiment_id": "agent-routing-2026-09-03-001",
+  "baseline_revision": "git:abc123",
+  "candidate_revision": "git:def456",
+  "suite_digest": "sha256:...",
+  "primary_metric": "accepted_task_rate",
+  "guard_metrics": {
+    "policy_violations_max": 0,
+    "p95_latency_ms_max": 3000,
+    "cost_per_task_max": 0.05
+  },
+  "decision": "pending"
+}
 ```
 
-**Step-level rewards** assign credit to individual actions:
+A metric without a guard is vulnerable to optimization that damages safety, cost, latency, or reliability. A candidate without a fixed baseline and suite cannot prove a causal change.
 
-```php
-Step 1: Search docs       -> +0.1 (useful action)
-Step 2: Parse results     -> +0.1 (correct parsing)
-Step 3: Write wrong query -> -0.3 (identified as error)
-Step 4: Get bad results   -> -0.1 (wasted compute)
-Step 5: Wrong answer      -> -0.2 (final failure)
-```
-
-### Constructing Step-Level Rewards from Trajectories
-
-Given a failed trajectory `T_fail` and a successful trajectory `T_success` for the same task, identify the divergence point:
+## Keep/Reject Rule
 
 ```python
-def find_divergence(t_fail: list[Step], t_success: list[Step]) -> int:
-    """Find first step where trajectories meaningfully diverge."""
-    for i, (sf, ss) in enumerate(zip(t_fail, t_success)):
-        if sf.action_type != ss.action_type or sf.target != ss.target:
-            return i
-    return min(len(t_fail), len(t_success))
+from dataclasses import dataclass
 
-def construct_step_rewards(t_fail: list[Step], t_success: list[Step]) -> list[float]:
-    """Assign per-step rewards based on trajectory comparison."""
-    div = find_divergence(t_fail, t_success)
-    rewards = []
-    for i, step in enumerate(t_fail):
-        if i < div:
-            rewards.append(0.0)       # shared prefix - neutral
-        elif i == div:
-            rewards.append(-1.0)      # divergence point - mistake
-        else:
-            rewards.append(-0.1)      # cascading from mistake
-    return rewards
+
+@dataclass(frozen=True)
+class Evaluation:
+    primary: float
+    policy_violations: int
+    p95_latency_ms: int
+    cost_per_task: float
+
+
+def accept(
+    baseline: Evaluation,
+    candidate: Evaluation,
+    *,
+    latency_limit: int,
+    cost_limit: float,
+) -> bool:
+    return (
+        candidate.primary > baseline.primary
+        and candidate.policy_violations == 0
+        and candidate.p95_latency_ms <= latency_limit
+        and candidate.cost_per_task <= cost_limit
+    )
 ```
 
-### MCTS-Inspired Exploration for Error Recovery
+Real evaluation also needs confidence intervals or repeated runs when sampling variance is material. The conservative default is to reject ties and regressions.
 
-Use tree search to find recovery paths from mistakes:
+## Controlled Improvement Loop
 
-```python
-def explore_alternatives(state_at_step: State, budget: int = 5) -> list[Trajectory]:
-    """Generate alternative continuations from a given state."""
-    alternatives = []
-    for _ in range(budget):
-        # Roll out from the state with temperature > 0 for diversity
-        traj = agent.rollout(state_at_step, temperature=0.8)
-        alternatives.append(traj)
-    return sorted(alternatives, key=lambda t: t.final_reward, reverse=True)
+1. Freeze the acceptance criteria, test suite, and baseline receipt.
+2. Generate or select one candidate change.
+3. Apply it only in an isolated branch/worktree or sandbox.
+4. Run deterministic tests plus the same agent evaluation suite.
+5. Have an independent evaluator inspect the evidence and adverse cases.
+6. Keep the candidate only if it improves the primary metric and passes every guard.
+7. Preserve the rejected candidate and its receipt; do not silently overwrite history.
+
+The core idea of agent-driven experimental projects such as autoresearch is useful only when the evaluation is real and the change scope is controlled. It is not a license for unbounded self-modification.
+
+## Reflection and Trajectory Data
+
+Model reflection can help generate hypotheses: a failed task may suggest missing tool context, an ambiguous prompt, a faulty parser, or an incomplete stop condition. It is not ground truth.
+
+Store a structured failure record:
+
+```json
+{
+  "task_id": "eval_431",
+  "revision": "git:def456",
+  "terminal_state": "failed",
+  "evidence": ["tool receipt: timeout", "output schema: invalid"],
+  "hypothesis": "retry policy is missing an eligible timeout branch",
+  "review_state": "unverified"
+}
 ```
 
-When a trajectory fails at step N, rewind to step N-1 and explore `budget` alternative continuations. The best alternative becomes a positive training signal; the original becomes a negative one.
+Use the evidence to drive a testable candidate. Do not train on or promote model-authored explanations until their underlying facts are checked.
 
-## Reflection-Based Self-Improvement
+## Evaluation Design
 
-### Post-Task Reflection
+A useful suite contains:
 
-After each task attempt, the agent writes a structured reflection:
+- representative normal tasks;
+- difficult boundary and recovery tasks;
+- malformed input and tool-result cases;
+- policy denials and adversarial injection attempts;
+- regression cases discovered in production;
+- cost, latency, and retry measurements.
 
-```yaml
-## Reflection on Task #{n}
-Result: FAIL (score: 0.3)
+Keep a holdout set that no optimizer or prompt-tuning loop can inspect. Rotate new hidden examples into the holdout after each major release.
 
-### What went wrong
-- Step 3: searched with overly broad query, got irrelevant results
-- Step 5: attempted to answer without sufficient context
+## Promotion Boundary
 
-### What to do differently
-- Use more specific search queries with exact error messages
-- If first search returns < 3 relevant results, reformulate before proceeding
+A candidate can progress through:
 
-### Pattern to remember
-When debugging errors: search for EXACT error message first, not general topic
+```text
+sandbox experiment -> local validation -> independent review
+                   -> staged/canary evaluation -> production release
 ```
 
-### Reflection -> Code Modification Loop
-
-The most powerful form: agent edits its own source code based on reflection:
-
-```python
-def self_improve_cycle(agent_code_path: str, benchmark: list[Task], iterations: int = 10):
-    """Agent improves its own code through reflection."""
-    for i in range(iterations):
-        # 1. Run benchmark
-        results = run_benchmark(agent_code_path, benchmark)
-        score = results["pass_rate"]
-
-        # 2. Analyze failures
-        failures = [r for r in results["details"] if not r["success"]]
-        failure_analysis = analyze_failures(failures)
-
-        # 3. Generate reflection
-        reflection = generate_reflection(
-            current_score=score,
-            failure_patterns=failure_analysis,
-            agent_code=read_file(agent_code_path),
-        )
-
-        # 4. Propose code edit
-        proposed_edit = propose_improvement(reflection, agent_code_path)
-
-        # 5. Apply edit and re-test
-        apply_edit(agent_code_path, proposed_edit)
-        new_results = run_benchmark(agent_code_path, benchmark)
-        new_score = new_results["pass_rate"]
-
-        # 6. Keep or revert
-        if new_score > score:
-            git_commit(f"improvement: {score:.1%} -> {new_score:.1%}")
-        else:
-            git_revert()
-```
-
-Results from research: this pattern achieves 17% -> 53% on SWE-Bench Verified without any gradient training. The key is measuring improvement mechanically (test results) rather than relying on the agent's self-assessment.
-
-## Trajectory Collection and Training
-
-### Building a Training Set from Agent Runs
-
-```python
-def collect_training_pairs(task_pool: list[Task], agent, n_attempts: int = 3):
-    """Run each task multiple times, extract success/failure pairs."""
-    pairs = []
-    for task in task_pool:
-        trajectories = []
-        for _ in range(n_attempts):
-            traj = agent.run(task)
-            trajectories.append(traj)
-
-        successes = [t for t in trajectories if t.success]
-        failures = [t for t in trajectories if not t.success]
-
-        for fail in failures:
-            if successes:
-                # Pair with most similar successful trajectory
-                best_match = min(successes, key=lambda s: trajectory_distance(fail, s))
-                pairs.append((fail, best_match))
-    return pairs
-```
-
-### Preference Learning from Trajectories
-
-Step-level reward pairs can train the agent via DPO (Direct Preference Optimization) or similar:
-
-```python
-# For each divergence point, create a preference pair:
-# preferred = successful step at divergence
-# dispreferred = failed step at divergence
-preference_data = []
-for t_fail, t_success in training_pairs:
-    div = find_divergence(t_fail, t_success)
-    if div < len(t_fail) and div < len(t_success):
-        preference_data.append({
-            "context": t_fail[:div],  # shared prefix
-            "preferred": t_success[div],  # correct next step
-            "dispreferred": t_fail[div],  # wrong next step
-        })
-```
-
-## Practical Self-Improvement Without Training
-
-For prompt-based agents (no fine-tuning access), accumulate learnings in persistent memory:
-
-```markdown
-<!-- .agent/learnings.md - updated after each session -->
-
-## Error Patterns (auto-extracted)
-1. **Broad search queries**: 73% of search failures use < 3 keywords. Fix: always include exact identifiers
-2. **Missing validation**: 45% of code generation failures lack input validation. Fix: add validation step
-3. **Premature answers**: 28% of failures attempt to answer before gathering enough context. Fix: require 3+ sources
-
-## Successful Strategies
-1. **Error message search**: searching exact error text succeeds 89% of the time vs 34% for paraphrased
-2. **Test-first approach**: writing test before implementation succeeds 71% vs 52% for code-first
-```
-
-This file is injected into the system prompt at session start. Over time, the agent accumulates domain-specific heuristics.
+Production feedback is evidence, but it is not authorization for a system to rewrite itself. All promotion remains bound to change control and rollback capability.
 
 ## Gotchas
 
-- **Self-assessment bias**: agents rate their own outputs higher than warranted. Always use mechanical verification (tests, benchmarks, external evaluators) rather than asking the agent "did you do well?" Research shows agents claim success on failed tasks ~40% of the time
-- **Improvement plateaus are real**: the reflection-edit loop typically plateaus after 10-20 iterations on a fixed benchmark. At that point, either change the benchmark, increase diversity of exploration, or switch to a different improvement strategy
-- **Reverting is as important as improving**: without strict revert-on-regression, agents accumulate harmful changes that individually look neutral but collectively degrade performance. Always compare against the last-known-good checkpoint, not just the previous iteration
-- **Step-level rewards require trajectory diversity**: if all attempts fail the same way, there are no divergence points to learn from. Ensure exploration diversity through temperature variation, different initial prompts, or multiple agent configurations
+- **The agent can optimize the metric instead of the outcome.** A narrow scorer can be gamed. **Fix:** use multiple guards, adversarial cases, and manual review of representative outputs.
+- **Test leakage creates fake improvement.** Repeated optimization against the same visible set eventually overfits it. **Fix:** preserve a hidden holdout and treat it as release-only evidence.
+- **Multiple edits destroy causality.** A better score cannot identify which change helped. **Fix:** change one scoped variable per experiment and retain the full receipt.
+- **Model reflections may invent causes.** Plausible explanations are not diagnostics. **Fix:** link hypotheses to logs, receipts, or reproducible tests before editing.
+- **A rollback without artifact integrity is not a rollback.** Mutable branches and overwritten files lose the last known good state. **Fix:** use immutable commit IDs and versioned evaluation records.
+
+## Sources
+
+- [OpenAI API: working with evals](https://developers.openai.com/api/docs/guides/evals)
+- [OpenAI model guidance](https://developers.openai.com/api/docs/guides/latest-model)
+- [karpathy/autoresearch](https://github.com/karpathy/autoresearch)
+- [Git worktree documentation](https://git-scm.com/docs/git-worktree)
 
 ## See Also
 
-- [[autonomous-agent-evolution]] - Multi-agent parallel evolution with shared knowledge
-- [[agent-evaluation]] - Benchmarks and metrics for measuring improvement
-- [[agent-design-patterns]] - Reflexion pattern as foundation for self-critique
-- [[prompt-engineering]] - Prompt-level optimization techniques
-- [[production-patterns]] - Deploying self-improving agents safely
+- [[agent-evaluation]]
+- [[agent-design-patterns]]
+- [[autonomous-agent-evolution]]
+- [[production-patterns]]
+- [[llm-fine-tuning-practical]]
