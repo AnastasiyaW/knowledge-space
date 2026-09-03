@@ -53,6 +53,7 @@ def update_readme(total: int, domains: int, xref: int, counts: dict[str, int]) -
         f"**{total}+ articles | {domains} domains | {xref}+ cross-references**",
         text,
     )
+    text = re.sub(r"\bacross \d+ domains\b", f"across {domains} domains", text)
     row_re = re.compile(r"^\| `([a-z0-9-]+)/` \| +(\d+) +\| (.*?) \|$", re.M)
     rows = row_re.findall(text)
     if not rows:
@@ -88,10 +89,12 @@ def main() -> int:
         (r'(id="ks-graph-nodes">)\d+(</span>)', rf"\g<1>{total}\g<2>"),
         (r'(id="ks-total-domains">)\d+(</span>)', rf"\g<1>{domains}\g<2>"),
         (r"\b\d{3}\+ articles across \d+ domains", f"{total}+ articles across {domains} domains"),
+        (r"\bacross \d+ domains\b", f"across {domains} domains"),
     ])
     sub("mkdocs.yml", [
         (r"\b\d{3}\+ curated articles", f"{total}+ curated articles"),
         (r"\(\d+ articles across \d+ domains\)", f"({total} articles across {domains} domains)"),
+        (r"\bacross \d+ domains\b", f"across {domains} domains"),
     ])
     sub("AGENTS.md", [(r"\(\d{3}\+ articles, \d+ domains\)", f"({total}+ articles, {domains} domains)")])
     sub("docs/blog/posts/welcome.md", [
