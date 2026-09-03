@@ -1,134 +1,126 @@
 ---
-title: "Agentic Systems Landscape (2026)"
-description: "Multi-agent protocols, SDK comparison, orchestration patterns, and real-world coding agent benchmarks as of April 2026."
+title: "Agentic Systems Landscape (September 2026)"
+description: "Protocol boundaries, runtime choices, and production control-plane patterns for agentic systems; reviewed 2026-09-03."
 ---
 
-# Agentic Systems Landscape (2026)
+# Agentic Systems Landscape (September 2026)
 
-State of production agent infrastructure as of April 2026: protocols, SDKs, orchestration patterns, and reality-checked benchmarks.
+Reviewed 2026-09-03. Treat an agent system as an application control plane around probabilistic model calls, not as a collection of autonomous personas. The durable units are contracts, state, permissions, evidence, and rollback boundaries.
 
-## Standard Protocols
+## Protocol Boundaries
 
-Under AAIF (Agentic AI Foundation, Linux Foundation) co-founded by OpenAI, Anthropic, Google, Microsoft, AWS, and Block:
+| Boundary | Use it for | Owns the lifecycle | Do not use it as |
+|---|---|---|---|
+| MCP | Connecting an application-hosted agent to tools, data, and context providers | The host application | A generic agent-to-agent workflow engine |
+| A2A | Exchanging tasks and outcomes between separately operated agents | Each participating agent/service | A replacement for tool authorization or local function calls |
+| Application API | Internal calls between components you deploy together | Your application | A public interoperability protocol without a compatibility contract |
 
-| Protocol | Role | Status |
-|----------|------|--------|
-| **MCP** (Model Context Protocol) | Agent ↔ Tools | 200+ server implementations |
-| **A2A** | Agent ↔ Agent | IBM ACP merged Aug 2025 |
-| **AGENTS.md** | Coding agent config standard | 844K+ site adoptions, ~3200 upvotes for Claude Code support |
+MCP specifies a host-client-server architecture: the host creates clients, controls permissions, and manages lifecycle. [MCP Architecture](https://modelcontextprotocol.io/specification/2025-06-18/architecture)
 
-A2A is the newer protocol enabling direct agent-to-agent communication without a human intermediary. MCP connects agents to external tools and data sources.
+A2A is an interoperability protocol for communication between agents. It complements MCP rather than replacing it: an agent can use MCP to reach its tools and A2A to exchange work with another agent. [A2A specification](https://a2a-protocol.org/latest/)
 
-## SDK Landscape
+## Runtime Choice
 
-| Lab | SDK | Differentiator |
-|-----|-----|---------------|
-| Anthropic | Claude Agent SDK + Managed Agents (public beta Apr 8, 2026) | Managed sandboxed containers, SSE streaming |
-| OpenAI | Agents SDK (formerly Swarm) | Handoff pattern: triage → specialist → escalation |
-| Google | ADK (Python/TS/Java/Go) | Native A2A, auto Agent Cards generation |
-| Microsoft | Semantic Kernel + AutoGen | Enterprise integrations |
-| HuggingFace | Smolagents | Lightweight OSS alternative |
+Choose the smallest runtime that exposes the control you need.
 
-### Claude Managed Agents (April 8, 2026)
+| Need | Suitable starting point | Required control |
+|---|---|---|
+| One bounded task with a few tools | One agent loop in application code | Tool schemas, deadlines, structured final output |
+| A specialist helps a manager | Manager calls specialist as a tool | Manager remains the sole final-output authority |
+| The user should continue with a specialist | Explicit handoff | Routing rule, user-visible ownership, context contract |
+| Independent work items | Deterministic fan-out and fan-in | Idempotency key, concurrency cap, reducer |
+| Long-running or restartable work | Durable workflow/state store | Checkpoints, lease, retry policy, terminal receipt |
 
-Fully managed agent harness:
-1. Create agent config (model + prompt + tools + MCP servers)
-2. Configure container environment (OS packages, language runtimes, network rules)
-3. Run session via API with SSE event stream
+The OpenAI Agents SDK documents two distinct composition patterns: specialists used as tools keep a manager in control, while handoffs transfer the active conversation to a specialist. Its guidance also distinguishes model-selected orchestration from code-selected orchestration. [Agent orchestration](https://openai.github.io/openai-agents-js/guides/multi-agent/)
 
-Eliminates: Docker setup, orchestration code, tool execution layer, fault recovery logic.
+Managed runtimes can reduce infrastructure ownership, but they do not remove the need to define data access, approval, output validation, and incident handling. For example, Claude Managed Agents models an agent as a versioned configuration plus an environment and a session. [Claude Managed Agents](https://platform.claude.com/docs/en/managed-agents/quickstart)
 
-## Multi-Agent Orchestration Patterns
+## Production Control Plane
 
-### ORCH Pattern
+An agent invocation should have one durable record. Store references to large inputs and outputs instead of copying them through every prompt.
 
-Deterministic orchestrator + multiple independent LLMs:
-```text
-Input → LLM-A (analysis) ─┐
-Input → LLM-B (analysis) ──┤→ Merge Agent → Output
-Input → LLM-C (analysis) ─┘
+```json
+{
+  "run_id": "run_01J...",
+  "work_item_id": "news-2026-09-03-001",
+  "parent_run_id": null,
+  "attempt": 1,
+  "input_ref": "s3://private-bucket/intake/001.json",
+  "agent_version": "news-curator@2026-09-03",
+  "tool_policy_id": "news-read-only-v3",
+  "status": "running",
+  "output_ref": null,
+  "evidence": [],
+  "idempotency_key": "news-2026-09-03-001:curate:v3"
+}
 ```
 
-Each LLM analyzes independently; merge agent selects the best reasoning path. Prevents echo-chamber bias from single-model self-review.
+### Required Invariants
 
-### TEA Protocol (arxiv 2506.12508)
+- One component owns each mutable record. Workers may append evidence, but only the workflow controller changes the terminal status.
+- A retry uses the same work item and a new attempt number. It never silently creates a second publication candidate.
+- A tool call has an allowlisted capability, deadline, caller identity, and receipt. Unknown tool outcomes fail closed.
+- A generated answer is not a receipt. A receipt identifies the input, agent/configuration version, tool results, validator result, and timestamp.
+- Public publication is a separate state transition after review. Do not equate successful extraction with approval.
 
-Tools, environments, and agents as first-class **versioned resources** with full lifecycle management:
-- Version history for prompts, tool definitions, agent configs
-- Reproducible replay of any agent state
-- Diff-based debugging across agent versions
+## Build Order
 
-### Hierarchical Partitioning (arxiv 2604.07681)
+1. Implement a single-agent path with a typed input and typed output.
+2. Add deterministic validation before adding another agent.
+3. Add a separately scoped evaluator when a bad output is materially costly.
+4. Add parallel workers only for independent, partitioned work items.
+5. Add durable recovery only when the work can outlive one process.
+6. Add cross-service A2A only when independently owned agents need a stable interoperability boundary.
 
-Central planner decomposes task → parallel executor agents → merge:
-```text
-Planner
-  ├── Executor-A (subgraph 1) ─┐
-  ├── Executor-B (subgraph 2) ──┤→ Planner merge → Output
-  └── Executor-C (subgraph 3) ─┘
-```
+This order keeps the failure surface observable. A multi-agent design is justified by a concrete need for independent work, separation of authority, or a different trust boundary—not by a role name.
 
-Used in production at companies running 4+ agent teams.
+## Model and Tool Routing
 
-### Grok 4.20 Architecture (Reference Implementation)
+Route by the contract, not by a product label.
 
-4-agent architecture:
-- **Coordinator** - task decomposition, handoff management
-- **Researcher** - information retrieval
-- **Logician** - formal verification, consistency checking
-- **Contrarian Analyst** - adversarial review, find flaws
+| Work class | Routing criterion | Example validator |
+|---|---|---|
+| Extraction | Schema is known | JSON schema and source-reference checks |
+| Classification | Allowed labels are finite | Enum validation and confidence policy |
+| Drafting | Human review is required | Editorial checklist and approval record |
+| Code change | Repository state is authoritative | Targeted test plus diff review |
+| External action | Side effect is material | Explicit approval and idempotency key |
 
-All run in parallel; coordinator cross-verifies outputs before synthesis.
+Use a model-selected route only when the route itself is an open-ended reasoning task. Use application code when the route is a policy decision, an authorization boundary, or a budget limit.
 
-## Multi-Model Routing
+## When Not to Add an Agent
 
-Production agents route tasks between model tiers:
+Do not add a specialist merely to rename a prompt. Keep one agent when:
 
-| Task class | Model tier | Example |
-|------------|-----------|---------|
-| Architecture, security review, creative | Frontier (Opus, GPT-5) | System design decisions |
-| Extraction, formatting, refactoring | Light (Sonnet, Haiku, Gemma) | Rename variables, format files |
-| Vision, code-specific | Specialized | Screenshot analysis, SQL generation |
+- the task is sequential and the same permissions apply throughout;
+- the result has one deterministic validator;
+- sharing full context is cheaper and safer than serializing it between agents;
+- no independent reviewer or external trust boundary is needed.
 
-## Coding Agent Reality Check (April 2026)
-
-| Benchmark | Score | vs Aug 2024 |
-|-----------|-------|------------|
-| SWE-bench Verified | 70%+ (top agents) | Was ~20% |
-| SWE-bench Pro (long-horizon) | ~23% (GPT-5, Claude Opus 4.1) | New benchmark |
-
-**Where agents are strong:** Mechanical tasks - migrations, vulnerability remediation, large-scale refactoring. 10-20x speedup on these tasks is reproducible.
-
-**Where agents still fail:** System-level understanding, business domain knowledge, cross-cutting architectural decisions that require understanding WHY code exists, not just what it does.
-
-## Observability (Production Non-Negotiable)
-
-Langfuse (acquired by ClickHouse, January 2026):
-- 2,000+ paying customers
-- 26M+ SDK installs/month
-- 19 of Fortune 50 customers
-- Full agent trace capture: token costs, latency, tool calls, reasoning chains
-
-Agent tracing is not optional in production. Without it, debugging multi-agent failures is nearly impossible.
-
-## Open Source Models (April 2026)
-
-**Gemma 4** (Google, April 2, 2026):
-- Apache 2.0 license
-- Strong agentic, coding, and reasoning capabilities
-- First OSS model meaningfully competing with proprietary frontier models on agent benchmarks
+Splitting work introduces context loss, extra cost, more traces to inspect, and another failure mode at every handoff.
 
 ## Gotchas
 
-- **SWE-bench Pro vs Verified are incomparable.** Verified = 500 human-verified tasks. Pro = longer-horizon, unseen tasks. A 70% Verified score and a 23% Pro score can be from the same model - different difficulty, different scope
-- **Multi-agent setups are 3-7x more expensive.** Agent Teams charges full token costs for each agent's context independently. Budget for this before committing to multi-agent architectures
-- **MCP and A2A solve different problems.** MCP = connect an agent to Slack, GitHub, a database. A2A = let one agent delegate to another specialized agent. Don't replace one with the other
-- **Observability cost is proportional to token volume.** Capturing full traces at 26M SDK installs/month generates significant data. Design retention policies before logging everything
+- **Issue: Treating MCP and A2A as interchangeable.** MCP authorization belongs to the host/tool boundary; A2A addresses communication between agents. **Fix:** document both boundaries separately and use the protocol that owns the relationship.
+- **Issue: Letting a model decide a policy-controlled route.** A natural-language instruction is not an authorization system. **Fix:** keep budgets, publication approval, and destructive-action gates in deterministic application code.
+- **Issue: Retrying with a new identity.** A timeout can leave an external side effect uncertain. **Fix:** persist an idempotency key and reconcile the prior attempt before resubmitting.
+- **Issue: Counting a model response as completion.** A fluent response may omit required evidence. **Fix:** make the workflow terminate only after the validator records a PASS receipt.
+
+## Limitations
+
+Protocols make boundaries explicit; they do not make agents reliable, secure, or mutually trustworthy. Tool behavior, source quality, model non-determinism, and reviewer policy remain application responsibilities. Test the actual workflow with representative failures before increasing autonomy.
 
 ## See Also
 
-- [[multi-agent-systems]]
-- [[claude-code-ecosystem]]
-- [[managed-agents]]
 - [[agent-orchestration]]
+- [[managed-agents]]
+- [[multi-agent-systems]]
 - [[multi-session-coordination]]
+- [[llmops]]
+
+## Sources
+
+- [Model Context Protocol Architecture](https://modelcontextprotocol.io/specification/2025-06-18/architecture)
+- [A2A Protocol](https://a2a-protocol.org/latest/)
+- [OpenAI Agents SDK: Agent Orchestration](https://openai.github.io/openai-agents-js/guides/multi-agent/)
+- [Claude Managed Agents Quickstart](https://platform.claude.com/docs/en/managed-agents/quickstart)

@@ -1,221 +1,169 @@
 ---
 title: "Agent Observability Dashboards"
-description: "Real-time observability for multi-agent and sub-agent systems: hook-based telemetry, event transport pipeline, visualization patterns, and tool landscape."
+description: "Trace contracts, dashboard views, and data-minimizing telemetry for tool-using and multi-agent systems; reviewed 2026-09-03."
 ---
 
 # Agent Observability Dashboards
 
-Real-time visibility into running sub-agents, tool usage, token spend, and skill assignment. Covers hook-based telemetry capture specific to Claude Code multi-agent sessions; for orchestration coordination patterns see [[multi-session-coordination]], for metrics/evaluation pipelines see [[llmops]].
+Reviewed 2026-09-03. An observability dashboard answers four operational questions: what work ran, which authority acted, which tools or models were involved, and what evidence makes the result trustworthy. It should not depend on a particular IDE hook or vendor event name.
 
-## Key Facts
+## Start with a Trace Contract
 
-- Claude Code exposes 12 hook event types covering the full session and sub-agent lifecycle
-- `SubagentStart` / `SubagentStop` are the entry points for per-agent dashboarding; each carries a `subagent_type` field that maps to the invoked skill
-- Events flow: hooks (Python/bash process) → HTTP collector → SQLite WAL → WebSocket → browser
-- SQLite WAL mode is mandatory for concurrent multi-session writes; default journal mode causes exclusive write locks — see [[multi-session-coordination]] for the pattern
-- Self-hosted dashboards give raw hook events; SaaS tracing tools (LangSmith, Phoenix) require OpenTelemetry instrumentation separate from hooks
-- The gap between hook events and skill/checklist visibility requires a small overlay (~200-400 LOC) — hook events do not natively carry skill metadata or checklist progress
-
-## Event Model
-
-### 12 Hook Event Types
-
-| Category | Events |
-|---|---|
-| Session lifecycle | `SessionStart`, `SessionEnd`, `Stop` |
-| Multi-agent | `SubagentStart`, `SubagentStop` |
-| Tool execution | `PreToolUse`, `PostToolUse`, `PostToolUseFailure` |
-| User interaction | `PermissionRequest`, `Notification`, `UserPromptSubmit` |
-| Context | `PreCompact` |
-
-`SubagentStart` and `SubagentStop` bracket each spawned agent's lifetime. `PreToolUse` / `PostToolUse` fire for every tool call inside that agent, enabling per-agent tool attribution when correlated by session ID.
-
-### Minimal Event Schema
+Use one trace for one user-visible workflow or durable work item. Every model call, tool call, handoff, validator, and approval becomes a child span or event.
 
 ```json
 {
-  "event_type": "SubagentStart",
-  "session_id": "sess_abc123",
-  "parent_session_id": "sess_parent456",
-  "timestamp": "2026-05-12T14:03:22.411Z",
-  "subagent_type": "general-purpose",
-  "task_prompt": "Review PR #47 for security issues",
-  "model": "claude-opus-4-8",
-  "metadata": {
-    "hook_event_name": "SubagentStart",
-    "app_name": "my-project"
-  }
+  "schema_version": "agent-trace/v1",
+  "timestamp": "2026-09-03T14:10:31.442Z",
+  "trace_id": "tr_01J...",
+  "span_id": "sp_01J...",
+  "parent_span_id": "sp_01J-parent",
+  "run_id": "run_01J...",
+  "operation": "tool.fetch_source",
+  "actor": { "kind": "agent", "id": "researcher@2026-09-03" },
+  "outcome": "ok",
+  "duration_ms": 184,
+  "input_ref": "source:42",
+  "output_ref": "artifact:claim-set-42",
+  "tool": { "name": "fetch_source", "policy_id": "research-readonly-v2" },
+  "attributes": { "attempt": 1, "environment": "production" }
 }
 ```
 
-```json
-{
-  "event_type": "PostToolUse",
-  "session_id": "sess_abc123",
-  "timestamp": "2026-05-12T14:03:45.002Z",
-  "tool_name": "Read",
-  "tool_input": { "file_path": "/src/auth.py" },
-  "tool_result": "...",
-  "duration_ms": 84,
-  "token_usage": { "input": 1200, "output": 340 }
-}
-```
+Do not put secrets, raw user prompts, access tokens, or unrestricted tool output in the default event payload. Store a controlled reference or digest when replay requires it.
 
-## Pipeline
+## Minimum Span Taxonomy
 
-### Hooks → Collector → Store → Live UI
+| Operation | Parent | Required fields | Success evidence |
+|---|---|---|---|
+| Workflow | None | run ID, objective, owner, terminal state | terminal receipt |
+| Agent turn | Workflow | agent/config version, model, input/output references | validated output or error |
+| Tool call | Agent turn | allowlist policy, tool name, arguments reference, deadline | tool receipt |
+| Handoff | Agent turn | from/to owner, routing reason, context reference | accepted handoff |
+| Validator | Workflow | criteria version, result, findings reference | pass/fail report |
+| Approval | Workflow | reviewer identity, scope, decision | approval receipt |
 
-```text
-Claude agent process
-  │  (PreToolUse / PostToolUse / SubagentStart / SubagentStop ...)
-  ▼
-Python hook script (~/.claude/settings.json → hooks[])
-  │  HTTP POST to local collector
-  ▼
-Bun/Node collector (TypeScript)
-  │  INSERT INTO events (WAL mode)
-  ▼
-SQLite (WAL)
-  │  SELECT polling or change-notification
-  ▼
-WebSocket server
-  │  push to connected browsers
-  ▼
-Browser dashboard (Vue 3 / React + Tailwind)
-```
+The OpenTelemetry GenAI semantic-conventions project covers spans, metrics, and events for GenAI clients and MCP. Use its conventions where they match; keep application-specific fields namespaced and documented. [OpenTelemetry GenAI conventions](https://github.com/open-telemetry/semantic-conventions-genai)
 
-### Minimal Hook Script
+## Emit a Structured Event
 
-Hooks receive event data on `stdin` as JSON. The script reads it, enriches if needed, and POSTs to the collector.
+This dependency-free Python 3.11+ example writes one JSON event per line to standard output. A production collector can forward the same envelope to an OTLP endpoint, a queue, or a database.
 
 ```python
-#!/usr/bin/env python3
-# ~/.claude/hooks/emit_event.py
-# Configured in settings.json under hooks[].command for each event type
+from __future__ import annotations
 
 import json
-import sys
-import urllib.request
+from datetime import UTC, datetime
+from time import perf_counter
+from uuid import uuid4
 
-COLLECTOR_URL = "http://localhost:3001/events"
 
-def main():
-    payload = json.load(sys.stdin)
-    data = json.dumps(payload).encode()
-    req = urllib.request.Request(
-        COLLECTOR_URL,
-        data=data,
-        headers={"Content-Type": "application/json"},
-        method="POST",
-    )
+def emit(operation: str, trace_id: str, started: float, outcome: str) -> None:
+    event = {
+        "schema_version": "agent-trace/v1",
+        "timestamp": datetime.now(UTC).isoformat(),
+        "trace_id": trace_id,
+        "span_id": f"sp_{uuid4().hex}",
+        "operation": operation,
+        "outcome": outcome,
+        "duration_ms": round((perf_counter() - started) * 1000, 2),
+        "attributes": {"environment": "development"},
+    }
+    print(json.dumps(event, separators=(",", ":"), sort_keys=True))
+
+
+def main() -> None:
+    trace_id = f"tr_{uuid4().hex}"
+    started = perf_counter()
     try:
-        urllib.request.urlopen(req, timeout=1)
+        # Replace with a bounded model or tool invocation.
+        result = "validated"
+        emit("agent.generate_summary", trace_id, started, "ok")
+        print(result)
     except Exception:
-        pass  # never block the agent
+        emit("agent.generate_summary", trace_id, started, "error")
+        raise
+
 
 if __name__ == "__main__":
     main()
 ```
 
-### Hook Registration (settings.json)
+## Dashboard Views That Drive Decisions
 
-```json
-{
-  "hooks": {
-    "SubagentStart": [{ "type": "command", "command": "python ~/.claude/hooks/emit_event.py" }],
-    "SubagentStop":  [{ "type": "command", "command": "python ~/.claude/hooks/emit_event.py" }],
-    "PreToolUse":    [{ "type": "command", "command": "python ~/.claude/hooks/emit_event.py" }],
-    "PostToolUse":   [{ "type": "command", "command": "python ~/.claude/hooks/emit_event.py" }],
-    "SessionStart":  [{ "type": "command", "command": "python ~/.claude/hooks/emit_event.py" }],
-    "SessionEnd":    [{ "type": "command", "command": "python ~/.claude/hooks/emit_event.py" }]
-  }
-}
-```
-
-### Collector SQLite Schema (minimal)
-
-```sql
-CREATE TABLE events (
-  id          INTEGER PRIMARY KEY AUTOINCREMENT,
-  session_id  TEXT NOT NULL,
-  parent_id   TEXT,
-  event_type  TEXT NOT NULL,
-  ts          TEXT NOT NULL,
-  payload     TEXT NOT NULL  -- JSON blob
-);
-PRAGMA journal_mode=WAL;
-
-CREATE INDEX idx_session ON events(session_id);
-CREATE INDEX idx_type    ON events(event_type);
-CREATE INDEX idx_ts      ON events(ts);
-```
-
-### What to Visualize
-
-| View | Data source | Key dimensions |
+| View | Primary question | Data needed |
 |---|---|---|
-| Session tree | `SubagentStart` parent/child linking | Agent nesting depth, subagent_type |
-| Per-agent tool timeline | `PreToolUse` / `PostToolUse` grouped by session_id | Tool name, file path, duration_ms |
-| Token spend | `PostToolUse.token_usage` aggregated | Input/output per agent, cumulative |
-| Latency heatmap | `duration_ms` across tool calls | Tool type vs time |
-| Live pulse | All events in rolling window | Color-coded by session |
-| Skill assignment overlay | `SubagentStart.subagent_type` → SKILL.md lookup | Agent → skill description |
-| Checklist tracker | Parse bullet items from `task_prompt` → match against subsequent tool calls | % items resolved |
+| Run list | Which work is stuck, failed, or awaiting approval? | terminal state, owner, age, retry count |
+| Trace tree | Where did time or authority move? | parent/child spans, duration, handoffs |
+| Tool ledger | Which capability caused a failure or cost spike? | tool policy, tool outcome, arguments reference |
+| Validator queue | Which candidates are safe to publish? | criteria version, verdict, evidence reference |
+| Budget view | Which workflow exceeds its allocation? | model/tool units, cost attribution, concurrency |
+| Incident view | Can this run be replayed or reconciled? | idempotency key, external receipt, error category |
 
-The skill assignment overlay and checklist tracker are not provided by any off-the-shelf dashboard as of May 2026 — both require a thin overlay reading your project's skill definitions.
+Avoid vanity charts. A token chart without workflow identity cannot tell an operator which user task or production change it represents.
 
-## Tooling Landscape
+## Pipeline Design
 
-### Self-Hosted (Hook-Native)
-
-| Tool | Architecture | Strengths | Gaps |
-|---|---|---|---|
-| **disler/claude-code-hooks-multi-agent-observability** | Python hooks → Bun TS → SQLite WAL → Vue 3 + Tailwind | Closest fit for Claude Code; captures all 12 event types; session color coding; chat transcript viewer; live pulse | No skill→agent mapping; no checklist tracker; Vue 3 (not React) |
-| **Marc Nuri AI Coding Agent Dashboard** | Heartbeat model + WebSocket relay + enricher pattern | Multi-device; git branch / PR link per session; remote terminal attach; push notifications; workflow templates | Not open source (as of May 2026); focused on cross-device orchestration, not per-agent skill visibility |
-
-### SaaS / General LLM Tracing
-
-| Tool | Model | Self-host | Claude Code native | Best fit |
-|---|---|---|---|---|
-| **LangSmith** | Trace + eval | No (cloud) | No (LangChain ecosystem) | LangGraph production stacks |
-| **Langfuse** | Open-source tracing | Yes | No (OTel required) | General LLM prod, budget-conscious |
-| **Arize Phoenix** | ML-grade, 7 span types | Yes | No (OTel required) | Large-scale production, embedding eval |
-| **AgentOps** | Session replay, time-travel debug | No (cloud) | Partial | Debugging agent regressions |
-| **Helicone** | Drop-in proxy | Yes (partial) | No (proxies API calls, not hooks) | Cost visibility on raw API usage |
-
-**OTel instrumentation** is required for Langfuse/Phoenix/LangSmith. Claude Code hooks produce raw JSON; bridging to OTel spans needs a shim that maps `SubagentStart`→`SPAN_KIND_CLIENT` and `PostToolUse`→child spans. No maintained shim exists as of May 2026.
-
-### Span Type Mapping (for OTel bridge)
-
-```python
-EVENT_TO_OTEL = {
-    "SubagentStart":    "AGENT",
-    "SubagentStop":     "AGENT",   # end marker
-    "PreToolUse":       "TOOL",
-    "PostToolUse":      "TOOL",    # end marker + result
-    "UserPromptSubmit": "LLM",
-    "SessionStart":     "CHAIN",
-    "SessionEnd":       "CHAIN",
-}
+```text
+application / workflow controller
+        |
+        v
+structured trace emitter
+        |
+        v
+collector with schema validation and redaction
+        |
+        +--> durable event store
+        |
+        +--> OpenTelemetry-compatible backend
+        |
+        v
+operator dashboard and alerts
 ```
+
+The collector is a trust boundary. It validates event shape, assigns ingestion time, applies sampling/redaction, and rejects malformed payloads. Instrument at your own workflow and tool boundaries instead of assuming a third-party client emits every event your operations team needs.
+
+The OpenAI Agents SDK exposes built-in tracing with trace, agent, turn, generation, function, guardrail, and handoff spans. An adapter can enrich those spans with your work-item and evidence references rather than replacing its trace hierarchy. [OpenAI Agents SDK tracing](https://openai.github.io/openai-agents-js/guides/tracing/)
+
+## Sampling, Retention, and Privacy
+
+| Data class | Default policy | Escalation |
+|---|---|---|
+| Identifiers and timing | Retain for operational window | Aggregate after the window |
+| Prompt/output text | Do not retain by default | Opt-in, redacted, access-controlled capture |
+| Tool arguments/results | Store references or allowlisted fields | Full capture only for approved debugging |
+| Error payloads | Redact before storage | Time-limited secured incident record |
+
+Set retention by purpose. Debug replay, product analytics, cost allocation, and audit evidence have different access and deletion requirements. Verify the actual storage behavior of the tracing backend you deploy; dashboard UI claims are not a data-retention policy.
+
+## Alert Conditions
+
+Alert on transitions that require action, not raw event volume:
+
+- a run exceeds its deadline or budget;
+- a side-effecting tool has an unknown outcome;
+- validator failure rate changes after an agent/configuration release;
+- an approval queue crosses its age target;
+- a collector rejects events or loses its durable-store acknowledgement.
+
+Every alert should link to a trace ID, owner, evidence reference, and runbook action.
 
 ## Gotchas
 
-- **Issue:** Hook script that raises an exception or times out blocks the agent that fired it. -> **Fix:** Wrap all network calls in `try/except`, use a short timeout (1s), and always `sys.exit(0)` — hooks must never block or crash the parent agent process.
-
-- **Issue:** Multiple parallel sub-agents write to SQLite simultaneously without WAL mode, causing `database is locked` errors and dropped events. -> **Fix:** Always open the collector database with `PRAGMA journal_mode=WAL`. WAL allows concurrent readers alongside a single writer; without it, every INSERT takes an exclusive lock and parallel hooks contend. See [[multi-session-coordination]] for the canonical pattern.
-
-- **Issue:** `PostToolUse` fires for the hook script itself if the hook is registered as a Bash tool call, creating recursive event loops. -> **Fix:** Register hooks using `"type": "command"` (subprocess invocation), not as tool calls. Hooks fired via `command` do not themselves trigger `PreToolUse`/`PostToolUse`.
-
-- **Issue:** `subagent_type` in `SubagentStart` carries the agent's declared type (`general-purpose`, `code-review`, etc.), not the skill name passed in the task prompt. Skill-to-agent mapping requires parsing the `task_prompt` field for skill invocation patterns. -> **Fix:** In the skill overlay, regex-match `task_prompt` against your skill manifest (e.g. `\bcode-review\b`) to reconstruct the assignment; do not rely on `subagent_type` alone.
+- **Issue: Logging raw prompts and tool results by default.** Telemetry becomes a secondary data leak and expensive replay store. **Fix:** log references, hashes, and allowlisted metadata; capture full payloads only under a documented, access-controlled policy.
+- **Issue: Reusing one span ID across retries.** The dashboard cannot distinguish a new attempt from the original uncertain call. **Fix:** keep the trace and work-item identity, but create a new span and attempt number for every retry.
+- **Issue: Treating a client library's events as the complete system trace.** Approval, queueing, and external receipts often happen outside the SDK. **Fix:** instrument workflow-controller boundaries and correlate vendor spans with the durable run ID.
+- **Issue: Alerting on token count alone.** High volume can be legitimate; a silent side-effect timeout is more urgent. **Fix:** alert on violated policy, state, or service-level objectives.
 
 ## See Also
 
-- [[multi-session-coordination]] — git worktrees, SQLite WAL, advisory leases, hook integration for coordination
-- [[llmops]] — production monitoring metrics, structured logging schema, alerting thresholds
-- [[agent-orchestration]] — orchestrator tiers and task decomposition patterns
-- [[multi-agent-systems]] — sub-agent spawning models and trust boundaries
-- [[claude-code-ecosystem]] — full Claude Code tooling map
-- [disler/claude-code-hooks-multi-agent-observability](https://github.com/disler/claude-code-hooks-multi-agent-observability) — reference open-source dashboard
-- [Marc Nuri AI Coding Agent Dashboard](https://blog.marcnuri.com/ai-coding-agent-dashboard) — heartbeat + enricher architecture writeup
-- [Claude Code sub-agents docs](https://code.claude.com/docs/en/sub-agents) — SubagentStart/Stop payload spec
+- [[llmops]]
+- [[agent-orchestration]]
+- [[multi-agent-systems]]
+- [[multi-session-coordination]]
+
+## Sources
+
+- [OpenTelemetry GenAI Semantic Conventions](https://github.com/open-telemetry/semantic-conventions-genai)
+- [OpenAI Agents SDK: Tracing](https://openai.github.io/openai-agents-js/guides/tracing/)
+- [OpenAI Agents SDK: Agent Orchestration](https://openai.github.io/openai-agents-js/guides/multi-agent/)
