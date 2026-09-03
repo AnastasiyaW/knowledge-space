@@ -1,158 +1,100 @@
 ---
-title: Chunking Strategies
+title: "Chunking Strategies for Retrieval (September 2026)"
 category: techniques
-tags: [llm-agents, chunking, text-splitting, document-processing, rag, data-preparation]
+tags: [llm-agents, chunking, retrieval, rag, document-processing]
 ---
 
-# Chunking Strategies
+# Chunking Strategies for Retrieval (September 2026)
 
-Chunking is the process of splitting documents into smaller pieces for embedding and retrieval in RAG systems. Chunk quality directly determines retrieval quality, which determines answer quality.
+Reviewed 2026-09-03. Chunking creates the retrieval units for a document corpus. There is no universal best chunk size: a useful strategy preserves evidence and metadata while optimizing retrieval and answer quality against a real evaluation set.
 
-## Key Facts
-- Chunk size is the most impactful RAG parameter - too small loses context, too large dilutes relevance
-- Chunk overlap prevents cutting important context at boundaries
-- Semantic chunking (split on natural boundaries) preserves meaning better than fixed-size splits
-- Documents should be cleaned before chunking: remove headers/footers, page numbers, watermarks
-- Tables should be extracted as structured data, not as text chunks
+## Start from the Retrieval Contract
 
-## Chunk Size Guidelines
+| Question | Design implication |
+|---|---|
+| What must the answer cite? | Preserve source, version, page/section, and stable locator |
+| What is the user asking for? | Choose a unit that contains enough evidence to answer it |
+| What structure exists? | Prefer headings, records, tables, and semantic boundaries |
+| Which model consumes the result? | Measure token budget with the exact tokenizer |
+| How are documents updated? | Keep chunk identity/version stable enough to delete and re-index |
 
-| Chunk Size | Use Case | Tradeoff |
-|------------|----------|----------|
-| 256-512 chars | Precise Q&A, specific facts | More chunks, more retrieval noise |
-| 512-1000 chars | General purpose, balanced | Good default for most use cases |
-| 1000-2000 chars | Summarization, broader context | Fewer chunks, may dilute relevance |
-| Full document | Single-document Q&A | Only with large context windows |
+LangChain describes retrieval as a modular pipeline of loaders, text splitters, embeddings, vector stores, and retrievers. A splitter is one component, not the whole quality system. [LangChain retrieval](https://docs.langchain.com/oss/python/langchain/retrieval)
 
-## Patterns
+## Strategies
 
-### Recursive Character Text Splitter
+| Strategy | Use when | Main risk |
+|---|---|---|
+| Structure-aware | Headings, records, and paragraphs carry meaning | Broken input structure creates bad boundaries |
+| Token-bounded | The downstream context limit is strict | Tokenizer/version mismatch |
+| Parent-child | Small units retrieve precisely but larger units answer well | Parent linkage and storage complexity |
+| Table/record-aware | Facts live in rows or fields | Flattening loses relationships |
+| Semantic boundary | Cohesive sections matter more than fixed length | Boundary heuristic can be inconsistent |
 
-Most common approach. Recursively splits by separators until chunks are within size limit:
+Choose overlap only when it solves an evaluated boundary-loss problem. Overlap increases index size, retrieval duplication, and prompt cost.
+
+## Structure-Aware Splitter
+
+This Python example uses the current standalone LangChain text-splitters package. It creates bounded chunks while preferring paragraph and line boundaries.
 
 ```python
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+
 
 splitter = RecursiveCharacterTextSplitter(
-    chunk_size=1000,
-    chunk_overlap=200,
-    separators=["\n\n", "\n", ".", " ", ""]
+    chunk_size=800,
+    chunk_overlap=80,
+    separators=["\n\n", "\n", ". ", " ", ""],
 )
-chunks = splitter.split_documents(documents)
+
+chunks = splitter.split_text(
+    "Heading\n\nFirst paragraph with evidence.\n\nSecond paragraph with context."
+)
+print(chunks)
 ```
 
-Tries `\n\n` first (paragraph breaks), falls back to `\n`, then `.`, then space, then character-level as last resort.
+Treat the numeric values as a baseline for evaluation, not a default suitable for every corpus.
 
-### Token-Based Splitting
+## Metadata Contract
 
-Split by token count rather than character count. More accurate for LLM context management since LLMs have token limits:
-
-```python
-from langchain.text_splitter import TokenTextSplitter
-
-splitter = TokenTextSplitter(
-    chunk_size=500,    # tokens, not chars
-    chunk_overlap=50
-)
+```json
+{
+  "chunk_id": "policy-2026-09:section-4:chunk-02",
+  "document_id": "policy-2026-09",
+  "document_version": "sha256:...",
+  "source_locator": {"section": "4", "page": 12},
+  "parent_id": "policy-2026-09:section-4",
+  "text": "..."
+}
 ```
 
-### Semantic Chunking
+Metadata must survive retrieval and reach the answer generator. If the final response cannot identify which version and section supported a claim, the retrieval pipeline cannot provide reliable citation.
 
-Split on natural boundaries (paragraphs, sections, headers) rather than arbitrary counts. Better preserves meaning units.
+## Evaluation
 
-### Hierarchical Chunking
+Evaluate the complete path, not just embedding similarity:
 
-Parent chunks (full sections) + child chunks (paragraphs). Retrieve child for precision, return parent for context. Gives both precise matching and sufficient surrounding context.
-
-## Chunk Overlap
-
-- **Purpose**: prevent cutting important context at chunk boundaries
-- **Typical**: 10-20% of chunk size (e.g., 100-200 chars for 1000-char chunks)
-- **Too much**: duplicate information, increased storage and cost
-- **Too little**: lost context at boundaries
-
-## Document Loaders
-
-| Loader | Format | Notes |
-|--------|--------|-------|
-| **PyPDF / PyPDF2** | PDF | Simple. Struggles with tables and complex layouts |
-| **LlamaParse** | PDF, DOCX | Best PDF extraction - handles tables, images, complex layouts. Cloud service |
-| **Unstructured** | PDF, DOCX, HTML, images | Multi-format, extracts structured elements |
-| **BeautifulSoup** | HTML | Web scraping, HTML parsing |
-| **Firecrawl** | Web pages | Crawls websites, converts to clean markdown |
-| **Cheerio** | HTML (Node.js) | Web scraping for FlowWise/Node.js |
-
-## Data Preparation Checklist
-
-1. **Clean documents**: remove headers/footers, page numbers, watermarks
-2. **Preserve structure**: keep headings, table formatting, list structures
-3. **Add metadata**: source file, page number, section title, date
-4. **Handle tables separately**: extract as structured data, not text chunks
-5. **Test chunk quality**: manually review chunks - do they contain meaningful units?
-6. **Verify indexing**: confirm documents were actually indexed in vector store
+1. Create representative questions with accepted sources and expected answer constraints.
+2. Measure whether the retrieved set contains sufficient evidence.
+3. Measure answer correctness and citation accuracy after generation.
+4. Inspect failures: extraction, segmentation, embedding, ranking, context packing, or model use.
+5. Re-index under a new document/version identity after a material splitter change.
 
 ## Gotchas
-- The #1 mistake in FlowWise: not clicking "Upsert" after connecting documents - RAG retrieves nothing
-- PDF extraction quality varies wildly - always inspect extracted text before chunking
-- Tables in PDFs often turn into garbage text with simple extractors - use LlamaParse or manual extraction
-- Chunk size should be tuned per use case - 1000 chars is just a starting point
-- Very small chunks (< 200 chars) often lack enough context for meaningful embedding
-- Overlapping chunks increase storage costs but significantly reduce boundary-related retrieval failures
 
-## Alternative: Character Text Splitter
-
-Simpler than RecursiveCharacterTextSplitter - splits on a single separator:
-
-```python
-from langchain.text_splitter import CharacterTextSplitter
-
-splitter = CharacterTextSplitter(
-    separator="\n",       # single separator (not a list)
-    chunk_size=1000,
-    chunk_overlap=200
-)
-chunks = splitter.split_documents(docs)
-```
-
-**When to use**: when you know the document structure uses consistent delimiters. Recursive splitter is better for mixed-format documents.
-
-### Practical Splitting Pipeline
-
-Real-world document processing often requires multiple passes:
-
-```python
-from langchain_community.document_loaders import PyPDFLoader
-
-# 1. Load
-loader = PyPDFLoader("handbook.pdf")
-pages = loader.load()  # one Document per page
-
-# 2. Split with metadata preservation
-splitter = RecursiveCharacterTextSplitter(
-    chunk_size=1000,
-    chunk_overlap=200,
-    separators=["\n\n", "\n", ". ", " "]
-)
-chunks = splitter.split_documents(pages)
-
-# Each chunk inherits page metadata (source, page number)
-print(chunks[0].metadata)  # {'source': 'handbook.pdf', 'page': 0}
-
-# 3. Verify before indexing
-print(f"Total chunks: {len(chunks)}")
-print(f"Avg chunk size: {sum(len(c.page_content) for c in chunks)/len(chunks):.0f} chars")
-```
-
-### Indexing Verification Checklist
-
-After indexing, always verify:
-1. Document count matches expectations: `vectorstore._collection.count()`
-2. Sample retrieval works: `vectorstore.similarity_search("test query")`
-3. Metadata is preserved: check `result.metadata` on retrieved docs
-4. No empty chunks: filter chunks with `len(chunk.page_content.strip()) > 50`
+- **Issue: Flattening tables into unlabelled prose.** Row/column relationships disappear before retrieval. **Fix:** retain structured fields or render a stable, labelled representation with a source locator.
+- **Issue: Using character counts for a token-limited model.** A chunk can overflow after formatting or multilingual tokenization. **Fix:** measure the final packed context with the deployment tokenizer.
+- **Issue: Indexing duplicates created by overlap.** Retrieval can return near-identical chunks and hide diverse evidence. **Fix:** deduplicate or diversify results and justify overlap with evaluation data.
+- **Issue: Re-indexing without a document version.** Old chunks can remain retrievable after a source changes. **Fix:** tie every chunk to an immutable document version and delete or filter superseded versions.
 
 ## See Also
-- [[rag-pipeline]] - How chunks flow through the RAG system
-- [[vector-databases]] - Where chunks are stored and searched
-- [[embeddings]] - How chunks become searchable vectors
-- [[production-patterns]] - Knowledge base patterns that bypass chunking
+
+- [[rag-pipeline]]
+- [[embeddings]]
+- [[tokenization]]
+- [[vector-databases]]
+- [[production-patterns]]
+
+## Sources
+
+- [LangChain retrieval overview](https://docs.langchain.com/oss/python/langchain/retrieval)
+- [LangChain text splitters](https://docs.langchain.com/oss/python/integrations/splitters)

@@ -1,164 +1,130 @@
 ---
-title: Function Calling and Tool Use
+title: "Function Calling and Tool Use (September 2026)"
 category: techniques
-tags: [llm-agents, function-calling, tool-use, openai-tools, anthropic-tools, api]
+tags: [llm-agents, function-calling, tool-use, schemas, validation]
 ---
 
-# Function Calling and Tool Use
+# Function Calling and Tool Use (September 2026)
 
-Function calling enables LLMs to output structured tool invocations instead of free text. The model does not execute functions - it generates a JSON object describing which function to call and with what arguments. Your code executes the function and feeds the result back.
+Reviewed 2026-09-03. Function calling is a contract: a model emits a structured request, the application validates and executes it, and the result returns to the model or workflow. The model does not receive authority to execute an action merely by naming a function.
 
-## Key Facts
-- Function calling is more reliable for structured output than asking for JSON in a prompt
-- The model chooses tools based on their descriptions - description quality directly affects tool selection accuracy
-- Models can request multiple tool calls in parallel in a single response
-- Tool results are fed back as messages, creating a multi-turn tool-use conversation
+## The Contract
 
-## Patterns
-
-### OpenAI Function Calling
-
-**Define tools:**
-```python
-tools = [
-    {
-        "type": "function",
-        "function": {
-            "name": "get_weather",
-            "description": "Get current weather for a city. Use when user asks about weather, temperature, or rain.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "city": {"type": "string", "description": "City name, e.g., 'Paris'"},
-                    "units": {"type": "string", "enum": ["celsius", "fahrenheit"]}
-                },
-                "required": ["city"]
-            }
-        }
-    }
-]
+```text
+user request
+    -> model selects a declared tool
+    -> application validates name, schema, policy, and approval
+    -> application executes or rejects the call
+    -> structured result becomes the next model/workflow input
 ```
 
-**Call with tools:**
-```python
-response = client.chat.completions.create(
-    model="gpt-4",
-    messages=[{"role": "user", "content": "What's the weather in Paris?"}],
-    tools=tools,
-    tool_choice="auto"
-)
+| Field | Requirement |
+|---|---|
+| Tool name | Stable, unique, and allowlisted |
+| Arguments | Typed schema with constraints and examples where ambiguity matters |
+| Caller | Run ID, agent version, and tool-policy identity |
+| Deadline | Bounded execution time and cancellation behavior |
+| Result | Structured success or error envelope |
+| Side effect | Explicit approval and idempotency key when material |
 
-message = response.choices[0].message
-if message.tool_calls:
-    for tool_call in message.tool_calls:
-        name = tool_call.function.name
-        args = json.loads(tool_call.function.arguments)
-        result = execute_function(name, args)
-        # Feed result back
-        messages.append(message)
-        messages.append({
-            "role": "tool",
-            "tool_call_id": tool_call.id,
-            "content": str(result)
-        })
-    # Get final response with tool results
-    final = client.chat.completions.create(
-        model="gpt-4", messages=messages, tools=tools
-    )
-```
+The same application-owned loop appears across provider APIs. Claude documents client tool calls as a model request followed by application execution and a tool result; Gemini documents the same responsibility for function execution. [Claude tool-use contract](https://platform.claude.com/docs/en/agents-and-tools/tool-use/how-tool-use-works) [Gemini function calling](https://ai.google.dev/gemini-api/docs/function-calling)
 
-**tool_choice options:**
+## A Minimal Safe Dispatcher
 
-| Value | Behavior |
-|-------|----------|
-| `"auto"` | Model decides whether to call a function |
-| `"none"` | Never call functions (text only) |
-| `"required"` | Must call at least one function |
-| `{"type": "function", "function": {"name": "..."}}` | Force specific function |
-
-### Anthropic Tool Use
+This Python 3.11+ example keeps validation and authority outside the model response.
 
 ```python
-response = client.messages.create(
-    model="claude-3-opus-20240229",
-    max_tokens=1024,
-    tools=[{
-        "name": "get_weather",
-        "description": "Get weather for a location",
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "city": {"type": "string", "description": "City name"}
-            },
-            "required": ["city"]
-        }
-    }],
-    messages=[{"role": "user", "content": "Weather in Paris?"}]
-)
+from __future__ import annotations
 
-for block in response.content:
-    if block.type == "tool_use":
-        result = execute_function(block.name, block.input)
-        messages.append({"role": "assistant", "content": response.content})
-        messages.append({
-            "role": "user",
-            "content": [{"type": "tool_result", "tool_use_id": block.id, "content": str(result)}]
-        })
+from dataclasses import dataclass
+from typing import Any
+
+
+@dataclass(frozen=True)
+class ToolResult:
+    ok: bool
+    payload: dict[str, Any]
+
+
+def get_weather(city: str, units: str = "celsius") -> ToolResult:
+    if units not in {"celsius", "fahrenheit"}:
+        return ToolResult(False, {"error": "unsupported_units"})
+    return ToolResult(True, {"city": city, "units": units, "temperature": 20})
+
+
+TOOLS = {"get_weather": get_weather}
+
+
+def dispatch(call: dict[str, Any]) -> ToolResult:
+    name = call.get("name")
+    arguments = call.get("arguments")
+    if name not in TOOLS:
+        return ToolResult(False, {"error": "tool_not_allowed"})
+    if not isinstance(arguments, dict):
+        return ToolResult(False, {"error": "invalid_arguments"})
+    city = arguments.get("city")
+    units = arguments.get("units", "celsius")
+    if not isinstance(city, str) or not city:
+        return ToolResult(False, {"error": "city_required"})
+    if not isinstance(units, str):
+        return ToolResult(False, {"error": "invalid_units"})
+    return TOOLS[name](city=city, units=units)
+
+
+if __name__ == "__main__":
+    print(dispatch({"name": "get_weather", "arguments": {"city": "Paris"}}))
 ```
 
-### LangChain Tools
+In production, replace the example result with a bounded service call and add authentication, audit logging, idempotency, and domain-specific schema validation.
 
-```python
-from langchain.tools import tool
+## Tool Definition Rules
 
-@tool
-def search_database(query: str, limit: int = 10) -> str:
-    """Search the company database for relevant records.
+| Rule | Why |
+|---|---|
+| Describe when to use and when not to use a tool | Prevents overlapping descriptions from producing arbitrary selection |
+| Keep schemas narrow | Makes validation, policy, and review feasible |
+| Return machine-readable errors | Lets the model recover without parsing prose |
+| Separate read from write tools | Allows different authorization policies |
+| Bind tool access to a phase or task | Avoids exposing unused capabilities |
+| Version a breaking schema change | Existing prompts and clients may rely on the old shape |
 
-    Args:
-        query: Search query string
-        limit: Maximum number of results (default 10)
-    """
-    results = db.search(query, limit=limit)
-    return json.dumps(results)
+Use structured output for a final answer that must match a schema. Use function calling when the model needs an intermediate interaction with an application-owned capability. They solve different stages of a workflow.
+
+## Execution Policy
+
+```json
+{
+  "tool_policy_id": "research-readonly-v2",
+  "allowed_tools": ["search_sources", "read_document"],
+  "requires_approval": ["publish_article", "send_email"],
+  "timeout_ms": 15000,
+  "idempotency_scope": "run_id:tool_call_id"
+}
 ```
 
-## Tool Description Best Practices
+Do not express this policy only in a system prompt. Enforce it in the dispatcher or gateway that performs the action.
 
-**Bad**: `"Does stuff with weather"`
-**Good**: `"Get current weather conditions including temperature, humidity, and precipitation probability for a specific city. Use when the user asks about weather, temperature, or if they should bring rain gear."`
+## Parallel Calls and Retries
 
-Include in parameter descriptions:
-- What the parameter means
-- Expected format/values
-- Constraints (min/max, enum options)
-- Default behavior if omitted
-
-## Tool Calling Patterns
-
-- **Sequential**: each tool result informs the next (search -> get ID -> query details)
-- **Conditional**: model picks tool based on context (weather API vs finance API)
-- **Parallel**: model requests multiple tools simultaneously for independent queries
-- **Composition**: chain tools where each output feeds the next
-
-## Validation
-
-Before executing tool calls, validate:
-- Function name exists in available tools
-- Required parameters are present
-- Parameter types are correct
-- Values are within expected ranges
-- No injection attacks in string parameters
+Parallel calls are safe only when the operations are independent and their result ordering is defined. A retry of an external write must reuse the idempotency key and reconcile any uncertain first attempt before sending another request.
 
 ## Gotchas
-- Tool descriptions are the primary way the model decides which tool to use - invest time in writing clear, specific descriptions
-- Models can generate malformed JSON arguments - always wrap `json.loads` in try/except
-- Smaller/local models are less reliable at function calling than GPT-4 or Claude
-- Each tool call round-trip costs tokens (request + response + tool result + final response)
-- Long tool result strings consume context window - truncate verbose outputs
+
+- **Issue: Calling a tool name supplied by the model without an allowlist.** A model response is untrusted input. **Fix:** resolve names through a server-side registry and reject unknown tools.
+- **Issue: Treating schema validation as authorization.** Valid arguments can still request an impermissible action. **Fix:** evaluate identity, policy, approval, and budget separately from argument shape.
+- **Issue: Returning free-text errors.** The next model turn may invent a recovery path. **Fix:** return stable error codes, retryability, and a safe next action.
+- **Issue: Retrying writes after a timeout.** The original call may have succeeded. **Fix:** persist an idempotency key and query the external receipt first.
 
 ## See Also
-- [[agent-fundamentals]] - How tools fit into the ReAct agent loop
-- [[langchain-framework]] - LangChain tool abstractions
-- [[llm-api-integration]] - API setup for tool-enabled calls
-- [[agent-security]] - Validating tool calls for safety
+
+- [[tool-use-patterns]]
+- [[agent-orchestration]]
+- [[agent-security]]
+- [[llm-api-integration]]
+
+## Sources
+
+- [Claude: How tool use works](https://platform.claude.com/docs/en/agents-and-tools/tool-use/how-tool-use-works)
+- [Claude: Define tools](https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools)
+- [Gemini API: Function calling](https://ai.google.dev/gemini-api/docs/function-calling)
+- [OpenAI Agents SDK: Tools](https://openai.github.io/openai-agents-js/guides/tools/)

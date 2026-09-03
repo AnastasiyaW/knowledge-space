@@ -1,109 +1,90 @@
 ---
-title: Tokenization
+title: "Tokenization for LLM Systems (September 2026)"
 category: concepts
 tags: [llm-agents, tokenization, bpe, wordpiece, sentencepiece, context-window]
 ---
 
-# Tokenization
+# Tokenization for LLM Systems (September 2026)
 
-Tokenization converts raw text into sequences of integer token IDs that transformer models can process. The choice of tokenizer affects vocabulary size, sequence length, multilingual capability, and API cost.
+Reviewed 2026-09-03. Tokenization maps input text to the integer sequences a model consumes. Token counts, special tokens, truncation, and chat formatting are model-specific; never use a generic characters-per-token estimate for a budget or hard limit.
 
-## Key Facts
-- A token is roughly 4 characters or 0.75 words in English
-- Non-English text (Russian, Chinese, Japanese) uses 2-4x more tokens per word - meaning higher API costs
-- Each LLM family has its own tokenizer - tokens from GPT differ from Llama's
-- Modern subword tokenizers virtually eliminate out-of-vocabulary (OOV) issues
-- Context window = maximum tokens the model processes (input + output combined)
+## Tokenization Pipeline
 
-## Tokenization Algorithms
+| Stage | Purpose |
+|---|---|
+| Normalization | Applies configured transformations to raw input |
+| Pre-tokenization | Splits text into candidate units |
+| Model | Maps units/subwords to token IDs |
+| Post-processing | Adds special tokens and sequence structure |
+| Encoding | Holds IDs, offsets, masks, and related metadata |
 
-### BPE (Byte Pair Encoding)
-Iteratively merges the most frequent character/subword pairs. Simple frequency heuristic.
+The Hugging Face Tokenizers API documents this pipeline and the tokenizer components. [Tokenizer API](https://huggingface.co/docs/tokenizers/main/api/tokenizer)
 
-**Used in**: GPT family, RoBERTa, BART
+## Algorithm Families
 
-```python
-from tokenizers import Tokenizer, models, pre_tokenizers, trainers
+| Family | Typical property | Use with care |
+|---|---|---|
+| BPE | Frequent merges create reusable subwords | Vocabulary and byte handling differ by implementation |
+| WordPiece | Subword scoring with continuation conventions | Token representation is tokenizer-specific |
+| Unigram / SentencePiece | Probabilistic subword vocabulary and raw-text handling | Whitespace and normalization policy matter |
+| Character/byte fallback | Coverage for unusual text | Longer sequences can change cost and latency |
 
-tokenizer = Tokenizer(models.BPE())
-tokenizer.pre_tokenizer = pre_tokenizers.Whitespace()
-trainer = trainers.BpeTrainer(vocab_size=1000)
-tokenizer.train_from_iterator(corpus, trainer)
-print(tokenizer.encode("Hello world").tokens)
-```
+The algorithm name does not determine cost or context behavior. The actual tokenizer artifact, chat template, and request serialization do.
 
-### WordPiece
-Optimizes corpus likelihood rather than simple frequency. Uses `##` prefix for continuation subwords ("playing" -> "play" + "##ing").
+## Count with the Exact Tokenizer
 
-**Used in**: BERT
-
-### SentencePiece
-Treats spaces as characters (`_` symbol). Language-agnostic - works on raw text without pre-tokenization. Supports BPE and Unigram modes.
-
-**Used in**: T5, mBART, LLaMA
+This Python example uses a named tokenizer artifact and returns the exact IDs for that artifact.
 
 ```python
-import sentencepiece as spm
-spm.SentencePieceTrainer.Train(
-    '--input=corpus.txt --model_prefix=tok_sp --vocab_size=1000'
-)
-sp = spm.SentencePieceProcessor(model_file='tok_sp.model')
+from tokenizers import Tokenizer
+
+
+tokenizer = Tokenizer.from_pretrained("bert-base-uncased")
+encoding = tokenizer.encode("A token budget must use the deployment tokenizer.")
+
+print("token_count=", len(encoding.ids))
+print("tokens=", encoding.tokens)
 ```
 
-## Special Tokens
+For hosted APIs, use the provider documented tokenizer/counting method for the exact model and request format. Include system messages, tool definitions, retrieved context, attachments, and expected output reservation in the budget.
 
-| Token | Purpose | BERT | GPT | T5 |
-|-------|---------|------|-----|-----|
-| [CLS] / \<s\> | Classification aggregate | Yes | No | \<s\> |
-| [SEP] / \</s\> | Sentence separator | Yes | `\n\n` | \</s\> |
-| [PAD] | Batch padding | Yes | \<eos\> | \<pad\> |
-| [MASK] | Masked language modeling | Yes | No | \<extra_id_N\> |
-| \<unk\> | Unknown token | Yes | No (BPE covers all) | Yes |
+## Context Budget
 
-Multimodal markers: `<image>`, `<video>`, `<speech>` used in Flamingo, LLaVA, Kosmos-1.
-
-## Token Counting
-
-```python
-import tiktoken
-
-enc = tiktoken.encoding_for_model("gpt-4")
-tokens = enc.encode("Hello world")
-print(len(tokens))  # exact token count
-
-# Cost estimation
-input_tokens = len(enc.encode(prompt))
-cost = input_tokens * 2.50 / 1_000_000  # GPT-4o input price
+```text
+context_limit
+  - fixed instructions
+  - tool schemas
+  - conversation state
+  - retrieved evidence
+  - current user input
+  - output reservation
+  = remaining input budget
 ```
 
-## Context Windows
+Do not truncate silently. Define which content can be summarized, retrieved again, rejected, or held for a smaller task.
 
-| Model | Context Window |
-|-------|---------------|
-| BERT | 512 tokens |
-| GPT-4 | 8K / 128K tokens |
-| Claude 3 | 200K tokens |
-| Gemini 1.5 Pro | 1M tokens (up to 2M preview) |
-| Llama 3 | 8K (extended variants) |
-| Mistral Large | 128K tokens |
+## Unicode and Structured Data
 
-### Extending Effective Context
-- **Truncation**: cut left/right context for local tasks
-- **Sliding window + aggregation**: process in windows, merge results
-- **Map-reduce summarization**: summarize chunks, merge summaries
-- **RAG**: index corpus, inject only relevant fragments
-- **KV-cache reuse**: cache static instructions separately from variable content
+- Different languages, code, JSON, URLs, and base64 payloads can have very different token densities.
+- A visible character sequence can normalize or split differently between tokenizers.
+- Tool definitions and large tool results can consume context before the user input is processed.
+- Multimodal request accounting is provider-specific; use the provider current guidance instead of treating media as text tokens.
 
 ## Gotchas
-- Token boundaries don't align with word boundaries - LLMs struggle with character-level tasks like string reversal
-- Same text tokenizes differently across models - always count with the specific model's tokenizer
-- Code and JSON are often more token-expensive than prose
-- System prompt, function schemas, and chat history all count toward context window
-- Output token limits are separate from context window (typically 4K-16K per response)
-- "Lost in the middle" problem: information in the middle of long contexts is less likely to be attended to
+
+- **Issue: Estimating costs with a fixed characters-per-token rule.** The estimate can be wrong for non-English text, code, or structured data. **Fix:** count with the exact deployment tokenizer and full request serialization.
+- **Issue: Using the base-text tokenizer but omitting chat/tool formatting.** The request can exceed the real context limit. **Fix:** account for system instructions, tool schemas, retrieved chunks, and output reserve.
+- **Issue: Truncating the newest evidence by accident.** A simplistic slice can preserve irrelevant history and lose the task. **Fix:** define a state-aware truncation or retrieval policy.
+- **Issue: Changing tokenizer artifacts without evaluation.** Token boundaries can affect retrieval, prompt length, and model behavior. **Fix:** version the tokenizer with the model configuration.
 
 ## See Also
-- [[transformer-architecture]] - How transformers process token sequences
-- [[embeddings]] - Converting tokens to vector representations
-- [[llm-api-integration]] - Token counting for API cost management
-- [[model-optimization]] - Quantization reduces per-token compute
+
+- [[chunking-strategies]]
+- [[context-engineering]]
+- [[rag-pipeline]]
+- [[model-optimization]]
+
+## Sources
+
+- [Hugging Face Tokenizers API](https://huggingface.co/docs/tokenizers/main/api/tokenizer)
+- [Hugging Face Transformers tokenizer reference](https://huggingface.co/docs/transformers/main_classes/tokenizer)
