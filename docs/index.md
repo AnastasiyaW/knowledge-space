@@ -55,7 +55,7 @@ hide:
 
 # Knowledge Space
 
-Curated technical knowledge base across 26 domains. Built for LLM agents and engineers.
+Curated technical knowledge base across 27 domains. Built for LLM agents and engineers.
 
 ## What is this?
 
@@ -68,7 +68,7 @@ Each article is a concentrated extract: code examples, configuration patterns, g
 **Who it's for:**
 
 - **LLM agents** - structured format optimized for RAG retrieval, [ConTree MCP](https://contree.dev/), and context injection
-- **Engineers** - quick lookup of patterns, commands, configurations across 26 domains
+- **Engineers** - quick lookup of patterns, commands, configurations across 27 domains
 - **Teams** - shared knowledge base accessible via ConTree sandbox or direct file access
 
 ## How to use
