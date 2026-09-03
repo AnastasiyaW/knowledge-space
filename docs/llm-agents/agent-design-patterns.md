@@ -1,116 +1,141 @@
 ---
-title: Agent Design Patterns
-category: techniques
-tags: [llm-agents, react, plan-and-execute, reflexion, mrkl, agent-patterns]
+title: "Agent Design Patterns"
+description: "Select bounded control-flow patterns for LLM systems: direct tools, ReAct, plans, state machines, and specialist handoffs"
 ---
 
-# Agent Design Patterns
+# Agent Design Patterns (September 2026)
 
-Established patterns for structuring agent behavior, from simple tool-calling to sophisticated self-correcting loops. Pattern choice depends on task complexity, required reliability, and cost constraints.
+Version context: patterns are architectural choices, not framework features. Pin the model, tool schemas, policy revision, and evaluation suite used by a deployed flow.
 
-## Key Facts
-- ReAct (Reasoning + Acting) is the foundational pattern for most agent implementations
-- Explicitly generating reasoning traces before actions improves tool selection accuracy
-- Plan-and-execute is better for complex multi-step tasks where the plan can be reviewed
-- Self-critique loops improve output quality but multiply cost (2-5x more LLM calls)
-- Design principles: minimize scope, prefer deterministic steps, log everything, set iteration limits
+A good agent pattern makes the decision boundary explicit: the model may propose the next action, while deterministic code decides whether that action is allowed, records the result, and chooses the terminal state.
 
-## Patterns
+## Start Below Agency
 
-### ReAct (Reasoning + Acting)
+Use the least dynamic shape that meets the task:
 
-LLM interleaves thinking with tool calling:
+| Shape | Model decides | System decides |
+|---|---|---|
+| Direct tool call | Nothing beyond input content | Tool, parameters, authorization, response |
+| Fixed workflow | Content within a known step | Step order, retries, state transitions |
+| Bounded ReAct loop | Next allowed read/reasoning step | Tool allowlist, budget, termination |
+| Plan and execute | Candidate plan and replanning request | Plan validation, step execution, approval |
+| Specialist handoff | Suitable authorized specialist | Identity, history projection, capability |
+| DAG | Node-local proposal | Dependencies, joins, concurrency, receipts |
 
-```php
-Thought -> Action -> Observation -> Thought -> ... -> Final Answer
-```
+A fixed workflow is usually easier to test and safer to operate. Add an agent loop only when the next step genuinely depends on information that cannot be enumerated beforehand.
 
-**Key insight**: generating reasoning traces before actions dramatically improves tool selection and parameter accuracy vs. direct action-only approaches.
+## Bounded ReAct
 
-### Plan-and-Execute
-
-Two-phase approach:
-
-1. **Planning phase**: LLM generates ordered list of steps with dependencies
-2. **Execution phase**: execute each step, re-plan if results differ from expectations
-
-**Advantages over ReAct**: better for complex tasks, plan reviewable by human, easier to debug (which step failed?).
-
-**Disadvantage**: initial plan may not account for unexpected tool outputs.
-
-### MRKL (Modular Reasoning, Knowledge, and Language)
-
-LLM as router/coordinator with specialist modules (calculator, search, SQL executor). LLM decides which module to invoke and how to interpret output. Foundation for most tool-use agent architectures.
-
-### Reflexion / Self-Critique
-
-Agent evaluates its own output and iteratively improves:
+The ReAct paper describes interleaving reasoning traces with actions and observations. In production, do not treat raw model reasoning as an audit log or a permission grant. Persist structured action proposals and tool receipts instead.
 
 ```text
-1. Generate initial response
-2. Critique: "What's wrong with this response?"
-3. Identify specific issues
-4. Generate improved response
-5. Repeat until satisfactory or max iterations
+input -> model proposes an allowed action -> policy validates
+      -> tool executes -> receipt persists -> next state or terminal result
 ```
 
-**Use cases**: code generation (write -> test -> fix -> test), complex analysis, creative writing.
+Every loop needs a stop condition: successful evidence, insufficient information, denied action, exhausted attempt/cost/time budget, or external approval required.
 
-### Scratchpad Management
+## Action Proposal Contract
 
-The accumulated history of thoughts, actions, and observations fed back to the LLM at each step. Grows with each iteration.
+Require the model to emit a schema that is independent of any provider SDK:
 
-**Management strategies**:
-- Truncation: drop oldest entries when approaching context limit
-- Summarization: periodically summarize older entries
-- Selective retention: keep key decisions, drop routine observations
-
-## Tool Selection Patterns
-
-| Pattern | Description | When to Use |
-|---------|-------------|-------------|
-| **Static tool set** | Fixed list of available tools | Well-defined domains |
-| **Dynamic discovery** | Agent searches for tools at runtime | Open-ended tasks |
-| **Tool composition** | Chain tool outputs as inputs | Multi-step data processing |
-
-## Design Principles
-
-1. **Minimize agent scope**: each agent does one thing well
-2. **Prefer deterministic steps**: use code/scripts for deterministic operations, LLM only for reasoning
-3. **Log everything**: full trace of thoughts, actions, observations for debugging
-4. **Set iteration limits**: prevent infinite loops (max 10-20 steps typical)
-5. **Validate outputs**: check tool call parameters before execution
-6. **Human-in-the-loop**: require human approval for high-stakes actions
-7. **Start with workflows, add agency gradually**: don't make everything autonomous
-
-## Structured Output from Agents
-
-Force agents to produce structured data at each step:
-
-```python
-# Tool call schema
+```json
 {
-    "tool": "search_database",
-    "parameters": {
-        "query": "quarterly revenue 2024",
-        "filters": {"department": "sales"}
-    },
-    "reasoning": "Need sales figures to answer user's revenue question"
+  "action": "search_documents",
+  "arguments": {"query": "invoice INV-42"},
+  "purpose": "find the authorized invoice record",
+  "expected_receipt": "document-list-v1"
 }
 ```
 
+The `purpose` is an operator-visible summary, not hidden chain-of-thought. The policy layer validates action name, argument schema, actor scope, and remaining budget before any tool runs.
+
+```python
+from dataclasses import dataclass
+from typing import Any
+
+
+@dataclass(frozen=True)
+class ActionProposal:
+    action: str
+    arguments: dict[str, Any]
+    purpose: str
+
+
+ALLOWED_ACTIONS = {"search_documents", "get_invoice"}
+
+
+def authorize(proposal: ActionProposal, remaining_steps: int) -> None:
+    if remaining_steps <= 0:
+        raise RuntimeError("step budget exhausted")
+    if proposal.action not in ALLOWED_ACTIONS:
+        raise PermissionError(f"action is not allowed: {proposal.action}")
+    if not proposal.purpose.strip():
+        raise ValueError("operator-visible purpose is required")
+```
+
+## Plan and Execute
+
+A plan is a mutable hypothesis, not a command. Use a plan when:
+
+- the task has multiple dependent objectives;
+- an operator needs to inspect a proposed approach before side effects;
+- intermediate results may trigger an authorized replan;
+- each step can produce a receipt and a defined failure state.
+
+Keep planning and execution separate. Validate a plan against current permissions and facts immediately before each step; never execute an old plan blindly after tools, data, or policy have changed.
+
+## Reflection and Verification
+
+A self-critique model call can produce useful hypotheses, but it is not verification. Use it to generate candidate checks, then run deterministic tests, source retrieval, schema validation, or an independent evaluator.
+
+| Need | Suitable mechanism |
+|---|---|
+| Validate JSON / typed output | Schema validator |
+| Verify a calculation | Deterministic code |
+| Verify a source claim | Retrieved primary source with citation |
+| Verify a code change | Test/build plus independent review |
+| Generate alternative strategy | Model critique or planner |
+| Approve high-impact action | Authorized human or policy service |
+
+## Tool Discovery and Composition
+
+Dynamic tool discovery expands the attack surface and the model's decision space. Prefer a small task-scoped allowlist. If discovery is required, treat tool metadata as untrusted until its identity, schema, permissions, and side-effect class are verified.
+
+Tool composition needs a contract at every edge: output schema, tenant/actor scope, error behavior, deadline, idempotency key, and receipt. An observation that lacks provenance must not drive a side-effecting step.
+
+## Handoffs
+
+A handoff is appropriate when a distinct capability or authority owns the next task. It must carry a typed request, an approved context projection, a deadline, a trace reference, and a defined owner for the final response.
+
+Do not hand an entire conversation to a specialist by default. Minimize it to the facts and artifacts the specialist is authorized to see.
+
+## Pattern Selection Checklist
+
+1. Write the terminal result and evidence required to call it complete.
+2. Identify every side effect and authorization boundary.
+3. Implement the shortest deterministic workflow that meets the task.
+4. Add a bounded agent decision only where the next step is genuinely unknown.
+5. Instrument action proposals, policy decisions, tool receipts, and stop reason.
+6. Evaluate the whole flow against representative and adversarial cases.
+
 ## Gotchas
-- Agent enters infinite loop: always set max_iterations (10-20)
-- Scratchpad overflow: summarize or truncate older entries
-- Model generates invalid tool calls: add validation before execution
-- Over-engineering: simple ReAct handles 80% of use cases, don't add complexity prematurely
-- Reflexion multiplies cost: each self-critique loop is an additional LLM call
+
+- **A model-generated plan can become stale.** Tool output and permissions change after planning. **Fix:** authorize and validate immediately before each action, then replan from current receipts.
+- **Raw reasoning is not a security control.** It may be incomplete, sensitive, or misleading. **Fix:** persist structured proposals, policies, and receipts rather than relying on hidden reasoning text.
+- **Reflection can amplify the same mistake.** The same model may rationalize an incorrect answer. **Fix:** use independent deterministic checks or a separately calibrated evaluator.
+- **Dynamic discovery is not authorization.** An advertised tool can be unsuitable or malicious. **Fix:** enforce identity, schema, and task-scoped permission checks outside the model.
+
+## Sources
+
+- [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)
+- [OpenAI Agents SDK: agent orchestration](https://openai.github.io/openai-agents-js/guides/multi-agent/)
+- [OpenAI model guidance: tool orchestration](https://developers.openai.com/api/docs/guides/latest-model)
 
 ## See Also
-- [[agent-fundamentals]] - Agent components and architecture overview
-- [[multi-agent-systems]] - Patterns for multiple collaborating agents
-- [[function-calling]] - How tool calls work at the API level
-- [[langchain-framework]] - Framework implementations of these patterns
-- [[langgraph]] - Graph-based agent orchestration
-- [[agent-self-improvement]] - Self-critique extended to agent self-modification
-- [[autonomous-agent-evolution]] - Heartbeat reflection pattern for long-running agents
+
+- [[agent-fundamentals]]
+- [[agent-architectures]]
+- [[function-calling]]
+- [[tool-use-patterns]]
+- [[multi-agent-systems]]

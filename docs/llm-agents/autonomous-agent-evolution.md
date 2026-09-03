@@ -1,276 +1,147 @@
 ---
-title: Autonomous Agent Evolution
-category: patterns
-tags: [llm-agents, multi-agent, evolution, workspace-isolation, shared-knowledge, heartbeat, self-improvement]
+title: "Autonomous Agent Evolution"
+description: "Run parallel agent experiments safely with isolated worktrees, append-only evidence, resource locks, and independent evaluation"
 ---
 
-# Autonomous Agent Evolution
+# Autonomous Agent Evolution (September 2026)
 
-Replacing fixed evolutionary search (agents as stateless workers) with long-lived autonomous agents that control the entire search process: what to retrieve, when to evaluate, what to retain. Key innovation: workspace isolation + shared knowledge layer + periodic reflection.
+Version context: this page describes a controlled experiment architecture, not a claim that autonomous agents should modify production systems. Pin the repository revision, evaluator, task manifest, environment image, and resource policy for every run.
 
-## Core Architecture
+Parallel agents can explore independent candidate changes, but only when the work has a measurable objective, isolated mutation space, and a promotion path that rejects unsupported results.
 
-### Isolated Workspaces
+## Admission Gate
 
-Each agent operates in a separate workspace (git worktree, container, or directory) to prevent interference. Agents can run different experiments in parallel without merge conflicts.
+Do not launch a parallel evolution run until all conditions hold:
+
+1. A task manifest enumerates every candidate unit of work.
+2. A deterministic or independently reviewable evaluator exists.
+3. Each worker has an isolated branch/worktree or sandbox.
+4. Shared mutable resources have explicit locks and external verification.
+5. Output artifacts have stable IDs, digests, and retention policy.
+6. A coordinator owns promotion, rollback, and terminal accounting.
+
+Without these conditions, parallel agents create concurrent edits and unverified narratives rather than evidence.
+
+## Isolation Model
+
+Git worktrees permit multiple checked-out branches of one repository. They isolate file changes by branch, but they do not isolate processes, network access, credentials, mounted drives, or cloud resources.
 
 ```text
-agent-0/          # git worktree for agent 0
-agent-1/          # git worktree for agent 1
-agent-2/          # git worktree for agent 2
-.shared/          # shared knowledge (symlinked into each workspace)
-  attempts/       # historical evaluations indexed by commit hash
-  notes/          # markdown observations (hierarchical)
-  skills/         # reusable procedures and scripts
+coordinator
+  ├── worker-a: worktree + branch + task shard
+  ├── worker-b: worktree + branch + task shard
+  └── evaluator: fresh context, read-only evidence review
+shared: append-only receipts + explicit resource locks
 ```
 
-```bash
-# Setup per-agent worktrees from a base repo
-git worktree add agent-0 -b agent-0-branch
-git worktree add agent-1 -b agent-1-branch
-# Symlink shared knowledge into each
-ln -s $(pwd)/.shared agent-0/.shared
-ln -s $(pwd)/.shared agent-1/.shared
-```
+Use environment-level controls when workers must not share secrets, GPU capacity, ports, databases, or external-service credentials.
 
-**Why worktrees over branches**: agents need simultaneous filesystem access. Branch switching would serialize work. Worktrees give each agent a full working copy while sharing the git object store.
-
-### Shared Knowledge Layer
-
-Three artifact types, all readable by every agent:
-
-| Artifact | Format | Purpose |
-|----------|--------|---------|
-| `attempts/` | `{commit-hash}.json` with score + metadata | Prevent re-evaluation of identical solutions |
-| `notes/` | Hierarchical markdown files | Observations, patterns, failed approaches |
-| `skills/` | Executable scripts + markdown docs | Reusable procedures discovered during search |
+## Manifest-Backed Work
 
 ```json
-// .shared/attempts/a3f2b1c.json
 {
-  "commit": "a3f2b1c",
-  "agent": 2,
-  "score": 0.3809,
-  "approach": "greedy interval optimization with symmetry breaking",
-  "timestamp": "2026-04-01T14:23:00Z",
-  "parent_commit": "b7e4d2a",
-  "delta_score": 0.0003
+  "run_id": "evolution-2026-09-03",
+  "baseline_commit": "abc123",
+  "evaluator_revision": "git:eval456",
+  "objective": "accepted_task_rate",
+  "guard_metrics": {"policy_violations_max": 0},
+  "shards": [
+    {"id": "A", "state": "pending", "owner": null},
+    {"id": "B", "state": "pending", "owner": null}
+  ],
+  "promotion_state": "hold"
 }
 ```
 
-```markdown
-<!-- .shared/notes/optimization/symmetry-breaking.md -->
-# Symmetry Breaking in Interval Placement
+A shard is complete only after it has a terminal evaluation receipt. A worker process, branch, or progress message is not proof of completion.
 
-Forcing the first interval to start at 0 eliminates ~50% of the search
-space without losing optimal solutions. Confirmed by agents 0 and 2
-across 8 independent evaluations.
+## Worker Protocol
 
-Related attempts: a3f2b1c, d4e5f6g
+For each assigned shard:
+
+1. Check that the shard is still `pending` under the manifest lock.
+2. Create or claim an isolated worktree/branch from the recorded baseline.
+3. Apply one bounded candidate change.
+4. Run the named evaluator and preserve raw result, digest, environment, and commit ID.
+5. Mark the shard `passed`, `rejected`, or `blocked_external` with a reason.
+6. Send only evidence references to the coordinator; never promote directly to the baseline.
+
+A worker should not reuse an attempted task without reconciling the prior receipt and idempotency key.
+
+## Shared Knowledge Without Races
+
+Keep shared information in two categories:
+
+| State | Safe representation | Rule |
+|---|---|---|
+| Evidence, observations, receipts | Per-run append-only files | Never rewrite another worker's record |
+| Locks, reservations, current winner | One resource-specific file | Claim atomically; check external state before recovery |
+
+Example receipt:
+
+```json
+{
+  "shard_id": "A",
+  "candidate_commit": "def456",
+  "parent_commit": "abc123",
+  "evaluator_digest": "sha256:...",
+  "primary_metric": 0.0,
+  "guards": {"policy_violations": 0},
+  "verdict": "rejected",
+  "recorded_at": "2026-09-03T18:00:00Z"
+}
 ```
 
-### Heartbeat Mechanism
+Observations are helpful but are not shared instructions. Treat agent-authored notes as untrusted hypotheses until the referenced evaluator or source confirms them.
 
-Three reflection types at different frequencies prevent tunnel vision:
+## Selection and Promotion
 
-**Per-iteration reflection** (every evaluation):
+The coordinator compares only receipts produced by the same evaluator revision and comparable environment. A candidate wins only when it improves the primary objective and passes every guard.
 
-```kotlin
-After eval #{n} with score {s}:
-1. What did this change accomplish?
-2. Was the score change expected?
-3. Write 1-2 line observation to .shared/notes/
+```text
+candidate receipt -> independent evaluator -> selection record
+                  -> integration test -> staged/canary evidence -> promotion
 ```
 
-**Periodic consolidation** (every ~10 evaluations):
+Use a fresh evaluator context for final acceptance. The worker that made a change cannot certify its own semantic correctness.
 
-```sql
-1. Review own progress over last 10 evals
-2. Browse other agents' notes in .shared/notes/
-3. Organize scattered observations into structured notes
-4. Extract reusable patterns into .shared/skills/
-5. Identify promising directions from other agents' work
-```
+## Resource Locks
 
-**Stagnation redirection** (5 consecutive non-improving evaluations):
+Git is not a lock manager for GPUs, ports, databases, remote queues, or external URLs. For each mutable resource, record owner, heartbeat, process ID or reservation ID, attempt budget, and recovery procedure.
 
-```sql
-1. Forced reassessment: "Current approach is not working"
-2. Read all recent notes from ALL agents
-3. Identify unexplored directions
-4. Pivot to fundamentally different approach
-5. Log the pivot reason in notes
-```
+Before reclaiming a stale lock, verify externally that the owner process or remote operation is no longer active. Do not infer that a resource is free from an old timestamp alone.
 
-Without heartbeats, agents fixate on local optima and stop sharing knowledge. The consolidation step is critical - it forces cross-pollination between agents.
+## Stagnation and Stop Conditions
 
-## Implementation Patterns
+Stop or redirect a run when:
 
-### File-Based Knowledge Sharing
+- every shard has a terminal receipt;
+- the evaluator is invalid or unavailable;
+- repeated candidates regress under the same measurement;
+- a resource/security guard is triggered;
+- the configured attempt/cost/time budget is reached.
 
-The simplest approach for Claude Code / coding agent setups:
-
-```python
-import json
-import glob
-from pathlib import Path
-
-SHARED = Path(".shared")
-
-def log_attempt(commit: str, score: float, approach: str, agent_id: int):
-    """Log evaluation result to shared knowledge."""
-    entry = {
-        "commit": commit,
-        "agent": agent_id,
-        "score": score,
-        "approach": approach,
-    }
-    (SHARED / "attempts" / f"{commit}.json").write_text(json.dumps(entry, indent=2))
-
-def get_best_score() -> float:
-    """Read current best from shared attempts."""
-    best = 0.0
-    for f in glob.glob(str(SHARED / "attempts" / "*.json")):
-        data = json.loads(Path(f).read_text())
-        best = max(best, data["score"])
-    return best
-
-def check_stagnation(agent_id: int, window: int = 5) -> bool:
-    """Detect if this agent has stagnated."""
-    my_attempts = sorted(
-        [json.loads(Path(f).read_text())
-         for f in glob.glob(str(SHARED / "attempts" / "*.json"))
-         if json.loads(Path(f).read_text())["agent"] == agent_id],
-        key=lambda x: x["timestamp"],
-    )
-    if len(my_attempts) < window:
-        return False
-    recent = my_attempts[-window:]
-    return all(a.get("delta_score", 0) <= 0 for a in recent)
-```
-
-### Evaluation Deduplication
-
-Avoid re-running expensive evaluations on identical solutions:
-
-```python
-import hashlib
-
-def solution_hash(code: str) -> str:
-    """Content-based hash ignoring whitespace/comments."""
-    # Strip comments and normalize whitespace
-    lines = [l.strip() for l in code.splitlines()
-             if l.strip() and not l.strip().startswith("#")]
-    return hashlib.sha256("\n".join(lines).encode()).hexdigest()[:12]
-
-def already_evaluated(code: str) -> bool:
-    h = solution_hash(code)
-    return (SHARED / "attempts" / f"{h}.json").exists()
-```
-
-## CORAL Framework
-
-Reference implementation: [github.com/Human-Agent-Society/Coral](https://github.com/Human-Agent-Society/Coral) (MIT, 429 stars). Multi-agent research infrastructure by MIT/NUS/Stanford/Meta.
-
-### Setup and Launch
-
-```bash
-git clone https://github.com/Human-Agent-Society/CORAL.git && cd CORAL
-uv sync --extra ui    # include web dashboard
-uv run coral start -c examples/kernel_builder/task.yaml
-```
-
-### Task Definition (task.yaml)
-
-```yaml
-task_name: kernel_builder
-num_agents: 4
-runtime: claude-code   # or opencode, codex
-grader: examples/kernel_builder/grader.py
-max_iterations: 100
-heartbeat_interval: 10  # consolidation every N evals
-stagnation_threshold: 5
-```
-
-### Custom Grader
-
-```python
-from coral.grading import TaskGrader, ScoreBundle
-
-class KernelGrader(TaskGrader):
-    def evaluate(self, workspace: str) -> ScoreBundle:
-        # Run benchmark, return structured scores
-        cycles = run_kernel_benchmark(workspace)
-        return ScoreBundle(
-            primary=1.0 / cycles,          # lower cycles = higher score
-            metrics={"cycles": cycles, "correctness": verify(workspace)},
-        )
-```
-
-### Supported Runtimes
-
-| Runtime | Command | Notes |
-|---------|---------|-------|
-| Claude Code | `claude` | Default, most tested |
-| OpenCode | `opencode` | Open-source terminal agent |
-| Codex | `codex` | OpenAI coding agent |
-
-All require pre-installation. Runtime selection per `task.yaml`.
-
-### Evaluation Flow
-
-Agents call `uv run coral eval -m "description"` which atomically: stages changes, commits, runs grader, records attempt to `.coral/public/attempts/`, updates shared knowledge.
-
-### Additional Features
-
-- **Web dashboard** on port 8420 (`uv run coral ui`) - real-time agent monitoring
-- **LiteLLM gateway** - custom model routing for non-default providers
-- **Docker session mode** - containerized agent isolation
-- **Warm-start literature review** - agents review prior art before optimization
-- **Post-commit hooks** - automatic evaluation triggers
-
-### Benchmarks
-
-| Task | CORAL (4 agents) | AlphaEvolve | Speedup |
-|------|-------------------|-------------|---------|
-| Erdos Minimum Overlap | 99% of optimal, 34 min | 99% of optimal, 5.2h | ~9x |
-| Anthropic Kernel | 1103 cycles | 1363 cycles | 19% better |
-
-## Comparison with Linear Approaches
-
-| Aspect | Linear (autoresearch) | Parallel Evolution |
-|--------|----------------------|-------------------|
-| Agents | 1 | 3-8 |
-| Search strategy | Sequential keep/discard | Parallel diverse exploration |
-| Knowledge sharing | Git history only | Explicit shared knowledge layer |
-| Stagnation handling | Manual | Automatic redirection |
-| Reflection | Optional | Built-in heartbeat |
-| Improvement rate | ~9.5% (per eval) | ~36.8% (per eval) |
-| Total evaluations needed | 84 (for same quality) | 19 |
-| Cost per run | ~$0.10/cycle | ~$0.40/cycle (4 agents) |
-| Effective cost/improvement | Higher | Lower (3-4x) |
-
-The parallel approach reaches better solutions with fewer total evaluations because agents explore different directions simultaneously and share discoveries.
-
-## Integration with Existing Patterns
-
-**With [[agent-design-patterns]] (Reflexion)**: heartbeat reflection is a formalized version of self-critique applied to the search process itself, not just individual outputs.
-
-**With [[multi-agent-systems]] (Shared State)**: the `.shared/` knowledge layer is a concrete implementation of the shared-state communication protocol using the filesystem.
-
-**With [[context-engineering]]**: each agent maintains its own context focused on its current exploration direction. The shared knowledge layer acts as external memory, preventing context bloat from carrying all agents' history.
+Changing the metric after a plateau is a new experiment, not a continuation. Preserve rejected evidence so future workers do not repeat the same failed candidate.
 
 ## Gotchas
 
-- **File locking on shared writes**: multiple agents writing to `.shared/` simultaneously can corrupt JSON files. Use atomic writes (write to temp file, then rename) or per-agent subdirectories with periodic merge
-- **Note quality degrades without structure**: agents generate vague notes ("tried X, didn't work") unless the heartbeat prompt explicitly requires structured observations with scores and hypotheses. Template the note format
-- **Stagnation detection threshold matters**: too sensitive (2-3 evals) causes premature pivots away from promising directions. Too loose (10+ evals) wastes compute. 5 consecutive non-improving evals is a reasonable default but should be tuned per task complexity
-- **Shared skills can propagate bad patterns**: if one agent writes a flawed skill to `.shared/skills/`, others will adopt it. Add a minimum score threshold before promoting observations to skills
+- **Worktrees are not full isolation.** They share the host's processes, credentials, and mounted resources. **Fix:** add environment-level isolation and per-resource locks where needed.
+- **Parallel progress messages can hide duplicate work.** Two workers may evaluate the same candidate. **Fix:** reserve shards in a manifest with an idempotency key and receipt check.
+- **Shared notes can spread a false hypothesis.** An agent's summary may be wrong or stale. **Fix:** link every reusable observation to an evaluator receipt or primary source.
+- **A higher score can be an invalid comparison.** Different environment, seed, data, or evaluator revision changes the experiment. **Fix:** compare only compatible receipts and record all material inputs.
+- **Automatic promotion is an authority escalation.** A passing worker test does not authorize production mutation. **Fix:** require independent evaluation, integration evidence, and a defined release owner.
+
+## Sources
+
+- [Git worktree documentation](https://git-scm.com/docs/git-worktree)
+- [OpenAI API: working with evals](https://developers.openai.com/api/docs/guides/evals)
+- [OpenAI Agents SDK: agent orchestration](https://openai.github.io/openai-agents-js/guides/multi-agent/)
+- [OpenAI Agents SDK: tracing](https://openai.github.io/openai-agents-python/tracing/)
 
 ## See Also
 
-- [[agent-design-patterns]] - Reflexion and self-critique patterns
-- [[multi-agent-systems]] - Agent collaboration architectures
-- [[context-engineering]] - Managing agent working memory
-- [[agent-self-improvement]] - Step-level rewards and learning from mistakes
-- [[agent-memory]] - Memory types and persistence strategies
+- [[agent-self-improvement]]
+- [[agent-evaluation]]
+- [[multi-agent-systems]]
+- [[agent-architectures]]
+- [[production-patterns]]
