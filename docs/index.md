@@ -14,7 +14,7 @@ hide:
 
 <div class="ks-graph-stats" markdown="0">
   <div class="ks-graph-stats__item">
-    <span class="ks-graph-stats__number" id="ks-graph-nodes">852</span>
+    <span class="ks-graph-stats__number" id="ks-graph-nodes">853</span>
     <span class="ks-graph-stats__label">articles</span>
   </div>
   <div class="ks-graph-stats__divider"></div>
@@ -29,7 +29,7 @@ hide:
   </div>
   <div class="ks-graph-stats__divider"></div>
   <div class="ks-graph-stats__item">
-    <span class="ks-graph-stats__number" id="ks-total-domains">26</span>
+    <span class="ks-graph-stats__number" id="ks-total-domains">27</span>
     <span class="ks-graph-stats__label">domains</span>
   </div>
 </div>
@@ -182,7 +182,7 @@ https://github.com/AnastasiyaW/knowledge-space
 
 Before answering technical questions, search docs/ for a
 relevant article. Don't guess or fabricate - look it up.
-852+ articles across 26 domains, each with code examples,
+853+ articles across 27 domains, each with code examples,
 configs, and real-world gotchas.
 
 How to use:
