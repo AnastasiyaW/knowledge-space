@@ -1,124 +1,90 @@
 ---
-title: Ollama and Local LLMs
+title: "Ollama and Local LLMs (September 2026)"
 category: infrastructure
-tags: [llm-agents, ollama, local-llm, open-source, llama, mistral, privacy, quantization]
+tags: [llm-agents, ollama, local-llm, structured-output, observability]
 ---
 
-# Ollama and Local LLMs
+# Ollama and Local LLMs (September 2026)
 
-Ollama provides a simple way to run open-source LLMs locally. Complete data privacy, no API costs after download, offline capability, and full customization. The tradeoff is hardware requirements and lower capability than frontier closed-source models.
+Reviewed 2026-09-03. Ollama provides a local runtime and API surface for running compatible models. A local endpoint changes the deployment boundary; it does not by itself prove privacy, model provenance, license compliance, or sufficient quality for a workload.
 
-## Key Facts
-- Full data privacy - nothing leaves your machine
-- No cost after download - free forever
-- Works offline - no internet required
-- Server endpoint: `http://localhost:11434`
-- Start with Q4 8B model - if it runs smoothly, try larger
-- Open-source models are not yet at GPT-4/Claude level but the gap is narrowing rapidly
+## Runtime Contract
 
-## Setup
+| Concern | What to record |
+|---|---|
+| Model | Exact tag and immutable artifact digest where available |
+| Host | CPU/GPU, memory, driver, and runtime version |
+| Endpoint | Local bind address, network exposure, authentication path |
+| Data path | Prompts, files, tools, telemetry, and any cloud configuration |
+| Quality | Evaluation set, tokenizer, quantization, and validation result |
+| Operations | Load latency, generation latency, errors, and keep-alive policy |
 
-```bash
-# Install from ollama.com, then:
-ollama run llama3.1:8b          # Download + run interactively
-ollama list                      # Show downloaded models
-ollama serve                     # Start API server (port 11434)
-/bye                             # Exit interactive session
-```
+Ollama documents its local API, streaming behavior, structured outputs, tool calling, and usage metrics. Treat the current official API reference as the authority for request fields and supported capabilities. [Ollama API](https://docs.ollama.com/) [Structured outputs](https://docs.ollama.com/capabilities/structured-outputs)
 
-## Hardware Requirements
+## Structured Local Call
 
-| Model Size | VRAM Needed | Hardware |
-|------------|-------------|----------|
-| 8B params | 8-16 GB | Consumer GPUs (RTX 4060+) |
-| 70B params | 40+ GB | Professional workstations |
-| 405B params | Multiple H100s | Impractical for local use |
-
-## Quantization Levels
-
-| Quant | Quality | Size (8B) | Recommendation |
-|-------|---------|-----------|----------------|
-| Q2 | Very low | Smallest | Not recommended |
-| Q4 | Good | ~4GB | Best starting point |
-| Q5 | Better | ~5GB | If Q4 runs well |
-| Q6 | High | ~6GB | Strong GPU |
-| Q8 | Near-original | ~8GB | RTX 4060+ |
-| fp16 | Original | ~16GB | Needs >= 16GB VRAM |
+This request asks for a non-streaming response constrained to a JSON schema. Use a model you have explicitly pulled and evaluated for the task.
 
 ```bash
-ollama run llama3.1:8b-instruct-q4_0  # Q4 quantized
-ollama run llama3.1:8b-instruct-q8_0  # Q8 quantized
+ollama pull gemma3
+curl http://localhost:11434/api/chat \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "gemma3",
+    "stream": false,
+    "messages": [{"role": "user", "content": "Return one city and its country."}],
+    "format": {
+      "type": "object",
+      "properties": {
+        "city": {"type": "string"},
+        "country": {"type": "string"}
+      },
+      "required": ["city", "country"]
+    }
+  }'
 ```
 
-## Recommended Models
+Validate the returned JSON in application code. A schema request reduces formatting failures; it does not verify factual accuracy.
 
-| Model | Strength |
-|-------|----------|
-| **Llama 3.1 8B** | Best open-source for local use, competitive with GPT-3.5 |
-| **Llama 3.1 70B** | Beats GPT-3.5 in benchmarks |
-| **Gemma 2** | Strong alternative from Google |
-| **Mistral** | Good general-purpose |
-| **Qwen 2** | Strong multilingual |
-| **DeepSeek Coder** | Specialized for code |
-| **Phi-3** | Small but capable (Microsoft) |
-| **Dolphin-Llama3** | Uncensored variant |
+## Streaming vs Non-Streaming
 
-**Dolphin models**: fine-tuned to remove alignment/censorship. Useful for unrestricted local use.
+| Mode | Use when | Operator concern |
+|---|---|---|
+| Streaming | Long interactive output and progressive UI | Handle newline-delimited events and cancellation |
+| Non-streaming | Short output, structured validation, or batch logic | Bound end-to-end timeout and response size |
 
-## Groq API - Fast Inference Alternative
+The Ollama API documents streaming as the default for selected endpoints and non-streaming JSON responses when the request disables streaming. [Streaming](https://docs.ollama.com/api/streaming)
 
-When local hardware is insufficient, Groq provides fast inference via LPU (Language Processing Unit):
-- Much faster than GPU-based inference
-- Works with open-source models (Llama 3.1, etc.)
-- Free tier available, cheap paid pricing
-- OpenAI-compatible API format
+## Tool Calls and Metrics
 
-## Integration Patterns
+Tool calls still need an application-controlled loop: inspect the request, validate the tool and arguments, execute under policy, then return the result. Ollama also documents response metrics such as load, prompt-evaluation, and evaluation durations. Use them with your run ID and model tag; a latency number without workload identity is not comparable. [Tool calling](https://docs.ollama.com/capabilities/tool-calling) [Usage metrics](https://docs.ollama.com/api/usage)
 
-### FlowWise
-1. Add "Chat Ollama" node
-2. Set base URL: `http://localhost:11434`
-3. Set model name (e.g., `llama3.1:8b`)
-4. Connect to supervisor/chain as usual
+## Capacity Planning
 
-### LangChain
-```python
-from langchain_community.chat_models import ChatOllama
-
-llm = ChatOllama(model="llama3.1:8b", temperature=0)
-response = llm.invoke("Hello, world!")
-```
-
-### Local RAG Stack
-- **Chat model**: Chat Ollama
-- **Embeddings**: Ollama Embeddings (same server)
-- **Vector store**: In-memory or Chroma
-- **Document loader**: PDFs, text files, web scraper
-- **Text splitter**: Recursive character (chunk 700-1000, overlap 50-100)
-- **Memory**: Buffer memory for conversation context
-
-Entirely local, free, private.
-
-### Local Email Agent
-Three-agent pipeline on Ollama:
-1. **Email Summarizer** - reads email, produces summary
-2. **Email Responder** - generates reply in user's style (via RAG on sample emails)
-3. **Email Formatter** - formats and saves to file
-
-Complete privacy for email processing.
+- Measure a representative prompt and output length on the actual host.
+- Set concurrency from observed memory and latency, not parameter-count folklore.
+- Record the quantization and context configuration with every evaluation.
+- Separate cold-start/load latency from token generation latency.
+- Reject or queue work when capacity is exhausted; do not silently route private input to a different provider.
 
 ## Gotchas
-- Small quantized models produce errors with complex agent workflows - use capable models for agents
-- Must upsert documents into vector store before RAG works - the #1 FlowWise mistake
-- Local models are significantly slower than API models without GPU acceleration
-- CPU-only inference works but is very slow for models > 3B parameters
-- Ollama downloads models on first use - plan for download time on slow connections
-- Quality degrades noticeably below Q4 quantization for most tasks
-- Function calling is less reliable with local models than with GPT-4 or Claude
+
+- **Issue: Assuming localhost means all data stays local.** Cloud models, remote tools, telemetry, download sources, and network binding can alter the data path. **Fix:** review the complete deployment and network configuration.
+- **Issue: Treating a model tag as immutable.** A tag can be updated or selected differently across hosts. **Fix:** record the evaluated artifact identity and deploy the same pinned artifact.
+- **Issue: Using structured output without application validation.** A model can still return malformed or semantically invalid values. **Fix:** parse and validate against the same schema used for the request.
+- **Issue: Comparing throughput without separating load time.** A warm model and a cold model answer different operational questions. **Fix:** record load and generation metrics separately.
 
 ## See Also
-- [[frontier-models]] - Comparing local vs cloud model capabilities
-- [[model-optimization]] - Quantization formats and techniques
-- [[no-code-platforms]] - FlowWise integration with Ollama
-- [[rag-pipeline]] - Building local RAG with Ollama
-- [[fine-tuning]] - Customizing local models
+
+- [[function-calling]]
+- [[tool-use-patterns]]
+- [[frontier-models]]
+- [[model-optimization]]
+- [[agent-observability-dashboards]]
+
+## Sources
+
+- [Ollama documentation](https://docs.ollama.com/)
+- [Ollama structured outputs](https://docs.ollama.com/capabilities/structured-outputs)
+- [Ollama tool calling](https://docs.ollama.com/capabilities/tool-calling)
+- [Ollama usage metrics](https://docs.ollama.com/api/usage)

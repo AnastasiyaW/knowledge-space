@@ -1,109 +1,105 @@
 ---
-title: Frontier Models Comparison
+title: "Frontier Model Selection (September 2026)"
 category: concepts
-tags: [llm-agents, gpt-4, claude, llama, mistral, gemini, model-comparison, benchmarks]
+tags: [llm-agents, model-selection, evaluation, deployment, open-weights]
 ---
 
-# Frontier Models Comparison
+# Frontier Model Selection (September 2026)
 
-A practical comparison of major LLM families for selecting the right model for different use cases. The landscape evolves rapidly - model capabilities, pricing, and rankings shift frequently.
+Reviewed 2026-09-03. “Frontier model” is a moving market label, not a stable technical tier. Select a model family by a tested workload contract, then pin an exact provider model ID or open-weight artifact for each deployment.
 
-## Key Facts
-- Scaling laws: more data + more parameters = better results (GPT-4 training estimated ~$100M)
-- Closed-source leaders: GPT-4o, Claude 3, Gemini 1.5 Pro
-- Open-weight leaders: Llama 3, Mistral, DeepSeek
-- Chatbot Arena (LMSYS) is the most reliable benchmark - crowdsourced human preference via blind comparison
-- Open-source models are improving rapidly - the capability gap with closed models is narrowing
+## Start with the Workload Contract
 
-## Model Families
+| Contract dimension | Question to freeze | Evidence |
+|---|---|---|
+| Task | What output is accepted? | Schema, rubric, or test fixture |
+| Modality | Which input and output media are required? | Representative input set |
+| Tool use | Must the model plan, call tools, or only produce text? | Tool-call success and recovery rate |
+| Deployment | Cloud API, private endpoint, or local runtime? | Data-flow and access policy |
+| Operations | What latency, budget, and availability bounds apply? | Trace and cost envelope |
+| Governance | Who may change the model or release a prompt? | Versioned approval record |
 
-### GPT (OpenAI)
+Do not turn a provider leaderboard into a routing policy. Benchmarks are useful for creating hypotheses, but deployment decisions need evaluation data from the actual prompts, documents, tools, languages, and failure modes of the product.
 
-| Model | Key Feature |
-|-------|-------------|
-| GPT-3 (175B) | Few-shot learning, in-context learning |
-| GPT-4 | Multimodality, best-in-class reasoning |
-| GPT-4o | Omni-modal: text, images, audio, video |
-| GPT-4o-mini | Cost-efficient for simpler tasks |
+## Capability Dimensions
 
-### Claude (Anthropic)
-- Constitutional AI (CAI) - model critiques itself against principles
-- Family: Haiku (small/fast), Sonnet (balanced), Opus (most capable)
-- Strengths: very long context (200K tokens), document analysis, careful reasoning
-- Best for safety-sensitive applications
+| Dimension | What to test | Common false proxy |
+|---|---|---|
+| Structured output | Schema-valid results after validation | A fluent JSON-looking answer |
+| Tool use | Correct tool, arguments, and recovery on tool error | Number of tools advertised |
+| Long context | Retrieval and answer quality at the required position | Maximum context-window size |
+| Multimodal work | Accuracy on the media formats actually supplied | A generic “multimodal” label |
+| Coding | Repository-level tasks with tests and diffs | One benchmark score |
+| Local deployment | Memory, latency, licensing, and evaluation fit | Parameter count alone |
 
-### Llama (Meta)
+The current provider catalog is the authority for supported model IDs, context limits, and deprecations. Record the exact identifier in configuration; do not hard-code a family name such as “GPT” or “Claude” as if it were immutable.
 
-| Model | Sizes | Training Data | Achievement |
-|-------|-------|---------------|-------------|
-| Llama 2 | 7B, 13B, 70B | 2T tokens | RLHF safety, commercial license |
-| Llama 3 | 8B, 70B, 405B | 15T tokens | 85% MMLU (close to GPT-4) |
+## Evaluation Set
 
-Open weights, best for privacy/local deployment and fine-tuning.
+Maintain a small, versioned evaluation set before switching models:
 
-### Mistral
-- Models: Mistral 7B, Mixtral 8x7B (MoE), Mistral Large
-- Best quality-per-parameter ratio
-- Mixtral: 8 experts, 2 active per token, 47B total but ~13B active
-- Sliding window attention for efficient long contexts
+1. Include normal inputs, adversarial inputs, long-context cases, and real tool failures.
+2. Define automatic checks for schema validity, citations, tests, or policy constraints.
+3. Sample human review for quality dimensions that cannot be reduced to a validator.
+4. Compare candidates under the same tool policy, prompt version, temperature, and budget.
+5. Keep the result, model ID, prompt/configuration hash, and reviewer decision as a release receipt.
 
-### Gemini (Google)
-- Natively multimodal (text + images + audio + video in single model)
-- Gemini 1.5 Pro: 1M token context (up to 2M preview)
-- Best for multimodal applications
+### Decision Matrix
 
-### DeepSeek
-- Code-specialized models (1.3B to 33B)
-- Outperforms Code Llama on many benchmarks
-- Open-source
+| Need | Preferred property | Required guardrail |
+|---|---|---|
+| High-stakes extraction | Strict structured output and deterministic validation | Reject invalid or incomplete fields |
+| Fresh-data assistant | Reliable tool loop and source attribution | Tool allowlist and citation policy |
+| Private/local workload | Compatible open-weight artifact and local runtime | License, model-file, and network review |
+| Coding workflow | Repository tools and independent test gate | Diff review and targeted tests |
+| Cost-sensitive bulk work | Measured quality at a lower-cost tier | Sampled quality audit before rollout |
 
-## Model Selection Decision Framework
+## Release Pattern
 
-| Need | Recommendation |
-|------|---------------|
-| Maximum quality | GPT-4o or Claude 3 Opus |
-| Privacy / local deployment | Llama 3 or Mistral (via Ollama) |
-| Cost efficiency at scale | Mistral or GPT-4o-mini |
-| Long document processing | Claude 3 (200K) or Gemini 1.5 Pro (1M) |
-| Multimodal | Gemini or GPT-4o |
-| Code generation | GPT-4o, DeepSeek Coder, Claude 3 |
-| Fine-tuning | Llama 3 or Mistral (open weights) |
+```text
+candidate model + prompt + tool policy
+              |
+              v
+offline evaluation -> approval -> canary traffic
+              |                         |
+              v                         v
+          HOLD / revise            trace + rollback signal
+```
 
-## Context Windows
+The release unit is the combination of model, provider endpoint, system instructions, tool schemas, retrieval configuration, and validator. Changing any one can alter behavior.
 
-| Model | Window |
-|-------|--------|
-| GPT-4 | 8K / 128K tokens |
-| Claude 3 | 200K tokens |
-| Gemini 1.5 Pro | 1M tokens |
-| Llama 3 | 8K (extended variants) |
-| Mistral Large | 128K tokens |
+## Open Weights vs Managed APIs
 
-Longer context = more information per request but higher cost and potential "lost in the middle" quality issues.
+| Choice | Strength | Operational responsibility |
+|---|---|---|
+| Managed API | Fast access to provider capabilities and managed capacity | Provider policy, regional availability, data handling, rate limits |
+| Open weights | More control over hosting, inference stack, and fine-tuning | License, artifact provenance, serving, observability, and security |
+| Hybrid | Workload-specific routing | Explicit data and fallback policy; no silent provider switch |
 
-## Benchmarks
-
-| Benchmark | What It Measures |
-|-----------|-----------------|
-| **MMLU** | Broad knowledge (57 subjects) |
-| **HumanEval** | Code generation (pass@1) |
-| **MATH** | Mathematical reasoning |
-| **GSM8K** | Grade school math word problems |
-| **Chatbot Arena** | Crowdsourced human preference (Elo scores) |
-
-Chatbot Arena is the most reliable real-world benchmark because it measures actual user preference in blind A/B tests, not synthetic metrics.
+Treat licensing and data residency as separate checks. “Open” in a model name does not by itself answer either question.
 
 ## Gotchas
-- Benchmark scores don't always predict real-world task performance - always test on YOUR data
-- Model pricing changes frequently - check current provider pricing before architecting costs
-- "Frontier" status is temporary - today's best model is tomorrow's commodity
-- Context window size doesn't mean all that context is used equally well ("lost in the middle")
-- Open-weight doesn't mean free - infrastructure costs for running large models are significant
-- Model versioning: providers update models behind the same API name, sometimes changing behavior
+
+- **Issue: Selecting by a stale comparison table.** Model identifiers, limits, and retirement dates change faster than an article. **Fix:** use the provider catalog at release time and save the exact ID in the evaluation receipt.
+- **Issue: Comparing candidates with different prompts or tools.** The experiment measures the harness, not the model. **Fix:** freeze the task, context, tool policy, and validator before a comparison.
+- **Issue: Using a huge context window as a retrieval strategy.** Relevant evidence can still be missed or diluted. **Fix:** evaluate placement, retrieval, and citation quality on long inputs.
+- **Issue: Treating an open-weight model as automatically private.** Telemetry, download sources, remote tools, and deployment configuration can still move data. **Fix:** review the complete data path.
+
+## Limitations
+
+No static page can rank a changing model market reliably. This reference defines a repeatable selection process; it intentionally does not publish a permanent “best model” list or price table.
 
 ## See Also
-- [[ollama-local-llms]] - Running open-weight models locally
-- [[model-optimization]] - Making models smaller and faster
-- [[fine-tuning]] - Customizing open-weight models
-- [[llm-api-integration]] - Connecting to provider APIs
-- [[llmops]] - Cost optimization across models
+
+- [[function-calling]]
+- [[tool-use-patterns]]
+- [[model-optimization]]
+- [[agent-evaluation]]
+- [[ollama-local-llms]]
+
+## Sources
+
+- [OpenAI model documentation](https://platform.openai.com/docs/models)
+- [Anthropic models overview](https://platform.claude.com/docs/en/about-claude/models/overview)
+- [Gemini API model documentation](https://ai.google.dev/gemini-api/docs/models)
+- [Hugging Face Hub model documentation](https://huggingface.co/docs/hub/models-the-hub)

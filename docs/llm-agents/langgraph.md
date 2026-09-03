@@ -1,154 +1,118 @@
 ---
-title: LangGraph
+title: "LangGraph (September 2026)"
 category: frameworks
-tags: [llm-agents, langgraph, state-machine, agent-graph, orchestration, workflow]
+tags: [llm-agents, langgraph, state-machine, workflow, orchestration]
 ---
 
-# LangGraph
+# LangGraph (September 2026)
 
-LangGraph is a framework for building stateful, multi-step agent workflows as directed graphs. Part of the LangChain ecosystem but focused on complex agent orchestration with explicit control flow, typed state, and native support for cycles.
+Reviewed 2026-09-03. LangGraph is a low-level orchestration framework and runtime for long-running, stateful agent workflows. It can use LangChain components, but a LangGraph workflow can also use other model and tool integrations. [LangGraph overview](https://docs.langchain.com/oss/python/langgraph/overview)
 
-## Key Facts
-- Agents are defined as graphs: nodes (functions) connected by edges (transitions)
-- State is a typed dictionary passed between nodes
-- Supports conditional routing, cycles (retry loops), and parallel execution
-- Built-in interrupt nodes for human-in-the-loop
-- More control than LangChain agents but requires explicit graph design
+## What the Graph Owns
 
-## LangGraph vs LangChain Agents
+| Graph concern | Keep explicit |
+|---|---|
+| State | Typed fields and merge semantics |
+| Nodes | One bounded operation per node |
+| Edges | Deterministic or auditable routing rules |
+| Persistence | Checkpoint identity and resume contract |
+| Interrupts | Human approval or external wait boundary |
+| Terminal state | Pass, hold, retryable failure, or failure |
 
-| Feature | LangChain Agents | LangGraph |
-|---------|-----------------|-----------|
-| Control flow | Implicit (LLM decides) | Explicit (graph defines) |
-| State management | Limited (memory) | Rich (typed state dict) |
-| Debugging | Hard (agent decides path) | Clear (follow graph edges) |
-| Cycles/loops | Limited | Native support |
-| Human-in-the-loop | Manual | Built-in interrupt nodes |
+Use a graph when the workflow needs visible state, branching, restartability, or a human boundary. A single application-controlled agent loop is simpler for one bounded task.
 
-## Core Concepts
+## Minimal StateGraph
 
-### State
+This Python 3.11+ example contains no model call. Replace the deterministic nodes with provider calls only after the state and terminal criteria are clear.
+
 ```python
+from __future__ import annotations
+
 from typing import TypedDict
-from langgraph.graph import StateGraph
 
-class AgentState(TypedDict):
-    messages: list
-    next_step: str
-    results: dict
+from langgraph.graph import END, START, StateGraph
+
+
+class ReviewState(TypedDict):
+    text: str
+    verdict: str
+
+
+def classify(state: ReviewState) -> dict[str, str]:
+    verdict = "review" if "citation" in state["text"].lower() else "pass"
+    return {"verdict": verdict}
+
+
+def route(state: ReviewState) -> str:
+    return "human_review" if state["verdict"] == "review" else "done"
+
+
+def human_review(state: ReviewState) -> dict[str, str]:
+    return {"verdict": "held_for_review"}
+
+
+builder = StateGraph(ReviewState)
+builder.add_node("classify", classify)
+builder.add_node("human_review", human_review)
+builder.add_node("done", lambda state: {})
+builder.add_edge(START, "classify")
+builder.add_conditional_edges("classify", route)
+builder.add_edge("human_review", END)
+builder.add_edge("done", END)
+graph = builder.compile()
+
+
+if __name__ == "__main__":
+    print(graph.invoke({"text": "add a citation", "verdict": ""}))
 ```
 
-### Nodes
-Functions that receive state, process it, and return modified state:
+## Design Rules
 
-```python
-def research_node(state: AgentState) -> AgentState:
-    result = search_tool.invoke(state["messages"][-1])
-    state["results"]["research"] = result
-    return state
+| Rule | Reason |
+|---|---|
+| Keep state serializable | Checkpoints and debugging need a durable representation |
+| Make node outputs narrow | Reduces accidental mutation and ambiguous merges |
+| Put policy routes in code | Budgets, permissions, and publication gates are not model preferences |
+| Use model routing only for open-ended classification | It can be evaluated as a separate task |
+| Store external receipts in state references | A text answer is not proof of an external side effect |
 
-def analyze_node(state: AgentState) -> AgentState:
-    analysis = llm.invoke(f"Analyze: {state['results']['research']}")
-    state["results"]["analysis"] = analysis
-    return state
-```
+## Interrupt and Resume
 
-### Edges (including conditional)
-```python
-graph = StateGraph(AgentState)
-graph.add_node("research", research_node)
-graph.add_node("analyze", analyze_node)
-graph.add_node("respond", respond_node)
+An interrupt is a state transition, not a UI convenience. Before pausing for approval or external input, persist:
 
-# Simple edge
-graph.add_edge("analyze", "respond")
+- workflow/run ID;
+- checkpoint or state reference;
+- requested action and evidence;
+- approver identity/role required;
+- expiration and resume rule.
 
-# Conditional routing
-graph.add_conditional_edges(
-    "research",
-    route_function,  # returns node name based on state
-    {"needs_analysis": "analyze", "ready": "respond"}
-)
-```
+On resume, revalidate time-sensitive inputs and permissions. Do not replay a side effect merely because the process restarted.
 
-### Compilation and Execution
-```python
-app = graph.compile()
-result = app.invoke({
-    "messages": [user_message],
-    "next_step": "research",
-    "results": {}
-})
-```
+## LangGraph vs Application Code
 
-## Patterns
-
-### Human-in-the-Loop
-```python
-def human_review_node(state):
-    action = state["proposed_action"]
-    approval = get_human_approval(action)
-    state["approved"] = approval
-    return state
-
-graph.add_node("propose", agent_propose)
-graph.add_node("review", human_review_node)
-graph.add_node("execute", agent_execute)
-
-graph.add_edge("propose", "review")
-graph.add_conditional_edges(
-    "review",
-    lambda s: "execute" if s["approved"] else "propose",
-    {"execute": "execute", "propose": "propose"}
-)
-```
-
-### Retry Loop
-```python
-def should_retry(state):
-    if state["quality_score"] < 0.8 and state["attempts"] < 3:
-        return "retry"
-    return "done"
-
-graph.add_conditional_edges("evaluate", should_retry, {
-    "retry": "generate",
-    "done": "output"
-})
-```
-
-### Multi-Agent Graph
-```python
-# Supervisor routes to specialized agents
-graph.add_node("supervisor", supervisor_node)
-graph.add_node("researcher", research_agent)
-graph.add_node("writer", writing_agent)
-
-graph.add_conditional_edges(
-    "supervisor",
-    lambda s: s["next_agent"],
-    {"research": "researcher", "write": "writer", "done": END}
-)
-graph.add_edge("researcher", "supervisor")
-graph.add_edge("writer", "supervisor")
-```
-
-## When to Use LangGraph
-- Multi-step workflows with conditional branching
-- Agents needing explicit state management
-- Human-in-the-loop approval steps
-- Complex multi-agent orchestration
-- Workflows requiring retry logic or iterative refinement
-- When you need to debug exactly which path the agent took
+| Use LangGraph when | Use plain application code when |
+|---|---|
+| The workflow has durable state, branches, and recovery | The task is one bounded model/tool loop |
+| Operators need a visible execution path | A simple typed function pipeline is sufficient |
+| A human approval must survive a restart | Approval is synchronous and local |
+| Multiple independently tested nodes share a state contract | Splitting would add only ceremony |
 
 ## Gotchas
-- Graph design requires upfront planning - more work than a simple ReAct agent
-- State must be serializable for persistence/checkpointing
-- Conditional edge functions must handle all possible state values
-- Cycles without termination conditions create infinite loops
-- Debugging requires understanding the full graph structure, not just individual nodes
+
+- **Issue: Treating a node name as an authorization boundary.** A node can still call any tool exposed to its runtime. **Fix:** enforce a separate tool policy at the application/tool gateway.
+- **Issue: Mutating nested state in place.** Concurrent or resumed paths can see unintended changes. **Fix:** return narrow updates and define merge behavior explicitly.
+- **Issue: Looping on model feedback without a limit.** A self-correction loop can spend budget forever. **Fix:** persist attempt count, validator result, and a terminal HOLD state.
+- **Issue: Resuming an external write without reconciliation.** The previous attempt may have succeeded. **Fix:** store an idempotency key and external receipt reference in state.
 
 ## See Also
-- [[langchain-framework]] - Foundation framework that LangGraph extends
-- [[agent-design-patterns]] - Patterns implemented as graphs
-- [[multi-agent-systems]] - Multi-agent patterns in graph form
-- [[agent-memory]] - Human-in-the-loop patterns
+
+- [[agent-orchestration]]
+- [[multi-agent-systems]]
+- [[multi-agent-messaging]]
+- [[agent-evaluation]]
+- [[production-patterns]]
+
+## Sources
+
+- [LangGraph overview](https://docs.langchain.com/oss/python/langgraph/overview)
+- [LangGraph documentation index](https://docs.langchain.com/llms.txt)
