@@ -2,6 +2,7 @@
 
 **Development line:** `organization:google-deepmind` · thread `leadership`
 **Last researched:** 2026-09-02 · confidence: high · 11 sources, each with the moment it was read
+**Freshness check:** 2026-09-03 · no substantive leadership change since this article; one stale-source caveat added
 
 ## What it is
 
@@ -48,8 +49,10 @@ Vinyals. Google named no replacement Google DeepMind CEO.
 
 - Prefer dated leadership announcements over undated biographies. As observed on
   2026-09-02, Google DeepMind's careers page still described Demis Hassabis as CEO
-  and was therefore stale.
-  — [Careers at Google DeepMind](https://deepmind.google/careers/)
+  and was therefore stale; on 2026-09-03 the undated About page showed the same
+  lag. Treat both as non-authoritative for current titles.
+  — [Careers at Google DeepMind](https://deepmind.google/careers/) ·
+  [About Google DeepMind](https://deepmind.google/about/)
 - Use Google's stated title for Koray — SVP, Google DeepMind and Chief AI Architect,
   Google — rather than calling him CEO unless Google later announces that title.
   — [Koray Kavukcuoglu](https://blog.google/authors/koray-kavukcuoglu/)
@@ -78,18 +81,19 @@ Vinyals. Google named no replacement Google DeepMind CEO.
   reorganisation.
 - Discovery Loop's public API, customer-access programme, pricing or availability
   date — none announced.
-- Google's own pages were not reconciled as of 2026-09-02: the careers page still
-  called Demis CEO, and Jeff Dean's author page still called him Google's Chief
-  Scientist.
+- Google's own pages were not reconciled as of 2026-09-03: the careers and About
+  pages still called Demis CEO, and Jeff Dean's author page still called him
+  Google's Chief Scientist.
 - No official Simplified-Chinese version of the announcement was found; a Caixin
   report corroborated the core role changes.
 
 ## Sources
 
-All read on 2026-09-02T18:32Z.
+All read on 2026-09-02T18:32Z unless dated otherwise.
 
 | source | title |
 |---|---|
+| https://deepmind.google/about/ | About Google DeepMind (read 2026-09-03) |
 | https://blog.google/company-news/inside-google/message-ceo/next-chapter-ai-momentum/ | The next chapter of our AI momentum |
 | https://blog.google/innovation-and-ai/technology/ai/april-ai-update/ | Google DeepMind: Bringing together two world-class AI teams |
 | https://blog.google/authors/koray-kavukcuoglu/ | Koray Kavukcuoglu |
