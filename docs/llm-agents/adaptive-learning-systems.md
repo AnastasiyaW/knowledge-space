@@ -1,154 +1,131 @@
 ---
-title: Adaptive Learning Systems with LLMs
-category: applications
-tags: [education, knowledge-tracing, spaced-repetition, learner-modeling, tutoring, fsrs]
+title: "Adaptive Learning Systems with LLMs"
+description: "A bounded architecture for learner state, deterministic scheduling, content generation, evaluation, and privacy"
 ---
 
-# Adaptive Learning Systems with LLMs
+# Adaptive Learning Systems with LLMs (September 2026)
 
-Architecture patterns for AI-powered education systems that adapt to individual learners. Covers knowledge tracing, lesson generation, spaced repetition, and context-efficient student modeling.
+Version context: learner models, curricula, and scheduling algorithms are domain policies. Treat their versions, calibration data, and privacy rules as deployable artifacts; do not embed them only in an LLM prompt.
 
-## Four-Layer Architecture
+An LLM can generate explanations and exercises, but it should not be the source of truth for prerequisite graphs, learner records, review scheduling, or high-stakes assessment decisions.
 
-```typescript
-Domain Model     -> Knowledge graph, prerequisites, difficulty
-Student Model    -> Proficiency state, learning style, history
-Tutoring Model   -> Pedagogical decisions, review scheduling
-Interface Layer  -> LLM interaction, exercise generation
+## Four Bounded Layers
+
+```text
+Curriculum model  -> concepts, prerequisites, approved objectives
+Learner model     -> evidence-backed estimates and review history
+Scheduler         -> deterministic next-review and workload policy
+Generation layer  -> explanations, examples, feedback, and exercise candidates
 ```
 
-### Domain Model
+The boundary makes a system testable: curriculum and scheduling can be replayed without a model call, while generation can be evaluated against a known learner state.
 
-Knowledge graph with concepts as nodes, prerequisites as directed edges, difficulty scores per concept. Stored externally (JSON/SQLite), queried per lesson. LLM does NOT manage the graph - deterministic traversal provides the structure.
+## Learner Event Contract
 
-### Student Model
+Store observed interactions, not ungrounded statements such as `the learner understands algebra`.
 
-Structured JSON profile tracking:
-
-| Dimension | Update Frequency | Storage |
-|-----------|-----------------|---------|
-| Per-concept proficiency | Every interaction | Tier 1 (always in context) |
-| Error patterns / misconceptions | Per session | Tier 2 (summarized) |
-| Learning pace indicators | Per session | Tier 2 |
-| Full interaction history | Continuous | Tier 3 (RAG retrieval) |
-| Forgetting curves | Per review | FSRS algorithm (external) |
-
-### Tutoring Model
-
-Pedagogical decisions run outside the LLM as deterministic rules. LLM handles: lesson generation, exercise creation, feedback adaptation, explanation style. This separation ensures reproducible scheduling while keeping LLM creativity for content.
-
-## Knowledge Tracing Models
-
-Evolution from Bayesian to transformer-based:
-
-| Model | Architecture | Key Feature |
-|-------|-------------|-------------|
-| BKT | Hidden Markov | Per-skill binary mastery. Still used in OATutor |
-| DKT (2015) | RNN/LSTM | Sequence-based prediction |
-| SAKT (2019) | Self-attention | Selective relevant history |
-| AKT (2020) | Contextual attention | Exponential decay for forgetting |
-| **simpleKT (2023)** | Simplified transformer | Beats complex models. Essential baseline |
-| DKT2 (2025) | xLSTM + IRT | Interpretable output |
-| UKT (2025) | Probability distributions | Uncertainty-aware, Wasserstein attention |
-
-**pyKT** (pykt.org) - definitive Python library. 10+ models, 7+ datasets, actively maintained. Three-step model training.
-
-## Spaced Repetition: FSRS
-
-**FSRS (Free Spaced Repetition Scheduler)** - state of the art, integrated into Anki 23.10+.
-
-Key principle: review scheduling based on predicted forgetting probability, not fixed intervals. Implementations in JS, Go, Rust, Python.
-
-FSRS-7 supports fractional interval lengths. The algorithm runs externally (deterministic) and feeds review queue into the LLM tutoring layer.
-
-## Pedagogical Principles for LLM Tutors
-
-### Comprehensible Input (i+1)
-
-Input slightly above current level. AI dynamically assesses proficiency and curates progressively challenging content. 95-98% comprehensibility threshold for acquisition. One-size-fits-all i+1 fails - adaptive systems must fine-tune per learner.
-
-### Task-Based Teaching (TBLT)
-
-Three task types to encode as exercise templates:
-
-| Type | What | Example |
-|------|------|---------|
-| Information-gap | Transfer info between participants | Describe image for partner to draw |
-| Reasoning-gap | Derive new info from given facts | Debug code from error message |
-| Opinion-gap | Express preferences/justify | Choose best architecture and explain |
-
-### Affective Filter
-
-AI tutors reduce anxiety through: gamified interfaces, immediate non-judgmental feedback, low-pressure practice environments. The LLM's tone and response to errors directly impacts learning effectiveness.
-
-## Token-Efficient Student Context
-
-### Tiered Context Strategy
-
-For ~4K token student context budget:
-
-```php
-Tier 1 - Always in context (~300 tokens):
-  Current proficiency vector (concept -> score)
-  Last 3-5 interactions summary
-
-Tier 2 - Summarized (~500 tokens):
-  Session summaries (last 5 sessions)
-  Known misconceptions, error patterns
-
-Tier 3 - Retrieved on demand (RAG):
-  Full interaction history
-  Detailed error logs
-  Historical proficiency curves
+```json
+{
+  "event_id": "evt_01J...",
+  "learner_id": "pseudonymous-id",
+  "concept_id": "fractions.addition",
+  "activity_revision": "fractions-v5",
+  "submitted_at": "2026-09-03T18:00:00Z",
+  "result": "incorrect",
+  "attempt_count": 2,
+  "evidence_ref": "encrypted://assessment/...",
+  "consent_policy": "education-data-v2"
+}
 ```
 
-### Context Budget Allocation
+A learner-state update is a versioned transformation of events. Record its model or rule revision, confidence, timestamp, and source event range.
 
-| Section | Tokens | Purpose |
-|---------|--------|---------|
-| System prompt + pedagogy rules | ~1000 | Teaching methodology |
-| Student profile (Tier 1) | ~300 | Current state |
-| Session history (Tier 2) | ~500 | Recent context |
-| Current lesson content | ~1000 | Active material |
-| Exercise + scaffolding | ~500 | Current task |
-| Generation buffer | ~700 | Model output |
+## Scheduling Outside the LLM
 
-### Lost-in-the-Middle Mitigation
+The scheduler owns when an item is due. Anki documents FSRS as a separate scheduling algorithm that estimates recall probability and uses a desired-retention setting; it is a useful example of why scheduling must be deterministic and independently auditable.
 
-30%+ accuracy drop for information placed in the middle of long contexts. Student proficiency data goes at START. Recent interactions at END. Summaries and background in the middle (least critical position).
+```python
+from dataclasses import dataclass
+from datetime import datetime
 
-## LLM Lesson Generation Patterns
 
-### Dual-Layer Prompt Strategy (LPITutor)
+@dataclass(frozen=True)
+class ReviewDecision:
+    concept_id: str
+    due_at: datetime
+    scheduler_revision: str
+    reason: str
 
-- **Static layer**: pedagogically aligned templates (exercise types, feedback rules)
-- **Dynamic layer**: injected per-request (retrieved content + learner metadata)
 
-### Content Generation Pipeline
+def next_activity(decision: ReviewDecision) -> dict[str, str]:
+    return {
+        "concept_id": decision.concept_id,
+        "scheduler_revision": decision.scheduler_revision,
+        "reason": decision.reason,
+    }
+```
 
-LLMs learn from examples created by learning experts. Key insight from production systems: not fully autonomous - constant prompt tuning required. LLMs generate candidate exercises; pedagogical rules validate structure and difficulty.
+The LLM may receive this selected activity plus the learner's least-privilege context. It must not choose a different due date or silently rewrite mastery state.
 
-### Curriculum Adaptation
+## Generation Contract
 
-Adaptive Difficulty Curriculum Learning (ADCL) addresses the Difficulty Shift phenomenon - when difficulty calibration drifts as student progresses. Monitor difficulty delta between consecutive exercises and cap maximum jump.
+Use the model to propose content that is then validated against curriculum constraints:
 
-## Open-Source Platforms
+| Input | Validator |
+|---|---|
+| Concept and prerequisite set | Curriculum service |
+| Difficulty band | Calibrated policy |
+| Exercise format | Schema validator |
+| Factual source material | Retrieval/citation validator |
+| Learner-visible feedback | Safety and tone policy |
+| Answer key | Deterministic checker or reviewed rubric |
 
-- **OATutor** (CAHLR/OATutor) - React + Firebase, BKT mastery, field-tested in classrooms
-- **adaptive-knowledge-graph** (MysterionRise) - KG + Local LLMs + Bayesian tracking, privacy-first
-- **LearnHouse** - Notion-like editor, open learning platform
-- **FOKE** (Stanford SCALE) - hierarchical knowledge forest, multi-dimensional profiling
+For open-ended feedback, label the output as assistance. Do not represent generated feedback as a verified grade unless an assessment policy explicitly permits it.
+
+## Knowledge Tracing
+
+Knowledge tracing predicts future performance from interaction sequences. It is an estimator, not a fact about a learner.
+
+Start with a transparent baseline and measure calibration on held-out learner histories. Use a research toolkit such as pyKT only after confirming that its data representation, split strategy, and license fit the product. The implementation choice must be justified by a measured improvement over the baseline.
+
+## Context and Privacy
+
+The model context should contain only what is needed for the current activity:
+
+- current authorized learner and curriculum identifiers;
+- selected concept, objective, and difficulty policy;
+- recent feedback summary that is relevant to the activity;
+- approved source material and assessment constraints.
+
+Keep raw histories, personally identifiable data, and unrelated conversations out of the prompt. Define retention, deletion, access review, and export policies before collecting learner events.
+
+## Evaluation Gate
+
+Evaluate the whole system, not only generated prose:
+
+1. Curriculum traversal respects prerequisites.
+2. Scheduler produces reproducible results for the same event sequence.
+3. Learner-state estimates are calibrated on held-out histories.
+4. Generated exercises obey the objective and answer schema.
+5. Feedback does not disclose protected data or make unsupported claims.
+6. Workload and learning outcomes are monitored with an approved study design.
 
 ## Gotchas
 
-- **FSRS must run outside the LLM** - putting scheduling logic in prompts makes it non-deterministic. Review intervals drift. Run FSRS as code, inject results into context.
-- **simpleKT beats most complex models** - resist the urge to implement cutting-edge KT architectures. Start with simpleKT as baseline, only add complexity if measured improvement justifies it.
-- **Student proficiency stales fast in context** - if a student answers 10 questions between proficiency updates, the LLM is working with outdated state. Update Tier 1 profile after every interaction, not batched.
-- **i+1 is not universal** - the optimal challenge level varies by learner, topic, and time of day. Fixed i+1 underperforms adaptive systems that calibrate per-learner.
+- **Generated tutoring text is not a student model.** A confident explanation can be wrong about skill level. **Fix:** derive learner state from versioned event transformations and expose confidence/uncertainty.
+- **Scheduling in a prompt is non-reproducible.** The same history can yield different review advice. **Fix:** run scheduling as deterministic code and pass the chosen activity to the model.
+- **Future data leaks invalidate evaluation.** Randomly splitting chronological interactions lets later performance reveal the answer. **Fix:** split by learner and time boundary before fitting or tuning.
+- **Educational data is sensitive.** Rich conversation logs can contain identity, disability, or assessment information. **Fix:** minimize prompt context and enforce explicit retention and access policies.
+
+## Sources
+
+- [Anki manual: FSRS](https://docs.ankiweb.net/deck-options.html#fsrs)
+- [FSRS for Anki project](https://github.com/open-spaced-repetition/fsrs4anki)
+- [pyKT knowledge-tracing toolkit](https://github.com/pykt-team/pykt-toolkit)
 
 ## See Also
 
-- [[agent-memory]] - memory patterns applicable to student modeling
-- [[context-engineering]] - context management for long sessions
-- [[rag-pipeline]] - retrieval for Tier 3 student history
-- [[embeddings]] - concept similarity for prerequisite detection
+- [[agent-memory]]
+- [[rag-pipeline]]
+- [[embeddings]]
+- [[agent-evaluation]]
