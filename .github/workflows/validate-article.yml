@@ -143,7 +143,7 @@ jobs:
             "ios-mobile" "java-spring" "kafka" "linux-cli" "llm-agents"
             "llm-memory" "nodejs" "php" "python" "rust" "security"
             "seo-marketing" "sql-databases" "testing-qa" "web-frontend"
-            "writing" "contributing" "blog"
+            "writing" "contributing" "blog" "projects" "organizations"
           )
 
           while IFS= read -r file; do
