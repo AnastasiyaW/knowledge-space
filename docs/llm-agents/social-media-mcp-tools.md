@@ -1,178 +1,131 @@
 ---
 title: "Social Media MCP Tools"
-description: "MCP servers for social media posting: Publora, Postiz, Ayrshare, community solutions. Comparison, pricing, integration setup."
+description: "A provider-neutral, approval-first design for using MCP to draft, validate, and publish social content without treating a social post as a reversible chat action."
+tags: [mcp, social-media, publishing, approvals, oauth, agents]
 ---
 
 # Social Media MCP Tools
 
-MCP servers for posting to social platforms from AI agents (Claude Desktop, Cursor, Claude Code, etc.). Range from managed SaaS to self-hosted and single-platform community servers.
+**Scope checked: 2026-09-03.** A social-media MCP server is an integration boundary, not a publishing policy. Platform permissions, versioning, media rules, and commercial plans change frequently, so this page does not rank vendors or preserve static pricing. Instead, it defines a safe contract for connecting a news or project-content pipeline to a platform API.
 
-## Quick Decision Guide
+## Treat Publication as an External Effect
 
-| Need | Best option |
-|------|-------------|
-| Multi-platform, cheap, managed | Publora ($2.99/acc/mo) |
-| Multi-platform, self-hosted, free | Postiz (Docker) |
-| Enterprise, widest coverage (13+ platforms) | Ayrshare ($149+/mo) |
-| X/Twitter only, fastest setup | OpenTweet ($11.99/mo) |
-| Single platform, zero cost | Community MCP server |
+A successful model response is not a published post. Separate the workflow:
 
-## Managed SaaS Options
-
-### Publora
-
-Agent-first social media scheduler. Repositioned from B2C scheduling to AI-agent publishing (2025 acquisition by Sergey Bulaev).
-
-**Supported platforms (11+):** LinkedIn, X/Twitter, Instagram (Reels/Stories/Carousel), Threads, Telegram, Facebook Pages, TikTok, YouTube, Mastodon, Bluesky, Pinterest
-
-**Pricing:**
-
-| Plan | Price | Posts/month | Notes |
-|------|-------|-------------|-------|
-| Starter (Free) | $0 | 15 | All except X/Twitter |
-| Pro | $2.99/account/mo | 100/account | All 10+ platforms |
-| Premium | $9.99/account/mo | 500/account | All 10+ platforms |
-
-**Setup:**
-
-```bash
-# 1. Register + connect social accounts via OAuth at publora.com
-# 2. Generate API key in dashboard
-# 3. Configure MCP in Claude Desktop
-
-# MCP endpoint
-https://mcp.publora.com
-
-# Skills install
-npx skills add publora/skills
+```text
+source evidence -> editorial draft -> policy validation -> human approval
+                -> platform-specific publish -> provider receipt -> reconciliation
 ```
 
-**Claude Desktop config (`claude_desktop_config.json`):**
+The agent may prepare a draft and a structured proposal. Only the effect service may use platform credentials or create the post, and it must retain the provider response that identifies the created resource.
+
+## Minimal Publish Intent
+
+Keep a platform-independent intent in the application, then translate it at the provider adapter:
 
 ```json
 {
-  "mcpServers": {
-    "publora": {
-      "command": "npx",
-      "args": ["-y", "@publora/mcp"],
-      "env": {
-        "PUBLORA_API_KEY": "your-api-key"
-      }
-    }
-  }
+  "intent_id": "social-044",
+  "project_ref": "happyin-space",
+  "platform": "linkedin",
+  "account_ref": "organization:public-channel",
+  "content_revision": "draft:2026-09-03.2",
+  "media_refs": ["asset:cover-044"],
+  "schedule_at": null,
+  "approval_ref": "approval:appr_01...",
+  "idempotency_key": "social-044:linkedin:v1",
+  "expires_at": "2026-09-03T18:00:00Z"
 }
 ```
 
-**Skills repo:** `github.com/publora/skills` (MIT license, 9 skills covering all platforms)
+The executor derives the platform payload from this immutable intent and validates the current account, scope, media, audience, and time. It never accepts a free-form “post this everywhere” instruction as authority.
 
-**Skills structure:**
+## MCP Tool Surface
+
+Expose narrow verbs rather than one broad `social_admin` tool:
+
+| Tool | Effect | Required checks |
+|---|---|---|
+| `list_connected_accounts` | read | caller and account scope |
+| `create_draft` | reversible internal write | project, source references, content schema |
+| `validate_publish` | read-only provider preflight | scope, media, format, current platform version |
+| `publish_approved` | external effect | immutable approval, expiry, account, idempotency |
+| `get_publication_receipt` | read | intent ID and caller scope |
+
+Tool descriptions and annotations are untrusted unless they come from a server the host already trusts. Hosts should keep a human able to deny a tool invocation. [MCP tools](https://modelcontextprotocol.io/specification/latest/server/tools)
+
+## Authorization Boundary
+
+For remote MCP, use the protocol's authorization flow and validate tokens for the intended resource. The MCP server should keep platform OAuth credentials in a server-side vault; the MCP client receives only the result it needs, never a reusable platform access token. [MCP authorization](https://modelcontextprotocol.io/specification/latest/basic/authorization)
+
+For each connected account, record:
+
+- platform account and owner reference;
+- granted scopes and the date they were verified;
+- current API version and content capabilities;
+- media upload requirements and size limits;
+- provider rate-limit and retry behavior;
+- policy or review restrictions;
+- credential rotation and revocation procedure.
+
+The exact values are platform-specific and must be revalidated at connection time. For example, LinkedIn's Posts API currently requires versioned request headers and separate member/organization scopes; a successful creation returns a provider post identifier. [LinkedIn Posts API](https://learn.microsoft.com/en-us/linkedin/marketing/community-management/shares/posts-api)
+
+## Approval and Idempotency
 
 ```text
-skills/
-  linkedin-post/      - posts with images, videos, documents
-  threads-post/       - auto-threading support
-  telegram-post/      - channel posting, markdown
-  instagram-post/     - Reels, Stories, Carousels
-  tiktok-post/        - videos with privacy controls
-  bluesky-post/       - rich text + media
-  x-post/             - X/Twitter with auto-threading
-  social-post/        - unified: YouTube, Facebook, Mastodon
-  linkedin-analytics/ - engagement metrics, follower data
+draft -> reviewer approves exact content revision and account
+      -> effect service reserves (intent_id, idempotency_key, content_revision)
+      -> adapter creates one platform post
+      -> record provider ID, response class, and final visibility
 ```
 
-### Ayrshare
+An identical retry returns the stored receipt. Reusing the idempotency key with a different account, revision, or media list must reject before a second post is created. If the network times out after the provider call, mark the state unknown and reconcile by the provider receipt or a safe lookup; do not publish again on assumption.
 
-Enterprise-grade. 13+ platforms, 75+ tools. REST API + MCP (community-maintained).
+## Provider Qualification Gate
 
-**Pricing:** $149-$599/mo + per-profile fees. For enterprise teams with budget.
+Evaluate a managed or self-hosted connector against current evidence, not a price table:
 
-**Platforms:** All Publora platforms + Reddit, Snapchat, more.
+1. documented transport and OAuth flow;
+2. explicit account, scope, and API-version model;
+3. immutable request or idempotency support for publish;
+4. media upload, post creation, and lookup receipts;
+5. maintenance owner, release provenance, and dependency review;
+6. a staging or test-account canary;
+7. a human approval path that shows the actual outgoing content.
 
-### OpenTweet
+No community server should receive broad social credentials merely because its tool name sounds narrow.
 
-X/Twitter-only. 2-minute setup, MCP server included.
+## Operating Pattern for a News Portal
 
-**Pricing:** $11.99/mo + free MCP tier.
+Use the portal's knowledge record as the source of truth:
 
-Best for: X-heavy workflows where multi-platform is not needed.
+| Portal state | Social action |
+|---|---|
+| Research collected | no social action |
+| Drafted and source-reviewed | optional draft proposal |
+| Approved for public release | create one platform-specific publish intent |
+| Published and verified | attach provider receipt and canonical URL |
+| Corrected or superseded | publish a new, linked revision; do not overwrite history silently |
 
-## Self-Hosted: Postiz
-
-Full open-source social media scheduling. Docker-based. Growing community (26K+ GitHub stars as of 2026).
-
-**Platforms:** X, LinkedIn, Instagram, Facebook, Bluesky, Mastodon, Discord.
-
-```bash
-# Docker Compose setup
-git clone https://github.com/gitroomhq/postiz-app
-cd postiz-app
-cp .env.example .env
-# Configure OAuth credentials for each platform
-docker-compose up -d
-```
-
-MCP integration: community-maintained, check repo for latest MCP adapter.
-
-**When to choose:** privacy requirements, no monthly fees, team collaboration features.
-
-## Community Single-Platform MCP Servers
-
-Free, require own API keys, more technical setup.
-
-| Platform | Available servers |
-|----------|------------------|
-| X/Twitter | 7+ (`sriramsowmithri`, `rafaljanicki`, `LuniaKunal`, others) |
-| LinkedIn | 4 (`TuliEscobar`, `raghav18482`, `fredericbarthelet`, `AudienseCo`) |
-| Instagram | 3 (`handoing`, `mosesblxk`, `taskmaster-ai`) |
-| Bluesky | 4 (`LT-aitools`, `brianellin`, `morinokami`, `berenslab`) |
-| TikTok | 1 (`Seym0n/tiktok-mcp`) |
-
-**Discovery:** `github.com/TensorBlock/awesome-mcp-servers` - maintained list of community MCP servers by category.
-
-## Platform Comparison
-
-| Product | Platforms | Pricing | Open Source | MCP Quality |
-|---------|-----------|---------|-------------|-------------|
-| Publora | 11+ | Free / $2.99-$9.99/acc | Skills MIT | Official HTTP |
-| Postiz | 7+ | Free (self-hosted) | Full | Community |
-| Ayrshare | 13+ | $149-$599+/mo | No | Community |
-| OpenTweet | X only | $11.99/mo + free tier | Partial | Official |
-| Community servers | 1 each | Free | Yes | Varies |
-
-## Workflow: Claude Code + Social Posting
-
-```python
-# Example: Claude Code agent posting research summary to LinkedIn
-# Using Publora MCP
-import anthropic
-
-client = anthropic.Anthropic()
-
-# Agent calls linkedin-post skill with structured content
-response = client.messages.create(
-    model="claude-opus-4-5",
-    max_tokens=1000,
-    tools=[{
-        "name": "mcp__publora__linkedin-post",
-        "description": "Post to LinkedIn",
-    }],
-    messages=[{
-        "role": "user",
-        "content": "Post this research summary to LinkedIn with appropriate hashtags: [summary]"
-    }]
-)
-```
+This keeps news provenance, project pages, and social derivatives connected without letting social delivery redefine editorial truth.
 
 ## Gotchas
 
-- **X/Twitter excluded from Publora free tier.** The most demanded platform is gated - requires Pro plan ($2.99/mo) to post to X.
-- **Publora doc-code mismatches.** The new owner found 269 discrepancies between documentation and actual API behavior (discovered via AI-agent testing across 7 review rounds). Test endpoints before building automation.
-- **Community MCP servers require you to manage platform API credentials.** Platform APIs have rate limits and approval processes - Instagram Graph API, TikTok API require business accounts and app review.
-- **Postiz OAuth setup is non-trivial.** Requires creating developer apps on each platform, managing redirect URIs, and keeping tokens refreshed. Budget 2-4 hours for initial setup.
-- **LinkedIn API restricts organic posting.** LinkedIn's API only allows posting via approved LinkedIn Partner solutions for non-personal accounts. Personal account posting works; company page posting requires Partner status (Ayrshare has it, community servers may not).
-- **MCP HTTP transport vs stdio.** Publora uses HTTP transport (`https://mcp.publora.com`). Some MCP clients only support stdio. Check client compatibility before committing.
+- **A scheduler receipt is not a publication receipt.** It may only mean the connector accepted the job. **Fix:** reconcile the provider resource ID and observed visibility.
+- **MCP transport does not grant platform authority.** OAuth scopes and account roles still live at the platform boundary. **Fix:** validate them in the provider adapter for every effect.
+- **Tool metadata can be malicious or stale.** A friendly description is not a security guarantee. **Fix:** trust the configured server identity and inspect schemas before enabling effectful tools.
+- **Retries can duplicate a post.** Timeouts do not tell you whether the platform acted. **Fix:** atomically reserve an idempotency key and reconcile unknown outcomes.
+- **Static vendor comparisons decay quickly.** Prices, platform coverage, and permissions are not stable documentation facts. **Fix:** keep a dated qualification receipt per connector.
+
+## Sources
+
+- [Model Context Protocol tools](https://modelcontextprotocol.io/specification/latest/server/tools)
+- [Model Context Protocol authorization](https://modelcontextprotocol.io/specification/latest/basic/authorization)
+- [LinkedIn Posts API](https://learn.microsoft.com/en-us/linkedin/marketing/community-management/shares/posts-api)
 
 ## See Also
 
-- [[ai-agent-ide-features]]
-- [[agent-architectures]]
+- [[agent-safety-alignment]]
+- [[tool-use-patterns]]
+- [[multi-agent-messaging]]
+- [[agent-orchestration]]

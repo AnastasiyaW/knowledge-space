@@ -1,247 +1,128 @@
 ---
 title: "Claude Managed Agents"
-description: "Anthropic's hosted agent infrastructure - container sandboxes, tool orchestration, event streaming, outcomes evaluation. Open beta April 2026."
+description: "A version-aware guide to Anthropic's managed agent harness: agent configuration, environments, sessions, events, permission policies, and data boundaries."
+tags: [llm-agents, claude, managed-agents, sandboxes, permissions, orchestration]
 ---
 
 # Claude Managed Agents
 
-Hosted agent platform from Anthropic. You define agent config (model, prompt, tools), Anthropic runs it in managed cloud containers with built-in code execution, web access, file I/O, and event streaming. No Docker, no orchestration code, no tool execution layer.
+**Scope checked: 2026-09-03.** Claude Managed Agents is Anthropic's beta managed harness for long-running, asynchronous agent work. It provides the agent loop, environments, tool execution, persisted event history, and session lifecycle; the application still owns its business authorization, approval decisions, and release criteria. [Managed Agents overview](https://platform.claude.com/docs/en/managed-agents/overview)
 
-Key difference from Messages API: Messages API gives direct model access (you build everything). Managed Agents gives a complete agent platform (containers, tools, persistence, fault recovery included).
+## What Is Managed
 
-## Four Core Concepts
+| Concept | Current meaning | Application responsibility |
+|---|---|---|
+| Agent | model, system prompt, tools, MCP servers, skills | version and review the configuration |
+| Environment | Anthropic cloud sandbox or self-hosted sandbox configuration | select data-residency and network boundary |
+| Session | running agent instance for a task | create, steer, interrupt, reconcile outcomes |
+| Events | messages, tool results, status and progress records | consume the authoritative event stream |
 
-| Concept | What it is | Lifecycle |
-|---------|-----------|-----------|
-| **Agent** | Versioned config: model + system prompt + tools + MCP servers | Create once, reference by ID |
-| **Environment** | Container template: OS packages, network rules, language runtimes | Reusable across sessions |
-| **Session** | Running agent instance inside an environment | Holds conversation history, filesystem, status |
-| **Events** | SSE stream between your app and the agent | User messages in, agent responses + tool calls out |
+Managed infrastructure reduces runtime assembly work. It does not make a tool call authorized, a result factually correct, or a publication safe to release.
 
-## Quick Start
+## Lifecycle Contract
 
-```bash
-# Install CLI
-brew install anthropics/tap/ant          # macOS
-# or curl from GitHub releases for Linux
-
-# Install SDK
-pip install anthropic                    # Python
-npm install @anthropic-ai/sdk           # TypeScript
-
-export ANTHROPIC_API_KEY="your-key"
+```text
+versioned agent + reviewed environment
+          -> create session
+          -> send user event
+          -> stream authoritative events
+          -> approval / denial / interrupt as required
+          -> reconcile external effects
+          -> terminal receipt
 ```
 
-### Create Agent + Environment + Session
+The platform supports persisted session history and outputs, server-sent event streaming, and mid-execution steering or interruption. A UI preview is not the record: use persisted session events and an application receipt to decide whether a task really finished. [Session event stream](https://platform.claude.com/docs/en/managed-agents/events-and-streaming)
 
-```python
-from anthropic import Anthropic
+## Minimum Configuration
 
-client = Anthropic()
+Start from an explicit, least-privilege definition:
 
-# 1. Agent config
-agent = client.beta.agents.create(
-    name="Coding Assistant",
-    model="claude-sonnet-4-6",
-    system="You are a helpful coding assistant. Write clean, well-documented code.",
-    tools=[{"type": "agent_toolset_20260401"}],
-)
-
-# 2. Container template
-environment = client.beta.environments.create(
-    name="dev-env",
-    config={
-        "type": "cloud",
-        "networking": {"type": "unrestricted"},
-        "packages": {"pip": ["pandas", "numpy"]},  # optional
-    },
-)
-
-# 3. Start session
-session = client.beta.sessions.create(
-    agent=agent.id,
-    environment_id=environment.id,
-    title="My first session",
-)
-
-# 4. Send task and stream results
-with client.beta.sessions.events.stream(session.id) as stream:
-    client.beta.sessions.events.send(
-        session.id,
-        events=[{
-            "type": "user.message",
-            "content": [{"type": "text", "text": "Create a Fibonacci script"}],
-        }],
-    )
-    for event in stream:
-        match event.type:
-            case "agent.message":
-                for block in event.content:
-                    print(block.text, end="")
-            case "agent.tool_use":
-                print(f"\n[Tool: {event.name}]")
-            case "session.status_idle":
-                print("\n\nDone.")
-                break
+```yaml
+name: Editorial Research Agent
+model:
+  id: claude-opus-5
+system: Draft from approved public sources. Do not publish.
+tools:
+  - type: agent_toolset_20260401
+    default_config:
+      permission_policy:
+        type: always_ask
 ```
 
-## Built-in Tools
+The current API is beta and requires the `managed-agents-2026-04-01` beta header; supported SDKs add it automatically. Pin the SDK and test its current request shape before deploying. [Managed Agents quickstart](https://platform.claude.com/docs/en/managed-agents/quickstart)
 
-`agent_toolset_20260401` includes all tools:
+## Permission Policy Is Not Access Control
 
-| Tool | Description |
-|------|-------------|
-| `bash` | Shell commands in container |
-| `read` | Read files |
-| `write` | Write files |
-| `edit` | String replacement in files |
-| `glob` | File pattern matching |
-| `grep` | Regex search |
-| `web_fetch` | Download URL content |
-| `web_search` | Internet search |
+Permission policies decide whether server-executed tools run immediately or pause for approval:
 
-### Selective Tool Configuration
+| Policy | Result |
+|---|---|
+| `always_allow` | enabled server tool executes without confirmation |
+| `always_ask` | session pauses until the application returns allow or deny |
 
-```python
-# Disable specific tools
-{"type": "agent_toolset_20260401",
- "configs": [
-     {"name": "web_fetch", "enabled": False},
-     {"name": "web_search", "enabled": False}]}
+The pre-built agent toolset defaults to `always_allow`; MCP toolsets default to `always_ask`. Custom tools run in the application and therefore need their own authorization layer. Running sessions retain the tool configuration they were created with, so a policy change affects only later sessions unless the application explicitly handles migration. [Permission policies](https://platform.claude.com/docs/en/managed-agents/permission-policies)
 
-# Enable only specific tools (everything else disabled)
-{"type": "agent_toolset_20260401",
- "default_config": {"enabled": False},
- "configs": [
-     {"name": "bash", "enabled": True},
-     {"name": "read", "enabled": True}]}
-```
+For a public-content workflow, use a narrow split:
 
-### Custom Tools
+| Stage | Capability | Default |
+|---|---|---|
+| Research | read approved sources, create structured notes | allowed |
+| Draft | create revision proposal | allowed |
+| Review | inspect sources and draft | allowed |
+| Publish | create a public effect | deny until a concrete approval event |
+| Recovery | inspect task and receipt | allowed, no new effect |
 
-```python
-agent = client.beta.agents.create(
-    tools=[
-        {"type": "agent_toolset_20260401"},
-        {
-            "type": "custom",
-            "name": "get_weather",
-            "description": "Get current weather for a location",
-            "input_schema": {
-                "type": "object",
-                "properties": {"location": {"type": "string"}},
-                "required": ["location"],
-            },
-        }],
-)
-```
+An approval UI must identify the exact tool call, arguments, target account, and expiry. “The agent was approved earlier” is not enough evidence for a new publication.
 
-Custom tool best practices: 3-4 sentence descriptions (what, when, limitations). Group related operations under one tool with `action` parameter. Use namespace prefixes (`db_query`, `storage_read`). Return only essential data.
+## Environment and Data Boundary
 
-## Permission System
+Choose a cloud sandbox only after documenting:
 
-Two modes, combinable per-tool:
+- network allowlist and egress policy;
+- file, repository, and artifact mounts;
+- which credentials are available to the session;
+- data classification and retention;
+- whether a self-hosted sandbox is required for residency or compliance;
+- how uploaded files and session data will be deleted.
 
-| Mode | Behavior | Use case |
-|------|----------|----------|
-| `always_allow` | Auto-execute | Trusted internal agents |
-| `always_ask` | Pause for approval | User-facing agents |
+Managed Agents sessions are intentionally stateful. Anthropic documents that this feature is not eligible for Zero Data Retention or HIPAA BAA coverage at the current beta stage; assess that boundary before putting sensitive corpus or learner data in a session. [Managed Agents overview](https://platform.claude.com/docs/en/managed-agents/overview)
 
-MCP tools default to `always_ask`. This is more production-ready than LangGraph/CrewAI/AutoGen - none offer per-tool permissions out of the box.
+## Event Handling
 
-## Usage Patterns
+Consume events as a state machine, not as chat text:
 
-| Pattern | Description | Example |
-|---------|-------------|---------|
-| **Event-triggered** | External system fires agent | Sentry: bug detected -> agent writes patch -> opens PR |
-| **Scheduled** | Cron-style | Daily GitHub digest, team task summary |
-| **Fire-and-forget** | Human submits task, gets result | Asana AI Teammates |
-| **Long-horizon** | Hours of work, persistent state | Research projects, large codebase migrations |
+1. persist the session ID, task ID, expected inputs, and current policy revision;
+2. send the task as a `user.message` event;
+3. stream status, agent, and tool events;
+4. when an `always_ask` action pauses, inspect the concrete request and send an allow or deny event;
+5. on interruption, wait for the recorded idle transition;
+6. reconcile any external effect before assigning a terminal state.
 
-**CLI + SDK pattern**: agent templates as YAML in git (model, prompt, tools, MCP). CLI deploys via CI pipeline. SDK manages sessions at runtime.
+The platform's preview deltas are for display only; its buffered persisted event is the authoritative record. [Session event stream](https://platform.claude.com/docs/en/managed-agents/events-and-streaming)
 
-## Outcomes (Research Preview)
+## When It Fits
 
-Turns sessions from conversations into goal-oriented work. Define what "done" looks like with a rubric. A separate grader process evaluates quality independently.
-
-```python
-client.beta.sessions.events.send(
-    session_id=session.id,
-    events=[{
-        "type": "user.define_outcome",
-        "description": "Build a DCF model for Costco in .xlsx",
-        "rubric": {"type": "text", "content": RUBRIC_TEXT},
-        "max_iterations": 5,  # default 3, max 20
-    }],
-)
-```
-
-Rubric tips: concrete, verifiable criteria ("CSV contains price column with numeric values"), not vague ("data looks good").
-
-| Result | What happens |
-|--------|-------------|
-| `satisfied` | Session goes idle |
-| `needs_revision` | Agent starts new iteration |
-| `max_iterations_reached` | Final attempt, then idle |
-| `failed` | Rubric doesn't match task |
-
-Retrieve output files via Files API from `/mnt/session/outputs/`.
-
-## Multi-Agent (Research Preview)
-
-One orchestrator delegates to sub-agents. Each runs in its own thread with isolated context, but all share the container filesystem.
-
-```python
-orchestrator = client.beta.agents.create(
-    name="Engineering Lead",
-    model="claude-sonnet-4-6",
-    system="Coordinate engineering work. Delegate code review to reviewer, tests to test agent.",
-    tools=[{"type": "agent_toolset_20260401"}],
-    callable_agents=[
-        {"type": "agent", "id": reviewer.id, "version": reviewer.version},
-        {"type": "agent", "id": test_writer.id, "version": test_writer.version}],
-)
-```
-
-**Limitation**: single delegation level only. Orchestrator calls agents, agents cannot call other agents.
-
-Stream sub-agent threads independently:
-
-```python
-for thread in client.beta.sessions.threads.list(session.id):
-    print(f"[{thread.agent_name}] {thread.status}")
-```
-
-## Architecture
-
-Three independent components with minimal assumptions about each other:
-
-- **Brain** - Claude + agent loop (tool selection, reasoning)
-- **Hands** - sandboxes and tools (execution)
-- **Session** - event journal (persistence)
-
-Each can fail or be replaced independently. Built-in: prompt caching, context compaction, automatic infrastructure recovery.
-
-## Pricing
-
-Standard Claude API token rates + **$0.08/hour** active session time. A 10-minute coding session costs a few cents for compute.
-
-| Operation | Rate Limit |
-|-----------|-----------|
-| Create (agents, sessions, environments) | 60 req/min |
-| Read (get, list, stream) | 600 req/min |
+Choose Managed Agents when the task benefits from a managed environment, multiple tool calls over minutes or hours, persisted sessions, or scheduled execution. Use the Messages API or a local harness when the application needs full control of the loop, environment, data path, and every tool executor.
 
 ## Gotchas
 
-- **Outcomes grader runs in separate context** - it cannot see the agent's reasoning, only the output. This is by design (prevents self-evaluation bias) but means your rubric must be evaluable from artifacts alone, not from the conversation
-- **Single delegation level** - orchestrator -> agents, but agents cannot call sub-agents. Design flat hierarchies. For deeper nesting, use sequential sessions where one agent's output feeds another's input
-- **Container state is per-session** - files created in one session don't carry to another unless you explicitly download and re-upload. Use the Files API for persistence across sessions
-- **`always_ask` pauses the entire session** - if your app doesn't handle the approval event promptly, the agent sits idle burning session time. Implement approval webhooks or polling with timeouts
+- **The agent toolset is permissive by default.** Its default is `always_allow`. **Fix:** configure `always_ask` or disable unnecessary tools before creating each production agent version.
+- **An MCP approval is not application authorization.** A user can approve a tool yet lack authority for the business action. **Fix:** validate tenant, target, scope, and approval at the downstream executor.
+- **A session going idle is not proof of success.** It can be waiting for confirmation, interrupted, or unable to reconcile a side effect. **Fix:** require a domain terminal receipt.
+- **Stateful sessions retain more than a prompt.** History, sandbox state, and outputs are part of the data boundary. **Fix:** classify data, define retention, and verify deletion operations.
+- **Beta surfaces evolve.** A copied quickstart may drift. **Fix:** pin dependencies, cite the current beta header, and run a controlled canary after changes.
+
+## Sources
+
+- [Claude Managed Agents overview](https://platform.claude.com/docs/en/managed-agents/overview)
+- [Claude Managed Agents quickstart](https://platform.claude.com/docs/en/managed-agents/quickstart)
+- [Permission policies](https://platform.claude.com/docs/en/managed-agents/permission-policies)
+- [Session event stream](https://platform.claude.com/docs/en/managed-agents/events-and-streaming)
 
 ## See Also
 
-- [[agent-orchestration]] - orchestration patterns and frameworks
-- [[agent-deployment]] - deployment strategies for AI agents
-- [[claude-code-ecosystem]] - Claude Code plugin/hooks/skills system
-- [[multi-agent-systems]] - multi-agent coordination architectures
-- [[tool-use-patterns]] - tool design best practices
+- [[agent-orchestration]]
+- [[agent-safety-alignment]]
+- [[tool-use-patterns]]
+- [[multi-agent-messaging]]
+- [[llmops]]
