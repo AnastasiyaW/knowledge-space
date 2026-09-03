@@ -1,55 +1,94 @@
-# Swarm-Based Review and Multisampling in Agentic Workflows
+---
+title: "Independent Review and Multisampling for Agent Workflows"
+description: "Generate independent candidates, validate evidence, and select agent outputs through explicit acceptance criteria rather than fixed vote counts or model confidence."
+tags: [llm-agents, multisampling, review, evaluation, evidence]
+---
 
-Multisampling and swarm-based review are techniques used to scale LLM reasoning performance at inference time. These methods leverage diverse sampling, specialized agent personas, and iterative review cycles to surface edge cases that single-pass generation typically misses.
+# Independent Review and Multisampling for Agent Workflows
 
-## Multisampling and Diversity Scaling
-Multisampling (Best-of-N) relies on the principle that multiple independent reasoning paths increase the probability of hitting a correct solution.
+**Scope checked: 2026-09-04.** Multiple agent outputs can expose different failure modes, but neither a majority vote nor an agent's confidence is evidence that an output is correct. Treat multisampling as a bounded way to create competing candidates; treat review as a separate verification activity with a named acceptance contract.
 
-- **Diversity over Identity:** Using diverse prompts (different phrasing or personas) for the same task outperforms identical prompt sampling. Diverse prompting shows gains of +10.8% in reasoning and +9.5% in coding tasks [2502.11027].
-- **Scaling Law (N=4 to N=16):** The most significant performance gains occur between n=4 and n=16. Beyond n=16, returns diminish rapidly. Best-of-8 strategies can achieve a ~22% speedup in reaching a target accuracy threshold [2502.12668].
-- **Self-Consistency:** A foundational pattern where the model generates multiple Chain-of-Thought (CoT) paths followed by a majority vote on the final answer [2203.11171].
+## Start with a Task Contract
 
-### Confidence-Weighted Self-Consistency (CISC)
-CISC optimizes token usage by weighting samples based on model confidence, reducing the number of required samples by up to 46% while maintaining accuracy.
+Before generating alternatives, record what “done” means for this task. A useful contract makes candidates comparable and prevents a review swarm from silently changing the request.
 
-## Swarm Review Architecture (Plan Swarming)
-Swarm review involves an iterative, multi-round process where specialized agents audit a plan or code snippet. Each round unmasks deeper issues as earlier ones are resolved.
+```yaml
+task_id: payment-retry-001
+source_revision: immutable repository revision
+deliverable: patch and test receipt
+acceptance:
+  - named test command passes
+  - retry is idempotent
+  - no production mutation during evaluation
+authority:
+  - repository read and local test only
+escalation:
+  - missing credential, production target, or unclear owner
+```
 
-- **Round 1 (Baseline):** A single agent identifies surface-level issues (e.g., 10-12 findings).
-- **Round 2 (Multisampling):** Multiple parallel agents with diverse personas identify unique edge cases.
-- **Round 3 (Aspect Focusing):** Agents are assigned specific domains (security, performance, style).
-- **Round 4 (Deep Audit):** High-N multisampling (e.g., 25+ runs) focused on specific medium-to-high risk areas.
+The contract should distinguish a desired answer from the evidence that can prove it. For a source-backed answer, the evidence may be current primary sources. For a code change, it may be a diff, deterministic tests, and an independent review. For an external action, it must include the approval and resulting receipt.
 
-### Parallel Specialized Agents
-In production code review environments, using parallel specialized agents increases substantive findings from 16% to 54%. Large pull requests (>1000 lines) see a significant boost in recall (up to 84%) using this pattern.
+## Separate Candidates from Verification
 
-## Aggregation and Selection Mechanisms
-Majority voting is effective for consensus but often discards "minority-correct" findings—unique, high-value catches made by only one agent in the swarm.
+| Role | Allowed work | Output | Cannot prove on its own |
+|---|---|---|---|
+| candidate generator | propose an answer or patch within the contract | candidate plus cited assumptions | that the proposal works |
+| evidence collector | locate sources, run allowed checks, preserve receipts | evidence bundle | that evidence meets every acceptance criterion |
+| verifier | compare the candidate and evidence to the contract | pass, fail, or bounded uncertainty | authority to change the target |
+| selector | chooses a proven candidate or returns no decision | selection rationale | correctness without verifier evidence |
 
-- **Reasoning Tree Audit:** Instead of voting on the final answer, a "Judge" agent audits the reasoning steps. This can recover 65-82% of correct findings that are in the minority [2602.09341].
-- **Voting vs. Debate:** Simple voting is often as effective as full multi-agent debate (MAD) while being significantly cheaper. Debate acts as a martingale and does not always improve expected correctness [2508.17536].
-- **Union Voting for Security:** In vulnerability detection, the union of all agent findings is preferred over consensus to maximize recall, even if it increases false positives.
+Independence should be designed around differing evidence paths, not theatrical role names. For example, one candidate can trace a data-flow boundary while another attempts the stated acceptance test. Giving every agent the same draft, tools, and unstated assumptions creates correlated errors even if the prompts differ.
 
-## Specialized Vulnerability Detection Pipelines
-Modern pipelines for security and correctness use multi-level stages to identify complex logic flaws.
+## Choose an Aggregation Rule That Fits the Claim
 
-- **Hypothesis-Validation Pattern:** 
-    1. Identify a sensitive operation.
-    2. Generate a hypothesis for a vulnerability.
-    3. Construct a trigger path.
-    4. Verify via execution or symbolic audit.
-- **Multi-Level Pipeline (MultiVer):** Uses specialized agents for security, performance, and correctness. This approach achieves ~82.7% recall, outperforming many fine-tuned static models [2602.17875].
-- **Coarse-to-Fine Routing:** A router agent directs code to specific detector agents, followed by cross-model prompt evolution where one model (e.g., Claude) generates prompts and another (e.g., GPT-4o) evaluates their effectiveness [2601.18847].
+| Claim type | Preferred rule | Why a vote is insufficient |
+|---|---|---|
+| deterministic calculation or code behavior | execute the named validator | the test result is stronger than consensus |
+| factual, time-sensitive statement | require current primary-source citations | many agents can repeat an obsolete source |
+| design choice | compare trade-offs against explicit constraints | there may be more than one acceptable answer |
+| security concern | retain the union as triage, then confirm each finding | rare findings can be valuable, but unverified findings are not vulnerabilities |
+| irreversible action | require the declared approval and a side-effect receipt | agreement does not grant authority |
 
-## Gotchas
-- **Consensus Bias:** Majority voting (Self-Consistency) naturally suppresses rare but correct edge-case detections. In security contexts, strictly following the majority leads to critical misses.
-- **Diminishing Returns:** Attempting to scale N beyond 16-32 without changing the prompt diversity or agent personas usually results in wasted tokens for negligible accuracy gains.
-- **Unmasking Effect:** Fixing issues identified in Round 1 of a swarm review often changes the context enough to "unmask" bugs that were previously hidden or ignored by the LLM.
+A selector may return “no candidate proven.” That is a healthy outcome when evidence is missing, the contract is ambiguous, or the allowed tools cannot inspect the relevant boundary.
 
-## See Also
-- [[agent-orchestration]]
-- [[agent-design-patterns]]
-- [[multi-agent-systems]]
-- [[agent-evaluation]]
-- [[agent-memory]]
+## Bounded Multisampling Loop
 
+1. Freeze the task contract, input revision, tool policy, and stopping condition.
+2. Generate independent candidates that vary an evidence perspective or implementation approach.
+3. Run deterministic validation before asking a model to judge prose about validation.
+4. Send only the candidate and evidence bundle needed for a blind verifier to apply the contract.
+5. Select a candidate only when its required evidence is present; otherwise record the gap and escalate or stop.
+
+Set a budget in terms that operators can observe: allowed candidates, time, tool calls, or cost. Stop early when every criterion is proven, and stop at the budget boundary when it is not. Do not silently increase the sample count until a preferred answer wins.
+
+## Evidence Record
+
+Keep enough information for a later reviewer to reproduce the decision:
+
+- task and candidate identifiers;
+- source revision, configuration version, and input fixture;
+- exact validation commands and exit results;
+- source URLs or artifact digests;
+- denied tools, approvals, and external side-effect receipts;
+- selection rationale and unresolved uncertainty.
+
+This record turns an agent ensemble into an auditable workflow. It also makes regression evaluation possible: a future run can use the same contract and disclose which input, tool, or source changed.
+
+## Security Reviews Need Confirmation
+
+Security-oriented agents may cast a wide net, but their output is a lead, not a release decision. Preserve the finding, affected revision, proposed trigger path, and evidence needed to reproduce it. Confirm through the safest available method—code inspection, a controlled test fixture, or an authorized environment—before labeling it a vulnerability or changing a production system. Avoid granting a review agent extra network, credential, or deployment authority merely to make its result look conclusive.
+
+## Common Failure Modes
+
+- **Majority as proof:** agreement can amplify a shared false premise.
+- **Shared mutable scratchpad:** later candidates imitate the first candidate instead of testing it.
+- **Unbounded debate:** more messages replace a missing acceptance test.
+- **Blind trust in confidence scores:** confidence is not a calibrated correctness guarantee.
+- **Security “union” shipped as fact:** triage findings require confirmation and owner review.
+- **Lost provenance:** without a revision, fixture, and receipt, a future result cannot be compared honestly.
+
+## References
+
+- [OpenAI Evals documentation](https://platform.openai.com/docs/guides/evals) — evaluation definitions, runs, and graders.
+- [NIST AI RMF: Generative AI Profile](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence) — a risk-management framing for generative-AI systems.
+- [Claude Code subagents](https://code.claude.com/docs/en/subagents) — current documentation for scoped subagent definitions and delegated work.

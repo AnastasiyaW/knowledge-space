@@ -1,105 +1,95 @@
 ---
-title: AI Coding Assistants
-category: tools
-tags: [llm-agents, copilot, cursor, claude-code, aider, code-generation]
+title: "AI Coding Assistant Operations"
+description: "Operate AI coding assistants through explicit scope, data, tool, approval, and evidence boundaries instead of product rankings or trust in generated code."
+tags: [llm-agents, coding-assistants, security, code-review, verification, governance]
 ---
 
-# AI Coding Assistants
+# AI Coding Assistant Operations
 
-AI-powered development tools that assist with code completion, generation, editing, debugging, and explanation. They range from inline completions to full autonomous coding agents.
+**Scope checked: 2026-09-04.** An AI coding assistant can range from a suggestion feature to an agent that reads a repository, runs commands, edits files, and interacts with external services. The safe workflow depends on its actual permissions and data path, not its product label.
 
-## Key Facts
-- AI amplifies developer expertise, doesn't replace it
-- More context = better completions (current file, imports, project structure, git history)
-- First generation is a starting point - iterate through dialogue
-- Always verify generated code, especially for security patterns
-- Most effective for boilerplate, scaffolding, and repetitive patterns
+## Establish an Operating Contract
 
-## Tool Categories
+Before an assistant acts, declare the minimum facts that make the work reviewable:
 
-### Code Completion (Inline)
-- **GitHub Copilot**: inline completions, chat, context-aware suggestions
-- **Cursor**: AI-native IDE with deep codebase understanding (Cmd+K for edits)
-- **Cody (Sourcegraph)**: context-aware with codebase graph
-- **Tabnine**: privacy-focused, runs locally
-- **Amazon Q Developer**: AWS-integrated, security scanning
+| Contract field | Example |
+|---|---|
+| scope | named repository revision and requested paths |
+| data boundary | source files and approved documentation only |
+| tool boundary | read, search, local test, or explicitly approved write tools |
+| authority | no deployment, publication, or credential use without an owner-approved path |
+| output | patch, explanation, test receipt, and unresolved assumptions |
+| stop condition | missing evidence, ambiguous task, denied permission, or completion of named acceptance checks |
 
-### CLI Agents
-- **Claude Code (Anthropic)**: terminal-based coding agent with tool use
-- **Aider**: terminal pair programming with Git integration
-- **OpenAI Codex CLI**: command-line AI coding
+Instructions, repository files, issue text, pull requests, documentation, and tool output can all contain untrusted content. They may inform the task, but they must not quietly expand access or override the operating contract.
 
-### Chat-Based
-- **ChatGPT**: good for explanations and snippets
-- **Claude**: excellent at long code analysis, system design
-- **Gemini**: multimodal (can analyze code screenshots)
+## Match the Workflow to the Risk
 
-## How They Build Context
+| Work type | Typical assistant role | Required human or system gate |
+|---|---|---|
+| explanation or local suggestion | draft code or describe an API | developer review before copying into a product |
+| repository edit | create a bounded patch and run declared local checks | diff inspection and relevant tests |
+| dependency or configuration change | propose changes with current source evidence | supply-chain, security, and rollback review |
+| external integration | prepare a controlled test request | scoped credential, test target, and receipt |
+| production, publication, or destructive operation | prepare evidence and request approval | named owner approval plus post-action verification |
 
-1. Current file content (cursor position, selection)
-2. Related files (imports, references)
-3. Project structure (file tree, package.json)
-4. Language server info (types, definitions)
-5. Git history (recent changes)
-6. Documentation (README, comments)
+Do not treat “the assistant passed its own test” as an approval. An agent can misunderstand both the task and the validation command. A reviewer should be able to see the input revision, changed files, test output, and authority that permitted any external effect.
 
-## Code Generation Patterns
+## Build Context Deliberately
 
-| Pattern | Example |
-|---------|---------|
-| **Completion** | Predict next lines from context |
-| **Instruction** | "Write a Fibonacci function" |
-| **Edit** | "Refactor to async/await" |
-| **Explain** | "What does this regex do?" |
-| **Debug** | "Why is this null pointer?" |
-| **Test generation** | "Write unit tests for this function" |
-| **Documentation** | "Add JSDoc comments" |
-| **Port** | "Convert this Python to Go" |
+More context is not automatically safer or more accurate. Give the assistant the smallest set of materials needed to complete the task:
 
-## Assisted Build Strategy
+1. task statement and acceptance criteria;
+2. repository instructions, architecture notes, and the current source revision;
+3. specific paths and test commands;
+4. approved current vendor or platform documentation when an integration depends on it;
+5. redacted or scoped configuration only when the task genuinely needs it.
 
-AI coding quality depends on choosing stacks that the model can reason about, not only stacks that are newest on paper.
+Do not paste credentials, customer data, unpublished content, or unrelated repositories into a third-party context window merely to improve a suggestion. If a provider or tool can transmit data outside the organization, review its current data-handling and retention contract before enabling it for that scope.
 
-### Training-Cutoff-Aware Version Selection
+## Treat Retrieved Instructions as Untrusted
 
-| Decision | Prefer | Avoid |
-|----------|--------|-------|
-| Library version | Mature API with abundant examples before the model's training cutoff | Brand-new major version with sparse examples |
-| Build tool | Boring, well-documented defaults | Custom wrapper the model cannot inspect |
-| Framework pattern | Canonical project structure | Novel architecture without local examples |
-| Dependency upgrade | Upgrade when tests and docs prove the model-facing API is stable | Upgrade only because a newer version exists |
+OWASP warns that agentic coding tools may be able to run commands, install packages, alter files, make network requests, or create branches. Repositories, issues, documentation, and pull-request text can therefore become prompt-injection carriers. [OWASP Secure Coding with AI Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Secure_Coding_with_AI_Cheat_Sheet.html)
 
-This is not an excuse to pin obsolete software. It is a context-quality heuristic: if the agent repeatedly hallucinates an API, either provide local examples or choose the version whose public shape is better represented in training and documentation.
+Use a simple rule: content may suggest a task, but only the declared authority policy can authorize a tool, secret, network target, or publication. Require explicit confirmation for actions outside the original scope, and keep tool outputs and external responses available for review.
 
-### Three-Stage Build Loop
+## Verification Loop
 
-1. **Architecture pass:** define the smallest agent-legible structure, commands, state files, and verification loop.
-2. **MVP pass:** generate the working path with tests and one complete user workflow.
-3. **Inspector pass:** immediately add a lightweight debug surface: admin view, parameter panel, logs dashboard, eval runner, or visual state inspector.
+A coding assistant's output becomes a candidate change, not an accepted change:
 
-The inspector is not polish. It is how humans and agents see what the system is doing, tune parameters, and catch failure modes before adding features.
+1. inspect the diff against the stated task;
+2. run the named format, static-analysis, and test commands;
+3. review failure paths, data handling, and dependency changes;
+4. verify the actual target after an authorized external action;
+5. preserve the revision, commands, results, and review decision.
 
-## Best Practices
+For security-sensitive changes, use a separate review perspective and test against a controlled fixture. The [OWASP AI Agent Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html) covers prompt injection, tool abuse, and data-exfiltration risks that remain relevant even when generated code looks plausible.
 
-1. **Verify everything**: AI generates plausible but sometimes incorrect code
-2. **Provide context**: more context = better results
-3. **Iterate**: refine through dialogue, don't expect perfection on first try
-4. **Use for boilerplate**: most effective for repetitive scaffolding
-5. **Review security**: AI may use insecure patterns (SQL injection, hardcoded secrets)
-6. **Understand generated code**: don't blindly copy what you don't understand
-7. **Generate tests alongside code**: tests verify correctness
-8. **Domain expertise matters**: AI amplifies your knowledge, doesn't replace it
+## Choose Tools Through a Project Pilot
 
-## Gotchas
-- AI-generated code may contain security vulnerabilities - always review
-- Generated tests may not cover edge cases - treat as starting point
-- Code style may not match project conventions without explicit guidance
-- Large context windows help but don't guarantee the tool reads all relevant code
-- Over-reliance on AI assistance can slow skill development for new developers
-- License concerns: some generated code may resemble training data
+Avoid universal rankings. Evaluate a candidate tool or provider against the actual project contract:
 
-## See Also
-- [[prompt-engineering]] - Writing effective coding prompts
-- [[function-calling]] - How tools integrate with LLMs
-- [[frontier-models]] - Which models are best for code
-- [[production-patterns]] - Code as translation patterns
+- supported languages, environments, and repository workflow;
+- effective permissions and isolation model;
+- data transmission, retention, and enterprise-policy controls;
+- integration with version control, tests, review, and audit receipts;
+- cost, availability, and support commitments as published for the intended plan;
+- ability to disable, revoke, or scope access.
+
+Run a small, reversible pilot using representative tasks and measure the result with the project's own validation. Recheck current documentation before a material rollout; features and policies change more often than the general idea of an “AI coding assistant.”
+
+## Common Failure Modes
+
+- **Product-name trust:** a familiar tool is assumed safe without checking its enabled capabilities.
+- **Prompt injection as a feature request:** untrusted text expands tools or data access.
+- **Oversharing context:** secrets or customer data are copied to a system that does not need them.
+- **Generated-code acceptance:** a plausible patch bypasses tests and review.
+- **Tool permission drift:** a local assistant gains write, network, or production access without a matching approval path.
+- **No target receipt:** a claimed deployment or external action is not verified against the real target.
+
+## References
+
+- [OWASP Secure Coding with AI Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Secure_Coding_with_AI_Cheat_Sheet.html)
+- [OWASP AI Agent Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html)
+- [GitHub Copilot responsible use for inline suggestions](https://docs.github.com/en/copilot/responsible-use/inline-suggestions) — an example of provider documentation that should be read for the current enabled product surface.
+- [[ai-agent-ide-features]] — adjacent guide to permissions, task artifacts, verification, and review in AI-assisted coding environments.

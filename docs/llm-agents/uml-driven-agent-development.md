@@ -1,190 +1,111 @@
-# UML-Driven Agent Development
+---
+title: "Diagram-as-Code for Agent Workflows"
+description: "Use small, versioned sequence, state, and trust-boundary diagrams to clarify agent workflows, then validate them in the renderer and CI target that will publish them."
+tags: [llm-agents, diagrams, uml, mermaid, plantuml, architecture]
+---
 
-Model-first approach to agent workflow design: specify behavior as diagrams-as-code before writing implementation, keeping diagrams version-controlled alongside code.
+# Diagram-as-Code for Agent Workflows
 
-## Key Facts
+**Scope checked: 2026-09-04.** A diagram is valuable when it makes an otherwise hidden state transition, handoff, approval, or trust boundary inspectable. Keep diagram source alongside the system it describes, but do not assume that one Markdown renderer, hosting site, or notation supports every diagram feature.
 
-- Model-Driven Architecture (MDA, OMG 2001) is the formal basis; pragmatic adoption = draw only for hard parts, not the whole system
-- Mermaid renders natively in GitHub/GitLab/Notion markdown — no plugin required; diffs cleanly as text
-- PlantUML covers all 14 UML 2.x diagram types (timing, profile, composite structure); Mermaid covers ~10
-- D2 (2023+) has cleaner layout engine than Mermaid but smaller LLM training corpus
-- LLMs generate Mermaid/PlantUML syntax reliably — feed a prompt, get a diff-able diagram
-- Store diagrams in `docs/diagrams/` alongside code; validate existence via CI or `init.sh`
-- [[agent-design-patterns]] (ReAct, Plan-and-Execute, Reflexion) benefit from sequence + state diagrams during design
-- [[agent-orchestration]] graphs (LangGraph nodes/edges) map directly to activity diagrams
+## Diagram the Unclear Boundary
 
-## Diagram-to-Agent-Concern Mapping
+Start with a concrete question rather than a diagram type:
 
-| Agent concern | Diagram type | What it captures | Tooling fit |
-|---|---|---|---|
-| Multi-agent message flow | **Sequence** | Lifelines, message order, async awaits, alt/opt/loop fragments | Mermaid `sequenceDiagram` or PlantUML |
-| Feature / task lifecycle | **State** | States, guard conditions, entry/exit actions, transitions | Mermaid `stateDiagram-v2` or PlantUML |
-| Hook and tool lifecycle | **Activity** | Decision points, parallel forks/joins, swimlanes per agent | PlantUML (swimlane support) |
-| Memory layer hierarchy | **Package / Component** | Layer nesting, dependency arrows, namespace boundaries | PlantUML or C4 Component |
-| Service topology (MCPs, APIs) | **Deployment / C4** | Nodes, artifacts, communication paths, trust boundaries | Structurizr DSL or PlantUML |
-| Actor scope discovery | **Use Case** | Actors, include/extend, acceptance criteria derivation | PlantUML |
-| Data schema before code | **Class** | Types, fields, multiplicities, associations | Mermaid `classDiagram` or PlantUML |
-| Time-critical protocol | **Timing** | Lifeline state over clock axis, signal transitions | PlantUML only (Mermaid lacks timing) |
+| Question | Smallest useful diagram |
+|---|---|
+| Which role sends which artifact, and in what order? | sequence diagram |
+| Which states can a task enter, retry, or terminally fail in? | state diagram |
+| Which component may call which tool or service? | context or trust-boundary diagram |
+| Which data crosses a permission, tenant, or network boundary? | data-flow or deployment diagram |
+| Which policy controls a decision? | decision table, optionally paired with a state diagram |
 
-**Not worth diagramming:** trivial functions, single-file scripts, hot fixes, exploratory code.
+Do not diagram a trivial helper only because a diagram tool is available. Prefer a plain test, contract, or short table when that communicates the behavior more directly.
 
-## Mermaid Examples
+## Sequence Diagram: Make Handoffs Visible
 
-### Multi-Agent Coordination — sequenceDiagram
+This Mermaid example captures a bounded review flow. It describes the intended protocol; the referenced code and tests must still prove that the protocol is implemented.
 
 ```mermaid
 sequenceDiagram
-    autonumber
     participant O as Orchestrator
-    participant R as ResearchAgent
-    participant V as VerifierAgent
-    participant T as ToolRunner
+    participant G as Candidate generator
+    participant V as Independent verifier
+    participant R as Receipt store
 
-    O->>R: dispatch(task, budget)
-    activate R
-    R->>T: search(query)
-    T-->>R: results[]
-    R-->>O: draft_report
-    deactivate R
-
-    O->>V: verify(draft_report)
-    activate V
-    alt verdict == REJECT
-        V-->>O: REJECT + reason
-        O->>R: retry(reason, reduced_budget)
-    else verdict == PASS
-        V-->>O: PASS
-    end
-    deactivate V
-
-    O-->>O: emit_result()
+    O->>G: frozen task contract and input revision
+    G-->>O: candidate plus evidence references
+    O->>V: candidate and acceptance criteria
+    V-->>O: pass, fail, or missing evidence
+    O->>R: append decision and validation receipt
 ```
 
-### Feature/Task State Machine — stateDiagram-v2
+Sequence diagrams are effective when message order matters. They should name the artifact being handed off, not merely the agent label. Mermaid documents sequence-diagram syntax; PlantUML likewise treats textual participant and message definitions as source that a renderer turns into a diagram. [Mermaid sequence diagrams](https://mermaid.js.org/syntax/sequenceDiagram) · [PlantUML sequence diagrams](https://plantuml.com/sequence-diagram)
+
+## State Diagram: Make Terminal States Explicit
+
+For agents, a state diagram is often more useful than a large class diagram because retries, approvals, and terminal failure states are operationally important.
 
 ```mermaid
 stateDiagram-v2
-    [*] --> not_started
-
-    not_started --> in_progress : assign(agent_id)
-
-    in_progress --> blocked : external_dep_missing
-    blocked --> in_progress : dep_resolved
-
-    in_progress --> failed : error(reason)
-    failed --> in_progress : retry [attempts < MAX]
-    failed --> not_started : reset [user_decision]
-
-    in_progress --> done : L1_L2_L3_pass
-    done --> [*]
-
-    note right of in_progress
-        WIP = 1 enforced:
-        only one feature
-        in_progress at a time
-    end note
+    [*] --> Pending
+    Pending --> Running: claim
+    Running --> AwaitingApproval: external action requested
+    AwaitingApproval --> Running: approval receipt
+    Running --> Succeeded: acceptance checks pass
+    Running --> RetryableFailure: transient failure
+    RetryableFailure --> Pending: bounded retry
+    Running --> Blocked: authority or evidence missing
+    Succeeded --> [*]
+    Blocked --> [*]
 ```
 
-### Hook Lifecycle Example — stateDiagram-v2
+A terminal “blocked” state is not an error hidden behind a retry loop. It tells operators which evidence, approval, or external condition is required before work may resume. Validate exact state syntax against the renderer in your documentation pipeline. [Mermaid state diagrams](https://mermaid.js.org/syntax/stateDiagram.html) · [PlantUML state diagrams](https://plantuml.com/state-diagram)
 
-```mermaid
-stateDiagram-v2
-    direction LR
-    [*] --> SessionStart : claude invoked
+## Keep a Trust Boundary Separate
 
-    SessionStart --> PreToolUse : tool call queued
-    PreToolUse --> BLOCKED : hook exits non-zero
-    PreToolUse --> ToolExecution : hook exits 0
+A workflow diagram can imply permissions without showing them. Add a compact boundary view or table for decisions that involve credentials, user data, network calls, or publication.
 
-    ToolExecution --> PostToolUse : tool returns
-    PostToolUse --> PreToolUse : next tool call
-    PostToolUse --> Stop : session end
+| Boundary | Allowed flow | Required evidence |
+|---|---|---|
+| user input to planner | read as untrusted data | input record and policy version |
+| planner to tool runner | only declared tool parameters | permission decision and tool receipt |
+| tool runner to external service | approved, scoped request | idempotency key and service response |
+| generated draft to publication | owner-approved content only | review and publish receipt |
 
-    Stop --> [*]
+The [C4 model](https://c4model.com/) is useful as a vocabulary for software context, containers, components, and code. It does not replace an explicit security review, and it does not choose a renderer for you.
 
-    BLOCKED --> [*] : abort
-```
+## Select a Notation by the Publishing Contract
 
-## Tool Comparison — When to Use Which
+- **Mermaid:** use when its required syntax is supported by the actual documentation renderer and its CI validation.
+- **PlantUML:** use when the project has a declared rendering path for PlantUML source or generated assets.
+- **C4:** use for hierarchical architecture communication, independently of the diagram renderer selected.
+- **UML terminology:** use only where its semantics help the team communicate; a formal-looking diagram is not a substitute for executable acceptance criteria.
 
-| Criterion | Mermaid | PlantUML | D2 | Structurizr (C4) |
-|---|---|---|---|---|
-| GitHub native render | Yes | No (needs pre-render or plugin) | No | No |
-| UML 2.x coverage | ~10 of 14 types | All 14 | ~6 | 4 (C4 levels) |
-| Timing diagrams | No | Yes | No | No |
-| Profile / stereotype | No | Yes | No | No |
-| Swimlane activity | Limited | Full | No | No |
-| LLM generation quality | High (large corpus) | High | Medium (smaller corpus) | Medium |
-| Layout control | Low (auto) | Medium | High (auto+manual) | Low (auto) |
-| Java dependency | No | Yes (local jar) | No | No |
-| Diff-ability | Excellent | Excellent | Excellent | Good |
-| CI integration | `mmdc` CLI | `plantuml.jar` or server | `d2` CLI | Structurizr CLI |
+Check current official syntax before relying on a feature, and avoid publishing claims such as “native everywhere” or a fixed count of supported diagram types. Renderers, plugins, and hosting integrations evolve independently.
 
-**Decision rules:**
-- Default to **Mermaid** — markdown-native, zero setup, LLM-ready
-- Switch to **PlantUML** when: timing diagrams needed, swimlane activity, full UML 2.x profile, enterprise compliance
-- Use **D2** when: layout precision matters more than UML compliance (architecture sketches, ERD)
-- Use **C4/Structurizr** when: system context and container boundaries are the focus (service architecture, MCP topology)
+## Verification Workflow
 
-### PlantUML Sequence Fragment Reference
+1. keep source with the relevant specification or code revision;
+2. name the target renderer and the command that validates it;
+3. render in the same CI or static-site path that publishes the page;
+4. inspect failures as documentation defects, not as cosmetic warnings;
+5. update the diagram whenever a tested state, message, or trust boundary changes.
 
-```plantuml
-@startuml
-participant Orchestrator as O
-participant Worker as W
+For a high-risk flow, pair the diagram with a state-machine test, API contract, or approval-policy test. The diagram helps people reason about the system; the executable check decides whether a revision preserves the contract.
 
-O -> W: start()
-activate W
+## Common Failure Modes
 
-group loop [while budget > 0]
-  W -> W: process_batch()
-  alt result == ERROR
-    W --> O: error(code)
-  else result == OK
-    W --> O: partial_result
-  end
-end
+- **Renderer assumption:** a valid source file is mistaken for proof that the published site can render it.
+- **Happy-path-only flow:** retries, cancellation, denial, and terminal blockage disappear from the diagram.
+- **Implicit authority:** arrows imply that an agent may call a system without showing the approval boundary.
+- **Diagram drift:** the picture survives a code change because no validation or review links it to the revision.
+- **Notation worship:** a complex diagram hides a simpler acceptance test or decision table.
 
-deactivate W
-@enduml
-```
+## References
 
-Fragments available in PlantUML not in Mermaid: `loop`, `opt`, `par`, `break`, `critical`, `ref`.
-
-### Render Pipeline (CI / init.sh)
-
-```bash
-# PlantUML batch render (requires plantuml.jar or server)
-find docs/diagrams -name "*.puml" | xargs -I{} java -jar plantuml.jar {}
-
-# Mermaid batch render via CLI
-find docs/diagrams -name "*.mmd" | xargs -I{} mmdc -i {} -o {}.svg
-
-# Validate all referenced diagrams exist (add to init.sh)
-grep -r "docs/diagrams/" . --include="*.md" | \
-  grep -oP 'docs/diagrams/[^\s)>"]+' | sort -u | \
-  while read f; do [ -f "$f" ] || echo "MISSING: $f"; done
-```
-
-## Gotchas
-
-- **Issue:** Mermaid sequence diagram silently drops messages when participant names contain spaces or special characters without quoting. -> **Fix:** Always quote participant aliases: `participant "Tool Runner" as T` or use short aliases with no spaces; test render locally with `mmdc` before committing.
-
-- **Issue:** PlantUML timing diagrams require `@startuml` / `@enduml` plus explicit `robust` or `clock` declarations — LLMs often generate syntactically invalid timing blocks from hallucinated keywords. -> **Fix:** Use the canonical PlantUML timing template: `robust "Signal" as S` + `@S has state1,state2` + `@0 S is state1`; validate with the official PlantUML server at `https://www.plantuml.com/plantuml/uml/` before saving.
-
-- **Issue:** Mermaid `stateDiagram-v2` note syntax (`note right of StateX`) is only valid for top-level states — nested notes inside `state X {}` blocks produce render errors without visible error messages. -> **Fix:** Move notes to top level after the composite state definition, or use PlantUML which has full note placement support.
-
-- **Issue:** D2 auto-layout can place nodes in non-intuitive order when edge direction is bidirectional, making agent flow diagrams hard to read. -> **Fix:** Use `direction: right` or `direction: down` at the diagram root and force grouping with `grid-rows` / `grid-columns` on container nodes.
-
-## See Also
-
-- [[agent-design-patterns]] - ReAct, Plan-and-Execute, Reflexion patterns — these behavioral patterns are the subject of sequence and state diagrams
-- [[agent-orchestration]] - LangGraph state graphs and node/edge definitions map directly to activity diagrams
-- [[multi-agent-systems]] - Coordinator/Fork/Swarm topologies visualized with sequence + component diagrams
-- [[production-patterns]] - Hook lifecycle and tool validation flows modeled with activity diagrams
-- OMG UML 2.5.1 specification: https://www.omg.org/spec/UML/2.5.1/
-- PlantUML official: https://plantuml.com/
-- Mermaid documentation: https://mermaid.js.org/
-- C4 Model: https://c4model.com/
-- D2 language: https://d2lang.com/
-- Diagrams as Code survey: https://modeling-languages.com/text-uml-tools-complete-list/
+- [Mermaid sequence-diagram syntax](https://mermaid.js.org/syntax/sequenceDiagram)
+- [Mermaid state-diagram syntax](https://mermaid.js.org/syntax/stateDiagram.html)
+- [PlantUML sequence-diagram documentation](https://plantuml.com/sequence-diagram)
+- [PlantUML state-diagram documentation](https://plantuml.com/state-diagram)
+- [C4 model](https://c4model.com/)
