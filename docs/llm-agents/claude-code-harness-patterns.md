@@ -1,165 +1,136 @@
-# Claude Code Harness Patterns — Skills, Commands, CLI Detectors
-
-Three-layer harness architecture for enforcing design quality and development discipline in Claude Code. The pattern separates knowledge (skill files), triggers (slash commands), and deterministic verification (CLI tool) into independent layers.
-
-## Three-Layer Architecture
-
-```text
-┌─────────────────────────────────────────────────────┐
-│ Layer 3: Deterministic CLI Detector                 │
-│  • Mechanical checks, no LLM needed                 │
-│  • Anti-pattern regex + headless browser checks     │
-│  • JSON output for piping into CI                   │
-└─────────────────────────────────────────────────────┘
-┌─────────────────────────────────────────────────────┐
-│ Layer 2: Slash Commands                              │
-│  • Named triggers: /audit /polish /critique         │
-│  • Composable: /audit /normalize /polish blog       │
-│  • Discoverable names → agent picks correct command │
-└─────────────────────────────────────────────────────┘
-┌─────────────────────────────────────────────────────┐
-│ Layer 1: Skill (SKILL.md + reference files)         │
-│  • Domain knowledge: typography, color, spacing     │
-│  • Always-loaded context for the agent              │
-│  • Reference files per sub-domain                  │
-└─────────────────────────────────────────────────────┘
-```
-
-**Shell Bypass Principle:** Mechanical checks (linting, pattern detection) must NOT go through LLM. They are deterministic — run via CLI, feed results as structured input to the next step.
-
-## TDD-First Methodology (RED-GREEN-REFACTOR)
-
-Enforced workflow:
-```text
-brainstorming → writing-plans → using-git-worktrees →
-subagent-driven-development → test-driven-development →
-requesting-code-review → finishing-a-development-branch
-```
-
-**Key constraint:** Agent checks which skills apply BEFORE starting a task. Skills are not optional hints — they are mandatory workflows the agent self-enforces.
-
-**Measured impact (community benchmarks):**
-- Visual brainstorming with HTML mockups reduced style-related retries: 4/feature → 0
-- Token cost reduction: ~14% with better upfront planning
-- Parallel agent dispatch via git worktrees: 3-5x speedup on multi-file tasks
-
-## Visual Context Pattern (HTML Fragment Server)
-
-When a decision is better understood visually than in text, use a local HTTP server with HTML fragments:
-
-```bash
-scripts/start-server.sh --project-dir /path/to/project
-```
-
-**How it works:**
-1. Agent writes HTML fragments to `screen_dir` (not full documents — server wraps in template)
-2. User opens URL, clicks options
-3. Clicks stored as JSON events in `$STATE_DIR/events`
-4. Agent reads events next turn, iterates
-
-**CSS contract classes:** `.options`, `.option`, `.cards`, `.mockup`, `.split`, `.mock-nav`, `.mock-sidebar`, `.mock-button`, `.mock-input`
-
-**Decision rule:** "Would the user understand this better by seeing it than reading it?" → yes: HTML fragment; no: terminal output.
-
-## Design CLI Anti-Pattern Detection
-
-Run deterministic pattern checks before invoking LLM review:
-
-```bash
-npx impeccable detect src/          # directory scan
-npx impeccable detect index.html    # single file
-npx impeccable detect https://url   # URL via headless browser
-npx impeccable detect --fast --json # regex-only, JSON for CI
-```
-
-**Anti-pattern manifest (24 checkers, categories):**
-
-| Category | Patterns blocked |
-|----------|-----------------|
-| AI-slop fonts | Inter, Roboto, Arial as default (without overrides) |
-| AI-slop colors | Pure black/gray (need tinted neutrals), purple gradients |
-| AI-slop layout | Nested cards ("Cardocalypse"), thick border accent cards |
-| AI-slop motion | Bounce/elastic easing, dark outer glows |
-| Quality | Line length >75ch, cramped padding, skipped heading levels, small touch targets (<44px) |
-| Text | Gray text on colored backgrounds |
-
-**Integration in CI:**
-```yaml
-# .github/workflows/design-check.yml
-- name: Design anti-pattern check
-  run: npx impeccable detect src/ --fast --json > design-report.json
-- name: Fail on P0 issues
-  run: jq '.issues[] | select(.severity == "P0")' design-report.json | grep -q . && exit 1 || true
-```
-
-## Anti-Pattern as Config
-
-Both positive ("use tinted neutrals") and negative ("never Inter as default") instructions are needed. Negative list is often more actionable:
-
-```markdown
-# DESIGN.md pattern — anti-attractor procedure
-Before choosing any design element, enumerate your reflex defaults and reject them:
-- Font: NOT Inter/Roboto/Arial → choose from [your brand fonts]
-- Card background: NOT pure white (#fff) → use [your surface color]
-- Primary action: NOT purple gradient → use [your brand primary]
-- Animation: NOT bounce/elastic → use ease-out or spring (tension 200, friction 26)
-```
-
-## DESIGN.md — Visual CLAUDE.md
-
-Drop a `DESIGN.md` in project root. Agents read it as a visual runtime config:
-
-```markdown
 ---
-brand: your-brand-name
-version: 1.0.0
+title: "Coding-Agent Harness Patterns"
+description: "A practical boundary between instructions, tools, deterministic gates, review, and durable evidence for coding-agent work."
+tags: [coding-agents, harness, hooks, skills, testing, verification]
 ---
 
-## Typography
-- Heading: [font-name], weights 600/700
-- Body: [font-name], weight 400, line-height 1.6
-- Scale: 12/14/16/18/24/32/48px
+# Coding-Agent Harness Patterns
 
-## Color Tokens
-- surface-0: hsl(220, 15%, 97%)   # not pure white
-- text-primary: hsl(220, 15%, 15%) # not pure black (#000)
-- brand-primary: hsl(230, 80%, 55%)
+**Scope checked: 2026-09-03.** A harness is the operating environment around a coding agent. Its job is not to make an agent sound disciplined; it makes the intended workflow inspectable and lets deterministic checks reject an invalid change.
 
-## Spacing
-- Unit: 8px base grid
-- Component padding: 16/24/32px
+This guide avoids claimed universal speedups, product rankings, and hard-coded third-party tool recommendations. Measure a harness in its own repository against a declared delivery criterion.
 
-## Avoid
-- Generic card-in-card patterns
-- Centered single-column content wider than 720px
-- Decorative elements with no semantic function
+## Five Boundaries
+
+| Boundary | Owns | Must not own |
+|---|---|---|
+| task contract | acceptance criteria, scope, authority | hidden implementation decisions |
+| instructions | project conventions and routing | a substitute for executable policy |
+| tools and skills | repeatable domain workflows | final approval of their own output |
+| deterministic gates | build, tests, schema, formatting, link checks | judgment about unstated product intent |
+| independent review | semantic and release risk | an unbounded rewrite of a settled task |
+
+When a layer cannot be inspected, invoked, or verified by the agent, it is not an operational control.
+
+## Start With a Delivery Contract
+
+Write acceptance criteria before editing:
+
+1. name the paths or external behavior in scope;
+2. state the exact verification command or observable receipt;
+3. list irreversible or approval-gated actions;
+4. identify the owner of each mutable resource;
+5. name the required reviewer when self-review is insufficient.
+
+Keep task state in a durable artifact, not only in chat history. A concise manifest can track `PENDING`, `RUNNING`, `PASS`, and `BLOCKED` plus the receipt that justifies a terminal state.
+
+## Instructions Are Scoped Configuration
+
+Current Claude Code distinguishes shared project settings, project-local settings, user settings, and managed policy. Put team-safe, versioned configuration in shared project scope; keep personal overrides and credentials out of the repository. `/status` reports the sources the active session loaded. [Claude Code settings](https://code.claude.com/docs/en/settings)
+
+Project instructions should answer only questions that cannot be derived cheaply from code:
+
+- where authoritative architecture and deployment documentation live;
+- how to run required checks;
+- protected files, secrets boundaries, and approval rules;
+- the expected handoff and review artifacts.
+
+Do not turn an instruction file into a changelog or a prompt dump. Point to durable documents for detailed knowledge.
+
+## Deterministic Controls Come Before Model Judgment
+
+Run inexpensive mechanical checks directly:
+
+| Change risk | Example control | Evidence |
+|---|---|---|
+| syntax or format | formatter, parser, type checker | process exit and report |
+| changed contract | targeted test or schema validation | assertion output |
+| documentation | link and frontmatter checks | lint receipt |
+| release artifact | build or package verification | immutable artifact reference |
+| risky behavior | integration or user-visible test | trace, screenshot, or service receipt |
+
+An LLM can interpret a failing report and propose a correction. It must not convert a failed check into a pass by explanation alone.
+
+## Hooks and Skills Have Different Roles
+
+Claude Code supports hooks around lifecycle and tool events, and custom subagents can carry focused context and tool permissions. These are integration surfaces, not proof that a workflow was followed. [Hooks reference](https://code.claude.com/docs/en/hooks) [Custom subagents](https://code.claude.com/docs/en/sub-agents)
+
+| Mechanism | Good use | Required guard |
+|---|---|---|
+| skill | domain procedure or reusable checklist | trigger conditions and a runnable verification |
+| hook | record an event or block a prohibited action | stable input/output and fail-closed release behavior |
+| subagent | bounded exploration or independent review | file ownership, no self-certification, clear return format |
+| script | deterministic inventory or validation | versioned source, exit status, retained report |
+
+Do not make an untrusted tool result executable authority. Parse, validate, and route it through the same approval boundary as any other input.
+
+## A Minimal Change Loop
+
+```text
+freeze acceptance criteria
+        ↓
+inspect code and relevant documentation
+        ↓
+make the smallest coherent change
+        ↓
+run the named deterministic checks
+        ↓
+collect receipts and inspect the diff
+        ↓
+independent review for material risk
+        ↓
+publish only after every required gate passes
 ```
 
-## Command Composition Examples
+The loop becomes useful when every arrow has a durable artifact. A status message without a test output, diff, or runtime receipt is not evidence.
 
-```bash
-# Full frontend workflow
-/audit /normalize /polish blog
+## Worktree and Reviewer Isolation
 
-# UX review with error hardening
-/critique /harden checkout
+Use a separate Git worktree when concurrent work would otherwise share a mutable checkout. Git documents linked worktrees as separate working trees attached to one repository, allowing more than one branch to be checked out at a time. [git-worktree](https://git-scm.com/docs/git-worktree)
 
-# Extract design system from existing codebase
-/create-design-system
+For a material public change, the reviewer should read the final diff independently and return either `PASS` or a concrete finding with file, line, impact, and minimal fix. The author applies fixes; the reviewer does not silently certify a changed implementation from memory.
 
-# Visual verification after changes
-/verify-artifact   # screenshot + vision check vs anti-pattern list
-```
+## Measure Locally, Not by Marketing
+
+If a team wants to compare harness variants, define:
+
+- fixed task corpus and repository revisions;
+- same model, permissions, and tool availability;
+- a primary quality metric such as accepted tests or reviewer findings;
+- cost and elapsed-time capture;
+- a rule for keeping, reverting, or repeating an experiment.
+
+Without that design, a reported percentage is anecdote rather than an engineering result.
 
 ## Gotchas
 
-- **Issue:** Layer 3 CLI runs synchronously and can't catch dynamic rendering issues. -> **Fix:** Use headless browser mode (`--no-fast`) for SPAs; use `--fast` for static HTML in CI.
-- **Issue:** `/verify-artifact` requires MCP browser tool to be connected. -> **Fix:** Check for `mcp__Claude_Preview__preview_screenshot` availability before invoking; fall back to `--fast` CLI scan if unavailable.
-- **Issue:** DESIGN.md conflicts with CLAUDE.md if both define tone/style. -> **Fix:** DESIGN.md covers visual/brand only; CLAUDE.md covers behavior/workflow. No overlap by design.
+- **A skill says to run a check, but no script exists.** The rule is not enforceable. **Fix:** add or reference the smallest runnable check before treating it as a gate.
+- **A hook has broad write authority.** It can become a hidden deployment path. **Fix:** keep hooks narrow, logged, and unable to bypass normal release approval.
+- **The same agent writes and approves a risky change.** It has the same blind spots in both roles. **Fix:** require a fresh reviewer or deterministic external check.
+- **A test suite passes after the task changed shape.** It may not test the requested behavior. **Fix:** map each acceptance criterion to its own evidence.
+- **Parallel agents share a checkout.** File races erase intent. **Fix:** use worktrees or explicit ownership boundaries before editing.
+
+## Sources
+
+- [Claude Code settings](https://code.claude.com/docs/en/settings)
+- [Claude Code hooks](https://code.claude.com/docs/en/hooks)
+- [Claude Code custom subagents](https://code.claude.com/docs/en/sub-agents)
+- [Git worktrees](https://git-scm.com/docs/git-worktree)
 
 ## See Also
 
-- [[claude-code-ecosystem]]
 - [[agent-design-patterns]]
-- [[context-engineering]]
+- [[agent-orchestration]]
+- [[multi-session-coordination]]
+- [[handoff-rollup-pattern]]
 - [[production-patterns]]

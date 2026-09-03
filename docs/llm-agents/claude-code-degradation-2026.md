@@ -1,150 +1,119 @@
-# Claude Code Degradation 2026
+---
+title: "Claude Code Reliability and Configuration"
+description: "A receipt-based method for diagnosing coding-agent quality, configuration, cost, and availability changes without inventing a vendor incident."
+tags: [claude-code, reliability, configuration, observability, agent-operations]
+---
 
-Timeline, root causes, and workarounds for the March 2026 Claude Code quality regression and token cost inflation event.
+# Claude Code Reliability and Configuration
 
-## What Happened — Timeline
+**Scope checked: 2026-09-03.** A disappointing coding-agent result is an observation, not evidence of a provider regression. Treat it as an operational incident: record the exact client, model, configuration, task input, tool results, and user-visible outcome before attributing a cause.
 
-| Date | Event |
-|------|-------|
-| Early Feb 2026 | Opus 4.6 released with Adaptive Thinking (model decides per-turn reasoning budget) |
-| 2026-02-12 | `redact-thinking-2026-02-12` header rolled out — hides thinking traces from UI |
-| 2026-03-03 | Default `effort` silently lowered from `high` to `medium` (effort=85). No changelog entry. |
-| 2026-03-08 | Quality cliff in longitudinal session data (stop-hook violations spike, reads-per-edit collapses) |
-| 2026-03-23+ | Cache invalidation bugs in v2.1.100 deployed. Token costs inflate 10-20x silently. |
-| 2026-03-26 | Anthropic confirms peak-hour throttling (5-11am PT weekdays) |
-| 2026-03-31 | Anthropic public statement: "hitting limits way faster than expected" |
-| 2026-04-02 | 6,852-session longitudinal analysis published. Median thinking depth: 2,200 → 600 chars (-67%). Reads-per-edit: 6.6 → 2.0. Team monthly Bedrock-equivalent cost: $345 → $42,121 (~122x). |
-| 2026-04-09 | Community workaround guides for `CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING=1` published |
+This page intentionally does not preserve claims about hidden defaults, reverse-engineered cache defects, secret environment variables, or an unverified industry-wide quality cliff. Public guidance should describe controls an operator can inspect and reproduce.
 
-## Root Causes (Confirmed)
+## Separate the Four Questions
 
-### 1. Effort Default Lowered (effort=85)
+| Question | Evidence that can answer it | Do not infer it from |
+|---|---|---|
+| Did the task fail? | failing command, screenshot, output receipt, user report | a long or short model response |
+| Did local configuration change? | committed settings diff, `/status`, `claude doctor`, launch arguments | a remembered previous session |
+| Did the provider change behavior? | dated official release/status notice plus a reproducible comparison | one account, one prompt, or social posts |
+| Did cost or latency change? | provider usage receipt, local timing, request identifiers, comparable workload | an estimated token count in prose |
 
-Anthropic lowered the default `effort` level from `high` to `medium` (internal value 85) on 2026-03-03. Confirmed by Anthropic engineering. Motivation: users "consuming too many tokens per task."
+Keep each answer scoped. A local policy, an unavailable tool, a changed repository, and a model-quality change are different causal hypotheses.
 
-Effect: model allocates less thinking budget per turn. For simple tasks: negligible. For complex multi-step engineering: 67% reduction in thinking depth.
+## Configuration Is an Auditable Input
 
-Adaptive thinking can allocate zero tokens on easy-seeming turns, producing fabricated commit SHAs, non-existent packages, and hallucinated API versions.
+Claude Code documents settings files with separate user, shared-project, project-local, and managed scopes. A command-line setting applies for one session, while managed settings can constrain values that local files request. Inspect the active sources with `/status`; use `claude doctor` to identify settings entries the client rejected. [Claude Code settings](https://code.claude.com/docs/en/settings)
 
-### 2. Cache Invalidation Bugs in v2.1.100
+For a material run, preserve this small record next to the task receipt:
 
-Two separate bugs reverse-engineered from Claude Code v2.1.100 binary:
-
-**Bug 1 — Billing sentinel string replacement:**  
-When conversation history contains billing-related terms, a regex replacement hits the wrong byte position → breaks cache prefix → entire context re-billed as uncached. Effect: 10-20x token inflation.
-
-**Bug 2 — Resume/continue tool injection position:**  
-Tool definitions injected at a different position than in fresh sessions → cache invalidated → full re-processing of all prior context on every `--resume`/`--continue`.
-
-Combined effect: ~20,000 invisible tokens added to every request in affected sessions. Sessions drain quota ~40% faster.
-
-## Measured Impact
-
-| Metric | Pre-cliff (Feb) | Post-cliff (March) |
-|--------|----------------|-------------------|
-| Median thinking block length | 2,200 chars | 600 chars (-67%) |
-| Reads-per-edit ratio | 6.6 | 2.0 |
-| Stop-hook violations/day | ~0 | ~10 |
-| API request count for equivalent task | baseline | ~80x higher |
-| Monthly cost (team, Bedrock-equivalent) | $345 | $42,121 (~122x) |
-
-## Workarounds
-
-### Tier 1 — Officially Supported
-
-```bash
-# Force maximum reasoning effort persistently
-export CLAUDE_CODE_EFFORT_LEVEL=max
-
-# Disable adaptive thinking — force fixed reasoning budget per turn
-export CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING=1
-```
-
-In-session: `/effort max` or `/effort high`. Per-turn trigger: `ultrathink` keyword.
-
-**settings.json:**
 ```json
 {
-  "effort": "max",
-  "disableAdaptiveThinking": true
+  "observed_at": "2026-09-03T21:30:00Z",
+  "client_version": "recorded locally",
+  "model": "recorded by the client",
+  "effort_or_model_settings": "recorded effective value",
+  "settings_sources": ["managed", "project", "local"],
+  "workspace_revision": "git commit or immutable source revision",
+  "task_input_ref": "redacted durable reference",
+  "verification_ref": "test, build, or user-visible receipt"
 }
 ```
 
-**API users — explicit thinking budget (not adaptive):**
-```python
-{"thinking": {"type": "enabled", "budget_tokens": 32000}}
-# NOT {"type": "adaptive"} — adaptive silently nullifies maxThinkingTokens
-```
+Do not place credentials, full private prompts, or raw customer data in the record. A digest or protected reference is enough to correlate evidence.
 
-### Tier 2 — Community Workarounds
+## Effort and Model Changes Need Verification
 
-**Cache hygiene (Bug 2 mitigation):**
-- Avoid `--resume` / `--continue` until v2.1.100 cache bugs are confirmed fixed
-- Start fresh sessions for long workflows
-- Avoid billing-related strings in conversation history (Bug 1 trigger): "billing", "usage limit", "quota"
+Current Claude Code settings support model and effort controls through documented settings, flags, and the `/model` and `/effort` interface. The exact effect of a level is model- and version-dependent; use it as a chosen operating parameter, not as a promise about hidden token budgets. Settings changes may take effect differently by key, and a model switch starts with a different prompt cache. [Settings precedence and per-session overrides](https://code.claude.com/docs/en/settings)
 
-**CLAUDE.md prefix stability (Bug 1 mitigation):**
-- No timestamps near the top of CLAUDE.md (breaks cache on every session)
-- No dynamic content in system prompt prefix
-- Define all tools once; use state machines instead of swapping tool definitions
-- Preserve error messages in context (reduces retry cycles ~40%)
+Safe procedure:
 
-**Token monitoring:**
-- Track `cache_read_input_tokens` vs `cache_creation_input_tokens` in API responses
-- Target: >80% cache hit rate on long sessions
-- Below 80% → something is breaking the prefix
+1. make one documented configuration change;
+2. rerun one representative task with the same verification command;
+3. compare the external result, not hidden reasoning;
+4. retain both receipts and the configuration diff;
+5. keep the change only when the measured acceptance criterion improves.
 
-**Version rollback:**
-```bash
-# Rollback to v2.1.87 (pre-regression):
-curl -fsSL https://claude.ai/install.sh | bash
-# Use native installer, NOT npm
-```
+This distinguishes an effective local adjustment from a coincidental good answer.
 
-### Tier 3 — Alternative Models
+## Diagnose a Suspected Regression
 
-| Model | SWE-bench | Cost vs Opus 4.6 | Notes |
-|-------|-----------|-----------------|-------|
-| DeepSeek V3.2 | ~90% of GPT-5.4 | ~20x cheaper | Strong agentic coding |
-| Gemini 3.1 Pro | 80.6% | ~50% cheaper | Comparable on coding |
-| Qwen3.6-Plus | Beats Opus 4.5 on terminal | Via Tongyi subscription | 1M context |
-| GLM-5.1 | Agentic-tuned | Free (self-host) | Open weights |
+Use a bounded triage rather than a growing collection of workarounds:
 
-**Pragmatic 2026 stance:** Start with open-weight (DeepSeek/Qwen/GLM) for routine tasks; use Opus 4.6 only for subtasks where the gap matters.
+1. reproduce the symptom in the same repository revision;
+2. check the task's own command, test, or deployed behavior;
+3. capture client version, effective settings sources, model selection, and tool errors;
+4. retry once only when the operation is idempotent;
+5. compare with a clean, minimal configuration if the result remains reproducible;
+6. consult official release notes or status information for a provider-level claim;
+7. file or update an incident only with the supporting receipts.
 
-## What Anthropic Has Not Addressed (as of 2026-04-14)
+If the symptom disappears, record it as unresolved rather than naming a cause. If it persists, state the failed acceptance criterion and the smallest next experiment.
 
-- Whether v2.1.100 cache bugs are fixed
-- Exact mapping of `effort=85` / `medium` / `high` / `max` to thinking-token budgets
-- Why the effort-default change was not in any release note
-- Whether model weights changed between Opus 4.5 and 4.6 (denied, not independently verifiable)
+## Cache, Cost, and Context
 
-## KV-Cache Best Practices (Permanent)
+Prompt caching and billing mechanics are provider- and version-specific. Never diagnose a cache failure from a guessed sentinel string or recommend avoiding ordinary words. Instead:
 
-Regardless of Anthropic changes, cache-friendly CLAUDE.md structure reduces costs:
+- keep durable project instructions stable when that is a normal team practice;
+- measure usage only through fields an enabled provider interface actually returns;
+- compare like-for-like workload, model, and settings;
+- separate request cost from tool, retrieval, and human-review cost;
+- treat a provider receipt as stronger evidence than a reconstructed estimate.
 
-```text
-CLAUDE.md structure (cache-friendly):
-  1. Static invariant rules (never changes between sessions)
-  2. Project structure (changes rarely)
-  3. Per-session context (if any, goes at END)
+A static project instruction file can improve consistency, but it is not a substitute for tests, policy enforcement, or a capability boundary.
 
-Never at the top:
-  - Current timestamps
-  - Dynamic project status
-  - Session-specific context
-```
+## Escalation Record
 
-See [[context-window-management]] for full KV-cache optimization guide.
+An actionable report contains:
+
+| Field | Why it matters |
+|---|---|
+| exact failed outcome | defines the acceptance criterion |
+| minimal reproduction | lets another operator test the same behavior |
+| client and workspace revision | separates product changes from local drift |
+| effective configuration sources | exposes precedence and managed policy |
+| tool/build receipt | proves whether execution actually failed |
+| redacted correlation identifier | helps support locate a request without exposing contents |
+| recovery and retry decision | prevents duplicate external effects |
+
+The report should say observed until an authoritative source establishes a wider cause.
 
 ## Gotchas
 
-- **Issue:** `/effort max` in-session resets after compaction or new session without persisted settings. -> **Fix:** Set `"effort": "max"` in `settings.json` AND export `CLAUDE_CODE_EFFORT_LEVEL=max` in shell profile.
-- **Issue:** Adaptive thinking allocated zero tokens on a turn → model produces confident but fabricated output (commit SHAs, package names, API versions). -> **Fix:** `CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING=1` forces a minimum thinking budget per turn. Verify critical outputs against actual filesystem/APIs.
-- **Issue:** Cache hit rate monitoring shows low hits even with stable prefix → legacy v2.1.100 tool injection bug. -> **Fix:** Upgrade to latest Claude Code via native installer (not npm). Check `cache_creation_input_tokens` vs `cache_read_input_tokens` in API response to confirm.
+- **An unverified flag looks useful in a forum post.** It may be ignored, removed, or unsafe. **Fix:** use only settings, flags, and environment variables documented for the installed client.
+- **A clean prompt gives a different result.** That does not prove the original context was too long or faulty. **Fix:** record the two inputs and compare a defined acceptance test.
+- **A configuration file exists but is not active.** Scope and precedence can override it. **Fix:** check `/status` and retain the relevant settings diff.
+- **A retry hides an unknown external outcome.** The first attempt may already have acted. **Fix:** reconcile a provider receipt or use an idempotency key before repeating an effect.
+- **A model answer sounds confident.** Confidence is not a release signal. **Fix:** run the task's deterministic check and independent review when the change is material.
+
+## Sources
+
+- [Claude Code settings](https://code.claude.com/docs/en/settings)
+- [Claude Code release notes](https://code.claude.com/docs/en/release-notes)
 
 ## See Also
 
 - [[context-window-management]]
-- [[agentic-security-2026]]
 - [[claude-code-harness-patterns]]
+- [[agentic-security-2026]]
+- [[production-patterns]]
