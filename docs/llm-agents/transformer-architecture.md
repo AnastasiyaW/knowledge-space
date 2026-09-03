@@ -1,120 +1,107 @@
 ---
-title: Transformer Architecture
-category: concepts
-tags: [llm-agents, transformers, attention, deep-learning, architecture]
+title: "Transformer Architecture"
+description: "A practical, version-aware guide to attention-based transformer structure, autoregressive decoding, positional information, and production configuration boundaries."
+tags: [llm-agents, transformers, attention, deep-learning, architecture, inference]
 ---
 
-# Transformer Architecture
+# Transformer Architecture (September 2026)
 
-The transformer is the foundational architecture behind all modern LLMs. Introduced in 2017 ("Attention Is All You Need"), it replaced recurrent approaches with parallelizable self-attention, enabling massive scaling of model size and training data.
+Version context: transformer families, positional encodings, attention kernels, tokenizer behavior, context limits, and cache implementations vary by model release. This page explains stable architectural ideas; it does not make a permanent claim about a particular model's internals or maximum context.
 
-## Evolution: RNN -> LSTM -> Transformer
+The 2017 Transformer paper introduced a sequence-transduction architecture based on attention instead of recurrence or convolution. The original design uses an encoder-decoder structure and attention to connect them. [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
 
-**RNN**: Processes tokens sequentially, maintaining hidden state. Suffers from vanishing/exploding gradients on long sequences. Cannot parallelize.
+## The Core Computation
 
-**LSTM**: Added gates (forget, input, output) to control information flow. Better at long-range dependencies but still sequential - cannot parallelize training.
-
-**Transformer**: Fully parallelizable via attention mechanism. Processes all tokens simultaneously. Scales with compute and data. Foundation for GPT, BERT, Claude, Llama, and all modern LLMs.
-
-## Core Architecture
-
-### Encoder-Decoder Structure
-
-The original transformer was designed for translation with both components:
-
-- **Encoder**: processes input sequence, builds contextual representations
-- **Decoder**: generates output sequence using encoder representations via cross-attention
-
-Modern variants specialize:
-- **Encoder-only** (BERT): bidirectional attention, best for classification, NER, embeddings
-- **Decoder-only** (GPT, Claude, Llama): autoregressive (causal), best for text generation
-
-### Self-Attention Mechanism
-
-Each token attends to all other tokens to determine relevance.
-
-**Query, Key, Value (Q, K, V):**
-1. Each token produces three vectors: Query (what am I looking for?), Key (what do I contain?), Value (what information do I provide?)
-2. Attention score = Q * K^T (relevance of each token)
-3. Scale by sqrt(d_k) to prevent gradient issues in softmax
-4. Softmax produces attention weights (sum to 1)
-5. Weighted sum of Value vectors = output
-
-**Formula**: `Attention(Q, K, V) = softmax(QK^T / sqrt(d_k)) * V`
-
-**Intuition**: For "The cat sat on the mat", when processing "sat", the model gives high attention to "cat" (subject), medium to "mat" (location), low to "the" (article).
-
-### Multi-Head Attention
-
-Run H parallel attention "heads", each with separate Q, K, V weight matrices. Each head learns different relationship types (syntactic, semantic, positional). Outputs are concatenated and projected.
-
-Typical head counts: 12 (BERT-base), 32 (GPT-3), 96 (large frontier models).
-
-### Feed-Forward Network (FFN)
-
-After attention, each token passes through a 2-layer network:
+A transformer processes token representations. For an attention layer, learned projections derive queries (`Q`), keys (`K`), and values (`V`) from those representations:
 
 ```text
-FFN(x) = max(0, xW1 + b1)W2 + b2
+Attention(Q, K, V) = softmax((Q × Kᵀ) / sqrt(d_k)) × V
 ```
 
-- First layer expands dimension (typically 4x hidden size)
-- ReLU/GELU activation
-- Second layer projects back to hidden size
-- This is where much of the model's "knowledge" is stored
+For each query position, the attention weights select and combine value vectors from allowed key positions. The exact projection layout, number of heads, normalization order, activation, and numerical kernel are model-specific implementation choices.
 
-### Residual Connections and Layer Normalization
+Multi-head attention runs several attention projections in parallel, then combines them. It gives a layer multiple representation subspaces; it is not a literal list of independent human-readable "topics."
 
-- **Residual connections**: `output = LayerNorm(x + Sublayer(x))` - prevents vanishing gradients in deep networks
-- **Layer normalization**: normalizes activations across feature dimension
-- **Pre-norm** (normalize before sublayer) is more stable for deep models than post-norm
+## Three Common Architectural Families
 
-## BERT vs GPT
+| Family | Attention pattern | Typical output role | Important boundary |
+|---|---|---|---|
+| Encoder-only | tokens attend across the permitted input | contextual representations | cannot be assumed to generate an autoregressive answer |
+| Decoder-only | each token is masked from future tokens | next-token generation | inference produces tokens sequentially |
+| Encoder-decoder | decoder self-attention plus cross-attention to encoded input | conditional generation | source representation and generated sequence have different roles |
 
-| Feature | BERT | GPT |
-|---------|------|-----|
-| Architecture | Encoder-only | Decoder-only |
-| Attention | Bidirectional (full context) | Causal (sees only past tokens) |
-| Training | Masked Language Model (predict masked tokens) | Autoregressive (predict next token) |
-| Best for | Classification, NER, Q&A, embeddings | Text generation, chat, code |
+These are patterns, not a product ranking. The correct choice depends on training objective, deployed model contract, tool behavior, and evaluation results.
 
-## Positional Encoding
+## Order, Masks, and Position
 
-Transformers have no inherent sense of token order. Position information is injected via:
+Attention alone does not give a sequence position an inherent order. A transformer therefore adds or otherwise represents positional information. The original paper uses positional encodings; later model families use other position mechanisms. Treat the positional scheme as part of the resolved model configuration.
 
-| Type | Mechanism | Models | Extrapolation |
-|------|-----------|--------|---------------|
-| **Sinusoidal** | Fixed sin/cos patterns | GPT-1, BERT, original Transformer | Poor beyond training length |
-| **Learned** | Trainable position embeddings | GPT-2 | Limited to trained length |
-| **RoPE** (Rotary) | Rotates embeddings by position-dependent angle | LLaMA, Mistral, GPT-4 | Good with NTK/YaRN extensions |
-| **ALiBi** | Distance-based penalty on attention scores | Mistral variants | Good - works beyond training length |
+Masks define which positions may attend to which others:
 
-## Attention Optimizations
+- **causal mask:** prevents a decoder position from reading future generated tokens;
+- **padding or attention mask:** prevents invalid or absent positions from contributing;
+- **cross-attention mask:** constrains which source positions a decoder may consult.
 
-- **FlashAttention**: GPU-friendly tiled computation. Same accuracy, 2-4x faster, much less memory. Breaks Q/K/V into tiles instead of computing full attention matrix.
-- **MQA (Multi-Query Attention)**: One K/V pair shared across all heads. Saves memory and compute with slight expressiveness tradeoff.
-- **GQA (Grouped-Query Attention)**: Heads divided into groups, each sharing K/V. Used in Llama 2 70B. Middle ground between MHA and MQA.
-- **MoE (Mixture of Experts)**: Only activate subset of parameters per token. Mixtral uses 2 of 8 experts per token (47B total, ~13B active).
+A wrong mask can produce a system that appears to work in a demo while leaking future labels during evaluation or mixing records across a batch.
 
-## Key Architectural Parameters
+## Training and Autoregressive Generation Differ
 
-| Parameter | BERT-base | GPT-3 | Effect |
-|-----------|-----------|-------|--------|
-| Hidden size (d_model) | 768 | 4096 | Model capacity |
-| Layers | 12 | 96 | Depth of reasoning |
-| Attention heads | 12 | 96 | Attention pattern diversity |
-| FFN inner dim | 3072 | 16384 | Knowledge storage |
-| Vocab size | 30K | 50K | Language coverage |
-| Max sequence | 512 | 2048+ | Context window |
+During training, implementations can often evaluate many sequence positions in parallel subject to the model's mask. During decoder-style generation, token `t + 1` depends on the state after token `t`, so each new token advances the request state.
+
+Inference implementations may retain prior key/value projections in a cache to avoid recomputing the whole prefix. The cache is an optimization with a strict isolation requirement: it must be tied to the request, model/configuration revision, and applicable tenant/data boundary. Do not infer cache behavior or capacity from a model name. [Hugging Face KV cache guide](https://huggingface.co/docs/transformers/main/en/kv_cache)
+
+## A Practical Model Contract
+
+An application should record the transformer-facing configuration that changes behavior:
+
+```json
+{
+  "model_key": "approved-generation-model",
+  "resolved_model_revision": "observed-at-runtime",
+  "tokenizer_revision": "recorded-at-deploy",
+  "context_policy_revision": "context@8",
+  "attention_or_position_config": "provider-or-local-reference",
+  "inference_cache_policy": "per-request-v2",
+  "output_contract": "answer-with-citations/v3"
+}
+```
+
+This is more useful for reproducibility than a prose statement such as "uses a transformer." A model alias can hide a changed tokenizer, context behavior, or kernel implementation.
+
+## Performance Work Is an Evaluation Problem
+
+Attention cost, memory use, batching, quantization, and cache strategy can affect latency and quality. Optimize only with a representative workload and a task-level acceptance suite.
+
+Measure:
+
+- request and generated-token latency separately;
+- peak memory and concurrency under the intended context mix;
+- task quality, citation coverage, and structured-output validity;
+- error, timeout, and retry rates;
+- cache hit or reuse signals only where the runtime exposes them;
+- isolation and cancellation behavior under concurrent requests.
+
+PyTorch's `MultiheadAttention` documentation is a useful implementation reference, but a framework primitive does not define the architecture of every deployed model. [PyTorch MultiheadAttention](https://docs.pytorch.org/docs/stable/generated/torch.nn.MultiheadAttention.html)
 
 ## Gotchas
-- Attention complexity is O(n^2) with sequence length - this is why context windows are expensive
-- KV-cache memory grows as O(n * layers * d_model) per token during generation
-- "Lost in the middle" problem: information in the middle of long prompts is less likely to be used than beginning/end
-- Extending context beyond trained window risks quality degradation even with RoPE
+
+- **"Parallel transformer" does not mean parallel answer generation.** Decoder-style generation still advances one next-token step at a time. **Fix:** measure end-to-end latency on the deployed workflow, not only a training-style kernel.
+- **A mask is a correctness boundary.** A reversed or missing mask can leak future or unrelated context. **Fix:** test masks with adversarial and cross-record cases.
+- **Token position is not a character offset.** Tokenization, truncation, and positional treatment can change what the model actually receives. **Fix:** record tokenizer and context-policy revisions with the release.
+- **KV caches are not shared memory.** A cache keyed too broadly can cross requests or policy boundaries. **Fix:** scope reuse to the exact approved configuration and identity boundary.
+- **Attention weights are not a proof of explanation.** They are model computations, not a causal audit trail for a business decision. **Fix:** retain source citations, validators, and explicit decision receipts.
+
+## Sources
+
+- [Vaswani et al., Attention Is All You Need](https://arxiv.org/abs/1706.03762)
+- [PyTorch MultiheadAttention](https://docs.pytorch.org/docs/stable/generated/torch.nn.MultiheadAttention.html)
+- [Hugging Face KV cache guide](https://huggingface.co/docs/transformers/main/en/kv_cache)
 
 ## See Also
-- [[tokenization]] - How text becomes tokens for the transformer
-- [[embeddings]] - Vector representations from transformer layers
-- [[model-optimization]] - Quantization, distillation, pruning of transformer models
-- [[frontier-models]] - Comparison of transformer-based LLMs
+
+- [[tokenization]]
+- [[kv-cache-compression]]
+- [[llm-api-integration]]
+- [[context-engineering]]
+- [[model-optimization]]
+- [[scaling-laws-and-benchmarks]]

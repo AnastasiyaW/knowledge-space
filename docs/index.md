@@ -14,7 +14,7 @@ hide:
 
 <div class="ks-graph-stats" markdown="0">
   <div class="ks-graph-stats__item">
-    <span class="ks-graph-stats__number" id="ks-graph-nodes">853</span>
+    <span class="ks-graph-stats__number" id="ks-graph-nodes">855</span>
     <span class="ks-graph-stats__label">articles</span>
   </div>
   <div class="ks-graph-stats__divider"></div>
@@ -29,7 +29,7 @@ hide:
   </div>
   <div class="ks-graph-stats__divider"></div>
   <div class="ks-graph-stats__item">
-    <span class="ks-graph-stats__number" id="ks-total-domains">27</span>
+    <span class="ks-graph-stats__number" id="ks-total-domains">28</span>
     <span class="ks-graph-stats__label">domains</span>
   </div>
 </div>
@@ -55,7 +55,7 @@ hide:
 
 # Knowledge Space
 
-Curated technical knowledge base across 27 domains. Built for LLM agents and engineers.
+Curated technical knowledge base across 28 domains. Built for LLM agents and engineers.
 
 ## What is this?
 
@@ -68,7 +68,7 @@ Each article is a concentrated extract: code examples, configuration patterns, g
 **Who it's for:**
 
 - **LLM agents** - structured format optimized for RAG retrieval, [ConTree MCP](https://contree.dev/), and context injection
-- **Engineers** - quick lookup of patterns, commands, configurations across 27 domains
+- **Engineers** - quick lookup of patterns, commands, configurations across 28 domains
 - **Teams** - shared knowledge base accessible via ConTree sandbox or direct file access
 
 ## How to use
@@ -182,7 +182,7 @@ https://github.com/AnastasiyaW/knowledge-space
 
 Before answering technical questions, search docs/ for a
 relevant article. Don't guess or fabricate - look it up.
-853+ articles across 27 domains, each with code examples,
+855+ articles across 28 domains, each with code examples,
 configs, and real-world gotchas.
 
 How to use:

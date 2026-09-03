@@ -1,144 +1,125 @@
 ---
-title: Vector Databases
-category: infrastructure
-tags: [llm-agents, vector-db, chroma, pinecone, qdrant, faiss, ann, similarity-search]
+title: "Vector Databases and Retrieval"
+description: "Build vector retrieval around versioned embeddings, authorized metadata filters, provenance, recall evaluation, and safe migration rather than static product rankings."
+tags: [llm-agents, vector-db, embeddings, retrieval, rag, similarity-search, hybrid-search]
 ---
 
-# Vector Databases
+# Vector Databases and Retrieval (September 2026)
 
-Vector databases store embedding vectors and enable fast similarity search. They are the persistence and retrieval layer for RAG systems, semantic search, and recommendation engines.
+Version context: embedding models, distance metrics, vector dimensions, index algorithms, filtering semantics, hybrid-query APIs, and hosted-service limits change independently. Keep them in a reviewed retrieval configuration and validate the selected store against the actual corpus and workload.
 
-## Key Facts
-- Vector DBs use Approximate Nearest Neighbor (ANN) algorithms for sub-linear search time
-- Exact nearest neighbor is O(n) - impractical for millions of vectors
-- Metadata filtering allows pre-filtering before similarity search
-- In-memory stores (Chroma, FAISS) are fast but don't persist across restarts without explicit saving
-- Hybrid search (vector + keyword/BM25) catches both semantic and lexical matches
+A vector store retrieves candidates whose embedding representations are close to a query representation. It does not prove that a candidate is factual, current, authorized, or sufficient for a generated answer. Retrieval quality is a workflow property: ingestion, filtering, ranking, context construction, citations, and evaluation all matter.
 
-## Database Comparison
+## Start with a Retrieval Record
 
-| Database | Type | Best For | Key Feature |
-|----------|------|----------|-------------|
-| **Chroma** | Embedded/server | Prototyping, small projects | Simple API, Python-native, in-memory |
-| **Pinecone** | Managed cloud | Production at scale | Fully managed, auto-scaling, metadata filtering |
-| **Qdrant** | Self-hosted/cloud | Production with control | Rust-based, fast, rich filtering, payload storage |
-| **Weaviate** | Self-hosted/cloud | Multimodal search | GraphQL API, hybrid search built-in |
-| **FAISS** | Library (Meta) | Research, high-performance | Fastest similarity search, GPU support, no built-in persistence |
-| **pgvector** | PostgreSQL extension | Existing Postgres stack | SQL integration, ACID transactions, familiar tooling |
+Each indexed item needs a stable identity, provenance, embedding revision, and policy metadata.
 
-## ANN Algorithms
-
-### HNSW (Hierarchical Navigable Small World)
-- Most popular in production vector DBs
-- Builds layered graph structure, O(log n) search
-- High recall (>95%) at very fast speeds
-- Memory-intensive (stores graph in RAM)
-
-### IVF (Inverted File Index)
-- Clusters vectors, searches only relevant clusters
-- Lower memory than HNSW
-- Good for very large datasets
-- Slightly lower recall
-
-### Indexing Strategy Selection
-
-| Strategy | Dataset Size | Memory | Speed | Accuracy |
-|----------|-------------|--------|-------|----------|
-| Flat | <100K vectors | High | Slow (exact) | Perfect |
-| IVF-Flat | Medium | Medium | Fast | Good |
-| IVF-PQ | Large | Low | Fast | Moderate |
-| HNSW | Any | High | Very fast | Very good |
-
-## FAISS vs Chroma: Practical Comparison
-
-FAISS (Facebook AI Similarity Search) and Chroma are both commonly used with LangChain, but serve different purposes:
-
-| Aspect | FAISS | Chroma |
-|--------|-------|--------|
-| **Type** | Library (similarity search) | Database (embedded/server) |
-| **Persistence** | In-memory only (manual save/load) | Persistent on disk by default |
-| **Best for** | High-performance search, research | Prototyping, small-to-medium apps |
-| **GPU support** | Yes (massive speedup) | No |
-| **Metadata filtering** | Limited (via IDSelector) | Built-in |
-| **Install** | `pip install faiss-cpu` or `faiss-gpu` | `pip install chromadb` |
-
-### Swapping Vector Stores in LangChain
-
-LangChain's abstractions make switching trivial - same retriever interface:
-
-```python
-# Option A: Chroma (persistent, simpler)
-from langchain_community.vectorstores import Chroma
-vectorstore = Chroma.from_documents(chunks, embeddings, persist_directory="./chroma_db")
-
-# Option B: FAISS (in-memory, faster search)
-from langchain_community.vectorstores import FAISS
-vectorstore = FAISS.from_documents(chunks, embeddings)
-# To save: vectorstore.save_local("./faiss_index")
-# To load: vectorstore = FAISS.load_local("./faiss_index", embeddings)
-
-# Both use identical retriever interface
-retriever = vectorstore.as_retriever(search_kwargs={"k": 4})
-results = retriever.invoke("query text")
+```json
+{
+  "record_id": "doc:policy-17:chunk-004",
+  "source_ref": "repository:policies@4f31...",
+  "content_digest": "sha256:...",
+  "embedding_revision": "embedder@2026-09-03",
+  "vector_space": "semantic-search-v4",
+  "metadata": {
+    "tenant_id": "tenant-42",
+    "classification": "internal",
+    "published_at": "2026-08-21T00:00:00Z",
+    "language": "en"
+  },
+  "index_state": "ready"
+}
 ```
 
-**When to use FAISS**: need raw search speed, have GPU available, dataset fits in memory, don't need complex metadata filtering. FAISS is the standard choice for benchmarks and research.
+The original source remains canonical. The vector record is an index entry that must be rebuildable from a controlled source manifest.
 
-**When to use Chroma**: need persistence across restarts, want metadata filtering, building RAG prototypes, don't want to manage save/load. Chroma is the default choice for LangChain tutorials.
+## Retrieval Is a Pipeline
 
-## Patterns
-
-### Metadata Filtering (Qdrant)
-```python
-from qdrant_client import QdrantClient
-from qdrant_client.models import Filter, FieldCondition, MatchValue, Range
-
-client = QdrantClient("localhost", port=6333)
-results = client.search(
-    collection_name="docs",
-    query_vector=query_embedding,
-    query_filter=Filter(
-        must=[
-            FieldCondition(key="source", match=MatchValue(value="annual_report")),
-            FieldCondition(key="year", range=Range(gte=2023))
-        ]
-    ),
-    limit=5
-)
+```text
+authorized query
+  -> policy filter
+  -> dense / lexical candidate retrieval
+  -> fusion or reranking
+  -> context selection with source references
+  -> model answer
+  -> citation and task validator
 ```
 
-### LangChain Vector Store
-```python
-from langchain_community.vectorstores import Chroma
-from langchain_openai import OpenAIEmbeddings
+A system may use dense retrieval, lexical retrieval, metadata filtering, reranking, or a combination. "Hybrid" is a design choice, not a guarantee that any two scores can be added safely. Qdrant's current documentation, for example, illustrates separate dense and sparse candidate retrieval followed by a defined fusion query. [Qdrant hybrid queries](https://qdrant.tech/documentation/search/hybrid-queries/)
 
-vectorstore = Chroma.from_documents(chunks, OpenAIEmbeddings())
-retriever = vectorstore.as_retriever(search_kwargs={"k": 4})
-results = retriever.invoke("What is the company revenue?")
+## Apply Authorization Before the Answer
+
+Treat metadata filters as part of the access-control contract, not merely a relevance preference. A query must be constrained by tenant, classification, lifecycle, region, and any other policy dimension before retrieved text reaches a model.
+
+Validate both stages:
+
+1. **candidate stage:** no disallowed record appears in the retriever output;
+2. **context stage:** no disallowed snippet or stale source reference reaches the prompt;
+3. **answer stage:** citations identify the retained source records and the answer does not claim support it lacks.
+
+A post-generation refusal does not repair an unauthorized context leak.
+
+## Index Choice Is a Measured Trade-off
+
+Approximate-nearest-neighbor indexes can reduce search cost while introducing recall/latency trade-offs. Exact search, quantization, graph indexes, inverted-file indexes, and database-native extensions make different trade-offs for a particular vector space and workload.
+
+The FAISS project demonstrates the basic index lifecycle: define a fixed vector dimension, add vectors, then search for nearest neighbors. Some index types also require training before use. [FAISS getting started](https://github.com/facebookresearch/faiss/wiki/Getting-started)
+
+Choose an implementation only after measuring:
+
+| Requirement | Evidence to collect |
+|---|---|
+| Retrieval quality | recall or task success against a reviewed query set |
+| Latency and capacity | tail latency, concurrency, memory, and build time |
+| Filtering | authorization correctness under adversarial tenant/classification cases |
+| Durability | backup, restore, and rebuild receipt from source manifest |
+| Operations | upgrade, observability, incident recovery, and ownership |
+| Cost | current storage, query, replication, and operational costs |
+
+## Embed and Rebuild Idempotently
+
+A safe ingestion worker should:
+
+1. read a versioned source;
+2. normalize and split it under a recorded chunking policy;
+3. compute a content digest and embedding revision;
+4. write by deterministic record ID or idempotency key;
+5. confirm the index state and count against the manifest;
+6. write a receipt with failures classified for retry or review.
+
+Do not rely on a successful `upsert` response as proof that the whole corpus is searchable and authorized.
+
+## Migrate Embeddings Deliberately
+
+A new embedding model, dimension, normalization rule, or distance metric defines a new vector space. A changed chunking strategy changes corpus representation and index schema; it still requires a controlled reindex and evaluation even when the encoder and vector space remain compatible. Prefer a separate collection or namespace and a controlled dual-read or dual-write migration:
+
+```text
+baseline index + evaluation -> candidate index + same evaluation
+  -> bounded traffic comparison -> promote or roll back
 ```
 
-### Hybrid Search
-Combine vector similarity with keyword/BM25 search:
-
-```toml
-hybrid_score = alpha * vector_score + (1 - alpha) * bm25_score
-```
-
-**Reciprocal Rank Fusion (RRF)**: Alternative merging without tuning alpha:
-```toml
-score = sum(1 / (rank + k)) across all search methods
-```
+Do not silently mix incompatible vector spaces. Keep a chunking change in a separately evaluated index version, because record identity, source coverage, and retrieval behavior can change even when vector dimensions do not.
 
 ## Gotchas
-- In-memory vector stores lose data on restart - always persist for production
-- FAISS is a library, not a database - no built-in CRUD, persistence, or filtering
-- pgvector performance degrades with millions of vectors without proper index tuning
-- Metadata filtering happens before vector search in most DBs - design metadata schema carefully
-- Index building can be slow for large datasets - plan for initial indexing time
-- Different distance metrics (cosine, L2, dot product) can give different ranking results - match to your embedding model's training
+
+- **Nearest is not true.** Similarity search produces candidates, not evidence for an answer. **Fix:** retain sources, rerank where appropriate, and validate citation coverage.
+- **Metadata filtering is an access-control surface.** A missing tenant filter can expose another customer's data. **Fix:** make policy filters mandatory and test them before model context construction.
+- **Embedding changes are schema changes.** Different vector spaces cannot be compared or mixed safely by intuition. **Fix:** version the embedding and migrate via separate, evaluated indexes.
+- **Index success is not corpus completeness.** Partial ingestion, stale chunks, and failed deletes can remain invisible. **Fix:** reconcile counts and digests against a source manifest.
+- **Hybrid scores need a defined method.** Dense and lexical signals have different scales. **Fix:** choose and evaluate a fusion/reranking strategy rather than adding raw scores.
+- **A vector index is not a backup.** It is a rebuildable derivative. **Fix:** protect the source corpus and store index rebuild receipts.
+
+## Sources
+
+- [Qdrant hybrid queries](https://qdrant.tech/documentation/search/hybrid-queries/)
+- [FAISS getting started](https://github.com/facebookresearch/faiss/wiki/Getting-started)
+- [pgvector project](https://github.com/pgvector/pgvector)
 
 ## See Also
-- [[embeddings]] - How text becomes vectors for storage
-- [[rag-pipeline]] - How vector search fits in the RAG pipeline
-- [[chunking-strategies]] - Preparing documents for vector storage
-- [[production-patterns]] - When to use vector search vs deterministic lookup
+
+- [[embeddings]]
+- [[rag-pipeline]]
+- [[chunking-strategies]]
+- [[tokenization]]
+- [[llmops]]
+- [[agent-security]]
