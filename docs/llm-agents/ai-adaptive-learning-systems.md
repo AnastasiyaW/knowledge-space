@@ -1,203 +1,156 @@
 ---
 title: "AI-Powered Adaptive Learning Systems"
-description: "Knowledge tracing models, learner profiling, lesson generation architectures, spaced repetition integration, and context-efficient student state management."
+description: "A version-aware architecture for learner evidence, deterministic scheduling, constrained LLM tutoring, evaluation, and learner-data safeguards."
+tags: [education, adaptive-learning, knowledge-tracing, spaced-repetition, llm-agents, privacy]
 ---
 
 # AI-Powered Adaptive Learning Systems
 
-Architecture and components for building LLM-based adaptive tutoring systems. Covers student modeling, lesson generation, pedagogical knowledge encoding, and efficient context management.
+**Scope checked: 2026-09-03.** An adaptive learning system is a decision system around evidence of learning, not a chatbot that guesses a learner's level. Separate measurement, scheduling, content generation, and governance so each can be evaluated and corrected independently.
 
-## Knowledge Tracing Models
+## Four Distinct Responsibilities
 
-Predicting student mastery state from interaction history.
+| Layer | Owns | Must not decide alone |
+|---|---|---|
+| Domain model | concepts, prerequisites, content requirements | learner identity or access rights |
+| Learner evidence | answers, attempts, confidence, provenance | irreversible labels about ability |
+| Decision engine | next activity, review schedule, escalation rule | free-form content and policy exceptions |
+| Tutor interface | explanation, exercise rendering, feedback | mastery authority or private-data retention |
 
-### Evolution
+An LLM can make explanations and exercises adaptive. It should not become the authoritative database of learner state, the scheduler, or the final judge of high-stakes mastery.
 
-| Model | Year | Architecture | Key Contribution |
-|-------|------|-------------|-----------------|
-| BKT | 1994 | Hidden Markov | Binary mastery, per-skill |
-| DKT | 2015 | LSTM/RNN | Deep learning on interaction sequences |
-| SAKT | 2019 | Self-attention | Selectively attends to relevant past interactions |
-| AKT | 2020 | Contextual attention + exponential decay | Models forgetting curves |
-| simpleKT | 2023 | Simplified transformer + Rasch IRT | Beats complex models, hard to beat |
+## Evidence-First Learner State
 
-### 2025 Frontier Models
+Store observable evidence and derived estimates separately:
 
-- **DKT2** - xLSTM + IRT for interpretable output
-- **HCGKT** - Hierarchical graph filtering + contrastive learning + GNNs
-- **LefoKT** - Decouples forgetting from problem relevance via relative forgetting attention
-- **UKT** - Uncertainty-aware knowledge state (Wasserstein attention, probability distributions)
-- **ReKT** - 3D knowledge state: topic × knowledge point × knowledge domain; lightweight FRU framework
-- **DyGKT** - Dynamic graph learning, models prerequisite structure via GNNs
-
-### Reference Implementation
-
-**pyKT** - canonical Python KT library:
-```bash
-pip install pykt-toolkit
-# 10+ models, 7+ standardized datasets, 3-step training pipeline
-# GitHub: github.com/pykt-team/pykt-toolkit
+```json
+{
+  "learner_ref": "student:opaque-id",
+  "concept_ref": "algebra:linear-equations",
+  "evidence": {
+    "activity_ref": "exercise-044",
+    "response_class": "correct_after_hint",
+    "observed_at": "2026-09-03T16:20:00Z"
+  },
+  "estimate": {
+    "mastery": 0.63,
+    "confidence": "low",
+    "model_revision": "kt-model@2026-09-03"
+  },
+  "next_review_at": "2026-09-06T09:00:00Z",
+  "consent_revision": "learner-data-policy@3"
+}
 ```
 
-## Four-Layer Adaptive Learning Architecture
+The numerical estimate is a model output, not a fact about the learner. It must be calibrated against future outcomes, revisable, and explainable to the extent required by the learning setting.
+
+## Knowledge Tracing Is a Measured Model Choice
+
+Knowledge tracing predicts a learner state from interaction sequences. It can use simple probabilistic models, recurrent or attention-based models, or other approaches. No model family is universally best: data volume, concept granularity, cold start, missingness, and assessment quality change the result.
+
+The pyKT toolkit provides standardized preprocessing, multiple datasets and scenarios, and more than ten deep knowledge-tracing approaches for comparative experiments. Use it to establish a baseline, then evaluate on the actual curriculum and learner population. [pyKT toolkit](https://github.com/pykt-team/pykt-toolkit)
+
+Minimum evaluation:
+
+1. split data by learner and time to prevent future-answer leakage;
+2. compare against a simple baseline;
+3. measure calibration as well as ranking or accuracy;
+4. inspect errors by concept, language, accessibility need, and learner cohort;
+5. require a human review path when the estimate changes a consequential opportunity.
+
+## Deterministic Review Scheduling
+
+Keep review scheduling in a deterministic service with a versioned algorithm, input history, chosen parameters, and replayable output. The LLM may explain why a review is useful or create practice material, but it should receive the due activity as a fact rather than invent the due date.
+
+FSRS is an open spaced-repetition family built around memory-state variables and parameter optimization. Implementations and algorithm versions evolve, so record both the exact library/version and the parameters used for a learner or deck. [Open Spaced Repetition](https://github.com/open-spaced-repetition) [SRS benchmark](https://github.com/open-spaced-repetition/srs-benchmark)
 
 ```text
-1. Domain Model         knowledge graph, concept map, prerequisite structure
-2. Student Model        proficiency per concept, learning style, forgetting curves
-3. Tutoring Model       what to teach next, how to present, when to review
-4. Interface Layer      exercise delivery, feedback UI, progress visualization
+assessment event -> learner evidence store -> scheduler / decision rule
+                                           -> due activity
+                                           -> constrained tutor prompt
+                                           -> learner response -> new evidence
 ```
 
-## Student Model: Profile Dimensions
+## Use LLMs in a Constrained Role
 
-A complete learner profile includes:
-- **Knowledge state** - per-concept mastery probability (updated after each interaction)
-- **Learning pace** - concept acquisition rate relative to baseline
-- **Error patterns** - recurring misconceptions, specific knowledge gaps
-- **Forgetting curves** - per-concept forgetting rate for spaced repetition scheduling
-- **Cognitive load estimate** - time-on-task, retry frequency, hint usage
-- **Behavioral signals** - navigation patterns, session length, break frequency
+An LLM is well suited to:
 
-## Spaced Repetition Integration
+- generate several exercise drafts from an approved concept template;
+- explain a known error with a cited pedagogical rule;
+- adapt language, modality, or examples within an approved difficulty band;
+- summarize an authorized-reviewer-visible progress record;
+- ask a clarification question when evidence is insufficient.
 
-**FSRS** (Free Spaced Repetition Scheduler) is the state of the art algorithm:
+It should not silently:
 
-```python
-# FSRS-7 (latest), backed by Anki 23.10+
-# github.com/open-spaced-repetition/fsrs4anki
-# Implementations: JS, Go, Rust, Python
-# Key principle: review scheduling based on predicted forgetting probability
-# NOT fixed intervals
+- infer protected attributes or a fixed “learning style”;
+- promote a learner based only on generated feedback;
+- alter prerequisites, schedule, age rules, or accommodation policy;
+- retain raw learner history outside the declared data store;
+- mark a generated answer correct without deterministic or human evaluation.
 
-# Integration point: FSRS runs OUTSIDE the LLM
-# LLM role: generate lesson content
-# FSRS role: schedule when to show it again
-```
+## Prompt Contract for Tutoring
 
-FSRS handles scheduling deterministically. Never route scheduling decisions through an LLM - it's a solved optimization problem.
-
-## LLM Lesson Generation
-
-### Duolingo Birdbrain Architecture (Reference)
-
-- Updates daily from ~1.25B exercises
-- After every interaction: estimates (1) exercise difficulty across user base, (2) individual proficiency
-- Session generator builds custom lessons in real-time
-- Maintains learner in "optimal challenge zone"
-
-### i+1 Comprehensible Input Principle
-
-Target material should be slightly above current proficiency:
-- 95-98% comprehensibility threshold for effective acquisition
-- Below that: too hard, no acquisition
-- Above that: no challenge, no growth
-- AI implementation: estimate current level → generate material at i+1 complexity
-
-### Pedagogical Knowledge Base Structure
+Pass only the evidence required for this activity:
 
 ```text
-pedagogical_kb/
-  theories/
-    spaced_repetition.json     # FSRS params, scheduling rules
-    comprehensible_input.json  # i+1 rules, thresholds
-    cognitive_load.json        # CLT principles, load management
-  
-  exercise_templates/
-    fill_in_blank.json         # template + difficulty params + assessment criteria
-    code_completion.json       # for programming specifically
-    reasoning_gap.json         # problem-solving exercises
-    
-  progression_rules/
-    difficulty_calibration.json  # adjustment based on performance
-    concept_prerequisites.json   # dependency graph
+Role: explain one approved concept.
+Known concept: linear equations.
+Evidence: correct after one hint; confidence low.
+Allowed action: generate one practice item and an explanation.
+Forbidden action: change mastery, scheduling, or learner record.
+Output: structured draft with answer key and cited concept reference.
 ```
 
-Each entry encodes: WHY (pedagogical principle) + WHAT (rule) + WHEN (trigger) + HOW (implementation pattern).
+The application validates the resulting schema, checks the answer key, and records the generated content revision before it is shown to a learner.
 
-## Context-Efficient Student State
+## Evaluation Is About Learning Outcomes
 
-### Tiered Context Loading
+Evaluate more than response fluency:
 
-```text
-Tier 1 - Always in context (~300-500 tokens):
-  current proficiency vector (last 10-20 concepts)
-  active lesson context
-  last 3-5 interaction summaries
+| Question | Evidence |
+|---|---|
+| Did the learner learn and retain the concept? | delayed assessment or retrieval performance |
+| Is the learner model calibrated? | predicted versus observed outcomes |
+| Is the intervention equitable? | cohort and accessibility analysis |
+| Is feedback pedagogically sound? | independent review and rubric |
+| Is data use legitimate? | consent, retention, access, and deletion receipts |
+| Does the LLM introduce errors? | sampled content review and automated checks |
 
-Tier 2 - Summarized (~500-1000 tokens):
-  session summaries (last 5 sessions)
-  known misconceptions and error patterns
-  learning pace indicators
+Pilot with a constrained curriculum and a reversible setting before using the system for grades, placement, credentials, or eligibility.
 
-Tier 3 - RAG on demand:
-  full interaction history
-  completed lesson details
-  historical proficiency curves
-```
+## Learner Rights and Data
 
-### 4K Token Budget Example
+Adaptive systems can process sensitive educational and behavioral data. UNESCO's guidance calls for a human-centred approach, data protection, and validation of pedagogical and ethical suitability. [UNESCO guidance for generative AI in education and research](https://www.unesco.org/en/articles/guidance-generative-ai-education-and-research)
 
-```text
-System prompt + pedagogy rules:  ~1000 tokens
-Student profile (Tier 1):         ~300 tokens
-Session history summary:          ~500 tokens
-Current lesson content:          ~1000 tokens
-Exercise + scaffolding:           ~500 tokens
-Generation buffer:                ~700 tokens
-Total:                           ~4000 tokens
-```
+Define:
 
-### Lost-in-the-Middle Problem
-
-LLMs lose 30%+ accuracy for information in the middle of long contexts:
-
-```text
-FIRST: student proficiency data (recency + importance)
-LAST:  recent interactions (recency bias)
-MIDDLE: lesson background, summaries (less critical)
-```
-
-## Open-Source Platforms
-
-**adaptive-knowledge-graph** (MysterionRise/adaptive-knowledge-graph):
-- KG + local LLMs + Bayesian skill tracking
-- Privacy-first RAG with graph-enhanced retrieval
-- KG-aware RAG: retrieves conceptually related content via graph traversal
-
-**OATutor** (CAHLR/OATutor):
-- React + Firebase, BKT for skill mastery
-- CHI 2023 paper, field-tested in classrooms
-
-**LearnHouse** (learnhouse/learnhouse):
-- Notion-like editor, open-source learning platform
-- Suitable for content delivery layer
-
-## Architecture Diagram
-
-```text
-Knowledge Graph ──────────────────────────────────┐
-(concepts, prerequisites, difficulty)             │
-                                                  v
-Student Model (Proficiency + History) ──→ FSRS Scheduler
-                    │                     (Review Queue)
-                    v
-Lesson Generator ──→ Pedagogical KB
-(LLM + Prompts)     (Templates, Rules)
-                    │
-                    v
-Context Builder (Tier 1/2/3 compression → token budget)
-```
+- the minimum data needed for the stated learning purpose;
+- consent, access, correction, export, and deletion paths;
+- age-appropriate interaction and human escalation;
+- retention windows for raw interaction logs versus derived state;
+- accessibility, language, and bias evaluation;
+- a teacher or authorized reviewer path for consequential decisions.
 
 ## Gotchas
 
-- **FSRS runs outside the LLM.** The scheduling algorithm is deterministic. Passing scheduling decisions to an LLM introduces hallucination, inconsistency, and extra cost. Compute the schedule, pass it to the LLM as fact.
-- **Knowledge tracing on small interaction histories is unreliable.** BKT and DKT both need 10+ interactions per concept for stable estimates. Cold-start problem: use peer profiling or explicit placement tests before adaptive scheduling.
-- **simpleKT outperforms complex models on most datasets.** Before building DyGKT-style graph learning, verify that simpleKT doesn't already meet your accuracy target. The simple model is easier to debug and deploy.
-- **"Optimal challenge zone" placement is harder than it sounds.** Birdbrain runs on 1.25B exercises daily. For smaller systems, use conservative difficulty targets (60-70% success rate) rather than trying to hit i+1 precisely.
+- **A mastery score can look more certain than it is.** Sparse or biased interaction data produces unstable estimates. **Fix:** preserve confidence, compare with baseline assessments, and allow correction.
+- **A personalized prompt can leak learner data.** More context is not automatically better tutoring. **Fix:** send the minimum approved evidence and redact logs.
+- **Scheduling and generation solve different problems.** A fluent explanation does not calculate retention. **Fix:** keep scheduling deterministic and versioned.
+- **Benchmark accuracy does not establish classroom value.** Dataset success may not transfer to a different curriculum or cohort. **Fix:** run time-aware, local evaluations and authorized review.
+- **Generated feedback can be persuasive but wrong.** It may reinforce a misconception. **Fix:** validate answer keys, sample outputs, and retain a correction workflow.
+
+## Sources
+
+- [pyKT toolkit](https://github.com/pykt-team/pykt-toolkit)
+- [Open Spaced Repetition](https://github.com/open-spaced-repetition)
+- [SRS benchmark](https://github.com/open-spaced-repetition/srs-benchmark)
+- [UNESCO guidance for generative AI in education and research](https://www.unesco.org/en/articles/guidance-generative-ai-education-and-research)
 
 ## See Also
 
 - [[adaptive-learning-systems]]
 - [[rag-pipeline]]
-- [[knowledge-graph-memory]]
+- [[agent-memory]]
 - [[token-optimization]]
+- [[agent-evaluation]]
