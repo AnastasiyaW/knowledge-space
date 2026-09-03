@@ -1,151 +1,144 @@
 ---
-title: LLMOps
-category: infrastructure
-tags: [llm-agents, llmops, monitoring, evaluation, cost-optimization, observability]
+title: "LLMOps"
+description: "Run language-model systems with versioned evaluations, release gates, observable receipts, and data-minimizing telemetry."
+tags: [llm-agents, llmops, evaluation, observability, governance, cost-optimization]
 ---
 
-# LLMOps
+# LLMOps (September 2026)
 
-LLMOps adapts MLOps practices for LLM-specific workflows: prompt management, model serving, evaluation, monitoring, and cost control. The key difference from traditional MLOps is that iteration happens through prompt editing and RAG tuning, not model retraining.
+Version context: model aliases, API behavior, pricing, cache rules, retention controls, and tool semantics change independently. Treat every resolved model, prompt, retrieval configuration, tool policy, and evaluation set as a reviewed release input rather than as permanent documentation.
 
-## Key Facts
-- Primary iteration loop: edit prompt -> run evaluation suite -> compare metrics -> deploy if improved
-- Biggest cost driver: token usage, especially output tokens
-- LLM-as-Judge is the most scalable automated evaluation method
-- Structured logging of every request is essential and disk is cheap
-- Prompt changes need regression testing just like code changes
+LLMOps is the operational discipline for an LLM-backed workflow. Its purpose is not to collect every request in a dashboard. Its purpose is to decide whether a change improved a real task, to release that change safely, and to reconstruct or roll back a result when something goes wrong.
 
-## LLMOps vs Traditional MLOps
+## Define the Unit of Change
 
-| Aspect | Traditional MLOps | LLMOps |
-|--------|------------------|--------|
-| Training | Custom model training | Prompt engineering or fine-tuning |
-| Deployment | Model binary + inference server | API calls or self-hosted models |
-| Versioning | Model weights + data | Prompts + configs + adapter weights |
-| Evaluation | Fixed metrics (accuracy, F1) | LLM-as-judge, human eval, task-specific |
-| Cost | Compute for training/inference | Token-based API pricing |
-| Iteration | Retrain model | Edit prompt, adjust RAG |
+A prompt edit can alter safety, quality, latency, and cost as materially as a code change. Put the complete candidate in a small release manifest:
 
-## Evaluation Pipeline
-
-### LLM-as-Judge Pattern
-```python
-def evaluate_response(question, response, reference, judge_llm):
-    prompt = f"""Rate this response on 1-5:
-    Question: {question}
-    Response: {response}
-    Reference: {reference}
-    Rate on: accuracy, completeness, clarity.
-    Output JSON: {{"accuracy": X, "completeness": X, "clarity": X}}"""
-    return judge_llm.invoke(prompt)
-```
-
-### Key Metrics
-
-| Metric | What It Measures |
-|--------|-----------------|
-| **Faithfulness** | Answer grounded in context? |
-| **Answer Relevancy** | Addresses the question? |
-| **Context Precision** | Retrieved docs relevant? |
-| **Context Recall** | All relevant docs found? |
-| **Toxicity** | Harmful content? |
-| **Latency** | End-to-end response time |
-| **Cost** | Token usage per query |
-
-### Evaluation Frameworks
-- **RAGAS**: automated RAG evaluation
-- **DeepEval**: comprehensive LLM testing
-- **LangSmith**: integrated tracing + evaluation
-- **Promptfoo**: prompt testing and comparison
-- **Arize Phoenix**: LLM observability
-
-## Model Serving
-
-### Self-Hosted Options
-- **vLLM**: high-throughput with PagedAttention
-- **TGI**: HuggingFace inference server
-- **Ollama**: simple local serving
-- **TensorRT-LLM**: NVIDIA-optimized
-- **llama.cpp**: CPU-optimized for GGUF models
-
-### Serving Optimizations
-- **KV-cache**: cache key-value pairs for seen tokens
-- **Continuous batching**: process multiple requests simultaneously
-- **Speculative decoding**: small model drafts, large model verifies
-- **Quantization**: reduce precision for faster inference
-
-## Monitoring in Production
-
-### Key Metrics
-- Response latency (p50, p95, p99)
-- Token usage (input + output per request)
-- Error rate (API failures, malformed responses)
-- Hallucination rate (periodic human review)
-- User satisfaction (thumbs up/down)
-- Cost per conversation / per user
-- Retrieval quality (for RAG)
-
-### Structured Logging
 ```json
 {
-    "request_id": "uuid",
-    "timestamp": "2024-01-15T10:30:00Z",
-    "user_id": "user123",
-    "input_tokens": 500,
-    "output_tokens": 200,
-    "model": "gpt-4",
-    "latency_ms": 1200,
-    "tools_called": ["search_db", "calculate"],
-    "cost_usd": 0.015,
-    "feedback": null
+  "release_id": "support-triage-2026-09-03.1",
+  "task_contract": "support-triage/v3",
+  "model_key": "approved-triage-model",
+  "resolved_model_revision": "recorded-at-deploy",
+  "prompt_revision": "sha256:...",
+  "retrieval_revision": "catalog@17",
+  "tool_policy_revision": "tools@9",
+  "eval_suite_revision": "triage-evals@12",
+  "data_policy_revision": "retention@5",
+  "owner": "support-platform"
 }
 ```
 
-Store full trace (intermediate steps, tool calls, LLM responses) for debugging.
+The manifest identifies a behavior without copying secrets, full customer content, or a provider SDK object into source control. Store a protected reference or digest when replay needs input material.
 
-### Alerting
-- Response latency exceeds threshold
-- Error rate spikes
-- Token usage anomaly (possible injection attack)
-- Provider degradation/outage
-- Cost exceeds daily/monthly budget
+## Release Lifecycle
 
-## Cost Optimization
+| Stage | Question | Required evidence | Terminal outcome |
+|---|---|---|---|
+| Task contract | What must the workflow do and never do? | input/output schema, authorization boundary, acceptance criteria | approved or rejected scope |
+| Baseline | What does the current release achieve? | frozen representative eval set and baseline receipt | comparable reference |
+| Candidate | What changed? | one reviewed manifest diff and migration notes | evaluable candidate |
+| Offline evaluation | Did it improve without breaking known cases? | deterministic checks, labeled cases, and reviewed failure sample | pass, hold, or reject |
+| Staging or shadow run | Does it operate safely under realistic conditions? | trace, policy checks, latency and error evidence | ready or blocked |
+| Canary | Does a bounded real route preserve the contract? | explicit cohort, rollback point, terminal receipts | promote or roll back |
+| Archive | Can an operator explain the result later? | immutable release/eval/decision references | reproducible record |
 
-### Strategies
-1. **Smallest effective model**: GPT-4o-mini for simple tasks, GPT-4 only for complex
-2. **Response caching**: identical/similar queries return cached results
-3. **Prompt compression**: minimize system prompt token count
-4. **Smart routing**: easy questions to cheap models, hard to expensive
-5. **Token caching**: Anthropic/OpenAI prompt caching (25% premium, then 10x cheaper)
-6. **Batch processing**: group similar requests
+Do not promote an apparently better prompt merely because one demo looks good. A release decision needs a comparison against the same task contract and a record of the cases that still fail.
 
-### Cost Formula
-```text
-Cost/request = (input_tokens * input_price + output_tokens * output_price)
+## Build an Evaluation Contract
 
-GPT-4o example: 1000 in + 500 out = ~$0.0075
-At 10,000 requests/day: ~$75/day
+Use several forms of evidence because they catch different errors:
+
+| Evidence type | Best for | Limitation |
+|---|---|---|
+| Deterministic assertion | schemas, exact labels, permissions, forbidden fields | cannot assess every semantic answer |
+| Labeled reference set | known task outcomes and regressions | coverage is limited to the data selected |
+| Human review | nuance, usefulness, policy interpretation | requires calibrated rubric and sampling |
+| Model-based grader | scalable triage of well-defined criteria | is a signal to audit, not an unbounded authority |
+| Production receipt | actual terminal state and user-visible failure | must be privacy-aware and sampled safely |
+
+OpenAI's evaluation guidance illustrates test criteria such as an exact string check against a reference label. That pattern is useful when the task has an objective answer; it is not a substitute for human review of ambiguous or high-impact outcomes. [Working with evals](https://developers.openai.com/api/docs/guides/evals)
+
+Freeze the test inputs, evaluator version, and acceptance thresholds before comparing candidates. If a model-based grader changes, treat that as a separate candidate change and calibrate it against reviewed examples.
+
+## Trace Work Without Creating a Data Leak
+
+One user-visible workflow or durable task should have one trace ID. Model calls, retrieval, tool calls, approvals, validators, retries, and handoffs become child events. Emit references and structured fields by default, not unrestricted prompts or tool output.
+
+```json
+{
+  "schema_version": "llmops-event/v1",
+  "trace_id": "tr_01...",
+  "release_id": "support-triage-2026-09-03.1",
+  "operation": "model.complete",
+  "outcome": "completed",
+  "duration_ms": 842,
+  "usage": {"input": 0, "output": 0},
+  "input_ref": "protected:request/...",
+  "output_ref": "protected:result/...",
+  "tool_policy_revision": "tools@9",
+  "attempt": 1
+}
 ```
 
-## CI/CD for LLM Applications
+A useful event answers which release ran, what authority was used, how it ended, and where the controlled evidence lives. The OpenTelemetry GenAI semantic-conventions project is a useful interoperability reference; application-specific fields should remain documented and namespaced. [OpenTelemetry GenAI conventions](https://github.com/open-telemetry/semantic-conventions-genai)
 
-1. **Code changes**: standard CI/CD (tests, lint, deploy)
-2. **Prompt changes**: run evaluation suite, compare against baseline, deploy if improved
-3. **Model changes**: A/B test, monitor metrics, full rollout if stable
-4. **RAG data changes**: re-index, run retrieval quality tests, deploy new index
+## Make Safety and Authorization Release Gates
+
+A model or its prompt is not an authority boundary. Keep authorization, tenant isolation, side-effect approval, and business invariants in deterministic application code.
+
+For each candidate, test at least:
+
+1. malformed, missing, and adversarial inputs;
+2. tool arguments that are valid JSON but unauthorized;
+3. conflicting instructions embedded in retrieved or user-controlled text;
+4. duplicate delivery and timeout paths for effectful work;
+5. redaction and retention behavior in traces and evaluator inputs;
+6. a known-safe rollback to the previous release manifest.
+
+The current [OpenAI safety best practices](https://developers.openai.com/api/docs/guides/safety-best-practices) are a provider-specific starting point, not a replacement for a product threat model.
+
+## Operate Costs as Measurements, Not Folklore
+
+Collect provider-reported usage, cache signals where available, model revision, latency, retry count, tool-call count, and task outcome for each release. Resolve price only from the current pricing schedule for the exact model and processing tier at planning or billing time.
+
+Use a budget as a release condition:
+
+```text
+quality and safety SLOs met
+    AND measured workload cost is within the approved budget
+    AND no unaccounted retry or tool side effect exists
+        => candidate may advance
+```
+
+A lower token count is not automatically a cost improvement if it increases retries, defers work to an expensive tool, or lowers task success.
+
+## Incident and Rollback Practice
+
+An incident record should link the trace, release ID, input/output references, external receipts, and evaluator findings. Its first question is operational: did an external action occur? Its second is causal: which release input changed the behavior?
+
+Rollback by restoring a previously verified manifest and confirming the resolved model/configuration at runtime. Do not roll back by guessing a historic model alias, prompt text, or cache configuration.
 
 ## Gotchas
-- LLM-as-Judge has biases (prefers verbose answers, favors certain styles) - calibrate with human labels
-- Evaluation metrics can be gamed - use multiple complementary metrics
-- Cost tracking must include ALL token sources (system prompts, function schemas, retries)
-- Prompt regression testing is essential - a prompt improvement for one case can break another
-- Production hallucination rate is hard to measure without periodic human review
-- Model provider updates can change behavior without notice - pin model versions where possible
+
+- **Averages hide harmful tails.** Mean latency or average score can conceal a small class of catastrophic failures. **Fix:** segment evaluations and telemetry by task, locale, tool path, tenant policy, and terminal state.
+- **LLM-as-judge is not self-validating.** A grader can drift or share the same blind spot as the candidate. **Fix:** calibrate it against human-reviewed cases and retain disagreements for audit.
+- **Trace payloads can become a shadow data store.** Logging full prompts, retrieved files, or tool output creates retention and access risks. **Fix:** emit controlled references, redact early, and enforce a retention policy.
+- **A canary without a rollback receipt is a production experiment.** A small cohort does not make an unknown side effect reversible. **Fix:** define the halt condition, idempotency strategy, and rollback release before traffic moves.
+- **A model alias is not a reproducibility record.** Providers may update aliases or availability. **Fix:** record the resolved model/configuration observed by the running release.
+
+## Sources
+
+- [OpenAI: working with evals](https://developers.openai.com/api/docs/guides/evals)
+- [OpenAI: Responses API reference](https://developers.openai.com/api/reference/cli/resources/responses/methods/create)
+- [OpenAI: safety best practices](https://developers.openai.com/api/docs/guides/safety-best-practices)
+- [OpenTelemetry GenAI semantic conventions](https://github.com/open-telemetry/semantic-conventions-genai)
 
 ## See Also
-- [[llm-api-integration]] - API monitoring and cost tracking
-- [[rag-pipeline]] - RAG evaluation metrics
-- [[langchain-framework]] - LangSmith for tracing
-- [[production-patterns]] - Logging and evaluation patterns
-- [[frontier-models]] - Model selection for cost optimization
+
+- [[agent-evaluation]]
+- [[agent-observability-dashboards]]
+- [[llm-api-integration]]
+- [[prompt-engineering]]
+- [[token-optimization]]
+- [[agent-security]]
