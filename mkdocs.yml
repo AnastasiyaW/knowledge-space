@@ -1,6 +1,6 @@
 site_name: Happyin Knowledge Space
 site_description: >-
-  Comprehensive technical knowledge base with 860+ curated articles
+  Comprehensive technical knowledge base with 859+ curated articles
   covering Kafka, Python, SQL, DevOps, Security, and 21 more domains.
   Built for software engineers and LLM agents.
 site_url: https://happyin.space/
@@ -120,4 +120,4 @@ plugins:
   - redirects:
       redirect_maps: {}
 
-# nav: auto-generated from docs/ structure (860 articles across 28 domains)
+# nav: auto-generated from docs/ structure (859 articles across 28 domains)
