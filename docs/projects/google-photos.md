@@ -1,18 +1,26 @@
 ---
-title: Google Photos — AI photo editing in Google Photos
+title: Google Photos
 category: projects
+date: 2025-08-20
 tags: [ai-photo-editing, google-photos, google_io_2024, google_photos, project]
 aliases: ["Google Photos"]
 ---
 
-# Google Photos — AI photo editing in Google Photos
+# Google Photos
 
 **Development line:** `project:google-photos` · thread `ai-photo-editing`  
-**Events:** 1 dated, 2025-08-20 → 2025-08-20 · **Researched:** 2026-09-04 · confidence: medium
+**Last event:** 2025-08-20 · 1 dated since 2025-08-20 · **Researched:** 2026-09-04 · confidence: medium
 
 ## What it is
 
-Google Photos — облачная фотобиблиотека Google для личного архива на Android, iOS и вебе. — резервное копирование и синхронизация; — поиск, альбомы, обмен и обычные правки; — Ask Photos для разговорного поиска и правок, отдельные AI-инструменты Create. Лимит: базовые 15 ГБ делятся с Gmail и Drive; AI-функции зависят от региона, учётной записи, сети и дневной квоты. Вывод: выберите качество до массовой загрузки и проверяйте AI-результат перед использованием.
+Google Photos is a cloud photo library for personal archives across Android, iOS, and the web.
+
+- Backup and sync: uploads and synchronizes device photos and videos across platforms.
+- Standard management: organizes search, albums, sharing, and manual edits.
+- Ask Photos and Create: runs conversational search, text-driven edits, and generative media tools.
+
+Base storage offers 15 GB shared with Gmail and Drive, while AI features require network access and depend on region, account type, and daily quotas.
+Select backup quality before bulk uploads and check AI outputs before use.
 
 ## Development line
 
@@ -20,47 +28,51 @@ Google Photos — облачная фотобиблиотека Google для л
 
 ## What changed
 
-2024-05-14 — Ask Photos анонсирован как экспериментальная Gemini-функция: запросы обычным языком по фото и видео, ответы по содержимому и помощь с подборками. Первичный источник к дате найден сегодня. 2025-06-26 — Ask Photos получил быстрые результаты классического поиска, пока Gemini обрабатывает сложный запрос в фоне; началось расширение за пределы раннего доступа среди подходящих пользователей в США. Найдено сегодня. 2025-08-20 — разговорное AI-редактирование по тексту или голосу объявлено сначала для Pixel 10 в США; также анонсирована поддержка C2PA Content Credentials. 2026-02-10 — Ask button для подходящих пользователей США на Android и iOS добавил вопросы по открытой фотографии, поиск похожих моментов и правки по описанию. Найдено сегодня. 2026-09-04 — текущая справка описывает Ask Photos как экспериментальную opt-in функцию с регионально-языковыми ограничениями; classic Search остаётся доступен. AI Create требует резервной копии фото, сети и имеет дневной лимит генераций. Найдено сегодня.
+- **2024-05-14** — Google announced Ask Photos as an experimental Gemini feature. It answers natural-language questions about photos and videos, searches visual content, and organizes albums. The primary source for this date was found today.
+- **2025-06-26** — Ask Photos added immediate classic search results while Gemini processes complex queries in the background. Access expanded beyond early access to eligible US users. Found today.
+- **2025-08-20** — Google announced conversational AI photo editing by text or voice, starting on Pixel 10 in the US. Support for C2PA Content Credentials was announced alongside it.
+- **2026-02-10** — The Ask button rolled out to eligible US users on Android and iOS. It answers questions about an open photo, finds similar moments, and applies edits from descriptions. Found today.
+- **2026-09-04** — Current documentation lists Ask Photos as an experimental opt-in feature with regional and language limits, while classic Search remains active. AI Create requires backed-up photos, an active network connection, and respects daily generation limits. Found today.
 
 ## How to use this
 
-From 2025-08-20, practitioners should treat Google Photos AI editing as an actively evolving product capability and check the official product announcement and accompanying video before relying on its current editing workflow.
+From 2025-08-20, treat Google Photos AI editing as an actively evolving capability. Check the official product announcement and accompanying video before relying on current editing workflows.
 
-1. Войдите в личный Google Account, включите Backup и выберите только нужные папки устройства; после загрузки проверьте статус конкретных файлов.
+1. Sign in to a personal Google Account, turn on Backup, and select only needed device folders. Check individual file backup status after upload.
   — <https://support.google.com/photos/answer/6193313?co=GENIE.Platform%3DAndroid&hl=en>
-2. До массовой загрузки выберите Original quality для исходников и крупной печати либо Storage saver для экономии места.
+2. Choose Original quality for source files and large prints, or Storage saver to conserve storage, before starting bulk uploads.
   — <https://support.google.com/photos/answer/6220791?co=GENIE.Platform%3DDesktop&hl=en>
-3. Для поиска используйте обычный Search; при наличии доступа включите Ask Photos и формулируйте сложный запрос целым описанием, затем проверьте результат.
+3. Use classic Search for routine lookups. Turn on Ask Photos if eligible, describe complex queries in complete sentences, and inspect results.
   — <https://support.google.com/photos/answer/15318661?co=GENIE.Platform%3DAndroid&hl=en>
-4. Для обычной правки откройте файл, выберите Edit и сохраняйте существенный вариант как копию.
+4. Open a file, select Edit for standard adjustments, and save significant edits as a copy.
   — <https://support.google.com/photos/answer/6128850?hl=en-GB>
-5. Если функция доступна, откройте Create и выберите Photo remix, Photo to video или Video remix; генерация требует backed-up фото и сети.
+5. Open Create when available and choose Photo remix, Photo to video, or Video remix. Generation requires backed-up photos and an active network connection.
   — <https://support.google.com/photos/answer/16763021?hl=en>
 
 ## Best practices
 
-- Не освобождайте память телефона, пока не подтверждён backup: действие удаляет локальные копии устройства.
+- Keep local device copies until backup is confirmed, because freeing space permanently removes local files.
   — <https://support.google.com/photos/answer/6128843?co=GENIE.Platform%3DAndroid&hl=en>
-- Храните мастер-файлы в Original quality, а Storage saver выбирайте только после принятия потери разрешения и перекодирования.
+- Retain master files in Original quality. Switch to Storage saver only after accepting compression and reduced resolution.
   — <https://support.google.com/photos/answer/6220791?co=GENIE.Platform%3DDesktop&hl=en>
-- Для простого или важного поиска оставляйте classic Search запасным вариантом и перепроверяйте ответ Ask Photos: функция остаётся экспериментальной.
+- Keep classic Search as a fallback for routine queries, and verify Ask Photos answers because the feature remains experimental.
   — <https://support.google.com/photos/answer/15318661?co=GENIE.Platform%3DAndroid&hl=en>
-- Для правок, к которым может понадобиться вернуться, используйте Save as copy, а не замену оригинала.
+- Use Save as copy whenever previous versions may be needed later, instead of overwriting the original file.
   — <https://support.google.com/photos/answer/6128850?hl=en-GB>
-- Контролируйте общий лимит Google Account: Photos делит его с Gmail и Drive, а переполнение останавливает новые резервные копии.
+- Track shared Google Account storage across Photos, Gmail, and Drive, so reaching the quota does not halt new backups.
   — <https://support.google.com/photos/answer/10100180?hl=en>
 
 ## Superseded by this
 
-- 2024-05-14 — состояние «Ask Photos только появится в ближайшие месяцы» устарело: текущая справка описывает работающую экспериментальную opt-in функцию, хотя доступ остаётся ограниченным.
-- 2025-06-26 — представление, что быстрый классический поиск и Gemini-поиск обязательно разделены, устарело: Ask Photos показывает быстрые результаты сразу и продолжает сложный поиск в фоне; classic Search всё ещё можно выбрать.
-- 2025-08-20 — совет считать разговорное редактирование универсально доступным после анонса Pixel 10 устарел: текущая доступность зависит от возраста, личного аккаунта, региона и соответствия требованиям функции.
+- 2024-05-14 — The expectation that Ask Photos would launch months later is obsolete. Current documentation confirms a live experimental opt-in feature, though access remains restricted.
+- 2025-06-26 — The assumption that classic search and Gemini search run separately is obsolete. Ask Photos returns instant results immediately while complex background processing continues, and classic Search remains available.
+- 2025-08-20 — The assumption that conversational editing rolled out universally with Pixel 10 is obsolete. Availability depends on user age, personal account status, region, and eligibility rules.
 
 ## Still unknown
 
-- К исходной записи от 2024-05-14 URL не приложен; найденная сегодня первичная публикация Google совпадает по дате и теме, но не доказывает исходный текст записи.
-- Нет единой публичной матрицы доступности по всем странам, языкам, устройствам и тарифным квотам: Google указывает, что они могут меняться.
-- Статус поддержки C2PA Content Credentials на каждом клиенте сегодня не подтверждён: первичная публикация от 2025-08-20 была анонсом.
+- No URL was attached to the original 2024-05-14 entry. The official Google announcement found today matches the date and subject, but does not verify the original entry text.
+- Google provides no unified public availability matrix across countries, languages, devices, and plan quotas, noting that terms may change.
+- Client-side support for C2PA Content Credentials remains unverified across devices today, as the 2025-08-20 publication was only an announcement.
 
 ## Sources
 
