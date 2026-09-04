@@ -1,6 +1,6 @@
 # Umfassende technische Wissensbasis - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 910+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 911+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -691,6 +691,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [stable-diffusion-webui — Release history](https://happyin.space/projects/automatic1111-stable-diffusion-webui/): **Development line:** `project:automatic1111-stable-diffusion-webui` · thread `release-history`
 - [FLUX.1-Kontext-dev-onnx — FLUX.1 Kontext ONNX and editing](https://happyin.space/projects/black-forest-labs/): **Development line:** `project:black-forest-labs` · thread `flux-kontext`
 - [CameraCtrl](https://happyin.space/projects/cameractrl/): **Development line:** `project:cameractrl` · thread `cameractrl-development`
+- [CapCut Video Studio — AI Creator Home](https://happyin.space/projects/capcut/): **Development line:** `project:capcut` · thread `ai-creator-home`
 - [Clipdrop](https://happyin.space/projects/clipdrop/): **Development line:** `project:clipdrop` · thread `clipdrop-image-editing`
 - [F⁴Splat](https://happyin.space/projects/f4splat/): **Development line:** `project:f4splat` · thread `f4splat-development`
 - [FLUX 3](https://happyin.space/projects/flux-3/): **Development line:** `project:flux-3` · thread `flux-3-development`
