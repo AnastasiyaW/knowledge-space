@@ -1,60 +1,66 @@
-# FP8 Quantization Optimization for E4M3
+---
+title: FP8 E4M3: Measured Quantization Contract
+description: "FP8 E4M3 quantization is a release- and backend-specific numerical contract; bind the tensor format, scaling recipe, supported operations and hardware, calibration or amax evidence, serialization/runtime path, and quality/latency/memory measurements, and never substitute clipping or another format silently."
+category: optimization
+tags: [fp8, e4m3, quantization, transformer-engine, inference, measurement]
+aliases: ["FP8 Quantization Optimization for E4M3", "E4M3 Quantization"]
+---
 
-FP8 (E4M3) quantization is used to accelerate inference and training on NVIDIA Hopper architecture (H100, H200). The E4M3 format provides a dynamic range of [-448, 448], requiring specific scaling strategies to maintain precision during tensor operations.
+# FP8 E4M3: Measured Quantization Contract
 
-## Standard Dynamic Scaling (Amax Path)
-The standard approach involves calculating a dynamic scale factor for every tensor before casting to FP8. This ensures that the maximum absolute value within the tensor maps to the maximum representable FP8 value (448).
+FP8 is not one interchangeable optimization switch. The
+[Transformer Engine current-scaling documentation](https://docs.nvidia.com/deeplearning/transformer-engine/user-guide/features/low_precision_training/fp8_current_scaling/fp8_current_scaling.html)
+describes E4M3 as an FP8 format with one sign bit, four exponent bits, three
+mantissa bits, finite values up to plus or minus 448, and NaN. It contrasts
+E4M3 with E5M2, whose range and precision trade-off differ. Those formats,
+their kernels, and their scaling recipes must not be substituted silently.
 
-- **Formula:** `scale = 448 / max(abs(x))`
-- **Operation:** The tensor is multiplied by the scale, clamped to the [-448, 448] range, and cast.
-- **GEMM:** During General Matrix Multiplication (`_scaled_mm`), the results are divided by the scale to return to the original range.
+## Select a documented numerical path
 
-### Implementation Pattern
-```python
-import torch
+The cited Transformer Engine release describes current scaling as one FP32
+scale per tensor: compute absolute maximum, scale to the chosen FP8 range, and
+cast. It notes that this requires two tensor reads. That explains one
+trade-off for that named recipe; it does not justify a universal static scale,
+hard-clipping path, layer count, latency claim, or hardware promise for a
+different framework or model.
 
-def amax_scale_cast(x):
-    # Standard dynamic scaling
-    amax = torch.amax(x.abs())
-    scale = 448.0 / amax
-    x_fp8 = torch.clamp(x * scale, -448, 448).to(torch.float8_e4m3fn)
-    return x_fp8, scale
-```
+Record the exact framework/engine release, GPU and driver, model/checkpoint,
+precision settings, supported operations, tensor layout, and fallback/error
+behavior. Verify the supported-device and operation matrix for the release in
+use rather than extending a documented result to another accelerator or
+runtime.
 
-## Performance Overhead in Eager Mode
-In PyTorch Eager mode, `torch.amax(x.abs())` triggers a full reduction over the tensor (e.g., `[seq_len, hidden_size]`). In deep architectures with many layers (100+) and multiple diffusion steps (20+), this reduction adds a significant overhead of approximately 150μs per call.
+## Keep calibration and measurement evidence
 
-For a 112-layer model over 20 steps, the cumulative overhead from amax reductions can become a bottleneck during prototyping or uncompiled inference.
+For every intended execution path, retain:
 
-## Clip Path Optimization
-The "Clip Path" strategy eliminates the reduction step by assuming a static scale of 1.0. Tensors are simply clamped to the FP8 range and cast.
+- tensor format and scaling recipe by operation, including whether amax,
+  delayed, block, or another documented strategy is used;
+- calibration inputs or live amax evidence, scale-update policy, and
+  outlier/saturation observations;
+- checkpoint loading, serialization, compilation, and serving path, including
+  where conversions occur;
+- comparable baseline and FP8 runs with warm and steady-state latency, peak
+  memory, throughput, reproducibility, numerical failures, and task-quality
+  results; and
+- acceptance thresholds set for the actual task, plus the measurement
+  environment and source-disjoint evaluation set.
 
-```python
-def clip_scale_cast(x):
-    # Optimized path: no reduction, hard-clipping only
-    x_fp8 = torch.clamp(x, -448, 448).to(torch.float8_e4m3fn)
-    return x_fp8
-```
+One model's activation distribution, calibration pass, or compiler behavior
+does not certify another model, prompt distribution, resolution, batch shape,
+or training phase.
 
-### Empirical Validation
-Analysis of 50,000 forward passes on Transformer-based models indicates that:
-- Layer activations are highly stable, with an amax consistently near 1.0.
-- Only ~0.007% of values across the analyzed dataset exceeded the 448 threshold.
-- The error introduced by saturating these rare outliers at 448 is statistically negligible for model output quality.
+## Failure boundary
 
-## Production and Compilation
-The necessity of the Clip Path optimization depends on the execution environment:
-- **Eager Mode:** Clip Path is highly effective for reducing latency during debugging or inference without compilation.
-- **torch.compile:** When using `torch.compile`, the compiler typically fuses `amax`, `scale`, `clamp`, and `cast` into a single CUDA kernel. In this scenario, the reduction overhead is effectively eliminated by kernel fusion, making the algorithmic difference between Amax and Clip paths less significant for performance.
+If a required operation or device does not support the declared path, amax or
+quality evidence is absent, a serialization boundary changes format, or
+measurements violate the task threshold, report a visible failure/review
+state. Do not replace E4M3 with E5M2, disable scaling, clamp values, or fall
+back to another precision while describing the result as the same FP8 run.
 
-## Gotchas
-- **Issue:** Using Clip Path on models with unstable activation distributions → **Fix:** Perform a calibration run (5-10k passes) to ensure the amax consistently stays near or below 448 before committing to static scaling.
-- **Issue:** Format Mismatch → **Fix:** Ensure the target format is E4M3. If using E5M2, the maximum value is significantly lower (57,344 vs 448), and the distribution characteristics will differ.
-- **Issue:** Training Instability → **Fix:** For LoRA or full training in FP8, avoid the Clip Path during the first few iterations where gradients and activations are more volatile; switch to Clip Path only after the model stabilizes.
+## Related pages
 
-## See Also
+- [[low-vram-inference-strategies]]
 - [[diffusion-inference-acceleration]]
 - [[diffusion-lora-training]]
-- [[flux-klein-9b-inference]]
-- [[MMDiT]]
-
+- [[tiled-inference]]
