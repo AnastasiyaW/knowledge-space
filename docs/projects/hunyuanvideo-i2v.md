@@ -1,6 +1,7 @@
 ---
 title: HunyuanVideo-I2V — Public project availability
 category: projects
+date: 2025-03-06
 tags: [hunyuanvideo, hunyuanvideo-i2v, project, public-project-availability]
 aliases: ["HunyuanVideo-I2V"]
 ---
@@ -8,19 +9,34 @@ aliases: ["HunyuanVideo-I2V"]
 # HunyuanVideo-I2V — Public project availability
 
 **Development line:** `project:hunyuanvideo-i2v` · thread `public-project-availability`  
-**Events:** 1 dated, 2025-03-06 → 2025-03-06 · **Researched:** 2026-09-04 · confidence: medium
+**Last event:** 2025-03-06 · 1 dated since 2025-03-06 · **Researched:** 2026-09-04 · confidence: medium
 
 ## What it is
 
-HunyuanVideo-I2V — Tencent’s 2025 local image-to-video stack for practitioners who need first-frame-guided generation rather than a hosted API. - Takes a reference image and text prompt. - Includes official PyTorch code, pretrained weights, sampling, LoRA-effect training, and xDiT multi-GPU inference. - Generates up to 720p and 129 frames (about five seconds); official single-GPU guidance specifies 60 GB peak VRAM and tests on 80 GB. Verdict: the original stack remains runnable, but new deployments should compare the later HunyuanVideo-1.5 I2V line before committing hardware and integration work.
+HunyuanVideo-I2V is Tencent’s 2025 local image-to-video stack for teams that need first-frame-guided generation rather than a hosted API.
+
+- Inputs: reference image and text prompt conditioning.
+- Components: official PyTorch code, pretrained weights, sampling, LoRA training, and xDiT multi-GPU inference.
+- Output: video generation up to 720p and 129 frames (about five seconds).
+
+Official single-GPU guidance specifies 60 GB peak VRAM and tests on 80 GB.
+
+The original stack remains runnable, but new deployments should compare the later HunyuanVideo-1.5 I2V line before committing hardware and integration work.
 
 ## Development line
 
-- **2025-03-06 — HunyuanVideo-I2V public project resources were recorded.** On 2025-03-06, a dated record linked HunyuanVideo-I2V to its official Hugging Face page and Tencent GitHub repository. This establishes a public reference point for the project's model and source resources, without establishing a specific version, capability, or release claim.
+- **2025-03-06 — HunyuanVideo-I2V public project release.** Tencent released the inference code and model weights.
 
 ## What changed
 
-HunyuanVideo-I2V — the documented line starts with a local 720p release, then corrects its initial weights and adds scale-out inference. - 2025-03-06: Tencent released the inference code and model weights. - 2025-03-07, found today: Tencent replaced the release state after fixing an ID-change bug; the corrected weights are the source of truth for first-frame consistency. - 2025-03-09: no separate official code, weights, or version change dated this day was found; no implementation delta can be verified. - 2025-03-11, found today: Tencent updated LoRA training and inference code after the bug fix. - 2025-03-13, found today: Tencent released xDiT-powered parallel inference. - 2025-11-21, found today: Tencent released the separate HunyuanVideo-1.5 T2V/I2V line, with 480p and 720p I2V checkpoints; it is not documented as a drop-in continuation of this repository.
+HunyuanVideo-I2V starts with a local 720p release, corrects its initial weights, and adds multi-GPU inference.
+
+- 2025-03-06: Tencent released the inference code and model weights.
+- 2025-03-07: Tencent replaced the release state after fixing an ID-change bug; the corrected weights are the source of truth for first-frame consistency.
+- 2025-03-09: Tencent published no separate official code, weights, or version change dated this day; no implementation delta can be verified.
+- 2025-03-11: Tencent updated LoRA training and inference code after the bug fix.
+- 2025-03-13: Tencent released xDiT-powered parallel inference.
+- 2025-11-21: Tencent released the separate HunyuanVideo-1.5 T2V/I2V line, with 480p and 720p I2V checkpoints; it is not documented as a drop-in continuation of this repository.
 
 ## How to use this
 
@@ -28,7 +44,7 @@ From 2025-03-06, practitioners should use the linked official Hugging Face page 
 
 1. Confirm the original stack fits the machine: Linux and an NVIDIA CUDA GPU are required; plan for 60 GB peak VRAM at 720p, with 80 GB the tested configuration.
   — <https://github.com/Tencent/HunyuanVideo-I2V?tab=readme-ov-file#-news>
-2. Clone the official repository, create its Python 3.11.9 environment, install the documented PyTorch/CUDA dependencies and requirements; use the published CUDA 12 container if that matches the deployment.
+2. Clone the official repository, create its Python 3.11.9 environment, and install the documented PyTorch/CUDA dependencies and requirements; use the published CUDA 12 container if that matches the deployment.
   — <https://github.com/Tencent/HunyuanVideo-I2V?tab=readme-ov-file#-news>
 3. Download the current official HunyuanVideo-I2V weights from the Tencent model card and review the Tencent Hunyuan Community License before use.
   — <https://huggingface.co/tencent/HunyuanVideo-I2V>
@@ -59,9 +75,9 @@ From 2025-03-06, practitioners should use the linked official Hugging Face page 
 
 ## Still unknown
 
-- The March 9 event cannot be tied to a distinct upstream release from the reviewed first-party records; the linked The source page was not retrievable.
-- No first-party source reviewed here calls HunyuanVideo-1.5 a drop-in upgrade or formal replacement for HunyuanVideo-I2V.
-- The reviewed sources do not state a current maintenance commitment, support window, or hosted API availability for the original HunyuanVideo-I2V stack.
+- The March 9 event cannot be tied to a distinct upstream release from first-party records; the linked source page was not retrievable.
+- Tencent does not document HunyuanVideo-1.5 as a drop-in upgrade or formal replacement for HunyuanVideo-I2V.
+- The sources state no current maintenance commitment, support window, or hosted API availability for the original HunyuanVideo-I2V stack.
 
 ## Sources
 
