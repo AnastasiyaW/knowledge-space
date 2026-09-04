@@ -1,183 +1,95 @@
 ---
-title: FLUX MMDiT Attention Manipulation
+title: FLUX Attention Intervention and Inspection
+description: Attention interventions in FLUX-family DiTs are research- and implementation-specific; use the exact model's exposed attention path, preserve its conditioning contract, and validate composition rather than treating maps as causal proof.
 category: techniques
-tags: [flux, mmdit, attention, regional-prompting, compositional-generation, visualization, anatomy]
+tags: [flux, attention, diffusion-transformer, regional-prompting, interpretability, compositional-generation]
+aliases: ["FLUX MMDiT Attention Manipulation", "FLUX Attention Control"]
 ---
 
-# FLUX MMDiT Attention Manipulation
+# FLUX Attention Intervention and Inspection
 
-Techniques for manipulating, analyzing, and exploiting the joint self-attention mechanism in FLUX/MMDiT for regional prompting, compositional generation, and semantic control.
+Attention intervention is not a generic post-processing switch. It changes
+model-internal computation and is valid only for the exact architecture,
+checkpoint, runtime, and attention implementation that were tested together.
+An attention map can be useful diagnostic evidence; it is not by itself proof
+that a semantic region, causal mechanism, or edit boundary has been identified.
 
-## MMDiT Joint Attention Structure
+## Establish the implementation boundary
 
-FLUX uses a joint self-attention over concatenated image and text tokens. The attention matrix has 4 quadrants:
+Before inspecting or modifying attention, record:
 
-| Quadrant | Role |
-|----------|------|
-| I2I (image→image) | Spatial coherence, structure |
-| I2T (image→text) | Text conditions image regions |
-| T2I (text→image) | Image regions affect text interpretation |
-| T2T (text→text) | Text self-coherence |
+- model family, checkpoint revision, pipeline/runtime version, and adapters;
+- whether the model uses joint, cross, self, or a model-specific attention
+  arrangement;
+- the exposed hook or processor surface and its input/output shapes;
+- attention backend, precision, and compile/fusion settings; and
+- the source fixture, prompt, seed, and expected preservation constraints.
 
-**Key for manipulation:** I2I quadrant dominates spatial layout. Masking or biasing specific quadrants lets you decouple style from content, isolate regions, or inject custom guidance.
+The [Diffusers attention-processor API](https://huggingface.co/docs/diffusers/main/api/attnprocessor)
+has model-specific processor classes, including FLUX variants, and parts of its
+surface are explicitly experimental. A patch written for one processor or a
+fused backend must not be assumed to run—or have the same effect—on another
+FLUX release.
 
-FreeFlux block analysis (23 of 38 blocks): early blocks handle low-level texture/style, late blocks govern high-level layout and semantics. Layer 19 onward = layout-critical.
+## Three distinct uses
 
-## Regional Prompting (instantX)
+### Inspection
 
-Regional-Prompting-FLUX: assigns different text prompts to spatial regions by masking the I2T attention quadrant.
+Capture a bounded set of activations or attention-derived maps from a fixed
+fixture. Compare them with an independently reviewed region or task outcome.
+Use this to formulate a hypothesis, not to auto-label a dataset or certify
+semantic correctness.
 
-```python
-# ComfyUI node: Regional Conditioning
-# Each region gets its own prompt
-# Attention mask prevents cross-region contamination
+[ConceptAttention](https://arxiv.org/abs/2502.04320) studies a way to derive
+contextualized concept features from diffusion-transformer attention outputs.
+Its results are research evidence for a particular method; they do not turn
+ordinary cross-attention heatmaps into a universal segmentation API.
 
-regions = [
-    {"mask": top_half_mask, "prompt": "blue sky with clouds"},
-    {"mask": bottom_half_mask, "prompt": "green meadow with flowers"}
-]
-```
+### Region conditioning
 
-Use `base_ratio` to blend regional and global conditioning. Higher base_ratio = more global coherence, lower = sharper region boundaries. Typical range: 0.3-0.7.
+Regional prompting can use a declared spatial mask together with a distinct
+conditioning path. The [Regional Prompting for FLUX
+report](https://arxiv.org/abs/2411.02395) is a training-free FLUX.1 research
+implementation. Treat its masks, token handling, and evaluation setup as
+release-specific; do not transfer them unchanged to another model family or an
+editing pipeline.
 
-## Stitch: Two-Phase Compositional Generation
+Evaluate both prompt adherence and leakage across the region boundary. A
+sharper local effect can still damage global composition, text, identity, or
+background preservation.
 
-Stitch (Feb 2025) generates complex scenes by splitting into individual subjects then compositing via attention.
+### Feature-space editing
 
-**Pipeline:**
-1. Generate each subject independently with clean background
-2. Extract attention maps for each subject
-3. Composite via attention injection into joint generation
+[FluxSpace](https://arxiv.org/abs/2412.09611) explores semantic editing in the
+representation space of rectified-flow transformers. It is not an assurance
+that arbitrary activation injection will preserve the source image. Keep an
+edit experiment separate from a production pipeline until it has a
+model-matched preservation receipt.
 
-**Results**: >200% improvement on GenEval compositional benchmarks. Outperforms most FLUX-based methods on attribute binding (assigning correct attributes to correct subjects).
+## Controlled experiment protocol
 
-**Why it works**: FLUX's I2T attention is used to "plant" subject features at target positions in the joint attention space.
+1. Create a fixed baseline fixture and save its output.
+2. Change one hook, mask, schedule, or layer-selection rule at a time.
+3. Measure the requested compositional change, boundary leakage, artifacts,
+   determinism, latency, and task-specific preservation.
+4. Test negative fixtures where no local change is allowed.
+5. Keep the full version tuple and result set with every retained intervention.
 
-## Attention Temperature Scaling (TACA)
+Do not use fixed block numbers, temperature values, or claimed attention
+quadrants as a portable recipe. Those values are architectural facts only when
+they are supplied and validated by the exact implementation.
 
-Temperature Aware Concept Alignment: scale the softmax temperature in cross-attention to control concept-token binding strength.
+## Release gate
 
-```python
-# Higher temperature = softer attention = more distributed concept binding
-# Lower temperature = sharper = more precise localization
-# TACA learns per-concept temperature via a small MLP
+An intervention may enter a reusable workflow only when its model/runtime
+binding, compatible attention backend, input contract, evaluation fixtures, and
+rollback path are documented. If an optimized attention backend hides the
+required data or changes the output, fail closed instead of silently switching
+to a different implementation.
 
-scaled_attn = torch.softmax(attn_weights / temperature_scale, dim=-1)
-```
+## Related pages
 
-Useful for: attribute binding (red apple + blue car), object counting, spatial layout compliance.
-
-## ConceptAttention (ICML 2025)
-
-Extracts semantic saliency maps from FLUX attention for interpretability and control.
-
-```python
-# Hook onto attention layers
-from concept_attention import ConceptAttentionPipeline
-
-pipe = ConceptAttentionPipeline.from_pretrained("black-forest-labs/FLUX.1-dev")
-output = pipe(
-    prompt="a red apple on a wooden table",
-    concepts=["apple", "table", "background"],
-    return_attention_maps=True
-)
-# output.attention_maps: {concept: spatial_heatmap}
-```
-
-**Applications:**
-- Semantic segmentation without training
-- Region-specific editing masks from text
-- Understanding why FLUX placed elements where it did
-- Input for downstream inpainting/editing
-
-Aperture (2025): related visualization tool for FLUX layer-by-layer attention inspection. Interactive UI shows which prompt tokens activate which image regions at each layer.
-
-## FluxSpace: Feature-Space Editing
-
-Edit images via intermediate feature injection. Extract features from a source image at specific layers, then inject modified features during generation of a target image.
-
-```python
-# 1. Forward pass source through FLUX, save intermediate activations
-# 2. Apply editing operation in feature space (interpolation, direction shift)
-# 3. Generate target with injected features at same layers
-# Layer range 15-25 = good balance of content/style preservation
-```
-
-Differs from LoRA: no training, pure inference-time manipulation. Suitable for style transfer, structure-preserving edits, attribute manipulation.
-
-## NUMINA: Object Counting Accuracy (CVPR 2026)
-
-Additive attention bias injection for accurate object counting in Wan2.1 and adaptable to FLUX/MMDiT.
-
-**Architecture (two-phase):**
-
-**Phase 1 - Layout Construction:**
-```python
-# MeanShift + DBSCAN clustering on text tokens
-# Builds spatial layout: where should N copies of object be placed?
-layout = construct_layout(prompt, target_count=N)  
-# Returns: list of (center_x, center_y, radius) tuples
-```
-
-**Phase 2 - Attention Bias Injection:**
-```python
-# Additive pre-softmax bias (not multiplicative)
-# Delta(t) modulation: bias stronger at early timesteps, fade to zero
-delta_t = 1.0 - (t / T_max)  # decreases over denoising
-bias = delta_t * spatial_layout_bias  # [H, W] -> added to attn_weights
-
-attn_weights = attn_weights + bias  # pre-softmax addition
-attn = softmax(attn_weights)
-```
-
-**FLUX adaptation feasibility (HIGH):** FLUX's cross-attention handles text→image injection. Replace Wan's temporal attention with FLUX's image-text cross-attention. Same MeanShift+DBSCAN layout works. Main challenge: FLUX's MMDiT is natively joint, Wan treats them separately.
-
-## HandCraft / RHanDS: Attention-Based Anatomy Correction
-
-Post-generation approaches that use attention manipulation for correct hand anatomy.
-
-**HandCraft (WACV 2025):** uses MANO parametric hand model to generate conditioning depth maps, then ControlNet-conditions an inpainting pass.
-
-**RHanDS (AAAI 2025):** decoupled structure + style guidance in attention space:
-- Structure path: hand mesh depth → structure conditioning branch
-- Style path: malformed hand itself → style preservation branch
-- Merge: attention-level fusion, not image-level
-
-Result: preserves original skin tone and lighting better than HandRefiner because it operates in attention space, not pixel space.
-
-## Practical Implementations
-
-### ComfyUI Nodes
-
-| Node | Purpose | GitHub |
-|------|---------|--------|
-| Regional-Prompting-FLUX | Region-specific prompts via attention masks | instantX-research |
-| ComfyUI-NAG | Normalized Attention Guidance (negative guidance) | ChenDarYen/ComfyUI-NAG |
-| ComfyUI_Flux2Klein-Enhancer | Boost prompt adherence via embedding scaling | capitan01R |
-| ComfyUI-Impact-Pack | FaceDetailer/DetailerForEach for anatomy post-processing | ltdrdata |
-
-### Layer Targeting for Editing
-
-```python
-# FLUX block analysis for targeted LoRA training
-# Skip content blocks (20-29) → train ONLY style blocks (30-57)
-# SplitFlux approach: 30% faster training, better style/content separation
-
-split_flux_target_blocks = list(range(30, 57))  # style layers only
-```
-
-## Gotchas
-
-- **Regional prompting quality depends on region mask precision**: soft/blurred masks cause concept bleed. Binary masks with hard edges work better for FLUX's attention structure.
-- **ConceptAttention returns layer-averaged maps**: individual layer maps vary significantly. Inspect layer 20-30 for semantic content, layers 1-10 for low-level texture.
-- **TACA temperature too low causes oversaturation**: temperature < 0.5 makes cross-attention too sharp, object outlines become cartoonish. Start at 1.0 and tune down.
-- **Stitch's two-phase approach doubles generation time**: each subject requires a full forward pass. For >3 subjects, generation time scales linearly.
-- **NUMINA layout construction fails on abstract counting** ("a dozen roses", "many birds"): MeanShift+DBSCAN needs a specific integer target count for reliable layout.
-
-## See Also
-
-- [[MMDiT]] - transformer architecture details
-- [[flux-klein-9b-inference]] - inference settings
-- [[anatomy-correction-diffusion]] - full anatomy fix pipeline
-- [[diffusion-lora-training]] - layer targeting for LoRA
-- [[object-removal-inpainting]] - region-aware inpainting approaches
+- [[MMDiT]]
+- [[flow-matching]]
+- [[diffusion-inference-acceleration]]
+- [[anatomy-correction-diffusion]]
