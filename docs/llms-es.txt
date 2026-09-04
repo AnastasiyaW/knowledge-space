@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 917+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 918+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -698,6 +698,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Claude](https://happyin.space/projects/claude/): **Development line:** `project:claude` · thread `claude-product-development`
 - [Clipdrop](https://happyin.space/projects/clipdrop/): **Development line:** `project:clipdrop` · thread `clipdrop-image-editing`
 - [ComfyUI-3D-Pack](https://happyin.space/projects/comfyui-3d-pack/): **Development line:** `project:comfyui-3d-pack` · thread `comfyui-3d-pack-development`
+- [ComfyUI Cloud — Hosted access and billing](https://happyin.space/projects/comfyui-cloud/): **Development line:** `project:comfyui-cloud` · thread `hosted-access-and-billing`
 - [ComfyUI Desktop](https://happyin.space/projects/comfyui-desktop/): **Development line:** `project:comfyui-desktop` · thread `comfyui-desktop`
 - [F⁴Splat](https://happyin.space/projects/f4splat/): **Development line:** `project:f4splat` · thread `f4splat-development`
 - [FLUX 3](https://happyin.space/projects/flux-3/): **Development line:** `project:flux-3` · thread `flux-3-development`
