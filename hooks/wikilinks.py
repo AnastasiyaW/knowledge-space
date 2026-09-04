@@ -23,11 +23,22 @@ def _build_slug_map(docs_dir: Path):
         rel = md_file.relative_to(docs_dir)
         slug = md_file.stem  # e.g., "broker-architecture"
         path_str = str(rel).replace("\\", "/")
+        _path_map.add(path_str)
+        if md_file.name != "index.md":
+            _seen_domains.setdefault(slug, set()).add(path_str)
         # Prefer domain articles over index files
         if slug not in _slug_map or md_file.name != "index.md":
             _slug_map[slug] = path_str
 
+    for name, paths in _seen_domains.items():
+        if len(paths) > 1:
+            _ambiguous[name] = True
     _built = True
+
+
+_path_map: set[str] = set()
+_seen_domains: dict[str, set[str]] = {}
+_ambiguous: dict[str, bool] = {}
 
 
 def _make_replacer(current_page_path: str):
@@ -41,13 +52,29 @@ def _make_replacer(current_page_path: str):
         if any(c in slug for c in ("'", '"', ",", "=", "&", "|", "(", ")", ":", "+")):
             return match.group(0)
 
-        # Support [[domain/slug]] syntax - extract the slug part
-        # e.g. [[data-engineering/apache-kafka]] -> apache-kafka
+        # [[domain/slug]] names its domain, and that is information: dropping it sent
+        # [[cpp/concurrency]] and [[python/concurrency]] both to rust/concurrency.md
+        # (measured 2026-09-05; twelve basename groups over twenty-eight pages collide).
+        target_path = None
         if "/" in slug:
+            qualified = slug.strip("/")
+            for candidate in _path_map:
+                if candidate == f"{qualified}.md" or candidate.endswith(f"/{qualified}.md"):
+                    target_path = candidate
+                    break
             slug = slug.rsplit("/", 1)[-1]
+            if target_path is None:
+                # It named a domain and no page answers to that domain: say nothing rather
+                # than sending the reader to another domain's page of the same name.
+                return match.group(0)
+        elif _ambiguous.get(slug):
+            # A bare name several domains answer to. Guessing one is how wrong evidence
+            # gets cited; the link stays as written so a person can qualify it.
+            return match.group(0)
 
-        if slug in _slug_map:
+        if target_path is None and slug in _slug_map:
             target_path = _slug_map[slug]
+        if target_path:
             # Compute relative path from current page directory
             if current_dir:
                 rel_path = os.path.relpath(target_path, current_dir).replace("\\", "/")
