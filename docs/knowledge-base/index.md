@@ -772,7 +772,7 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[flow-matching]] - Flow matching trains a continuous vector field along a chosen probability path; scheduler, path, and inference settings are checkpoint-specific rather than universal diffusion defaults.
     - [[flux-kontext]] - Context-aware image generation
     - [[LaMa]] - LaMa is a Fourier-convolution inpainting model for large masks and resolution generalization; use it with a compatible checkpoint and test texture continuity separately from semantic object restoration.
-    - [[lora-fine-tuning-for-editing-models]] - LoRA training for image editing
+    - [[lora-fine-tuning-for-editing-models]] - An editing LoRA is compatible only with its exact base checkpoint, architecture, runtime, and adapter format; train from authorized paired evidence, sweep capacity and schedule on held-out edits, and prove both requested change and preservation before release.
     - [[MARBLE]] - MARBLE performs material transfer, blending, and parametric material edits through CLIP-space controls over a pretrained image generator; validate object geometry, illumination, and artifact licenses for each workflow.
     - [[MMDiT]] - MMDiT is the Stable Diffusion 3 multimodal transformer pattern: modality-specific representations participate in joint attention; implementation APIs and LoRA target names vary by model revision.
     - [[SANA]] - Efficient text-to-image architecture
@@ -811,18 +811,18 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[flux-klein-style-lora-system]] - A FLUX.2 [klein] style LoRA is a version-bound data-and-evaluation workflow; separate style from subject data, preserve rights and provenance, and validate transfer on held-out content.
     - [[fp8-quantization-optimization-for-e4m3]] - FP8 (E4M3) quantization is used to accelerate inference and training on NVIDIA Hopper architecture
     - [[frequency-decomposition-editing]] - Methods for separating images into low-frequency (LF) and high-frequency (HF) components, editing
-    - [[grayscale-overlay-nn-architectures]] - Predicting single-channel grayscale overlay maps for Photoshop Soft Light blending - a
+    - [[grayscale-overlay-nn-architectures]] - Grayscale overlay prediction is a paired, pixel-aligned retouching task; preserve the blend contract and no-op baseline, bind every source/target pair and mask, and evaluate the composited image plus the map before releasing an automated adjustment.
     - [[image-restoration-survey]] - Image restoration must declare the degradation and fidelity target; choose a task-compatible deterministic or diffusion method, then validate measured recovery separately from plausible but invented detail.
-    - [[in-context-segmentation]] - Segmenting images by example: provide one or more (image, mask) pairs and the model segments the
+    - [[in-context-segmentation]] - In-context segmentation transfers a supplied reference mask through a named vision model; its output is a candidate mask, not ground truth, and requires reference provenance, target review, uncertainty handling, and source-disjoint validation.
     - [[in-context-segmentation-with-insid3-and-dinov3]] - INSID3 is a training-free framework for one-shot in-context segmentation that leverages dense
     - [[intrinsic-decomposition]] - Separating an image into intrinsic components (reflectance/albedo vs
     - [[lora-auxiliary-losses]] - Additional loss terms beyond standard diffusion denoising loss
     - [[lora-identity-disentanglement-in-flux2-klein-9b]] - Identity LoRA training often suffers from concept bleeding, where environmental factors (lighting
-    - [[low-vram-inference-strategies]] - Techniques for running image generation and processing models on GPUs with limited VRAM (2-8 GB)
+    - [[low-vram-inference-strategies]] - Low-VRAM inference is a measured runtime configuration, not a hardware-tier promise; pin the model and backend, select only documented quantization, offload, or tiling paths, and record peak memory, latency, output fidelity, and failure behavior on the actual device.
     - [[MACRO]] - MACRO is a structured multi-reference dataset, benchmark, and set of model-specific fine-tuning assets; validate the compatible base model and artifact terms before deployment.
     - [[megastyle-flux-style-transfer]] - MegaStyle is a single-reference style transfer framework developed by Tencent for FLUX.1-dev
     - [[object-removal-inpainting]] - Object removal is a constrained edit: bind the source asset, permitted object, mask, model contract, and protected regions, then validate scene continuity and factual preservation before release.
-    - [[paired-training-for-restoration]] - How to train a diffusion model for image-to-image restoration (not text-to-image)
+    - [[paired-training-for-restoration]] - Paired restoration training learns a declared degraded-to-target mapping; it needs source-aligned and rights-cleared pairs, a model-compatible conditioning path, holdouts separated by source, and evaluation that distinguishes measured recovery from plausible invention.
     - [[perspective-calibration-for-compositing]] - A local decision framework for estimating camera geometry, validating it with scene evidence, and
     - [[pixel-art-generation]] - Algorithms and models for converting raster images to pixel art, generating pixel art via diffusion
     - [[PixelSmile]] - PixelSmile is a release-bound facial-expression editing project; pin its published human preview, base model, patched runtime, consented source image, and expression review rather than treating benchmark numbers or adapters as general guarantees.

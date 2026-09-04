@@ -22,16 +22,16 @@ type: MOC
 
 ## Training & Fine-tuning
 - [[diffusion-lora-training]] - LoRA training for diffusion models
-- [[lora-fine-tuning-for-editing-models]] - LoRA fine-tuning for editing models
+- [[lora-fine-tuning-for-editing-models]] - An editing LoRA is compatible only with its exact base checkpoint, architecture, runtime, and adapter format; train from authorized paired evidence, sweep capacity and schedule on held-out edits, and prove both requested change and preservation before release.
 - [[Text-to-LoRA]] - Text-to-LoRA is a Sakana AI hypernetwork that creates task adapters for documented LLM target families from textual task descriptions; it is not a drop-in generator for diffusion-model LoRAs.
-- [[paired-training-for-restoration]] - Paired training for image restoration
+- [[paired-training-for-restoration]] - Paired restoration training learns a declared degraded-to-target mapping; it needs source-aligned and rights-cleared pairs, a model-compatible conditioning path, holdouts separated by source, and evaluation that distinguishes measured recovery from plausible invention.
 - [[rights-first-text-to-mask-training]] - Rights-aware dataset contracts for grounding, masks, alpha, and multilingual queries
 
 ## Inference & Optimization
 - [[diffusion-inference-acceleration]] - Diffusion acceleration is a model-and-runtime-specific trade-off; measure warm and steady-state latency, memory, output fidelity, and reproducibility for the exact checkpoint and workflow.
 - [[tiled-inference]] - Tiled inference for high-resolution generation
 - [[temporal-tiling]] - Temporal tiling is a model-specific research experiment for cross-tile consistency, not a direct reuse of video memory; bind the tile plan and runtime state, compare against an overlap baseline, and validate seams, composition, and cost on held-out images.
-- [[low-vram-inference-strategies]] - Low-VRAM inference strategies
+- [[low-vram-inference-strategies]] - Low-VRAM inference is a measured runtime configuration, not a hardware-tier promise; pin the model and backend, select only documented quantization, offload, or tiling paths, and record peak memory, latency, output fidelity, and failure behavior on the actual device.
 - [[textual-latent-interpolation]] - Textual latent interpolation is a model-specific conditioning experiment: preserve non-target inputs, bind it to an exact encoder and adapter, sweep the requested range, and prove controllability and preservation instead of assuming semantic linearity.
 
 ## Editing & Restoration
@@ -43,7 +43,7 @@ type: MOC
 - [[retouch-patch-harmonization]] - Build color-consistent defect-inpainting training pairs
 - [[perspective-calibration-for-compositing]] - Recover camera geometry before inserting or relighting objects
 - [[color-checker-and-white-balance]] - Color checker and white-balance correction requires a measured physical chart or a separately validated estimator; detector output and a generated checker are not colorimetric ground truth.
-- [[grayscale-overlay-nn-architectures]] - Neural networks for grayscale overlay prediction
+- [[grayscale-overlay-nn-architectures]] - Grayscale overlay prediction is a paired, pixel-aligned retouching task; preserve the blend contract and no-op baseline, bind every source/target pair and mask, and evaluate the composited image plus the map before releasing an automated adjustment.
 
 ## Specialized Models
 - [[Calligrapher]] - Calligrapher customizes text imagery from style references through FLUX.1-Fill-dev, SigLIP, masks, and project weights; treat typography accuracy and licensing as separate acceptance checks.
@@ -56,7 +56,7 @@ type: MOC
 - [[comfyui-sensenova-u1]] - Official SenseNova U1/U1.5 versus third-party ComfyUI wrapper
 
 ## Segmentation
-- [[in-context-segmentation]] - In-context segmentation
+- [[in-context-segmentation]] - In-context segmentation transfers a supplied reference mask through a named vision model; its output is a candidate mask, not ground truth, and requires reference provenance, target review, uncertainty handling, and source-disjoint validation.
 
 ## Additional References
 

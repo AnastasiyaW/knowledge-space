@@ -1,137 +1,94 @@
 ---
-title: Paired Training for Restoration
+title: Paired Restoration Training: Evidence and Conditioning Contract
+description: "Paired restoration training learns a declared degraded-to-target mapping; it needs source-aligned and rights-cleared pairs, a model-compatible conditioning path, holdouts separated by source, and evaluation that distinguishes measured recovery from plausible invention."
 category: techniques
-tags: [img2img, paired-dataset, degradation, conditioning, channel-concat, restoration-training, flow-matching]
+tags: [image-to-image, paired-data, restoration, conditioning, provenance, evaluation]
 aliases: ["Image-to-Image Conditioning", "Paired Image Training", "Degradation Pipeline"]
 ---
 
-# Paired Training for Image Restoration
+# Paired Restoration Training: Evidence and Conditioning Contract
 
-How to train a diffusion model for image-to-image restoration (not text-to-image). Core technique: channel concatenation of degraded image latent with noise.
+Paired restoration training learns a declared mapping from a degraded input to
+an approved target. It is not ordinary text-to-image training with cleaner
+captions, and it must not present plausible generated texture as recovered
+source evidence.
 
-## The Problem
+[Palette](https://arxiv.org/abs/2111.05826) is a conditional
+image-to-image diffusion framework covering tasks such as colorization,
+inpainting, uncropping, and JPEG restoration. That paper supports the general
+need for an explicit image condition; it does not prescribe one channel layout,
+initialization, loss, scheduler, or training recipe for every modern model.
 
-Standard [[flow-matching]] trains T2I: `noise → image` conditioned on text. For restoration we need: `degraded_image → clean_image`. Simply training T2I on clean images does NOT produce a denoiser.
+## Define the pair
 
-## Solution: Channel Concatenation
+For every sample, retain:
 
-```toml
-clean_image → VAE.encode → latents (target)
-degraded_image → VAE.encode → condition_latents
+- original/source authority and rights record;
+- degraded input, target, and their hashes;
+- alignment/crop/resize/color-space policy;
+- declared degradation or approved retouch operation;
+- editable versus protected/unknown regions; and
+- reviewer decision and any uncertainty or exclusion reason.
 
-noise → x_t = (1-σ)*noise + σ*latents     # standard flow matching
-model_input = concat([x_t, condition_latents], dim=1)  # [B, 2C, H, W]
-projection = Conv2d(2C, C, kernel_size=1)   # project back to C channels
-model(projection(model_input), timestep, text_embeddings)
-```
+Source and target must depict the same approved scene or a deliberately
+specified edit. If the target contains manual beautification, generative fill,
+or unknown historical changes, label that fact rather than treating it as a
+clean ground truth.
 
-### Initialization Trick (Critical)
+## Conditioning must match the model
 
-The 1x1 projection conv must be zero-initialized for the condition channels:
-```python
-proj = nn.Conv2d(64, 32, kernel_size=1, bias=False)
-proj.weight[:, :32, :, :] = torch.eye(32).unsqueeze(-1).unsqueeze(-1)  # identity
-proj.weight[:, 32:, :, :] = 0.0  # condition starts as zero-contribution
-```
-This means at step 0 the model behaves exactly like the pretrained T2I model. The condition signal is learned gradually.
+Image-conditioned systems may use channel concatenation, cross-attention, a
+dedicated control branch, an image encoder, or another architecture-specific
+mechanism. Use only the conditioning path documented and trained for the
+pinned checkpoint. Changing input channel counts, injecting latents, or
+copying a conditioning module from another framework creates a new model
+configuration that requires its own initialization, training, and evaluation.
 
-### Why NOT ControlNet?
+Record the full conditioning contract:
 
-| Approach | New params | Quality | Complexity |
-|----------|-----------|---------|------------|
-| Channel concat + 1x1 conv | ~1K params | Good for spatial-aligned tasks | Minimal |
-| ControlNet | ~800M (full encoder copy) | Better for structural guidance | High |
-| IP-Adapter | ~22M | Good for style/reference | Medium |
+- base model/checkpoint and VAE/encoder revisions;
+- runtime, scheduler/objective, and conditioning module implementation;
+- input/target latent or pixel preprocessing; and
+- behavior when the condition is missing, malformed, masked, or out of
+  distribution.
 
-For restoration where input and output are **spatially identical**, channel concat is sufficient. ControlNet is overkill - the condition IS the image, just degraded.
+Never silently drop an image condition and return an unconditional result as if
+the restoration succeeded.
 
-Proven in: [[Step1X-Edit]], [[flux-kontext]], Palette (Google), InstructPix2Pix.
+## Build honest degradation evidence
 
-## Degradation Pipeline
+Synthetic degradation can create controlled paired examples, but it models only
+the transforms that were declared. Keep synthetic and observed real-world
+degradations distinguishable. Do not claim that noise, blur, compression, or
+downscaling parameters reproduce an unknown camera or editing history without
+evidence.
 
-Synthetic degradation from clean images. Apply 1-3 random degradations:
+Split training, tuning, and holdout data by original asset, capture session,
+subject/product, and derivative chain. Adjacent crops or multiple degraded
+versions of the same original belong in the same split.
 
-| Degradation | Parameters | Use Case |
-|------------|------------|----------|
-| Gaussian noise | σ = 5-50 | Camera noise |
-| Poisson noise | scale = 1-5 | Low-light |
-| JPEG artifacts | quality = 10-40 | Compression |
-| Gaussian blur | kernel = 3-11 | Defocus |
-| Downscale + upscale | factor = 2-4 | Low resolution |
-| Color jitter | brightness/contrast ±0.2 | Color cast |
+## Evaluate recovery separately from plausibility
 
-### Implementation (PIL/numpy only, no ML deps)
+| Evidence type | What it can support |
+|---|---|
+| Authorized aligned target | paired reconstruction metrics and visual error review under a defined color/crop policy |
+| Source-disjoint real degraded image without target | reviewed usefulness and failure analysis, not a pixel-accuracy claim |
+| Generative or uncertain target detail | a derived visual proposal, never recovered factual ground truth |
 
-```python
-def random_degradation(image, num_degradations=2):
-    """Apply random degradation pipeline to PIL Image."""
-    degradations = random.sample([
-        lambda img: add_gaussian_noise(img, sigma=random.uniform(5, 50)),
-        lambda img: add_jpeg_artifacts(img, quality=random.randint(10, 40)),
-        lambda img: add_gaussian_blur(img, kernel=random.choice([3, 5, 7, 9, 11])),
-        lambda img: add_downscale(img, factor=random.uniform(2, 4))], k=min(num_degradations, 4))
-    for deg in degradations:
-        image = deg(image)
-    return image
-```
+Review text, marks, product geometry, faces, protected regions, and material
+detail separately from aggregate metrics. A high visual-quality score can
+coexist with a factually altered output.
 
-## Dataset Strategy
+## Release gate
 
-### Size Guidelines
+Promote a paired-restoration model only with reproducible pairs, a
+model-compatible conditioning path, source-disjoint holdouts, source/output
+provenance, and a policy for uncertain or changed factual detail. If the model
+cannot distinguish recovery from invention for the intended use, release it
+only as a reviewed enhancement proposal or keep it out of that workflow.
 
-| Task | Pairs | Source |
-|------|-------|--------|
-| Denoising (general) | 17K-28K | DIV2K + Flickr2K, synthetic degradation |
-| Retouching (domain) | 3K-5K | Before/after from Retouch4me or retoucher |
-| Background replace | 150-300 | Paired photos or synthetic |
+## Related pages
 
-### PairedDataset Format
-
-CSV: `image_path,condition_image_path,caption`
-
-Both images MUST receive identical spatial augmentations (crop coords, flip state). Use shared random seed per sample.
-
-### On-the-fly vs Pre-generated
-
-- **On-the-fly**: more augmentation diversity, slower training, good for exploration
-- **Pre-generated**: faster training (cache latents), fixed degradations, good for final runs
-- **Recommendation**: on-the-fly for first experiments, pre-generate for production training
-
-## Text Prompts for Restoration
-
-The text condition describes the degradation to remove:
-- "Remove gaussian noise from this image"
-- "Remove JPEG compression artifacts, restore sharp details"
-- "Enhance low-light image, recover shadows"
-- Generic: "Restore this image to high quality"
-
-Prompt diversity during training prevents overfitting to specific text patterns.
-
-## Training Config (for [[SANA]] 1.6B)
-
-```yaml
-model:
-  pretrained: "Efficient-Large-Model/SANA1.5_1.6B_1024px_diffusers"
-  conditioning: "img2img"
-  condition_channels: 32  # DC-AE latent channels
-training:
-  lr: 1e-5
-  batch_size: 4
-  steps: 10000
-  optimizer: adamw8bit
-  dtype: bf16
-  ema_decay: 0.9999
-data:
-  type: paired_csv
-  resolution: 512  # start small, curriculum to 1024
-  degradation: on_the_fly
-```
-
-## Evaluation
-
-| Metric | What it measures | Target |
-|--------|-----------------|--------|
-| PSNR | Pixel accuracy | > 30 dB (σ=25 noise) |
-| SSIM | Structural similarity | > 0.85 |
-| LPIPS | Perceptual similarity | < 0.1 |
-| FID | Distribution quality | < 10 |
+- [[image-restoration-survey]]
+- [[synthetic-dataset-pipeline]]
+- [[upscaler-evaluation]]
