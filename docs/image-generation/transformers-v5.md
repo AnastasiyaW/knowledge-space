@@ -1,70 +1,83 @@
 ---
-title: Transformers v5
+title: Transformers v5: Version-Bound Migration
+description: "Transformers v5 moves checkpoint conversion into the loader, but every integration must be pinned to an installed release, runtime contract, checkpoint, and adapter test; current main-branch APIs are not universal compatibility."
 category: infrastructure
-tags: [huggingface, transformers, weight-converter, tokenization, weekly-releases, migration, fp8, flash-attention]
+tags: [huggingface, transformers, weight-converter, migration, checkpoint-loading, compatibility]
 ---
 
-# Transformers v5.0.0
+# Transformers v5: Version-Bound Migration
 
-First major release in 5 years (1200+ commits). Fundamental changes to release cycle, weight loading, and tokenization. Released March 2026.
+Transformers v5 is an evolving major-version line, not one permanent API
+snapshot. A migration begins by recording the installed package version and
+the exact model, checkpoint, and companion-library revisions. Do not infer
+behavior from a blog post, a `main` branch example, or an unrelated point
+release.
 
-## Key Changes
+The official [release list](https://github.com/huggingface/transformers/releases)
+and [v5 documentation](https://huggingface.co/docs/transformers/) are the
+authority for the package version you actually install.
 
-### 1. Weekly Release Cycle
+## Dynamic checkpoint conversion
 
-From 5-week cycles → **weekly** (v5.1, v5.2, ...). New architectures available almost immediately without installing dev versions. Critical given daily pace of new model releases.
+The current
+[WeightConverter documentation](https://github.com/huggingface/transformers/blob/main/docs/source/en/weightconverter.md)
+describes a loader that can rename, split, merge, transpose, shard, and
+quantize compatible checkpoint tensors while loading. It is useful when a
+supported model's serialized layout differs from its runtime parameter layout.
 
-### 2. WeightConverter API (Dynamic Weight Loading)
+That mechanism has clear limits:
 
-Previously: checkpoints loaded exactly as serialized. Now: **transforms applied during loading**.
+- a conversion mapping must exist for the intended native model/class;
+- custom-code models are not automatically covered by a mapping;
+- a successful load does not prove output parity, adapter compatibility, or
+  suitability for a different framework; and
+- a Transformers loader does not automatically convert a Diffusers pipeline,
+  a custom fork, or an arbitrary third-party checkpoint.
 
-```python
-# WeightConverter maps architecture → list of conversions
-# Transforms weights on the fly:
-# - MoE layer reshaping
-# - Tensor Parallelism splitting
-# - Architecture adaptation
-# No need to rewrite model logic or re-serialize checkpoints
-```
+Treat missing mappings, unexpected keys, dtype changes, and adapter errors as
+visible compatibility failures. Do not silently select a different loader or
+checkpoint.
 
-Enables: loading third-party checkpoints with different naming conventions, MoE support, TP/PP sharding — all without manual weight surgery.
+## Migration contract
 
-### 3. Unified Tokenizer Architecture
+Before changing an image-generation environment, capture this matrix:
 
-Eliminated dual Python/Rust tokenizer files. Single `tokenization_<model>.py` with automatic backend selection:
+| Surface | Record |
+|---|---|
+| Package | installed Transformers version, Python, PyTorch, and accelerator/runtime versions |
+| Model | repository revision, config, checkpoint files/digests, dtype, and device map |
+| Integration | Diffusers, PEFT/adapters, custom code, and any local patch revisions |
+| Baseline | a pinned pre-migration load and task-specific output or structural check |
+| Candidate | the new environment, loader report, warnings, and matching task check |
 
-```yaml
-Priority:
-1. TokenizersBackend (Rust) — optimal performance, parallelization
-2. SentencePieceBackend — fallback
-3. PythonBackend — last resort
-```
+Run the load path with its logs intact. Then verify the thing the application
+actually needs: e.g. text-encoder output shape and dtype, adapter attachment,
+generation call, memory behavior, and a reviewed output. Passing import or
+`from_pretrained` alone is not a release proof.
 
-New: empty tokenizer → train on custom corpus from scratch using vocab + merges directly. Tokenizer init mirrors model init: class defines behavior, not pre-loaded files.
+## Image-generation integrations
 
-### 4. Breaking Changes for Migration
+Many image stacks span multiple packages. A model can use Transformers for a
+text encoder while its denoiser, scheduler, VAE, or adapter runtime is owned by
+another library. Pin and test the full stack together.
 
-| Change | Before | After |
-|--------|--------|-------|
-| `dtype` in `from_pretrained` | Explicit | **auto** (detects optimal) |
-| Shard size for saving | Varies | **50 GB** default |
-| Tokenizer files | Separate slow/fast | Unified single file |
+For a project using [[SANA]], [[PixelSmile]], or another model-specific
+integration:
 
-**Migration checklist:**
-- Check old scripts that relied on default float32 loading — now may load in lower precision automatically
-- Shard size change affects model hub uploads (fewer, larger files)
-- Tokenizer imports may need updating if they referenced specific fast/slow classes
+1. read the upstream repository's stated dependency and patch contract;
+2. reproduce an upstream-supported minimal load;
+3. add the project's adapter or editing path;
+4. compare with the pinned baseline; and
+5. store the version matrix and failure output with the result.
 
-### 5. New Models
+This keeps dynamic conversion a traceable compatibility feature rather than a
+reason to assume that every historical model now loads unchanged.
 
-GLM-4.7, Jais2, Pixio + FP8 quantization fixes + Flash Attention for quantized models.
+## Sources and related pages
 
-## Impact on Image Generation Work
-
-- [[Step1X-Edit]] / [[flux-kontext]] / other models using custom diffusers forks may benefit from WeightConverter — load weights without patching diffusers
-- Weekly releases mean faster access to new model architectures
-- FP8 + Flash Attention fixes directly relevant for LoRA training on [[MMDiT]] models
-
-## Key Link
-
-- Release notes: github.com/huggingface/transformers/releases/tag/v5.0.0
+- [Transformers v5 overview](https://huggingface.co/blog/transformers-v5)
+- [Transformers releases](https://github.com/huggingface/transformers/releases)
+- [Dynamic weight loading documentation](https://github.com/huggingface/transformers/blob/main/docs/source/en/weightconverter.md)
+- [[SANA]]
+- [[PixelSmile]]
+- [[flux-klein-9b-inference]]

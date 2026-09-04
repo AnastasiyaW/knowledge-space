@@ -1,111 +1,94 @@
 ---
-title: Image Upscaler Evaluation
+title: Image Upscaler Evaluation: Fidelity-First Protocol
+description: "Choose an upscaler by measured fidelity on the actual source class, not benchmark labels or a universal default; preserve source/output provenance, evaluate artifacts and factual detail, and keep generative outputs out of factual training targets."
 category: tools
-tags: [upscaling, super-resolution, real-esrgan, hat, swinir, vae, comfyui, batch-processing]
+tags: [upscaling, super-resolution, image-restoration, evaluation, data-provenance, fidelity]
 ---
 
-# Image Upscaler Evaluation
+# Image Upscaler Evaluation: Fidelity-First Protocol
 
-Practical comparison of image upscalers for LoRA training data preparation and production pipelines. Key constraint: for training data, **fidelity > perceptual quality** - hallucinated detail = poisoned training samples.
+Upscaling creates a derived image. It can improve presentation or make a
+training input usable, but it cannot recover unobserved factual detail. Choose
+a model from evidence on the actual source class and intended use, rather than
+from a fixed leaderboard, a hardware estimate, or a claim that one tool is
+hallucination-free.
 
-## Regression-Based Upscalers (No Hallucinations)
+## Separate task classes
 
-These learn a direct LR-to-HR mapping without generative sampling. Cannot hallucinate by design.
+| Task class | Typical evidence | Release caution |
+|---|---|---|
+| Known downsampling | paired high/low-resolution references | paired metrics are meaningful only for the stated degradation |
+| JPEG/noisy web imagery | source-disjoint real images plus reviewed outputs | learned restoration can alter texture, edges, and text |
+| Generative super-resolution | perceptual review and disclosed generated detail | never treat invented detail as recovered source evidence |
 
-| Model | Architecture | Scale | Speed (512px, H200 est.) | PSNR (Set14) | Best For |
-|-------|-------------|-------|--------------------------|-------------|----------|
-| **Real-ESRGAN x2plus** | RRDBNet (GAN) | 2x | ~0.08-0.15s | ~28-30 dB | Photos, JPEG artifacts, batch |
-| SwinIR-L | Swin Transformer | 2x/4x | ~0.4-0.6s | ~30.9 dB | High quality, moderate speed |
-| HAT-L | Hybrid Attention | 4x | ~1.5-2.0s | ~31.3 dB | Best PSNR, very slow |
-| DAT2 | Dual Aggregation | 4x | ~1.5s | ~31.1 dB | Good PSNR/speed balance |
-| **4xRealWebPhoto_v4** | DAT2-based | 4x | ~1.5s | N/A | Web-compressed JPEGs specifically |
+[Real-ESRGAN](https://github.com/xinntao/Real-ESRGAN) is an official project
+for practical image/video restoration trained with synthetic degradation.
+[SwinIR](https://github.com/JingyunLiang/SwinIR) documents restoration tasks
+including classical, lightweight, and real-world super-resolution, denoising,
+and JPEG artifact reduction. [HAT](https://arxiv.org/abs/2205.04437) is a
+super-resolution research model. These names identify candidates; they do not
+establish a universal ranking, safe default, license conclusion, or performance
+number for your hardware and images.
 
-### Real-ESRGAN x2plus (Recommended Default)
+## Evaluation dataset
 
-- **Model size**: ~67 MB
-- **License**: BSD
-- **ComfyUI**: native support, no custom nodes needed
-- **Batch throughput**: 430K images at ~2.5 hours on H200 with batching
-- **JPEG handling**: trained with degradation pipeline including JPEG compression
-- **Why default**: zero hallucinations, handles artifacts, battle-tested at scale, tiny model
+Build the evaluation set before selecting a model:
 
-```python
-from realesrgan import RealESRGANer
-from basicsr.archs.rrdbnet_arch import RRDBNet
+- split by original asset/source, not by adjacent crops or derived copies;
+- include the image classes the project will actually receive;
+- keep paired references only where the known degradation is honest;
+- reserve a source-disjoint holdout that no tuning decision sees; and
+- record rights, original hash, crop/resize path, model revision, settings, and
+  output hash for every derived image.
 
-model = RRDBNet(num_in_ch=3, num_out_ch=3, num_feat=64,
-                num_block=23, num_grow_ch=32, scale=2)
-upsampler = RealESRGANer(
-    scale=2,
-    model_path='RealESRGAN_x2plus.pth',
-    model=model,
-    tile=0,        # no tiling for 512px
-    half=True      # fp16
-)
-```
+Do not use a model's own promotional gallery as a substitute for a held-out
+test set.
 
-### 4xRealWebPhoto_v4_dat2
+## What to measure
 
-Specifically trained on web-downloaded, re-compressed images. Ideal for CDN-served content (Pinterest, social media) where images go through multiple JPEG compression cycles.
+For paired references, report metrics with their exact reference, crop, color
+space, alignment, and aggregation rule. PSNR, SSIM, or perceptual metrics can
+describe reconstruction error in that controlled setting; they do not prove
+factual preservation for unpaired images.
 
-## Diffusion-Based Upscalers (Avoid for Training Data)
+For all source classes, review:
 
-These models ADD detail that wasn't in the original - hallucination by design.
+1. repeated or erased texture, ringing, aliasing, and compression artifacts;
+2. text, logos, product geometry, facial features, and other factual detail;
+3. crop and aspect-ratio changes; and
+4. peak memory, wall time, retry behavior, and failures on the intended
+   runtime.
 
-| Model | Hallucination | Why Avoid for Training |
-|-------|---------------|----------------------|
-| SUPIR | HIGH | Invents textures, skin details |
-| StableSR | MEDIUM-HIGH | SD-based generative sampling |
-| CCSR v2 | MEDIUM | Reduced but not zero |
-| PiSA-SR | ADJUSTABLE | Dual LoRA: pixel (faithful) + semantic (hallucination). At `semantic_scale=0` becomes regression, but overhead of loading SD model |
+Use a blinded visual review where the decision matters. Record disagreement
+instead of resolving it by choosing the prettier result.
 
-### PiSA-SR Exception (CVPR 2025)
+## Training-data boundary
 
-Uses dual LoRA on Stable Diffusion: pixel-level (l2-loss) + semantic-level (LPIPS + distillation). Guidance scales set independently. At `semantic_scale=0` it becomes pure regression - technically usable but Real-ESRGAN is simpler for this purpose.
+For factual, catalog, or supervised targets, preserve the original source as
+the authority. An upscaled derivative may be used only under a documented
+policy that distinguishes:
 
-## SDXS-1B VAE Upscaler
+- preprocessing for display or model input;
+- validated paired reconstruction experiments; and
+- generative or uncertain detail that must not become ground truth.
 
-Asymmetric VAE (8x encoder / 16x decoder = built-in 2x upscale). 1.6B param UNet + 32-channel VAE (200MB).
+If an output changes a mark, text, edge, or material detail that matters to a
+label, hold it for review or exclude it from that target. Saving as PNG does
+not repair an earlier model alteration, and deterministic processing is not a
+guarantee of factual recovery.
 
-**Not recommended for production use:**
-- Alpha quality, development halted due to funding
-- Trained on anime/illustrations (~90%), not photos
-- `trust_remote_code=True` required - security risk
-- No ComfyUI integration
-- While technically "hallucination-free" (VAE encode/decode), latent space biased toward training domain
+## Runtime integration
 
-VAE reconstruction quality (37.83 PSNR) is close to FLUX.2 VAE (38.33) but this measures reconstruction, not super-resolution performance.
+Verify every concrete integration at the installed version: model file digest,
+loader, device/dtype, tile policy, alpha/bit-depth handling, input/output
+colorspace, and failure path. A ComfyUI node, a Python script, and a standalone
+binary are separate runtimes and require separate evidence.
 
-## Batch Processing Optimization
+Promote one candidate only after its source-class evaluation, provenance
+records, and operational measurement meet the intended release contract.
 
-### Speed Tips
+## Related pages
 
-1. `torch.compile(model)` gives ~1.5-2x speedup
-2. Always fp16 on modern GPUs
-3. No tiling needed for 512px images
-4. I/O is the bottleneck - use 4-8 data loading workers
-5. Filter images already >= target resolution before processing
-
-### Mixed Resolution Strategy
-
-For datasets with 512-768px images:
-- **<512px**: upscale 2x with Real-ESRGAN x2plus
-- **512-767px**: upscale 2x, center-crop to target (or use as-is if training supports variable resolution)
-- **768px+**: crop/resize to target, no upscaling needed
-
-### ComfyUI Integration
-
-Real-ESRGAN, 4xRealWebPhoto, HAT, SwinIR: download `.pth` to `ComfyUI/models/upscale_models/`, use "Load Upscale Model" + "Upscale Image (Using Model)" nodes. Works out of the box.
-
-## Gotchas
-
-- **JPEG artifacts amplify during upscaling** if the upscaler wasn't trained on compressed input. Real-ESRGAN handles this; SwinIR has a JPEG-specific variant (SwinIR-JPEG) for preprocessing.
-- **Save upscaled images as PNG** for training data - re-compressing to JPEG after upscaling defeats the purpose and introduces new artifacts.
-- **HAT-L is impractical at scale** - 430K images would take ~36 hours vs ~2.5 hours for Real-ESRGAN. Only justified for small high-value datasets.
-- **"Hallucination-free" claims need scrutiny** - VAE encode/decode is technically deterministic but lossy compression introduces domain bias from training data.
-
-## See Also
-
-- [[flux-klein-9b-inference]] - tiled upscale pipelines with Klein
-- [[diffusion-lora-training]] - dataset preparation for LoRA training
-- [[image-restoration-survey]] - broader restoration techniques
+- [[image-restoration-survey]]
+- [[diffusion-lora-training]]
+- [[flux-klein-9b-inference]]

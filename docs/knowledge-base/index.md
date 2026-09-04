@@ -777,7 +777,7 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[MMDiT]] - MMDiT is the Stable Diffusion 3 multimodal transformer pattern: modality-specific representations participate in joint attention; implementation APIs and LoRA target names vary by model revision.
     - [[SANA]] - Efficient text-to-image architecture
     - [[tiled-inference]] - Memory-efficient large image generation
-    - [[transformers-v5]] - HuggingFace Transformers for image gen
+    - [[transformers-v5]] - Transformers v5 moves checkpoint conversion into the loader, but every integration must be pinned to an installed release, runtime contract, checkpoint, and adapter test; current main-branch APIs are not universal compatibility.
 
     **More**
 
@@ -825,7 +825,7 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[paired-training-for-restoration]] - How to train a diffusion model for image-to-image restoration (not text-to-image)
     - [[perspective-calibration-for-compositing]] - A local decision framework for estimating camera geometry, validating it with scene evidence, and
     - [[pixel-art-generation]] - Algorithms and models for converting raster images to pixel art, generating pixel art via diffusion
-    - [[PixelSmile]] - LoRA adapter for Step1X-Edit that enables fine-grained facial expression editing with continuous
+    - [[PixelSmile]] - PixelSmile is a release-bound facial-expression editing project; pin its published human preview, base model, patched runtime, consented source image, and expression review rather than treating benchmark numbers or adapters as general guarantees.
     - [[plugin-inference-ux]] - Patterns for making slow ML inference (10-30s per operation) feel fast inside desktop creative
     - [[qwen-image]] - Version-aware reference for Qwen-Image generation, editing, 2511/2512 checkpoints, and the separate
     - [[RealRestorer]] - RealRestorer is a large image-editing-model restoration workflow for nine documented degradation types; use the repository's patched local runtime and evaluate fidelity separately from benchmark scores.
@@ -839,11 +839,11 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[Step1X-Edit]] - Step1X-Edit is a StepFun multimodal image-editing family with release-specific pipelines; pair each checkpoint with its documented Diffusers branch and verify model and artifact terms independently.
     - [[style-reference-ux]] - Style-reference UX must separate temporary influence from saved training, style from content/structure, and local data from third-party processing, while making strength and provenance visible to the user.
     - [[synthetic-dataset-pipeline]] - Synthetic detection data is a labeled candidate corpus, not automatic ground truth; preserve generator and source provenance, review annotations, prevent split leakage, and validate on real held-out data.
-    - [[temporal-tiling]] - The idea: instead of processing tiles independently (standard tiling), treat them as a temporal
+    - [[temporal-tiling]] - Temporal tiling is a model-specific research experiment for cross-tile consistency, not a direct reuse of video memory; bind the tile plan and runtime state, compare against an overlap baseline, and validate seams, composition, and cost on held-out images.
     - [[Text-to-LoRA]] - Text-to-LoRA is a Sakana AI hypernetwork that creates task adapters for documented LLM target families from textual task descriptions; it is not a drop-in generator for diffusion-model LoRAs.
-    - [[textual-latent-interpolation]] - Technique for continuous attribute control in diffusion models by interpolating between text
+    - [[textual-latent-interpolation]] - Textual latent interpolation is a model-specific conditioning experiment: preserve non-target inputs, bind it to an exact encoder and adapter, sweep the requested range, and prove controllability and preservation instead of assuming semantic linearity.
     - [[tile-position-encoding]] - Methods for injecting spatial position information into patch/tile-based image models, with
-    - [[upscaler-evaluation]] - Practical comparison of image upscalers for LoRA training data preparation and production pipelines
+    - [[upscaler-evaluation]] - Choose an upscaler by measured fidelity on the actual source class, not benchmark labels or a universal default; preserve source/output provenance, evaluate artifacts and factual detail, and keep generative outputs out of factual training targets.
     - [[videomama-diffusion-based-video-matting]] - VideoMaMa is a video matting framework that converts coarse segmentation masks into pixel-perfect
     - [[watermark-removal]] - Removing visible logos, text overlays, and branding from images
     - [[X-Dub]] - X-Dub is a public Wan2.2-TI2V-5B-based visual-dubbing release; validate single-person cropping, identity, temporal stability, audio rights, and model terms on every target video.
