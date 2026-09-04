@@ -1,31 +1,35 @@
 ---
-title: Auto1111SDK — Auto1111SDK development
+title: Auto1111SDK
 category: projects
+date: 2024-03-05
 tags: [auto1111sdk, auto1111sdk-development, project]
 aliases: ["Auto1111SDK"]
 ---
 
-# Auto1111SDK — Auto1111SDK development
+# Auto1111SDK
 
 **Development line:** `project:auto1111sdk` · thread `auto1111sdk-development`  
-**Events:** 2 dated, 2024-02-06 → 2024-03-05 · **Researched:** 2026-09-04 · confidence: medium
+**Last event:** 2024-03-05 · 2 dated since 2024-02-06 · **Researched:** 2026-09-04 · confidence: medium
 
 ## What it is
 
-Auto1111SDK — a Python library for developers who want to drive local Stable Diffusion workflows from code rather than use the Automatic1111 WebUI. - Text-to-image, image-to-image, inpainting, outpainting, and Stable Diffusion upscale. - ESRGAN/Real-ESRGAN upscaling, CivitAI downloads, custom VAE/SDXL support, and a ControlNet interface. Limit: 0.0.95 is PyPI’s latest release, dated 2024-02-16 and classified pre-alpha; the documented ControlNet path is FP32-only. Verdict: use it to reproduce a legacy workflow, not as the default base for a new deployment without a full compatibility audit.
+Auto1111SDK is a Python library for developers driving local Stable Diffusion workflows from code instead of the Automatic1111 WebUI.
+
+- Text-to-image, image-to-image, inpainting, outpainting, and Stable Diffusion upscale.
+- ESRGAN/Real-ESRGAN upscaling, CivitAI downloads, custom VAE/SDXL support, and a ControlNet interface.
 
 ## Development line
 
-- **2024-02-06 — Auto1111SDK project repository and Colab notebook were recorded.** On 2024-02-06, the dated record identified an Auto1111SDK GitHub repository and a linked Google Colab notebook. From the links alone, this is an early public project-resource checkpoint; no release, feature, or code-change claim can be established.
-- **2024-03-05 — Auto1111SDK organization repository was recorded with the Colab notebook.** On 2024-03-05, the dated record identified a repository under the Auto1111SDK GitHub organization and the linked Colab notebook. This is a material public-distribution checkpoint, but the links alone do not establish whether it represented a repository migration, a release, or a repost.
+- **2024-02-06 — Auto1111SDK project repository and Colab notebook appeared.** The project used the personal `saketh12/Auto1111SDK` repository path and a Colab demo.
+- **2024-03-05 — Auto1111SDK organization repository appeared with the Colab notebook.** On 2024-03-05, the repository moved under the Auto1111SDK GitHub organization alongside the linked Colab notebook. The change marks a public entry point, but the links do not show whether it was a repository migration, a release, or a repost.
 
 ## What changed
 
-Auto1111SDK — the documented line is early-2024 development followed by no later PyPI release. 2024-02-06 — first recorded reference: the project used the personal `saketh12/Auto1111SDK` repository path and a Colab demo. 2024-02-16 (found today) — PyPI published 0.0.95, which its current release history still identifies as latest. 2024-03-05 — the recorded repository path changed to `Auto1111SDK/Auto1111SDK` while retaining the same Colab file; this proves a publishing-path change, not a code delta. 2026-09-04 (found today) — the GitHub README still documents virtualenv-only installation, the old personal Git install path, and FP32-only ControlNet. Verdict: the package is now a legacy dependency with unverified current-runtime compatibility.
+Auto1111SDK stopped development in early-2024 with no later PyPI release. On 2024-02-06, the project started under the personal `saketh12/Auto1111SDK` repository path with a Colab demo. On 2024-02-16, PyPI published 0.0.95, which remains the latest release in its history. On 2024-03-05, the repository path changed to `Auto1111SDK/Auto1111SDK` while retaining the same Colab file; this shows a publishing path change rather than new code. On 2026-09-04, the GitHub README still documents virtualenv-only installation, the old personal Git install path, and FP32-only ControlNet. The package is now a legacy dependency with unverified current-runtime compatibility.
 
 ## How to use this
 
-From 2024-03-05, treat the Auto1111SDK organization repository as the recorded historical project entry point and validate current setup instructions separately.
+From 2024-03-05, treat the Auto1111SDK organization repository as the historical project entry point and verify current setup separately.
 
 1. Create a clean Python virtual environment; the project explicitly recommends a virtualenv and says Conda is unsupported.
   — <https://github.com/Auto1111SDK/Auto1111SDK>
@@ -58,7 +62,7 @@ From 2024-03-05, treat the Auto1111SDK organization repository as the recorded h
 ## Still unknown
 
 - The Colab notebook at `https://colab.research.google.com/drive/1SekiJ-mdB2V8ogWbyRyF_yDnoMuDGWTl` could not be read without a valid Google session, so its current runtime, package pins, hardware, and execution state are unverified.
-- The dated links establish a personal-to-organization GitHub path change, but do not establish whether it was a repository transfer, a mirror, or a code release; no release note or commit diff for 2024-03-05 was available.
+- The dated links establish a personal-to-organization GitHub path change on 2024-03-05, but do not establish whether it was a repository transfer, a mirror, or a code release; no release note or commit diff for 2024-03-05 was available.
 - Current compatibility with 2026 Python, PyTorch, CUDA, and model formats is not established by the sources read.
 
 ## Sources
