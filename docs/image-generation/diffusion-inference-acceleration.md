@@ -1,187 +1,91 @@
 ---
 title: Diffusion Inference Acceleration
+description: Diffusion acceleration is a model-and-runtime-specific trade-off; measure warm and steady-state latency, memory, output fidelity, and reproducibility for the exact checkpoint and workflow.
 category: techniques
-tags: [inference, acceleration, spectrum, triattention, kv-cache, quantization, nunchaku, sampling, spectral-forecasting]
-aliases: ["Spectrum", "TriAttention", "Inference Speedup"]
+tags: [inference, acceleration, quantization, torch-compile, attention, scheduler, reproducibility]
+aliases: ["Inference Speedup", "Diffusion Optimization"]
 ---
 
 # Diffusion Inference Acceleration
 
-Techniques for accelerating diffusion model inference without quality loss. Covers spectral forecasting, KV cache compression, quantization, and sampling optimization.
+There is no portable “speed-up factor” for diffusion inference. A technique can
+improve throughput for one checkpoint, resolution, hardware target, and
+pipeline while making another slower, less stable, or visually different.
+Treat acceleration as a controlled experiment, not as a list of interchangeable
+nodes.
 
-## Spectrum - Spectral Forecasting
+## Establish a baseline receipt
 
-Accelerates diffusion sampling by 3.5-4.8x through frequency-domain analysis. Instead of running the full denoiser at every timestep, Spectrum identifies which frequency components actually change between adjacent steps and only recomputes those.
+Before changing the runtime, record:
 
-### How It Works
+- exact model/checkpoint revision, pipeline version, scheduler, and adapters;
+- prompt or input fixture, seed, dimensions, batch size, and number of steps;
+- GPU, driver, CUDA/PyTorch/runtime versions, and precision;
+- cold-start time, warm steady-state latency, peak device memory, and output
+  files or hashes; and
+- a task-specific fidelity check, including human review where visual
+  correctness matters.
 
-1. **Analyze frequency spectrum** of denoiser output at each step via FFT
-2. **Identify static frequencies** - many high-frequency components stabilize early in the denoising process
-3. **Forecast static components** from previous step, only run the model on changing frequencies
-4. **Reconstruct** full output by combining forecasted + computed components
+Report cold and warm behavior separately. Compilation and caching frequently
+move time into the first request, which may be unacceptable for interactive
+editing even when repeated jobs become faster.
 
-The key insight: during diffusion sampling, low-frequency structure (composition, color) settles first, while high-frequency detail (texture, edges) continues evolving. But even high-frequency components become predictable in later steps.
+## Compatible optimization families
 
-### Performance
+Use only a mechanism that is documented for the exact model/runtime pair, and
+add one family at a time.
 
-| Model | Speedup | Quality Impact |
-|-------|---------|---------------|
-| FLUX.1 | 3.5-4.79x | No measurable degradation |
-| HunyuanVideo + FLUX.1 | 3.5x | No measurable degradation |
-| Wan 2.1-14B | 4.67x | No measurable degradation |
-| SDXL | Supported | No measurable degradation |
+### Compilation
 
-### ComfyUI Integration
+The [Diffusers acceleration guide](https://huggingface.co/docs/diffusers/optimization/fp16)
+documents torch.compile for compute-heavy model components. Compilation can pay
+off for repeated, shape-stable work, but a changed image size or execution
+condition can trigger recompilation. Diffusers also documents regional
+compilation for repeated blocks; availability depends on the model
+implementation.
 
-Available as `ComfyUI-Spectrum-Proper` nodes. Supports FLUX, WAN, and SDXL architectures. Drop-in replacement for standard sampling - no workflow restructuring needed.
+### Precision and quantization
 
-```python
-# Conceptual usage (diffusers)
-from spectrum import SpectralForecaster
+Reduced precision or quantized weights can alter memory use, latency, numerical
+behavior, and image details. Measure the result against representative inputs;
+do not infer fidelity from a precision label. Record the quantizer, base
+checkpoint, calibration path when applicable, and loader/runtime version.
 
-forecaster = SpectralForecaster(
-    model=pipe.transformer,
-    threshold=0.1,  # frequency change threshold
-)
+### Attention and memory placement
 
-# During sampling loop, forecaster decides per-step
-# which frequency bands need full model evaluation
-```
+Attention backends may change speed and memory behavior on a particular
+hardware stack. CPU or disk offloading primarily solves a memory constraint,
+not an unconditional latency problem: the
+[memory guide](https://huggingface.co/docs/diffusers/optimization/memory)
+notes that sequential CPU offloading can be extremely slow. Treat offloading,
+VAE tiling, and sharding as capacity choices and benchmark them independently.
 
-## TriAttention - KV Cache Compression
+### Scheduler, step count, and caching
 
-Compresses KV cache memory by 10.7x through trigonometric representation of attention matrices. Primarily targets LLM inference but applicable to any transformer with KV caching.
+Changing a scheduler or reducing steps changes the sampling procedure. Use the
+checkpoint publisher's supported route, then evaluate the requested task rather
+than assuming an arbitrary scheduler is compatible. Cache schemes are often
+architecture- and implementation-specific; verify their memory cost,
+invalidation behavior, and output effect on the target pipeline.
 
-### Mechanism
+## Measurement protocol
 
-Standard KV cache stores full K and V tensors for all previous tokens. TriAttention represents these via trigonometric decomposition:
+1. Run a fixed baseline after sufficient warm-up and keep the raw receipt.
+2. Change one optimization family and repeat the same fixture.
+3. Compare median and tail latency, peak memory, output reproducibility, and
+   visual/task fidelity.
+4. Keep the change only when its measured trade-off satisfies the deployment
+   constraint; otherwise revert it.
+5. Repeat after changes to the checkpoint, adapters, resolution regime, driver,
+   or runtime.
 
-- Encode K/V vectors into compact trigonometric coefficients
-- Reconstruct attention weights from coefficients on-the-fly
-- 10.7x memory reduction with 2.5x generation speed improvement
+For a public workflow, publish the compatible version tuple and the benchmark
+fixture, not a generic performance claim. Do not combine percentage savings
+from separate experiments as if they multiply.
 
-### Practical Integration
+## Related pages
 
-Available as a vLLM plugin. For diffusion transformers (DiT, [[MMDiT]]), KV cache compression matters most during:
-
-- Tiled inference with cross-tile attention (see [[temporal-tiling]])
-- Long-context conditioning (multiple reference images)
-- Video generation with temporal attention
-
-## TurboQuant - Extreme KV Cache Quantization
-
-Compresses KV cache to 3 bits per element without model retraining. Uses random rotation of vectors + scalar quantization.
-
-### Algorithm
-
-```text
-1. Apply random orthogonal rotation R to K/V vectors
-2. Quantize rotated vectors to 3-bit scalars (table lookup)
-3. At attention time: dequantize, apply R^T, compute attention normally
-```
-
-~5-6x memory compression at 99.5% attention fidelity.
-
-### Implementation Status
-
-```bash
-# llama.cpp fork (working)
-git clone https://github.com/TheTom/llama-cpp-turboquant
-cd llama-cpp-turboquant && make -j
-./llama-server -m model.gguf --cache-type-k turbo3 --cache-type-v turbo3
-```
-
-| Runtime | Status |
-|---------|--------|
-| llama.cpp fork | Working, CPU, all tests pass |
-| llama.cpp mainline | Merge pending |
-| vLLM | Feature request open |
-| Apple Silicon | 4.6x compression, matches q8_0 speed |
-
-### Practical Notes
-
-- Best gains on long contexts (128K+). At 4K context, difference is minimal
-- Base weight quantization affects quality: Q8_0+ gives best results, Q4_K_M degrades more
-- QJL correction (second stage) can worsen quality through standard attention - use TurboQuant_mse variant
-- The rotation trick is simple (table lookup), which is why implementations appeared within hours of publication
-
-## Nunchaku - Weight Quantization for DiT
-
-NVFP4 and INT8 quantization specifically optimized for diffusion transformers.
-
-### FLUX Klein 9B Quantization
-
-```python
-# Nunchaku quantized Klein inference
-# 40-55% VRAM reduction vs bf16
-from nunchaku import load_quantized_model
-
-model = load_quantized_model(
-    "flux2-klein-9b-nunchaku",
-    dtype="nvfp4"  # or "int8"
-)
-```
-
-| Precision | VRAM (9B) | Quality | Speed |
-|-----------|-----------|---------|-------|
-| bf16 | ~18 GB | Baseline | 1.0x |
-| FP8 | ~10 GB | Near-identical | ~1.1x |
-| NVFP4 | ~8 GB | Slight softening | ~1.3x |
-| INT8 (W8A8) | ~9 GB | Near-identical | ~1.2x |
-
-FP8 Klein maintains desirable grain structure (16mm film look). Non-FP8 produces cleaner output (35mm film character).
-
-## Sampling Optimization
-
-### Step Reduction for Distilled Models
-
-Distilled models (FLUX Klein distilled, [[SANA]]-Sprint) are step-optimized:
-
-| Model | Design Steps | Usable Range | Quality Cliff |
-|-------|-------------|-------------|---------------|
-| Klein 9B distilled | 4 | 4-8 | >8 degrades |
-| SANA-Sprint | 1-4 | 1-4 | N/A (designed for 1-step) |
-| FLUX.1-schnell | 4 | 4-8 | >8 degrades |
-
-Using 50+ steps on a 4-step distilled model wastes compute and can actively degrade quality.
-
-### Sampler Compute Efficiency
-
-Different samplers have different compute cost per step:
-
-| Sampler | Compute/Step | Notes |
-|---------|-------------|-------|
-| euler | 1x | Baseline, most stable |
-| res_2s | ~2x | Effectively doubles work per step |
-| dpmpp_2m | ~1.5x | Good quality/speed balance |
-| euler_ancestral | ~1x | Adds stochasticity |
-
-`res_2s` at 4 steps is computationally equivalent to `euler` at 8 steps. Useful for fixing anatomy issues without increasing step count.
-
-### Combined Acceleration Stack
-
-For maximum throughput:
-
-```text
-1. Spectrum spectral forecasting     (3-5x speedup)
-2. Nunchaku FP8/NVFP4 quantization  (1.1-1.3x speedup)
-3. Optimal step count                (no wasted steps)
-4. VAE tiling for decode             (enables high-res)
-```
-
-These stack multiplicatively. FLUX.1 with Spectrum + FP8 achieves ~4-6x total acceleration.
-
-## Gotchas
-
-- **Spectrum + LoRA interaction**: spectral forecasting assumes stable frequency patterns. Heavy LoRA influence can shift which frequencies change per step, potentially requiring threshold tuning. Test with your specific LoRA before production use.
-- **Quantization + fine detail**: NVFP4 quantization slightly softens fine textures (hair strands, fabric weave). For product photography where texture detail is critical, FP8 is the safe choice over NVFP4.
-- **Distilled model CFG**: distilled models have guidance baked in. Setting CFG above 1.0-1.5 produces "deep-fried" artifacts. Klein 9B distilled requires CFG=1.0 specifically.
-- **TurboQuant on short contexts**: at 4K tokens or fewer, the overhead of rotation/dequantization can negate memory savings. Only beneficial for 32K+ contexts.
-
-## See Also
-
-- [[SANA]] - linear attention + 32x compression for native efficiency
-- [[flow-matching]] - fewer steps needed vs DDPM
-- [[tiled-inference]] - spatial tiling for high-res
-- [[temporal-tiling]] - cross-tile context propagation
-- [[DC-AE]] - 32x VAE compression reducing token count
+- [[flow-matching]]
+- [[low-vram-inference-strategies]]
+- [[tiled-inference]]
+- [[flux-klein-9b-inference]]

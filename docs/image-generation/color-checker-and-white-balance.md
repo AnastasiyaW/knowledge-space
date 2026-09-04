@@ -1,120 +1,95 @@
 ---
 title: Color Checker and White Balance Correction
+description: Color checker and white-balance correction requires a measured physical chart or a separately validated estimator; detector output and a generated checker are not colorimetric ground truth.
 category: techniques
-tags: [color-checker, white-balance, color-constancy, illumination, calibration, datasets, jewelry-photography]
+tags: [color-checker, white-balance, color-constancy, calibration, illumination, product-photography]
 aliases: ["Color Constancy", "White Balance"]
 ---
 
 # Color Checker and White Balance Correction
 
-Automated color calibration using color checker cards and white balance correction models. Critical for product/jewelry photography standardization — consistent metal color, gemstone hue across different lighting.
+White balance and color correction solve related but different problems. White
+balance estimates or neutralizes the illuminant; a color transform maps a
+particular capture/rendering response to a defined reference. Neither becomes
+reliable merely because a chart-shaped object was detected in an image.
 
-## Core Concept
+## Decide what counts as a reference
 
-Color checker cards (X-Rite 24-patch, 140-patch Digital ColorChecker SG) provide known color references. Pipeline:
-1. Detect color checker in image
-2. Compute color transform (3x3 matrix, polynomial, or neural) from measured → reference values
-3. Apply transform to entire image
+Use one of these evidence paths and record which one was used:
 
-## Datasets
+1. **Measured physical chart.** Capture a known chart in the same lighting and
+   optical path as the subject. Read its patches from an un-clipped, correctly
+   exposed capture and compare them with the chart's reference values.
+2. **Separately validated estimator.** A learned white-balance or illumination
+   estimator may be useful when a physical chart is absent, but it needs
+   validation on the target camera, render path, materials, and lighting. Its
+   output is an estimate, not a measurement.
 
-| Dataset | Content | Use |
-|---------|---------|-----|
-| **Middlebury Color** | 35 cameras × 2 lighting conditions (3200K/4800K), RAW + JPEG | Camera-specific calibration |
-| **ccHarmony** | 4260 pairs synthetic composites + real images | Image harmonization training |
-| **Color Checkers (Roboflow)** | 214 images + pretrained detection model | Checker detection |
-| **I-HAZE** | 35 pairs (haze/clean) with MacBeth checker | Haze + color correction |
-| **CroP** | Synthetic RAW generator with checkers | Training data generation |
-| **Gehler, NUS-8, Cube++** | Standard color constancy benchmarks | White balance evaluation |
+For jewelry and product work, retain the source capture, chart identity,
+illuminant/setup, render transform, and validation samples. A pleasing result
+is not enough evidence that metal or gemstone colors are accurate.
 
-Links:
-- vision.middlebury.edu/color/data/
-- github.com/bcmi/Image-Harmonization-Dataset-ccHarmony
-- universe.roboflow.com/nahom-5dyof/color-checkers
+## Physical-chart workflow
 
-## Detection Tools
+1. Photograph the chart under the capture lighting without clipping highlights
+   or changing the exposure/lighting between reference and product frames.
+2. Locate the chart, order its patches, and reject frames with glare, blur,
+   occlusion, extreme perspective, or uncertain patch correspondence.
+3. Derive the transform in the declared working space and apply it only to
+   captures governed by that calibration contract.
+4. Validate on held-out neutral, skin, product, or material patches chosen for
+   the actual deliverable. Inspect both numerical error and the rendered image.
+5. Version the transform with the camera profile, lens/lighting setup, raw
+   converter, and validation receipt. Recalibrate after a material setup or
+   rendering-pipeline change.
 
-| Tool | Approach | Notes |
-|------|----------|-------|
-| colour-checker-detection | YOLOv8 + segmentation | Python package, github.com/colour-science/colour-checker-detection |
-| Roboflow pretrained | API-based detection | Pre-trained, ready to use |
-| Custom YOLO | Train on checker dataset | Best for specific shooting setups |
+The transformation should not silently combine white balance, camera profile,
+tone mapping, and creative grading. Keep those operations explicit so a later
+review can reproduce the result.
 
-## White Balance Correction Models
+## Detection is only localization
 
-| Model | Approach | License | Notes |
-|-------|----------|---------|-------|
-| **WB_sRGB** | Deep WB correction for already-rendered sRGB | Has datasets, idea reproducible | github.com/mahmoudnafifi/WB_sRGB |
-| **WB_color_augmenter** | Emulates wrong WB for training data augmentation | Pairs generation | github.com/mahmoudnafifi/WB_color_augmenter |
+[Colour Checker Detection](https://github.com/colour-science/colour-checker-detection)
+implements segmentation, templated, and machine-learning approaches. Its
+published YOLOv8 model is trained for ColorChecker Classic 24 and is not a
+general detector for Nano or SG charts. The repository also documents
+licensing differences for the inference path that uses the Ultralytics API.
 
-## Primary Pipeline: Diffusion-Generated Color Checker
+Accordingly, pin the detector version, chart type, and inference dependency,
+then verify its patch ordering and crop quality on the real capture set.
+Detection can find a candidate chart; it does not validate chart condition,
+lighting equivalence, exposure, or colorimetry.
 
-**Главный подход:** обучить диффузионную модель СТАБИЛЬНО генерировать виртуальный color checker внутри изображения, согласованный с освещением сцены. Потом детекция + цветокоррекция по точкам — это уже классический алгоритм.
+## Learned and generative estimators
 
-### Архитектура (3 стадии)
+[Deep White Balance](https://github.com/mahmoudnafifi/Deep_White_Balance)
+is a research implementation for learned white-balance correction of rendered
+images. It can be evaluated as an estimator, but its training data and
+rendering assumptions need to be compared with the local capture pipeline.
 
-```bash
-Stage 1: GENERATE — диффузионная модель вписывает чекер в изображение
-  Input: фото без чекера + маска (где разместить чекер)
-  Output: фото с чекером, где цвета чекера отражают реальное освещение сцены
-  Model: SD2 Inpainting fine-tune / [[SANA]] / [[Step1X-Edit|Qwen-Image-Edit]] LoRA
+Generative Color Constancy (GCC) is a different research direction: its
+[paper](https://arxiv.org/abs/2502.17435) uses deterministic inpainting to
+place a virtual color checker that reflects an estimated scene illumination.
+That is useful for studying illumination estimation, not for turning generated
+patch values into a measured target. A generated checker must stay labeled as
+a model estimate and must never replace a physical reference in a
+colorimetric acceptance test.
 
-Stage 2: DETECT — найти сгенерированный чекер и считать значения патчей
-  Model: YOLO или colour-checker-detection (простая задача — чекер всегда есть)
-  Output: 24 измеренных RGB значений
+## Minimal acceptance record
 
-Stage 3: CORRECT — классический алгоритм цветокоррекции
-  Compute: 3×3 color matrix (measured → reference D65 values)
-  Apply: transform entire image
-  Method: least squares, polynomial, или colour-science library
-```
+For every calibrated batch, retain:
 
-### Почему генерация а не детекция
+- capture and chart identifiers, source digest, and declared color space;
+- detector/estimator revision and all transform parameters;
+- rejected frames with a reason;
+- held-out validation images and the pass/fail criterion; and
+- the reviewer or automated job that approved release.
 
-Реальные фото **не содержат** color checker — фотографы убирают его перед финальной обработкой. Нам нужна модель которая может **восстановить** как бы выглядел чекер в данной сцене при данном освещении. Это задача illumination estimation через generative inpainting.
+This makes color correction auditable when a camera, lighting rig, model, or
+raw-processing pipeline later changes.
 
-### Датасет для обучения Stage 1
+## Related pages
 
-| Источник | Что берём | Как используем |
-|----------|----------|---------------|
-| Middlebury Color | Фото С чекером + фото БЕЗ (кроп/маска) | Before/after пары |
-| I-HAZE | Фото с MacBeth чекером | Paired training data |
-| CroP (synthetic) | Генерируем любое количество | Augmentation |
-| ccHarmony | Пары с known illumination | Validation |
-| **Собственные фото** | Снять ювелирку С чекером и БЕЗ | Gold standard pairs |
-
-**Формат пар:**
-```text
-input/0001.png    → фото БЕЗ чекера (маска на месте чекера)
-target/0001.png   → фото С чекером (реальный, в том же освещении)
-mask/0001.png     → бинарная маска позиции чекера
-```
-
-### Критичный момент: стабильность генерации
-
-Модель должна генерировать **узнаваемый** X-Rite 24-patch чекер, а не абстрактные цветные пятна. Подходы:
-1. **ControlNet** с шаблоном чекера (фиксированный layout) + inpainting для цветов
-2. **LoRA** обученная на парах (сцена без чекера → сцена с чекером)
-3. **Prompt conditioning**: "X-Rite ColorChecker Classic, 24 patches, 4×6 grid" + маска
-
-### Альтернативный подход: прямая WB коррекция
-
-Без генерации чекера — обучить модель предсказывать цветовую матрицу напрямую:
-- Input: фото
-- Output: 3×3 color correction matrix (или illuminant estimation)
-- Training: на RAW→final парах из DNG sidecar файлов (Lightroom WB corrections)
-
-Проще, но менее interpretable и менее точно для нестандартных условий.
-
-## Relevance for Jewelry Photography
-
-- Standardize metal color (gold, silver, rose gold) across different studio setups
-- Consistent gemstone color under varying illumination
-- Batch processing: photographer shoots 700+ RAW files → automated color correction
-- Solar curves technique (see discussions) for revealing subtle color/edge differences invisible to naked eye
-
-## Related Techniques
-
-- **Intrinsic image decomposition:** separate illumination from reflectance (github.com/vinavfx/Intrinsic-for-Nuke — good implementation, restrictive license but paper is reproducible)
-- **Shadow removal:** SP-Net/M-Net for shadow decomposition (ICCV 2019, ISTD dataset 4800 pairs)
-- **Reflectance filtering:** github.com/tnestmeyer/reflectance-filtering
+- [[color-correction-by-numbers]]
+- [[color-space-and-gamma-reference]]
+- [[diffusion-inference-acceleration]]
