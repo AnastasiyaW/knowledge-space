@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 950+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 951+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -743,6 +743,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [LEDITS](https://happyin.space/projects/ledits/): **Development line:** `project:ledits` · thread `ledits-development`
 - [Llama 3.1](https://happyin.space/projects/llama-3-1/): **Development line:** `project:llama-3-1` · thread `llama-3-1`
 - [LMarena Video Arena — Video Arena](https://happyin.space/projects/lmarena/): **Development line:** `project:lmarena` · thread `video-arena`
+- [LTX-2.3](https://happyin.space/projects/ltx-video/): **Development line:** `project:ltx-video` · thread `ltx-video`
 - [Vidu](https://happyin.space/projects/vidu/): **Development line:** `project:vidu` · thread `vidu`
 
 ## Python
