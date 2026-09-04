@@ -1,31 +1,42 @@
 ---
-title: ExAvatar — ExAvatar development
+title: ExAvatar
 category: projects
+date: 2024-09-26
 tags: [exavatar, exavatar-development, project]
 aliases: ["ExAvatar"]
 ---
 
-# ExAvatar — ExAvatar development
+# ExAvatar
 
 **Development line:** `project:exavatar` · thread `exavatar-development`  
-**Events:** 2 dated, 2024-08-01 → 2024-09-26 · **Researched:** 2026-09-04 · confidence: medium
+**Last event:** 2024-09-26 · 2 dated since 2024-08-01 · **Researched:** 2026-09-04 · confidence: medium
 
 ## What it is
 
-ExAvatar — a research pipeline for graphics and avatar practitioners who need body, hand, and facial-expression control from a single-person monocular phone video, rather than X-Avatar’s 3D-scan/RGB-D input. — fits SMPL-X and FLAME to the capture; — trains a 3D Gaussian avatar; — renders novel body and hand poses, facial expressions, and viewpoints. Measure and limits: the project demonstrates a roughly 10-second neutral-pose phone scan; unseen mouth interiors, palm surfaces, and dynamic clothing can fail. Verdict: use it for controlled offline avatar research when the SMPL-X fitting stack is acceptable; do not use it where clothing deformation or unseen anatomy must be reliable.
+ExAvatar is a research pipeline for graphics and avatar practitioners who need body, hand, and facial-expression control from a single-person monocular phone video instead of X-Avatar’s 3D-scan/RGB-D input.
+
+- SMPL-X and FLAME fitting: fits to the capture.
+- 3D Gaussian avatar: trains from the fitted capture.
+- View synthesis: renders novel body and hand poses, facial expressions, and viewpoints.
+
+The project demonstrates a roughly 10-second neutral-pose phone scan. Unseen mouth interiors, palm surfaces, and dynamic clothing can fail. We use it for controlled offline avatar research when the SMPL-X fitting stack is acceptable. We do not use it where clothing deformation or unseen anatomy must be reliable.
 
 ## Development line
 
-- **2024-08-01 — ExAvatar project website shared.** On 2024-08-01, ExAvatar was shared through its project website. The dated link provides a public project reference and marks an externally visible step in the project's development history.
-- **2024-09-26 — ExAvatar release repository shared.** On 2024-09-26, ExAvatar was shared with a dedicated GitHub release repository. The dated repository link is a material public development step because it provides a release-oriented source beyond the earlier project website.
+- **2024-08-01 — ExAvatar project website shared.** On 2024-08-01, ExAvatar was shared through its project website as a public project reference.
+- **2024-09-26 — ExAvatar release repository shared.** On 2024-09-26, ExAvatar published a dedicated GitHub release repository to provide a release-oriented source beyond the earlier project website.
 
 ## What changed
 
-2024-08-01 — ExAvatar was presented as an ECCV 2024 method combining SMPL-X with 3D Gaussian Splatting to make a controllable body, hand, and face avatar from a short phone scan. 2024-09-26 — ExAvatar_RELEASE made the official PyTorch reimplementation available with public assets and documented fitting, training, testing, and animation paths. Found today (2026-09-04) — the official repository and documentation remain public, but GitHub lists no packaged releases or release notes; reproducible use should record a chosen commit (inference).
+2024-08-01 — ExAvatar appeared as an ECCV 2024 method combining SMPL-X with 3D Gaussian Splatting to make a controllable body, hand, and face avatar from a short phone scan.
+
+2024-09-26 — ExAvatar_RELEASE made the official PyTorch reimplementation available with public assets and documented fitting, training, testing, and animation paths.
+
+2026-09-04 — The official repository and documentation remain public, but GitHub lists no packaged releases or release notes. Reproducible use should record a chosen commit.
 
 ## How to use this
 
-As of 2024-09-26, practitioners should consult the ExAvatar release repository for release-oriented project materials, rather than relying only on the project website shared on 2024-08-01.
+As of 2024-09-26, consult the ExAvatar release repository for release-oriented project materials rather than relying only on the project website shared on 2024-08-01.
 
 1. Create the Conda environment in an ExAvatar_RELEASE checkout: `conda env create -f environment.yml`, then `conda activate exavatar`.
   — <https://github.com/mks0601/ExAvatar_RELEASE/blob/main/README.md>
@@ -53,14 +64,14 @@ As of 2024-09-26, practitioners should consult the ExAvatar release repository f
 
 ## Superseded by this
 
-- 2024-09-26 — For implementation, pre-release or project-page-only guidance is superseded by the public ExAvatar_RELEASE repository and its fitting and avatar READMEs.
+- 2024-09-26 — For implementation, the public ExAvatar_RELEASE repository and its fitting and avatar READMEs supersede pre-release or project-page-only guidance.
 
 ## Still unknown
 
-- The repository has no GitHub release package, and the reviewed sources provide no current VRAM target, training-time expectation, or supported CUDA/driver matrix.
+- The repository has no GitHub release package, and reviewed sources provide no current VRAM target, training-time expectation, or supported CUDA/driver matrix.
 - No reviewed first-party source declares ExAvatar deprecated or names an official successor.
 - No reproducible Chinese-language operating report or independent community hardware recipe was verified; the listed practices are maintainer guidance.
-- The 2024-09-26 The source permalink could not be retrieved and was not used as evidence.
+- The 2024-09-26 source permalink could not be retrieved and was not used as evidence.
 
 ## Sources
 
