@@ -1,105 +1,85 @@
 ---
-title: Textual Latent Interpolation
+title: Textual Latent Interpolation: Model-Bounded Control
+description: "Textual latent interpolation is a model-specific conditioning experiment: preserve non-target inputs, bind it to an exact encoder and adapter, sweep the requested range, and prove controllability and preservation instead of assuming semantic linearity."
 category: techniques
-tags: [interpolation, text-embeddings, continuous-control, expression-editing, latent-arithmetic, zero-shot]
+tags: [interpolation, text-embeddings, continuous-control, expression-editing, evaluation]
 ---
 
-# Textual Latent Interpolation
+# Textual Latent Interpolation: Model-Bounded Control
 
-Technique for continuous attribute control in diffusion models by interpolating between text embeddings. Enables smooth transitions between states (e.g., neutral → happy) with an intensity parameter alpha. Core mechanism behind [[PixelSmile]]'s expression control.
+Textual latent interpolation constructs a conditioning vector between two text
+encoder outputs. For embeddings `e₀` and `e₁`, a common form is
+`e(α) = (1 - α)e₀ + αe₁`. This arithmetic is well-defined; a smooth or
+semantically meaningful visual transition is not guaranteed by the arithmetic
+alone.
 
-## Principle
+The technique becomes a usable control only when a particular model,
+tokenizer, adapter, and training/evaluation setup demonstrate the requested
+behavior. It is not a universal property of text encoders or diffusion
+checkpoints.
 
-Same idea as word2vec arithmetic ("king - man + woman = queen") but in the text embedding space of a diffusion model's text encoder.
+## Bind the experiment
 
-```python
-# Direction vector in embedding space
-e_neutral = text_encoder("neutral expression")
-e_target  = text_encoder("happy expression")
-delta = e_target - e_neutral
+For a reproducible run, record:
 
-# Controlled generation at any intensity
-e_conditioned = e_neutral + alpha * delta
-# alpha=0 → neutral, alpha=1 → full expression, alpha>1 → exaggerated
-```
+- the base model, text encoder, tokenizer, adapter/checkpoint digest, and
+  runtime revision;
+- two prompts with all non-target language held constant;
+- source image, seed, edit mask, and preservation requirements where editing
+  an existing image;
+- the requested `α` range and increments; and
+- a no-interpolation control using the same model and prompt contract.
 
-## Implementation Strategies
+Changing several words, swapping an encoder, or loading a different adapter
+changes the experiment. Do not call results comparable merely because both
+runs use a number named `alpha`.
 
-### Strategy 1: All-token interpolation (PixelSmile default)
+## What to test
 
-Interpolate across ALL token positions in the embedding sequence. Simplest, works when prompts differ only in the attribute word.
+Use a small sweep across the requested range rather than selecting a single
+attractive output. Review each step for:
 
-```python
-# score_one_all method
-e_cond = (1 - alpha) * e_neutral + alpha * e_target
-# Equivalent to: e_neutral + alpha * (e_target - e_neutral)
-```
+| Question | Evidence |
+|---|---|
+| Requested control | a task-specific, predeclared annotation or review rubric |
+| Preservation | unchanged protected regions, subject traits, scene structure, and product details |
+| Monotonicity | whether the requested visual attribute changes in the intended direction over the tested range |
+| Stability | repeated seeds and nearby values do not cause abrupt unrelated edits |
+| Boundary behavior | values outside the trained/tested range are labelled exploratory, not normal controls |
 
-### Strategy 2: Tail-token interpolation
+For facial images, an expression edit is a requested visual transformation, not
+evidence of a person's real emotional state. Do not turn an interpolation
+control into an identity, health, age, or emotion classifier.
 
-Only interpolate the last N tokens (where the attribute-specific words are). Preserves the shared context tokens exactly.
+## Relationship to PixelSmile
 
-```python
-# Interpolate only last 6-7 tokens
-e_cond = e_neutral.clone()
-e_cond[:, -7:, :] = (1 - alpha) * e_neutral[:, -7:, :] + alpha * e_target[:, -7:, :]
-```
+[PixelSmile](https://github.com/Ammmob/PixelSmile) and its
+[paper](https://arxiv.org/abs/2603.25728) describe textual latent
+interpolation as part of a specific facial-expression editing system. That
+evidence supports evaluating the released PixelSmile contract; it does not
+prove that an arbitrary CLIP, Qwen, or other text encoder exposes the same
+continuous direction.
 
-### Strategy 3: Direction projection
+Keep the model's own expression vocabulary, conditioning path, and release
+status separate from a generic interpolation article. A different checkpoint
+requires its own controls, data boundary, and evaluation.
 
-Compute the delta, project it to a subspace, apply scaled:
+## Release boundary
 
-```python
-delta = e_target - e_neutral
-delta_norm = delta / delta.norm()  # unit direction
-e_cond = e_neutral + alpha * magnitude * delta_norm
-```
+Do not promote interpolation to a product slider until the tested model can:
 
-## Multi-Attribute Blending
+1. reproduce the selected range from a pinned configuration;
+2. preserve the protected attributes defined for the task;
+3. surface the source, adapter, value, and result for review; and
+4. fail visibly when the requested control is unsupported or outside its
+   validated range.
 
-Extend to pairwise combinations (PixelSmile's expression blending):
+An output may be visually plausible while still changing unrelated content.
+That is a failed preservation result, not proof that the embedding path is
+useful.
 
-```python
-e_angry = text_encoder("angry expression")
-e_sad   = text_encoder("sad expression")
-e_neutral = text_encoder("neutral expression")
+## Related pages
 
-delta_angry = e_angry - e_neutral
-delta_sad   = e_sad - e_neutral
-
-# Blend two emotions at different intensities
-e_cond = e_neutral + 0.7 * delta_angry + 0.5 * delta_sad
-```
-
-9 of 15 basic-expression pairs produce plausible results. Failures when attributes are physiologically contradictory (conflicting muscle states).
-
-## Requirements
-
-1. **Aligned embedding space**: the text encoder must produce embeddings where linear interpolation is semantically meaningful. VLM-based encoders (**Qwen 2.5 VL**) work better than CLIP for this.
-
-2. **LoRA training with the technique**: the model must be trained to respond to interpolated embeddings. PixelSmile explicitly trains with varied alpha values — the model learns that intermediate embeddings mean intermediate expressions.
-
-3. **Prompt structure**: neutral and target prompts should be identical except for the controlled attribute. Keeps the delta clean.
-
-## Applications Beyond Expressions
-
-The technique generalizes to any attribute controllable via text:
-
-| Application | Neutral Prompt | Target Prompt | Alpha Controls |
-|-------------|---------------|---------------|----------------|
-| Expression | "neutral expression" | "happy expression" | Smile intensity |
-| Age | "young person" | "elderly person" | Apparent age |
-| Lighting | "normal lighting" | "dramatic lighting" | Light intensity |
-| Style | "photograph" | "oil painting" | Stylization degree |
-| Weather | "clear sky" | "heavy rain" | Rain intensity |
-
-## Relation to Other Techniques
-
-| Technique | Mechanism | Granularity | Training Required |
-|-----------|-----------|-------------|-------------------|
-| Textual Latent Interpolation | Embedding arithmetic | Continuous | Yes (for best results) |
-| Prompt weighting | Token-level scale factors | Discrete steps | No |
-| ControlNet | Spatial conditioning | Pixel-level | Yes (dedicated model) |
-| IP-Adapter | Image embedding injection | Per-reference | Yes (adapter) |
-
-Key advantage: zero additional parameters at inference (just different conditioning), continuous control, and composable.
+- [[PixelSmile]]
+- [[face-beautify-edit-lora]]
+- [[style-reference-ux]]

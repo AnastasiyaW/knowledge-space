@@ -1,243 +1,112 @@
 ---
-title: Temporal Tiling (Tiles as Temporal Sequence)
+title: Temporal Tiling: Research Boundary and Evaluation Plan
+description: "Temporal tiling is a model-specific research experiment for cross-tile consistency, not a direct reuse of video memory; bind the tile plan and runtime state, compare against an overlap baseline, and validate seams, composition, and cost on held-out images."
 category: techniques
-tags: [tiling, temporal-attention, tiles-as-frames, animatediff, sliding-window, context-propagation, high-resolution, nuwa-infinity, multidiffusion]
+tags: [tiling, image-generation, research, global-context, evaluation]
 aliases: ["Tiles-as-Frames", "Temporal Tile Processing"]
 ---
 
-# Temporal Tiling: Treating Image Tiles as a Temporal Sequence
+# Temporal Tiling: Research Boundary and Evaluation Plan
 
-The idea: instead of processing tiles independently (standard tiling), treat them as a **temporal sequence** where each tile knows the context of previously generated tiles — like frames in a video. This eliminates seam artifacts and maintains global coherence.
+Temporal tiling is the hypothesis that a large image can be rendered as a
+sequence of spatial tiles while carrying useful context from earlier tiles.
+The word *temporal* is an analogy: tiles occupy different locations in one
+image, not different frames of a video. Treat it as a model-specific research
+experiment until a trained model and runtime explicitly support the state that
+is being propagated.
 
-## The Problem with Standard Tiling
+## What a tiled system must preserve
 
-Standard tiled diffusion (MultiDiffusion, [[tiled-inference]]) processes tiles independently and blends overlaps by averaging. This causes:
-- Seam artifacts on smooth gradients (metal surfaces, skin)
-- Inconsistent lighting/color across tiles
-- Duplicated objects (same prompt, different tiles → same content repeated)
+Ordinary tiling can independently denoise regions and blend their overlaps.
+That is often enough for memory control, but it can produce discontinuities in
+gradients, geometry, lighting, or repeated objects. A temporal-tiling proposal
+has to improve those defects without quietly changing the image contract.
 
-## Approaches — From Simple to Full
+Record these inputs for every experiment:
 
-### Level 0: Overlap Averaging (MultiDiffusion)
+- the source image or prompt, rights boundary, seed, and checkpoint revision;
+- the tile grid, overlap, order, coordinate convention, and resize policy;
+- the exact runtime, latent representation, and any supported cache/state API;
+- protected regions and the definition of an acceptable edit; and
+- a plain overlap-only baseline generated from the same inputs.
 
-```text
-Tile A [====overlap====] Tile B
-       averaged in overlap zone
-```
-Fast, parallel, but quality limited. Averaging smears details.
+Without that record, a smoother output cannot be attributed to tile context
+rather than a changed prompt, sampler, crop, or checkpoint.
 
-### Level 1: Gradient Sync (SyncDiffusion, NeurIPS 2023)
+## Do not equate video state with image-tile state
 
-At each denoising step, compute perceptual loss between overlapping predicted images → backprop gradients → nudge tiles toward consistency. 66% preference over MultiDiffusion. No retraining. Slow (gradient computation per step).
+[SANA-Video](https://github.com/NVlabs/Sana/blob/main/docs/sana_video.md)
+uses block-wise autoregressive mechanisms for a video model. The
+[SANA repository](https://github.com/NVlabs/Sana) documents linear attention,
+image/video model families, and their own runtimes. That evidence does **not**
+make its internal state a public drop-in interface for arbitrary image tiles.
 
-### Level 2: Global + Local (DemoFusion, AccDiffusion)
+In particular, do not:
 
-Generate low-res global image first → use as structural guide for high-res tiles:
-- **DemoFusion**: skip-residual from low-res + dilated sampling for global paths
-- **AccDiffusion v2**: ControlNet from low-res + patch-content-aware prompts (avoids object duplication)
-- **FreeScale**: Scale Fusion separates self-attention into global (low-freq) and local (high-freq)
+- inject undocumented attention statistics with forward hooks;
+- reuse a video cache after changing token positions, latent layout, or model
+  revision;
+- claim that a video causal mask proves spatial seam improvement; or
+- copy a video configuration into an image pipeline without a model-specific
+  implementation and test.
 
-### Level 3: Cross-Attention to Previous Tile (IP-Adapter Pattern)
+The same caution applies to any cross-attention, adapter, or hidden-state
+handoff: it is valid only when the checkpoint was trained and evaluated with
+that conditioning path.
 
-After generating tile N, encode its latent. When generating tile N+1, inject previous tile features via cross-attention (like [[PixelSmile|IP-Adapter]]).
+## Candidate approaches and their evidence boundary
 
-~22M extra params. Fast. But only sees immediate predecessor — error accumulates.
+| Approach | What it can test | What it does not prove |
+|---|---|---|
+| Overlap and blending | memory-safe tiled inference baseline | global object consistency |
+| Low-resolution global condition | whether a supported conditioning path helps structure | that every tile model can consume the condition |
+| Trained spatial-context module | whether a named checkpoint learns cross-tile dependencies | transfer to another model, grid, or aspect ratio |
+| Video-native causal state | long-sequence behavior in the compatible video runtime | correctness for a spatial image scan |
 
-### Level 4: Temporal Attention Modules (AnimateDiff Pattern)
+Start with the smallest supported path. If an image model exposes an official
+global-condition or tiled-inference mode, bind the experiment to that model's
+own documentation. If it does not, keep the proposal in research rather than
+creating an unversioned hidden-state bridge.
 
-**Treat tiles as video frames.** Insert temporal self-attention after each spatial block:
+## Evaluation plan
 
-```bash
-Spatial layers: each tile processed independently
-                (temporal axis → batch dimension)
-                          ↓
-Temporal attention: process ACROSS tiles
-                (spatial axes → batch dimension)
-                          ↓
-Each spatial position attends to same position in all tiles
-```
+Use source-disjoint held-out images and include both smooth material and
+composition-heavy scenes. Compare each candidate with the overlap-only
+baseline under the same seed and model contract.
 
-Zero-initialized output projection → identity at start → pretrained spatial model protected.
+Evaluate three separate questions:
 
-**Pros**: bidirectional attention, learned consistency
-**Cons**: O(N^2) in number of tiles, requires training temporal modules
+1. **Boundary continuity.** Inspect overlap crops, gradients, repeated
+   textures, and color shifts at every tile edge.
+2. **Global fidelity.** Inspect duplicated objects, changed counts, altered
+   labels, product geometry, faces, and protected regions across the full
+   image.
+3. **Operational cost.** Measure peak memory, wall time, retry behavior, and
+   cache reset behavior on the actual runtime and hardware.
 
-### Level 5: Causal Temporal Attention (SANA-Video / GPDiT Pattern)
+Use metrics only where their reference and computation are defined. A seam
+score may compare an output with a known target or a controlled overlap, but it
+does not establish that generated text, identity, product attributes, or other
+facts are correct. Keep visual review and factual preservation as explicit
+release checks.
 
-Generate tiles sequentially with causal masking — each tile attends only to previously generated tiles:
+## Promotion gate
 
-```text
-Tile 0 (top-left): generated normally
-Tile 1: attends to Tile 0
-Tile 2: attends to Tiles 0, 1
-...
-```
+Call a temporal-tiling path implemented only when all of the following exist:
 
-**GPDiT variant**: each noisy tile attends to previous CLEAN tiles (already denoised). Ablating clean-clean attention saves ~50% FLOPs.
+- a versioned model/runtime interface for the propagated condition or state;
+- a reproducible configuration and source/output record;
+- held-out evidence against the overlap baseline; and
+- an owner-approved release policy for failures, protected regions, and
+  factual-detail review.
 
-**Sparse causal** (Tune-A-Video): each tile attends only to first tile + immediate neighbor. Efficient.
+Otherwise label it as an experiment. A plausible seamless image is not enough
+evidence to turn an architecture analogy into a production capability.
 
-### Level 6: NUWA-Infinity Pattern (Autoregressive Patches)
+## Sources and related pages
 
-Microsoft's system — **closest prior art** to tiles-as-sequence:
-- **Nearby Context Pool (NCP)**: caches previously generated patches as context for current patch
-- **Arbitrary Direction Controller**: learns optimal generation order
-- Global patch-level autoregressive model for inter-patch dependencies
-- Local token-level generation within each patch
-- "Render-and-optimize": each patch optimized immediately, hidden states saved as context
-
-### Level 7: Hybrid (Best of All Worlds)
-
-Combine global guidance + neighbor cross-attention:
-1. Generate low-res global image (DemoFusion)
-2. For each tile: inject global context via skip-residual AND inject neighbor tile features via MVDiffusion-style Correspondence-Aware Attention (CAA)
-3. Parallelizable (tiles depend on global + overlap, not on each other sequentially)
-
-## For [[SANA]] Specifically
-
-SANA's linear attention makes temporal tiling uniquely practical:
-
-1. **Linear complexity O(N)** — extending token sequence with neighbor tiles costs linearly, not quadratically
-2. **32× DC-AE compression** — tile latents are extremely compact (32×32 for 1024px tile)
-3. **SANA-Video already exists** — Block Causal Linear Attention with constant-memory KV cache. **Same mechanism directly applicable to tiles.**
-4. **Causal Mix-FFN** in SANA-Video caches last frame of previous block for temporal convolution — maps to last row of previous tile for spatial tiling
-
-**Minimum viable approach for SANA:**
-Extend RoPE position encoding to include 2D tile position. When generating a tile, concatenate its tokens with tokens from overlapping regions of adjacent (already generated) tiles. Linear attention handles cross-tile consistency at O(N) cost.
-
-**Full approach:**
-Port SANA-Video's Block Causal Linear Attention to 2D spatial tiling. Each tile = one "frame". KV cache stores cumulative statistics from previous tiles (O(D^2) memory regardless of tile count).
-
-### SANA BCLA Hook Implementation
-
-Hook into `SanaLinearAttn` layers to extract/inject cumulative statistics S, Z across tiles:
-
-```python
-# SANA linear attention forward:
-# O_i = phi(Q_i) @ S / (phi(Q_i) @ Z)
-# S = sum(phi(K)^T @ V)  -- shape [D, D]
-# Z = sum(phi(K)^T)       -- shape [D, 1]
-
-# Hook: before forward, inject accumulated S, Z from previous tiles
-# Hook: after forward, extract current tile's S, Z for next tile
-
-class TemporalBCLAHook:
-    def __init__(self):
-        self.S = None  # cumulative key-value statistics
-        self.Z = None  # cumulative key statistics
-    
-    def pre_forward(self, module, input):
-        if self.S is not None:
-            module._temporal_S = self.S
-            module._temporal_Z = self.Z
-    
-    def post_forward(self, module, input, output):
-        self.S = module._current_S.detach()
-        self.Z = module._current_Z.detach()
-```
-
-**RoPE fix (from SANA-Video):** the denominator must NOT use RoPE for numerical stability:
-
-```python
-# Correct: O_i = (phi(Q_i) @ S_with_rope) / (phi(Q_i) @ Z_without_rope)
-# Wrong:   O_i = (phi(Q_i) @ S_with_rope) / (phi(Q_i) @ Z_with_rope)
-```
-
-### SANA Temporal Tiling Verification Tests
-
-| Test | Method | Expected |
-|------|--------|----------|
-| Cache norm growth | `norm(S)` after each tile | Monotonic increase |
-| Perturbation | Replace S, Z with zeros | Result = independent tiles |
-| Feature similarity | Cosine sim of adjacent tiles | > 0.85 with BCLA, < 0.85 without |
-| Shuffle test | Random tile order | Worse than raster-scan |
-
-### SANA Flow Matching Bug Fixes
-
-Common bugs in `train_flowmatching.py` implementations:
-
-| Bug | Wrong | Correct |
-|-----|-------|---------|
-| Interpolation | `(1-sigma) * noise + sigma * data` | `(1-sigma) * data + sigma * noise` |
-| Target | `data - noise` | `noise - data` |
-| Model precision | FP16 | BF16 (`Sana_1600M_1024px_BF16_diffusers`) |
-| Shift | 1.0 | 3.0 |
-| Timestep sampling | Beta(1.6, 1.605) | Logit-normal(0, 1) |
-| DC-AE encode | `.latent_dist.sample()` | `.latent` (deterministic) |
-| Loss | Unweighted MSE | Sigma-weighted MSE |
-
-### SANA Temporal LoRA Training Recipe
-
-If inference-only BCLA is insufficient, train temporal awareness:
-
-```hcl
-Phase 1: Temporal LoRA only
-  Freeze: all spatial (transformer, VAE, text encoder)
-  Train: LoRA on attn.to_q/k/v/out (rank 32)
-  LR: 1e-4
-  Data: 5K+ images split into tile sequences
-  Steps: 10K
-  Loss: flow matching MSE (sigma-weighted)
-  Init: zero-init output projection (AnimateDiff technique)
-
-Phase 2: Joint fine-tune (if Phase 1 insufficient)
-  Unfreeze: all, LR: 1e-5
-
-Phase 3: High-quality polish
-  LR: 1e-6, best data only
-```
-
-**Zero-init** ensures model = pretrained SANA at step 0 (temporal output contributes nothing initially, signal gradually emerges during training).
-
-### Quality Targets
-
-| Metric | Target | Baseline (independent tiles) |
-|--------|--------|------------------------------|
-| Seam PSNR (overlap zones) | > 40 dB | ~30 dB |
-| Color consistency (Delta E) | < 2.0 | ~5-8 |
-| Gradient continuity (boundary ratio) | < 1.2 | ~2-3 |
-
-## Key Papers
-
-| Paper | Year | Key Contribution |
-|-------|------|-----------------|
-| MultiDiffusion | 2023 | Overlap averaging baseline |
-| SyncDiffusion | NeurIPS 2023 | Gradient-based sync |
-| MVDiffusion | NeurIPS 2023 | Correspondence-Aware Attention |
-| DemoFusion | CVPR 2024 | Progressive upscale + skip residual |
-| ScaleCrafter | ICLR 2024 | Re-dilation of convolutions |
-| AccDiffusion v2 | 2024 | Content-aware tile prompts + ControlNet |
-| FreeScale | ICCV 2025 | Scale Fusion, 8K generation |
-| Sliding Tile Attention | 2025 | Tile-granularity sliding window, 7× faster |
-| NUWA-Infinity | NeurIPS 2022 | Autoregressive tile generation |
-| Hierarchical Patch Diffusion | CVPR 2024 | Deep Context Fusion coarse→fine |
-| SANA-Video | ICLR 2026 | Block Causal Linear Attention for video |
-| MiraMo | TPAMI 2026 | Temporal modules for SANA linear attention (video) |
-| FramePack | 2025 | Geometric context compression |
-| AnimateDiff | 2023 | Zero-init temporal modules |
-
-## Memory Comparison
-
-| Approach | VRAM per tile | Consistency | Speed |
-|----------|-------------|-------------|-------|
-| MultiDiffusion | ~baseline | Poor | Fast (parallel) |
-| SyncDiffusion | ~1.5× | Good | Slow (gradients) |
-| DemoFusion | ~1.2× | Good | Slow (progressive) |
-| Temporal attention (all) | ~N× | Excellent | Slow (O(N^2)) |
-| Causal (sequential) | ~1.5× + KV | Very good | Medium |
-| **SANA causal linear** | ~1.2× + O(D^2) KV | Very good | **Fast (O(N))** |
-| Hybrid (global + CAA) | ~2-3× | Very good | Medium (parallel) |
-
-## Gotchas
-
-- **RoPE in SANA denominator breaks numerical stability**: when implementing BCLA for SANA, the attention denominator Z must NOT include RoPE-transformed keys. Using RoPE in both numerator and denominator causes NaN/Inf in the normalization. The numerator uses RoPE, the denominator does not.
-- **Tile order matters for causal approaches**: raster-scan (left-to-right, top-to-bottom) is the default but not always optimal. Spiral or center-out patterns may produce better results for certain subjects. NUWA-Infinity's Arbitrary Direction Controller learns optimal order, but for simpler implementations, shuffling tile order degrades quality measurably.
-- **SANA flow matching training has 7 common bugs**: wrong interpolation direction, wrong target sign, wrong precision (must be BF16), wrong shift value, wrong timestep distribution, deterministic vs stochastic DC-AE encoding, and unweighted loss. Each independently causes training failure. See the bug table above.
-
-## See Also
-
-- [[tiled-inference]] - standard tiled diffusion (overlap averaging)
-- [[SANA]] - SANA architecture and linear attention details
-- [[sana-denoiser-architecture]] - SANA as denoiser pipeline
-- [[block-causal-linear-attention]] - BCLA mechanism from SANA-Video
-- [[flow-matching]] - training objective for temporal LoRA
+- [SANA repository](https://github.com/NVlabs/Sana)
+- [SANA-Video documentation](https://github.com/NVlabs/Sana/blob/main/docs/sana_video.md)
+- [[tiled-inference]]
+- [[block-causal-linear-attention]]
+- [[sana-denoiser-architecture]]
