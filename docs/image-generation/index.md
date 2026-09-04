@@ -8,7 +8,7 @@ type: MOC
 ## Architectures
 - [[MMDiT]] - MMDiT is the Stable Diffusion 3 multimodal transformer pattern: modality-specific representations participate in joint attention; implementation APIs and LoRA target names vary by model revision.
 - [[flow-matching]] - Flow matching for diffusion models
-- [[block-causal-linear-attention]] - Block causal linear attention mechanism
+- [[block-causal-linear-attention]] - Block causal linear attention is SANA-Video's trained long-video mechanism with a fixed-size cumulative attention state; it is not a generic plug-in for arbitrary image tiling or DiTs.
 - [[DC-AE]] - Use DC-AE only with a diffusion model and latent contract it was trained for; high compression reduces latent-token work but does not make it a drop-in VAE replacement.
 - [[SANA]] - SANA architecture
 - [[sana-denoiser-architecture]] - SANA denoiser design
@@ -23,7 +23,7 @@ type: MOC
 ## Training & Fine-tuning
 - [[diffusion-lora-training]] - LoRA training for diffusion models
 - [[lora-fine-tuning-for-editing-models]] - LoRA fine-tuning for editing models
-- [[Text-to-LoRA]] - Text-to-LoRA generation
+- [[Text-to-LoRA]] - Text-to-LoRA is a Sakana AI hypernetwork that creates task adapters for documented LLM target families from textual task descriptions; it is not a drop-in generator for diffusion-model LoRAs.
 - [[paired-training-for-restoration]] - Paired training for image restoration
 - [[rights-first-text-to-mask-training]] - Rights-aware dataset contracts for grounding, masks, alpha, and multilingual queries
 
@@ -35,7 +35,7 @@ type: MOC
 - [[textual-latent-interpolation]] - Textual latent interpolation
 
 ## Editing & Restoration
-- [[Step1X-Edit]] - Step1X-Edit model
+- [[Step1X-Edit]] - Step1X-Edit is a StepFun multimodal image-editing family with release-specific pipelines; pair each checkpoint with its documented Diffusers branch and verify model and artifact terms independently.
 - [ACE++](ACE++.md) - ACE++ provides reference-driven image creation and editing through task-specific LoRA workflows and a general FFT model; use the published base-model pairing and verify its terms.
 - [[LaMa]] - LaMa is a Fourier-convolution inpainting model for large masks and resolution generalization; use it with a compatible checkpoint and test texture continuity separately from semantic object restoration.
 - [[image-restoration-survey]] - Image restoration survey
@@ -48,7 +48,7 @@ type: MOC
 ## Specialized Models
 - [[Calligrapher]] - Calligrapher customizes text imagery from style references through FLUX.1-Fill-dev, SigLIP, masks, and project weights; treat typography accuracy and licensing as separate acceptance checks.
 - [[PixelSmile]] - PixelSmile model
-- [[X-Dub]] - X-Dub model
+- [[X-Dub]] - X-Dub is a public Wan2.2-TI2V-5B-based visual-dubbing release; validate single-person cropping, identity, temporal stability, audio rights, and model terms on every target video.
 - [[FLAIR]] - FLAIR is a training-free flow-based posterior-sampling framework for inverse imaging; use its published configuration and verify fidelity, observed-data consistency, and base-model terms on the target task.
 - [[MACRO]] - MACRO is a structured multi-reference dataset, benchmark, and set of model-specific fine-tuning assets; validate the compatible base model and artifact terms before deployment.
 - [[MARBLE]] - MARBLE performs material transfer, blending, and parametric material edits through CLIP-space controls over a pretrained image generator; validate object geometry, illumination, and artifact licenses for each workflow.
@@ -60,7 +60,7 @@ type: MOC
 
 ## Additional References
 
-- [[anatomy-correction-diffusion]] - Comprehensive guide to detecting and fixing anatomy mutations (hands, fingers, limbs) in FLUX Klein
+- [[anatomy-correction-diffusion]] - Anatomy correction is a diagnose-mask-condition-inpaint workflow; use geometry-aware research methods and model-matched editing tools, then visually verify every edited hand or limb against the source.
 - [[color-correction-by-numbers]] - Deterministic color correction using measurable channel targets rather than perceptual judgment
 - [[color-space-and-gamma-reference]] - Practical reference for color management in video/photo processing pipelines
 - [[color-theory-for-ml]] - Applied color theory for diffusion model training, color correction, and palette control
