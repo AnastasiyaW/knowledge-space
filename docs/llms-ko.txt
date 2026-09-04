@@ -1,6 +1,6 @@
 # 종합 기술 지식 베이스 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 902+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 903+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -663,6 +663,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Suno — Product development and industry relationships](https://happyin.space/organizations/suno/): **Development line:** `organization:suno` · thread `product-development-and-industry-relationships`
 - [Tencent](https://happyin.space/organizations/tencent/): **Development line:** `organization:tencent` · thread `ai-research-releases`
 - [xAI — Grok model development](https://happyin.space/organizations/xai/): **Development line:** `organization:xai` · thread `grok-model-development`
+- [XLabs AI — FLUX conditioning and ComfyUI integrations](https://happyin.space/organizations/xlabs-ai/): **Development line:** `organization:xlabs-ai` · thread `flux-conditioning-and-comfyui-integrations`
 - [Yandex](https://happyin.space/organizations/yandex/): **Development line:** `organization:yandex` · thread `yandex-ai-products`
 
 ## PHP
