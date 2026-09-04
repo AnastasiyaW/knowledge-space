@@ -1,66 +1,79 @@
 ---
-title: Meta — Meta AI
+title: Meta
 category: organizations
+date: 2023-09-28
 tags: [meta, meta-ai, meta-ai-avatars, meta_ai_video_ads, organization, streamdit]
 aliases: ["Meta"]
 ---
 
-# Meta — Meta AI
+# Meta
 
 **Development line:** `organization:meta` · thread `meta-ai`  
-**Events:** 1 dated, 2023-09-28 → 2023-09-28 · **Researched:** 2026-09-03 · confidence: medium
+**Last event:** 2023-09-28 · 1 dated since 2023-09-28 · **Researched:** 2026-09-04 · confidence: medium
 
 ## What it is
 
-Meta — a social-platform company whose practical AI surface is Meta AI for people already using WhatsApp, Instagram, Facebook, and Messenger; it competes for assistant use with ChatGPT. - Meta AI: text, voice, image, and selected file-based assistance. - Muse Image: image generation and editing where it has rolled out. - Movie Gen and StreamDiT: media-generation research, not a general user endpoint. Limit: compute-heavy features can have usage caps, and country and app availability varies. Verdict: use Meta AI for assisted drafting and image ideation; do not make unreleased video work a production dependency.
+Meta embeds Meta AI across WhatsApp, Instagram, Facebook, and Messenger to compete directly with ChatGPT.
+
+- Meta AI: text, voice, image, and file assistance.
+- Muse Image: image generation and editing where rolled out.
+- Movie Gen and StreamDiT: media-generation research models rather than user endpoints.
 
 ## Development line
 
-- **2023-09-28 — Meta announced an AI assistant and AI characters across consumer apps.** On 2023-09-28, Meta announced an AI assistant alongside character-based AI experiences for WhatsApp and Instagram. This was a product-development step that put generative-AI interaction into Meta’s consumer communication surfaces.
+- **2023-09-28 — Meta announced an AI assistant and AI characters across consumer apps.** On 2023-09-28, Meta added an AI assistant and character bots to WhatsApp and Instagram. This step put generative AI into its consumer messaging surfaces.
 
 ## What changed
 
-Meta — moved from a US beta assistant and themed AI characters to a cross-app assistant powered by Muse Spark; video progress remains separate from a general release. - 2023-09-28 — Meta introduced Meta AI in US beta for WhatsApp, Messenger, and Instagram, plus 28 AI characters and an early image-generation flow. - 2023-10-12 — no retrievable evidence establishes that the avatar mention was a distinct rollout or a feature that remains available today. - 2024-10-09 — found today: the nearest verified official change is Movie Gen, announced October 4 as research for text-to-video, personalised video, editing, and audio rather than a released advertising workflow. - 2025-07-09 — StreamDiT, from Meta and UC Berkeley authors, reported a distilled 4B streaming video model at 16 FPS and 512p on one H100; its 30B variant was not real-time on one H100. - 2026-04-08 — found today: Meta said Muse Spark powers Meta AI on the app and meta.ai, with wider product rollout staged over time. - 2026-06-19 — a secondary report described disruption in Meta's Applied AI unit; it is an organisational report, not a product release or usage instruction. - 2026-07-07 — found today: Muse Image became available in Meta AI and meta.ai, while Muse Video remained announced as coming soon.
+Meta moved from a US beta with themed characters to a cross-app assistant running on Muse Spark. Video tools remain unreleased research.
+
+- 2023-09-28 — Meta released Meta AI in US beta for WhatsApp, Messenger, and Instagram, with 28 AI characters and image generation.
+- 2023-10-12 — No surviving records confirm whether the avatar experiment rolled out separately or still exists today.
+- 2024-10-09 — Meta announced Movie Gen research on October 4 for text-to-video, personalised video, editing, and audio, not an ad workflow.
+- 2025-07-09 — StreamDiT authors from Meta and UC Berkeley showed a distilled 4B video model at 16 FPS and 512p on one H100. Its 30B version was not real-time on one H100.
+- 2026-04-08 — Meta announced that Muse Spark powers Meta AI in the app and on meta.ai, with broader rollout staged over time.
+- 2026-06-19 — A report described disruption in Meta's Applied AI unit, covering internal team changes rather than a product release.
+- 2026-07-07 — Muse Image launched inside Meta AI and meta.ai, while Muse Video remained marked as coming soon.
 
 ## How to use this
 
-From 2023-09-28, practitioners should evaluate Meta AI as an embedded capability in its messaging and social products, testing the relevant in-app surfaces rather than treating it as a standalone assistant.
+From 2023-09-28, we evaluate Meta AI inside the messaging and social apps rather than as a standalone tool. Test each in-app surface directly.
 
-1. Open Meta AI at meta.ai, in the Meta AI app, or through a direct Meta AI chat in WhatsApp, Instagram, Facebook, or Messenger.
+1. Open Meta AI on meta.ai, in the Meta AI app, or in a chat on WhatsApp, Instagram, Facebook, or Messenger.
   — <https://ai.meta.com/meta-ai/assistant/>
-2. Give one bounded task with the needed context and desired format, then refine it with follow-up prompts in the same conversation.
+2. Send one bounded task with necessary context and format, then refine the answer with follow-up prompts.
   — <https://ai.meta.com/learn/ai-basics/how-to-use-meta-ai/>
-3. For image work, supply the reference assets and iterate with Muse Image where the feature is offered; confirm availability in the current app or web UI.
+3. Provide reference images and iterate with Muse Image where available, checking your local app or web interface.
   — <https://ai.meta.com/blog/introducing-muse-image-muse-video-msl/>
-4. For a sensitive conversation, use Incognito Chat only if it is visible in WhatsApp or the Meta AI app; it is a staged rollout rather than a universal setting.
+4. Use Incognito Chat for sensitive queries only when visible in WhatsApp or the app, since rollout is staged.
   — <https://about.fb.com/news/2026/05/incognito-chat-whatsapp-meta-ai/>
-5. Use another production video tool until Meta releases Muse Video; the current official status is still coming soon.
+5. Pick an alternative production video tool until Meta ships Muse Video, which remains marked as coming soon.
   — <https://ai.meta.com/blog/introducing-muse-image-muse-video-msl/>
 
 ## Best practices
 
-- Specify audience, goal, output format, and constraints; keep one objective per prompt.
+- State audience, goal, format, and limits clearly, keeping one goal per prompt.
   — <https://ai.meta.com/learn/ai-basics/how-to-use-meta-ai/>
-- Treat outputs as drafts and independently verify facts, dates, figures, and technical claims before publishing or deciding.
+- Treat every response as a draft and verify facts, dates, and numbers before publishing.
   — <https://ai.meta.com/learn/ai-for-business/how-to-create-an-article-with-ai/>
-- Use the response rating and focused follow-ups to correct relevance, accuracy, tone, or repetition instead of restarting broadly.
+- Rate answers and send targeted follow-up prompts to fix tone or mistakes instead of restarting the chat.
   — <https://ai.meta.com/learn/ai-basics/how-to-use-meta-ai/>
-- Separate released Meta AI and Muse Image workflows from research or preview work; do not commit a delivery plan to Movie Gen, StreamDiT, or unreleased Muse Video.
+- Build workflows only on released Meta AI and Muse Image features. Do not plan delivery around Movie Gen, StreamDiT, or unreleased Muse Video.
   — <https://ai.meta.com/blog/introducing-muse-image-muse-video-msl/>
 
 ## Superseded by this
 
-- 2023-09-28 US-only beta and the @MetaAI /imagine entry pattern are no longer the main access guidance; use the current web, app, and in-app Meta AI routes, while still checking local availability.
-- 2023-09-28 character and social-profile framing is no longer the practical description of the product; current documentation centers the general Meta AI assistant and Muse Spark.
-- 2024-10-04 Movie Gen as an anticipated video product is obsolete as planning guidance: Muse Image is released, but Muse Video remains previewed and coming soon rather than a general video-production endpoint.
+- The 2023-09-28 US beta and the @MetaAI /imagine command are obsolete. Use the web, mobile app, or in-app chats.
+- The 2023-09-28 character profiles are no longer the focus. Current documentation centers the general Meta AI assistant and Muse Spark.
+- The 2024-10-04 Movie Gen preview cannot support delivery plans. Muse Image is live, but Muse Video remains previewed and coming soon.
 
 ## Still unknown
 
-- The 2023-10-12 X post could not be retrieved, so it may describe a distinct avatar experiment but cannot support a product claim.
-- No source URL survived for the 2024-10-09 video-ad item; Movie Gen is a nearby official research change found today, not proof of the original item's exact content.
-- This history joins a consumer assistant, media-model research, and organisational reporting. They are related Meta activities, not one deployable product surface.
-- Feature, country, and subscription availability must be checked in the current Meta AI interface; the sources do not establish a universal rollout.
-- The June 2026 Applied AI claims were not independently corroborated beyond describing The Next Web article as a secondary report.
+- We could not retrieve the 2023-10-12 post, so avatar experiments cannot support product claims.
+- No source URL survived for the 2024-10-09 video ad note. Movie Gen research does not verify that original item.
+- These records combine consumer chat, research models, and team reporting rather than one unified product.
+- Regional and tier availability remains unconfirmed globally. Check feature access directly in the app.
+- We have no independent confirmation for the June 2026 Applied AI unit claims beyond the secondary report in The Next Web.
 
 ## Sources
 
@@ -82,5 +95,5 @@ From 2023-09-28, practitioners should evaluate Meta AI as an embedded capability
 ## Agent brief {#agent-brief}
 
 - **Subject:** `organization:meta`, thread `meta-ai`, 1 dated events 2023-09-28 → 2023-09-28.
-- **Practical note:** From 2023-09-28, practitioners should evaluate Meta AI as an embedded capability in its messaging and social products, testing the relevant in-app surfaces rather than treating it as a standalone assistant.
-- **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
+- **Practical note:** From 2023-09-28, test Meta AI as an in-app feature across Meta's social products rather than as a standalone assistant.
+- **Confidence:** medium. Dated supersedes above govern what is obsolete.
