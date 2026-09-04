@@ -1,6 +1,6 @@
 # Umfassende technische Wissensbasis - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 891+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 892+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -641,6 +641,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Disney Research — Interactive Generative Motion Editing](https://happyin.space/organizations/disney-research/): **Development line:** `organization:disney-research` · thread `interactive-generative-motion-editing`
 - [ElevenLabs — Voice Platform Development](https://happyin.space/organizations/elevenlabs/): **Development line:** `organization:elevenlabs` · thread `voice-platform-development`
 - [fal.ai — Model platform expansion](https://happyin.space/organizations/fal-ai/): **Development line:** `organization:fal-ai` · thread `model-platform-expansion`
+- [Framestore](https://happyin.space/organizations/framestore/): **Development line:** `organization:framestore` · thread `framestore-production-technology`
 - [Google — Google AI Development](https://happyin.space/organizations/google/): **Development line:** `organization:google` · thread `google-ai-development`
 - [Hedra — Hedra product development](https://happyin.space/organizations/hedra/): **Development line:** `organization:hedra` · thread `hedra-product-development`
 - [HeyGen](https://happyin.space/organizations/heygen/): **Development line:** `organization:heygen` · thread `avatar-platform-and-developer-integration`
