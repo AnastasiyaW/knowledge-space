@@ -1,81 +1,61 @@
 ---
-title: Step1X-Edit
+title: "Step1X-Edit: Release-Specific Image Editing"
+description: "Step1X-Edit is a StepFun multimodal image-editing family with release-specific pipelines; pair each checkpoint with its documented Diffusers branch and verify model and artifact terms independently."
 category: models
-tags: [image-editing, step1x, stepfun, mmdit, flow-matching, qwen-vl, open-source, apache-2.0]
-aliases: ["Qwen-Image-Edit", "Qwen-Image-Edit-2511"]
+tags: [image-editing, step1x, stepfun, multimodal, diffusion, lora, gedit-bench]
+aliases: ["Step1X-Edit"]
 ---
 
-# Step1X-Edit
+# Step1X-Edit: Release-Specific Image Editing
 
-Open-source image editing foundation model by **StepFun** (Shanghai). De facto standard open backbone for instruction-based image editing (2025-2026). Qwen-Image-Edit-2511 by Alibaba/Qwen is a production-tuned variant of this architecture.
+**Scope checked: 2026-09-04.** Step1X-Edit is StepFun's open image-editing research and model family. Its published approach uses a multimodal language model to process a reference image and editing instruction, then couples the resulting latent representation to a diffusion image decoder. It is an image-editing stack, not a generic compatibility layer for every image model.
 
-## Architecture
+## Treat Each Release as Its Own Integration Target
 
-```text
-Input Image → VAE Encode → image latent (z)
-Text Instruction → Qwen 2.5 VL → text embeddings (c)
-                         ↓
-              MMDiT Transformer Blocks
-         (joint attention over z and c)
-                         ↓
-              VAE Decode → edited image
-```
+The current upstream repository documents the original model alongside newer `v1p1` and `v1p2` releases. The local runtime is explicitly release-dependent: upstream names different pipeline classes and different Diffusers branches for different checkpoints. Select the model card, repository revision, dependency branch, and example for one release as a single compatibility unit.
 
-Three core components:
+Do not infer that another vendor's image-editing model is a Step1X-Edit variant merely because both use multimodal conditioning or diffusion. In particular, Qwen image-editing releases are separate artifacts with their own pipelines and terms.
 
-| Component | Implementation | Trainable? | Size |
-|-----------|---------------|------------|------|
-| Text Encoder | **Qwen 2.5 VL** (vision-language model) | Yes (usually) | ~7B params |
-| Transformer | [[MMDiT]] with joint attention | Yes / LoRA | ~20B+ params |
-| VAE | Custom autoencoder (RealRestorerAutoencoderKL variant) | Usually frozen | ~200M params |
+## What the Official Project Provides
 
-Total weights: **~40-60 GB** in bf16 depending on variant.
+The official repository supplies:
 
-### Why Qwen VL instead of CLIP
+- local inference examples for documented releases;
+- model artifacts and a GEdit-Bench evaluation resource;
+- fine-tuning scripts and an example LoRA path for the original model;
+- optional performance integrations and community integrations, each with its own compatibility boundary.
 
-Previous editing models (InstructPix2Pix, MagicBrush) used CLIP as text encoder. CLIP encodes text only — it cannot "see" the input image at encoding time. Qwen 2.5 VL is a full vision-language model:
-- Processes both the text instruction AND the input image
-- Understands spatial relationships ("move the cup to the left")
-- Reasons about what to change vs what to preserve
-- Generates richer conditional embeddings
+The project also distinguishes a newer reasoning-oriented release from earlier variants. That makes a version-free inference recipe unsafe: a pipeline that imports or runs for one checkpoint is not evidence that it is correct for another.
 
-This is the key architectural innovation that separates Step1X-Edit generation models from prior approaches.
+## Safe Integration Contract
 
-### Scheduler
+1. Choose one exact Step1X-Edit checkpoint and read its current model card and matching upstream example.
+2. Build the environment from the corresponding documented dependency branch; record the repository commit and package versions.
+3. Start with a small, rights-cleared image and an explicit edit instruction. Preserve the untouched input.
+4. Retain the checkpoint digest, pipeline class, prompt, seed where available, input/output digests, and any enabled optional module.
+5. Test a held-out fixture for both the requested change and the features that must remain unchanged.
 
-Uses [[flow-matching]] instead of DDPM/DDIM. Default inference: 28 steps, guidance_scale 3.0. Faster convergence, more stable at low step counts.
+When fine-tuning or loading a LoRA, keep it tied to the exact base release, target modules, and loading path used to produce it. A successful file load is not proof of semantic compatibility or preservation quality.
 
-## Variants
+## Evaluate Editing, Not a Demo Claim
 
-| Model | Maintainer | License | Notes |
-|-------|-----------|---------|-------|
-| Step1X-Edit | StepFun | Apache 2.0 | Original |
-| Qwen-Image-Edit-2511 | Alibaba/Qwen | Apache 2.0 | Production variant, DiffSynth-Studio framework |
-| RealRestorerTransformer2DModel | RealRestorer team | Academic only (weights) | Modified for restoration |
+Use separate acceptance checks:
 
-## Inference
+| Question | Evidence |
+|---|---|
+| Did the requested edit occur? | task-specific visual review against the instruction |
+| Did protected content remain intact? | side-by-side comparison of faces, text, logos, geometry, and product details |
+| Is the result reproducible? | immutable environment, model revision, prompt, seed, and input/output receipt |
+| Does a benchmark apply? | the declared GEdit-Bench protocol, not a score copied to another task |
 
-```python
-from diffsynth import QwenImageEditPlusPipeline
-pipe = QwenImageEditPlusPipeline.from_pretrained("Qwen/Qwen-Image-Edit-2511", torch_dtype=torch.bfloat16)
-pipe.enable_model_cpu_offload()
-result = pipe(prompt="change the background to a beach", image=input_image, num_inference_steps=28, guidance_scale=3.0)
-```
+For source-faithful work such as product identity, documents, evidence, or measurements, an edited image is a derived artifact. Keep the original as the authority.
 
-**VRAM**: ~40 GB at 1024x1024 in bf16. With CPU offload — fits on 24 GB but slower. FP8 quantization → ~20-30 GB.
+## Terms and Deployment Boundary
 
-## Downstream Models Built on This Architecture
+The repository license, checkpoint license, hosted service terms, base dependencies, training data, and input-image rights can differ. Confirm the current terms for every artifact actually used before commercial or hosted deployment; no family-level label is a substitute for that check.
 
-- [[RealRestorer]] — image restoration (9 degradation types)
-- [[PixelSmile]] — facial expression editing (LoRA rank 64, 850 MB)
-- [[MACRO]] Qwen variant — multi-reference generation (full fine-tune)
+## References
 
-## Commercial Use
-
-**Apache 2.0** — fully permitted for commercial use. Both Step1X-Edit and Qwen-Image-Edit-2511. This makes it the go-to backbone for commercial editing products, unlike models with NC restrictions.
-
-## Key Links
-
-- Step1X-Edit GitHub: github.com/stepfun-ai/Step1X-Edit
-- Qwen-Image-Edit HF: huggingface.co/Qwen/Qwen-Image-Edit-2511
-- Framework: DiffSynth-Studio (github.com/modelscope/DiffSynth-Studio)
+- [Step1X-Edit official repository](https://github.com/stepfun-ai/Step1X-Edit)
+- [Step1X-Edit technical report](https://arxiv.org/abs/2504.17761)
+- [Step1X-Edit model collection](https://huggingface.co/stepfun-ai/Step1X-Edit)

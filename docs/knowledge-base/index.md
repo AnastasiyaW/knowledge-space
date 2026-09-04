@@ -781,8 +781,8 @@ Each domain below is collapsible - expand to see the article list. Articles are 
 
     **More**
 
-    - [[anatomy-correction-diffusion]] - Comprehensive guide to detecting and fixing anatomy mutations (hands, fingers, limbs) in FLUX Klein
-    - [[block-causal-linear-attention]] - Temporal extension of SANA's linear attention for sequential processing (video frames or image
+    - [[anatomy-correction-diffusion]] - Anatomy correction is a diagnose-mask-condition-inpaint workflow; use geometry-aware research methods and model-matched editing tools, then visually verify every edited hand or limb against the source.
+    - [[block-causal-linear-attention]] - Block causal linear attention is SANA-Video's trained long-video mechanism with a fixed-size cumulative attention state; it is not a generic plug-in for arbitrary image tiling or DiTs.
     - [[Calligrapher]] - Calligrapher customizes text imagery from style references through FLUX.1-Fill-dev, SigLIP, masks, and project weights; treat typography accuracy and licensing as separate acceptance checks.
     - [[color-checker-and-white-balance]] - Automated color calibration using color checker cards and white balance correction models
     - [[color-correction-by-numbers]] - Deterministic color correction using measurable channel targets rather than perceptual judgment
@@ -836,17 +836,17 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[segmentation-dataset-preparation]] - Reference for binary semantic segmentation datasets with 0.1-5% positive-pixel coverage (small
     - [[skin-retouch-pipeline]] - Automated blemish detection and removal pipeline for photos
     - [[spatialedit-16b-geometric-control-for-diffusion-based-image-editing]] - SpatialEdit-16B is a multimodal diffusion transformer (MM-DiT) framework designed for precise
-    - [[Step1X-Edit]] - Open-source image editing foundation model by StepFun (Shanghai)
+    - [[Step1X-Edit]] - Step1X-Edit is a StepFun multimodal image-editing family with release-specific pipelines; pair each checkpoint with its documented Diffusers branch and verify model and artifact terms independently.
     - [[style-reference-ux]] - Comparative analysis of style reference workflows across major AI image generation products
     - [[synthetic-dataset-pipeline]] - Pipeline for building high-quality annotated datasets for YOLO + SAM fine-tuning from raw image
     - [[temporal-tiling]] - The idea: instead of processing tiles independently (standard tiling), treat them as a temporal
-    - [[Text-to-LoRA]] - Hypernetwork that generates LoRA adapter weights from a natural language task description in a
+    - [[Text-to-LoRA]] - Text-to-LoRA is a Sakana AI hypernetwork that creates task adapters for documented LLM target families from textual task descriptions; it is not a drop-in generator for diffusion-model LoRAs.
     - [[textual-latent-interpolation]] - Technique for continuous attribute control in diffusion models by interpolating between text
     - [[tile-position-encoding]] - Methods for injecting spatial position information into patch/tile-based image models, with
     - [[upscaler-evaluation]] - Practical comparison of image upscalers for LoRA training data preparation and production pipelines
     - [[videomama-diffusion-based-video-matting]] - VideoMaMa is a video matting framework that converts coarse segmentation masks into pixel-perfect
     - [[watermark-removal]] - Removing visible logos, text overlays, and branding from images
-    - [[X-Dub]] - Visual dubbing model that edits lip movements in video to match new audio, preserving identity and
+    - [[X-Dub]] - X-Dub is a public Wan2.2-TI2V-5B-based visual-dubbing release; validate single-person cropping, identity, temporal stability, audio rights, and model terms on every target video.
 
 ---
 
