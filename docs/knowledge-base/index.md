@@ -771,10 +771,10 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[ATI]] - ATI adds trajectory-conditioned object, local, and camera motion control to its Wan2.1-based image-to-video workflow; preserve the published model, checkpoint, and localhost editor boundaries.
     - [[flow-matching]] - Flow-based generative models
     - [[flux-kontext]] - Context-aware image generation
-    - [[LaMa]] - Large mask inpainting
+    - [[LaMa]] - LaMa is a Fourier-convolution inpainting model for large masks and resolution generalization; use it with a compatible checkpoint and test texture continuity separately from semantic object restoration.
     - [[lora-fine-tuning-for-editing-models]] - LoRA training for image editing
-    - [[MARBLE]] - Multi-aspect image restoration
-    - [[MMDiT]] - Multi-modal diffusion transformer
+    - [[MARBLE]] - MARBLE performs material transfer, blending, and parametric material edits through CLIP-space controls over a pretrained image generator; validate object geometry, illumination, and artifact licenses for each workflow.
+    - [[MMDiT]] - MMDiT is the Stable Diffusion 3 multimodal transformer pattern: modality-specific representations participate in joint attention; implementation APIs and LoRA target names vary by model revision.
     - [[SANA]] - Efficient text-to-image architecture
     - [[tiled-inference]] - Memory-efficient large image generation
     - [[transformers-v5]] - HuggingFace Transformers for image gen
@@ -800,7 +800,7 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[edge-softness-and-compositing]] - Measure the edge instead of choosing it: 10-90 transition width, robust outline fitting
     - [[face-beautify-edit-lora]] - Training before/after edit LoRAs on FLUX Klein 9B and Qwen-Image-Edit for facial correction
     - [[face-detection-filtering-pipeline]] - Reusable pipeline for filtering image collections by face presence, quality, and type using YOLO
-    - [[FLAIR]] - Training-free variational posterior sampling framework for image restoration
+    - [[FLAIR]] - FLAIR is a training-free flow-based posterior-sampling framework for inverse imaging; use its published configuration and verify fidelity, observed-data consistency, and base-model terms on the target task.
     - [[flowinone-unified-multimodal-generation-via-image-flow]] - FlowInOne is a multimodal generation framework that treats all inputs—text, classes, bounding
     - [[flux-attention-manipulation]] - Techniques for manipulating, analyzing, and exploiting the joint self-attention mechanism in
     - [[flux-klein-9b-architecture]] - Deep reference for the FLUX.2 Klein 9B model internals: transformer structure, text encoding, VAE
@@ -828,7 +828,7 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[PixelSmile]] - LoRA adapter for Step1X-Edit that enables fine-grained facial expression editing with continuous
     - [[plugin-inference-ux]] - Patterns for making slow ML inference (10-30s per operation) feel fast inside desktop creative
     - [[qwen-image]] - Version-aware reference for Qwen-Image generation, editing, 2511/2512 checkpoints, and the separate
-    - [[RealRestorer]] - Image restoration model built on Step1X-Edit
+    - [[RealRestorer]] - RealRestorer is a large image-editing-model restoration workflow for nine documented degradation types; use the repository's patched local runtime and evaluate fidelity separately from benchmark scores.
     - [[recurrent-depth-transformer]] - Looped transformer architecture that reuses a single block T times to simulate multi-step reasoning
     - [[retouch-patch-harmonization]] - A training-data design for defect inpainting that preserves the clean target image colour domain
     - [[rights-first-text-to-mask-training]] - A lineage-controlled training and evaluation contract for Russian text requests, visual grounding

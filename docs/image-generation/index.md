@@ -6,7 +6,7 @@ type: MOC
 # Image Generation
 
 ## Architectures
-- [[MMDiT]] - Multi-Modal Diffusion Transformer architecture
+- [[MMDiT]] - MMDiT is the Stable Diffusion 3 multimodal transformer pattern: modality-specific representations participate in joint attention; implementation APIs and LoRA target names vary by model revision.
 - [[flow-matching]] - Flow matching for diffusion models
 - [[block-causal-linear-attention]] - Block causal linear attention mechanism
 - [[DC-AE]] - Use DC-AE only with a diffusion model and latent contract it was trained for; high compression reduces latent-token work but does not make it a drop-in VAE replacement.
@@ -37,9 +37,9 @@ type: MOC
 ## Editing & Restoration
 - [[Step1X-Edit]] - Step1X-Edit model
 - [ACE++](ACE++.md) - ACE++ provides reference-driven image creation and editing through task-specific LoRA workflows and a general FFT model; use the published base-model pairing and verify its terms.
-- [[LaMa]] - Large Mask Inpainting
+- [[LaMa]] - LaMa is a Fourier-convolution inpainting model for large masks and resolution generalization; use it with a compatible checkpoint and test texture continuity separately from semantic object restoration.
 - [[image-restoration-survey]] - Image restoration survey
-- [[RealRestorer]] - RealRestorer model
+- [[RealRestorer]] - RealRestorer is a large image-editing-model restoration workflow for nine documented degradation types; use the repository's patched local runtime and evaluate fidelity separately from benchmark scores.
 - [[retouch-patch-harmonization]] - Build color-consistent defect-inpainting training pairs
 - [[perspective-calibration-for-compositing]] - Recover camera geometry before inserting or relighting objects
 - [[color-checker-and-white-balance]] - Color checker and white balance correction
@@ -49,9 +49,9 @@ type: MOC
 - [[Calligrapher]] - Calligrapher customizes text imagery from style references through FLUX.1-Fill-dev, SigLIP, masks, and project weights; treat typography accuracy and licensing as separate acceptance checks.
 - [[PixelSmile]] - PixelSmile model
 - [[X-Dub]] - X-Dub model
-- [[FLAIR]] - FLAIR model
+- [[FLAIR]] - FLAIR is a training-free flow-based posterior-sampling framework for inverse imaging; use its published configuration and verify fidelity, observed-data consistency, and base-model terms on the target task.
 - [[MACRO]] - MACRO is a structured multi-reference dataset, benchmark, and set of model-specific fine-tuning assets; validate the compatible base model and artifact terms before deployment.
-- [[MARBLE]] - MARBLE model
+- [[MARBLE]] - MARBLE performs material transfer, blending, and parametric material edits through CLIP-space controls over a pretrained image generator; validate object geometry, illumination, and artifact licenses for each workflow.
 - [[ATI]] - ATI adds trajectory-conditioned object, local, and camera motion control to its Wan2.1-based image-to-video workflow; preserve the published model, checkpoint, and localhost editor boundaries.
 - [[comfyui-sensenova-u1]] - Official SenseNova U1/U1.5 versus third-party ComfyUI wrapper
 

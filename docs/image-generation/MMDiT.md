@@ -1,139 +1,57 @@
 ---
-title: MMDiT (Multi-Modal Diffusion Transformer)
+title: "MMDiT: Multimodal Diffusion Transformer"
+description: "MMDiT is the Stable Diffusion 3 multimodal transformer pattern: modality-specific representations participate in joint attention; implementation APIs and LoRA target names vary by model revision."
 category: architectures
-tags: [mmdit, transformer, diffusion, attention, architecture, dit, joint-attention]
+tags: [mmdit, transformer, diffusion, attention, architecture, dit, joint-attention, stable-diffusion-3]
 aliases: ["Multi-Modal Diffusion Transformer", "MM-DiT"]
 ---
 
-# MMDiT (Multi-Modal Diffusion Transformer)
+# MMDiT: Multimodal Diffusion Transformer
 
-Transformer architecture for diffusion models that processes multiple modalities (text, image) through **joint attention** in shared transformer blocks. Used in SD3, FLUX, [[Step1X-Edit]], and most modern diffusion models (2024-2026).
+**Scope checked: 2026-09-04.** MMDiT is the multimodal diffusion-transformer architecture introduced with Stable Diffusion 3. It represents image and language inputs with modality-specific parameters, joins their token sequences for attention, and then continues modality-specific processing. That joint-attention boundary allows image and text representations to influence one another without treating every implementation as the same model or API.
 
-## Architecture
+## Core Design
 
-### vs Standard DiT
+The Stable Diffusion 3 paper describes MMDiT as two representation streams with separate weights whose token sequences meet at attention. This is different from treating a text encoder as a passive key/value source for a separate image-only transformer:
 
-**DiT** (Peebles & Xie, 2023): text conditioning via cross-attention (separate Q from image, K/V from text). Text and image tokens live in different attention spaces.
+| Concern | MMDiT boundary |
+|---|---|
+| representation | image and text retain modality-specific parameters |
+| attention | the streams can exchange information through joint attention |
+| denoising | the multimodal transformer predicts over encoded image latents |
+| implementation | configuration, text encoders, latent format, and block names belong to a specific model revision |
 
-**MMDiT**: text and image tokens concatenated into a single sequence, processed by the same self-attention layers. Both modalities attend to each other symmetrically.
+The architecture is relevant to Stable Diffusion 3. Other transformers may share ideas such as dual streams or joint attention, but a similar diagram or marketing label is not proof of parameter, checkpoint, or adapter compatibility.
 
-```rust
-DiT block:
-  image_tokens → self_attn(Q=img, K=img, V=img) → cross_attn(Q=img, K=text, V=text) → FFN
+## Integration Is Model-Specific
 
-MMDiT block:
-  [image_tokens; text_tokens] → self_attn(Q=all, K=all, V=all) → split → img_FFN / txt_FFN
-```
+For the current Diffusers SD3 pipeline, the MMDiT component is exposed as `SD3Transformer2DModel` alongside the VAE, text encoders, scheduler, and pipeline configuration. Those class names and loader semantics are implementation details, not a portable specification.
 
-### Key Components per Block
+Before adapting or operating an MMDiT-based model:
 
-| Component | Purpose | LoRA target? |
-|-----------|---------|-------------|
-| `to_q`, `to_k`, `to_v` | Image-stream QKV projections | Yes |
-| `add_q_proj`, `add_k_proj`, `add_v_proj` | Text-stream QKV projections | Yes |
-| `to_out.0` | Image attention output projection | Yes |
-| `to_add_out` | Text attention output projection | Yes |
-| `img_mlp` | Image-stream FFN (2 linear layers) | Yes |
-| `txt_mlp` | Text-stream FFN (2 linear layers) | Yes |
+1. pin the model, pipeline, and library revision;
+2. inspect the published configuration and state-dict/module names;
+3. use the adapter or LoRA loader intended for that exact transformer;
+4. record the text encoders, latent VAE, scheduler, precision, and prompt settings as part of the run identity;
+5. validate output and failure behavior on a small fixture before a wider render batch.
 
-Both streams share attention weights but have **separate FFN layers** — this lets the model learn modality-specific transformations while maintaining cross-modal attention.
+Do not copy a static list of `to_q` or `add_q_proj` target modules from an unrelated MMDiT-like model. Module names, projections, dual-stream layers, and supported adapter formats change between releases.
 
-### Attention Pattern
+## Performance and Editing Claims Need Measurement
 
-In joint attention, image tokens can attend to text tokens and vice versa. This creates bidirectional information flow:
-- Text informs image generation ("make it red")
-- Image informs text understanding (spatial context)
+Memory and latency depend on image-token count, text length, transformer configuration, attention implementation, precision, and hardware. Profile the exact pipeline instead of reusing a resolution/VRAM figure from another model. Likewise, joint attention can help model conditioning but does not guarantee exact text, region preservation, compositional correctness, or safe editing.
 
-For editing models like [[Step1X-Edit]], this is critical: the model needs to understand BOTH what the image currently looks like AND what the text instruction asks to change.
+For a controllable editing workflow, keep separate evidence for:
 
-## LoRA Application Pattern
+- source-image preservation;
+- requested local change;
+- prompt and typography accuracy;
+- adapter/model revision;
+- output review and permitted publication use.
 
-For fine-tuning MMDiT (as demonstrated by [[PixelSmile]]):
+## References
 
-```python
-# Standard LoRA targets for MMDiT editing models
-target_modules = [
-    "to_q", "to_k", "to_v",           # image attention
-    "add_q_proj", "add_k_proj", "add_v_proj",  # text attention
-    "to_out.0", "to_add_out",          # output projections
-    "img_mlp.net.0.proj", "img_mlp.net.2",     # image FFN
-    "txt_mlp.net.0.proj", "txt_mlp.net.2",     # text FFN
-]
-# PixelSmile: rank=64, alpha=128, dropout=0 → 850 MB LoRA
-```
-
-Targeting all projections + both FFNs gives maximum expressivity. For lighter adaptation, attention-only (skip FFN) reduces LoRA size by ~40%.
-
-## Models Using MMDiT
-
-| Model | Variant | Notes |
-|-------|---------|-------|
-| Stable Diffusion 3 | Original MMDiT | First major adoption |
-| FLUX.1 | Modified MMDiT | Adds RoPE, different conditioning |
-| [[Step1X-Edit]] | MMDiT + Qwen VL encoder | Image editing |
-| [[MACRO]] Bagel variant | MoT (Mixture of Transformers) | Multi-reference, related architecture |
-
-## Performance Characteristics
-
-- **Quadratic attention**: O(n^2) in total sequence length (image + text tokens). At 1024x1024 with VAE 8x downscale = 16384 image tokens + ~200 text tokens
-- **Flash Attention**: critical for practical inference. Most implementations require flash-attn 2.x
-- **Memory**: dominated by attention maps. Tiling/chunked attention helps for high-res
-
-## Joint Attention Decomposition
-
-The joint attention matrix decomposes into 4 quadrants:
-
-| Quadrant | Direction | Function |
-|----------|-----------|----------|
-| **I2I** | Image-to-Image | Self-attention, preserves structure/geometry |
-| **T2I** | Text-to-Image | Token-to-region alignment, PRIMARY for localization |
-| **I2T** | Image-to-Text | Feedback to text representations |
-| **T2T** | Text-to-Text | Near-identity, emphasizes boundary tokens |
-
-To extract "cross-attention-like" signals from joint attention: slice out the T2I quadrant. ConceptAttention (ICML 2025) shows that output-space projections give sharper saliency maps than raw attention weights.
-
-## Attention Manipulation Techniques
-
-### Regional Prompting
-
-**instantX Regional-Prompting-FLUX** (2411.02395): constructs attention masks controlling which image regions attend to which text prompts. Masks the T2I and I2T quadrants per region so each region only "sees" its own prompt. `base_ratio` controls base prompt influence. ComfyUI: `ComfyUI-FluxRegionAttention` (attashe).
-
-**Stitch** (2509.26644, CVPR 2025): two-phase generation. Phase 1: LLM decomposes prompt into sub-prompts + bounding boxes, each object generated independently. Phase 2: objects extracted mid-generation and stitched. >200% improvement on FLUX GenEval Position task.
-
-### Compositional Control
-
-**Enhancing MMDiT** (2411.18301): closest equivalent to Attend-and-Excite for MMDiT. Test-time optimization at early steps with 3 loss functions: Block Alignment Loss, Text Encoder Alignment Loss, Overlap Loss. Addresses subject neglect/mixing with similar subjects.
-
-**TACA** (2506.07986): temperature coefficient gamma > 1 on cross-modal Q-K interaction before softmax. Timestep-dependent: higher in early steps (layout), standard in later steps. Works with LoRA fine-tuning.
-
-### Layer-Specific Roles
-
-**FreeFlux** (2503.16153, ICCV 2025): discovered that positional vs content dependency does NOT correlate with layer depth. Categorizes edits into: position-dependent (object addition), content-similarity-dependent (non-rigid editing), region-preserved. Each type manipulates different layers.
-
-**Unraveling MMDiT Blocks** (2601.02211): semantic info in earlier blocks, finer details in later blocks. Selectively enhancing text conditions per block improves T2I-CompBench++ from 56.9% to 63.0% on SD3.5 without quality loss - free boost.
-
-### Semantic Editing
-
-**FluxSpace** (2412.09611, CVPR 2025): leverages transformer block representations for disentangled editing. Training-free, no masks needed. Works on humans, animals, cars, complex scenes.
-
-### Attention Visualization Tools
-
-- **Aperture** (nathannlu/aperture): visualize FLUX attention maps across all 52 blocks
-- **attention-map-diffusers** (wooyeolbaek): supports FLUX.1-dev, FLUX.1-schnell, SD3
-- **ConceptAttention** (2502.04320, ICML 2025): repurposes DiT output projections for SOTA zero-shot segmentation
-
-## Key Insight
-
-MMDiT's joint attention is what makes instruction-following editing possible at high quality. Cross-attention (DiT-style) creates an information bottleneck - the model can only "ask" the text about specific queries. Joint attention lets the model freely mix both signals, discovering complex relationships between "what is" and "what should be."
-
-## Gotchas
-
-- **No attention-based anatomy fix exists** for FLUX/MMDiT. All current hand/body correction is post-generation (HandCraft, RHanDS). Research gap.
-- **ComfyUI-FluxRegionAttention has memory leaks** - not optimized for production use. Monitor VRAM.
-- **Traditional cross-attention tricks don't transfer directly** - Attend-and-Excite, prompt-to-prompt etc. assume separate cross-attention layers. Must be adapted for joint attention quadrant masking.
-
-## See Also
-
-- [[flux-klein-9b-inference]] - practical inference settings
-- [[lora-fine-tuning-for-editing-models]] - LoRA targets for MMDiT
-- [[in-context-segmentation]] - ConceptAttention for segmentation
+- [Stable Diffusion 3 research paper](https://arxiv.org/abs/2403.03206)
+- [Stability AI MMDiT architecture overview](https://stability.ai/news-updates/stable-diffusion-3-research-paper)
+- [Diffusers SD3 transformer documentation](https://huggingface.co/docs/diffusers/main/en/api/models/sd3_transformer2d)
+- [Diffusers Stable Diffusion 3 pipeline documentation](https://huggingface.co/docs/diffusers/main/en/api/pipelines/stable_diffusion/stable_diffusion_3)
