@@ -7,7 +7,7 @@ type: MOC
 
 ## Architectures
 - [[MMDiT]] - MMDiT is the Stable Diffusion 3 multimodal transformer pattern: modality-specific representations participate in joint attention; implementation APIs and LoRA target names vary by model revision.
-- [[flow-matching]] - Flow matching for diffusion models
+- [[flow-matching]] - Flow matching trains a continuous vector field along a chosen probability path; scheduler, path, and inference settings are checkpoint-specific rather than universal diffusion defaults.
 - [[block-causal-linear-attention]] - Block causal linear attention is SANA-Video's trained long-video mechanism with a fixed-size cumulative attention state; it is not a generic plug-in for arbitrary image tiling or DiTs.
 - [[DC-AE]] - Use DC-AE only with a diffusion model and latent contract it was trained for; high compression reduces latent-token work but does not make it a drop-in VAE replacement.
 - [[SANA]] - SANA architecture
@@ -28,7 +28,7 @@ type: MOC
 - [[rights-first-text-to-mask-training]] - Rights-aware dataset contracts for grounding, masks, alpha, and multilingual queries
 
 ## Inference & Optimization
-- [[diffusion-inference-acceleration]] - Inference acceleration techniques
+- [[diffusion-inference-acceleration]] - Diffusion acceleration is a model-and-runtime-specific trade-off; measure warm and steady-state latency, memory, output fidelity, and reproducibility for the exact checkpoint and workflow.
 - [[tiled-inference]] - Tiled inference for high-resolution generation
 - [[temporal-tiling]] - Tiles as temporal sequence
 - [[low-vram-inference-strategies]] - Low-VRAM inference strategies
@@ -42,7 +42,7 @@ type: MOC
 - [[RealRestorer]] - RealRestorer is a large image-editing-model restoration workflow for nine documented degradation types; use the repository's patched local runtime and evaluate fidelity separately from benchmark scores.
 - [[retouch-patch-harmonization]] - Build color-consistent defect-inpainting training pairs
 - [[perspective-calibration-for-compositing]] - Recover camera geometry before inserting or relighting objects
-- [[color-checker-and-white-balance]] - Color checker and white balance correction
+- [[color-checker-and-white-balance]] - Color checker and white-balance correction requires a measured physical chart or a separately validated estimator; detector output and a generated checker are not colorimetric ground truth.
 - [[grayscale-overlay-nn-architectures]] - Neural networks for grayscale overlay prediction
 
 ## Specialized Models
@@ -69,8 +69,8 @@ type: MOC
 - [[denoise-architectures-2026]] - 2025-2026 landscape of image denoising architectures: NTIRE 2025 winners, SSM/Mamba-based models
 - [[diffusion-distillation-cdm]] - flow-matching distillation to 4 NFE without GAN or reward model
 - [[edge-softness-and-compositing]] - Measure the edge instead of choosing it: 10-90 transition width, robust outline fitting
-- [[face-beautify-edit-lora]] - Training before/after edit LoRAs on FLUX Klein 9B and Qwen-Image-Edit for facial correction
-- [[face-detection-filtering-pipeline]] - Reusable pipeline for filtering image collections by face presence, quality, and type using YOLO
+- [[face-beautify-edit-lora]] - A face edit LoRA is a paired, consent-aware local-edit training task; bind the adapter to its exact base model and validate the requested correction separately from identity preservation.
+- [[face-detection-filtering-pipeline]] - Face filtering is a provenance-preserving candidate-selection pipeline; detector boxes and landmarks support review, but they do not establish identity, consent, image realism, or training suitability.
 - [[flowinone-unified-multimodal-generation-via-image-flow]] - FlowInOne is a multimodal generation framework that treats all inputs—text, classes, bounding
 - [[flux-attention-manipulation]] - Techniques for manipulating, analyzing, and exploiting the joint self-attention mechanism in
 - [[flux-klein-9b-architecture]] - Deep reference for the FLUX.2 Klein 9B model internals: transformer structure, text encoding, VAE

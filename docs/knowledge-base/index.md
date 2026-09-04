@@ -769,7 +769,7 @@ Each domain below is collapsible - expand to see the article list. Articles are 
 
     - [ACE++](../image-generation/ACE++.md) - ACE++ provides reference-driven image creation and editing through task-specific LoRA workflows and a general FFT model; use the published base-model pairing and verify its terms.
     - [[ATI]] - ATI adds trajectory-conditioned object, local, and camera motion control to its Wan2.1-based image-to-video workflow; preserve the published model, checkpoint, and localhost editor boundaries.
-    - [[flow-matching]] - Flow-based generative models
+    - [[flow-matching]] - Flow matching trains a continuous vector field along a chosen probability path; scheduler, path, and inference settings are checkpoint-specific rather than universal diffusion defaults.
     - [[flux-kontext]] - Context-aware image generation
     - [[LaMa]] - LaMa is a Fourier-convolution inpainting model for large masks and resolution generalization; use it with a compatible checkpoint and test texture continuity separately from semantic object restoration.
     - [[lora-fine-tuning-for-editing-models]] - LoRA training for image editing
@@ -784,7 +784,7 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[anatomy-correction-diffusion]] - Anatomy correction is a diagnose-mask-condition-inpaint workflow; use geometry-aware research methods and model-matched editing tools, then visually verify every edited hand or limb against the source.
     - [[block-causal-linear-attention]] - Block causal linear attention is SANA-Video's trained long-video mechanism with a fixed-size cumulative attention state; it is not a generic plug-in for arbitrary image tiling or DiTs.
     - [[Calligrapher]] - Calligrapher customizes text imagery from style references through FLUX.1-Fill-dev, SigLIP, masks, and project weights; treat typography accuracy and licensing as separate acceptance checks.
-    - [[color-checker-and-white-balance]] - Automated color calibration using color checker cards and white balance correction models
+    - [[color-checker-and-white-balance]] - Color checker and white-balance correction requires a measured physical chart or a separately validated estimator; detector output and a generated checker are not colorimetric ground truth.
     - [[color-correction-by-numbers]] - Deterministic color correction using measurable channel targets rather than perceptual judgment
     - [[color-space-and-gamma-reference]] - Practical reference for color management in video/photo processing pipelines
     - [[color-theory-for-ml]] - Applied color theory for diffusion model training, color correction, and palette control
@@ -795,11 +795,11 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[defect-detection-small-objects]] - Reference for detecting defects (scratches, dust, surface anomalies) and small objects in
     - [[denoise-architectures-2026]] - 2025-2026 landscape of image denoising architectures: NTIRE 2025 winners, SSM/Mamba-based models
     - [[diffusion-distillation-cdm]] - flow-matching distillation to 4 NFE without GAN or reward model
-    - [[diffusion-inference-acceleration]] - Techniques for accelerating diffusion model inference without quality loss
+    - [[diffusion-inference-acceleration]] - Diffusion acceleration is a model-and-runtime-specific trade-off; measure warm and steady-state latency, memory, output fidelity, and reproducibility for the exact checkpoint and workflow.
     - [[diffusion-lora-training]] - Practical patterns for LoRA fine-tuning of diffusion models (FLUX Klein 9B, SANA, SDXL)
     - [[edge-softness-and-compositing]] - Measure the edge instead of choosing it: 10-90 transition width, robust outline fitting
-    - [[face-beautify-edit-lora]] - Training before/after edit LoRAs on FLUX Klein 9B and Qwen-Image-Edit for facial correction
-    - [[face-detection-filtering-pipeline]] - Reusable pipeline for filtering image collections by face presence, quality, and type using YOLO
+    - [[face-beautify-edit-lora]] - A face edit LoRA is a paired, consent-aware local-edit training task; bind the adapter to its exact base model and validate the requested correction separately from identity preservation.
+    - [[face-detection-filtering-pipeline]] - Face filtering is a provenance-preserving candidate-selection pipeline; detector boxes and landmarks support review, but they do not establish identity, consent, image realism, or training suitability.
     - [[FLAIR]] - FLAIR is a training-free flow-based posterior-sampling framework for inverse imaging; use its published configuration and verify fidelity, observed-data consistency, and base-model terms on the target task.
     - [[flowinone-unified-multimodal-generation-via-image-flow]] - FlowInOne is a multimodal generation framework that treats all inputs—text, classes, bounding
     - [[flux-attention-manipulation]] - Techniques for manipulating, analyzing, and exploiting the joint self-attention mechanism in

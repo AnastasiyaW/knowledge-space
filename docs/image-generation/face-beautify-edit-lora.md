@@ -1,97 +1,77 @@
 ---
-title: "Face Beautify Edit LoRA"
-description: "Training before/after edit LoRAs on FLUX Klein 9B and Qwen-Image-Edit for facial correction - dataset strategies, PixelSmile degradation, SplitFlux training"
+title: Face Edit LoRA: Paired Local Corrections
+description: A face edit LoRA is a paired, consent-aware local-edit training task; bind the adapter to its exact base model and validate the requested correction separately from identity preservation.
+category: workflows
+tags: [lora, image-editing, paired-data, face, consent, evaluation, privacy]
+aliases: ["Face Beautify Edit LoRA", "Face Correction LoRA"]
 ---
 
-# Face Beautify Edit LoRA
+# Face Edit LoRA: Paired Local Corrections
 
-Training an edit LoRA to fix facial issues (closed eyes, scrunched faces, unpleasant expressions) using before/after paired data on FLUX.2 Klein 9B.
+A face-edit adapter should learn a bounded requested correction, not a
+catch-all definition of “beauty.” Define the edit in operational language—for
+example, reopen a closed eye while preserving pose, lighting, and identity—and
+state what the adapter must not change.
 
-## Approach: Before/After Edit LoRA
+## Paired-data contract
 
-Paired files: `_start.png` (degraded face) + `_end.png` (good face) + caption instruction. Works with ai-toolkit, fal.ai API, SimpleTuner.
+Each training record needs an auditable source image, target image, edit
+instruction, and provenance record. The source and target should differ only
+in the approved correction as far as practical. Retain:
 
-**Requirements:**
-- 200-500+ quality pairs for solid results
-- `content_or_style: content` (preserves identity)
-- `flip_x: false` (faces are asymmetric - flipping creates artifacts)
-- No trigger word needed for edit LoRAs
+- consent or a documented right to train and derive the pair;
+- source and target digests, capture/generation provenance, and edit history;
+- the intended local change and protected “must preserve” regions or traits;
+- exclusion reasons for ambiguous, over-edited, or low-quality examples; and
+- the data-retention and access policy for biometric-sensitive material.
 
-## Dataset Strategy - Synthetic Generation
+Synthetic degradations can expand a dataset only when their generator,
+instructions, and acceptance review are recorded. They are not a substitute
+for representative paired examples, and they must not introduce a hidden
+identity or style change into the target.
 
-Generate degraded "before" images from good "after" portraits using PixelSmile or inpainting.
+## Bind the adapter to one model contract
 
-### PixelSmile for Degradation
+An adapter is not portable merely because two tools call it a LoRA. Preserve
+the exact base checkpoint/revision, pipeline, text encoders, VAE, adapter
+format, target modules, resolution/crop path, optimizer, and training config
+with the artifact.
 
-[[PixelSmile]] adds controllable expressions to face images via Qwen-Image-Edit-2511.
+[ai-toolkit](https://github.com/ostris/ai-toolkit) supplies maintained
+fine-tuning configuration examples. Start from the current example for the
+chosen base model, make the minimum documented changes, and save the exact
+configuration beside the resulting adapter. A toolkit example establishes an
+execution route; it does not prove a generic facial-edit result for another
+model or dataset.
 
-**ComfyUI workflow requirements:**
+## Split and validate correctly
 
-| Model | Size | Path |
-|-------|------|------|
-| Qwen-Image-Edit-2511 FP8 | 20 GB | `diffusion_models/qwen/` |
-| Qwen 2.5 VL 7B FP8 | 8 GB | `text_encoders/` |
-| Qwen VAE | 243 MB | `vae/` |
-| PixelSmile LoRA | 811 MB | `loras/qwen-edit/` |
-| Lightning 8-step LoRA | 811 MB | `loras/qwen-edit/` |
+Split data by person, source, or capture session before augmentation. Random
+image-level splits can leak near-identical portraits into validation and make
+an adapter look better than it is.
 
-**Sampler settings:** `res_multistep`, 8 steps, cfg=1, shift=3.1
+Evaluate a fixed edit suite containing:
 
-**Score parameter:** 1.0-1.5 for visible expression change. Score=0 produces no change. Formula: `V_neutral + score * (V_target - V_neutral)` (linear interpolation in embedding space).
+1. requested local corrections across pose, illumination, age presentation,
+   makeup, and image quality conditions;
+2. negative fixtures where the requested region must remain unchanged;
+3. identity-, pose-, lighting-, and background-preservation checks; and
+4. failure fixtures that should be rejected rather than aggressively edited.
 
-**12 base expressions** with intensity control. Use sleepy/confused/sad/disgust to generate degraded "before" from good "after" portraits.
+Report the requested-correction score separately from preservation and
+human-review outcomes. A successful aesthetic edit does not by itself prove
+identity preservation or suitability for a production workflow.
 
-### Alternative: Inpainting Pipeline (No Training)
+## Release gate
 
-YOLOv8 face detect -> Florence2 mask -> Klein inpaint. Limitation: Klein "listens too well" to text prompts and may change the entire face identity rather than just fixing the expression.
+Before use outside an experiment, publish an adapter card containing the model
+binding, data/rights scope, allowed edit vocabulary, known failure cases,
+validation fixtures, and a rollback path. Re-run the suite whenever the base
+model, runtime, adapter loader, or requested edit scope changes.
 
-### Data Sources
+## Related pages
 
-- FFHQ, CelebA-HQ (public face datasets)
-- Curated portrait collections
-- Batch degradation: 3 GPUs parallel via ComfyUI API, ~29 images/min
-
-## Training Variants
-
-| Variant | Rank | Target Layers | Rationale |
-|---------|------|---------------|-----------|
-| v1 baseline | 64 | all | Standard full coverage |
-| v2 highrank | 128 | all | More capacity for eye detail |
-| v3 splitflux | 128 | single-stream only | Freeze double_blocks, train single_blocks |
-
-### SplitFlux Architecture Insight
-
-FLUX/Klein uses double-stream blocks (joint image+text) and single-stream blocks (image detail/texture). Freezing double_blocks while training only single_blocks gave significantly better loss in testing:
-
-- **SplitFlux loss**: 0.632
-- **Baseline loss**: 1.225
-
-This preserves composition understanding (double_blocks) while adapting texture/detail generation (single_blocks).
-
-## Training Configuration
-
-```yaml
-# Key parameters from testing
-optimizer: adamw8bit
-learning_rate: 9e-5
-dtype: bf16
-caption_dropout_rate: 0.1    # 10% dropout for robustness
-content_or_style: content    # preserves identity
-ema: true                    # stabilizes edit quality
-```
-
-**EMA** (Exponential Moving Average) on LoRA weights is critical for edit quality stability. Enable in all configs.
-
-## Gotchas
-
-- **Qwen CLIP version matters**: PixelSmile requires `qwen_2.5_vl_7b_fp8_scaled.safetensors`, NOT `qwen_3_8b`. Dimension mismatch (3584 vs 12288) causes silent failures or crashes. The CLIP model must match the Qwen-Image-Edit-2511 architecture, not the Klein 9B architecture.
-- **PixelSmile node path uses dash**: the custom node directory must be `qwen-edit/` (with dash), not `qwen_edit/` (with underscore). ComfyUI node resolution is case-sensitive on Linux.
-- **Forward slashes in workflow JSON**: when sending workflows to Linux ComfyUI servers via API, all file paths must use `/` not `\`. Windows paths in JSON will fail silently or produce wrong model loads.
-
-## See Also
-
-- [[PixelSmile]] - expression control LoRA for Qwen-Image-Edit
-- [[diffusion-lora-training]] - general LoRA training parameters
-- [[lora-fine-tuning-for-editing-models]] - MMDiT-specific LoRA patterns
-- [[face-detection-filtering-pipeline]] - dataset quality filtering tools
-- [[anatomy-correction-diffusion]] - fixing anatomy mutations in generated images
+- [[lora-fine-tuning-for-editing-models]]
+- [[diffusion-lora-training]]
+- [[face-detection-filtering-pipeline]]
+- [[anatomy-correction-diffusion]]

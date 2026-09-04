@@ -1,182 +1,82 @@
 ---
-title: "Face Detection & Filtering Pipeline"
-description: "Reusable pipeline for filtering image collections by face presence, quality, and type using YOLO, MediaPipe, CLIP, and VGG16"
+title: Face Detection and Filtering: Candidate Review Pipeline
+description: Face filtering is a provenance-preserving candidate-selection pipeline; detector boxes and landmarks support review, but they do not establish identity, consent, image realism, or training suitability.
+category: workflows
+tags: [face-detection, dataset-curation, provenance, quality-control, privacy, review]
+aliases: ["Face Detection & Filtering Pipeline", "Face Dataset Review"]
 ---
 
-# Face Detection & Filtering Pipeline
+# Face Detection and Filtering: Candidate Review Pipeline
 
-Reusable pipeline for filtering large image collections by face presence, quality, and type. Primary use case: dataset preparation for face-related LoRA training.
+Face detection should produce review candidates and structured evidence, not an
+automatic statement that an image is a real person, has usable consent, or is
+suitable for training. Keep the filtering decision traceable to an input and
+to a declared policy.
 
-## Tool Chain
+## Inventory before inference
 
-### 1. YOLO11n-face - Real Face Detection
+Create an immutable input manifest with a digest, source location, license or
+consent evidence, ingestion time, and access class for every asset. Do not
+replace this manifest with a detector score. It remains the authority for
+rights, retention, and downstream audit.
 
-Model: `AdamCodd/YOLOv11n-face-detection` (5.4 MB). Trained on WIDERFACE - detects only real human faces (no dolls, masks, illustrations).
+## Candidate-detection stage
 
-```python
-from ultralytics import YOLO
+Run a versioned detector and save the input digest, model revision, box,
+confidence, crop coordinates, and error state. The
+[MediaPipe Face Detector](https://ai.google.dev/edge/mediapipe/solutions/vision/face_detector/python)
+supports image and video inputs and returns face locations with six keypoints:
+the eyes, nose tip, mouth, and ear-tragion points. Those outputs can support
+crop and orientation review.
 
-model = YOLO("yolov11n-face.pt")
-results = model("image.jpg", conf=0.5)
+They do not establish a person's identity, consent, age, emotion, or whether
+the depicted face is photographic rather than synthetic. Treat model
+confidence as a ranking signal whose threshold is calibrated locally, not as a
+universal acceptance criterion.
 
-for r in results:
-    for box in r.boxes:
-        x1, y1, x2, y2 = box.xyxy[0]
-        face_area = (x2 - x1) * (y2 - y1)
-        image_area = r.orig_shape[0] * r.orig_shape[1]
-        face_pct = face_area / image_area * 100
-```
+## Quality and relevance gates
 
-- Single class: `{0: 'face'}`
-- ~40 img/s on RTX 4090, ~27 img/s mixed workload
-- Filter by face area as % of image (e.g., >= 10% for portrait datasets)
+Define the target use first, then measure only relevant properties:
 
-### 2. MediaPipe selfie_multiclass - Face+Hair Segmentation
+1. **Framing:** sufficient visible area and a crop compatible with the intended
+   training or edit task.
+2. **Image quality:** focus, compression damage, clipping, occlusion, and
+   resolution reviewed against locally labeled examples.
+3. **Editability:** only when the declared task requires it; retain the
+   reviewer rationale rather than inferring it from a generic face score.
+4. **Rights and privacy:** consent/license evidence, retention class, and
+   approval for the intended derivative use.
 
-6-class pixel-level segmentation: 0=background, 1=hair, 2=body, 3=face, 4=clothes, 5=accessories.
+Automated scores may triage the queue, but uncertain cases should stay in
+review rather than being silently accepted or discarded.
 
-```python
-import mediapipe as mp
-import numpy as np
+## Similarity, duplicates, and splits
 
-model = mp.solutions.selfie_segmentation.SelfieSegmentation(model_selection=1)
+Use perceptual or embedding similarity to propose duplicate and near-duplicate
+groups. Preserve each source record, record the grouping model and threshold,
+and ask a reviewer or a clear policy rule to decide which representation may
+be used. Never use a similarity score as proof that two images show the same
+person.
 
-# Process image (RGB)
-result = model.process(image_rgb)
-mask = result.segmentation_mask  # float32, values 0-1
+For model evaluation, split by source, capture session, or known subject group
+where available. This prevents near-identical images from leaking across train
+and validation partitions. Record the split rule and its exceptions.
 
-# Calculate face+hair area
-face_hair_pct = np.mean(mask > 0.5) * 100
-```
+## Output schema and release decision
 
-- CPU only (TFLite), ~20 img/s with 4 ProcessPoolExecutor workers
-- Detects "face texture" on dolls/illustrations - use YOLO first to filter real faces
+Each result should include:
 
-### 3. Glasses Detection via Mask Overlap
+- input digest and provenance pointer;
+- detector/quality-model revisions and raw outputs;
+- decision (accept, review, or reject) with a reason code;
+- reviewer or policy version; and
+- downstream restrictions, including deletion/retention obligations.
 
-```python
-# Face mask (category 3) AND accessories mask (category 5) overlap > 3% = glasses
-face_mask = (segmentation == 3).astype(float)
-acc_mask = (segmentation == 5).astype(float)
-overlap = np.sum(face_mask * acc_mask) / max(np.sum(face_mask), 1)
-has_glasses = overlap > 0.03  # earrings/necklaces don't trigger (outside face region)
-```
+Only an accept record with rights evidence and a declared use scope may enter
+a face-edit training set. The rest remains traceable for correction or audit.
 
-### 4. CLIP ViT-B/32 - Photo vs Drawing Classification
+## Related pages
 
-Zero-shot classification separating photographs from illustrations/drawings/3D renders.
-
-```python
-import clip
-import torch
-
-model, preprocess = clip.load("ViT-B/32")
-
-photo_prompts = ["photograph of a person", "real photo of a human face"]
-drawing_prompts = ["drawing of a person", "illustration", "painting", "3d render"]
-
-# Batch inference: ~27 img/s on RTX 4090
-# Threshold 0.55 works well for photo/drawing split
-```
-
-Use multiple prompts per category and average similarities for robust classification.
-
-### 5. VGG16 fc6 - Image Deduplication
-
-Extract 4096-dim features from VGG16 fc6 layer, L2 normalize, compute cosine similarity.
-
-```python
-import torch
-from torchvision.models import vgg16
-
-model = vgg16(pretrained=True)
-model.classifier = model.classifier[:2]  # truncate after fc6
-model.eval()
-
-# GPU feature extraction: ~1400 img/s
-# CPU comparison ~10 min for 90K images
-```
-
-**Progressive dedup thresholds:**
-
-| Threshold | Detects |
-|-----------|---------|
-| 0.95 | Exact duplicates (rescaled, recompressed) |
-| 0.90 | Near-duplicates (slight crop, color shift) |
-| 0.85 | Similar poses (same subject, same angle) |
-
-Use chunked matrix multiplication for large collections to avoid OOM on NxN similarity matrix.
-
-### 6. HSEmotion - Emotion Classification
-
-Model: `enet_b2_8` (EfficientNet-B2, AffectNet trained). 8 emotions: Anger, Contempt, Disgust, Fear, Happiness, Neutral, Sadness, Surprise.
-
-```python
-# Requires specific versions:
-# pip install timm==0.9.16  (newer timm breaks it)
-
-import torch
-# Patch required for loading:
-torch.serialization.add_safe_globals([...])
-# Or: torch.load(path, weights_only=False, map_location='cpu')
-```
-
-On glamour/processed photos, emotion models disagree heavily between each other. Use single model (HSEmotion) rather than ensemble for consistency.
-
-## Pipeline Example
-
-Typical filtering cascade with yield at each stage:
-
-```bash
-42,910 source images
-  -> 24,655 (MediaPipe face+hair >= 10% of image)
-  -> 16,961 (YOLO11 real face >= 10% of image)
-  -> 14,309 (CLIP photo classification, threshold 0.55)
-  -> deduplicated with VGG16 at 0.90
-```
-
-Each stage runs independently - can parallelize with ProcessPoolExecutor.
-
-## Performance Patterns
-
-### HDD vs SSD for Large Collections
-
-```python
-# os.listdir() on 43K files on HDD: ~7 minutes
-# os.scandir() is faster than Path.glob() for large dirs
-# Cache file lists to JSON for repeat runs
-
-import json
-from pathlib import Path
-
-cache_path = Path("filelist_cache.json")
-if cache_path.exists():
-    files = json.loads(cache_path.read_text())
-else:
-    files = [str(p) for p in Path("images/").iterdir() if p.suffix in ('.jpg', '.png')]
-    cache_path.write_text(json.dumps(files))
-```
-
-### PyTorch + TensorFlow Conflict
-
-DeepFace (TensorFlow) can silently overwrite CUDA PyTorch with CPU-only version during install.
-
-```bash
-# Always verify after installing TF packages:
-python -c "import torch; print(torch.cuda.is_available())"
-
-# Fix if broken:
-pip install torch==2.6.0+cu124 --index-url https://download.pytorch.org/whl/cu124
-```
-
-## Gotchas
-
-- **MediaPipe detects non-real faces**: unlike YOLO11n-face (trained on WIDERFACE for real faces only), MediaPipe will trigger on doll faces, mannequins, face masks, and face-like illustrations. Always run YOLO detection first, then MediaPipe only on confirmed real-face images.
-- **HSEmotion requires timm==0.9.16**: newer timm versions break the model loading. Pin the version explicitly in requirements. Also requires `weights_only=False` in `torch.load()` which is a security consideration for untrusted model files.
-- **VGG16 dedup OOM on large sets**: for N > 50K images, computing the full NxN similarity matrix will OOM. Use chunked matrix multiplication (process 1000x1000 blocks at a time) or approximate nearest neighbor search.
-
-## See Also
-
-- [[diffusion-lora-training]] - dataset preparation for LoRA training
-- [[in-context-segmentation]] - INSID3 for batch annotation by example
-- [[flux-klein-9b-inference]] - inference settings for generated image quality
+- [[face-beautify-edit-lora]]
+- [[rights-first-text-to-mask-training]]
+- [[diffusion-lora-training]]
