@@ -1,32 +1,42 @@
 ---
-title: AuraFlow — AuraFlow model releases
+title: AuraFlow
 category: projects
+date: 2024-08-15
 tags: [auraflow, auraflow-model-releases, auraflow_release, project]
 aliases: ["AuraFlow"]
 ---
 
-# AuraFlow — AuraFlow model releases
+# AuraFlow
 
 **Development line:** `project:auraflow` · thread `auraflow-model-releases`  
-**Events:** 3 dated, 2024-07-12 → 2024-08-15 · **Researched:** 2026-09-04 · confidence: medium
+**Last event:** 2024-08-15 · 3 dated since 2024-07-12 · **Researched:** 2026-09-04 · confidence: medium
 
 ## What it is
 
-AuraFlow — a flow-based text-to-image model for local Diffusers/ComfyUI work or hosted fal inference. - Generates images from text through AuraFlowPipeline. - Exposes a hosted `fal-ai/aura-flow` endpoint. - v0.3 supports varied aspect ratios up to 1536 pixels per dimension. Limit: v0.3 remains labelled beta and the 7B-scale model is costly on consumer hardware. Verdict: use the explicit v0.3 checkpoint for this public line; do not assume a newer successor or production-stability guarantee.
+A flow-based text-to-image model for local Diffusers and ComfyUI setups or hosted fal inference.
+
+- Generates images from text through AuraFlowPipeline.
+- Exposes a hosted `fal-ai/aura-flow` endpoint.
+- v0.3 supports varied aspect ratios up to 1536 pixels per dimension.
 
 ## Development line
 
-- **2024-07-12 — AuraFlow's initial public project references were recorded.** On 2024-07-12, the supplied links recorded AuraFlow through a fal blog page, an official model page, and a playground. This marks the first documented event in the sealed AuraFlow development line. The supplied links alone do not establish its technical claims or capabilities.
-- **2024-07-29 — AuraFlow v0.2 was recorded as a new model version.** On 2024-07-29, the supplied official Hugging Face link identified AuraFlow-v0.2. As a distinct versioned reference after the initial AuraFlow event, it is a material step in the project's development line. The supplied links do not establish what changed in v0.2.
-- **2024-08-15 — AuraFlow v0.3 was recorded as a subsequent model version.** On 2024-08-15, the supplied official Hugging Face link identified AuraFlow-v0.3. It follows the v0.2 reference in the sealed line and is a further material versioned release. The supplied links do not establish its contents, compatibility, or performance.
+- **2024-07-12 — AuraFlow's initial public project references were recorded.** V0.1 launched as a fully open flow-based text-to-image model; fal documented native Diffusers and ComfyUI support and a 6.8B architecture.
+- **2024-07-29 — AuraFlow v0.2 was recorded as a new model version.** V0.2 was documented as a v0.1 successor trained with more compute. The official collection records its model update as 2024-07-27, so this may distinguish model publication from announcement.
+- **2024-08-15 — AuraFlow v0.3 was recorded as a subsequent model version.** V0.3 added more compute, aesthetic-data fine-tuning, and aspect-ratio support up to 1536 pixels per dimension.
 
 ## What changed
 
-AuraFlow — development line: - 2024-07-12: v0.1 launched as a fully open flow-based text-to-image model; fal documented native Diffusers and ComfyUI support and a 6.8B architecture. - 2024-07-29: v0.2 was documented as a v0.1 successor trained with more compute. The official collection records its model update as 2024-07-27, so this may distinguish model publication from announcement. - 2024-08-15: v0.3 added more compute, aesthetic-data fine-tuning, and aspect-ratio support up to 1536 pixels per dimension. - Found today: fal’s official collection lists only the unversioned model, v0.2, and v0.3; the live fal endpoint identifies AuraFlow as v0.3 and still labels it beta. Limit: that collection cannot prove no unpublished or differently named successor exists. Verdict: v0.3 is the current documented public mainline, not a confirmed actively evolving release train.
+AuraFlow — development line:
+
+- 2024-07-12: v0.1 launched as a fully open flow-based text-to-image model; fal documented native Diffusers and ComfyUI support and a 6.8B architecture.
+- 2024-07-29: v0.2 was documented as a v0.1 successor trained with more compute. The official collection records its model update as 2024-07-27, so this may distinguish model publication from announcement.
+- 2024-08-15: v0.3 added more compute, aesthetic-data fine-tuning, and aspect-ratio support up to 1536 pixels per dimension.
+- Found today: fal’s official collection lists only the unversioned model, v0.2, and v0.3; the live fal endpoint identifies AuraFlow as v0.3 and still labels it beta.
 
 ## How to use this
 
-As of 2024-08-15, practitioners should treat AuraFlow as a versioned model line and select the specific official AuraFlow, AuraFlow-v0.2, or AuraFlow-v0.3 reference needed for their workflow rather than assuming releases are interchangeable.
+As of 2024-08-15, treat AuraFlow as a versioned model line. Select the specific official AuraFlow, AuraFlow-v0.2, or AuraFlow-v0.3 reference needed for each workflow rather than assuming releases are interchangeable.
 
 1. Pin `fal/AuraFlow-v0.3` for a new local build; it is the documented current checkpoint in the official collection.
   — <https://huggingface.co/fal/AuraFlow-v0.3>
