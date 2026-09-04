@@ -1,6 +1,6 @@
 # 综合技术知识库 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 942+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 943+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -735,6 +735,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [James Webb Space Telescope — First Images Release](https://happyin.space/projects/james-webb-space-telescope/): **Development line:** `project:james-webb-space-telescope` · thread `first-images-release`
 - [JoyCaption](https://happyin.space/projects/joycaption/): **Development line:** `project:joycaption` · thread `joycaption-development`
 - [Katalist](https://happyin.space/projects/katalist/): **Development line:** `project:katalist` · thread `katalist-early-access`
+- [Kling AI](https://happyin.space/projects/kling-ai/): **Development line:** `project:kling-ai` · thread `kling-ai-product-development`
 - [Vidu](https://happyin.space/projects/vidu/): **Development line:** `project:vidu` · thread `vidu`
 
 ## Python
