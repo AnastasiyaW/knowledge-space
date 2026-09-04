@@ -1,14 +1,15 @@
 ---
-title: Hyper-SD — Hyper-SD development
+title: Hyper-SD
 category: projects
+date: 2024-08-28
 tags: [hyper-sd, hyper_sd, project]
 aliases: ["Hyper-SD"]
 ---
 
-# Hyper-SD — Hyper-SD development
+# Hyper-SD
 
 **Development line:** `project:hyper-sd` · thread `hyper-sd`  
-**Events:** 2 dated, 2024-04-22 → 2024-08-28 · **Researched:** 2026-09-04 · confidence: medium
+**Last event:** 2024-08-28 · 2 dated since 2024-04-22 · **Researched:** 2026-09-04 · confidence: medium
 
 ## What it is
 
