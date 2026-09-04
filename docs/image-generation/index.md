@@ -11,7 +11,7 @@ type: MOC
 - [[block-causal-linear-attention]] - Block causal linear attention is SANA-Video's trained long-video mechanism with a fixed-size cumulative attention state; it is not a generic plug-in for arbitrary image tiling or DiTs.
 - [[DC-AE]] - Use DC-AE only with a diffusion model and latent contract it was trained for; high compression reduces latent-token work but does not make it a drop-in VAE replacement.
 - [[SANA]] - SANA architecture
-- [[sana-denoiser-architecture]] - SANA denoiser design
+- [[sana-denoiser-architecture]] - A SANA-based restorer is a research proposal, not an implemented pipeline; it requires model-compatible conditioning, paired-data baselines, fidelity evaluation, and separate high-resolution tests before deployment.
 - [[qwen-image]] - Qwen-Image generation/editing artifacts and version history
 - [[transformers-v5]] - Transformers v5 for diffusion
 
@@ -85,15 +85,15 @@ type: MOC
 - [[lora-auxiliary-losses]] - Additional loss terms beyond standard diffusion denoising loss
 - [[lora-identity-disentanglement-in-flux2-klein-9b]] - Identity LoRA training often suffers from concept bleeding, where environmental factors (lighting
 - [[megastyle-flux-style-transfer]] - MegaStyle is a single-reference style transfer framework developed by Tencent for FLUX.1-dev
-- [[object-removal-inpainting]] - Comparative reference for object removal/erasure models (2024-2026)
+- [[object-removal-inpainting]] - Object removal is a constrained edit: bind the source asset, permitted object, mask, model contract, and protected regions, then validate scene continuity and factual preservation before release.
 - [[pixel-art-generation]] - Algorithms and models for converting raster images to pixel art, generating pixel art via diffusion
 - [[plugin-inference-ux]] - Patterns for making slow ML inference (10-30s per operation) feel fast inside desktop creative
 - [[recurrent-depth-transformer]] - Looped transformer architecture that reuses a single block T times to simulate multi-step reasoning
 - [[segmentation-dataset-preparation]] - Reference for binary semantic segmentation datasets with 0.1-5% positive-pixel coverage (small
-- [[skin-retouch-pipeline]] - Automated blemish detection and removal pipeline for photos
+- [[skin-retouch-pipeline]] - Skin retouching is a consent-aware, scope-limited correction workflow; preserve identity, texture, and protected traits, keep every mask and edit auditable, and require review of all changed skin.
 - [[spatialedit-16b-geometric-control-for-diffusion-based-image-editing]] - SpatialEdit-16B is a multimodal diffusion transformer (MM-DiT) framework designed for precise
-- [[style-reference-ux]] - Comparative analysis of style reference workflows across major AI image generation products
-- [[synthetic-dataset-pipeline]] - Pipeline for building high-quality annotated datasets for YOLO + SAM fine-tuning from raw image
+- [[style-reference-ux]] - Style-reference UX must separate temporary influence from saved training, style from content/structure, and local data from third-party processing, while making strength and provenance visible to the user.
+- [[synthetic-dataset-pipeline]] - Synthetic detection data is a labeled candidate corpus, not automatic ground truth; preserve generator and source provenance, review annotations, prevent split leakage, and validate on real held-out data.
 - [[tile-position-encoding]] - Methods for injecting spatial position information into patch/tile-based image models, with
 - [[upscaler-evaluation]] - Practical comparison of image upscalers for LoRA training data preparation and production pipelines
 - [[videomama-diffusion-based-video-matting]] - VideoMaMa is a video matting framework that converts coarse segmentation masks into pixel-perfect
