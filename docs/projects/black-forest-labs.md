@@ -1,6 +1,7 @@
 ---
 title: FLUX.1-Kontext-dev-onnx — FLUX.1 Kontext ONNX and editing
 category: projects
+date: 2025-07-03
 tags: [black-forest-labs, black_forest_labs, flux-kontext, flux_kontext, project]
 aliases: ["FLUX.1-Kontext-dev-onnx", "Kontext Komposer"]
 ---
@@ -8,60 +9,68 @@ aliases: ["FLUX.1-Kontext-dev-onnx", "Kontext Komposer"]
 # FLUX.1-Kontext-dev-onnx — FLUX.1 Kontext ONNX and editing
 
 **Development line:** `project:black-forest-labs` · thread `flux-kontext`  
-**Events:** 1 dated, 2025-07-03 → 2025-07-03 · **Researched:** 2026-09-04 · confidence: medium
+**Last event:** 2025-07-03 · 1 dated since 2025-07-03 · **Researched:** 2026-09-04 · confidence: medium
 
 ## What it is
 
-FLUX.1-Kontext-dev-onnx is the ONNX distribution of FLUX.1 Kontext [dev] for builders with an existing compatible local runtime. - edits an input image from a text instruction; - supports local and global changes, iterative work, and character or style preservation; - provides BF16, FP8, and FP4 (SVDQuant) exports. 12B parameters; downloads require accepting the FLUX.1 [dev] Non-Commercial License, and the Kontext family is fixed at 1MP. Verdict: use it only when ONNX is a hard deployment requirement; the official card has no model-specific runtime recipe, and BFL recommends FLUX.2 for new high-resolution or multi-reference work.
+FLUX.1-Kontext-dev-onnx is the ONNX export of FLUX.1 Kontext [dev] for local runtimes.
+
+- Image editing from text instructions.
+- Local and global modifications with character or style preservation across iterative work.
+- Model exports in BF16, FP8, and FP4 (SVDQuant).
 
 ## Development line
 
-- **2025-07-03 — FLUX.1 Kontext dev ONNX repository entered the development record.** On 2025-07-03, a Hugging Face repository for FLUX.1-Kontext-dev-onnx was recorded under Black Forest Labs. The link establishes an ONNX-oriented distribution artifact for the project, a material deployment path distinct from a general editing interface.
+- **2025-07-03 — Black Forest Labs published the FLUX.1 Kontext dev ONNX repository.** The official release surfaced BF16, FP8, and FP4 (SVDQuant) exports for the public Kontext [dev] base model. This is a packaging format for existing weights, not a new base-model release.
 
 ## What changed
 
-2025-07-03 — FLUX.1-Kontext-dev-onnx: the official ONNX distribution route surfaced BF16, FP8, and FP4 (SVDQuant) exports for the already public Kontext [dev] base model. This is a packaging/runtime route, not evidence of a separate base-model release that day. 2025-07-11 — BFL Playground and Kontext Komposer presets: the browser editor offered a no-code way to try text-guided edits, while the community post documented prompt-generator presets. Neither source documents an ONNX weight, API, or model revision. Found today (2026-09-04) — BFL still keeps the Kontext family available, but calls it previous-generation: outputs are fixed at 1MP and FLUX.2 is the recommended route for new work needing up to 4MP output, multi-reference editing, or more control.
+2025-07-03 — FLUX.1-Kontext-dev-onnx: Black Forest Labs provided BF16, FP8, and FP4 (SVDQuant) exports for the public Kontext [dev] model. This is a runtime packaging option rather than a new base-model release.
+
+2025-07-11 — BFL Playground and Kontext Komposer presets: the web editor added text-guided editing without code, and a community post documented prompt presets. Neither source introduced ONNX weights, an API, or a model revision.
+
+Found today (2026-09-04) — BFL keeps Kontext available as a previous-generation tool. Outputs stay at 1MP. BFL recommends FLUX.2 for new work needing up to 4MP output, multi-reference edits, or tighter control.
 
 ## How to use this
 
-From 2025-07-03, practitioners evaluating this line should start with the linked ONNX repository as its deployment artifact and separately verify the model revision and runtime support before integration.
+From 2025-07-03, start evaluation with the ONNX repository. Verify model revisions and runtime support before integrating.
 
 1. Open the official ONNX repository, sign in, and accept the gated FLUX.1 [dev] Non-Commercial License before downloading files.
   — <https://huggingface.co/black-forest-labs/FLUX.1-Kontext-dev-onnx>
-2. Choose BF16, FP8, or FP4 (SVDQuant) for a runtime that already supports this export. The card provides no model-specific code snippet, so do not assume the files are plug-and-play in a generic Diffusion Single File workflow.
+2. Choose BF16, FP8, or FP4 (SVDQuant) for a supported runtime. The card provides no model-specific code snippet, so verify support before using a generic Diffusion Single File workflow.
   — <https://huggingface.co/black-forest-labs/FLUX.1-Kontext-dev-onnx>
-3. If ONNX is not required, use BFL’s documented local route for the canonical Kontext [dev] weights: install Diffusers, load the pipeline, then pass an input image and edit prompt. This changes the deployment format, not the editing task.
+3. Use canonical Kontext [dev] weights when ONNX is unnecessary. Install Diffusers, load the pipeline, then pass an input image and edit prompt.
   — <https://huggingface.co/black-forest-labs/FLUX.1-Kontext-dev/tree/main>
-4. For a hosted evaluation, open the original Playground edit route and sign in; when checked today, it redirects through BFL authentication to the dashboard Playground.
+4. For hosted evaluation, open the original Playground edit route and sign in. When checked today, it redirects through BFL authentication to the dashboard Playground.
   — <https://playground.bfl.ai/image/edit>
-5. For a new production project that needs more than 1MP output or multiple references, choose FLUX.2 instead of beginning a new Kontext integration.
+5. Choose FLUX.2 instead of starting a new Kontext integration when a production project needs more than 1MP output or multiple references.
   — <https://help.bfl.ai/articles/5186006235-what-is-flux-1-kontext>
 
 ## Best practices
 
 - Write one explicit visual change at a time, such as “Change the car color to red,” then inspect the result before the next edit.
   — <https://docs.bfl.ai/kontext/kontext_image_editing>
-- For text inside an image, quote both the source and replacement text; use bright annotation boxes when a text edit also needs targeted repositioning or resizing.
+- Quote both source and replacement text for in-image text edits. Use bright annotation boxes when a text edit needs targeted repositioning or resizing.
   — <https://docs.bfl.ai/kontext/kontext_image_editing>
-- Keep edit chains short and checkpoint good outputs. BFL documents visible degradation after six iterative edits, so branch from a clean image instead of endlessly continuing one chain.
+- Keep edit chains short and save good intermediate outputs. BFL documents visible degradation after six iterative edits, so restart from a clean image instead of endlessly continuing one chain.
   — <https://bfl.ai/blog/flux-1-kontext>
-- Treat the dev weights as non-commercial and non-production by default; deploy filtering or manual review and meet applicable provenance requirements.
+- Treat dev weights as non-commercial and non-production by default. Deploy filtering or manual review, and satisfy applicable provenance requirements.
   — <https://huggingface.co/black-forest-labs/FLUX.1-Kontext-dev-onnx>
-- Community practice: make a preset an editable prompt template that explicitly preserves the subject while changing only the requested context, scene, style, clothing, or background. It is not an official model control.
+- Community practice: build presets as editable prompt templates that preserve the subject while altering context, scene, style, clothing, or background. These are not official model controls.
   — <https://www.reddit.com/r/StableDiffusion/comments/1lx8lot/kontext_presets_all_system_prompts/>
 
 ## Superseded by this
 
-- 2025-05-29 private-beta access by emailing BFL is obsolete after the 2025-06-26 public open-weight release; access is now through the gated Hugging Face license flow.
-- 2025-07-11 guidance that the direct Playground edit URL is an unauthenticated entry point is stale: observed on 2026-09-04, it redirects through BFL authentication to the dashboard.
-- 2025-era guidance to start a new high-resolution or multi-reference image-editing build on Kontext is superseded by BFL’s current recommendation to start with FLUX.2. Kontext remains available; it is not removed.
+- 2025-05-29 private-beta email access ended with the 2025-06-26 public open-weight release. Access now runs through the gated Hugging Face license flow.
+- 2025-07-11 guidance describing the Playground edit URL as an unauthenticated entry point is stale. As observed on 2026-09-04, it redirects through BFL authentication to the dashboard.
+- 2025-era guidance to build new high-resolution or multi-reference editing on Kontext is superseded by BFL's recommendation to use FLUX.2. Kontext remains available; it is not removed.
 
 ## Still unknown
 
-- The 2025-07-03 ONNX artifact and the 2025-07-11 browser/preset material are related by the Kontext family but are not proven to be one product: the first is a local model distribution, the second covers a hosted editor and community prompt layer.
-- Kontext Komposer appears in the community post as a preset label, such as “Komposer: Teleport”; no first-party source establishes it as an official BFL product, version, or component of the ONNX repository.
-- The official ONNX model card still has no end-to-end, model-specific runtime example. A compatible custom ONNX pipeline is therefore required, or the documented non-ONNX Diffusers route should be used.
-- The original dated source text is unavailable, so its exact claim, BFL endorsement status, and whether it announced a new export revision cannot be reconstructed from the links alone.
+- The 2025-07-03 ONNX artifact and the 2025-07-11 browser and preset materials share the Kontext family name but are not proven to be one product. The first is a local distribution; the second covers a hosted editor and a community prompt layer.
+- Kontext Komposer appears in community posts as a preset label, such as “Komposer: Teleport”. No first-party source establishes it as an official BFL product, version, or component of the ONNX repository.
+- The official ONNX model card provides no end-to-end runtime example. We must provide a compatible custom ONNX pipeline or use the documented Diffusers route.
+- The original dated source text is unavailable, so we cannot reconstruct its exact claims, BFL endorsement status, or export revisions from the links alone.
 
 ## Sources
 
