@@ -1,29 +1,35 @@
 ---
-title: OpenAI — OpenAI Development
+title: OpenAI
 category: organizations
+date: 2026-06-26
 tags: [chatgpt, chatgpt-plugins, chatgpt_monetization, clip, dall_e_2, dalle_2_public_access, gpt-5-6-sol, gpt_4, model_releases, openai, openai-development, openai-gpt-5-erdos-math-controversy, openai-safety-testing, openai:chatgpt, openai_bug_bounty, openai_chatgpt_agent, openai_devday_2024, openai_disney, openai_gpt_next, openai_gpt_store_and_updates, openai_reasoning, organization, swe_bench_verified]
 aliases: ["OpenAI"]
 ---
 
-# OpenAI — OpenAI Development
+# OpenAI
 
 **Development line:** `organization:openai` · thread `openai-development`  
-**Events:** 17 dated, 2022-04-07 → 2026-06-26 · **Researched:** 2026-09-04 · confidence: medium
+**Last event:** 2026-06-26 · 17 dated since 2022-04-07 · **Researched:** 2026-09-04 · confidence: medium
 
 ## What it is
 
-OpenAI — поставщик ChatGPT, ChatGPT Work, Codex и API для частных пользователей, команд и разработчиков; по охвату это конкурент связкам Anthropic Claude + API и Google Gemini + Vertex AI, а не один чат-бот. Возможности: - ChatGPT — диалоги, поиск, анализ файлов, изображения и голос; - Work — длительные задачи с приложениями, файлами, браузером и готовыми документами; - Codex — работа с репозиториями, терминалом, тестами и ревью; - API — Responses, инструменты, компьютерное управление, поиск, мультимодальность и агентные процессы. Мера/лимит: GPT‑6 Astra имеет контекст 1 050 000 токенов, вывод до 128 000 токенов и срез знаний 30 апреля 2026 года; стандартная цена API — $10 за миллион входных и $50 за миллион выходных токенов, а доступ 4 сентября 2026 года ещё разворачивается по тарифам и продуктам. Вердикт: Chat подходит для короткого взаимодействия, Work — для длительного результата, Codex — для репозитория, Responses API — для собственного продукта; модель, инструменты и полномочия нужно выбирать по измеренному качеству и риску операции.
+OpenAI — поставщик ChatGPT, ChatGPT Work, Codex и API для частных пользователей, команд и разработчиков; по охвату это конкурент связкам Anthropic Claude + API и Google Gemini + Vertex AI, а не один чат-бот.
+
+- ChatGPT — диалоги, поиск, анализ файлов, изображения и голос;
+- Work — длительные задачи с приложениями, файлами, браузером и готовыми документами;
+- Codex — работа с репозиториями, терминалом, тестами и ревью;
+- API — Responses, инструменты, компьютерное управление, поиск, мультимодальность и агентные процессы.
 
 ## Development line
 
 - **2022-04-07 — OpenAI Introduced DALL-E 2.** On 2022-04-07, OpenAI published a dedicated DALL-E 2 page, marking the introduction of the image-generation project. The dated link establishes the release milestone, but no claims about capabilities, access, or evaluation results are made without source review.
-- **2022-12-01 — OpenAI Made ChatGPT Available.** On 2022-12-01, OpenAI linked to the ChatGPT service, marking ChatGPT's availability as a product endpoint. The sealed metadata does not establish its launch terms, capabilities, or audience, so those details remain outside this proposal.
+- **2022-12-01 — OpenAI Made ChatGPT Available.** On 2022-12-01, OpenAI linked to the ChatGPT service, marking ChatGPT's availability as a product endpoint. The record does not establish its launch terms, capabilities, or audience, so those details remain outside this page.
 - **2023-02-26 — OpenAI Published Its Planning Position for AGI.** On 2023-02-26, OpenAI published a first-party article setting out its planning position for AGI and later systems. This was an organization-level strategy milestone; the proposal does not infer commitments or implementation details not present in the link metadata.
 - **2023-03-14 — OpenAI Introduced GPT-4.** On 2023-03-14, OpenAI published its GPT-4 research page and linked access and waitlist routes. This marks GPT-4's introduction in OpenAI's model-development history, while technical claims and availability details remain unresearched.
 - **2023-03-23 — OpenAI Introduced ChatGPT Plugins.** On 2023-03-23, OpenAI published an introduction to ChatGPT plugins together with developer documentation. This marks the addition of a plugin integration path to ChatGPT; supported capabilities and rollout conditions require source review.
 - **2023-04-12 — OpenAI Established Public Issue-Reporting Routes.** On 2023-04-12, OpenAI provided a model-behavior feedback form and an OpenAI program page on Bugcrowd. The dated links mark formal reporting routes for model and security issues, but do not by themselves establish eligibility, scope, or reward terms.
 - **2023-05-28 — OpenAI Launched a Democratic-Input Initiative for AI.** On 2023-05-28, OpenAI published a first-party article about democratic input into AI systems. This marks an organization-level governance initiative; its process, participants, and results remain unresearched.
-- **2023-06-01 — OpenAI Published Research on Process-Supervised Mathematical Reasoning.** On 2023-06-01, OpenAI published research on improving mathematical reasoning through process supervision. The link establishes the research milestone, but this proposal makes no performance or generalization claims without reviewing the paper.
+- **2023-06-01 — OpenAI Published Research on Process-Supervised Mathematical Reasoning.** On 2023-06-01, OpenAI published research on improving mathematical reasoning through process supervision. The link establishes the research milestone, but this page makes no performance or generalization claims without reviewing the paper.
 - **2023-08-23 — OpenAI Introduced GPT-3.5 Turbo Fine-Tuning and API Updates.** On 2023-08-23, OpenAI published an update introducing GPT-3.5 Turbo fine-tuning alongside API changes. This is a material platform-development milestone; model behavior, pricing, and implementation details remain unresearched.
 - **2024-01-11 — OpenAI Made the GPTs Catalog Available.** On 2024-01-11, OpenAI made a GPTs catalog available at the ChatGPT GPTs route. The dated endpoint establishes a distribution surface for GPTs; launch scope, catalog rules, and commercial terms remain unresearched.
 - **2024-08-13 — OpenAI Introduced SWE-bench Verified.** On 2024-08-13, OpenAI published a first-party introduction to SWE-bench Verified. This marks a benchmark-related development milestone, but the metadata alone does not support claims about its construction, scores, or adoption.
