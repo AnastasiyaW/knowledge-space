@@ -1,6 +1,7 @@
 ---
 title: Cursor — Product development
 category: projects
+date: 2026-06-29
 tags: [cursor, product-development, project]
 aliases: ["Cursor"]
 ---
@@ -8,63 +9,72 @@ aliases: ["Cursor"]
 # Cursor — Product development
 
 **Development line:** `project:cursor` · thread `product-development`  
-**Events:** 1 dated, 2026-06-29 → 2026-06-29 · **Researched:** 2026-09-04 · confidence: medium
+**Last event:** 2026-06-29 · 1 dated since 2026-06-29 · **Researched:** 2026-09-04 · confidence: medium
 
 ## What it is
 
-Cursor — a coding agent and editor for developers who want to understand a repository, delegate changes, and decide what to merge. - Maps a codebase, plans and builds features, fixes bugs, and reviews changes. - Works across the desktop app, isolated cloud VMs, web, and iOS; agent sessions can move between local and cloud work. - Carries repository-specific instructions through Rules, `AGENTS.md`, skills, and MCP. Limit: Cloud Agents need connected source control and a VM-testable environment with configured secrets and egress; their output remains a review candidate. Verdict: use Cursor to accelerate bounded, testable repository work, then inspect the diff and run normal checks before merge.
+Cursor is a coding editor and agent for developers who need to understand a repository, delegate edits, and merge changes.
+
+- Codebase indexing to map the repository, plan features, write code, fix bugs, and review diffs.
+- Cross-platform runtime across the desktop app, isolated cloud VMs, web, and iOS, with session handoff between local and cloud runs.
+- Context injection through Rules, `AGENTS.md`, skills, and MCP for repository-specific guidance.
 
 ## Development line
 
-- **2026-06-29 — Cursor announced an iOS mobile app.** On 2026-06-29, Cursor announced an iOS mobile app, as indicated by the dated Cursor blog link and App Store listing. This marked a material expansion of Cursor's product presence to iOS. The dated links alone do not establish the app's detailed capabilities, regional availability, or release status.
+- **2026-06-29 — Cursor announced an iOS mobile app.** Cursor announced its iOS mobile app on 2026-06-29 in a blog post and an App Store listing. The release expands the editor onto iOS devices. The announcement links confirm the release date, but they omit specific features, regional availability, and final release status.
 
 ## What changed
 
-Cursor — development line from an early public entry point to a cross-device agent workspace. - 2023-08-21 — `cursor.so` was the linked public entry point. Its current redirect does not preserve the contemporaneous feature set, so no feature-level historical claim is retained. - 2026-04-02 (found today) — Cursor 3 introduced a unified, multi-workspace agent interface: parallel local and cloud agents, handoff between them, diff/PR work, an integrated browser, and plugins. - 2026-06-29 — Cursor released its native iOS app in public beta for launching cloud agents or remotely directing local agents, with notifications, artifact review, and PR merging. - 2026-09-04 (found today) — current documentation places iOS on the same agent backend as desktop and web, and documents Cloud Agent entry points from desktop, web, iOS, Slack, source-control comments, Linear, and API. Limit: the original 2023 page is not an archive of its launch-era capabilities. Verdict: current operating guidance should be based on the reviewed agent workflow, not the old product link.
+Cursor evolved from a single web entry point into a multi-device agent workspace.
+
+- 2023-08-21 — `cursor.so` served as the original public address. The site now redirects and drops earlier feature descriptions, leaving no verifiable feature baseline for that date.
+- 2026-04-02 (found today) — Cursor 3 added a unified multi-workspace agent interface with parallel local and cloud agents, session handoffs, diff and PR workflows, an integrated browser, and plugins.
+- 2026-06-29 — Cursor shipped a native iOS app in public beta to launch cloud agents, control local agents remotely, track notifications, inspect artifacts, and merge PRs.
+- 2026-09-04 (found today) — Current documentation links iOS to the shared desktop and web agent backend. It lists Cloud Agent entry points across desktop, web, iOS, Slack, source-control comments, Linear, and the API.
 
 ## How to use this
 
-From 2026-06-29, practitioners who need mobile access should evaluate Cursor's iOS app alongside their existing workflow; the dated links alone do not support a more specific migration or feature recommendation.
+From 2026-06-29, test Cursor's iOS app alongside current workflows if mobile access is needed. The dated sources provide no basis for a full migration or broader feature recommendations.
 
-1. Install the desktop app, sign in, and open the repository folder.
+1. Install the desktop application, authenticate, and open the project directory.
   — <https://cursor.com/docs/get-started/quickstart>
-2. Ask Agent to explain the codebase, entry points, and key modules before requesting a change.
+2. Ask Agent to explain repository structure, entry points, and primary modules before proposing edits.
   — <https://cursor.com/docs/get-started/quickstart>
-3. Start with a small, low-risk change; use Plan Mode for multi-file, research-heavy, or approval-sensitive work.
+3. Start with a small, low-risk change, and switch to Plan Mode for research, multi-file tasks, or sensitive approvals.
   — <https://cursor.com/docs/get-started/quickstart>
-4. Add version-controlled repository instructions in `.cursor/rules/*.mdc`, or use a root `AGENTS.md` for simpler global project guidance.
+4. Add repository instructions under `.cursor/rules/*.mdc`, or place a root `AGENTS.md` file for global project guidance.
   — <https://cursor.com/docs/rules>
-5. Review the generated diff and run the repository's existing tests, type checks, linting, or build before accepting the change.
+5. Review generated diffs, then run existing test suites, type checks, linters, or builds before accepting any change.
   — <https://cursor.com/docs/get-started/quickstart>
-6. For asynchronous work, connect source control, configure the Cloud Agent environment, start an isolated VM agent, then review its artifacts, diff, and pull request.
+6. Connect source control for background tasks, configure the Cloud Agent runtime in an isolated VM, and inspect the resulting artifacts, diffs, and pull requests.
   — <https://cursor.com/docs/cloud-agent>
-7. On iPhone or iPad, sign in, choose the repository and branch, direct the agent, and review or merge its pull request when away from the desktop.
+7. Sign in on iPhone or iPad, select the repository and target branch, instruct the agent, and review or merge pull requests away from the desk.
   — <https://cursor.com/docs/cloud-agent/mobile>
 
 ## Best practices
 
-- Keep project Rules focused, actionable, scoped, and under 500 lines; split large rules, cite canonical files instead of copying them, and commit them to Git.
+- Keep project Rules scoped and under 500 lines so they remain actionable. Split oversized rule sets, reference canonical files instead of copying text, and commit them to Git.
   — <https://cursor.com/docs/rules>
-- Give the agent actual repository context first, make a small change before a broad one, and use Plan Mode when implementation needs research or approval.
+- Supply repository context before delegating work. Test a small edit before attempting broad changes, and run Plan Mode when implementation requires research or sign-off.
   — <https://cursor.com/docs/get-started/quickstart>
-- Prepare Cloud Agent environments before launch: provide required secrets through the dashboard, prefer OIDC to long-lived cloud keys, whitelist needed egress, and make local testing work without inaccessible services.
+- Configure Cloud Agent environments before running tasks. Inject secrets via the dashboard, use OIDC rather than long-lived cloud keys, allowlist required outbound network routes, and run tests without external dependencies.
   — <https://cursor.com/docs/cloud-agent/best-practices>
-- Treat every agent result as reviewable output: inspect the diff and run project checks before merge.
+- Treat all agent output as draft work. Inspect the diff and run repository checks before deciding to merge.
   — <https://cursor.com/docs/get-started/quickstart>
-- Use Quick Agent Review for small sanity checks and Deep review for complex logic, security-sensitive changes, or large refactors.
+- Run Quick Agent Review for brief sanity checks. Apply Deep review for complex logic, security-sensitive edits, or large refactors.
   — <https://cursor.com/docs/agent/agent-review>
 
 ## Superseded by this
 
-- 2023-08-21 — the legacy `cursor.so` address is superseded by `cursor.com`; it now redirects there, and current operational guidance lives in the current documentation.
-- 2026-04-02 — a desktop-only, single-editor workflow is no longer a sufficient mental model: Cursor 3 coordinates local and cloud agents across multiple workspaces while retaining IDE-level inspection.
-- 2026-06-29 — treating mobile as notification-only is obsolete: the native iOS app can start and direct agents, inspect work, and review or merge pull requests.
+- 2023-08-21 — `cursor.com` replaces the legacy `cursor.so` domain. The old URL redirects to the new site, and current setup steps live in official documentation.
+- 2026-04-02 — Single-editor desktop assumptions are obsolete. Cursor 3 coordinates local and cloud agents across multiple workspaces while keeping IDE-level inspection.
+- 2026-06-29 — Treating mobile apps as read-only notification feeds is outdated. The native iOS client initiates and steers agents, inspects output, and merges pull requests.
 
 ## Still unknown
 
-- The 2023 source now redirects and does not retain its original announcement text, version, or exact feature set.
-- The June 2026 post calls iOS a public beta; current documentation describes the app but does not explicitly state whether it has reached general availability.
-- Current model availability, pricing, plan entitlements, and regional App Store availability are not established by the sources reviewed.
+- The 2023 source redirects to the main site without preserving original launch notes, version numbers, or feature details.
+- The June 2026 post describes iOS as a public beta. Current documentation details its features but omits whether it reached general availability.
+- Current documentation does not clarify active model choices, subscription tiers, pricing limits, or regional App Store availability.
 
 ## Sources
 
@@ -84,5 +94,5 @@ From 2026-06-29, practitioners who need mobile access should evaluate Cursor's i
 ## Agent brief {#agent-brief}
 
 - **Subject:** `project:cursor`, thread `product-development`, 1 dated events 2026-06-29 → 2026-06-29.
-- **Practical note:** From 2026-06-29, practitioners who need mobile access should evaluate Cursor's iOS app alongside their existing workflow; the dated links alone do not support a more specific migration or feature recommendation.
-- **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
+- **Practical note:** From 2026-06-29, teams needing mobile support should evaluate Cursor's iOS client alongside current tools. The reviewed links do not support a broader platform migration or feature rollout.
+- **Confidence:** medium. Dated supersedes above remain the source for obsolete workflows.
