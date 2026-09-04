@@ -1,210 +1,87 @@
-# Segmentation Dataset Preparation — Binary Small-Object
+---
+title: Segmentation Dataset Preparation: Lineage and Supervision Contract
+description: "Segmentation dataset preparation is a lineage and supervision contract: bind source/rights, annotation policy and mask semantics, group-disjoint splits, augmentation and interpolation behavior, class coverage, and release metrics, and fail closed on leakage, unreviewed labels, or incompatible targets."
+category: techniques
+tags: [segmentation, dataset, annotations, masks, augmentation, splits, provenance, evaluation]
+aliases: ["Binary Small-Object Segmentation Dataset", "Segmentation Data Preparation"]
+---
 
-Reference for binary semantic segmentation datasets with 0.1-5% positive-pixel coverage (small defects, lesions, anomalies). Three critical errors consistently cause inflated metrics and model collapse.
+# Segmentation Dataset Preparation: Lineage and Supervision Contract
 
-## Critical Errors (Fix These First)
+A segmentation dataset is not just images and masks. It is a versioned
+supervision system: source assets, rights, annotation policy, mask semantics,
+sampling rules, split units, transformations, and evaluation must agree. A
+model can produce attractive overlays while training on leakage, mismatched
+masks, or labels that do not represent the intended task.
 
-### 1. Split at Crop Level Instead of Source Image Level
+## Define the sample and annotation contract
 
-**Symptom:** Near-equal train/val sample counts (e.g. 6077 train / 6091 val for acne). Correct image-level splits never produce this ratio.
+For every source asset and derived crop, retain a stable source/group ID,
+asset digest, rights and permitted purpose, acquisition and preprocessing
+lineage, annotation version/reviewer status, class taxonomy, geometry, mask
+encoding, ignore/unknown semantics, and any confidence or exclusion reason.
+Specify whether a mask is binary, multiclass, instance-aware, soft, or
+partially labeled. Never infer class meaning from an 8-bit value alone.
 
-**Fix:** GroupKFold grouped by `source_image_id`. All crops, scales, and instances from one source image → one fold.
+Inspect source image, mask, overlay, metadata, and class counts together.
+Quarantine unreadable, duplicate, ambiguous, or unreviewed labels rather than
+silently converting them to background.
 
-```python
-from sklearn.model_selection import GroupKFold
-import pandas as pd
+## Split by the real leakage unit
 
-df = pd.read_csv("instances.csv")  # cols: sample_path, source_image_id, class_id, scale
-gkf = GroupKFold(n_splits=5)
-df['fold'] = -1
-for fold_idx, (_, val_idx) in enumerate(gkf.split(df, groups=df['source_image_id'])):
-    df.loc[val_idx, 'fold'] = fold_idx
+All crops, augmentations, frames, near-duplicates, and repeated views that
+share a causal source must remain in one split group. The appropriate group
+may be a source image, subject, product, scene, session, time window, or
+capture device; document why it represents the expected deployment boundary.
 
-# Assert no leakage
-for f in range(5):
-    train_imgs = set(df[df.fold != f]['source_image_id'])
-    val_imgs   = set(df[df.fold == f]['source_image_id'])
-    assert not (train_imgs & val_imgs), f"Fold {f} leak: {len(train_imgs & val_imgs)} images"
-```
+[scikit-learn's GroupKFold](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GroupKFold.html)
+provides non-overlapping groups, but it cannot choose the right group
+definition or prove that two assets are not duplicates. After every split,
+retain manifests and assert no group, asset digest, or derivative lineage
+crosses train, validation, or test. Review per-class coverage after grouping;
+do not repair a rare-class split by leaking related crops.
 
-### 2. Loss Scale Mismatch with Class Imbalance
+## Keep images and supervision synchronized
 
-**Symptom:** Model converges to all-background. `class_weight=2.5` is wildly undercalibrated for 1% coverage (correct weight ≈ 99).
+Every spatial transform must update every relevant target with the same sampled
+geometry. Every pixel-only transform must be checked against target semantics.
+[Albumentations' target documentation](https://albumentations.ai/docs/2-core-concepts/targets/)
+distinguishes image-like and mask-like targets and explains why categorical
+masks normally need mask-safe interpolation. The exact library version and
+pipeline configuration still belong in the dataset release.
 
-**Fix:** Switch to compound Dice + Focal or FocalTversky.
+Record crop/pad/resize interpolation, rotation, mask-value handling, ignored
+pixels, transforms enabled per split, and any target routing for boxes,
+instances, depth, or metadata. A transform that is unsupported for the
+declared target must fail rather than generate plausible but misaligned
+supervision.
 
-```python
-import segmentation_models_pytorch as smp
-import torch.nn as nn
+## Evaluate the released dataset, not a convenient crop
 
-class CompoundLoss(nn.Module):
-    def __init__(self, ignore_index=255):
-        super().__init__()
-        self.dice  = smp.losses.DiceLoss(mode='binary', from_logits=True,
-                                          ignore_index=ignore_index)
-        self.focal = smp.losses.FocalLoss(mode='binary', alpha=0.25, gamma=2.0,
-                                           ignore_index=ignore_index)
+Freeze a source-disjoint test set before tuning thresholds or losses. Report
+class-wise and group-aware metrics, sample counts, uncertainty/coverage, and
+qualitative overlays at the delivery resolution. Choose model, resolution,
+loss, class weighting, threshold, and augmentation from this versioned
+experiment; there is no universal binary-output setup or loss weight for rare
+objects.
 
-    def forward(self, logits, target):
-        return 0.5 * self.dice(logits, target) + 0.5 * self.focal(logits, target)
+For small or safety-relevant targets, inspect false negatives, false
+positives, boundaries, and empty-mask cases by source group. Keep an error
+taxonomy so future annotations and data collection can be improved without
+rewriting historical labels.
 
-# Or for recall-biased (missed defect worse than false alarm):
-tversky = smp.losses.TverskyLoss(mode='binary', alpha=0.3, beta=0.7, gamma=1.0)
-```
+## Failure and release boundary
 
-**Loss selection guide:**
+Block a dataset release when source rights or label policy are missing, group
+overlap is detected, transformations are incompatible, class/mask semantics
+are ambiguous, test examples were used for tuning, or annotations lack the
+required review. Do not silently drop records, relabel unknown pixels,
+substitute a split, or collapse instances into background to make a metric
+look better.
 
-| Loss | Use when | Caveat |
-|------|----------|--------|
-| `DiceLoss` | Default binary medical seg | Unstable with no positives in batch |
-| `TverskyLoss` (α=0.3, β=0.7) | Recall >> precision (missed defect = bad) | More hyperparams |
-| `FocalLoss` | Hard examples matter | Needs γ tuning |
-| Compound 0.5×Dice + 0.5×Focal | Production default (nnU-Net style) | Requires both correct |
-| `CE + class_weight` | Only if weight = `1/coverage` | `2.5` for 1% coverage is wrong; correct ≈ 99 |
+## Related pages
 
-### 3. CoarseDropout Silently Erasing Targets
-
-**Symptom:** Train image has no positive pixels but mask still says defect present → semi-supervised noise.
-
-**Fix:** Set `fill_mask=0` in Albumentations 2.0+, or remove CoarseDropout for rare-small classes.
-
-```python
-import albumentations as A
-
-# Albumentations 2.0+ API
-A.CoarseDropout(
-    num_holes_range=(1, 8),
-    hole_height_range=(0.02, 0.08),  # keep small for small-object seg
-    hole_width_range=(0.02, 0.08),
-    fill=0,
-    fill_mask=0,  # CRITICAL: black out mask too, consistent erasure
-    p=0.3,
-)
-```
-
-## Canonical Dataset Class
-
-```python
-import albumentations as A
-import cv2, numpy as np, torch
-from torch.utils.data import Dataset
-
-class SkinDefectDataset(Dataset):
-    def __init__(self, df, imgsz=768, mode='train'):
-        self.df = df
-        self.imgsz = imgsz
-        self.transform = self._build_transform(mode)
-
-    def _build_transform(self, mode):
-        if mode == 'train':
-            return A.Compose([
-                A.LongestMaxSize(max_size=self.imgsz),
-                A.PadIfNeeded(min_height=self.imgsz, min_width=self.imgsz,
-                              border_mode=cv2.BORDER_REFLECT_101,
-                              mask_value=255),     # 255 = ignore_index for padded regions
-                A.HorizontalFlip(p=0.5),
-                A.RandomRotate90(p=0.5),
-                A.Affine(translate_percent=(-0.05,0.05), scale=(0.85,1.15),
-                         rotate=(-15,15), p=0.5),  # replaces deprecated ShiftScaleRotate
-                A.RandomBrightnessContrast(0.2, 0.2, p=0.3),
-                A.HueSaturationValue(10, 15, 10, p=0.3),
-                A.OneOf([A.GaussianBlur(blur_limit=(3,5)),
-                         A.GaussNoise(var_limit=(5,20))], p=0.2),
-                # CoarseDropout omitted for <5% coverage classes
-                A.Normalize(mean=(0.485,0.456,0.406), std=(0.229,0.224,0.225)),
-            ])
-        else:   # val: deterministic only
-            return A.Compose([
-                A.LongestMaxSize(max_size=self.imgsz),
-                A.PadIfNeeded(min_height=self.imgsz, min_width=self.imgsz,
-                              border_mode=cv2.BORDER_REFLECT_101,
-                              mask_value=255),
-                A.Normalize(mean=(0.485,0.456,0.406), std=(0.229,0.224,0.225)),
-            ])
-
-    def __getitem__(self, idx):
-        row = self.df.iloc[idx]
-        img  = cv2.cvtColor(cv2.imread(row['img_path']), cv2.COLOR_BGR2RGB)
-        mask = cv2.imread(row['mask_path'], cv2.IMREAD_GRAYSCALE)
-        mask = (mask > 127).astype(np.uint8)   # canonicalize to 0/1 on load
-        out  = self.transform(image=img, mask=mask)
-        img_t  = torch.from_numpy(out['image'].transpose(2,0,1)).float()
-        mask_t = torch.from_numpy(out['mask']).long()   # values: 0, 1, or 255
-        return img_t, mask_t
-```
-
-## Model Setup
-
-```python
-import segmentation_models_pytorch as smp
-
-# Binary segmentation: single output channel + sigmoid (NOT 2 channels + softmax)
-model = smp.Unet(
-    encoder_name='resnet101',
-    encoder_weights='imagenet',
-    in_channels=3,
-    classes=1,      # binary → sigmoid at inference, not softmax
-)
-```
-
-## Validation Loop
-
-```python
-def validate(model, loader, device):
-    model.eval()
-    tp, fp, fn, tn = 0, 0, 0, 0
-    with torch.no_grad():
-        for img, mask in loader:
-            img, mask = img.to(device), mask.to(device)
-            logits = model(img)
-            pred   = (logits.sigmoid() > 0.5).long().squeeze(1)
-            valid  = mask != 255          # exclude padded pixels
-            t, f, fn_, tn_ = smp.metrics.get_stats(pred[valid], mask[valid], mode='binary')
-            tp += t.sum(); fp += f.sum(); fn += fn_.sum(); tn += tn_.sum()
-    return smp.metrics.iou_score(tp, fp, fn, tn, reduction='micro').item()
-```
-
-## Leakage Verification Script
-
-```python
-def sanity_check(train_df, val_df):
-    train_imgs = set(train_df['source_image_id'])
-    val_imgs   = set(val_df['source_image_id'])
-    assert not (train_imgs & val_imgs), f"LEAKAGE: {len(train_imgs & val_imgs)} images overlap"
-    for split, df in [('train', train_df), ('val', val_df)]:
-        ratio = len(df) / df['source_image_id'].nunique()
-        print(f"{split}: {df['source_image_id'].nunique()} imgs, {len(df)} samples, ratio={ratio:.2f}")
-        if 0.9 < ratio < 1.1 and df['source_image_id'].nunique() > 500:
-            print(f"WARN: ~1:1 ratio suggests crop-level split, not image-level")
-```
-
-## Mask Conventions
-
-- **On disk:** any format (0/255 PNG OK for viewing)
-- **In memory (PyTorch):** 0=background, 1=target, 255=ignore (padded regions)
-- **Canonicalize at load:** `mask = (mask > 127).astype(np.int64)`
-- **Model output:** `classes=1` (not 2). Apply `sigmoid` at inference, not `softmax`.
-
-## Multi-Scale Crop Strategy
-
-Pre-generating tight/512/1024 crops per instance as independent samples:
-- Triples effective weight of each instance
-- Combined with crop-level split → silent oversampling + leakage
-
-**Better:** Dynamic `RandomResizedCrop(scale=(0.3, 1.0))` at train time (nnU-Net pattern). One sample per instance per epoch.
-
-## Preprocessing
-
-- **Padding:** use `reflect` mode + `ignore_index=255` in mask for padded pixels
-- **Mask resize: NEAREST always.** For upscaling predictions: bilinear on logits then threshold.
-- **Val augmentation: deterministic only.** No flips, rotates, dropout on validation.
-
-## Gotchas
-
-- **Issue:** `0/1` vs `0/255` mask inconsistency → silent NaN after 3 steps. -> **Fix:** Assert `mask.max() <= 1` in `__getitem__`. Canonicalize at load: `(mask > 127).astype(np.int64)`.
-- **Issue:** `DiceLoss` with `from_logits=True` expects raw logits. Applying `sigmoid` before loss gives wrong gradient surface. -> **Fix:** Pass raw logits, let the loss apply `sigmoid` internally. Check `from_logits` flag matches.
-- **Issue:** Val set too small for rare classes → unstable metrics. Single run variance > effect size. -> **Fix:** 5-fold GroupKFold, report mean±std. Drop classes with < 30 source images.
-- **Issue:** `ShiftScaleRotate` deprecated in Albumentations 2.0. -> **Fix:** Replace with `A.Affine(translate_percent=..., scale=..., rotate=...)`.
-
-## See Also
-- [[skin-retouch-pipeline]]
+- [[in-context-segmentation]]
+- [[rights-first-text-to-mask-training]]
+- [[defect-detection-small-objects]]
+- [[paired-training-for-restoration]]
