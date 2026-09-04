@@ -1,176 +1,89 @@
 ---
-title: Intrinsic Decomposition - Albedo and Illumination Separation
+title: Intrinsic Decomposition: Assumption and Review Contract
+description: "Intrinsic decomposition is an ambiguity-bound estimate of reflectance and illumination, not ground truth; bind the image-formation assumptions, model and version, color domain, residual policy, source evidence, and task-specific review before using its albedo or shading outputs for editing or relighting."
 category: techniques
-tags: [intrinsic-decomposition, albedo, relighting, illumination, color-transfer, reflectance, shading, neural-rendering]
+tags: [intrinsic-decomposition, albedo, illumination, reflectance, shading, relighting, evidence]
+aliases: ["Albedo and Illumination Separation", "Intrinsic Image Decomposition"]
 ---
 
-# Intrinsic Decomposition - Albedo and Illumination Separation
+# Intrinsic Decomposition: Assumption and Review Contract
 
-Separating an image into intrinsic components (reflectance/albedo vs. shading/illumination). Applications: physics-correct relighting, illumination-independent color transfer, specular removal, white balance estimation.
+Intrinsic decomposition estimates components such as reflectance (often called
+albedo) and shading from an image. It is not a measurement of the material or
+lighting in a photographed scene. In a simplified diffuse model, an observed
+image can be expressed as `I ≈ R ⊙ S + E`, where `R` is reflectance, `S` is
+illumination-dependent shading, and `E` absorbs effects the model does not
+represent. Real images include specularity, transparency, subsurface
+scattering, sensor processing, clipping, and mixed light. A single RGB image
+usually does not uniquely determine these components.
 
-## Core Decomposition
+## Declare the decomposition contract
 
-```text
-Observed image = Albedo (reflectance) × Shading (illumination)
-RGB_observed   = L(albedo)  ×  I(light direction, intensity, color)
-```
+For every output, retain:
 
-Albedo = surface reflectance without light effects. Shading = light-dependent component. Simple Lambertian model: `I = A * S`. Real materials add specularity, subsurface scattering, transmission.
+- source asset digest, crop/orientation, color encoding, alpha policy, and
+  whether the model sees linear, scene-referred, or display-referred values;
+- exact model release, weights, runtime, prompt/reference inputs, and the
+  image-formation assumptions the method documents;
+- named outputs, their units/normalization, residual or confidence handling,
+  and which pixels have no reliable estimate;
+- intended operation, such as a lighting-only preview or a constrained
+  recolor, plus protected content; and
+- comparison source, numerical/reconstruction check where meaningful, and
+  delivery-resolution visual review.
 
-## Methods
+An albedo-like output from one method cannot be substituted for another
+method's albedo, normal, material, or relighting input without an
+implementation-specific compatibility test.
 
-### FlowIID (2025)
+## Treat estimates as model-scoped
 
-**Paper:** arxiv 2601.12329
+The task spans different observations and assumptions. For example,
+[Intrinsic Scene Decomposition From RGB-D Images](https://openaccess.thecvf.com/content_iccv_2015/html/Hachama_Intrinsic_Scene_Decomposition_ICCV_2015_paper.html)
+uses depth and a stated illumination model, while
+[Intrinsic Image Transformation via Scale Space Decomposition](https://openaccess.thecvf.com/content_cvpr_2018/html/Cheng_Intrinsic_Image_Transformation_CVPR_2018_paper.html)
+frames single-image outputs as learned image-to-image estimates. Those papers
+do not establish that a named output is physically correct for arbitrary RGB
+photographs, skin, products, transparent objects, or a later model release.
 
-Single-step intrinsic decomposition via latent flow matching.
+Select a method only after testing the exact release on representative images
+and the downstream operation. Record failure cases such as hard shadows,
+specular highlights, clipped lights, saturated colors, mixed illumination,
+thin structures, and camera-processing artifacts.
 
-```python
-# Albedo computed as:
-albedo = input_image / estimated_shading  # per-pixel division in linear light
-```
+## Use a constrained edit workflow
 
-- Single inference step — fastest available method
-- LMSE albedo: 0.0043 (SOTA on benchmarks at time of publication)
-- Suitable for production pipeline where throughput matters
+1. Verify that the source, rights, crop, color domain, and protected regions
+   are within the job scope.
+2. Produce the stated estimate and keep the source-to-output association.
+3. Inspect the residual and ambiguity-prone regions before treating a value as
+   reflectance or shading.
+4. Apply only the approved change to explicit masks. A low-frequency or
+   albedo-like layer is not permission to change every material or face pixel.
+5. Recompose only with the model's declared routine. If a generated image,
+   clipping, blend, or nonlinear step is involved, label the result as derived
+   rather than exact reconstruction.
+6. Review source versus result at delivery resolution for color drift, halos,
+   shadow/material swaps, detail removal, geometry changes, and protected
+   content.
 
-### Colorful Diffuse Intrinsic Decomposition (Aksoy et al., TOG 2024)
+Albedo-domain color transfer can be a useful experiment when illumination
+confounds a color edit. It still needs a source-aware comparison and does not
+prove that the target color is physically correct. Preserve a residual only
+when the selected method defines it and the output contract says how it is
+combined.
 
-**Repo:** github.com/compphoto/Intrinsic  
-**Paper:** arxiv 2409.13690 (SIGGRAPH Asia Best Paper HM)
+## Failure and release boundary
 
-Three-pass pipeline:
-1. Grayscale ordinal shading estimation
-2. Low-resolution chromaticity (light color) estimation
-3. High-resolution albedo with sparse constraints
+Do not silently replace an uncertain estimate with a different model, add
+generated texture, or present a relit result as recovered source data. Return
+a visible review or failure state when assumptions are unknown, the runtime
+cannot reproduce the declared output, the residual is unexplained, or review
+finds a protected-content change.
 
-**Outputs:**
+## Related pages
 
-| Key | Content |
-|-----|---------|
-| `hr_alb` | High-res albedo (final reflectance estimate) |
-| `dif_shd` | Diffuse shading |
-| `residual` | Specular highlights + visible light sources |
-| `wb_img` | White-balanced reconstruction |
-| `dif_img` | albedo × diffuse shading |
-| `gry_shd` | Grayscale shading (light-color-free) |
-
-```python
-from intrinsic.pipeline import load_models, run_pipeline
-models = load_models('v2')
-results = run_pipeline(models, image)
-albedo  = results['hr_alb']
-shading = results['dif_shd']
-wb      = results['wb_img']
-```
-
-Key property: separates **colorful illumination** from albedo. Per-pixel white balance via colored shading layer. Works on arbitrary in-the-wild photographs.
-
-**License:** Academic only (patent pending).
-
-### DiffusionRenderer (NVIDIA, CVPR 2025 Oral)
-
-**Repo:** github.com/nv-tlabs/diffusion-renderer
-
-Full G-buffer extraction via video diffusion:
-
-- Albedo, normals, metallic, roughness
-- Forward + inverse rendering pipeline
-- Cosmos-DiffusionRenderer: updated version with improved generalization
-
-**License:** Non-commercial (NVIDIA).
-
-### UniRelight (NVIDIA, NeurIPS 2025)
-
-**Paper:** arxiv 2506.15673  
-**Repo:** github.com/nv-tlabs/UniRelight
-
-Joint albedo extraction + relighting via Cosmos-Predict1-7B-Video2World DiT backbone.
-
-**Architecture:** Three latents concatenated along temporal axis, processed by single DiT:
-
-```text
-f_theta([z_tau^E + h^E,  z_tau^a,  z^I];  c_emb, tau)
-```
-
-Where `z^I` = input video (conditioned), `z^a` = albedo (denoised), `z^E` = relit output (denoised). `h^E` = HDRI encoding added **only** to relit branch.
-
-**HDRI encoding** (three representations concatenated by channel):
-1. LDR panorama via Reinhard tonemapping
-2. Log-intensity map: `E_log = log(E+1)/E_max`
-3. Directional encoding: unit vectors in camera coordinates
-
-**Inference specs:**
-
-| Parameter | Value |
-|-----------|-------|
-| Resolution | 480 × 848 px |
-| Steps | 35 (no CFG) |
-| Time per 57 frames | 445.5s (1× A100) |
-| VRAM estimate | 40-60 GB (7B DiT + VAE) |
-
-**SyntheticScenes relit benchmark:**
-
-| Method | PSNR | SSIM | LPIPS |
-|--------|------|------|-------|
-| DiffusionRenderer | 26.61 | 0.841 | 0.222 |
-| UniRelight | **26.97** | **0.847** | **0.190** |
-
-**License:** NVIDIA OneWay Noncommercial — production use requires explicit NVIDIA agreement.
-
-### Other Models
-
-| Model | Paper | Key Feature |
-|-------|-------|------------|
-| IDArb | arxiv 2412.12083 (ICLR 2025) | Multi-view consistent decomposition (normals + material) |
-| IC-Light | ICLR 2025 | Diffusion-based, exploits linearity of light transport |
-| LightLab | arxiv 2505.09608 (SIGGRAPH 2025) | Fine-grained per-light-source control |
-| Facial Intrinsic (MSSID) | arxiv 2512.16511 | Full 6-pass PBR for faces: albedo, normals, AO, specular, translucency |
-| FlowIID | arxiv 2601.12329 | Single-step, fastest, SOTA LMSE |
-
-## Albedo-Domain Color Transfer
-
-Standard color transfer methods (Reinhard, histogram matching, optimal transport) operate on full RGB. Problems:
-
-1. Shadows shift the histogram toward dark — biases transfer
-2. Specular highlights inflate mean brightness — incorrect shift
-3. Colored light makes albedo appear different from what it is
-4. Different illumination = different histograms despite identical surface color
-
-**Solution: transfer in albedo domain then recompose.**
-
-```text
-Source → Decompose → Source_albedo, Source_shading
-Reference → Decompose → Ref_albedo
-
-color_transfer(Source_albedo, Ref_albedo) → Matched_albedo
-
-Output = Matched_albedo × Source_shading  [+ specular residual]
-```
-
-Lambertian recomposition works for diffuse surfaces. For specular: preserve the `residual` layer from Aksoy method and add back after albedo transfer.
-
-## Method Selection
-
-| Scenario | Recommended Method |
-|----------|-------------------|
-| Maximum speed, production | FlowIID |
-| Best albedo quality + per-pixel WB | Colorful Intrinsic (Aksoy) — check license |
-| Full G-buffer (normals needed) | DiffusionRenderer |
-| Video temporal consistency | UniRelight — check license, A100 required |
-| Face-specific PBR | Facial Intrinsic MSSID |
-
-## Gotchas
-
-- **Shadow misattributed as dark material**: decomposition models trained on indoor synthetic data may classify dark shadow regions as low-albedo material rather than illumination. Produces incorrect albedo map where shadows should be in the shading layer. Validate on your specific photography style before relying on results.
-- **Albedo × shading recomposition is Lambertian only**: `output = albedo × shading` is valid for purely diffuse surfaces. Specular highlights, transparency, subsurface scattering are non-linear and will produce incorrect results if recomposed naively. Always add the `residual` layer back after color transfer.
-- **Colorful vs. grayscale shading**: most older methods estimate grayscale shading. Aksoy's colorful shading is critical when the scene has colored light sources — grayscale shading methods will incorrectly attribute colored illumination to albedo, making the albedo appear "colored by the light" and defeating the purpose of the decomposition.
-- **UniRelight inference-only limitation**: UniRelight does not output shading maps or normals directly — only albedo and relit image. Cannot use it to recompose output with modified albedo.
-- **Temporal consistency gap**: FlowIID and Aksoy operate per-frame with no temporal attention. Frame-by-frame albedo estimates flicker on video. UniRelight solves this but requires A100 and non-commercial license.
-
-## See Also
-
-- [[color-theory-for-ml]] - Volkov local vs radiation color, theoretical foundation
-- [[color-space-and-gamma-reference]] - color space pipelines, Log/RAW handling
-- [[color-checker-and-white-balance]] - calibration-based color correction
-- [[sana-denoiser-architecture]] - diffusion architecture reference
+- [[color-space-and-gamma-reference]]
+- [[color-checker-and-white-balance]]
+- [[frequency-decomposition-editing]]
+- [[tiled-inference]]
