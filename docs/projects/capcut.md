@@ -1,6 +1,7 @@
 ---
 title: CapCut Video Studio — AI Creator Home
 category: projects
+date: 2026-03-27
 tags: [ai-creator-home, capcut, capcut_features, project]
 aliases: ["CapCut", "CapCut Video Studio"]
 ---
@@ -8,19 +9,31 @@ aliases: ["CapCut", "CapCut Video Studio"]
 # CapCut Video Studio — AI Creator Home
 
 **Development line:** `project:capcut` · thread `ai-creator-home`  
-**Events:** 1 dated, 2026-03-27 → 2026-03-27 · **Researched:** 2026-09-04 · confidence: medium
+**Last event:** 2026-03-27 · 1 dated since 2026-03-27 · **Researched:** 2026-09-04 · confidence: medium
 
 ## What it is
 
-CapCut Video Studio — a photo and video editor for short-form creators, small marketing teams, and educators who need to edit source media and generate a revisable draft. — Timeline: cut, crop, keyframe, text, transitions, effects, and music. — AI: text/image-to-video, Video Studio, auto captions, text-to-speech, background removal, and noise reduction. — Platforms: Online, Desktop, Mobile, and Pad. Limit: 2K/4K, 60 fps, model access, credits, watermarks, and export options vary by platform, hardware, plan, account, region, and source media. Verdict: use it for fast short-form production and variants; do not expect direct Premiere Pro project interchange.
+CapCut Video Studio is a photo and video editor for short-form creators, small marketing teams, and educators who need to edit source media and generate a revisable draft.
+
+- Timeline: cut, crop, keyframe, text, transitions, effects, and music.
+- AI: text/image-to-video, Video Studio, auto captions, text-to-speech, background removal, and noise reduction.
+- Platforms: Online, Desktop, Mobile, and Pad.
+
+Export caps at 2K/4K at 60 fps; model access, credits, watermarks, and export options vary by platform, hardware, plan, account, region, and source media. Use it for fast short-form production and variants, not for direct Premiere Pro project interchange.
 
 ## Development line
 
-- **2026-03-27 — CapCut referenced its AI Creator Home.** On 2026-03-27, the sealed record included a link to CapCut’s AI Creator Home. The dated link establishes a public AI-creator destination, but does not establish its capabilities, release status, or a specific product change. This history event should remain narrowly described until the linked page and original message are researched.
+- **2026-03-27 — CapCut referenced its AI Creator Home.** On 2026-03-27, CapCut linked to AI Creator Home. The link marks a public destination for creators, but shows no features, release status, or product changes. We keep the description narrow until we read the page and the original message.
 
 ## What changed
 
-CapCut Video Studio — the verifiable line moves from an unresolved feature mention to a separate AI entry point and today’s hybrid editor. — 2023-01-20: a CapCut feature event is recorded without a public URL; the actual feature and former availability cannot be verified. — 2026-03-27: `ai-creator-home` is the recorded AI entry URL. It returned no readable content on 2026-09-04, so neither its launch date nor exact model set is asserted. — Found today, 2026-09-04: CapCut’s own site describes Video Studio as a chat-based creation mode and lists conventional editing alongside AI video/image generation, captions, speech, background removal, and audio cleanup. Limit: feature access can vary by plan, platform, account, region, and rollout. Verdict: this is now a hybrid edit-and-generate workflow, not a single fixed feature set.
+The verifiable line moves from an unresolved feature mention to a separate AI entry point and today’s hybrid editor.
+
+- 2023-01-20: CapCut noted a feature event without a public URL. We cannot verify the feature or its former availability.
+- 2026-03-27: CapCut listed `ai-creator-home` as an entry URL. The link returned no readable content on 2026-09-04, so we cannot confirm its launch date or models.
+- Found today, 2026-09-04: CapCut’s site describes Video Studio as a chat-based creation mode. The site lists conventional editing alongside AI video and image generation, captions, speech, background removal, and audio cleanup.
+
+Feature access varies by plan, platform, account, region, and rollout. The product is now a hybrid edit-and-generate workflow rather than a single fixed feature set.
 
 ## How to use this
 
