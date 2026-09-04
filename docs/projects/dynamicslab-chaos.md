@@ -1,6 +1,7 @@
 ---
 title: DynamicsLab Chaos — Chaos and Drift demos
 category: projects
+date: 2025-07-03
 tags: [chaos-and-drift-demos, dynamicslab, dynamicslab-chaos, project]
 aliases: ["DynamicsLab Chaos", "Mirage"]
 ---
@@ -8,48 +9,53 @@ aliases: ["DynamicsLab Chaos", "Mirage"]
 # DynamicsLab Chaos — Chaos and Drift demos
 
 **Development line:** `project:dynamicslab-chaos` · thread `chaos-and-drift-demos`  
-**Events:** 2 dated, 2025-07-03 → 2025-07-03 · **Researched:** 2026-09-04 · confidence: medium
+**Last event:** 2025-07-03 · 2 dated since 2025-07-03 · **Researched:** 2026-09-04 · confidence: medium
 
 ## What it is
 
-DynamicsLab Chaos / Mirage is a 2025 browser preview of a real-time generative game-world model for creators exploring AI-native UGC instead of a conventional game engine. - Historical interaction: natural-language prompts, keyboard, and controller input. - Public scenarios: Urban Chaos and Coastal Drift. Limit: the original demos and blog each returned 502 on 2026-09-04; an API, SDK, pricing, or supported workflow could not be verified. Verdict: historical reference only until a first-party live route is restored and documented.
+DynamicsLab Chaos / Mirage is a 2025 browser preview of a real-time generative game-world model for creators exploring AI-native UGC instead of a conventional game engine.
+
+- Interaction: accepts natural-language prompts, keyboard, and controller input.
+- Scenarios: serves Urban Chaos and Coastal Drift.
 
 ## Development line
 
-- **2025-07-03 — DynamicsLab Chaos was publicly linked to a Chaos demo.** On 2025-07-03, a dated DynamicsLab message linked to the Chaos demo endpoint at demo.dynamicslab.ai/chaos. This is a material public reference point for the project’s interactive Chaos demonstration, though the available evidence does not establish whether the endpoint was newly launched or updated that day.
-- **2025-07-03 — DynamicsLab linked its blog and a Drift demo.** On 2025-07-03, a dated DynamicsLab message linked to the project blog and the Drift demo endpoint at demo.dynamicslab.ai/drift. This records a public development reference adjacent to the Chaos demo, but the links alone do not establish the contents, release status, or relationship between the blog and the demo.
+- **2025-07-03 — DynamicsLab Chaos was publicly linked to a Chaos demo.** On 2025-07-03, DynamicsLab linked to the Chaos demo endpoint at demo.dynamicslab.ai/chaos. We cannot tell whether the endpoint was new or updated that day.
+- **2025-07-03 — DynamicsLab linked its blog and a Drift demo.** On 2025-07-03, DynamicsLab linked to the project blog and the Drift demo endpoint at demo.dynamicslab.ai/drift. The links do not show the contents, release status, or connection between the blog and the demo.
 
 ## What changed
 
-DynamicsLab Chaos / Mirage development: 2025-07-03 — Mirage appeared as a public preview with Urban Chaos (`/chaos`) and Coastal Drift (`/drift`) browser scenarios. Available descriptions treat them as two Mirage scenarios, not separate products. 2025-08-21 (found today; preserved copy of a Dynamics Lab post) — Mirage 2 added image-conditioned world creation: upload a photo, sketch, concept image, or painting; prompt changes; then share a link. The announcement claims broader coverage, sharper visuals, lower latency, and smoother play. 2026-09-04 (found today) — the original Chaos, Drift, and blog endpoints returned 502 in this review. Earlier “try the demo” guidance is therefore not currently actionable; this does not prove a permanent shutdown.
+- **2025-07-03**: Mirage appeared as a public preview with Urban Chaos (`/chaos`) and Coastal Drift (`/drift`) browser scenarios. Descriptions treat them as two Mirage scenarios, not separate products.
+- **2025-08-21**: Mirage 2 added image-conditioned world creation: upload a photo, sketch, concept image, or painting, prompt changes, then share a link. The announcement claims broader coverage, sharper visuals, lower latency, and smoother play.
+- **2026-09-04**: The original Chaos, Drift, and blog endpoints returned 502. Earlier guidance to try the demo is not actionable, though this does not prove a permanent shutdown.
 
 ## How to use this
 
-As of 2025-07-03, practitioners evaluating DynamicsLab Chaos should preserve and consult the dated Chaos and Drift demo endpoints alongside the project blog, while treating the URLs alone as evidence of public availability rather than proof of feature scope or performance.
+As of 2025-07-03, preserve and consult the dated Chaos and Drift demo endpoints alongside the project blog. Treat the URLs as evidence of public availability, not proof of feature scope or performance.
 
-1. Do not start a production or user workflow from the old demo: no live first-party route was verified when the original Chaos endpoint returned 502.
+1. Do not start a production or user workflow from the old demo: we verified no live first-party route when the original Chaos endpoint returned 502.
   — <https://demo.dynamicslab.ai/chaos>
-2. If Dynamics Lab restores a verified first-party demo, the last documented Mirage 2 flow was to upload one image, prompt changes to the world, interact with it, and share the generated link.
+2. If Dynamics Lab restores a verified first-party demo, follow the last documented Mirage 2 flow: upload one image, prompt changes to the world, interact with it, and share the generated link.
   — <https://twitter-thread.com/t/1958592749378445319>
 
 ## Best practices
 
-- Benchmark any restored demo with a short timed scene before choosing it: contemporaneous hands-on reports described substantial control latency, visual drift, and only seconds of retained visual detail.
+- Benchmark any restored demo with a short timed scene before choosing it. Hands-on reports described substantial control latency, visual drift, and only seconds of retained visual detail.
   — <https://news.ycombinator.com/item?id=44978286>
 - Verify the operator and domain before uploading images or paying. A current Mirage2-branded alternative explicitly says it is unaffiliated and supplies manual video production, not the original interactive service.
   — <https://www.mirage2.org/mirage2-alternative-video>
 
 ## Superseded by this
 
-- 2025-07-03 initial-demo guidance for Urban Chaos and Coastal Drift was superseded by the Mirage 2 image-to-world flow announced on 2025-08-21.
-- 2025-08-21 guidance to try Mirage online is unavailable as of 2026-09-04 because the original public endpoints returned 502; this is an availability finding, not a claim that the project permanently ended.
+- The Mirage 2 image-to-world flow announced on 2025-08-21 superseded the 2025-07-03 demo guidance for Urban Chaos and Coastal Drift.
+- Guidance from 2025-08-21 to try Mirage online is not actionable as of 2026-09-04 because the public endpoints returned 502. This records availability, not a permanent shutdown.
 
 ## Still unknown
 
-- It is unknown whether Dynamics Lab or Mirage continues privately, moved to another official domain, or is permanently discontinued; a 502 does not establish closure.
-- No accessible primary source documents a current API/SDK, license, pricing, data handling, support policy, or model architecture.
-- Mirage 2 feature details came from a third-party preservation attributed to @DynamicsLab_AI because the direct X post returned 403 in this review.
-- Chaos and Drift are described as Mirage scenarios, but unavailable first-party pages prevent confirmation of their exact model or configuration relationship.
+- Whether Dynamics Lab or Mirage continues privately, moved to another official domain, or ended permanently; a 502 does not prove closure.
+- No accessible primary source documents a current API or SDK, license, pricing, data handling, support policy, or model architecture.
+- Feature details for Mirage 2 come from a copy attributed to @DynamicsLab_AI because the direct post returned 403.
+- The exact model or configuration relationship between Chaos and Drift, because first-party pages are unavailable.
 
 ## Sources
 
@@ -68,5 +74,5 @@ As of 2025-07-03, practitioners evaluating DynamicsLab Chaos should preserve and
 ## Agent brief {#agent-brief}
 
 - **Subject:** `project:dynamicslab-chaos`, thread `chaos-and-drift-demos`, 2 dated events 2025-07-03 → 2025-07-03.
-- **Practical note:** As of 2025-07-03, practitioners evaluating DynamicsLab Chaos should preserve and consult the dated Chaos and Drift demo endpoints alongside the project blog, while treating the URLs alone as evidence of public availability rather than proof of feature scope or performance.
+- **Practical note:** As of 2025-07-03, preserve and consult the dated Chaos and Drift demo endpoints alongside the project blog. Treat the URLs as evidence of public availability, not proof of feature scope or performance.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
