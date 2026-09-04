@@ -1,67 +1,81 @@
 ---
-title: Gemini — Gemini product development
+title: Gemini
 category: projects
+date: 2026-07-22
 tags: [gemini, gemini-app, gemini-gems, gemini-product-development, google-gemini, project]
 aliases: ["Gemini", "Google Gemini"]
 ---
 
-# Gemini — Gemini product development
+# Gemini
 
 **Development line:** `project:google-gemini` · thread `gemini-product-development`  
-**Events:** 1 dated, 2026-07-22 → 2026-07-22 · **Researched:** 2026-09-04 · confidence: medium
+**Last event:** 2026-07-22 · 1 dated since 2026-07-22 · **Researched:** 2026-09-04 · confidence: medium
 
 ## What it is
 
-Gemini — продукты Google для чата, файлов, кода и интеграции модели в приложение. — Gemini Apps: диалог, вложения и выбор модели. — Gems: сохранённые инструкции для повторяемых задач. — Gemini API и AI Studio: мультимодальные вызовы, структурированный вывод и инструменты. Мера: доступные model ID и статусы меняются; текущий справочник уже содержит `gemini-3.8-flash`, а `gemini-3.6-flash` остаётся в списке. Вывод: для личной рутины нужен Gem, для продукта — API с явным выбором модели и проверкой ответа.
+Gemini is Google's product family for chat, files, code, and model integration into applications.
+
+- Gemini Apps: conversation, attachments, and model selection.
+- Gems: saved instructions for repeatable tasks.
+- Gemini API and AI Studio: multimodal calls, structured output, and tools.
+
+Available model IDs and statuses change; the current directory already lists `gemini-3.8-flash`, while `gemini-3.6-flash` remains on the list. For personal routines we use a Gem; for a product we use the API with explicit model selection and response verification.
 
 ## Development line
 
-- **2026-07-22 — Gemini 3.6 Flash was linked with updated Flash model variants.** On 2026-07-22, the sealed record linked an official Google Blog Gemini-models page whose URL identifies Gemini 3.6 Flash, Gemini 3.5 Flash Lite, and Gemini 3.5 Flash Cyber. It also linked an AI Studio new-chat URL configured for Gemini 3.6 Flash, establishing a contemporaneous model-selection reference. The supplied evidence does not establish launch details, capabilities, regions, or terms, so none are stated here.
+- **2026-07-22 — Gemini 3.6 Flash was linked with updated Flash model variants.** A linked Google page from 2026-07-21 introduced Gemini 3.6 Flash, 3.5 Flash-Lite, and a limited pilot of 3.5 Flash Cyber; 3.6 and 3.5 Flash-Lite became available through the Gemini API and AI Studio.
 
 ## What changed
 
-2024-05-14 — Gemini Apps: Gemini Advanced получил Gemini 1.5 Pro с контекстом 1 млн токенов и загрузкой файлов; источник найден сегодня. 2024-05-14 — Gems: Google показал настраиваемые версии Gemini, но в тот день это была пометка «soon», а не подтверждённый общедоступный запуск; источник найден сегодня. 2024-05-14, найдено сегодня — Gemini API: Google представил Gemini 1.5 Flash для высокочастотных задач, а Gemini 1.5 Pro получил контекст до 2 млн токенов и обработку аудио в API и AI Studio. 2024-12-20 — AI Studio: указан URL нового чата; он не раскрывает модель, версию или релиз, поэтому более точное изменение не подтверждено. 2026-07-22 — Flash-линейка: связанная страница Google от 2026-07-21 представила Gemini 3.6 Flash, 3.5 Flash-Lite и ограниченный пилот 3.5 Flash Cyber; 3.6 и 3.5 Flash-Lite стали доступны через Gemini API и AI Studio. 2026-09-04, найдено сегодня — текущий каталог Gemini API перечисляет `gemini-3.8-flash`, `gemini-3.7-flash`, `gemini-3.6-flash` и `gemini-3.5-flash-lite`; 3.6 больше не единственный актуальный выбор. Ограничение: 3.5 Flash Cyber не стал общедоступной API-моделью — Google описывает пилот для правительств и доверенных партнёров через CodeMender. Вывод: для новой интеграции берите версию из текущего каталога, а не из старой ссылки AI Studio.
+- 2024-05-14 — Gemini Apps: Gemini Advanced received Gemini 1.5 Pro with a 1 million token context and file uploads; source found today.
+- 2024-05-14 — Gems: Google showed customizable versions of Gemini, but on that day marked them "soon" rather than confirming a public launch; source found today.
+- 2024-05-14, found today — Gemini API: Google introduced Gemini 1.5 Flash for high-frequency tasks, and Gemini 1.5 Pro received context up to 2 million tokens and audio processing in the API and AI Studio.
+- 2024-12-20 — AI Studio: a new chat URL is given; it reveals no model, version, or release, so no specific change is confirmed.
+- 2026-07-22 — Flash line: a linked Google page from 2026-07-21 introduced Gemini 3.6 Flash, 3.5 Flash-Lite, and a limited pilot of 3.5 Flash Cyber; 3.6 and 3.5 Flash-Lite became available through the Gemini API and AI Studio.
+- 2026-09-04, found today — the current Gemini API catalog lists `gemini-3.8-flash`, `gemini-3.7-flash`, `gemini-3.6-flash`, and `gemini-3.5-flash-lite`; 3.6 is no longer the only current choice.
+- 3.5 Flash Cyber did not become a public API model: Google describes a pilot for governments and trusted partners through CodeMender.
+- For a new integration, take a version from the current catalog rather than an old AI Studio link.
 
 ## How to use this
 
 From 2026-07-22, practitioners should treat Gemini 3.6 Flash as a recorded AI Studio model-selection candidate and verify its capabilities, rollout, and pricing in the linked official model update before adopting it.
 
-1. Для личной задачи откройте Gemini Apps, войдите в аккаунт, выберите модель, добавьте при необходимости файл или изображение и отправьте запрос.
+1. For personal tasks, open Gemini Apps, sign in, pick a model, attach a file or image if needed, and send the prompt.
   — <https://support.google.com/gemini/answer/13275745?hl=en>
-2. Для повторяемой роли откройте Explore Gems → New Gem; задайте имя и инструкции с ролью, задачей, контекстом и форматом, проверьте в preview и сохраните.
+2. For a repeated role, open Explore Gems → New Gem; set a name and instructions with role, task, context, and format, test in preview, and save.
   — <https://support.google.com/gemini/answer/15235603>
-3. Для интеграции создайте проект и ключ в AI Studio, храните ключ в переменной окружения, установите SDK и выполните первый вызов Interactions API из Python, JavaScript или REST.
+3. For integration, create a project and key in AI Studio, store the key in an environment variable, install the SDK, and make the first Interactions API call from Python, JavaScript, or REST.
   — <https://ai.google.dev/gemini-api/docs/get-started>
-4. Перед выпуском выберите точный model ID из живого каталога и закрепите его в конфигурации; текущая документация начинает с `gemini-3.8-flash`.
+4. Before release, pick an exact model ID from the live catalog and pin it in configuration; current documentation starts with `gemini-3.8-flash`.
   — <https://ai.google.dev/gemini-api/docs/models?hl=en>
-5. Когда ответ требует свежих данных, подключите Google Search; при обращении к собственной системе объявите функцию, выполните её в приложении и верните результат модели.
+5. When an answer needs fresh data, connect Google Search; when calling an internal system, declare a function, run it in the application, and pass the result back to the model.
   — <https://ai.google.dev/gemini-api/docs/tools>
 
 ## Best practices
 
-- Формулируйте цель, ограничения, формат и контекст явно; используйте несколько согласованных примеров, если важны стиль или классификация.
+- State the goal, constraints, format, and context explicitly; use several consistent examples when style or classification matters.
   — <https://ai.google.dev/gemini-api/docs/prompting-strategies>
-- Для Gemini 3.x сначала оставляйте temperature, top-p и top-k по умолчанию; документируйте и проверяйте каждое изменение, потому что настройка может ухудшить сложное рассуждение или вызвать цикл.
+- For Gemini 3.x, leave temperature, top-p, and top-k at default at first; document and verify each change, because tuning can degrade complex reasoning or cause loops.
   — <https://ai.google.dev/gemini-api/docs/prompting-strategies>
-- Используйте Structured Outputs для фиксированного финального формата, а Function Calling — для действия; JSON по схеме всё равно проверяйте на семантику и бизнес-правила.
+- Use Structured Outputs for a fixed final format, and Function Calling for actions; still verify schema-valid JSON for semantics and business rules.
   — <https://ai.google.dev/gemini-api/docs/structured-output>
-- Проверяйте ответ Gemini Apps перед профессиональным решением: справка прямо предупреждает, что приложение может ошибаться.
+- Check Gemini Apps responses before professional decisions: documentation explicitly warns that the app can make mistakes.
   — <https://support.google.com/gemini/answer/13275745?hl=en>
-- Выбирайте тариф до передачи рабочих данных: для Free Google указывает использование контента для улучшения продуктов, для Paid — нет; сверяйте это с требованиями команды и договора.
+- Choose a tier before sending work data: for Free, Google specifies content is used to improve products; for Paid, it is not; check this against team and contract requirements.
   — <https://ai.google.dev/gemini-api/docs/pricing>
 
 ## Superseded by this
 
-- 2024-05-14: состояние «Gems скоро появятся» устарело — текущая справка описывает создание, предварительную проверку и сохранение Gems.
-- 2024-05-14: рекомендация начинать новую API-интеграцию с Gemini 1.5 Flash или 1.5 Pro устарела; текущий каталог Gemini API ведёт по 3.x и перечисляет Gemini 3.8 Flash.
-- 2026-07-22: Gemini 3.6 Flash и 3.5 Flash-Lite остаются доступными, но считать 3.6 Flash автоматически самым новым Flash нельзя: текущий каталог также содержит 3.7 и 3.8 Flash.
-- 2024-12-20: URL нового чата AI Studio — точка входа, а не устойчивая рекомендация по версии модели.
+- 2024-05-14: "Gems coming soon" status is obsolete — current documentation describes creating, previewing, and saving Gems.
+- 2024-05-14: the recommendation to start a new API integration on Gemini 1.5 Flash or 1.5 Pro is obsolete; the current Gemini API catalog leads with 3.x and lists Gemini 3.8 Flash.
+- 2026-07-22: Gemini 3.6 Flash and 3.5 Flash-Lite remain available, but we cannot treat 3.6 Flash as automatically the newest Flash: the current catalog also contains 3.7 and 3.8 Flash.
+- 2024-12-20: the new AI Studio chat URL is an entry point, not a stable model version recommendation.
 
 ## Still unknown
 
-- Точные формулировки двух записей от 2024-05-14 недоступны: официальные анонсы того дня подтверждают направление, но не текст каждой записи.
-- Запись от 2024-12-20 даёт только URL нового чата AI Studio; из него нельзя достоверно вывести модель, версию или релиз.
-- Gemini Apps, Gems и Gemini API — разные поверхности одного семейства, а не отдельные проекты; доступность зависит от аккаунта, тарифа, региона и модели.
+- Exact wording of the two entries from 2024-05-14 is unavailable: official announcements from that day confirm the direction, but not the text of each entry.
+- The 2024-12-20 entry gives only a new AI Studio chat URL; we cannot reliably deduce the model, version, or release from it.
+- Gemini Apps, Gems, and the Gemini API are different surfaces of one family rather than separate projects; availability depends on account, tier, region, and model.
 
 ## Sources
 
