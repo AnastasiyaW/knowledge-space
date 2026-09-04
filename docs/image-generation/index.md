@@ -9,7 +9,7 @@ type: MOC
 - [[MMDiT]] - Multi-Modal Diffusion Transformer architecture
 - [[flow-matching]] - Flow matching for diffusion models
 - [[block-causal-linear-attention]] - Block causal linear attention mechanism
-- [[DC-AE]] - Deep Compression Autoencoder
+- [[DC-AE]] - Use DC-AE only with a diffusion model and latent contract it was trained for; high compression reduces latent-token work but does not make it a drop-in VAE replacement.
 - [[SANA]] - SANA architecture
 - [[sana-denoiser-architecture]] - SANA denoiser design
 - [[qwen-image]] - Qwen-Image generation/editing artifacts and version history
@@ -36,7 +36,7 @@ type: MOC
 
 ## Editing & Restoration
 - [[Step1X-Edit]] - Step1X-Edit model
-- [ACE++](ACE++.md) - ACE++ editing
+- [ACE++](ACE++.md) - ACE++ provides reference-driven image creation and editing through task-specific LoRA workflows and a general FFT model; use the published base-model pairing and verify its terms.
 - [[LaMa]] - Large Mask Inpainting
 - [[image-restoration-survey]] - Image restoration survey
 - [[RealRestorer]] - RealRestorer model
@@ -46,13 +46,13 @@ type: MOC
 - [[grayscale-overlay-nn-architectures]] - Neural networks for grayscale overlay prediction
 
 ## Specialized Models
-- [[Calligrapher]] - Calligrapher model
+- [[Calligrapher]] - Calligrapher customizes text imagery from style references through FLUX.1-Fill-dev, SigLIP, masks, and project weights; treat typography accuracy and licensing as separate acceptance checks.
 - [[PixelSmile]] - PixelSmile model
 - [[X-Dub]] - X-Dub model
 - [[FLAIR]] - FLAIR model
-- [[MACRO]] - MACRO model
+- [[MACRO]] - MACRO is a structured multi-reference dataset, benchmark, and set of model-specific fine-tuning assets; validate the compatible base model and artifact terms before deployment.
 - [[MARBLE]] - MARBLE model
-- [[ATI]] - Any Trajectory Instruction
+- [[ATI]] - ATI adds trajectory-conditioned object, local, and camera motion control to its Wan2.1-based image-to-video workflow; preserve the published model, checkpoint, and localhost editor boundaries.
 - [[comfyui-sensenova-u1]] - Official SenseNova U1/U1.5 versus third-party ComfyUI wrapper
 
 ## Segmentation

@@ -1,69 +1,56 @@
 ---
-title: ACE++
+title: "ACE++: Reference-Driven Image Creation and Editing"
+description: "ACE++ provides reference-driven image creation and editing through task-specific LoRA workflows and a general FFT model; use the published base-model pairing and verify its terms."
 category: models
-tags: [image-editing, alibaba, flux, lcu, try-on, face-swap, inpainting, lora, non-commercial]
+tags: [image-editing, alibaba, flux, reference-image, inpainting, lora, comfyui]
 aliases: ["ACE Plus", "FuseAnyPart"]
 ---
 
-# ACE++ (Alibaba / Tongyi Lab)
+# ACE++: Reference-Driven Image Creation and Editing
 
-Unified multi-task image editing model built on [[flux-kontext|FLUX.1-Fill-dev]]. Supports try-on, face swap, inpainting, style transfer, super-resolution, logo placement — all through LoRA adapters or full fine-tune.
+**Scope checked: 2026-09-04.** ACE++ is Alibaba Tongyi Lab's post-training system for reference-image generation and editing. It combines reference images, edit images or masks when needed, and a text instruction. The official repository provides several task-specialized LoRA routes and a broader fully fine-tuned (FFT) model rather than one interchangeable checkpoint for every workflow.
 
-Paper: arXiv:2501.02487. GitHub: ali-vilab/ACE_plus.
+## Select the Published Model Route
 
-## Architecture
+| Route | Intended scope | Operational note |
+|---|---|---|
+| Portrait LoRA | identity and portrait-reference generation or editing | use the accompanying reference workflow |
+| Subject LoRA | object, logo, pattern, and subject consistency | use the accompanying reference workflow |
+| Local Editing LoRA | mask- or control-guided local changes | may need the documented preprocessing route |
+| FFT model | broader reference and editing tasks | the authors note less stable results than the specialized LoRA routes |
 
-### LCU++ (Long-context Condition Unit++)
+The repository recommends the LoRA workflows where a specialized route exists. A general model can be convenient, but it should not be treated as the quality baseline for a task that has a dedicated adapter.
 
-Key change from original ACE: **channel concatenation** instead of sequence concatenation.
+## Base Model and Workflow Boundary
 
-```bash
-Original LCU:  [cond_image; mask] + [noise; mask]  → sequence concat (2× attention cost)
-LCU++:         [cond_image; mask; noise]            → channel concat (efficient)
-```
+The published LoRA examples pair ACE++ with `FLUX.1-Fill-dev`; some workflows also use FLUX.1 Redux or documented preprocessing components. The FFT route has its own configuration. Keep the following as one versioned unit:
 
-For N-ref tasks: multiple references concat along sequence, but each unit uses channel concat internally.
+- ACE++ weights and selected workflow;
+- base-model revision and any companion model;
+- preprocessing model and mask/control convention;
+- image dimensions, sequence-length setting, sampling controls, and prompt;
+- output artifact and source-reference authorization.
 
-**FFT model specifics:**
-- IN_CHANNELS: **448** (vs 384 for FLUX.1-Fill-dev) — 64 extra for edit image latent
-- Same transformer: 3072 hidden, 24 heads, 19+38 blocks
-- REDUX_DIM: 1152 for image embedding
+Do not load an ACE++ adapter into an arbitrary FLUX checkpoint because the filenames look compatible. The repository's `max_seq_length` option is a memory-versus-detail control for the supplied workflow, not a universal quality setting.
 
-## Model Variants
+## Practical Acceptance Checks
 
-**3 LoRA models (recommended):**
+Test the exact editing class before relying on it:
 
-| LoRA | Rank | Task |
-|------|------|------|
-| Portrait | 64 | Face/identity consistency |
-| Subject | 16 | Object/logo/pattern |
-| Local Editing | 16 | Mask-based region editing |
+1. confirm the reference subject/object is retained where required;
+2. inspect the edit boundary, mask leakage, hands, typography, and small logos at delivery size;
+3. check that unrelated regions remain unchanged when preservation is required;
+4. retain input image, mask, prompt, seed, model revisions, and output for a reproducible review;
+5. fall back to a controlled manual or compositing path when the result changes the wrong object.
 
-**1 FFT model** (fully fine-tuned): all tasks but less stable. Authors explicitly recommend LoRA over FFT.
+The upstream project lists limitations in instruction following for some add/remove operations and notes possible artifacts. A visually plausible result is not evidence that the requested local edit was performed correctly.
 
-## Training
+## Licensing and Distribution
 
-Two-stage:
-1. Pre-train on 0-ref tasks (T2I, inpainting) starting from FLUX.1-Fill-dev
-2. Fine-tune on all tasks (0-ref + N-ref) from ACE dataset
+ACE++ is built on external base-model artifacts. Review the current license and access terms for the selected base model, the ACE++ weights, and every companion checkpoint before commercial use, redistribution, or exposing a hosted service. Do not promote a workflow as commercially cleared solely because its code is visible on GitHub.
 
-## Critical Warning
+## References
 
-> **Development on FLUX base is SUSPENDED.** Authors found "high degree of heterogeneity between training data and FLUX model" causing highly unstable training. Future ACE versions will use Alibaba's **Wan** foundation models instead.
-
-## License
-
-Inherits **FLUX.1-dev Non-Commercial License** — non-commercial only without BFL licensing.
-
-## Gotchas
-
-- FFT model quality **worse than LoRA models** — use LoRA variants
-- FLUX.1-dev is guidance-distilled → negative prompts have uncertain effect
-- Requires FLUX.1-Fill-dev as base (not plain FLUX.1-dev)
-- No quantitative benchmarks published — qualitative results only
-
-## Key Links
-
-- GitHub: github.com/ali-vilab/ACE_plus
-- HF: huggingface.co/ali-vilab/ACE_Plus
-- Demo: huggingface.co/spaces/scepter-studio/ACE-Plus
+- [ACE++ official repository](https://github.com/ali-vilab/ACE_plus)
+- [ACE++ paper](https://arxiv.org/abs/2501.02487)
+- [ACE++ Hugging Face collection](https://huggingface.co/ali-vilab/ACE_Plus)
