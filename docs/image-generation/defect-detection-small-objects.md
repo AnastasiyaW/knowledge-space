@@ -1,199 +1,88 @@
 ---
-title: Defect Detection and Small Object Detection
+title: Defect and Small-Object Detection: Evidence Contract
+description: "Defect and small-object detection produces reviewable candidates, not automatic quality truth; bind the model, capture protocol, annotation or normal-reference policy, slicing or merge mapping, thresholds, and source-disjoint evaluation before any inspection or workflow decision."
 category: reference
-tags: [defect-detection, anomaly, efficientad, yolo, anomalib, small-objects, jewelry]
+tags: [defect-detection, anomaly-detection, small-objects, inspection, provenance, evaluation, tiling]
 aliases: ["Anomaly Detection", "Defect Detection Models", "Small Object Detection"]
 ---
 
-# Defect Detection and Small Object Detection
+# Defect and Small-Object Detection: Evidence Contract
 
-Reference for detecting defects (scratches, dust, surface anomalies) and small objects in high-resolution images. Focuses on <2GB VRAM constraints and jewelry/skin domain.
+Detection and anomaly systems identify candidates for inspection. A box, mask,
+heatmap, or score is not proof that a product is defective, that a visual
+change was introduced, or that an image is safe to publish. Bind the capture
+conditions, task definition, model, and review policy before using a result in
+an operational decision.
 
-## Model Overview
+## Choose the task explicitly
 
-| Model | Type | Speed | VRAM | AUROC | Use Case |
-|-------|------|-------|------|-------|---------|
-| EfficientAD | Anomaly (unsupervised) | <100ms | <2GB | 98.9% | Surface defects, no labels needed |
-| PatchCore | Anomaly (unsupervised) | 200-500ms | 2-4GB | 99.1% | Highest accuracy, more VRAM |
-| PP-YOLOE-SOD-S | Detection (supervised) | Fast | <2GB | 38.5 mAP* | Small objects, labeled dataset |
-| Siamese change-aware | Detection (supervised) | Varies | 2-4GB | - | Before/after change detection |
+| Task | Required supervision or reference | Output meaning |
+|---|---|---|
+| Supervised detection or segmentation | approved class taxonomy and source-linked annotations | candidate class/region |
+| Anomaly detection | a defined normal-reference policy and known exclusions | deviation from that reference distribution |
+| Before/after comparison | aligned, authorized paired captures and change policy | candidate difference |
 
-*VisDrone-S benchmark
+[EfficientAD](https://anomalib.readthedocs.io/en/v2.0.0/markdown/guides/reference/models/image/efficient_ad.html)
+is documented in Anomalib as a student-teacher anomaly method. Its paper
+evaluates a particular model family on named datasets. Neither source makes an
+anomaly map a universal defect label, sets a safe threshold for every material,
+or guarantees a fixed latency or memory budget on another runtime.
 
-## EfficientAD (WACV 2024)
+## Bind capture and training evidence
 
-Best choice for surface defect detection without labeled training data.
+For each sample or normal reference, retain:
 
-```python
-from anomalib.models import EfficientAd
-from anomalib.data import MVTec
-from anomalib.engine import Engine
+- original asset/capture identity, rights, and product or scene scope;
+- camera, lens, distance, focus, illumination, background, and processing
+  conditions that affect visible texture;
+- task taxonomy, inclusion/exclusion examples, annotation revision, and
+  reviewer provenance;
+- model/checkpoint, preprocessing, input resolution, runtime, and threshold
+  policy; and
+- uncertainty, rejected candidates, and known confounders.
 
-# Training (on normal/defect-free samples only)
-model = EfficientAd()
-datamodule = MVTec(root="data/", category="jewelry")
-engine = Engine()
-engine.fit(model=model, datamodule=datamodule)
+Specular highlights, compression, dust on the capture path, focus changes,
+background reflections, and geometry changes can look anomalous. Keep real
+observations separate from synthetic defects and do not use an augmentation as
+proof that a real-world defect detector is validated.
 
-# Inference
-engine.test(model=model, datamodule=datamodule)
-```
+## Treat slicing as a coordinate contract
 
-**Key specs:**
-- Inference: sub-100ms on single image
-- VRAM: <2GB (runs on GT1030/GTX 1650)
-- Training: only needs normal samples (no defect labels)
-- Produces pixel-level anomaly maps (heatmaps)
-- Architecture: efficient student-teacher with PDN (Patch Description Network)
+[SAHI](https://obss.github.io/sahi/guides/sliced-inference/) documents
+overlapping slices, per-slice detection, and merging back into full-image
+coordinates. If a high-resolution inspection uses tiles, record tile geometry,
+overlap, input transform, coordinate mapping, merge/suppression rule, and
+edge handling with the prediction. A detector's tile merge does not validate
+an anomaly heatmap or a pixel-editing seam.
 
-### EfficientAD vs PatchCore Trade-off
+Evaluate candidates on the original image. A downsampled preview can conceal
+the very small object or surface artifact the system claims to flag.
 
-| Aspect | EfficientAD | PatchCore |
-|--------|-------------|----------|
-| AUROC | 98.9% | 99.1% |
-| Inference speed | <100ms | 200-500ms |
-| VRAM | <2GB | 2-4GB |
-| Memory bank | No | Yes (grows with dataset) |
-| Best for | Real-time inspection | Maximum accuracy batch |
+## Validate for the target environment
 
-## Anomalib Framework (Intel)
+Split train, tuning, and test data by original asset, product/subject,
+capture session, and derivative chain. Holdouts must include the material,
+scale, lighting, and capture variations expected at release. Report
+task-specific error analysis, including false candidate burden and missed
+critical cases, instead of transferring AUROC, mAP, VRAM, or latency values
+from a benchmark or another device.
 
-Unified framework covering 20+ anomaly detection models:
+Review predicted regions against the source image and the approved task
+definition. Keep threshold changes versioned, and revalidate when camera,
+lighting, preprocessing, tile plan, model, or runtime changes.
 
-```bash
-pip install anomalib
-anomalib train --model EfficientAd --data MVTec --data.category bottle
-anomalib test --model EfficientAd --data MVTec
-```
+## Release gate
 
-**Supported models**: EfficientAD, PatchCore, FastFlow, STFPM, CFlow, WinCLIP, and more.
+Publish only reviewable candidates with model/configuration provenance and a
+visible uncertainty/failure state. Do not automatically reject inventory,
+erase retouching details, or make a safety/quality verdict solely from a
+detector score. If the policy requires an automatic action, define its
+bounded authority, counter-check, audit receipt, and rollback path before
+activation.
 
-```python
-from anomalib.models import Padim, Patchcore, EfficientAd, FastFlow
-from anomalib.data import Folder  # custom folder structure
+## Related pages
 
-# Custom dataset
-datamodule = Folder(
-    root="data/jewelry/",
-    normal_dir="normal/",
-    abnormal_dir="defects/",
-    task="segmentation",  # or "classification"
-    image_size=(256, 256),
-)
-```
-
-## PP-YOLOE-SOD-S (Baidu PaddleDetection)
-
-Optimized for small object detection. Fits 2GB VRAM.
-
-```python
-# Install PaddlePaddle + PaddleDetection
-pip install paddlepaddle-gpu paddledet
-
-# Config for small objects
-configs/smalldet/ppyoloe_plus_sod_s_80e_sliced_visdrone_640_025.yml
-
-# Training on custom data
-python tools/train.py -c configs/smalldet/... \
-  --slim_config configs/slim/prune/... \
-  -o TrainReader.batch_size=8
-```
-
-**Key features:**
-- SOD (Small Object Detection) variants use tiling inference internally
-- 38.5 mAP on VisDrone-S (small drone objects, challenging benchmark)
-- S model: fits 2GB VRAM at batch=1
-
-## Siamese Change-Aware Detection (Nature 2025)
-
-For detecting changes between before/after image pairs — useful for defect monitoring after processing:
-
-```python
-# Conceptual: siamese encoder for change detection
-class SiameseChangeDetector(nn.Module):
-    def __init__(self, encoder):
-        super().__init__()
-        self.encoder = encoder  # shared weights
-        self.change_head = nn.Sequential(
-            nn.Conv2d(512, 256, 3, padding=1),
-            nn.ReLU(),
-            nn.Conv2d(256, 1, 1),
-        )
-
-    def forward(self, img_before, img_after):
-        feat_a = self.encoder(img_before)
-        feat_b = self.encoder(img_after)
-        diff = torch.abs(feat_a - feat_b)
-        return self.change_head(diff)
-```
-
-**Use case**: inspect image before and after post-processing to detect introduced artifacts or changes.
-
-## Jewelry-Specific Considerations
-
-### Domain Challenges
-
-| Challenge | Impact | Mitigation |
-|-----------|--------|-----------|
-| Specular highlights | Fake anomalies on reflective metal | Mask by specular map before detection |
-| Gemstone facets | Regular high-frequency patterns | Train per-region models |
-| Scale variation | Micro-scratches vs macro-scratches | Multi-scale inference / tiling |
-| Background reflections | Ghost edges | Controlled background (velvet) in capture |
-
-### Recommended Pipeline
-
-```text
-1. EfficientAD for anomaly heatmap (unsupervised, fast)
-2. Threshold heatmap → candidate regions
-3. YOLO / PP-YOLOE-SOD for classification of candidates
-4. Optional: Siamese comparison if before/after pairs available
-```
-
-### Training Data
-
-- **Normal samples**: 100-200 defect-free images per product category
-- **Defect examples**: needed for PP-YOLOE, not needed for EfficientAD
-- **Annotation format**: COCO JSON (pixel masks) for segmentation; YOLO .txt for boxes
-- **Augmentation**: avoid geometric transforms that create fake texture artifacts
-
-## Tiling for High-Resolution Input
-
-Defect images are often 8-24MP. All models above work best at 640-1024px input.
-
-```python
-import sahi  # Slicing Aided Hyper Inference
-
-from sahi import AutoDetectionModel
-from sahi.predict import get_sliced_prediction
-
-model = AutoDetectionModel.from_pretrained(
-    model_type="yolov8",
-    model_path="pp_yoloe_sod.pt",
-    confidence_threshold=0.3,
-    device="cuda",
-)
-
-result = get_sliced_prediction(
-    "jewelry_8mp.jpg",
-    model,
-    slice_height=640,
-    slice_width=640,
-    overlap_height_ratio=0.2,
-    overlap_width_ratio=0.2,
-)
-```
-
-## Gotchas
-
-- **EfficientAD memory bank**: unlike PatchCore, EfficientAD does not use a growing memory bank — this is why it's fast and low-VRAM, but means it can't be updated incrementally without retraining.
-- **Per-category training required**: anomaly models are trained per product category. A model trained on gold rings will not perform well on gemstone pendants — different normal texture distributions.
-- **Specular masking**: for jewelry, specular highlights score as high anomalies in EfficientAD. Pre-mask specular regions using highlight detection (HSV V>240, S<30) before feeding to anomaly model.
-- **PP-YOLOE-SOD requires labeled data**: unlike EfficientAD, PP-YOLOE needs bounding box annotations for each defect type. Plan for annotation pipeline before choosing this approach.
-- **Tiling tile size vs model training**: if using SAHI tiling at inference, the model must have been trained at a compatible resolution. Mismatched tile sizes cause degraded accuracy.
-
-## See Also
-
-- [[skin-retouch-pipeline]] - skin defect detection (INSID3, YOLOE, LaMa)
-- [[low-vram-inference-strategies]] - running models on <2GB VRAM
-- [[tiled-inference]] - tiling strategies for high-resolution images
-- [[color-theory-for-ml]] - color anomaly in quality inspection context
+- [[tiled-inference]]
+- [[low-vram-inference-strategies]]
+- [[skin-retouch-pipeline]]
+- [[synthetic-dataset-pipeline]]
