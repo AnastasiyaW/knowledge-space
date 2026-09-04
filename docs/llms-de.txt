@@ -1,6 +1,6 @@
 # Umfassende technische Wissensbasis - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 943+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 944+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -720,6 +720,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Gemini](https://happyin.space/projects/gemini/): **Development line:** `project:gemini` · thread `gemini-development`
 - [GeneX](https://happyin.space/projects/genex/): **Development line:** `project:genex` · thread `genex-development`
 - [GenMM](https://happyin.space/projects/genmm/): **Development line:** `project:genmm` · thread `genmm-development`
+- [Google Colab](https://happyin.space/projects/google-colab/): **Development line:** `project:google-colab` · thread `google-colab-platform-evolution`
 - [Gemini](https://happyin.space/projects/google-gemini/): **Development line:** `project:google-gemini` · thread `gemini-product-development`
 - [Google Photos](https://happyin.space/projects/google-photos/): **Development line:** `project:google-photos` · thread `ai-photo-editing`
 - [Google Veo — Veo model and access releases](https://happyin.space/projects/google-veo/): **Development line:** `project:google-veo` · thread `veo-model-and-access-releases`
