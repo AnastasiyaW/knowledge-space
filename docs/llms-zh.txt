@@ -1,6 +1,6 @@
 # 综合技术知识库 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 859+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 884+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -633,6 +633,21 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [AMD — AMD AI Compute Platform](https://happyin.space/organizations/amd/): **Development line:** `organization:amd` · thread `amd-ai-compute-platform`
 - [Anthropic — Anthropic Development](https://happyin.space/organizations/anthropic/): **Development line:** `organization:anthropic` · thread `anthropic-development`
 - [Apple — Apple AI: research releases to product capabilities](https://happyin.space/organizations/apple/): **Development line:** `organization:apple` · thread `apple-ai-research-to-product`
+- [ByteDance — ByteDance AI development and compute constraints](https://happyin.space/organizations/bytedance/): **Development line:** `organization:bytedance` · thread `bytedance-ai-development-and-compute-constraints`
+- [Civitai — Civitai platform, business, and access evolution](https://happyin.space/organizations/civitai/): **Development line:** `organization:civitai` · thread `platform-business-and-access-evolution`
+- [Cursor — Product development](https://happyin.space/organizations/cursor/): **Development line:** `organization:cursor` · thread `product-development`
+- [D-ID — Public product surfaces](https://happyin.space/organizations/d-id/): **Development line:** `organization:d-id` · thread `public-product-surfaces`
+- [DeepSeek — DeepSeek product and AI-content governance](https://happyin.space/organizations/deepseek/): **Development line:** `organization:deepseek` · thread `deepseek-product-and-governance`
+- [Disney Research — Interactive Generative Motion Editing](https://happyin.space/organizations/disney-research/): **Development line:** `organization:disney-research` · thread `interactive-generative-motion-editing`
+- [ElevenLabs — Voice Platform Development](https://happyin.space/organizations/elevenlabs/): **Development line:** `organization:elevenlabs` · thread `voice-platform-development`
+- [fal.ai — Model platform expansion](https://happyin.space/organizations/fal-ai/): **Development line:** `organization:fal-ai` · thread `model-platform-expansion`
+- [Google — Google AI Development](https://happyin.space/organizations/google/): **Development line:** `organization:google` · thread `google-ai-development`
+- [Krea AI — Video generation](https://happyin.space/organizations/krea-ai/): **Development line:** `organization:krea-ai` · thread `video-generation`
+- [Meta AI — Generative AI models](https://happyin.space/organizations/meta-ai/): **Development line:** `organization:meta-ai` · thread `generative-ai-models`
+- [Microsoft](https://happyin.space/organizations/microsoft/): **Development line:** `organization:microsoft` · thread `microsoft-generative-ai-rollout-and-adoption`
+- [Mistral AI — Product and model releases](https://happyin.space/organizations/mistral-ai/): **Development line:** `organization:mistral-ai` · thread `product-and-model-releases`
+- [xAI — Grok model development](https://happyin.space/organizations/xai/): **Development line:** `organization:xai` · thread `grok-model-development`
+- [Yandex](https://happyin.space/organizations/yandex/): **Development line:** `organization:yandex` · thread `yandex-ai-products`
 
 ## PHP
 - [Laravel Architecture](https://happyin.space/php/laravel-architecture/): Laravel 11 is a PHP framework following the MVC pattern with a service container (IoC), service providers, facades, and Artisan CLI. Understanding the architecture is essential for working with lar...
@@ -652,6 +667,16 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [PHP Type System](https://happyin.space/php/php-type-system/): PHP is dynamically typed with optional strict mode. Eight primitive types: int, float, string, bool, array, object, null, resource. Type juggling performs implicit conversions; `declare(strict_type...
 
 ## Projects
+- [Clipdrop](https://happyin.space/projects/clipdrop/): **Development line:** `project:clipdrop` · thread `clipdrop-image-editing`
+- [F⁴Splat](https://happyin.space/projects/f4splat/): **Development line:** `project:f4splat` · thread `f4splat-development`
+- [GPT-4](https://happyin.space/projects/gpt-4/): **Development line:** `project:gpt-4` · thread `gpt-4-development`
+- [HuggingChat](https://happyin.space/projects/huggingchat/): **Development line:** `project:huggingchat` · thread `huggingchat-launch`
+- [Ideogram 4](https://happyin.space/projects/ideogram-4/): **Development line:** `project:ideogram-4` · thread `ideogram-4-development`
+- [Ideogram](https://happyin.space/projects/ideogram/): **Development line:** `project:ideogram` · thread `model-and-product-releases`
+- [InternVL](https://happyin.space/projects/internvl/): **Development line:** `project:internvl` · thread `internvl-model-releases`
+- [James Webb Space Telescope — First Images Release](https://happyin.space/projects/james-webb-space-telescope/): **Development line:** `project:james-webb-space-telescope` · thread `first-images-release`
+- [JoyCaption](https://happyin.space/projects/joycaption/): **Development line:** `project:joycaption` · thread `joycaption-development`
+- [Katalist](https://happyin.space/projects/katalist/): **Development line:** `project:katalist` · thread `katalist-early-access`
 - [Vidu](https://happyin.space/projects/vidu/): **Development line:** `project:vidu` · thread `vidu`
 
 ## Python

@@ -5,7 +5,9 @@ name: Validate Freshness
 # them: when two article branches each recompute the counts, they conflict on the same
 # lines and only the first one can merge (measured 2026-09-04, seven article branches).
 # So the counts are recomputed here instead - checked on a pull request, committed on
-# master - and a branch only ever carries its article.
+# master - and a branch only ever carries its article. The six llms*.txt files are derived
+# the same way and were failing the same way (measured 2026-09-04: 859 URLs against 885
+# articles, three pull requests red), so they are regenerated here too.
 
 on:
   push:
@@ -38,6 +40,9 @@ jobs:
       - name: Recompute the derived counts
         run: python scripts/sync_stats.py
 
+      - name: Regenerate the derived llms.txt files
+        run: python hooks/generate_llms_txt.py
+
       - name: Commit the recomputed counts (master only)
         if: github.event_name == 'push'
         run: |
@@ -47,7 +52,7 @@ jobs:
           fi
           git config user.name "knowledge-space"
           git config user.email "noreply@happyin.space"
-          git commit -aqm "counts: recompute after merge"
+          git commit -aqm "derived: recompute counts and llms.txt after merge"
           # This push starts one more run of this workflow; that run finds no drift,
           # commits nothing and stops. No loop.
           git push origin HEAD:master
