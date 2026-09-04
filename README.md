@@ -4,7 +4,7 @@ A curated technical reference across 28 domains — Kafka, Python, SQL, ML, secu
 
 We built it because agents kept confidently hallucinating API flags, version-specific behavior, and config options. Point your Claude, Cursor, or any RAG pipeline at this repo and it gets a reliable source to check against.
 
-**890+ articles | 28 domains | 3128+ cross-references**
+**891+ articles | 28 domains | 3128+ cross-references**
 
 [![Live site](https://img.shields.io/badge/Live_site-happyin.space-FFD740?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGNpcmNsZSBjeD0iMjgiIGN5PSIyMiIgcj0iOSIgZmlsbD0iI2JiODZmYyIvPjxjaXJjbGUgY3g9IjQyIiBjeT0iMzAiIHI9IjciIGZpbGw9IiMwM2RhYzYiLz48Y2lyY2xlIGN4PSIxOCIgY3k9IjQwIiByPSI2IiBmaWxsPSIjZmY3NTk3Ii8+PC9zdmc+)](https://happyin.space/)
 
@@ -27,7 +27,7 @@ We built it because agents kept confidently hallucinating API flags, version-spe
 | `ios-mobile/` | 31 | SwiftUI, Swift, Android/Kotlin fundamentals, mobile ML |
 | `cpp/` | 29 | Modern C++, memory, templates, concurrency, cross-platform ML |
 | `linux-cli/` | 29 | Shell scripting, filesystem, systemd, permissions, networking |
-| `organizations/` | 27 | One page per company or lab: leadership and structure changes, product lines, what each change made obsolete |
+| `organizations/` | 28 | One page per company or lab: leadership and structure changes, product lines, what each change made obsolete |
 | `java-spring/` | 25 | Spring Boot, JPA, microservices, Kotlin, Android |
 | `seo-marketing/` | 25 | Technical SEO, keyword research, link building, AI-driven SEO |
 | `testing-qa/` | 25 | Selenium, Playwright, API testing, CI integration, browser automation |

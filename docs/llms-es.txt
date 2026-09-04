@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 890+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 891+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -650,6 +650,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Krea AI — Video generation](https://happyin.space/organizations/krea-ai/): **Development line:** `organization:krea-ai` · thread `video-generation`
 - [Luma AI](https://happyin.space/organizations/luma-ai/): **Development line:** `organization:luma-ai` · thread `luma-ai-product-development`
 - [Meta AI — Generative AI models](https://happyin.space/organizations/meta-ai/): **Development line:** `organization:meta-ai` · thread `generative-ai-models`
+- [Meta](https://happyin.space/organizations/meta/): **Development line:** `organization:meta` · thread `meta-ai`
 - [Microsoft](https://happyin.space/organizations/microsoft/): **Development line:** `organization:microsoft` · thread `microsoft-generative-ai-rollout-and-adoption`
 - [Mistral AI — Product and model releases](https://happyin.space/organizations/mistral-ai/): **Development line:** `organization:mistral-ai` · thread `product-and-model-releases`
 - [xAI — Grok model development](https://happyin.space/organizations/xai/): **Development line:** `organization:xai` · thread `grok-model-development`
