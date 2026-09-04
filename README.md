@@ -4,7 +4,7 @@ A curated technical reference across 28 domains — Kafka, Python, SQL, ML, secu
 
 We built it because agents kept confidently hallucinating API flags, version-specific behavior, and config options. Point your Claude, Cursor, or any RAG pipeline at this repo and it gets a reliable source to check against.
 
-**905+ articles | 28 domains | 3128+ cross-references**
+**906+ articles | 28 domains | 3128+ cross-references**
 
 [![Live site](https://img.shields.io/badge/Live_site-happyin.space-FFD740?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGNpcmNsZSBjeD0iMjgiIGN5PSIyMiIgcj0iOSIgZmlsbD0iI2JiODZmYyIvPjxjaXJjbGUgY3g9IjQyIiBjeT0iMzAiIHI9IjciIGZpbGw9IiMwM2RhYzYiLz48Y2lyY2xlIGN4PSIxOCIgY3k9IjQwIiByPSI2IiBmaWxsPSIjZmY3NTk3Ii8+PC9zdmc+)](https://happyin.space/)
 
@@ -34,8 +34,8 @@ We built it because agents kept confidently hallucinating API flags, version-spe
 | `bi-analytics/` | 23 | Tableau, Power BI, SQL analytics, dashboards, product analytics |
 | `rust/` | 22 | Ownership, lifetimes, async, error handling, unsafe |
 | `nodejs/` | 16 | Event loop, streams, clusters, performance, design patterns |
+| `projects/` | 16 | One page per tool, model or product the news conveyor follows: dated development line, current use, obsolete guidance, sources |
 | `php/` | 15 | Laravel, MVC, ORM, testing, PHP 8 features |
-| `projects/` | 15 | One page per tool, model or product the news conveyor follows: dated development line, current use, obsolete guidance, sources |
 | `audio-voice/` | 14 | TTS, ASR, voice cloning, speech synthesis, TTS fine-tuning |
 | `writing/` | 14 | Technical article structure, SEO for articles, LLM anti-patterns |
 | `llm-memory/` | 13 | Memory architectures, session persistence, knowledge graphs |
