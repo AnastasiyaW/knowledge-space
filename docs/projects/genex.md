@@ -1,27 +1,30 @@
 ---
-title: GeneX — GeneX development
+title: GeneX
 category: projects
+date: 2024-12-16
 tags: [genex, genex-development, project]
 aliases: ["GenEx", "GeneX"]
 ---
 
-# GeneX — GeneX development
+# GeneX
 
 **Development line:** `project:genex` · thread `genex-development`  
-**Events:** 2 dated, 2024-11-20 → 2024-12-16 · **Researched:** 2026-09-04 · confidence: medium
+**Last event:** 2024-12-16 · 2 dated since 2024-11-20 · **Researched:** 2026-09-04 · confidence: medium
 
 ## What it is
 
-GeneX is a research pipeline for embodied-AI and world-model prototyping: it creates a 360° panorama from one image, generates forward panoramic video, rotates the view, and exports exploration clips. The released pair is a 12B BF16 initializer and a 2B FP16 explorer; the public interactive demo is paused. Verdict: use it for simulated-world experiments, not real-world navigation deployment.
+GeneX is a research pipeline for embodied-AI and world-model prototyping. It creates a 360° panorama from one image, generates forward panoramic video, rotates the view, and exports exploration clips. The released pair is a 12B BF16 initializer and a 2B FP16 explorer; the public interactive demo is paused. Use it for simulated-world experiments, not real-world navigation deployment.
 
 ## Development line
 
-- **2024-11-20 — GeneX shared an interactive demonstration.** On 2024-11-20, GeneX linked an interactive demonstration of the project. This was a public, hands-on presentation of the work and is a material development milestone.
-- **2024-12-16 — GeneX linked its project website.** On 2024-12-16, GeneX linked its project website and referenced the earlier project message. This created or highlighted a public project entry point after the interactive demonstration.
+- **2024-11-20 — GeneX shared an interactive demonstration.** On 2024-11-20, GeneX linked an interactive demonstration of the project as a public hands-on milestone.
+- **2024-12-16 — GeneX linked its project website.** On 2024-12-16, GeneX linked its project website and referenced the earlier project message, establishing a public entry point after the interactive demonstration.
 
 ## What changed
 
-2024-11-20 — Generative World Explorer presented interactive exploration of a panorama-conditioned, video-generated environment. 2024-12-16 — GenEx added the missing world-initialization stage: a single RGB image and optional description become a 360° panorama before action-conditioned panoramic-video exploration. Found today — the current official implementation is a local two-model workflow, with model cards updated on 2025-05-06.
+2024-11-20 — Generative World Explorer presented interactive exploration of a panorama-conditioned, video-generated environment.  
+2024-12-16 — GenEx added the missing world-initialization stage: a single RGB image and optional description become a 360° panorama before action-conditioned panoramic-video exploration.  
+Found today — the current official implementation is a local two-model workflow, with model cards updated on 2025-05-06.
 
 ## How to use this
 
