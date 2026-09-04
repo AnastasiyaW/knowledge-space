@@ -21,7 +21,7 @@ type: MOC
 - [[comfyui-flux2klein-enhancer]] - Third-party multi-reference identity/detail conditioning for Klein
 
 ## Training & Fine-tuning
-- [[diffusion-lora-training]] - LoRA training for diffusion models
+- [[diffusion-lora-training]] - Diffusion LoRA training is a version-bound adapter experiment; bind the exact base checkpoint, architecture, runtime, adapter format, authorized data, and evaluation split, and select rank, schedule, targets, and optimizer only from measured held-out behavior rather than copied recipes.
 - [[lora-fine-tuning-for-editing-models]] - An editing LoRA is compatible only with its exact base checkpoint, architecture, runtime, and adapter format; train from authorized paired evidence, sweep capacity and schedule on held-out edits, and prove both requested change and preservation before release.
 - [[Text-to-LoRA]] - Text-to-LoRA is a Sakana AI hypernetwork that creates task adapters for documented LLM target families from textual task descriptions; it is not a drop-in generator for diffusion-model LoRAs.
 - [[paired-training-for-restoration]] - Paired restoration training learns a declared degraded-to-target mapping; it needs source-aligned and rights-cleared pairs, a model-compatible conditioning path, holdouts separated by source, and evaluation that distinguishes measured recovery from plausible invention.
@@ -73,13 +73,13 @@ type: MOC
 - [[face-detection-filtering-pipeline]] - Face filtering is a provenance-preserving candidate-selection pipeline; detector boxes and landmarks support review, but they do not establish identity, consent, image realism, or training suitability.
 - [[flowinone-unified-multimodal-generation-via-image-flow]] - FlowInOne is a multimodal generation framework that treats all inputs—text, classes, bounding
 - [[flux-attention-manipulation]] - Attention interventions in FLUX-family DiTs are research- and implementation-specific; use the exact model's exposed attention path, preserve its conditioning contract, and validate composition rather than treating maps as causal proof.
-- [[flux-klein-9b-architecture]] - Deep reference for the FLUX.2 Klein 9B model internals: transformer structure, text encoding, VAE
-- [[flux-klein-capability-map]] - Reference for what FLUX.2 Klein 9B can do natively, via official LoRAs, via fal.ai LoRAs, and via
-- [[flux-klein-character-lora]] - Training LoRAs to preserve a specific person's identity with FLUX.2 Klein 9B
+- [[flux-klein-9b-architecture]] - FLUX.2 [klein] architecture claims must be tied to the named official release and artifact; the public family supports text-to-image and reference editing, but internal block layouts, encoder wiring, quantization, and adapter compatibility are not safe to infer across variants or runtimes.
+- [[flux-klein-capability-map]] - A FLUX.2 [klein] capability is usable only when the exact variant, checkpoint, license, runtime or provider endpoint, input contract, and output review are attested at execution time; family-level generation and editing support does not authorize every adapter, service, commercial use, or editing result.
+- [[flux-klein-character-lora]] - An identity LoRA is a sensitive, version-bound adapter trained only from authorized images under a defined purpose; bind consent, base checkpoint and adapter format, data and deletion policy, and source-disjoint likeness and preservation review, and never treat a generated identity match as verified identity.
 - [[flux-klein-jewelry-photography]] - Jewelry imagery is a source-controlled product workflow: preserve the approved asset, material and geometry evidence, color pipeline, and rights boundary, then release only after visual and factual QA.
 - [[flux-klein-style-lora-system]] - A FLUX.2 [klein] style LoRA is a version-bound data-and-evaluation workflow; separate style from subject data, preserve rights and provenance, and validate transfer on held-out content.
 - [[fp8-quantization-optimization-for-e4m3]] - FP8 (E4M3) quantization is used to accelerate inference and training on NVIDIA Hopper architecture
-- [[frequency-decomposition-editing]] - Methods for separating images into low-frequency (LF) and high-frequency (HF) components, editing
+- [[frequency-decomposition-editing]] - Frequency decomposition is a declared transform, not a semantic edit map; record color domain, transform or filter, boundary and reconstruction policy, edit masks, and output review, and distinguish mathematically reconstructed signal from generated or visually plausible detail.
 - [[in-context-segmentation-with-insid3-and-dinov3]] - INSID3 is a training-free framework for one-shot in-context segmentation that leverages dense
 - [[intrinsic-decomposition]] - Separating an image into intrinsic components (reflectance/albedo vs
 - [[lora-auxiliary-losses]] - Additional loss terms beyond standard diffusion denoising loss
