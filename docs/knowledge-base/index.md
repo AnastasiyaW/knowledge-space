@@ -776,7 +776,7 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[MARBLE]] - MARBLE performs material transfer, blending, and parametric material edits through CLIP-space controls over a pretrained image generator; validate object geometry, illumination, and artifact licenses for each workflow.
     - [[MMDiT]] - MMDiT is the Stable Diffusion 3 multimodal transformer pattern: modality-specific representations participate in joint attention; implementation APIs and LoRA target names vary by model revision.
     - [[SANA]] - Efficient text-to-image architecture
-    - [[tiled-inference]] - Memory-efficient large image generation
+    - [[tiled-inference]] - Tiled inference is a model-bound high-resolution strategy; partitioning, overlap, blending, global context, coordinate mapping, and output review must be evaluated together on the pinned pipeline, while detection tiles and generative or retouch tiles remain separate contracts.
     - [[transformers-v5]] - Transformers v5 moves checkpoint conversion into the loader, but every integration must be pinned to an installed release, runtime contract, checkpoint, and adapter test; current main-branch APIs are not universal compatibility.
 
     **More**
@@ -785,14 +785,14 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[block-causal-linear-attention]] - Block causal linear attention is SANA-Video's trained long-video mechanism with a fixed-size cumulative attention state; it is not a generic plug-in for arbitrary image tiling or DiTs.
     - [[Calligrapher]] - Calligrapher customizes text imagery from style references through FLUX.1-Fill-dev, SigLIP, masks, and project weights; treat typography accuracy and licensing as separate acceptance checks.
     - [[color-checker-and-white-balance]] - Color checker and white-balance correction requires a measured physical chart or a separately validated estimator; detector output and a generated checker are not colorimetric ground truth.
-    - [[color-correction-by-numbers]] - Deterministic color correction using measurable channel targets rather than perceptual judgment
-    - [[color-space-and-gamma-reference]] - Practical reference for color management in video/photo processing pipelines
-    - [[color-theory-for-ml]] - Applied color theory for diffusion model training, color correction, and palette control
+    - [[color-correction-by-numbers]] - Color correction is valid only against a declared measurement target, illuminant, camera or profile, working space, and viewing transform; neutral samples and chart patches are evidence when their provenance is known, while scene averages and skin-color ratios are not universal ground truth.
+    - [[color-space-and-gamma-reference]] - Color management is a versioned chain of input interpretation, working space, creative transforms, display or view transform, and output encoding; camera or container labels and generic gamma rules are insufficient without the exact profile, transform version, metadata policy, and validation display.
+    - [[color-theory-for-ml]] - Color guidance for ML is a task-specific representation and evidence contract: name the source encoding, illuminant or viewing assumptions, target transform, palette intent, and human-review purpose; artistic harmony, spectral labels, and psychological associations are hypotheses, not universal labels or model controls.
     - [[comfyui-flux2klein-enhancer]] - Pinned-workflow reference for reference conditioning and identity/detail enhancement with FLUX.2
     - [[comfyui-sensenova-u1]] - Boundary-aware reference for official SenseNova U1/U1.5 artifacts, official ComfyUI nodes, and the
     - [[comfyui-wan-vace-video-joiner]] - The Wan VACE Video Joiner is a node suite designed for assembling disparate video segments into a
     - [[DC-AE]] - Use DC-AE only with a diffusion model and latent contract it was trained for; high compression reduces latent-token work but does not make it a drop-in VAE replacement.
-    - [[defect-detection-small-objects]] - Reference for detecting defects (scratches, dust, surface anomalies) and small objects in
+    - [[defect-detection-small-objects]] - Defect and small-object detection produces reviewable candidates, not automatic quality truth; bind the model, capture protocol, annotation or normal-reference policy, slicing or merge mapping, thresholds, and source-disjoint evaluation before any inspection or workflow decision.
     - [[denoise-architectures-2026]] - 2025-2026 landscape of image denoising architectures: NTIRE 2025 winners, SSM/Mamba-based models
     - [[diffusion-distillation-cdm]] - flow-matching distillation to 4 NFE without GAN or reward model
     - [[diffusion-inference-acceleration]] - Diffusion acceleration is a model-and-runtime-specific trade-off; measure warm and steady-state latency, memory, output fidelity, and reproducibility for the exact checkpoint and workflow.

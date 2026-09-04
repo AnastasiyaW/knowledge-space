@@ -1,314 +1,94 @@
 ---
-title: Tiled Inference for High-Resolution
+title: Tiled Inference: Model-Bound High-Resolution Contract
+description: "Tiled inference is a model-bound high-resolution strategy; partitioning, overlap, blending, global context, coordinate mapping, and output review must be evaluated together on the pinned pipeline, while detection tiles and generative or retouch tiles remain separate contracts."
 category: techniques
-tags: [tiled-inference, sahi, high-resolution, upscaling, stitching, gradient-continuity, overlap, production-photography]
+tags: [tiled-inference, high-resolution, seam-review, object-detection, image-editing, evaluation]
+aliases: ["High-Resolution Tiling", "Tile-Based Inference"]
 ---
 
-# Tiled Inference for High-Resolution Processing
-
-Techniques for processing images larger than model input size by splitting into overlapping tiles, processing individually, and stitching back. Critical for production photography where originals are 5000-15000px.
-
-## Core Problem
-
-Most models accept 512-1024px max. Production photography needs pixel-perfect results at 5000-15000px. Naive splitting → visible seams at tile boundaries, especially on:
-- Smooth gradients (skin, sky, metal surfaces)
-- Repeating patterns (textures, fabrics)
-- Fine details crossing tile boundaries (jewelry edges, hair)
-
-## SAHI (Slicing Aided Hyper Inference)
-
-Standard tiled inference library for detection models (YOLO, etc.):
-```python
-from sahi.predict import get_sliced_prediction
-result = get_sliced_prediction(image, model, slice_height=640, slice_width=640, overlap_height_ratio=0.2, overlap_width_ratio=0.2)
-```
-Docs: docs.ultralytics.com/guides/sahi-tiled-inference/
-
-Works for **detection** (merges bounding boxes across tiles). For **generation/editing** tasks, stitching is more complex.
-
-## Overlap-Based Stitching for Generation
-
-From chat discussions (Vladimir's approach):
-
-```bash
-1. Take tiles with overlap (e.g., input 1000×1000, keep center 800×800)
-2. For next tile, include edges from already-processed tiles as overlap
-3. Model sees context from neighboring processed tiles
-4. Crop to center, avoiding boundary artifacts
-```
-
-### Gradient-Aware Blending
-
-For smooth gradients (jewelry metal surfaces):
-- **Linear blend** in overlap zone: `output = alpha * tile_A + (1-alpha) * tile_B`
-- **Poisson blending** at seams (laplacian-based, preserves gradients)
-- **Latent-space stitching** (as in [[X-Dub]]): average latents at boundaries, then decode
-
-## FLUX Kontext Diff-Merge Approach
-
-flux-kontext-diff-merge detects changed regions in **LAB color space** and selectively merges only the diff back into original using Poisson blending. Applicable to tiled processing — process tile, merge only changed pixels.
-
-## Known Issues (from team experience)
-
-1. **Gradient discontinuity** — smooth backgrounds show tile boundaries after processing. Mitigation: larger overlap, gradient-aware blending
-2. **Detail loss at boundaries** — fine elements (gemstone edges, chain links) crossing tiles get corrupted. Mitigation: tile grid aligned to segmentation masks, process objects wholly
-3. **Color drift** — cumulative color shift across many tiles. Mitigation: per-tile color correction against reference (as in [[X-Dub]]'s sliding window)
-4. **Segmentation across tiles** — models like SAM/ZIM eat max ~1200px per side; ideal edges need tiled segmentation with post-merge. Preliminary full-image seg at lower res → refine edges with high-res tiles
-
-## Latent-Space Tiling (for diffusion models)
-
-Alternative: tile in **latent space** (after VAE encode, before denoising):
-```text
-Full image → VAE encode → latent (H/8 × W/8 × C)
-Tile latents → denoise each tile with overlap
-Stitch latents → VAE decode full
-```
-
-Advantage: VAE decode of full stitched latent produces globally coherent output. This is how [[X-Dub]] handles long video.
-
-## Solar Curves (Edge Visualization)
-
-Non-standard technique from retouching: apply solar curve (tone inversion at midtones) to reveal subtle edges invisible at normal viewing. Can be used as auxiliary input for segmentation models to improve edge detection on white-on-white or low-contrast boundaries.
-
-```python
-# Solar curve: invert midtones to reveal hidden edges
-# See solar-curves-saver.py, solar-1-effect.py, solar-2-effect.py (team scripts)
-```
-
-Discussed for: white jewelry on white background segmentation, metal edge detection, gradient quality verification after tiled processing.
-
-## VRAM-Aware Tile Sizing
-
-For low-VRAM GPUs, tile size must be calculated from available memory. See [[low-vram-inference-strategies]] for detailed adaptive tile selection.
-
-Quick reference (FP16 U-Net restoration model, 20 MB weights):
-
-| Tile Size | Total VRAM | Fits 2 GB GPU |
-|-----------|------------|---------------|
-| 128x128 | ~60 MB | Yes |
-| 256x256 | ~140 MB | Yes |
-| 512x512 | ~450 MB | Yes |
-| 1024x1024 | ~1.6 GB | Tight |
-
-**BatchNorm warning**: tiling with BatchNorm causes artifacts that overlap cannot fix (statistics computed per-tile, not per-image). Use LayerNorm/InstanceNorm, or train on tiles matching inference size.
-
-## Global Context Conditioning
-
-Standard tiling loses global context per-tile. Methods to inject scene-wide information:
-
-### CMod (Channel-wise Modulation)
-
-64-dimensional global context vector derived from the full image (downsampled or separately encoded). Injected at each tile via channel-wise multiplication in the feature space.
-
-```python
-# Global vector: encode downsampled image → 64d vector
-global_ctx = encoder_small(image_resized)  # [B, 64]
-# Inject per tile via FiLM-style modulation
-for tile_features in tile_feature_list:
-    scale, shift = proj_layer(global_ctx).chunk(2, dim=-1)
-    tile_features = tile_features * (1 + scale) + shift
-```
-
-Advantage over cross-attention: 64d vector is extremely lightweight. Constant overhead regardless of image size.
-
-### FiLM (Feature-wise Linear Modulation)
-
-Learnable affine transform conditioned on global context at each normalization layer. More expressive than CMod, compatible with LayerNorm-based architectures.
-
-### Bottleneck Attention (DehazeXL)
-
-Tokenize full image at low resolution → encode to bottleneck → inject via cross-attention into each tile's processing. Tile attends to global semantic tokens while doing local processing.
-
-```text
-Full image (downsampled) → Tokenize → Encoder → [bottleneck tokens]
-Each tile processing:
-  Tile tokens (local) + bottleneck tokens (global) → cross-attention → tile output
-```
-
-### Taxonomy of Global Context Methods
-
-| Method | Mechanism | Overhead | Best For |
-|--------|-----------|---------|---------|
-| CMod | 64d channel multiply | Minimal | Color/lighting consistency |
-| FiLM | Affine at each norm layer | Low | Style consistency |
-| Bottleneck attn (DehazeXL) | Cross-attn to global tokens | Medium | Semantic consistency |
-| ConvGRU | Recurrent scanning | Medium | Sequential coherence |
-| Mamba | State-space scanning | Medium | Long-range dependencies |
-| Skip-residual (DemoFusion) | Add global image downsampled | Low | Structure consistency |
-
-### Positional Encoding for Tiles
-
-| Method | Global Awareness | Cost |
-|--------|-----------------|------|
-| None (no PosEnc) | Tile-local only | Zero |
-| Learned tile position embedding | Knows grid position | Minimal |
-| RoPE on full-image coords | Continuous position | Low |
-| Spectral encoding of location | Frequency-based position | Low |
-
-## 2025 Papers: Artifact Reduction
-
-### STA (Sliding Tile Attention)
-
-Tiles the attention computation itself (not just inference). 91% sparsity in attention mask, 3.53× speedup on long sequences. Applied to FLUX for high-res generation. Not inference-time only - built into the model's attention mechanism.
-
-### FreeScale
-
-Scale Fusion: separates self-attention into global (low-frequency structure) and local (high-frequency detail) branches. Local branch processes individual tiles, global branch processes downsampled full image. Merges at inference time without fine-tuning.
-
-```python
-# Conceptual:
-global_attn = self_attention(downsample(full_image))  # structure
-local_attn = self_attention(tile)  # detail
-output = merge(global_attn, local_attn)
-```
-
-### ScaleDiff (NPA + LFM + SDEdit)
-
-Three components:
-- **NPA (Non-uniform Pixel Aggregation)**: weighted tile blending based on confidence scores instead of uniform averaging
-- **LFM (Local Feature Matching)**: aligns features across tile boundaries before blending
-- **SDEdit integration**: runs partial-noise SDEdit on boundary zones to smooth remaining artifacts
-
-### APT (Adaptive Pattern Transfer)
-
-Statistical matching at tile boundaries:
-```python
-# For each overlapping boundary region:
-mu_left, sigma_left = target_region.mean(), target_region.std()
-mu_right, sigma_right = neighbor_region.mean(), neighbor_region.std()
-# Transfer statistics: align neighbor to match target's distribution
-neighbor_normalized = (neighbor_region - mu_right) / sigma_right
-neighbor_aligned = neighbor_normalized * sigma_left + mu_left
-```
-
-No learning required. Works as post-processing on any tiled output.
-
-### AccDiffusion v2 (Patch-Content-Aware Prompting)
-
-Generates per-tile prompts by querying a VLM about the tile content. Prevents object duplication: if left tile has "mountain", right tile prompt explicitly excludes "mountain" or specifies "continuation of mountain range."
-
-```python
-tile_caption = vlm_describe(tile_crop_from_low_res_guide)
-unique_tile_prompt = base_prompt + " " + tile_caption
-```
-
-### SANA Compatibility Matrix
-
-| Method | SANA Compatible | Notes |
-|--------|----------------|-------|
-| SyncDiffusion | No | UNet-based, incompatible |
-| MultiDiffusion | Partial | Works but ignores linear attention structure |
-| DemoFusion | No | UNet-specific skip connections |
-| FreeScale | Yes | Architecture-agnostic |
-| APT | Yes | Post-processing, model-agnostic |
-| AccDiffusion v2 | Yes | Prompt-level, model-agnostic |
-| DC-AE native tiling | Yes | `pipe.vae.enable_tiling(...)` |
-
-## Frequency-Aware Tiling (2024-2026)
-
-Standard tiling loses high-frequency details (fine texture, fabric weave, hair) at tile boundaries. Frequency-domain methods preserve these while enabling global coherence.
-
-### HiWave (SIGGRAPH Asia 2025)
-
-**Paper:** arxiv 2506.20452
-
-Training-free. Patch-wise DDIM inversion + wavelet-based detail enhancer:
-1. Retain low-frequency structure from the base image (global consistency)
-2. Selectively guide high-frequency components for fine detail enhancement
-
-Preferred in >80% of user comparisons vs prior SOTA. From Disney Research.
-
-### Frequency-Aware Guidance (ECCV 2024 Workshop)
-
-**Paper:** arxiv 2411.12450
-
-Plug-in DWT-based loss enforcing consistency in both spatial and frequency domains simultaneously:
-
-```python
-import torch, pywt
-def freq_aware_loss(pred, target, wavelet='haar', level=2):
-    # Decompose both into wavelet subbands
-    pred_coeffs  = pywt.wavedec2(pred.cpu().numpy(),  wavelet, level=level)
-    tgt_coeffs   = pywt.wavedec2(target.cpu().numpy(), wavelet, level=level)
-    # Match low-frequency structure + high-frequency details
-    loss_lf = F.mse_loss(pred_coeffs[0], tgt_coeffs[0])
-    loss_hf = sum(F.mse_loss(p, t) for p, t in zip(pred_coeffs[1:], tgt_coeffs[1:]))
-    return loss_lf + 0.1 * loss_hf
-```
-
-Drop-in addition to any diffusion pipeline. +3.72 dB PSNR on blind deblurring.
-
-### Latent Wavelet Diffusion (LWD, 2025)
-
-**Paper:** arxiv 2506.00433
-
-Three-component framework enabling any LDM to scale to 2K-4K without architectural changes:
-1. **Scale-consistent VAE** objective — spectral fidelity across resolution changes
-2. **Wavelet energy maps** — identify detail-rich regions (skin, hair, fabric) where denoising must be strongest
-3. **Time-dependent masking** — focus denoising budget on high-frequency components at early timesteps
-
-```python
-# Wavelet energy map identifies where texture preservation matters:
-coeffs = pywt.wavedec2(image, 'db4', level=3)
-energy_map = sum(np.abs(c)**2 for c in coeffs[1:])  # HF energy per pixel
-```
-
-### W-Edit (Oct 2025)
-
-Training-free wavelet-based frequency modulation for text-driven editing. Decomposes diffusion features into multi-scale wavelet bands, separating structural anchors (preserve) from editable details (modify). Selective injection into pretrained DiT/UNet layers.
-
-### Face Retouching with Spectral Restoration (ICCV 2025)
-
-**Directly applicable to face retouching pipelines:**
-
-- **Frequency Selection and Restoration (FSR)**: frequency-domain quantization with spatial projections
-- **Multi-Resolution Fusion (MRF)**: Laplacian pyramid fusion — removes blemishes while preserving fine details
-
-Approach: separate low-frequency (skin tone, broad shading) from high-frequency (pores, fine lines) at each pyramid level. Edit only the relevant level for the specific retouching task.
-
-```text
-LF0 (coarse, global) → lighting/color correction
-HF1 (medium)         → blemish/spot removal
-HF2 (fine)           → preserve skin texture
-HF3 (finest)         → preserve hair / eyelash detail
-```
-
-### RefineAnything (2026)
-
-**GitHub:** github.com/limuloo/RefineAnything  
-**HuggingFace:** limuloo1999/RefineAnything
-
-Multimodal diffusion model for region-specific refinement. Fixes distorted text, logos, fine structures within a specified region while keeping the background intact. Supports editing with and without a reference image.
-
-**For tiled pipelines:**
-- Post-assembly seam refinement: run on boundary zones between tiles to fix stitching artifacts
-- Uses "reverse diffusion detailing" pattern — diffusion forward (denoise) then backward (add detail)
-- Feeding a thumbnail first means fewer denoising steps needed
-
-### APT: Adaptive Path Tracing (Jul 2025)
-
-**Paper:** arxiv 2507.21690
-
-Identifies two failure modes in patch-based methods:
-1. **Patch-level distribution shift** — different patches develop different color/brightness statistics
-2. **Increased patch monotonicity** — local context causes repetitive detail within a patch
-
-Fixes via Statistical Matching (align patch distributions) + Scale-aware Scheduling (global coherence injection).
-
-## Frequency Method Comparison
-
-| Method | Training Required | Target Problem | Testability |
-|--------|-----------------|---------------|-------------|
-| HiWave | No (DDIM inversion) | Patch detail enhancement | 3-4 days |
-| Freq-Aware Guidance | No (plug-in loss) | Texture preservation at boundaries | 2-3 days |
-| Latent Wavelet Diffusion | No (framework) | 2K-4K upscaling with texture | 3-4 days |
-| FSR (face retouching) | Code unclear | Face blemish removal + detail preserve | 5-7 days |
-| RefineAnything | No (pretrained) | Region-specific artifact fixing | 1-2 days |
-
-## See Also
-
-- [[low-vram-inference-strategies]] - adaptive tile sizing, memory management
-- [[temporal-tiling]] - cross-tile context propagation
-- [[diffusion-inference-acceleration]] - complementary acceleration techniques
-- [[SANA]] - 32x compression reduces tiling need
-- [[intrinsic-decomposition]] - frequency-independent color correction for tiles
+# Tiled Inference: Model-Bound High-Resolution Contract
+
+Tiling is a way to present part of a large image to a constrained model. It is
+not a universal high-resolution recipe: a detector, a VAE decoder, and an
+image-editing model have different input, state, merge, and failure contracts.
+Treat the tiled workflow as a versioned pipeline, then test the assembled
+output rather than assuming that overlap removes every artifact.
+
+## Separate the task families
+
+[SAHI's slicing guide](https://obss.github.io/sahi/guides/sliced-inference/)
+describes a detection workflow: split a large image, run a detector on each
+slice, then merge predictions back into source coordinates. It can preserve
+small-object detail for a detector, but it does not define a generative,
+retouching, or segmentation stitcher.
+
+[Diffusers' memory guide](https://huggingface.co/docs/diffusers/optimization/memory)
+documents VAE tiling for supported pipelines. That operation splits encoding
+or decoding into overlapping tiles to reduce peak memory; the guide also
+warns that separately decoded tiles can vary in tone. It is not a guarantee
+that every model has a compatible spatial or latent tiling interface.
+
+Keep these contracts distinct:
+
+| Task | Required assembled result |
+|---|---|
+| Detection | candidate objects or regions mapped back to the original image |
+| Segmentation | a reviewed full-image mask with ownership at overlaps |
+| Restoration or retouch | one image whose edited and protected regions survive seam review |
+| Generation | a model-specific composition with no unapproved duplicated, missing, or drifting content |
+
+Do not apply a detector's merge rule to pixels or latents, and do not call a
+generated seam repair a recovered source fact.
+
+## Declare the tile plan
+
+Record the exact source and execution contract:
+
+- source digest, dimensions, orientation, crop policy, and input color
+  interpretation;
+- model/checkpoint, encoder or decoder, runtime, backend, and preprocessing
+  versions;
+- tile geometry, overlap, padding, traversal/order, and boundary ownership;
+- full-image or low-resolution guidance, if the named model supports it;
+- coordinate transform from every tile result to the original image; and
+- merge, blend, mask, and failure behavior.
+
+Choose geometry only after measuring the target model on the target device.
+Nominal VRAM, a neighboring model, or an example tile size is not evidence
+that a configuration fits or preserves detail.
+
+## Preserve the intended image
+
+For pixel-producing work, compare a tiled result with a supported
+full-frame or canonical non-tiled baseline when one exists. Inspect seams,
+tone, gradients, texture, text, product geometry, faces, and protected
+regions at the original delivery resolution. A visual check must include
+overlap boundaries, not only a reduced preview.
+
+For detection or segmentation, retain each tile's candidate coordinates,
+merge rule, confidence/uncertainty, and the source coordinate system used for
+review. Duplicate suppression, thresholding, and edge clipping are
+configuration choices that must be measured on source-disjoint holdouts.
+
+Global context, cross-tile state, latent blending, and seam refinement are
+model-specific features. Use them only when documented for the pinned
+pipeline, and bind any state reset or fallback behavior to the job receipt.
+
+## Acceptance and failure handling
+
+Measure peak memory, cold and warm latency, throughput, and output quality on
+the actual device. A release candidate passes only if the recorded tile plan
+stays within its measured resource envelope and preserves the task's
+acceptance criteria on held-out full-resolution images.
+
+If a tile cannot be processed or an assembly check fails, return a visible
+failure or a reviewable partial state. Do not silently change the model,
+resize away source detail, omit edge tiles, or substitute a lower-quality
+output.
+
+## Related pages
+
+- [[low-vram-inference-strategies]]
+- [[temporal-tiling]]
+- [[defect-detection-small-objects]]
+- [[upscaler-evaluation]]

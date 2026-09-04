@@ -1,250 +1,92 @@
 ---
-title: Color Space and Gamma Reference for Video/Image Pipelines
+title: Color Management: Versioned Transform Contract
+description: "Color management is a versioned chain of input interpretation, working space, creative transforms, display or view transform, and output encoding; camera or container labels and generic gamma rules are insufficient without the exact profile, transform version, metadata policy, and validation display."
 category: reference
-tags: [color-space, gamma, rec709, log, hlg, aces, davinci-wide-gamut, raw, chroma-subsampling, lut, cms, icc]
+tags: [color-management, color-space, transfer-function, icc, ocio, aces, output-transform]
+aliases: ["Color Space and Gamma Reference", "Color Pipeline Reference"]
 ---
 
-# Color Space and Gamma Reference for Video/Image Pipelines
+# Color Management: Versioned Transform Contract
 
-Practical reference for color management in video/photo processing pipelines. Covers color spaces, gamma transfer functions, RAW workflows, and Color Management System (CMS) architecture.
+Color management makes numerical image values interpretable between capture,
+processing, and display. A filename, container, camera brand, or informal
+label such as "log" does not identify a complete input transform. Treat every
+transform chain as a versioned contract, then validate the delivered image on
+the intended viewing path.
 
-## Architecture Overview
+## Declare the transform chain
 
-```text
-Camera sensor (linear light)
-  → OETF (Opto-Electronic Transfer Function) applied at recording
-  → File (with color space + gamma metadata)
-  → EOTF (Electro-Optical Transfer Function) applied at display
-  → Monitor output
-```
-
-Most display devices apply Rec.709 gamma regardless of file metadata. Log-encoded material must be explicitly transformed before output.
-
-## Dynamic Range by Format
-
-| Format | Dynamic Range | Notes |
-|--------|--------------|-------|
-| Rec.709 Gamma (SDR display) | 5-6 stops | Most consumer monitors |
-| Human eye (simultaneous) | ~14 stops | With adaptation: up to 24 |
-| Film negative | ~13 stops | |
-| ARRI Mini LF | 14.5 stops | |
-| Log Gamma | ~14 stops | Camera-specific curves |
-| HLG (Hybrid Log Gamma) | >14 stops | Backward-compatible with SDR |
-
-## Color Space Standards
-
-### Display Standards (ascending gamut size)
+Record every stage, in order:
 
 ```text
-Rec.709 ≈ sRGB  <  DCI-P3  <  Rec.2020
+source file or raw data
+  -> input interpretation and decode
+  -> working or reference space
+  -> approved creative operations
+  -> display or view transform
+  -> output encoding, profile, and delivery metadata
 ```
 
-| Standard | Year | Coverage | Typical Use |
-|----------|------|----------|------------|
-| Rec.709 (BT.709) | 1991 | ~35% CIE | ~90% of consumer displays, broadcast TV |
-| sRGB | 1996 | ≈Rec.709 | Computer monitors, web images |
-| DCI-P3 | 2010 | ~45% CIE | Digital cinema, HDR displays |
-| Rec.2020 (BT.2020) | 2012 | ~75% CIE | 4K TV, wide-gamut reference |
+For each job, bind the source digest, embedded metadata, chosen input
+assignment, transform/configuration revision, working-space policy, display
+or view name, output encoding, and validation display. A raw decode, camera
+input transform, LUT, and display transform are distinct operations even when
+one application presents them in one interface.
 
-### Camera-Specific Wide Gamut
+## Do not guess input interpretation
 
-| Manufacturer | Color Space | Paired Gamma |
-|---|---|---|
-| Sony | S-Gamut2, S-Gamut3, S-Gamut3.Cine | S-Log2, S-Log3 |
-| Panasonic | V-Gamut | V-Log |
-| ARRI | ARRI Wide Gamut | LogC3, LogC4 |
-| Blackmagic | Blackmagic Wide Gamut | Blackmagic Film |
-| RED | REDWideGamutRGB | Log3G10, Log3G12 |
-| DaVinci | DaVinci Wide Gamut RGB | DaVinci Intermediate |
+Metadata can be absent, stale, or inconsistent with the captured image.
+Container type and camera family are not enough to select a transform. If the
+input assignment cannot be verified from authoritative metadata, capture
+records, or an approved reference, stop for review or mark the output as an
+explicit interpretation. Do not silently choose a "closest" camera profile,
+transfer function, or wide-gamut space.
 
-## Gamma Transfer Functions
+The same rule applies to transfer curves. Gamma, logarithmic encodings, and
+HDR transfer functions are defined by a named encoding and delivery context;
+one generic gamma rule cannot safely decode every source or display every
+output.
 
-### Standard Gamma (SDR)
+## Use managed, inspectable configurations
 
-- **Rec.709 Gamma**: gamma 2.4, standard for broadcast
-- **sRGB**: piecewise function ≈ gamma 2.2, for monitors
-- 90% of displays automatically apply Rec.709 decoding to all input regardless of file gamma
+The [International Color Consortium](https://www.color.org/getting-started/)
+defines a Profile Connection Space that connects independently made input and
+output profiles. [OpenColorIO](https://opencolorio.readthedocs.io/en/latest/guides/authoring/authoring.html)
+uses an explicit configuration for colorspaces, displays, views, looks, and
+transforms. [ACES output transforms](https://docs.acescentral.com/system-components/output-transforms/)
+are likewise selected for named target gamut, luminance, white point, and
+display encoding combinations.
 
-### Log Gamma
+These systems do not make a generic transform correct by themselves. Pin the
+profile/configuration and transform version, preserve it with the job, and
+validate its input/output assumptions after an upgrade.
 
-Logarithmic curve compressing ~14 stops into standard bit depth. Each manufacturer has a different curve — not interchangeable:
+## Validate source, working, and delivery images
 
-```python
-# Conceptual: log-encoded value from linear light
-import numpy as np
-# Generic approximation (NOT S-Log or V-Log specific):
-log_val = np.log(linear_val + 1) / np.log(max_scene_luminance + 1)
-```
+Use authorized test images or calibrated targets that cover neutral regions,
+near-gamut colors, gradients, highlights, shadows, text, and protected
+detail. Evaluate:
 
-**Critical**: Displaying Log on an SDR monitor without transform = washed-out image (monitor applies Rec.709 EOTF to Log data — wrong).
+- input decoding and metadata handling;
+- color, tone, and gamut behavior through the full transform chain;
+- consistency between the chosen validation display/view and delivered file;
+- clipping, banding, unexpected gamut mapping, and irreversible bake-in; and
+- reproducibility after restart, cache reset, or configuration upgrade.
 
-### HLG (Hybrid Log Gamma)
+Record the output file/profile and a review receipt. Numeric pixel equality is
+only meaningful if the same encoding and transform path are named.
 
-Hybrid curve with two segments:
-- Below reference white: standard Rec.709 gamma (backward-compatible with SDR)
-- Above reference white: logarithmic extension (used on HDR displays)
+## Failure policy
 
-Result: single file plays correctly on both SDR and HDR displays without separate versioning.
+An unrecognized input, missing profile, unsupported display target, or failed
+configuration validation is a visible capability failure. It is not permission
+to strip metadata, bake a guess, or change the output path without recording
+the choice. Keep color-management and creative-grade changes separately
+auditable so a visual look is never misrepresented as a correction.
 
-## RAW Format
+## Related pages
 
-Linear photon counts from sensor, no gamma or color space applied.
-
-**Advantages:**
-- Maximum dynamic range for the camera
-- Maximum color gamut
-- Post-process can apply any color space / gamma
-
-**Processing:** Requires debayering (demosaicing) + explicit gamma + color space assignment. In NLEs this is the Camera RAW step.
-
-**Common mistake:** Importing RAW without setting correct Input Color Space — NLE assumes Rec.709 and clips dynamic range.
-
-## Bit Depth vs. Chroma Subsampling
-
-### Bit Depth
-
-| Bits | Steps | Gradient Banding |
-|------|-------|-----------------|
-| 8-bit | 256 | Visible posterization in gradients |
-| 10-bit | 1024 | Smooth transitions |
-| 12-bit | 4096 | Professional, no visible banding |
-
-Publishing to social platforms at 8-bit: gradients in backgrounds become visible bands. Mitigations: add subtle grain, avoid large smooth-tone backgrounds, publish in 4K (platform applies softer compression).
-
-### Chroma Subsampling (YUV)
-
-Reduces color resolution while preserving luma:
-
-| Format | Description | Artifact |
-|--------|------------|---------|
-| 4:4:4 | Full luma + chroma per pixel | None |
-| 4:2:2 | Chroma sampled at half horizontal res | Mild on large color regions |
-| 4:2:0 | Chroma sampled at 1/4 spatial res | Visible blocks on highly-saturated areas |
-
-Noise in camera footage concentrates in chroma channels. Denoising: apply to chroma (UV) channels only, not luma.
-
-## CMS Workflows
-
-### ColorSpace Transform (CST) — Explicit Pipeline
-
-```text
-Input clip → CST node (Log+WideGamut → Rec.709+Gamma2.4)
-           → Color corrections (in Rec.709)
-           → Output
-```
-
-Most explicit and understandable. Balance/exposure corrections should be applied **before** CST to preserve full dynamic range during correction.
-
-### DaVinci Wide Gamut (Internal Working Space)
-
-```text
-Input → Interpreted as camera color space (auto or manual)
-      → All corrections in DaVinci Wide Gamut (~ACES-like container)
-      → Output Color Space = Rec.709 (applied at render only)
-```
-
-Advantage over CST: corrections in wide gamut, no clipping risk during grading. Single compression step at output.
-
-### ACES
-
-- Input Device Transform (IDT): camera color space → ACES
-- All work in AP0/AP1 linear
-- Output Device Transform (ODT): ACES → target display
-
-ACES is linear — VFX/CG compositing integrates perfectly. Expensive to configure per-camera, Lift/Gamma controls behave non-intuitively.
-
-## Color Analysis Scopes
-
-### Parade (RGB/YRGB)
-
-Separate R, G, B waveforms stacked. Neutral color = all channels at same height and parallel.
-
-```python
-# Detect color cast programmatically
-r_mean = img[:,:,0].mean()
-g_mean = img[:,:,1].mean()
-b_mean = img[:,:,2].mean()
-avg = (r_mean + g_mean + b_mean) / 3
-threshold = 0.05
-
-cast = {c: (v - avg)/avg for c, v in zip('RGB', [r_mean, g_mean, b_mean])}
-# cast['R'] > threshold → warm/red cast
-```
-
-### Vectorscope
-
-Plots hue angle vs. saturation radius. Center = neutral (no saturation). Skin tones fall on a specific diagonal line regardless of ethnicity — use skin tone indicator for white balance.
-
-```text
-Skin tone hue angle: ~20-25° (reddish-orange sector)
-Neutral white balance: distribution centroid near (0,0) in UV space
-```
-
-Broadcast legal limit: saturation must not exceed outer box markers on vectorscope.
-
-### Waveform
-
-Horizontal pixel position mapped to brightness value (0–1023 in 10-bit). Useful for exposure: clip checking, IRE targets (18% grey = ~512).
-
-## Practical Input Interpretation Rules
-
-| Camera / Format | Input Color Space | Gamma |
-|---|---|---|
-| Rec.709 material | None (pass through) | — |
-| ARRI LogC in ProRes | ARRI Wide Gamut | LogC3 |
-| Sony S-Log3 | S-Gamut3.Cine | S-Log3 |
-| Panasonic V-Log | V-Gamut | V-Log |
-| RED IPP2 | REDWideGamutRGB | Log3G10 |
-| Blackmagic RAW | Blackmagic Wide Gamut | Blackmagic Film |
-| DJI D-Log | D-Gamut (DLog-M) | D-Log M |
-| iPhone HDR | HLG | HLG |
-
-**White balance and exposure** corrections: apply **before** transform (in log/wide-gamut space) to leverage full bit depth.
-
-## Camera-Specific CST Gotchas
-
-| Camera | Color Space | Gamma | Special Notes |
-|--------|-------------|-------|---------------|
-| Sony A7/FX (S-Log3) | S-Gamut3 or S-Gamut3.Cine | S-Log3 | Shoots noisy in Log; prefer +1 stop exposure or use HLG |
-| Panasonic (V-Log) | V-Gamut | V-Log | Only one Log option; GH5S transcoded files lose metadata |
-| Fujifilm (F-Log) | Rec.2020 (F-Gamut not in CST list) | F-Log | Map F-Gamut → Rec.2020 as closest approximation |
-| ARRI Mini | ARRI Wide Gamut (Alexa) | Log C | Metadata usually correct; best color science baseline |
-| RED R3D (IPP2) | REDWideGamutRGB | RedLog3G10 | Use IPP2 (not Legacy); fixes neon artifacts on oversaturated patches |
-| Blackmagic RAW (BRAW) | Blackmagic Design | Blackmagic Film | Enable Highlight Recovery (+0.5-1 stop free); always pick exact sensor gen |
-| Blackmagic Pocket 6K | Blackmagic Pocket **4K** (!) | Blackmagic Pocket 6K Gen4 | 6K shares 4K color space in CST; choosing 6K in color space field is wrong |
-| HLG (any camera) | Rec.2020 | (leave as Use Timeline) | Do not set gamma to "HLG 2100" — use Rec.2020 color space only, no gamma change |
-| DJI D-Log (DNG) | Blackmagic Design | Blackmagic Design Film | No native DJI profile in Resolve CST; Blackmagic closest match |
-
-**RAW dual-step pipeline:**
-```text
-RAW file (R3D / BRAW / DNG)
-  → Camera RAW tab: debayer into widest space (e.g. REDWideGamutRGB + Log3G10)
-  → [Optional: WB + exposure corrections before compression]
-  → CST node: Input = what Camera RAW output; Gamut Mapping → Saturation Compression ON
-  → Rec.709 working space
-```
-
-**CST operational rules:**
-- Set Input Color Space + Input Gamma only; leave Output as "Use Timeline" (Rec.709 + Gamma 2.4)
-- Enable Gamut Mapping → Saturation Compression on every CST node — compensates colors that exceed Rec.709 gamut
-- Disable "Apply Creative LUT" in Camera RAW tab before color work
-- WB and exposure corrections: do **before** CST to use full dynamic range
-
-## Gotchas
-
-- **Log on display without transform**: 90% of displays apply Rec.709 EOTF to any input. Log footage shows as desaturated/flat unless explicitly converted. NLEs often silently apply wrong gamma.
-- **ARRI ProRes container ≠ Rec.709**: ARRI frequently records LogC3 encoded video into ProRes .mov containers. Container format says nothing about color space — check camera metadata or ask the shooter.
-- **DaVinci Histogram axis reversal**: in Resolve, histogram left = brighter, right = darker — opposite of Photoshop/Lightroom. Applying Lightroom histogram intuition causes incorrect exposure adjustments.
-- **HLG auto-detected as Rec.709**: auto color managed workflows often misidentify HLG-encoded clips as Rec.709. Verify manually: HLG footage has a characteristic toe in dark areas that looks wrong under Rec.709 gamma.
-- **Chroma denoising target**: camera noise is predominantly in UV channels, not luma. Applying spatial noise reduction equally to all channels sharpens luma artifacts while leaving chroma noise. Target the chroma channel specifically.
-- **Wide-gamut monitor + sRGB signal**: consumer monitors with P3-wide panels often display Rec.709 signal too saturated without explicit color management. Calibration + ICC profile in OS is required for accurate monitoring.
-- **Blackmagic Pocket 6K color space mismatch**: 6K Pocket uses same color space as 4K Pocket in CST; selecting "Pocket 6K" in the color space dropdown gives wrong result. Use "Pocket 4K" for color space, "Pocket 6K Gen4" for gamma.
-- **Fujifilm F-Gamut not in CST list**: Resolve CST has no F-Gamut entry. Use Rec.2020 as the closest standard approximation for F-Gamut coverage.
-- **RED IPP2 vs Legacy**: Legacy IPP2 produces black clipping artifacts on oversaturated neons even on old sensors. Always set Color Science = IPP2 in Camera RAW tab, even for older Red bodies.
-
-## See Also
-
-- [[color-theory-for-ml]] - perceptual color theory, Volkov local vs radiation color
-- [[color-checker-and-white-balance]] - automated calibration pipeline
-- [[intrinsic-decomposition]] - separating albedo from illumination
-- [[diffusion-lora-training]] - color space considerations for training data
+- [[color-correction-by-numbers]]
+- [[color-checker-and-white-balance]]
+- [[color-theory-for-ml]]
+- [[diffusion-lora-training]]

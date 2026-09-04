@@ -29,7 +29,7 @@ type: MOC
 
 ## Inference & Optimization
 - [[diffusion-inference-acceleration]] - Diffusion acceleration is a model-and-runtime-specific trade-off; measure warm and steady-state latency, memory, output fidelity, and reproducibility for the exact checkpoint and workflow.
-- [[tiled-inference]] - Tiled inference for high-resolution generation
+- [[tiled-inference]] - Tiled inference is a model-bound high-resolution strategy; partitioning, overlap, blending, global context, coordinate mapping, and output review must be evaluated together on the pinned pipeline, while detection tiles and generative or retouch tiles remain separate contracts.
 - [[temporal-tiling]] - Temporal tiling is a model-specific research experiment for cross-tile consistency, not a direct reuse of video memory; bind the tile plan and runtime state, compare against an overlap baseline, and validate seams, composition, and cost on held-out images.
 - [[low-vram-inference-strategies]] - Low-VRAM inference is a measured runtime configuration, not a hardware-tier promise; pin the model and backend, select only documented quantization, offload, or tiling paths, and record peak memory, latency, output fidelity, and failure behavior on the actual device.
 - [[textual-latent-interpolation]] - Textual latent interpolation is a model-specific conditioning experiment: preserve non-target inputs, bind it to an exact encoder and adapter, sweep the requested range, and prove controllability and preservation instead of assuming semantic linearity.
@@ -61,11 +61,11 @@ type: MOC
 ## Additional References
 
 - [[anatomy-correction-diffusion]] - Anatomy correction is a diagnose-mask-condition-inpaint workflow; use geometry-aware research methods and model-matched editing tools, then visually verify every edited hand or limb against the source.
-- [[color-correction-by-numbers]] - Deterministic color correction using measurable channel targets rather than perceptual judgment
-- [[color-space-and-gamma-reference]] - Practical reference for color management in video/photo processing pipelines
-- [[color-theory-for-ml]] - Applied color theory for diffusion model training, color correction, and palette control
+- [[color-correction-by-numbers]] - Color correction is valid only against a declared measurement target, illuminant, camera or profile, working space, and viewing transform; neutral samples and chart patches are evidence when their provenance is known, while scene averages and skin-color ratios are not universal ground truth.
+- [[color-space-and-gamma-reference]] - Color management is a versioned chain of input interpretation, working space, creative transforms, display or view transform, and output encoding; camera or container labels and generic gamma rules are insufficient without the exact profile, transform version, metadata policy, and validation display.
+- [[color-theory-for-ml]] - Color guidance for ML is a task-specific representation and evidence contract: name the source encoding, illuminant or viewing assumptions, target transform, palette intent, and human-review purpose; artistic harmony, spectral labels, and psychological associations are hypotheses, not universal labels or model controls.
 - [[comfyui-wan-vace-video-joiner]] - The Wan VACE Video Joiner is a node suite designed for assembling disparate video segments into a
-- [[defect-detection-small-objects]] - Reference for detecting defects (scratches, dust, surface anomalies) and small objects in
+- [[defect-detection-small-objects]] - Defect and small-object detection produces reviewable candidates, not automatic quality truth; bind the model, capture protocol, annotation or normal-reference policy, slicing or merge mapping, thresholds, and source-disjoint evaluation before any inspection or workflow decision.
 - [[denoise-architectures-2026]] - 2025-2026 landscape of image denoising architectures: NTIRE 2025 winners, SSM/Mamba-based models
 - [[diffusion-distillation-cdm]] - flow-matching distillation to 4 NFE without GAN or reward model
 - [[edge-softness-and-compositing]] - Measure the edge instead of choosing it: 10-90 transition width, robust outline fitting
