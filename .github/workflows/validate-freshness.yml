@@ -1,5 +1,12 @@
 name: Validate Freshness
 
+# The article and domain counts written into README, AGENTS, the index, mkdocs and
+# the welcome post are DERIVED from the articles themselves. A branch must not carry
+# them: when two article branches each recompute the counts, they conflict on the same
+# lines and only the first one can merge (measured 2026-09-04, seven article branches).
+# So the counts are recomputed here instead - checked on a pull request, committed on
+# master - and a branch only ever carries its article.
+
 on:
   push:
     branches: [master]
@@ -15,6 +22,9 @@ on:
       - 'AGENTS.md'
       - 'mkdocs.yml'
 
+permissions:
+  contents: write
+
 jobs:
   freshness:
     runs-on: ubuntu-latest
@@ -24,6 +34,23 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
+      - name: Recompute the derived counts
+        run: python scripts/sync_stats.py
+
+      - name: Commit the recomputed counts (master only)
+        if: github.event_name == 'push'
+        run: |
+          if git diff --quiet; then
+            echo "counts already current"
+            exit 0
+          fi
+          git config user.name "knowledge-space"
+          git config user.email "noreply@happyin.space"
+          git commit -aqm "counts: recompute after merge"
+          # This push starts one more run of this workflow; that run finds no drift,
+          # commits nothing and stops. No loop.
+          git push origin HEAD:master
 
       - name: Check stats, wiki-links, llms.txt
         run: python hooks/freshness_check.py --ci
