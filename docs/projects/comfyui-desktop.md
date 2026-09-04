@@ -1,27 +1,37 @@
 ---
-title: ComfyUI Desktop — ComfyUI Desktop development
+title: ComfyUI Desktop
 category: projects
+date: 2026-01-06
 tags: [comfyui-desktop, project]
 aliases: ["ComfyUI Desktop"]
 ---
 
-# ComfyUI Desktop — ComfyUI Desktop development
+# ComfyUI Desktop
 
 **Development line:** `project:comfyui-desktop` · thread `comfyui-desktop`  
-**Events:** 2 dated, 2024-11-27 → 2026-01-06 · **Researched:** 2026-09-04 · confidence: medium
+**Last event:** 2026-01-06 · 2 dated since 2024-11-27 · **Researched:** 2026-09-04 · confidence: medium
 
 ## What it is
 
-ComfyUI Desktop, now succeeded by Comfy Desktop, is a local launcher for practitioners who need separate ComfyUI environments instead of maintaining one manual Python installation. - Creates, launches, and manages independent ComfyUI instances. - Keeps each instance’s version, custom nodes, settings, and Python environment separate. - Supports templates, migration from legacy or existing installs, update channels, snapshots, and rollback. Limit: allow at least 4.85 GB per standalone install and 8 GB RAM; 16 GB is recommended. Windows 10+ and macOS 13+ on Apple Silicon are documented paths, while current Linux instructions conflict. Verdict: use it for isolated local workflow stacks and recoverable updates; choose portable or manual ComfyUI when you need a platform or core revision Desktop does not clearly cover.
+ComfyUI Desktop, now succeeded by Comfy Desktop, is a local launcher for practitioners who need separate ComfyUI environments instead of maintaining one manual Python installation.
+
+- Instances: creates, launches, and manages independent ComfyUI instances.
+- Isolation: keeps each instance’s version, custom nodes, settings, and Python environment separate.
+- Operations: supports templates, migration from legacy or existing installs, update channels, snapshots, and rollback.
 
 ## Development line
 
-- **2024-11-27 — ComfyUI Desktop became available as an open-source project.** On 2024-11-27, ComfyUI made its Desktop application available as an open-source project. The linked repository and user-guide references identify this as a public product-line milestone. The sealed links do not establish its exact feature scope, supported platforms, or release details.
-- **2026-01-06 — ComfyUI added official AMD ROCm support.** On 2026-01-06, ComfyUI announced official support for AMD ROCm. This is a material platform-compatibility development for the ComfyUI Desktop line. The sealed link alone does not establish the exact Desktop versions, operating systems, hardware, or setup requirements.
+- **2024-11-27 — ComfyUI Desktop became available as an open-source project.** On 2024-11-27, ComfyUI made its Desktop application available as an open-source project. This marks a public milestone in the product line. The release materials omit its exact initial feature scope, supported platforms, and release details.
+- **2026-01-06 — ComfyUI added official AMD ROCm support.** On 2026-01-06, ComfyUI announced official support for AMD ROCm. This is a platform-compatibility update for the Desktop line. The announcement omits exact Desktop versions, operating systems, hardware, and setup requirements.
 
 ## What changed
 
-ComfyUI Desktop development line: - 2024-11-27 — v1 Desktop was open-sourced. The original launch article’s detailed feature set could not be re-read today. - 2026-01-06 — Windows Desktop v0.7.0 added official AMD ROCm support; installation should select ROCm automatically. The release used ROCm 7.1.1 and recommended its preview driver. - Found today (2026-09-04) — the maintained successor is documented as Comfy Desktop: a multi-installation manager rather than the legacy single-install app. It can migrate legacy workflows, nodes, models, inputs, outputs, and settings into a fresh standalone environment. - Found today (2026-09-04) — the old Comfy-Org/desktop repository is archived and points to Comfy-Org/Comfy-Desktop. Limit: current English documentation says Linux has no official installer, while the maintained repository documents Debian/Ubuntu and AppImage installation. Verdict: treat the legacy Desktop app and repository as migration sources, not the current operational baseline.
+ComfyUI Desktop development line:
+
+- 2024-11-27 — v1 Desktop was open-sourced. We could not re-read the detailed feature set from the original launch article today.
+- 2026-01-06 — Windows Desktop v0.7.0 added official AMD ROCm support; installation should select ROCm automatically. The release used ROCm 7.1.1 and recommended its preview driver.
+- Found today (2026-09-04) — documentation describes the maintained successor as Comfy Desktop: a multi-installation manager rather than the legacy single-install app. It can migrate legacy workflows, nodes, models, inputs, outputs, and settings into a fresh standalone environment.
+- Found today (2026-09-04) — the old Comfy-Org/desktop repository is archived and points to Comfy-Org/Comfy-Desktop.
 
 ## How to use this
 
