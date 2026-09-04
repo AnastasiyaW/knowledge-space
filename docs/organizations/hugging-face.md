@@ -1,33 +1,45 @@
 ---
-title: Hugging Face — Hugging Face platform evolution
+title: Hugging Face
 category: organizations
+date: 2025-02-03
 tags: [dreambooth-hackathon, hf-inference-providers, hugging-face, hugging-face-mcp, hugging-face-platform-evolution, huggingface-local-apps, organization]
 aliases: ["Hugging Face"]
 ---
 
-# Hugging Face — Hugging Face platform evolution
+# Hugging Face
 
 **Development line:** `organization:hugging-face` · thread `hugging-face-platform-evolution`  
-**Events:** 4 dated, 2022-12-28 → 2025-02-03 · **Researched:** 2026-09-03 · confidence: medium
+**Last event:** 2025-02-03 · 4 dated since 2022-12-28 · **Researched:** 2026-09-04 · confidence: medium
 
 ## What it is
 
-Hugging Face is a GitHub-style ML platform for teams that publish, evaluate, run, or connect models, datasets, and AI apps. - Hub repositories for models, datasets, and Spaces. - Inference Providers for compatible serverless models through one API. - MCP access to Hub search, documentation, selected Spaces, Jobs, and Sandboxes. Scale: the Hub documentation lists more than 2M models, 1.5M datasets, and 1.5M Spaces. Limit: provider compatibility, price, availability, and permissions differ by model and plan. Verdict: use the Hub as the asset record; choose serving provider and agent permissions per workload.
+Hugging Face is a GitHub-style ML platform for teams that publish, evaluate, run, or connect models, datasets, and AI apps.
+
+- Hub repositories for models, datasets, and Spaces.
+- Inference Providers for compatible serverless models through one API.
+- MCP access to Hub search, documentation, selected Spaces, Jobs, and Sandboxes.
 
 ## Development line
 
-- **2022-12-28 — Hugging Face published materials for a DreamBooth hackathon.** On 2022-12-28, Hugging Face linked a DreamBooth Hackathon page and an accompanying Colab notebook. This was a visible community and learning initiative around DreamBooth-based diffusion workflows.
-- **2024-05-24 — Hugging Face added a Local Apps product path.** On 2024-05-24, Hugging Face linked Local Apps task code and a Local Apps settings page. The linked product surfaces indicate an expansion of its platform toward locally configured application workflows.
-- **2024-06-05 — Hugging Face published a Spaces secrets disclosure.** On 2024-06-05, Hugging Face published a disclosure concerning secrets in Spaces. This made security handling of credentials in Spaces a public platform concern for users and maintainers.
-- **2025-02-03 — Hugging Face announced Inference Providers.** On 2025-02-03, Hugging Face published an announcement for Inference Providers. The announcement marked a platform route for accessing inference through providers integrated with Hugging Face.
+- **2022-12-28 — Hugging Face published materials for a DreamBooth hackathon.** Hugging Face linked a DreamBooth Hackathon page and a Colab notebook for diffusion workflows.
+- **2024-05-24 — Hugging Face added a Local Apps product path.** Hugging Face linked Local Apps task code and a settings page to support local application workflows.
+- **2024-06-05 — Hugging Face published a Spaces secrets disclosure.** Hugging Face disclosed secrets in Spaces, making credential security in Spaces a public concern for maintainers and users.
+- **2025-02-03 — Hugging Face announced Inference Providers.** Hugging Face announced Inference Providers as a platform route to access inference through integrated providers.
 
 ## What changed
 
-Hugging Face developed from hosted model collaboration into a platform with local, routed, and agent-facing execution paths. - 2022-12-28 — DreamBooth Hackathon provided a notebook-led path to personalize Stable Diffusion from a handful of images and publish models to the Hub. The contest ended in January 2023. - 2024-05-24 — Local Apps made model pages capable of presenting runnable local-runtime snippets. The linked mutable source currently covers runtimes such as llama.cpp, vLLM, SGLang, and MLX; the exact May 2024 implementation is not pinned. - 2024-06-05 — following the May 31 Space-secrets disclosure, Hugging Face rotated affected tokens, removed organization tokens from Spaces, added KMS-backed secrets, and moved users toward fine-grained tokens. - 2025-02-03 — recorded shortly after the January 28 launch, Inference Providers shifted serverless use from a single Hub endpoint toward a provider-routed API with compatible model pages, SDK support, personal provider keys, or Hugging Face-routed billing. - 2025-06-07 — the event aligns with Hugging Face's June 6 official MCP Server launch: MCP-compatible assistants could search Hub resources and call selected Gradio apps; it launched as experimental. - 2026-07-22 (found today) — MCP added the hf_fs navigation tool for repositories, storage, documentation, and papers, plus Sandboxes attached to buckets and repositories.
+Hugging Face expanded from hosted model collaboration into a platform with local, routed, and agent-facing execution paths.
+
+- 2022-12-28 — DreamBooth Hackathon gave a notebook path to personalize Stable Diffusion from a handful of images and publish models to the Hub. The contest ended in January 2023.
+- 2024-05-24 — Local Apps added runnable local-runtime snippets to model pages. The linked mutable source covers llama.cpp, vLLM, SGLang, and MLX, but the May 2024 implementation is not pinned.
+- 2024-06-05 — Following the May 31 Space-secrets disclosure, Hugging Face rotated affected tokens, removed organization tokens from Spaces, added KMS-backed secrets, and moved users to fine-grained tokens.
+- 2025-02-03 — Recorded shortly after the January 28 launch, Inference Providers shifted serverless use from a single Hub endpoint to a provider-routed API with compatible model pages, SDK support, personal provider keys, and Hugging Face-routed billing.
+- 2025-06-07 — Aligned with the June 6 official MCP Server launch, MCP-compatible assistants could search Hub resources and call selected Gradio apps. It launched as experimental.
+- 2026-07-22 (found today) — MCP added the hf_fs navigation tool for repositories, storage, documentation, and papers, plus Sandboxes attached to buckets and repositories.
 
 ## How to use this
 
-After the 2024-06-05 Spaces disclosure, review and remediate any secrets used in Hugging Face Spaces; from 2025-02-03, evaluate Hugging Face Inference Providers as a provider-mediated inference access path when selecting deployment workflows.
+Review and remediate secrets used in Hugging Face Spaces after the 2024-06-05 Spaces disclosure. Evaluate Hugging Face Inference Providers as a provider-mediated inference access path after 2025-02-03 when selecting deployment workflows.
 
 1. Create a fine-grained access token scoped to the repository or inference task, then authenticate a development machine with hf auth login.
   — <https://huggingface.co/docs/hub/en/security-tokens>
@@ -59,16 +71,16 @@ After the 2024-06-05 Spaces disclosure, review and remediate any secrets used in
 
 ## Superseded by this
 
-- 2022-12-28 — DreamBooth Hackathon prize, certificate, and leaderboard-submission workflow is obsolete; the event ended in January 2023.
-- 2024-06-05 — production guidance based on broad classic read/write tokens is superseded by per-application fine-grained tokens and, for CI, short-lived OIDC-issued tokens.
-- 2025-02-03 — assuming a single static hosted Inference API for every Hub model is superseded by provider/model compatibility and explicit provider or routing-policy selection.
-- 2025-06-07 — hand-written, fixed MCP client configuration is superseded by the current generated Settings configuration and hf_fs-centered Hub navigation.
+- 2022-12-28 — DreamBooth Hackathon prize, certificate, and leaderboard-submission workflows are obsolete because the event ended in January 2023.
+- 2024-06-05 — Guidance based on broad classic read/write tokens is superseded by per-application fine-grained tokens and short-lived OIDC-issued tokens for CI.
+- 2025-02-03 — Assuming a single static hosted Inference API for every Hub model is superseded by provider compatibility and explicit provider selection.
+- 2025-06-07 — Hand-written fixed MCP client configuration is superseded by the generated Settings configuration and hf_fs navigation.
 
 ## Still unknown
 
-- Hugging Face combines a repository platform, local-runtime integration layer, inference gateway, Spaces platform, and MCP connector. These events are a platform chronology, not one single product migration.
-- The 2025-06-07 X post returned no readable content during research. Hugging Face's June 6 changelog independently confirms the MCP launch, but not the post's exact wording.
-- The Local Apps reference points to mutable main-branch source rather than an immutable May 2024 revision, so its exact historical behaviour is unverified.
+- Hugging Face combines a repository platform, local-runtime integration layer, inference gateway, Spaces platform, and MCP connector. These events reflect a platform chronology, not one single product migration.
+- The 2025-06-07 post returned no readable content during research. Hugging Face's June 6 changelog independently confirms the MCP launch, but not the post's exact wording.
+- The Local Apps reference points to mutable repository source rather than an immutable May 2024 revision, so its exact historical behaviour is unverified.
 - Current prices, quotas, data-processing terms, and availability were not quoted because they vary by plan, model, and provider.
 
 ## Sources
