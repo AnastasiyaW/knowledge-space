@@ -821,7 +821,7 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[low-vram-inference-strategies]] - Techniques for running image generation and processing models on GPUs with limited VRAM (2-8 GB)
     - [[MACRO]] - MACRO is a structured multi-reference dataset, benchmark, and set of model-specific fine-tuning assets; validate the compatible base model and artifact terms before deployment.
     - [[megastyle-flux-style-transfer]] - MegaStyle is a single-reference style transfer framework developed by Tencent for FLUX.1-dev
-    - [[object-removal-inpainting]] - Comparative reference for object removal/erasure models (2024-2026)
+    - [[object-removal-inpainting]] - Object removal is a constrained edit: bind the source asset, permitted object, mask, model contract, and protected regions, then validate scene continuity and factual preservation before release.
     - [[paired-training-for-restoration]] - How to train a diffusion model for image-to-image restoration (not text-to-image)
     - [[perspective-calibration-for-compositing]] - A local decision framework for estimating camera geometry, validating it with scene evidence, and
     - [[pixel-art-generation]] - Algorithms and models for converting raster images to pixel art, generating pixel art via diffusion
@@ -832,13 +832,13 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[recurrent-depth-transformer]] - Looped transformer architecture that reuses a single block T times to simulate multi-step reasoning
     - [[retouch-patch-harmonization]] - A training-data design for defect inpainting that preserves the clean target image colour domain
     - [[rights-first-text-to-mask-training]] - A lineage-controlled training and evaluation contract for Russian text requests, visual grounding
-    - [[sana-denoiser-architecture]] - Repurposing SANA 1.6B DiT as an image restoration model
+    - [[sana-denoiser-architecture]] - A SANA-based restorer is a research proposal, not an implemented pipeline; it requires model-compatible conditioning, paired-data baselines, fidelity evaluation, and separate high-resolution tests before deployment.
     - [[segmentation-dataset-preparation]] - Reference for binary semantic segmentation datasets with 0.1-5% positive-pixel coverage (small
-    - [[skin-retouch-pipeline]] - Automated blemish detection and removal pipeline for photos
+    - [[skin-retouch-pipeline]] - Skin retouching is a consent-aware, scope-limited correction workflow; preserve identity, texture, and protected traits, keep every mask and edit auditable, and require review of all changed skin.
     - [[spatialedit-16b-geometric-control-for-diffusion-based-image-editing]] - SpatialEdit-16B is a multimodal diffusion transformer (MM-DiT) framework designed for precise
     - [[Step1X-Edit]] - Step1X-Edit is a StepFun multimodal image-editing family with release-specific pipelines; pair each checkpoint with its documented Diffusers branch and verify model and artifact terms independently.
-    - [[style-reference-ux]] - Comparative analysis of style reference workflows across major AI image generation products
-    - [[synthetic-dataset-pipeline]] - Pipeline for building high-quality annotated datasets for YOLO + SAM fine-tuning from raw image
+    - [[style-reference-ux]] - Style-reference UX must separate temporary influence from saved training, style from content/structure, and local data from third-party processing, while making strength and provenance visible to the user.
+    - [[synthetic-dataset-pipeline]] - Synthetic detection data is a labeled candidate corpus, not automatic ground truth; preserve generator and source provenance, review annotations, prevent split leakage, and validate on real held-out data.
     - [[temporal-tiling]] - The idea: instead of processing tiles independently (standard tiling), treat them as a temporal
     - [[Text-to-LoRA]] - Text-to-LoRA is a Sakana AI hypernetwork that creates task adapters for documented LLM target families from textual task descriptions; it is not a drop-in generator for diffusion-model LoRAs.
     - [[textual-latent-interpolation]] - Technique for continuous attribute control in diffusion models by interpolating between text

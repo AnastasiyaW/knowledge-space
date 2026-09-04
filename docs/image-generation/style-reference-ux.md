@@ -1,140 +1,75 @@
 ---
-title: Style Reference UX Patterns
-category: product
-tags: [ux, style-reference, midjourney, ideogram, firefly, product-design, style-transfer, lora]
+title: Style Reference UX: Authority, Strength, and Provenance
+description: Style-reference UX must separate temporary influence from saved training, style from content/structure, and local data from third-party processing, while making strength and provenance visible to the user.
+category: systems
+tags: [style-reference, ux, provenance, privacy, lora, content-reference, strength-control]
+aliases: ["Style Reference UX", "Style Reference Workflow"]
 ---
 
-# Style Reference UX Patterns
+# Style Reference UX: Authority, Strength, and Provenance
 
-Comparative analysis of style reference workflows across major AI image generation products. Reference for product design decisions around style input, strength control, browsing, and persistence.
+A style-reference control changes visual output, but users need to understand
+what it may borrow, what it will preserve, where their reference is sent, and
+whether the choice is temporary or creates a reusable trained asset. Those
+facts are product requirements, not optional help text.
 
-## Style Input Methods
+## Separate the user’s intents
 
-Ranked by user effort required:
+Expose distinct controls for:
 
-| Method | Product | Effort | Reusability |
-|--------|---------|--------|-------------|
-| Preset library pick | All products | One click | Infinite |
-| Single image upload | All products | Drag-drop | Per session |
-| Numeric code paste | Midjourney | Copy-paste | Infinite |
-| Multi-image upload (1-3) | Ideogram, Krea, Firefly | 2-3 uploads | Per session or saved |
-| Binary image rating | Midjourney Personalization | 15-20 min, 200 pairs | Infinite (profile) |
-| Grid selection from generated options | Midjourney Style Creator | 5-10 min | Infinite (code) |
-| LoRA training (5-35 images) | Freepik | 15-30 min training | Infinite |
-| Real-time canvas drawing | Krea.ai | Continuous | Per session |
+- **style:** palette, texture, mood, medium, and visual language;
+- **content:** subject, object identity, product geometry, and scene facts;
+- **structure:** pose, layout, camera/framing, or spatial constraints; and
+- **preservation:** reference features that an edit must leave unchanged.
 
-## Midjourney --sref Deep Dive
+Do not present these as one vague “reference strength” dial. If a workflow
+cannot technically separate them, say so and show the expected conflict rather
+than implying that all reference properties will be preserved.
 
-**Five creation methods:**
-1. Image URL: `--sref <url>` in Discord, paperclip icon in web app
-2. Numeric code: `--sref 2213253170` (billions of internal styles)
-3. `--sref random`: discover style, reveals code post-generation
-4. Style Creator: grid selection → generates unique code
-5. Moodboard: `--profile <id>` named image collections
+## Temporary versus durable choices
 
-**Style strength:** `--sw 0-1000`, default 100. Community-found optimal: 65-175.
+Offer two clearly labelled paths:
 
-**Multi-style blending:** `--sref code1::2 code2::1` - proportional weighting (only ratios matter).
+1. **Session reference:** applied only to the current job and removable with
+   the job record.
+2. **Saved style or trained adapter:** a durable asset with a name, owner,
+   source/provenance, model binding, retention policy, and deletion path.
 
-**Benchmark grids:** 16 creative domains shown with same sref code. Reveals style's range across character, fashion, portraiture, technical drawing, etc.
+A saved style must never be created implicitly from an upload. Training,
+sharing, or reuse needs a separate affirmative action and a visible statement
+of what data will be retained.
 
-Community ecosystem spawned: Midlibrary.io, SrefHunt.com (50K+ codes), sref-midjourney.com, PromptsRef.com. All follow: grid cards + one-click copy + category filters + personal bookmarks.
+## Strength controls that communicate risk
 
-## Strength/Influence Control Patterns
+Use a reversible strength control with plain-language effects and a preview
+that compares against the no-reference baseline. The UI should show when
+increasing style influence also weakens content/structure preservation. Avoid
+pretending that numeric weights are comparable across different models,
+adapters, or image references.
 
-| Pattern | Products | Notes |
-|---------|---------|-------|
-| Numeric parameter in text (`--sw 0-1000`) | Midjourney | Power users, precise |
-| Named levels (Low/Mid/High/Ultra/Max) | Leonardo.ai | Approachable, limited precision |
-| Continuous slider | Adobe Firefly, Freepik | Standard UI pattern |
-| Named flavors (Faithful/Bold/Dreamy) | Freepik Mystic | Qualitative, intuitive |
-| Drag gesture on image | Krea.ai | Direct manipulation |
-| Proportional weights (`::2 ::1`) | Midjourney blending | Proportional, power users |
+For complex requests, provide an explicit conflict summary before generation:
+which source controls color, which controls composition, which controls object
+facts, and which has priority when they disagree.
 
-## Style vs Structure Separation
+## Data and provider boundary
 
-**Adobe Firefly**: two distinct sliders:
-- **Style Strength**: how closely output follows the style reference
-- **Visual Intensity**: detail/drama of base image before style application
+Before accepting a reference, disclose whether it remains local or is sent to
+a captioning, embedding, generation, or training provider. Record the
+provider, model/revision, retention/access terms, and user authority in the
+job receipt. Sensitive portraits, products under NDA, and third-party artwork
+need an explicit allowed-use decision.
 
-**Structure Reference** (Firefly) is separate from Style Reference: controls outline and depth matching. Can use both independently.
+## Acceptance and reuse
 
-**Leonardo.ai**: same image can be Content Reference OR Style Reference. Clear mental model:
-- Content Reference = WHAT is in the image (subjects, composition)
-- Style Reference = HOW it looks (colors, artistic style, texture)
+Show a source panel with thumbnails/digests, model and adapter binding,
+reference scope, prompt, output, and feedback. User ratings are useful
+preference signals, but they do not prove rights, factual product accuracy, or
+identity preservation. A reusable adapter must follow the release contract in
+[[flux-klein-style-lora-system]].
 
-## Persistence and Sharing
+## Related pages
 
-| Mechanism | Product | Notes |
-|-----------|---------|-------|
-| Numeric code (portable, shareable) | Midjourney | Single number = entire aesthetic. Most viral. |
-| Named saved style (account-bound) | Ideogram, Freepik | Personal library |
-| Moodboard with ID | Midjourney | Curated collection, shareable |
-| Trained LoRA (account-bound) | Freepik | Highest commitment, highest quality |
-| Profile from ratings | Midjourney | Implicit style from preference history |
-
-## Key UX Insights
-
-**1. Numeric codes are the most viral mechanism.** Midjourney's single-number encoding spawned an entire third-party ecosystem. A portable, copy-pasteable aesthetic identifier creates sharing loops that no gallery can match.
-
-**2. Two-tier commitment works.** Ideogram's "Quick Reference" (temporary) vs "My Styles" (permanent named) pattern serves exploration and production simultaneously. Key: frictionless experimentation, clear path to commitment.
-
-**3. `--sref random` as discovery mechanic.** Generate → discover → save code → build collection. Turns randomness into curation. Creates addictive collecting behavior without explicit gamification.
-
-**4. Named qualitative modes beat numeric sliders for non-power-users.** Freepik's "Faithful/Bold/Dreamy" flavors and Leonardo's "Low/Mid/High/Ultra/Max" are more actionable than 0-1000 scales for users who think in qualities.
-
-**5. Benchmark grids show style versatility.** 16 variations of one style across different subjects is more informative than 4 variations of the same subject. Reveals style's range and limitations.
-
-**6. LoRA training exposed to end users is a UX barrier AND moat.** Freepik's 15-30 min wait creates investment/commitment. Users who trained a custom style don't switch platforms.
-
-**7. Real-time feedback (Krea, <50ms) changes the paradigm.** From "configure then generate" to "continuously sculpt." Fundamentally different interaction model.
-
-**8. Style + Character as independent axes.** Freepik's separate trainable entities that combine freely is powerful for brand content (same character, multiple styles or vice versa).
-
-## Ideogram Pattern: Immutable Custom Styles
-
-Reference images in Ideogram's custom styles cannot be changed after creation. Forces intentional curation - you commit to a style before training it. UX trade-off: more friction upfront, cleaner library management.
-
-**Quick Reference** tab: temporary style for experimenting (no naming, no saving required). Permanent "My Styles" for production use.
-
-## Runway Aleph: Post-Generation Style
-
-Post-generation style transfer via text prompts without regenerating from scratch. Apply style AFTER generation → non-destructive workflow. Currently only for video.
-
-Implication for product design: style can be a post-processing step, not just a generation parameter.
-
-## Implementation Notes for Custom LoRA Systems
-
-For a LoRA-based style system (like Freepik's):
-
-```bash
-Recommended: rank32, 1000 steps, cosine scheduler
-Dataset: 5-50 images, trigger_word + content captions (no style descriptors)
-Caption dropout: 0.1 (forces style into LoRA weights)
-Inference: Gemini-based prompt reformulation to weave style into scene description
-```
-
-**Dataset size → quality:**
-| Refs | Quality | Steps |
-|------|---------|-------|
-| 1-3 | Poor | N/A |
-| 5-7 | Marginal | 1500 |
-| 10-15 | Good | 1000 |
-| 30+ | Excellent | 500 |
-
-**Gemini two-level approach for style injection:**
-- L1 (Style Extraction): analyze reference images → style profile with MUST/ENRICH elements
-- L2 (Prompt Reformulation): weave style profile + user prompt naturally, resolve conflicts (style wins on visuals, user wins on subject/action)
-
-## Gotchas
-
-- **Building style browsing into the product is critical**: the explosion of third-party sref sites shows unmet demand. Users want to discover styles they haven't seen, not just apply ones they already know.
-- **LoRA at rank128 on small datasets (<10 images) overfit after ~500 steps**: rank32 is more robust for small datasets. Use rank128 only with 30+ reference images.
-- **Cosine scheduler causes "jumps" at midpoint in LoRA training**: if LR is still high when scheduler reaches midpoint, model can overshoot and produce inconsistent checkpoints. Use linear warm-down or check-at-500-steps pattern.
-- **Content leakage with small/homogeneous datasets**: a 2-image style dataset that both contain the same person → LoRA learns the person, not the style. Need content diversity within style consistency.
-
-## See Also
-
-- [[diffusion-lora-training]] - training style LoRAs
-- [[flux-klein-style-lora-system]] - full style system architecture
-- [[flux-klein-9b-inference]] - LoRA stacking at inference
+- [[flux-klein-style-lora-system]]
+- [[megastyle-flux-style-transfer]]
+- [[flux-klein-jewelry-photography]]
+- [[face-beautify-edit-lora]]
