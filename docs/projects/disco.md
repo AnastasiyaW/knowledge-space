@@ -1,32 +1,41 @@
 ---
-title: DisCO — DisCO development
+title: DisCO
 category: projects
+date: 2023-07-11
 tags: [disco, disco-development, project]
 aliases: ["DISCO", "DisCO", "DisCo"]
 ---
 
-# DisCO — DisCO development
+# DisCO
 
 **Development line:** `project:disco` · thread `disco-development`  
-**Events:** 3 dated, 2022-10-20 → 2023-07-11 · **Researched:** 2026-09-04 · confidence: medium
+**Last event:** 2023-07-11 · 3 dated since 2022-10-20 · **Researched:** 2026-09-04 · confidence: medium
 
 ## What it is
 
-DisCO — not one deployable tool, but three task-specific research implementations for image practitioners. - DISCO colorizes grayscale images through global color anchors. - Portrait DisCO corrects close-up facial perspective through 3D-GAN inversion. - Dance DisCo combines reference foreground, background, and target pose to generate human images or video. Limit: the colorization Space reports a runtime error; Portrait DisCO still lists its full system and Hugging Face demo as TODO; hosted dance-demo availability is unverified. Verdict: select and pin the repository by task; none is a successor of the others.
+DisCO covers three task-specific research implementations for image practitioners rather than one deployable tool.
+
+- DISCO colorizes grayscale images through global color anchors.
+- Portrait DisCO corrects close-up facial perspective through 3D-GAN inversion.
+- Dance DisCo combines reference foreground, background, and target pose to generate human images or video.
 
 ## Development line
 
-- **2022-10-20 — DisCO project page and public demo appeared.** On 2022-10-20, a DisCO project page was linked alongside a public Hugging Face Space. This marks an externally accessible introduction of the project and a way to try it directly.
-- **2023-02-26 — Portrait DisCO was presented through a project site.** On 2023-02-26, a dedicated Portrait DisCO project site was linked. It is a distinct public development step in the DisCO line, focused by its presentation on portrait-oriented work.
-- **2023-07-11 — DisCo dance project was published with code and a live demo.** On 2023-07-11, a DisCo dance project site was linked together with a GitHub repository and a live Gradio endpoint. This is a material public release step because it paired project documentation with source access and an executable demonstration.
+- **2022-10-20 — DisCO project page and public demo appeared.** Disentangled Image Colorization via Global Anchors established a SIGGRAPH Asia 2022 colorization workflow with code, checkpoints, and a hosted demo.
+- **2023-02-26 — Portrait DisCO was presented through a project site.** Portrait Distortion Correction with Perspective-Aware 3D GANs appeared as a separate project for correcting close-range portrait distortion. The repository records IJCV acceptance on 2024-01-03 and an inversion-code release on 2025-02-04, while the full system and Hugging Face demo remain TODO.
+- **2023-07-11 — DisCo dance project was published with code and a live demo.** Disentangled Control for Referring Human Dance Generation in Real World appeared as a separate pose-controlled dance-generation project. The repository records a temporal-module update on 2023-11-30, CVPR 2024 acceptance on 2024-04-08, and IDOL as a DisCo enhancement on 2024-07-15.
 
 ## What changed
 
-2022-10-20 — DISCO: Disentangled Image Colorization via Global Anchors established a SIGGRAPH Asia 2022 colorization workflow with code, checkpoints, and a hosted demo. 2023-02-26 — DisCO: Portrait Distortion Correction with Perspective-Aware 3D GANs appeared as a separate project for correcting close-range portrait distortion. Found today: its repository records IJCV acceptance on 2024-01-03 and an inversion-code release on 2025-02-04, while the full system and Hugging Face demo remain TODO. 2023-07-11 — DisCo: Disentangled Control for Referring Human Dance Generation in Real World appeared as a separate pose-controlled dance-generation project. Found today: its repository records a temporal-module update on 2023-11-30, CVPR 2024 acceptance on 2024-04-08, and IDOL as a DisCo enhancement on 2024-07-15. These dates are not one development line: the projects have different authors, tasks, models, repositories, and release paths.
+- 2022-10-20 — DISCO: Disentangled Image Colorization via Global Anchors established a SIGGRAPH Asia 2022 colorization workflow with code, checkpoints, and a hosted demo.
+- 2023-02-26 — DisCO: Portrait Distortion Correction with Perspective-Aware 3D GANs appeared as a separate project for correcting close-range portrait distortion. The repository records IJCV acceptance on 2024-01-03 and an inversion-code release on 2025-02-04, while the full system and Hugging Face demo remain TODO.
+- 2023-07-11 — DisCo: Disentangled Control for Referring Human Dance Generation in Real World appeared as a separate pose-controlled dance-generation project. The repository records a temporal-module update on 2023-11-30, CVPR 2024 acceptance on 2024-04-08, and IDOL as a DisCo enhancement on 2024-07-15.
+
+These dates do not form one development line. The three projects have different authors, tasks, models, repositories, and release paths.
 
 ## How to use this
 
-As of 2023-07-11, practitioners following the DisCO line should look for task-specific public project pages and validate a claimed capability through its linked code or live demo, rather than treating the name alone as one unchanged tool.
+As of 2023-07-11, check task-specific public project pages and validate capabilities through linked code or a live demo, rather than treating the name as one unchanged tool.
 
 1. For grayscale colorization, clone the repository, create its documented Python 3.8 / PyTorch / CUDA environment, download a checkpoint into `checkpoints`, place images in `data`, then run the supplied inference script.
   — <https://github.com/MenghanXia/DisentangledColorization>
@@ -46,16 +55,16 @@ As of 2023-07-11, practitioners following the DisCO line should look for task-sp
 
 ## Superseded by this
 
-- 2022-10-20 — using the hosted DISCO colorization Space as the default workflow is obsolete: its page currently reports a runtime error; use the local repository path instead.
-- 2023-02-26 — the earlier expectation of a future Portrait DisCO code release is superseded by the 2025-02-04 inversion-code release, but it must not be mistaken for a full-system or hosted-demo release.
-- 2023-07-11 — treating the linked Gradio endpoint as a verified current Dance DisCo workflow is obsolete: it could not be fetched on 2026-09-04; use the repository’s local workflow until a hosted endpoint is independently confirmed.
-- 2023-07-11 — treating all occurrences of “DisCO” as versions of one project is obsolete; the three records are independent projects sharing a name.
+- 2022-10-20 — using the hosted DISCO colorization Space as the default workflow is obsolete because its page currently reports a runtime error. Use the local repository path instead.
+- 2023-02-26 — the earlier expectation of a future Portrait DisCO code release is superseded by the 2025-02-04 inversion-code release. Do not mistake it for a full-system or hosted-demo release.
+- 2023-07-11 — treating the linked Gradio endpoint as a verified current Dance DisCo workflow is obsolete because it could not be fetched on 2026-09-04. Use the repository’s local workflow until a hosted endpoint is independently confirmed.
+- 2023-07-11 — treating all occurrences of “DisCO” as versions of one project is obsolete. The three records are independent projects sharing a name.
 
 ## Still unknown
 
 - The `disco` key combines three independent projects. No primary source establishes a common maintainer, release train, API, model weight, or successor relationship.
 - The current Dance DisCo Gradio endpoint could not be fetched during research; this does not prove permanent retirement.
-- I did not execute any repository or download checkpoints, so compatibility with current CUDA, PyTorch, and dependency versions is unverified.
+- We did not execute any repository or download checkpoints, so compatibility with current CUDA, PyTorch, and dependency versions is unverified.
 
 ## Sources
 
