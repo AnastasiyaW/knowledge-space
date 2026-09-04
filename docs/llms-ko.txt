@@ -1,6 +1,6 @@
 # 종합 기술 지식 베이스 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 914+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 915+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -695,6 +695,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Capybara](https://happyin.space/projects/capybara/): **Development line:** `project:capybara` · thread `capybara-development`
 - [ChatGPT](https://happyin.space/projects/chatgpt/): **Development line:** `project:chatgpt` · thread `chatgpt-product-development`
 - [ChronoEdit](https://happyin.space/projects/chronoedit/): **Development line:** `project:chronoedit` · thread `chronoedit-release-and-adapters`
+- [Claude](https://happyin.space/projects/claude/): **Development line:** `project:claude` · thread `claude-product-development`
 - [Clipdrop](https://happyin.space/projects/clipdrop/): **Development line:** `project:clipdrop` · thread `clipdrop-image-editing`
 - [F⁴Splat](https://happyin.space/projects/f4splat/): **Development line:** `project:f4splat` · thread `f4splat-development`
 - [FLUX 3](https://happyin.space/projects/flux-3/): **Development line:** `project:flux-3` · thread `flux-3-development`
