@@ -1,6 +1,6 @@
 # 종합 기술 지식 베이스 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 894+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 895+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -680,6 +680,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [F⁴Splat](https://happyin.space/projects/f4splat/): **Development line:** `project:f4splat` · thread `f4splat-development`
 - [FLUX 3](https://happyin.space/projects/flux-3/): **Development line:** `project:flux-3` · thread `flux-3-development`
 - [GPT-4](https://happyin.space/projects/gpt-4/): **Development line:** `project:gpt-4` · thread `gpt-4-development`
+- [Haiper — Public launch and iOS availability](https://happyin.space/projects/haiper/): **Development line:** `project:haiper` · thread `public-launch-and-ios-availability`
 - [HuggingChat](https://happyin.space/projects/huggingchat/): **Development line:** `project:huggingchat` · thread `huggingchat-launch`
 - [Ideogram 4](https://happyin.space/projects/ideogram-4/): **Development line:** `project:ideogram-4` · thread `ideogram-4-development`
 - [Ideogram](https://happyin.space/projects/ideogram/): **Development line:** `project:ideogram` · thread `model-and-product-releases`
