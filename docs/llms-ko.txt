@@ -1,6 +1,6 @@
 # 종합 기술 지식 베이스 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 946+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 947+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -738,6 +738,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Katalist](https://happyin.space/projects/katalist/): **Development line:** `project:katalist` · thread `katalist-early-access`
 - [Kling AI](https://happyin.space/projects/kling-ai/): **Development line:** `project:kling-ai` · thread `kling-ai-product-development`
 - [Krea 2 — Open-source release and ecosystem](https://happyin.space/projects/krea-2/): **Development line:** `project:krea-2` · thread `open-source-release`
+- [Krea AI](https://happyin.space/projects/krea-ai/): **Development line:** `project:krea-ai` · thread `krea-ai-creative-workflows`
 - [Krea](https://happyin.space/projects/krea/): **Development line:** `project:krea` · thread `krea-product-development`
 - [Vidu](https://happyin.space/projects/vidu/): **Development line:** `project:vidu` · thread `vidu`
 
