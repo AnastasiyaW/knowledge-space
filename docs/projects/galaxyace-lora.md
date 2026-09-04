@@ -1,14 +1,15 @@
 ---
-title: GalaxyAce LoRA — GalaxyAce LoRA development
+title: GalaxyAce LoRA
 category: projects
+date: 2026-03-30
 tags: [galaxyace-lora, project]
 aliases: ["GalaxyAce LoRA"]
 ---
 
-# GalaxyAce LoRA — GalaxyAce LoRA development
+# GalaxyAce LoRA
 
 **Development line:** `project:galaxyace-lora` · thread `galaxyace-lora`  
-**Events:** 1 dated, 2026-03-30 → 2026-03-30 · **Researched:** 2026-09-04 · confidence: medium
+**Last event:** 2026-03-30 · 1 dated since 2026-03-30 · **Researched:** 2026-09-04 · confidence: medium
 
 ## What it is
 
