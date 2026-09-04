@@ -1,67 +1,74 @@
 ---
-title: Capybara — Capybara development
+title: Capybara
 category: projects
+date: 2026-02-24
 tags: [capybara, capybara-development, project]
 aliases: ["CAPYBARA", "Capybara"]
 ---
 
-# Capybara — Capybara development
+# Capybara
 
 **Development line:** `project:capybara` · thread `capybara-development`  
-**Events:** 2 dated, 2026-02-17 → 2026-02-24 · **Researched:** 2026-09-04 · confidence: medium
+**Last event:** 2026-02-24 · 2 dated since 2026-02-17 · **Researched:** 2026-09-04 · confidence: medium
 
 ## What it is
 
-Capybara — open-source инференс-пайплайн для автора, которому нужны генерация и instruction-based редактирование в одном интерфейсе. — text-to-image (T2I) и text-to-video (T2V); — instruction-based image-to-image (TI2I) и video-to-video (TV2V); — одиночные запуски, CSV-пакеты, distributed inference через Accelerate и узлы ComfyUI. Ограничение: документация рекомендует Python 3.11 и CUDA 12.6; FP8 требует NVIDIA Ada/Hopper с compute capability не ниже 8.9 и torchao. Вердикт: это пригодная для локального инференса интеграция, но не документированная production- или training-платформа.
+Capybara is an open-source inference pipeline for users who need generation and instruction-based editing in one interface.
+
+- Text-to-image (T2I) and text-to-video (T2V) generation.
+- Instruction-based image-to-image (TI2I) and video-to-video (TV2V) editing.
+- Single runs, CSV batches, distributed inference via Accelerate, and ComfyUI nodes.
+
+Documentation recommends Python 3.11 and CUDA 12.6. FP8 requires NVIDIA Ada/Hopper with compute capability at least 8.9 and torchao. It is a workable integration for local inference, but not a documented production or training platform.
 
 ## Development line
 
-- **2026-02-17 — Capybara source, model, and demo resources were linked.** On 2026-02-17, the dated resource set linked Capybara’s source repository and model page together with a Qwen3-VL model and a hosted endpoint. This is material as an early public-facing development step for Capybara, although the sealed links alone do not establish the exact capability, release status, or relationship of each linked resource.
-- **2026-02-24 — Capybara documentation surfaced ComfyUI and FP8 workflows.** On 2026-02-24, the dated links pointed to Capybara documentation covering ComfyUI support, FP8 quantization, and a sample workflow. This is material because it marks a practical integration and deployment path, while the sealed evidence does not prove whether those capabilities were newly released on that date.
+- **2026-02-17 — Capybara source, model, and demo resources were linked.** On 2026-02-17, the dated resource set linked Capybara’s source repository and model page together with a Qwen3-VL model and a hosted endpoint. This marks an early public development step for Capybara, though the links alone do not establish exact capability, release status, or their relationship.
+- **2026-02-24 — Capybara documentation surfaced ComfyUI and FP8 workflows.** Documentation documented ComfyUI custom nodes, FP8, and a sample workflow. The official README dates these additions to 2026-02-20 for code changes, while 2026-02-24 is the recorded event date.
 
 ## What changed
 
-Capybara — 2026-02-17: вышел v0.1 inference framework с T2I, T2V, TI2I и TV2V. 2026-02-24: в документации зафиксирован путь через custom nodes ComfyUI, FP8 и пример workflow; официальный README датирует появление этих возможностей 2026-02-20, поэтому это дата изменения кода, а 2026-02-24 — дата зафиксированного события. Найдено сегодня, 2026-09-04: текущий first-party README по-прежнему содержит только эти две датированные строки, отмечает ComfyUI как выполненное и оставляет release unified creation model и training code в TODO.
+Capybara — on 2026-02-17, the v0.1 inference framework released with T2I, T2V, TI2I, and TV2V. On 2026-02-24, documentation recorded ComfyUI custom nodes, FP8, and a sample workflow. The official README dates those features to 2026-02-20 for code changes, making 2026-02-24 the recorded event date. As of 2026-09-04, the current first-party README still contains only those two dated lines, marks ComfyUI as done, and keeps release unified creation model and training code in TODO.
 
 ## How to use this
 
-After 2026-02-24, practitioners evaluating Capybara should consult its ComfyUI documentation, sample workflow, and FP8 guidance rather than relying only on the base repository or model page.
+After 2026-02-24, evaluate Capybara through its ComfyUI documentation, sample workflow, and FP8 guidance rather than the base repository or model page alone.
 
-1. Создайте изолированное окружение Python 3.11, установите PyTorch для CUDA 12.6 и зависимости проекта.
+1. Create an isolated Python 3.11 environment, install PyTorch for CUDA 12.6, and install project dependencies.
   — <https://github.com/xgen-universe/Capybara>
-2. Скачайте все обязательные компоненты checkpoint в структуру ckpts/; Qwen3-VL-8B-Instruct нужен только при включённом переписывании инструкции.
+2. Download all required checkpoint components into `ckpts/`. Qwen3-VL-8B-Instruct is needed only when instruction rewriting is enabled.
   — <https://github.com/xgen-universe/Capybara>
-3. Для первого прогона вызовите inference.py с task_type t2i или t2v; для ti2i и tv2v добавьте media_path и текстовую инструкцию.
+3. For a first run, call `inference.py` with `task_type` `t2i` or `t2v`. For `ti2i` and `tv2v`, pass `media_path` and a text instruction.
   — <https://github.com/xgen-universe/Capybara>
-4. Для серии задач подготовьте CSV с img_path либо video_path и instruction, затем передайте csv_path и data_root_path.
+4. For batch jobs, prepare a CSV with `img_path` or `video_path` and `instruction`, then pass `csv_path` and `data_root_path`.
   — <https://github.com/xgen-universe/Capybara>
-5. Для ComfyUI подключите корень Capybara в custom_nodes и запускайте ComfyUI в том же окружении capybara.
+5. For ComfyUI, link the Capybara root into `custom_nodes` and run ComfyUI in the same `capybara` environment.
   — <https://github.com/xgen-universe/Capybara/blob/main/comfyui/README.md>
-6. Загрузите sample_workflow.json в canvas ComfyUI, затем смените task_type и вход reference под T2I, T2V, TI2I или TV2V.
+6. Load `sample_workflow.json` into the ComfyUI canvas, then adjust `task_type` and the `reference` input for T2I, T2V, TI2I, or TV2V.
   — <https://github.com/xgen-universe/Capybara/blob/main/comfyui/examples/sample_workflow.json>
 
 ## Best practices
 
-- Начинайте с официального базового режима: 480p и 50 шагов для видео, 720p и 50 шагов для изображений; повышайте разрешение только после рабочего baseline.
+- Start with the official baseline mode: 480p and 50 steps for video, 720p and 50 steps for images. Raise resolution only after establishing a working baseline.
   — <https://github.com/xgen-universe/Capybara>
-- В ComfyUI для TI2I и TV2V задавайте кадр или видео через reference: aspect ratio выводится из reference, а guidance_scale внутри узла фиксирован на 1.0.
+- In ComfyUI for TI2I and TV2V, supply the frame or video via `reference`. The node infers aspect ratio from `reference` and fixes `guidance_scale` at 1.0.
   — <https://github.com/xgen-universe/Capybara/blob/main/comfyui/README.md>
-- Включайте FP8 только на Ada/Hopper с torchao: это примерно вдвое сокращает память весов transformer, но не обещает ускорения и закрепляет transformer в GPU-памяти.
+- Enable FP8 only on Ada/Hopper with `torchao`. This cuts transformer weight memory roughly in half, but promises no speedup and pins the transformer in GPU memory.
   — <https://github.com/xgen-universe/Capybara/blob/main/comfyui/README.md>
-- Не смешивайте Python-окружения Capybara и ComfyUI: документация требует запускать ComfyUI из того же окружения, чтобы custom nodes видели зависимости.
+- Do not mix Python environments between Capybara and ComfyUI. Documentation requires running ComfyUI from the same environment so custom nodes find their dependencies.
   — <https://github.com/xgen-universe/Capybara/blob/main/comfyui/README.md>
-- Перед скачиванием зафиксируйте разрешившийся model repository и revision: официальная ссылка xgen-universe сейчас перенаправляет на Glanty/Capybara.
+- Pin the resolved model repository and revision before downloading. The official `xgen-universe` link currently redirects to `Glanty/Capybara`.
   — <https://huggingface.co/xgen-universe/Capybara>
 
 ## Superseded by this
 
-- 2026-02-20: прежний TODO «Add support for ComfyUI» устарел; Capybara имеет custom nodes и sample workflow. Нативный CLI при этом остаётся поддерживаемым путём, а не заменённым.
+- 2026-02-20: the earlier TODO "Add support for ComfyUI" is obsolete because Capybara provides custom nodes and a sample workflow. The native CLI remains supported and is not replaced.
 
 ## Still unknown
 
-- Официальные материалы не объясняют, означает ли перенаправление Hugging Face с xgen-universe/Capybara на Glanty/Capybara перенос владения, зеркало или ошибку; перед применением нужно проверить конкретные файлы и revision.
-- First-party документация не даёт таблицы VRAM, независимых бенчмарков или доказательства production-готовности; также training code остаётся не выпущенным.
-- Временный demo URL на ngrok из события 2026-02-17 не удалось безопасно открыть, поэтому его текущая доступность не подтверждена.
+- Official sources do not explain whether the Hugging Face redirect from `xgen-universe/Capybara` to `Glanty/Capybara` is an ownership transfer, a mirror, or an error. Verify specific files and revision before use.
+- First-party documentation provides no VRAM tables, independent benchmarks, or proof of production readiness. Training code also remains unreleased.
+- The temporary ngrok demo URL from the 2026-02-17 event could not be opened safely, so its current availability is unconfirmed.
 
 ## Sources
 
