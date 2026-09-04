@@ -802,17 +802,17 @@ Each domain below is collapsible - expand to see the article list. Articles are 
     - [[face-detection-filtering-pipeline]] - Face filtering is a provenance-preserving candidate-selection pipeline; detector boxes and landmarks support review, but they do not establish identity, consent, image realism, or training suitability.
     - [[FLAIR]] - FLAIR is a training-free flow-based posterior-sampling framework for inverse imaging; use its published configuration and verify fidelity, observed-data consistency, and base-model terms on the target task.
     - [[flowinone-unified-multimodal-generation-via-image-flow]] - FlowInOne is a multimodal generation framework that treats all inputs—text, classes, bounding
-    - [[flux-attention-manipulation]] - Techniques for manipulating, analyzing, and exploiting the joint self-attention mechanism in
+    - [[flux-attention-manipulation]] - Attention interventions in FLUX-family DiTs are research- and implementation-specific; use the exact model's exposed attention path, preserve its conditioning contract, and validate composition rather than treating maps as causal proof.
     - [[flux-klein-9b-architecture]] - Deep reference for the FLUX.2 Klein 9B model internals: transformer structure, text encoding, VAE
-    - [[flux-klein-9b-inference]] - Practical reference for FLUX.2 Klein 9B image generation
+    - [[flux-klein-9b-inference]] - FLUX.2 [klein] 9B inference must follow the published model variant, checkpoint, scheduler, and license; benchmark the exact text or edit workflow instead of copying generic sampler, VRAM, or LoRA rules.
     - [[flux-klein-capability-map]] - Reference for what FLUX.2 Klein 9B can do natively, via official LoRAs, via fal.ai LoRAs, and via
     - [[flux-klein-character-lora]] - Training LoRAs to preserve a specific person's identity with FLUX.2 Klein 9B
-    - [[flux-klein-jewelry-photography]] - Production pipeline for generating and compositing jewelry product photography using FLUX.2 Klein 9B
-    - [[flux-klein-style-lora-system]] - Architecture and empirical findings for a user-facing style LoRA system on FLUX.2 Klein Base 9B
+    - [[flux-klein-jewelry-photography]] - Jewelry imagery is a source-controlled product workflow: preserve the approved asset, material and geometry evidence, color pipeline, and rights boundary, then release only after visual and factual QA.
+    - [[flux-klein-style-lora-system]] - A FLUX.2 [klein] style LoRA is a version-bound data-and-evaluation workflow; separate style from subject data, preserve rights and provenance, and validate transfer on held-out content.
     - [[fp8-quantization-optimization-for-e4m3]] - FP8 (E4M3) quantization is used to accelerate inference and training on NVIDIA Hopper architecture
     - [[frequency-decomposition-editing]] - Methods for separating images into low-frequency (LF) and high-frequency (HF) components, editing
     - [[grayscale-overlay-nn-architectures]] - Predicting single-channel grayscale overlay maps for Photoshop Soft Light blending - a
-    - [[image-restoration-survey]] - Overview of image restoration approaches: from classical to diffusion-based
+    - [[image-restoration-survey]] - Image restoration must declare the degradation and fidelity target; choose a task-compatible deterministic or diffusion method, then validate measured recovery separately from plausible but invented detail.
     - [[in-context-segmentation]] - Segmenting images by example: provide one or more (image, mask) pairs and the model segments the
     - [[in-context-segmentation-with-insid3-and-dinov3]] - INSID3 is a training-free framework for one-shot in-context segmentation that leverages dense
     - [[intrinsic-decomposition]] - Separating an image into intrinsic components (reflectance/albedo vs
