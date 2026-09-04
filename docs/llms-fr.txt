@@ -1,6 +1,6 @@
 # Base de connaissances techniques complète - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 935+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 936+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -719,6 +719,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [GalaxyAce LoRA](https://happyin.space/projects/galaxyace-lora/): **Development line:** `project:galaxyace-lora` · thread `galaxyace-lora`
 - [Gemini](https://happyin.space/projects/gemini/): **Development line:** `project:gemini` · thread `gemini-development`
 - [GeneX](https://happyin.space/projects/genex/): **Development line:** `project:genex` · thread `genex-development`
+- [GenMM](https://happyin.space/projects/genmm/): **Development line:** `project:genmm` · thread `genmm-development`
 - [GPT-4](https://happyin.space/projects/gpt-4/): **Development line:** `project:gpt-4` · thread `gpt-4-development`
 - [Haiper — Public launch and iOS availability](https://happyin.space/projects/haiper/): **Development line:** `project:haiper` · thread `public-launch-and-ios-availability`
 - [HuggingChat](https://happyin.space/projects/huggingchat/): **Development line:** `project:huggingchat` · thread `huggingchat-launch`
