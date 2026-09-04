@@ -1,6 +1,6 @@
 # 종합 기술 지식 베이스 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 927+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 928+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -709,6 +709,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [DDColor](https://happyin.space/projects/ddcolor/): **Development line:** `project:ddcolor` · thread `ddcolor-development`
 - [DICEPTION](https://happyin.space/projects/diception/): **Development line:** `project:diception` · thread `diception-development`
 - [DisCO](https://happyin.space/projects/disco/): **Development line:** `project:disco` · thread `disco-development`
+- [DynamicsLab Chaos — Chaos and Drift demos](https://happyin.space/projects/dynamicslab-chaos/): **Development line:** `project:dynamicslab-chaos` · thread `chaos-and-drift-demos`
 - [F⁴Splat](https://happyin.space/projects/f4splat/): **Development line:** `project:f4splat` · thread `f4splat-development`
 - [FLUX 3](https://happyin.space/projects/flux-3/): **Development line:** `project:flux-3` · thread `flux-3-development`
 - [GPT-4](https://happyin.space/projects/gpt-4/): **Development line:** `project:gpt-4` · thread `gpt-4-development`
