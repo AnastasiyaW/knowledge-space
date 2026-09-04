@@ -4,7 +4,7 @@ A curated technical reference across 28 domains — Kafka, Python, SQL, ML, secu
 
 We built it because agents kept confidently hallucinating API flags, version-specific behavior, and config options. Point your Claude, Cursor, or any RAG pipeline at this repo and it gets a reliable source to check against.
 
-**883+ articles | 28 domains | 3128+ cross-references**
+**970+ articles | 28 domains | 3134+ cross-references**
 
 [![Live site](https://img.shields.io/badge/Live_site-happyin.space-FFD740?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGNpcmNsZSBjeD0iMjgiIGN5PSIyMiIgcj0iOSIgZmlsbD0iI2JiODZmYyIvPjxjaXJjbGUgY3g9IjQyIiBjeT0iMzAiIHI9IjciIGZpbGw9IiMwM2RhYzYiLz48Y2lyY2xlIGN4PSIxOCIgY3k9IjQwIiByPSI2IiBmaWxsPSIjZmY3NTk3Ii8+PC9zdmc+)](https://happyin.space/)
 
@@ -12,12 +12,14 @@ We built it because agents kept confidently hallucinating API flags, version-spe
 
 | Domain | Articles | Coverage |
 |--------|:--------:|----------|
+| `projects/` | 80 | One page per tool, model or product the news conveyor follows: dated development line, current use, obsolete guidance, sources |
 | `image-generation/` | 77 | Diffusion models, flow matching, LoRA training, inpainting, tiled inference |
 | `llm-agents/` | 71 | RAG, fine-tuning, agent frameworks, prompt engineering, multi-agent |
 | `security/` | 61 | Web security, pentesting, Active Directory, anti-fraud, model protection, CWE |
 | `data-science/` | 57 | ML, statistics, neural networks, CV, NLP, math foundations |
 | `devops/` | 47 | Docker, Kubernetes, Terraform, CI/CD, monitoring, SRE, observability |
 | `kafka/` | 43 | Broker internals, consumers, producers, Streams, KSQL, Connect, replication |
+| `organizations/` | 38 | One page per company or lab: leadership and structure changes, product lines, what each change made obsolete |
 | `architecture/` | 37 | Microservices, DDD, system design, API patterns, CQRS |
 | `web-frontend/` | 36 | React, TypeScript, CSS, Figma, bundlers, accessibility, JS async |
 | `data-engineering/` | 34 | ETL/ELT, Spark, Airflow, data warehouses, streaming, CDC, vector search |
@@ -32,13 +34,11 @@ We built it because agents kept confidently hallucinating API flags, version-spe
 | `testing-qa/` | 25 | Selenium, Playwright, API testing, CI integration, browser automation |
 | `bi-analytics/` | 23 | Tableau, Power BI, SQL analytics, dashboards, product analytics |
 | `rust/` | 22 | Ownership, lifetimes, async, error handling, unsafe |
-| `organizations/` | 20 | One page per company or lab: leadership and structure changes, product lines, what each change made obsolete |
 | `nodejs/` | 16 | Event loop, streams, clusters, performance, design patterns |
 | `php/` | 15 | Laravel, MVC, ORM, testing, PHP 8 features |
 | `audio-voice/` | 14 | TTS, ASR, voice cloning, speech synthesis, TTS fine-tuning |
 | `writing/` | 14 | Technical article structure, SEO for articles, LLM anti-patterns |
 | `llm-memory/` | 13 | Memory architectures, session persistence, knowledge graphs |
-| `projects/` | 11 | One page per tool, model or product the news conveyor follows: dated development line, current use, obsolete guidance, sources |
 | `go/` | 9 | Goroutines, channels, modules, HTTP servers, microservices |
 
 ## For AI agents

@@ -1,6 +1,6 @@
 # Umfassende technische Wissensbasis - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 859+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 970+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -307,10 +307,22 @@ This knowledge base contains deep technical articles organized by domain. Each a
 
 ## Image Generation
 - [ACE++: Reference-Driven Image Creation and Editing](https://happyin.space/image-generation/ACE++/): **Scope checked: 2026-09-04.** ACE++ is Alibaba Tongyi Lab's post-training system for reference-image generation and editing. It combines reference images, edit images or masks when needed, and a t...
-- [Anatomy Correction in Diffusion Models](https://happyin.space/image-generation/anatomy-correction-diffusion/): **Scope checked: 2026-09-04.** Anatomy correction is a local image-editing workflow for malformed hands, fingers, faces, or limbs. It is not a universal sampler preset and no detector, LoRA, or inp...
 - [ATI: Any Trajectory Instruction](https://happyin.space/image-generation/ATI/): **Scope checked: 2026-09-04.** ATI is ByteDance's published trajectory-control extension for image-to-video generation. It represents object, local, and camera movement as trajectories and injects ...
-- [Block Causal Linear Attention](https://happyin.space/image-generation/block-causal-linear-attention/): **Scope checked: 2026-09-04.** Block causal linear attention is the long-context mechanism described for SANA-Video. It turns a video into causally ordered blocks and carries a fixed-size cumulativ...
 - [Calligrapher: Reference-Guided Text Image Customization](https://happyin.space/image-generation/Calligrapher/): **Scope checked: 2026-09-04.** Calligrapher is a diffusion-based project for generating or editing text imagery while transferring a visual style from a reference. Its documented modes include self...
+- [DC-AE: Deep Compression Autoencoder](https://happyin.space/image-generation/DC-AE/): **Scope checked: 2026-09-04.** DC-AE is a family of high-spatial-compression autoencoders from MIT Han Lab. It encodes an image into a smaller latent grid before a diffusion model processes it. Tha...
+- [FLAIR: Flow-Based Latent Alignment for Image Restoration](https://happyin.space/image-generation/FLAIR/): **Scope checked: 2026-09-04.** FLAIR is a training-free variational framework for solving inverse imaging problems with a flow-based latent generative prior. It is not a replacement image-restorati...
+- [LaMa: Resolution-Robust Large-Mask Inpainting](https://happyin.space/image-generation/LaMa/): **Scope checked: 2026-09-04.** LaMa is a feed-forward inpainting method built for large missing regions and high-resolution images. The original work combines Fast Fourier Convolutions (FFC), a hig...
+- [MACRO: Structured Multi-Reference Image Data](https://happyin.space/image-generation/MACRO/): **Scope checked: 2026-09-04.** MACRO is a research release for multi-reference image generation, not a new universal inference architecture. The authors publish structured data, a benchmark, traini...
+- [MARBLE: Material Recomposition and Blending](https://happyin.space/image-generation/MARBLE/): **Scope checked: 2026-09-04.** MARBLE is Stability AI's published material-editing method. It derives material representations in CLIP space and uses them to guide a pretrained text-to-image system...
+- [MMDiT: Multimodal Diffusion Transformer](https://happyin.space/image-generation/MMDiT/): **Scope checked: 2026-09-04.** MMDiT is the multimodal diffusion-transformer architecture introduced with Stable Diffusion 3. It represents image and language inputs with modality-specific paramete...
+- [PixelSmile: Release-Bound Expression Editing](https://happyin.space/image-generation/PixelSmile/): [PixelSmile](https://github.com/Ammmob/PixelSmile) is a research and software
+- [RealRestorer: Generalizable Real-World Image Restoration](https://happyin.space/image-generation/RealRestorer/): **Scope checked: 2026-09-04.** RealRestorer is a released image-restoration workflow built around a large image-editing model. The project combines a model, synthetic degradation pipeline, and Real...
+- [SANA (Efficient High-Resolution Image Synthesis)](https://happyin.space/image-generation/SANA/): Efficient DiT from NVlabs/MIT Han Lab. 600M-4.8B params with competitive quality at 1024-4096px. Uses **linear attention O(n)**, **DC-AE 32× compression**, and **Gemma-2-2B** text encoder. ICLR 202...
+- [Step1X-Edit: Release-Specific Image Editing](https://happyin.space/image-generation/Step1X-Edit/): **Scope checked: 2026-09-04.** Step1X-Edit is StepFun's open image-editing research and model family. Its published approach uses a multimodal language model to process a reference image and editin...
+- [Text-to-LoRA: Hypernetwork-Generated LLM Adapters](https://happyin.space/image-generation/Text-to-LoRA/): **Scope checked: 2026-09-04.** Text-to-LoRA (T2L) is Sakana AI's research system for creating task-specific LoRA adapters for language models from a textual task description. A trained hypernetwork...
+- [X-Dub: Public Mask-Free Visual Dubbing](https://happyin.space/image-generation/X-Dub/): **Scope checked: 2026-09-04.** X-Dub is the public implementation of a visual-dubbing method that synchronizes a video with replacement audio. The upstream method frames the task as mask-free editi...
+- [Anatomy Correction in Diffusion Models](https://happyin.space/image-generation/anatomy-correction-diffusion/): **Scope checked: 2026-09-04.** Anatomy correction is a local image-editing workflow for malformed hands, fingers, faces, or limbs. It is not a universal sampler preset and no detector, LoRA, or inp...
+- [Block Causal Linear Attention](https://happyin.space/image-generation/block-causal-linear-attention/): **Scope checked: 2026-09-04.** Block causal linear attention is the long-context mechanism described for SANA-Video. It turns a video into causally ordered blocks and carries a fixed-size cumulativ...
 - [Color Checker and White Balance Correction](https://happyin.space/image-generation/color-checker-and-white-balance/): White balance and color correction solve related but different problems. White
 - [Color Correction: Measurement-Bound Calibration Contract](https://happyin.space/image-generation/color-correction-by-numbers/): Numerical correction is defensible when numbers are tied to a declared
 - [Color Management: Versioned Transform Contract](https://happyin.space/image-generation/color-space-and-gamma-reference/): Color management makes numerical image values interpretable between capture,
@@ -318,7 +330,6 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [ComfyUI Flux2Klein Enhancer](https://happyin.space/image-generation/comfyui-flux2klein-enhancer/): `ComfyUI-Flux2Klein-Enhancer` is a third-party ComfyUI custom-node package for reference conditioning and identity/detail transfer. It targets FLUX.2 Klein 9B behavior and is not an official FLUX m...
 - [SenseNova U1 and ComfyUI](https://happyin.space/image-generation/comfyui-sensenova-u1/): SenseNova U1 is an official image-generation/editing family. `smthemex/ComfyUI_SenseNova_U1` is a separate third-party wrapper. Official nodes, official model capabilities, and wrapper capabilities...
 - [ComfyUI Wan VACE Video Joiner: Release-Bound Workflow Contract](https://happyin.space/image-generation/comfyui-wan-vace-video-joiner/): A Wan VACE join should be treated as a particular ComfyUI workflow release,
-- [DC-AE: Deep Compression Autoencoder](https://happyin.space/image-generation/DC-AE/): **Scope checked: 2026-09-04.** DC-AE is a family of high-spatial-compression autoencoders from MIT Han Lab. It encodes an image into a smaller latent grid before a diffusion model processes it. Tha...
 - [Defect and Small-Object Detection: Evidence Contract](https://happyin.space/image-generation/defect-detection-small-objects/): Detection and anomaly systems identify candidates for inspection. A box, mask,
 - [Denoising Architectures: Degradation and Evidence Contract](https://happyin.space/image-generation/denoise-architectures-2026/): Architecture names do not identify the degradation to remove or the detail to
 - [Continuous-Time Distribution Matching: Research Distillation Contract](https://happyin.space/image-generation/diffusion-distillation-cdm/): [Continuous-Time Distribution Matching](https://arxiv.org/abs/2605.06376)
@@ -327,7 +338,6 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Edge Softness and Compositing](https://happyin.space/image-generation/edge-softness-and-compositing/): Any paste, mask, matte or composite meets its surroundings **at the edge**, and the eye
 - [Face Edit LoRA: Paired Local Corrections](https://happyin.space/image-generation/face-beautify-edit-lora/): A face-edit adapter should learn a bounded requested correction, not a
 - [Face Detection and Filtering: Candidate Review Pipeline](https://happyin.space/image-generation/face-detection-filtering-pipeline/): Face detection should produce review candidates and structured evidence, not an
-- [FLAIR: Flow-Based Latent Alignment for Image Restoration](https://happyin.space/image-generation/FLAIR/): **Scope checked: 2026-09-04.** FLAIR is a training-free variational framework for solving inverse imaging problems with a flow-based latent generative prior. It is not a replacement image-restorati...
 - [Flow Matching: Conditional Vector-Field Training](https://happyin.space/image-generation/flow-matching/): [Flow Matching for Generative Modeling](https://arxiv.org/abs/2210.02747)
 - [FlowInOne: Release-Bound Research Contract](https://happyin.space/image-generation/flowinone-unified-multimodal-generation-via-image-flow/): [FlowInOne](https://arxiv.org/abs/2604.06757) is a research framework that
 - [FLUX Attention Intervention and Inspection](https://happyin.space/image-generation/flux-attention-manipulation/): Attention intervention is not a generic post-processing switch. It changes
@@ -345,36 +355,27 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [INSID3 with DINOv3: Candidate-Mask Contract](https://happyin.space/image-generation/in-context-segmentation-with-insid3-and-dinov3/): The upstream [INSID3 repository](https://github.com/visinf/INSID3) describes
 - [In-Context Segmentation: Reference-Bound Candidate Masks](https://happyin.space/image-generation/in-context-segmentation/): In-context segmentation uses one or more reference image/mask pairs to propose
 - [Intrinsic Decomposition: Assumption and Review Contract](https://happyin.space/image-generation/intrinsic-decomposition/): Intrinsic decomposition estimates components such as reflectance (often called
-- [LaMa: Resolution-Robust Large-Mask Inpainting](https://happyin.space/image-generation/LaMa/): **Scope checked: 2026-09-04.** LaMa is a feed-forward inpainting method built for large missing regions and high-resolution images. The original work combines Fast Fourier Convolutions (FFC), a hig...
 - [LoRA Auxiliary Losses: Experiment and Evaluation Contract](https://happyin.space/image-generation/lora-auxiliary-losses/): An auxiliary loss changes a training objective. It does not make an adapter
 - [LoRA Fine-Tuning for Editing Models: Compatibility Contract](https://happyin.space/image-generation/lora-fine-tuning-for-editing-models/): LoRA reduces the number of trainable parameters by adding low-rank updates to
 - [FLUX.2 [klein] 9B Identity LoRA: Disentanglement Contract](https://happyin.space/image-generation/lora-identity-disentanglement-in-flux2-klein-9b/): An identity LoRA learns an adapter for a particular base-model release; it
 - [Low-VRAM Inference: Measured Runtime Contract](https://happyin.space/image-generation/low-vram-inference-strategies/): Low-VRAM support is not a table of GPU names or an advertised memory number.
-- [MACRO: Structured Multi-Reference Image Data](https://happyin.space/image-generation/MACRO/): **Scope checked: 2026-09-04.** MACRO is a research release for multi-reference image generation, not a new universal inference architecture. The authors publish structured data, a benchmark, traini...
-- [MARBLE: Material Recomposition and Blending](https://happyin.space/image-generation/MARBLE/): **Scope checked: 2026-09-04.** MARBLE is Stability AI's published material-editing method. It derives material representations in CLIP space and uses them to guide a pretrained text-to-image system...
 - [MegaStyle: Release-Bound Style-Transfer Contract](https://happyin.space/image-generation/megastyle-flux-style-transfer/): [Tencent MegaStyle](https://github.com/Tencent/MegaStyle) is a research
-- [MMDiT: Multimodal Diffusion Transformer](https://happyin.space/image-generation/MMDiT/): **Scope checked: 2026-09-04.** MMDiT is the multimodal diffusion-transformer architecture introduced with Stable Diffusion 3. It represents image and language inputs with modality-specific paramete...
 - [Object Removal and Inpainting: Controlled Edit Contract](https://happyin.space/image-generation/object-removal-inpainting/): Object removal is not a request to generate a prettier background. It is a
 - [Paired Restoration Training: Evidence and Conditioning Contract](https://happyin.space/image-generation/paired-training-for-restoration/): Paired restoration training learns a declared mapping from a degraded input to
 - [Perspective Calibration for Object Compositing](https://happyin.space/image-generation/perspective-calibration-for-compositing/): Perspective calibration is the geometry stage **before** object compositing. Its output is a defensible camera-and-support-plane hypothesis: intrinsics `K`, camera orientation, horizon, and a plane...
 - [Pixel Art Generation: Grid, Palette, and Rights Contract](https://happyin.space/image-generation/pixel-art-generation/): “Pixel-art style” and a usable pixel-art asset are different claims. A usable
-- [PixelSmile: Release-Bound Expression Editing](https://happyin.space/image-generation/PixelSmile/): [PixelSmile](https://github.com/Ammmob/PixelSmile) is a research and software
 - [ML Plugin Inference UX: Host-State Contract](https://happyin.space/image-generation/plugin-inference-ux/): An ML operation in a creative host is a job with document, model, and host
 - [Qwen-Image](https://happyin.space/image-generation/qwen-image/): Qwen-Image is a project family with separate generation and editing checkpoints. This page distinguishes open local artifacts from later hosted-product announcements. Status verified against first-...
-- [RealRestorer: Generalizable Real-World Image Restoration](https://happyin.space/image-generation/RealRestorer/): **Scope checked: 2026-09-04.** RealRestorer is a released image-restoration workflow built around a large image-editing model. The project combines a model, synthetic degradation pipeline, and Real...
 - [Recurrent-Depth Transformer: Runtime Evidence Contract](https://happyin.space/image-generation/recurrent-depth-transformer/): Recurrent-depth transformer is a family name, not a standardized checkpoint or
 - [Retouch Patch Harmonization for Paired Before/After Images](https://happyin.space/image-generation/retouch-patch-harmonization/): Use this construction when aligned `before`/`after` pairs contain both local defect removal and broader colour or tonal edits. The objective is defect inpainting, not reproduction of every edit mad...
 - [Rights-First Text-to-Mask Training](https://happyin.space/image-generation/rights-first-text-to-mask-training/): Reference architecture for a text-directed masking system that must distinguish a requested object, produce an instance mask, and preserve soft alpha edges. The governing unit is an auditable asset...
 - [SANA-Based Restoration: Research Proposal](https://happyin.space/image-generation/sana-denoiser-architecture/): This page describes a proposed research direction, not a deployed Happyin
-- [SANA (Efficient High-Resolution Image Synthesis)](https://happyin.space/image-generation/SANA/): Efficient DiT from NVlabs/MIT Han Lab. 600M-4.8B params with competitive quality at 1024-4096px. Uses **linear attention O(n)**, **DC-AE 32× compression**, and **Gemma-2-2B** text encoder. ICLR 202...
 - [Segmentation Dataset Preparation: Lineage and Supervision Contract](https://happyin.space/image-generation/segmentation-dataset-preparation/): A segmentation dataset is not just images and masks. It is a versioned
 - [Skin Retouching: Consent-Aware Correction Workflow](https://happyin.space/image-generation/skin-retouch-pipeline/): Skin retouching should correct a specifically approved visual issue without
 - [SpatialEdit-16B: Geometry and Evaluation Contract](https://happyin.space/image-generation/spatialedit-16b-geometric-control-for-diffusion-based-image-editing/): The [SpatialEdit paper](https://arxiv.org/abs/2604.04911) presents a
-- [Step1X-Edit: Release-Specific Image Editing](https://happyin.space/image-generation/Step1X-Edit/): **Scope checked: 2026-09-04.** Step1X-Edit is StepFun's open image-editing research and model family. Its published approach uses a multimodal language model to process a reference image and editin...
 - [Style Reference UX: Authority, Strength, and Provenance](https://happyin.space/image-generation/style-reference-ux/): A style-reference control changes visual output, but users need to understand
 - [Synthetic Detection Data: Evidence and Review Pipeline](https://happyin.space/image-generation/synthetic-dataset-pipeline/): Synthetic images and model-generated annotations can accelerate dataset
 - [Temporal Tiling: Research Boundary and Evaluation Plan](https://happyin.space/image-generation/temporal-tiling/): Temporal tiling is the hypothesis that a large image can be rendered as a
-- [Text-to-LoRA: Hypernetwork-Generated LLM Adapters](https://happyin.space/image-generation/Text-to-LoRA/): **Scope checked: 2026-09-04.** Text-to-LoRA (T2L) is Sakana AI's research system for creating task-specific LoRA adapters for language models from a textual task description. A trained hypernetwork...
 - [Textual Latent Interpolation: Model-Bounded Control](https://happyin.space/image-generation/textual-latent-interpolation/): Textual latent interpolation constructs a conditioning vector between two text
 - [Tile Position Encoding: Spatial-Contract Guidance](https://happyin.space/image-generation/tile-position-encoding/): A tile is not spatially self-describing. Position information can make a
 - [Tiled Inference: Model-Bound High-Resolution Contract](https://happyin.space/image-generation/tiled-inference/): Tiling is a way to present part of a large image to a constrained model. It is
@@ -382,7 +383,6 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Image Upscaler Evaluation: Fidelity-First Protocol](https://happyin.space/image-generation/upscaler-evaluation/): Upscaling creates a derived image. It can improve presentation or make a
 - [VideoMaMa: Mask-Guided Matting Contract](https://happyin.space/image-generation/videomama-diffusion-based-video-matting/): [VideoMaMa](https://arxiv.org/abs/2601.14255) is a mask-guided video-matting
 - [Visible Watermark Restoration: Authorized-Asset Contract](https://happyin.space/image-generation/watermark-removal/): This page concerns restoration of a visible overlay only when the operator
-- [X-Dub: Public Mask-Free Visual Dubbing](https://happyin.space/image-generation/X-Dub/): **Scope checked: 2026-09-04.** X-Dub is the public implementation of a visual-dubbing method that synchronizes a video with replacement audio. The upstream method frames the task as mask-free editi...
 
 ## iOS & Mobile
 - [Android Dagger 2 Dependency Injection](https://happyin.space/ios-mobile/android-dagger-dependency-injection/): Dagger 2 generates dependency injection code at compile time with zero reflection and zero runtime overhead. It connects providers (Modules) to consumers (@Inject) through a Component interface.
@@ -633,6 +633,38 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [AMD — AMD AI Compute Platform](https://happyin.space/organizations/amd/): **Development line:** `organization:amd` · thread `amd-ai-compute-platform`
 - [Anthropic — Anthropic Development](https://happyin.space/organizations/anthropic/): **Development line:** `organization:anthropic` · thread `anthropic-development`
 - [Apple — Apple AI: research releases to product capabilities](https://happyin.space/organizations/apple/): **Development line:** `organization:apple` · thread `apple-ai-research-to-product`
+- [ByteDance — ByteDance AI development and compute constraints](https://happyin.space/organizations/bytedance/): **Development line:** `organization:bytedance` · thread `bytedance-ai-development-and-compute-constraints`
+- [Civitai — Civitai platform, business, and access evolution](https://happyin.space/organizations/civitai/): **Development line:** `organization:civitai` · thread `platform-business-and-access-evolution`
+- [Cursor — Product development](https://happyin.space/organizations/cursor/): **Development line:** `organization:cursor` · thread `product-development`
+- [D-ID — Public product surfaces](https://happyin.space/organizations/d-id/): **Development line:** `organization:d-id` · thread `public-product-surfaces`
+- [DeepSeek — DeepSeek product and AI-content governance](https://happyin.space/organizations/deepseek/): **Development line:** `organization:deepseek` · thread `deepseek-product-and-governance`
+- [Disney Research — Interactive Generative Motion Editing](https://happyin.space/organizations/disney-research/): **Development line:** `organization:disney-research` · thread `interactive-generative-motion-editing`
+- [ElevenLabs — Voice Platform Development](https://happyin.space/organizations/elevenlabs/): **Development line:** `organization:elevenlabs` · thread `voice-platform-development`
+- [fal.ai — Model platform expansion](https://happyin.space/organizations/fal-ai/): **Development line:** `organization:fal-ai` · thread `model-platform-expansion`
+- [Framestore](https://happyin.space/organizations/framestore/): **Development line:** `organization:framestore` · thread `framestore-production-technology`
+- [Google — Google AI Development](https://happyin.space/organizations/google/): **Development line:** `organization:google` · thread `google-ai-development`
+- [Hedra — Hedra product development](https://happyin.space/organizations/hedra/): **Development line:** `organization:hedra` · thread `hedra-product-development`
+- [HeyGen](https://happyin.space/organizations/heygen/): **Development line:** `organization:heygen` · thread `avatar-platform-and-developer-integration`
+- [Higgsfield — Higgsfield product releases](https://happyin.space/organizations/higgsfield/): **Development line:** `organization:higgsfield` · thread `higgsfield-product-releases`
+- [Hugging Face](https://happyin.space/organizations/hugging-face/): **Development line:** `organization:hugging-face` · thread `hugging-face-platform-evolution`
+- [Ideogram](https://happyin.space/organizations/ideogram/): **Development line:** `project:ideogram` · thread `model-and-product-releases`
+- [Krea AI — Video generation](https://happyin.space/organizations/krea-ai/): **Development line:** `organization:krea-ai` · thread `video-generation`
+- [Luma AI](https://happyin.space/organizations/luma-ai/): **Development line:** `organization:luma-ai` · thread `luma-ai-product-development`
+- [Meta AI — Generative AI models](https://happyin.space/organizations/meta-ai/): **Development line:** `organization:meta-ai` · thread `generative-ai-models`
+- [Meta](https://happyin.space/organizations/meta/): **Development line:** `organization:meta` · thread `meta-ai`
+- [Microsoft](https://happyin.space/organizations/microsoft/): **Development line:** `organization:microsoft` · thread `microsoft-generative-ai-rollout-and-adoption`
+- [Midjourney](https://happyin.space/organizations/midjourney/): **Development line:** `project:midjourney` · thread `midjourney-model-and-feature-releases`
+- [Mistral AI — Product and model releases](https://happyin.space/organizations/mistral-ai/): **Development line:** `organization:mistral-ai` · thread `product-and-model-releases`
+- [neural.love — AI creation and model training](https://happyin.space/organizations/neural-love/): **Development line:** `organization:neural-love` · thread `ai-creation-and-model-training`
+- [OpenAI](https://happyin.space/organizations/openai/): **Development line:** `organization:openai` · thread `openai-development`
+- [Pika](https://happyin.space/organizations/pika/): **Development line:** `project:pika` · thread `pika-product-development`
+- [Runway](https://happyin.space/organizations/runway/): **Development line:** `organization:runway` · thread `runway-video-ai-development`
+- [Stability AI](https://happyin.space/organizations/stability-ai/): **Development line:** `organization:stability-ai` · thread `stability-ai-development`
+- [Suno — Product development and industry relationships](https://happyin.space/organizations/suno/): **Development line:** `organization:suno` · thread `product-development-and-industry-relationships`
+- [Tencent](https://happyin.space/organizations/tencent/): **Development line:** `organization:tencent` · thread `ai-research-releases`
+- [xAI — Grok model development](https://happyin.space/organizations/xai/): **Development line:** `organization:xai` · thread `grok-model-development`
+- [XLabs AI — FLUX conditioning and ComfyUI integrations](https://happyin.space/organizations/xlabs-ai/): **Development line:** `organization:xlabs-ai` · thread `flux-conditioning-and-comfyui-integrations`
+- [Yandex](https://happyin.space/organizations/yandex/): **Development line:** `organization:yandex` · thread `yandex-ai-products`
 
 ## PHP
 - [Laravel Architecture](https://happyin.space/php/laravel-architecture/): Laravel 11 is a PHP framework following the MVC pattern with a service container (IoC), service providers, facades, and Artisan CLI. Understanding the architecture is essential for working with lar...
@@ -652,6 +684,85 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [PHP Type System](https://happyin.space/php/php-type-system/): PHP is dynamically typed with optional strict mode. Eight primitive types: int, float, string, bool, array, object, null, resource. Type juggling performs implicit conversions; `declare(strict_type...
 
 ## Projects
+- [Adobe Firefly Video Model — Firefly Video Model rollout](https://happyin.space/projects/adobe-firefly-video-model/): **Development line:** `project:adobe-firefly-video-model` · thread `firefly-video-model-rollout`
+- [Align3R](https://happyin.space/projects/align3r/): **Development line:** `project:align3r` · thread `align3r`
+- [AuraFlow](https://happyin.space/projects/auraflow/): **Development line:** `project:auraflow` · thread `auraflow-model-releases`
+- [Auto1111SDK](https://happyin.space/projects/auto1111sdk/): **Development line:** `project:auto1111sdk` · thread `auto1111sdk-development`
+- [stable-diffusion-webui — Release history](https://happyin.space/projects/automatic1111-stable-diffusion-webui/): **Development line:** `project:automatic1111-stable-diffusion-webui` · thread `release-history`
+- [FLUX.1-Kontext-dev-onnx — FLUX.1 Kontext ONNX and editing](https://happyin.space/projects/black-forest-labs/): **Development line:** `project:black-forest-labs` · thread `flux-kontext`
+- [CameraCtrl](https://happyin.space/projects/cameractrl/): **Development line:** `project:cameractrl` · thread `cameractrl-development`
+- [CapCut Video Studio — AI Creator Home](https://happyin.space/projects/capcut/): **Development line:** `project:capcut` · thread `ai-creator-home`
+- [Capybara](https://happyin.space/projects/capybara/): **Development line:** `project:capybara` · thread `capybara-development`
+- [ChatGPT](https://happyin.space/projects/chatgpt/): **Development line:** `project:chatgpt` · thread `chatgpt-product-development`
+- [ChronoEdit](https://happyin.space/projects/chronoedit/): **Development line:** `project:chronoedit` · thread `chronoedit-release-and-adapters`
+- [Claude](https://happyin.space/projects/claude/): **Development line:** `project:claude` · thread `claude-product-development`
+- [Clipdrop](https://happyin.space/projects/clipdrop/): **Development line:** `project:clipdrop` · thread `clipdrop-image-editing`
+- [ComfyUI-3D-Pack](https://happyin.space/projects/comfyui-3d-pack/): **Development line:** `project:comfyui-3d-pack` · thread `comfyui-3d-pack-development`
+- [ComfyUI Cloud — Hosted access and billing](https://happyin.space/projects/comfyui-cloud/): **Development line:** `project:comfyui-cloud` · thread `hosted-access-and-billing`
+- [ComfyUI Desktop](https://happyin.space/projects/comfyui-desktop/): **Development line:** `project:comfyui-desktop` · thread `comfyui-desktop`
+- [ControlNet for SDXL — SDXL ControlNet model releases](https://happyin.space/projects/controlnet-sdxl/): **Development line:** `project:controlnet-sdxl` · thread `sdxl-controlnet-model-releases`
+- [ControlNet](https://happyin.space/projects/controlnet/): **Development line:** `project:controlnet` · thread `controlnet-development`
+- [ControlVideo](https://happyin.space/projects/controlvideo/): **Development line:** `project:controlvideo` · thread `controlvideo`
+- [Cursor — Product development](https://happyin.space/projects/cursor/): **Development line:** `project:cursor` · thread `product-development`
+- [CutLER](https://happyin.space/projects/cutler/): **Development line:** `project:cutler` · thread `cutler-development`
+- [DALL-E 2 — Commercial adoption](https://happyin.space/projects/dalle-2/): **Development line:** `project:dalle-2` · thread `dalle-2-commercial-adoption`
+- [DDColor](https://happyin.space/projects/ddcolor/): **Development line:** `project:ddcolor` · thread `ddcolor-development`
+- [DICEPTION](https://happyin.space/projects/diception/): **Development line:** `project:diception` · thread `diception-development`
+- [DisCO](https://happyin.space/projects/disco/): **Development line:** `project:disco` · thread `disco-development`
+- [DynamicsLab Chaos — Chaos and Drift demos](https://happyin.space/projects/dynamicslab-chaos/): **Development line:** `project:dynamicslab-chaos` · thread `chaos-and-drift-demos`
+- [ExAvatar](https://happyin.space/projects/exavatar/): **Development line:** `project:exavatar` · thread `exavatar-development`
+- [F⁴Splat](https://happyin.space/projects/f4splat/): **Development line:** `project:f4splat` · thread `f4splat-development`
+- [FLOAT](https://happyin.space/projects/float/): **Development line:** `project:float` · thread `float-public-releases`
+- [FLUX 3](https://happyin.space/projects/flux-3/): **Development line:** `project:flux-3` · thread `flux-3-development`
+- [Fooocus](https://happyin.space/projects/fooocus/): **Development line:** `project:fooocus` · thread `fooocus-development`
+- [FramePack Studio](https://happyin.space/projects/framepack-studio/): **Development line:** `project:framepack-studio` · thread `framepack-studio-development`
+- [GalaxyAce LoRA](https://happyin.space/projects/galaxyace-lora/): **Development line:** `project:galaxyace-lora` · thread `galaxyace-lora`
+- [Gemini](https://happyin.space/projects/gemini/): **Development line:** `project:gemini` · thread `gemini-development`
+- [GeneX](https://happyin.space/projects/genex/): **Development line:** `project:genex` · thread `genex-development`
+- [GenMM](https://happyin.space/projects/genmm/): **Development line:** `project:genmm` · thread `genmm-development`
+- [Google Colab](https://happyin.space/projects/google-colab/): **Development line:** `project:google-colab` · thread `google-colab-platform-evolution`
+- [Gemini](https://happyin.space/projects/google-gemini/): **Development line:** `project:google-gemini` · thread `gemini-product-development`
+- [Google Photos](https://happyin.space/projects/google-photos/): **Development line:** `project:google-photos` · thread `ai-photo-editing`
+- [Google Veo — Veo model and access releases](https://happyin.space/projects/google-veo/): **Development line:** `project:google-veo` · thread `veo-model-and-access-releases`
+- [GPT-4](https://happyin.space/projects/gpt-4/): **Development line:** `project:gpt-4` · thread `gpt-4-development`
+- [Haiper — Public launch and iOS availability](https://happyin.space/projects/haiper/): **Development line:** `project:haiper` · thread `public-launch-and-ios-availability`
+- [HuggingChat](https://happyin.space/projects/huggingchat/): **Development line:** `project:huggingchat` · thread `huggingchat-launch`
+- [HunyuanVideo-I2V — Public project availability](https://happyin.space/projects/hunyuanvideo-i2v/): **Development line:** `project:hunyuanvideo-i2v` · thread `public-project-availability`
+- [Hyper-SD](https://happyin.space/projects/hyper-sd/): **Development line:** `project:hyper-sd` · thread `hyper-sd`
+- [Ideogram 4](https://happyin.space/projects/ideogram-4/): **Development line:** `project:ideogram-4` · thread `ideogram-4-development`
+- [Ideogram](https://happyin.space/projects/ideogram/): **Development line:** `project:ideogram` · thread `model-and-product-releases`
+- [InstantX SD3 ControlNet — SD3 ControlNet checkpoint releases](https://happyin.space/projects/instantx-sd3-controlnet/): **Development line:** `project:instantx-sd3-controlnet` · thread `sd3-controlnet-checkpoint-releases`
+- [InternVL](https://happyin.space/projects/internvl/): **Development line:** `project:internvl` · thread `internvl-model-releases`
+- [James Webb Space Telescope — First Images Release](https://happyin.space/projects/james-webb-space-telescope/): **Development line:** `project:james-webb-space-telescope` · thread `first-images-release`
+- [JoyCaption](https://happyin.space/projects/joycaption/): **Development line:** `project:joycaption` · thread `joycaption-development`
+- [Katalist](https://happyin.space/projects/katalist/): **Development line:** `project:katalist` · thread `katalist-early-access`
+- [Kling AI](https://happyin.space/projects/kling-ai/): **Development line:** `project:kling-ai` · thread `kling-ai-product-development`
+- [Krea 2 — Open-source release and ecosystem](https://happyin.space/projects/krea-2/): **Development line:** `project:krea-2` · thread `open-source-release`
+- [Krea AI](https://happyin.space/projects/krea-ai/): **Development line:** `project:krea-ai` · thread `krea-ai-creative-workflows`
+- [Krea](https://happyin.space/projects/krea/): **Development line:** `project:krea` · thread `krea-product-development`
+- [LEDITS](https://happyin.space/projects/ledits/): **Development line:** `project:ledits` · thread `ledits-development`
+- [Llama 3.1](https://happyin.space/projects/llama-3-1/): **Development line:** `project:llama-3-1` · thread `llama-3-1`
+- [LMarena Video Arena — Video Arena](https://happyin.space/projects/lmarena/): **Development line:** `project:lmarena` · thread `video-arena`
+- [LTX-2.3](https://happyin.space/projects/ltx-video/): **Development line:** `project:ltx-video` · thread `ltx-video`
+- [MagicQuill](https://happyin.space/projects/magicquill/): **Development line:** `project:magicquill` · thread `magicquill-development`
+- [MeshAnything](https://happyin.space/projects/meshanything/): **Development line:** `project:meshanything` · thread `meshanything-development`
+- [Microsoft Copilot](https://happyin.space/projects/microsoft-copilot/): **Development line:** `project:microsoft-copilot` · thread `microsoft-copilot`
+- [Midjourney](https://happyin.space/projects/midjourney/): **Development line:** `project:midjourney` · thread `midjourney-model-and-feature-releases`
+- [MiniMax H3](https://happyin.space/projects/minimax-h3/): **Development line:** `project:minimax-h3` · thread `minimax-h3`
+- [MiniMax Music](https://happyin.space/projects/minimax-music/): **Development line:** `project:minimax-music` · thread `minimax-music-development`
+- [Mozart AI](https://happyin.space/projects/mozart-ai/): **Development line:** `project:mozart-ai` · thread `mozart-ai-product-development`
+- [MTVCrafter](https://happyin.space/projects/mtvcrafter/): **Development line:** `project:mtvcrafter` · thread `mtvcrafter-public-development`
+- [MUSIKA](https://happyin.space/projects/musika/): **Development line:** `project:musika` · thread `musika`
+- [Nano Banana Pro](https://happyin.space/projects/nano-banana-pro/): **Development line:** `project:nano-banana-pro` · thread `nano-banana-pro`
+- [neural.love](https://happyin.space/projects/neural-love/): **Development line:** `project:neural-love` · thread `neural-love-image-tools`
+- [NotebookLM](https://happyin.space/projects/notebooklm/): **Development line:** `project:notebooklm` · thread `notebooklm-development`
+- [Nunchaku — Model integration expansion](https://happyin.space/projects/nunchaku/): **Development line:** `project:nunchaku` · thread `model-integration-expansion`
+- [PixVerse — Public availability](https://happyin.space/projects/pixverse/): **Development line:** `project:pixverse` · thread `public-availability`
+- [PowerPaint](https://happyin.space/projects/powerpaint/): **Development line:** `project:powerpaint` · thread `powerpaint`
+- [Proactor — Public launch and access](https://happyin.space/projects/proactor/): **Development line:** `project:proactor` · thread `public-launch-and-access`
+- [Project Starlight](https://happyin.space/projects/project-starlight/): **Development line:** `project:project-starlight` · thread `project-starlight-public-rollout`
+- [Qwen2.5-Coder](https://happyin.space/projects/qwen2-5-coder/): **Development line:** `project:qwen2-5-coder` · thread `qwen2-5-coder-launch`
+- [Qwen3-TTS](https://happyin.space/projects/qwen3-tts/): **Development line:** `project:qwen3-tts` · thread `qwen3-tts-release-and-distribution`
 - [Vidu](https://happyin.space/projects/vidu/): **Development line:** `project:vidu` · thread `vidu`
 
 ## Python
