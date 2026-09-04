@@ -1,18 +1,26 @@
 ---
-title: Gemini — Gemini development
+title: Gemini
 category: projects
+date: 2026-08-14
 tags: [gemini, gemini-development, project]
 aliases: ["Gemini", "Gemini 1.5", "Gemini 3.7 Flash"]
 ---
 
-# Gemini — Gemini development
+# Gemini
 
 **Development line:** `project:gemini` · thread `gemini-development`  
-**Events:** 6 dated, 2024-02-16 → 2026-08-14 · **Researched:** 2026-09-04 · confidence: high
+**Last event:** 2026-08-14 · 6 dated since 2024-02-16 · **Researched:** 2026-09-04 · confidence: high
 
 ## What it is
 
-Gemini — семейство Google для чата, работы с текстом, кодом, изображениями, аудио и видео, а также для API-интеграций. Возможности: Gemini app для ручной работы; AI Studio для проверки промптов и генерации кода; Gemini API для приложений; Live API для потоковых голосовых и vision-интерфейсов. Ограничение: доступ к приложению, API-ключам, тарифам, Live API и функциям macOS независим; Live API всё ещё Preview. Вердикт: прототипируйте в AI Studio, а в production закрепляйте конкретный stable model ID и проверяйте его тариф и lifecycle.
+Gemini is Google's model family for chat, text, code, images, audio, video, and API integrations.
+
+- Gemini app: manual chat and everyday tasks.
+- AI Studio: prompt prototyping and code generation.
+- Gemini API: backend integration into applications.
+- Live API: streaming voice and vision interfaces.
+
+Access to the consumer app, API keys, pricing tiers, Live API, and macOS features is independent, and Live API remains in Preview. We prototype in AI Studio, pin a stable model ID in production, and check its pricing tier and lifecycle.
 
 ## Development line
 
@@ -25,51 +33,57 @@ Gemini — семейство Google для чата, работы с текст
 
 ## What changed
 
-Gemini — линия изменений: — 2024-02-16: Gemini 1.5 Pro принесла MoE-архитектуру, стандартный контекст 128K и ограниченный preview до 1M токенов через AI Studio и Vertex AI. — 2024-12-12: с Gemini 2.0 появилась Multimodal Live API-линия для real-time аудио и видеопотоков; исторический AI Studio Live URL сейчас требует входа, а нынешний Live API работает через stateful WebSocket и остаётся Preview. — 2026-03-03: Gemini 3.1 Flash-Lite вышел в preview для высокочастотных задач, перевода, модерации и обработки данных; preview endpoint позже был снят. — 2026-04-10: Gemini app получила генерацию интерактивных симуляций и моделей прямо в чате, включая управляемые параметры визуализаций. — 2026-04-16: Gemini for macOS добавил desktop-вход с горячими клавишами и контекстом экрана; нужна Apple Silicon машина с macOS 15+ в поддерживаемой стране. — 2026-08-14: Gemini 3.7 Flash, объявленный Google 13 августа, стал Flash-моделью для coding и agent workflows. — Найдено 2026-09-04: Gemini 3.8 Flash вышел 2 сентября и указан как текущий stable Flash; Gemini 3.7 Flash остаётся fully supported, но в списке моделей уже помечен previous-generation.
+- 2024-02-16: Gemini 1.5 Pro introduced MoE architecture, 128K standard context, and a limited preview up to 1M tokens through AI Studio and Vertex AI.
+- 2024-12-12: Gemini 2.0 introduced the Multimodal Live API for real-time audio and video streaming; the historical AI Studio Live URL now requires sign-in, while the current Live API runs over stateful WebSocket and remains in Preview.
+- 2026-03-03: Gemini 3.1 Flash-Lite entered preview for high-frequency tasks, translation, moderation, and data processing; Google later retired the preview endpoint.
+- 2026-04-10: Gemini app added generation of interactive simulations and models directly in chat, with configurable visualization parameters.
+- 2026-04-16: Gemini for macOS added desktop access with hotkeys and screen context; it requires an Apple Silicon machine running macOS 15+ in a supported country.
+- 2026-08-14: Gemini 3.7 Flash, announced by Google on August 13, became the Flash model for coding and agent workflows.
+- Found 2026-09-04: Gemini 3.8 Flash launched on September 2 and is the current stable Flash; Gemini 3.7 Flash remains fully supported, but the model list now marks it previous-generation.
 
 ## How to use this
 
-As of 2026-08-14, practitioners should track Gemini by product surface: use AI Studio's Live interface for live workflows (2024-12-12), evaluate and price Gemini 3.1 Flash-Lite Preview before adoption (2026-03-03), and select Gemini 3.7 Flash in AI Studio where available (2026-08-14), while treating Gemini app and Mac features as separate product surfaces.
+Track Gemini by product surface as of 2026-08-14. Use AI Studio's Live interface for live workflows (2024-12-12). Price and evaluate Gemini 3.1 Flash-Lite Preview before adoption (2026-03-03). Select Gemini 3.7 Flash in AI Studio where available (2026-08-14), and treat Gemini app and Mac features as separate product surfaces.
 
-1. Для разовой работы откройте Gemini app, войдите в Google Account и начните чат с текстом или приложенными материалами.
+1. Open Gemini app, sign in with a Google Account, and start a chat with text or attached files for one-off tasks.
   — <https://gemini.google.com/app>
-2. На Mac установите Gemini for macOS только если устройство Apple Silicon, macOS Sequoia 15.0+ и страна поддерживает Gemini app.
+2. Install Gemini for macOS on Mac only if the device has Apple Silicon, runs macOS Sequoia 15.0+, and the country supports Gemini app.
   — <https://gemini.google/mac/>
-3. Для прототипа откройте Google AI Studio, выберите подходящий prompt-интерфейс, протестируйте модель, параметры, safety settings и нужные инструменты.
+3. Open Google AI Studio to prototype: pick a prompt interface, test the model, adjust parameters and safety settings, and add tools.
   — <https://ai.google.dev/gemini-api/docs/ai-studio-quickstart>
-4. После удачного прототипа используйте Get code, создайте или импортируйте Cloud project и выпустите API auth key для серверной интеграции.
+4. Use Get code after prototyping, create or import a Cloud project, and generate an API auth key for backend integration.
   — <https://ai.google.dev/gemini-api/docs/api-key>
-5. Перед внедрением выберите конкретный stable endpoint из текущего списка моделей; для новых сложных agent/coding задач оцените gemini-3.8-flash, а не автоматически старый 3.7 endpoint.
+5. Select a stable endpoint from the model list before deployment; evaluate gemini-3.8-flash for new coding and agent tasks instead of defaulting to the older 3.7 endpoint.
   — <https://ai.google.dev/gemini-api/docs/models>
-6. Для голосового или vision-диалога в реальном времени используйте отдельный Live API путь с WebSocket; для client-to-server сценария применяйте ephemeral tokens.
+6. Use the separate Live API path over WebSocket for real-time voice or vision dialogue; use ephemeral tokens for client-to-server setups.
   — <https://ai.google.dev/gemini-api/docs/live-api>
 
 ## Best practices
 
-- Закрепляйте production на конкретном stable model ID, а не на latest или experimental alias: latest меняется автоматически, а experimental endpoint может иметь более строгие лимиты и измениться без стабильного контракта.
+- Pin production workloads to a specific stable model ID instead of latest or experimental aliases: latest changes automatically, and experimental endpoints carry tighter limits without contract stability.
   — <https://ai.google.dev/gemini-api/docs/models>
-- Для Gemini 3 формулируйте короткие прямые инструкции; не переносите без необходимости многословные техники prompt engineering от старых моделей.
+- Write short, direct instructions for Gemini 3; do not carry over verbose prompt engineering techniques from older models.
   — <https://ai.google.dev/gemini-api/docs/gemini-3>
-- Для сложного JSON Schema включайте Structured Output, а не полагайтесь только на инструкцию «ответь JSON»; для повторяемого формата добавляйте несколько согласованных примеров.
+- Enable Structured Output for complex JSON Schema instead of relying on "reply in JSON"; add consistent examples for repeatable formatting.
   — <https://ai.google.dev/gemini-api/docs/prompting-strategies>
-- В long-context запросах размещайте вопрос после материала, не отправляйте ненужный контекст и кэшируйте повторно используемые файлы или данные.
+- Place the question after reference material in long-context calls, omit unneeded context, and cache reused files or data.
   — <https://ai.google.dev/gemini-api/docs/long-context>
-- Держите API-ключ вне Git и вне клиентского кода; для веб- и мобильного production вызывайте Gemini через backend, а ключ ограничивайте.
+- Keep the API key out of Git and client code; route web and mobile production calls through a backend and restrict the key.
   — <https://ai.google.dev/gemini-api/docs/api-key>
-- Перед расчётом стоимости сверяйте текущую таблицу: free и paid tiers различаются лимитами, функциями и обработкой контента, поэтому цена из старого анонса не является сметой.
+- Check the pricing table before estimating costs: free and paid tiers differ in limits, features, and content handling, so launch announcement pricing is not a valid estimate.
   — <https://ai.google.dev/gemini-api/docs/pricing?hl=ru#gemini-3.1-flash-lite-preview>
 
 ## Superseded by this
 
-- 2024-02-16 — режим раннего доступа Gemini 1.5 Pro с 128K стандартного контекста и ограниченным 1M preview является исторической доступностью, а не правилом выбора модели сегодня.
-- 2026-03-03 — endpoint `gemini-3.1-flash-lite-preview` снят 2026-05-25; его прямой заменой был `gemini-3.1-flash-lite`. В текущем lifecycle для последнего уже указан shutdown 2027-05-07 и следующая рекомендуемая замена `gemini-3.5-flash-lite`.
-- Найдено 2026-09-04 — формулировка «Gemini 3.7 Flash — новейший Flash» устарела: `gemini-3.8-flash` выпущен 2026-09-02. `gemini-3.7-flash` не выключен, но является previous-generation stable вариантом.
+- 2024-02-16 — Early access for Gemini 1.5 Pro with 128K base context and limited 1M preview is historical background, not current model selection guidance.
+- 2026-03-03 — The `gemini-3.1-flash-lite-preview` endpoint was shut down on 2026-05-25; its direct replacement was `gemini-3.1-flash-lite`. That replacement now lists a shutdown date of 2027-05-07 with `gemini-3.5-flash-lite` as the next recommended successor.
+- Found 2026-09-04 — Describing Gemini 3.7 Flash as the newest Flash is obsolete: `gemini-3.8-flash` was released on 2026-09-02. `gemini-3.7-flash` remains fully supported, but it is now the previous-generation stable option.
 
 ## Still unknown
 
-- Gemini объединяет разные рабочие поверхности — consumer app, macOS app, AI Studio, Gemini API и Live API. Доступ к одной из них не доказывает доступ к тарифам, квотам или функциям другой.
-- Исторический URL AI Studio Live теперь ведёт на форму входа. Точный интерфейс и настройки страницы от декабря 2024 нельзя проверить без авторизованного сеанса; запуск Live-направления подтверждён отдельным официальным анонсом от 11 декабря 2024 и текущей документацией.
-- Страница Gemini for macOS подтверждает текущие требования и ограничения, но не содержит собственной даты запуска; дата 2026-04-16 не подтверждена этой страницей независимо.
+- Gemini spans separate product surfaces: consumer app, macOS app, AI Studio, Gemini API, and Live API. Access to one does not confirm quotas, pricing tiers, or features for another.
+- The historical AI Studio Live URL redirects to a login prompt. We cannot verify the exact interface or settings from December 2024 without an active session; an official announcement on December 11, 2024, and current documentation confirm the launch separately.
+- The Gemini for macOS product page lists requirements and limits but gives no launch date; it does not independently verify the 2026-04-16 date.
 
 ## Sources
 
