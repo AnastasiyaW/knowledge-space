@@ -1,32 +1,69 @@
 ---
-title: Runway — Runway Video AI Development
+title: Runway
 category: organizations
+date: 2024-09-19
 tags: [gen-2, organization, runway, runway-video-ai-development, runway_3d_video, runway_act_two, runway_ai_training, runway_gen2_camera_control, runway_video_tools]
 aliases: ["Runway"]
 ---
 
-# Runway — Runway Video AI Development
+# Runway
 
 **Development line:** `organization:runway` · thread `runway-video-ai-development`  
-**Events:** 3 dated, 2023-03-20 → 2024-09-19 · **Researched:** 2026-09-04 · confidence: medium
+**Last event:** 2024-09-19 · 3 dated since 2023-03-20 · **Researched:** 2026-09-04 · confidence: medium
 
 ## What it is
 
-Runway is a cloud platform for filmmakers, creative teams and developers, competing with Adobe Firefly/Premiere on the creative side and Replicate on the API side. It now has three surfaces: Creative for generating and editing video, images and audio; Dev for APIs, MCP and multi-model routing; and Robotics for simulation tooling. Gen-4.5 is the current Runway video model: web generations are 2–10 seconds, 720p, 24/25 fps and 12 credits per second; Aleph 2.0 edits 2–30-second clips, while Act-Two transfers a recorded performance to a character for up to 30 seconds. Use Runway as an integrated shot-production system, not as a one-prompt finished-film generator.
+Runway is a cloud platform for filmmakers, creative teams and developers, competing with Adobe Firefly/Premiere on the creative side and Replicate on the API side.
+
+The platform provides three surfaces:
+- Creative: generates and edits video, images and audio.
+- Dev: provides APIs, MCP and multi-model routing.
+- Robotics: provides simulation tooling.
+
+Current model limits and measures:
+- Gen-4.5: current Runway video model; web generations are 2–10 seconds, 720p, 24/25 fps and 12 credits per second.
+- Aleph 2.0: edits 2–30-second clips.
+- Act-Two: transfers a recorded performance to a character for up to 30 seconds.
+
+Use Runway as an integrated shot-production system, not as a one-prompt finished-film generator.
 
 ## Development line
 
-- **2023-03-20 — Runway documented Gen-2 on its research site.** On 2023-03-20, the dated record linked Runway's official Gen-2 research page. The first-party, product-specific endpoint identifies Gen-2 as a concrete research and product-development milestone, although the sealed evidence does not establish launch terms or availability.
-- **2023-08-11 — A longer video-duration capability was reported for Runway.** On 2023-08-11, a community link reported a Runway capability for videos lasting 18 seconds. This represents a material duration-related product step if confirmed, but the sealed evidence contains no first-party announcement and does not establish the rollout scope.
-- **2024-09-19 — Runway published news of a partnership with Lionsgate.** On 2024-09-19, Runway's official news URL identified a partnership with Lionsgate. This is a material organizational-development milestone, but the duplicated malformed URL and absent article contents leave the partnership terms unverified.
+- **2023-03-20 — Runway documented Gen-2 on its research site.** It generated clips from text, text plus image, or an image, while retaining video-to-video and stylization workflows.
+- **2023-08-11 — A longer video-duration capability was reported for Runway.** On 2023-08-11, a community link reported a Runway capability for videos lasting 18 seconds. This represents a material duration-related product step if confirmed, but no first-party announcement establishes the rollout scope.
+- **2024-09-19 — Runway published news of a partnership with Lionsgate.** On 2024-09-19, Runway's news URL identified a partnership with Lionsgate. This is a material organizational-development milestone, but absent article contents leave the partnership terms unverified.
 
 ## What changed
 
-2022-08-11 — An early text-guided video-editing preview pointed toward Gen-1: retain a source clip’s structure while changing content or style with text or an image. The exact social post is no longer retrievable, so this establishes lineage rather than a verified release. 2022-10-18 — Runway was becoming a suite rather than one generator. [Found 2026-09-04] Its first-party archive dates AI Magic Tools to 2022-10-12 and Erase and Replace to 2022-10-17; the generic landing page does not identify which change prompted this date. 2022-11-03 — The exact change cannot be verified because no source URL survives. [Found 2026-09-04] Runway’s archive dates Frame Interpolation, which generated video from still images, to 2022-11-02; temporal proximity does not prove it was the same item. 2023-01-11 — AI Training introduced custom image-model training. [Found 2026-09-04] Runway’s archive dates the feature to 2022-12-05, so 2023-01-11 appears to document adoption rather than a new version. 2023-03-20 — Gen-2 removed the need for an existing source video in key modes: it generated clips from text, text plus image, or an image, while retaining video-to-video and stylization workflows. 2023-08-11 — A contemporary user report documented Gen-2 extensions up to 18 seconds with better continuity than repeatedly animating the previous last frame. No matching first-party release note was recovered. 2023-08-31 — Motion Slider added direct control over how much movement Gen-2 introduced. Runway’s official tutorial followed on 2023-09-12. 2023-09-05 — No first-party product named “Runway 3D Video” can be verified from this date. The surviving landing page supports treating it as a 2.5D/parallax-style workflow or demonstration, not a separate model release. 2023-09-09 — Director Mode added camera direction and intensity controls to Gen-2 in the browser, with iOS announced to follow. 2023-11-21 — Motion Brush, Gen-2 style presets, fractional Director Mode controls and an improved image model reached users. Runway’s consolidated first-party announcement is dated 2023-11-23. 2024-06-17/2024-07-01 — [Found 2026-09-04] Gen-3 Alpha replaced Gen-2 as Runway’s next model generation, improving fidelity, consistency, motion and temporal control. 2024-09-18/2024-09-19 — Runway and Lionsgate announced a custom model trained on Lionsgate’s proprietary catalog for pre-production and post-production experimentation; the first-party release is dated one day earlier than the recorded event. 2024-10-25 — [Found 2026-09-04] Act-One introduced performance-driven character animation from one driving video and one character image. 2025-03-31/2025-04-01 — [Found 2026-09-04] Gen-4 introduced cross-shot consistency for characters, locations and objects; Gen-4 Turbo followed as the faster, cheaper iteration model. 2025-04-30 — [Found 2026-09-04] Gen-4 References made reusable character, object and location consistency possible from one or several images without a custom-training cycle. 2025-07-17/2025-07-18 — Act-Two replaced Act-One’s performance-capture path with better head, face, body and hand tracking. The official changelog is dated one day earlier than the recorded event. 2025-07-25/2025-07-31 — [Found 2026-09-04] Aleph added prompt-driven changes to existing footage: add, remove or transform objects, alter lighting and style, or generate another view. 2025-10-24 — [Found 2026-09-04] Workflows added reusable node graphs that chain models, media types and intermediate processing. 2025-12-01/2025-12-11 — [Found 2026-09-04] Gen-4.5 became Runway’s current video-generation model; image-to-video followed on 2026-01-21. 2026-02-20 — [Found 2026-09-04] Runway became a multi-vendor model platform, adding third-party image and video models alongside its own. 2026-03-09 — [Found 2026-09-04] Runway Characters added real-time conversational avatars through the web demo and API. 2026-05-13/2026-05-21 — [Found 2026-09-04] Runway Agent added conversational multi-shot production, while Aleph 2.0 and Edit Studio expanded prompt-based editing to footage up to 30 seconds. 2026-07-21 — [Found 2026-09-04] Model Router let Dev users select models automatically by cost, latency or quality constraints. 2026-08-10/2026-08-24 — [Found 2026-09-04] Gen-4.5 and Aleph 2.0 gained ProRes and PNG-sequence delivery on eligible plans; Wan 3.0 added 2–30-second video with audio and multiple media references. 2026-09-03 — [Found 2026-09-04] GWM Worlds 2 appeared as a research preview for indefinitely running, interactive 720p video at 24 fps with 48 kHz audio. It remains research, with fidelity, fast-camera and long-term-memory limits.
+- **2022-08-11** — An early text-guided video-editing preview pointed toward Gen-1: retain a source clip’s structure while changing content or style with text or an image. The exact social post is no longer retrievable, so this establishes lineage rather than a verified release.
+- **2022-10-18** — Runway was becoming a suite rather than one generator. [Found 2026-09-04] Its first-party archive dates AI Magic Tools to 2022-10-12 and Erase and Replace to 2022-10-17; the generic landing page does not identify which change prompted this date.
+- **2022-11-03** — The exact change cannot be verified because no source URL survives. [Found 2026-09-04] Runway’s archive dates Frame Interpolation, which generated video from still images, to 2022-11-02; temporal proximity does not prove it was the same item.
+- **2023-01-11** — AI Training introduced custom image-model training. [Found 2026-09-04] Runway’s archive dates the feature to 2022-12-05, so 2023-01-11 appears to document adoption rather than a new version.
+- **2023-03-20** — Gen-2 removed the need for an existing source video in key modes: it generated clips from text, text plus image, or an image, while retaining video-to-video and stylization workflows.
+- **2023-08-11** — A contemporary user report documented Gen-2 extensions up to 18 seconds with better continuity than repeatedly animating the previous last frame. No matching first-party release note was recovered.
+- **2023-08-31** — Motion Slider added direct control over how much movement Gen-2 introduced. Runway’s official tutorial followed on 2023-09-12.
+- **2023-09-05** — No first-party product named “Runway 3D Video” can be verified from this date. The surviving landing page supports treating it as a 2.5D/parallax-style workflow or demonstration, not a separate model release.
+- **2023-09-09** — Director Mode added camera direction and intensity controls to Gen-2 in the browser, with iOS announced to follow.
+- **2023-11-21** — Motion Brush, Gen-2 style presets, fractional Director Mode controls and an improved image model reached users. Runway’s consolidated first-party announcement is dated 2023-11-23.
+- **2024-06-17/2024-07-01** — [Found 2026-09-04] Gen-3 Alpha replaced Gen-2 as Runway’s next model generation, improving fidelity, consistency, motion and temporal control.
+- **2024-09-18/2024-09-19** — Runway and Lionsgate announced a custom model trained on Lionsgate’s proprietary catalog for pre-production and post-production experimentation; the first-party release is dated one day earlier than the recorded event.
+- **2024-10-25** — [Found 2026-09-04] Act-One introduced performance-driven character animation from one driving video and one character image.
+- **2025-03-31/2025-04-01** — [Found 2026-09-04] Gen-4 introduced cross-shot consistency for characters, locations and objects; Gen-4 Turbo followed as the faster, cheaper iteration model.
+- **2025-04-30** — [Found 2026-09-04] Gen-4 References made reusable character, object and location consistency possible from one or several images without a custom-training cycle.
+- **2025-07-17/2025-07-18** — Act-Two replaced Act-One’s performance-capture path with better head, face, body and hand tracking. The official changelog is dated one day earlier than the recorded event.
+- **2025-07-25/2025-07-31** — [Found 2026-09-04] Aleph added prompt-driven changes to existing footage: add, remove or transform objects, alter lighting and style, or generate another view.
+- **2025-10-24** — [Found 2026-09-04] Workflows added reusable node graphs that chain models, media types and intermediate processing.
+- **2025-12-01/2025-12-11** — [Found 2026-09-04] Gen-4.5 became Runway’s current video-generation model; image-to-video followed on 2026-01-21.
+- **2026-02-20** — [Found 2026-09-04] Runway became a multi-vendor model platform, adding third-party image and video models alongside its own.
+- **2026-03-09** — [Found 2026-09-04] Runway Characters added real-time conversational avatars through the web demo and API.
+- **2026-05-13/2026-05-21** — [Found 2026-09-04] Runway Agent added conversational multi-shot production, while Aleph 2.0 and Edit Studio expanded prompt-based editing to footage up to 30 seconds.
+- **2026-07-21** — [Found 2026-09-04] Model Router let Dev users select models automatically by cost, latency or quality constraints.
+- **2026-08-10/2026-08-24** — [Found 2026-09-04] Gen-4.5 and Aleph 2.0 gained ProRes and PNG-sequence delivery on eligible plans; Wan 3.0 added 2–30-second video with audio and multiple media references.
+- **2026-09-03** — [Found 2026-09-04] GWM Worlds 2 appeared as a research preview for indefinitely running, interactive 720p video at 24 fps with 48 kHz audio. It remains research, with fidelity, fast-camera and long-term-memory limits.
 
 ## How to use this
 
-As of 2025-07-18, practitioners should not change production workflows from this sealed line alone. Use it to locate the Gen-2, longer-duration video, and Lionsgate-partnership milestones, then verify current first-party Runway documentation before relying on any capability, availability, or partnership implication.
+As of 2025-07-18, do not change production workflows from this timeline alone. Use it to locate the Gen-2, longer-duration video, and Lionsgate-partnership milestones, then verify current first-party Runway documentation before relying on any capability, availability, or partnership implication.
 
 1. Open the Runway web app and create or enter a workspace.
   — <https://app.runwayml.com/>
@@ -117,5 +154,5 @@ As of 2025-07-18, practitioners should not change production workflows from this
 ## Agent brief {#agent-brief}
 
 - **Subject:** `organization:runway`, thread `runway-video-ai-development`, 3 dated events 2023-03-20 → 2024-09-19.
-- **Practical note:** As of 2025-07-18, practitioners should not change production workflows from this sealed line alone. Use it to locate the Gen-2, longer-duration video, and Lionsgate-partnership milestones, then verify current first-party Runway documentation before relying on any capability, availability, or partnership implication.
+- **Practical note:** As of 2025-07-18, practitioners should not change production workflows from this timeline alone. Use it to locate the Gen-2, longer-duration video, and Lionsgate-partnership milestones, then verify current first-party Runway documentation before relying on any capability, availability, or partnership implication.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
