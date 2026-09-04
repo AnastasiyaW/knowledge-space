@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 888+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 889+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -646,6 +646,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [HeyGen](https://happyin.space/organizations/heygen/): **Development line:** `organization:heygen` · thread `avatar-platform-and-developer-integration`
 - [Higgsfield — Higgsfield product releases](https://happyin.space/organizations/higgsfield/): **Development line:** `organization:higgsfield` · thread `higgsfield-product-releases`
 - [Hugging Face](https://happyin.space/organizations/hugging-face/): **Development line:** `organization:hugging-face` · thread `hugging-face-platform-evolution`
+- [Ideogram](https://happyin.space/organizations/ideogram/): **Development line:** `project:ideogram` · thread `model-and-product-releases`
 - [Krea AI — Video generation](https://happyin.space/organizations/krea-ai/): **Development line:** `organization:krea-ai` · thread `video-generation`
 - [Meta AI — Generative AI models](https://happyin.space/organizations/meta-ai/): **Development line:** `organization:meta-ai` · thread `generative-ai-models`
 - [Microsoft](https://happyin.space/organizations/microsoft/): **Development line:** `organization:microsoft` · thread `microsoft-generative-ai-rollout-and-adoption`
