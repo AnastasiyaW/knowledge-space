@@ -13,40 +13,41 @@ aliases: ["FLUX.2 Klein 9B Manga Colorization LoRA"]
 
 ## What it is
 
-FLUX.2 Klein 9B Manga Colorization LoRA is a LoRA adapter for artists and ComfyUI or Diffusers users who transfer character palettes from a color reference onto line art or grayscale panels.
+FLUX.2 Klein 9B Manga Colorization LoRA is an adapter for artists and ComfyUI or Diffusers users who transfer character palettes from a color reference onto line art or grayscale panels.
 
-- Palette matching for hair, eye, clothing, and skin tones.
-- Multi-character support on a single reference image.
-- Prompt guidance for lighting and background tweaks.
+- Hair, eye, clothing, and skin colors: matches them across panels.
+- Multiple characters: supports several on a single reference.
+- Lighting and background: accepts short text prompts for adjustments.
 
 ## Development line
 
-- **2026-06-10 — Hugging Face model reference recorded for the project.** We recorded the Hugging Face model repository for the FLUX.2 Klein 9B manga colorization by reference LoRA on 2026-06-10.
+- **2026-06-10 — Hugging Face model reference recorded for the project.** On 2026-06-10, we linked the project to the Hugging Face model page for FLUX.2 Klein 9B manga colorization LoRA by reference. Technical details and release status remain unverified.
 
 ## What changed
 
-2026-06-10 — The initial Apache-2.0 adapter repository was published for FLUX.2 Klein 9B Base; it sets trigger `mngclranm` and specifies the base model. 2026-07-05 — A third-party ComfyUI workflow showed batch colorization for a folder of pages against a separate color reference; this is a community integration, not a new LoRA version.
+- **2026-06-10** — The initial Apache-2.0 repository was published for FLUX.2 Klein 9B Base with trigger `mngclranm`.
+- **2026-07-05** — A third-party ComfyUI workflow demonstrated batch colorization for page folders using a separate color reference. This was a community integration, not a new LoRA version.
 
 ## How to use this
 
-As of 2026-06-10, treat the linked Hugging Face LoRA as a reference workflow. Verify its capabilities, compatibility, licensing, and usage instructions before adoption.
+As of 2026-06-10, treat the linked Hugging Face LoRA as candidate reference material. Check capabilities, compatibility, licensing, and usage instructions before adopting it.
 
-1. Load `black-forest-labs/FLUX.2-klein-base-9B`, then connect the adapter weights with `load_lora_weights` or Load LoRA in ComfyUI.
+1. Load `black-forest-labs/FLUX.2-klein-base-9B`, then attach adapter weights with `load_lora_weights` or Load LoRA in ComfyUI.
   — <https://huggingface.co/thedeoxen/FLUX.2-klein-9B-manga-colorization-by-reference-LORA>
-2. Provide the black-and-white page as the target image and a separate colored character sheet, cover, or splash page as the reference.
+2. Pass the black-and-white page as the target image and a separate color character sheet, cover, or splash page as the reference.
   — <https://huggingface.co/thedeoxen/FLUX.2-klein-9B-manga-colorization-by-reference-LORA>
-3. Add `mngclranm` to the prompt; add lighting, mood, or background notes if needed.
+3. Add `mngclranm` to the prompt; add notes for lighting, mood, or background tint if needed.
   — <https://huggingface.co/thedeoxen/FLUX.2-klein-9B-manga-colorization-by-reference-LORA>
-4. Start with a LoRA weight of 0.8–1.0; reduce it if color transfer becomes excessive.
+4. Start with a LoRA weight of 0.8–1.0; lower it if color transfer becomes excessive.
   — <https://huggingface.co/thedeoxen/FLUX.2-klein-9B-manga-colorization-by-reference-LORA>
 
 ## Best practices
 
-- Pick a clean reference where page characters are clearly visible; a cover or character sheet works for multiple figures.
+- Pick a clean reference where the required characters are distinct. A cover or character sheet works for multiple characters.
   — <https://huggingface.co/thedeoxen/FLUX.2-klein-9B-manga-colorization-by-reference-LORA>
-- If character colors blend, change the seed first; then clean the reference or split the page into smaller panels.
+- Change the seed first if character colors bleed together. If that fails, clean the reference image or split the page into smaller panels.
   — <https://www.reddit.com/r/comfyui/comments/1uo52jb/comfyui_manga_colorization_with_color_reference/>
-- In ComfyUI, keep the target page larger than the reference: running about 1.5 MP against 0.5 MP reduced reference composition bleed in shared tests.
+- Keep the target page noticeably larger than the reference in ComfyUI. Tests showed about 1.5 MP against 0.5 MP reduced reference composition leakage.
   — <https://www.reddit.com/r/comfyui/comments/1uo52jb/comfyui_manga_colorization_with_color_reference/>
 
 ## Superseded by this
