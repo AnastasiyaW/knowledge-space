@@ -13,38 +13,46 @@ aliases: ["Seoul World Model"]
 
 ## What it is
 
-Seoul World Model (SWM) — исследовательская модель мира, которая генерирует видео маршрута по координатам, траектории камеры и текстовому сценарию, извлекая уличные изображения Сеула из геоиндекса. — удерживает геометрию и внешний вид места через retrieval-augmented conditioning; — поддерживает произвольное движение камеры и текстовые изменения сцены; — повторно привязывает генерацию к будущей точке маршрута через Virtual Lookahead Sink. Ограничение: на 2026-09-05 официально не опубликованы веса, inference-код, синтетические данные и код интерполяции, поэтому это пока не доступный для развёртывания инструмент.
+Seoul World Model (SWM) is a research world model. It generates route video from coordinates, camera trajectories, and text scripts by retrieving Seoul street-view imagery from a spatial index.
+
+- Retrieval-augmented conditioning preserves place geometry and visual appearance.
+- Free camera motion supports arbitrary trajectories and text scene modifications.
+- Virtual Lookahead Sink re-anchors video generation to upcoming route waypoints.
+
+As of 2026-09-05, weights, inference code, synthetic data, and interpolation code remain unreleased, so we cannot deploy it.
 
 ## Development line
 
-- **2026-03-17 — Seoul World Model public project and code references recorded.** On 2026-03-17, the Seoul World Model development line recorded links to a public project website and a GitHub repository. This is a material public reference point for the project's history because it connects the project to both an official presentation surface and source-code location.
+- **2026-03-17 — Seoul World Model public project and code references recorded.** On 2026-03-17, the project published links to a public project website and a GitHub repository, establishing its official presentation page and source repository.
 
 ## What changed
 
-2026-03-17 — Seoul World Model появился как официальный проект к работе Grounding World Simulation Models in a Real-World Metropolis; репозиторий объявил будущую публикацию весов, inference-кода, синтетических данных и компонентов подготовки обучающих видео.
+2026-03-17 — Seoul World Model launched as the official project for Grounding World Simulation Models in a Real-World Metropolis. The repository announced future publication of weights, inference code, synthetic data, and training video preparation tools.
 
-Дополнение к событию 2026-03-17: препринт от 2026-03-16 называет систему Seoul World Model (SWM), описывает её как дообучение предобученной video-world model и уточняет состав обучения: 440 тыс. уличных изображений Сеула, реальные driving-видео и синтетические городские данные. Источник: https://arxiv.org/abs/2603.15583.
+Addition to 2026-03-17 event: the preprint from 2026-03-16 names the system Seoul World Model (SWM) and describes it as fine-tuning on a pretrained video-world model. It specifies training data of 440 thousand Seoul street-view images, real driving videos, and synthetic urban data.
+  — <https://arxiv.org/abs/2603.15583>
 
-Новое событие 2026-03-16: опубликован препринт Grounding World Simulation Models in a Real-World Metropolis, задавший метод: геопривязанный retrieval, cross-temporal pairing, синтетические траектории и Virtual Lookahead Sink. Источник: https://arxiv.org/abs/2603.15583.
+New event 2026-03-16: authors published the preprint Grounding World Simulation Models in a Real-World Metropolis. The paper defines the core method: georeferenced retrieval, cross-temporal pairing, synthetic trajectories, and Virtual Lookahead Sink.
+  — <https://arxiv.org/abs/2603.15583>
 
 ## How to use this
 
-From 2026-03-17, practitioners should use the Seoul World Model project website together with its linked GitHub repository as the starting point for evaluating and obtaining the project, rather than relying on an unverified repost.
+From 2026-03-17, use the Seoul World Model project website and linked GitHub repository to evaluate the project instead of unverified reposts.
 
-1. Проверьте официальный репозиторий перед планированием эксперимента: на текущий момент он не даёт загрузки модели или inference-инструкций.
+1. Check the official repository before planning experiments: it currently provides no model downloads or inference instructions.
   — <https://github.com/naver-ai/seoul-world-model>
-2. Используйте проектную страницу и статью как спецификацию исследовательского воспроизведения: входы системы — стартовая геопозиция, траектория камеры, текстовый промпт и локальная база street-view-референсов.
+2. Use the project page and paper as research reproduction specifications: system inputs are initial geographic position, camera trajectory, text prompt, and local street-view references.
   — <https://seoul-world-model.github.io/>
-3. Не заявляйте воспроизводимость или производственное применение до публикации весов, inference-кода и данных авторами.
+3. Do not claim reproducibility or production readiness until authors release weights, inference code, and data.
   — <https://github.com/naver-ai/seoul-world-model>
 
 ## Best practices
 
-- Оценивайте привязку к месту отдельно от визуальной правдоподобности: в абляции меньшее число референсов снижало mPSNR, хотя FID/FVD не показывали однозначного ухудшения.
+- Measure location grounding separately from visual realism: in ablations, fewer reference images reduced mPSNR even when FID and FVD showed no clear degradation.
   — <https://arxiv.org/abs/2603.15583>
-- Для длинных маршрутов повторно извлекайте референс впереди по траектории, а не полагайтесь только на начальный кадр: это принцип Virtual Lookahead Sink из работы.
+- Retrieve forward references along the trajectory for long routes instead of relying only on the initial frame: this follows the Virtual Lookahead Sink method from the paper.
   — <https://arxiv.org/abs/2603.15583>
-- Не подменяйте ожидаемую публикацию доступным релизом: в официальном репозитории всё ещё указано, что веса и код будут выпущены позднее.
+- Do not treat an expected release as an available tool: the repository still notes that weights and code will arrive later.
   — <https://github.com/naver-ai/seoul-world-model>
 
 ## Superseded by this
@@ -53,8 +61,8 @@ From 2026-03-17, practitioners should use the Seoul World Model project website 
 
 ## Still unknown
 
-- Официальный репозиторий содержит только README и не имеет GitHub Releases; дата публикации весов, inference-кода, синтетических данных и кода интерполяции не названа.
-- Цифры данных требуют осторожности: проектная страница говорит о 1,2 млн панорам и 10 тыс. синтетических видео, а статья уточняет 440 тыс. street-view изображений в составе fine-tuning; это разные уровни пайплайна, но авторы не публикуют готовый набор и точную конфигурацию обучения.
+- The official repository contains only a README and no GitHub Releases. The authors have not announced release dates for weights, inference code, synthetic data, or interpolation code.
+- Dataset numbers conflict across sources. The project page cites 1,2 million panoramas and 10 thousand synthetic videos, while the paper specifies 440 thousand street-view images for fine-tuning. The authors have not published the prepared dataset or exact training configurations.
 
 ## Sources
 
