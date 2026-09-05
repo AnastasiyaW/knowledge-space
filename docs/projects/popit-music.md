@@ -13,14 +13,13 @@ aliases: ["Popit Music"]
 
 ## What it is
 
-Popit Music is a service for AI music creators to generate tracks, enter listener selection, and publish the result.
+Popit Music is a web service for AI music creators.
 
-- Track generation: pick two genres and a mood to generate a track.
-- Listener selection: submit tracks for listener voting.
-- Publishing: release the finished result.
+- Track generation: pick two genres and a mood without a text prompt.
+- Listener selection: enter generated tracks into audience voting.
+- Publishing: release finished tracks through a dedicated route.
 
-The first two generations were free at launch.
-The practical workflow is confirmed, but no reliable primary source discloses the generation model, current pricing, or legal terms.
+The first two generations were free at launch. The practical workflow is confirmed, but no reliable primary source discloses the generation model, current pricing, or legal terms.
 
 ## Development line
 
@@ -28,34 +27,34 @@ The practical workflow is confirmed, but no reliable primary source discloses th
 
 ## What changed
 
-- 2026-06-25 — Service login, the home page, and a separate publish route became available; a promptless workflow with a choice of two genres and a mood was described.
-- 2026-07-28 — The platform introduced the v2 audio engine, a track mixer, Composer, Remix, redesigned minting, and track information pages.
+- 2026-06-25 — Service login, the home page, and a separate publish route became available, with a promptless workflow based on two genres and a mood.
+- 2026-07-28 — The platform introduced the v2 audio engine, track mixer, Composer, Remix, reworked minting, and track info pages.
 
 ## How to use this
 
 As of 2026-06-25, make no practitioner workflow change from this line: the dated Popit Music URLs alone do not verify a capability, release, or other development event.
 
-1. Open the home page and sign in to the service workspace.
+1. Open the home page and sign in to the workspace.
   — <https://popit.music/home>
-2. Choose two genres and a mood, then start generation to create a track.
+2. Pick two genres and a mood, then start generation.
 3. Publish the finished track through the Publish route.
   — <https://popit.music/publish>
 
 ## Best practices
 
-- Check current rights, minting, and payment rules directly in the service before publishing: an independent public API catalog explicitly warns that statuses and metadata can change.
+- Check rights, minting rules, and payment terms in the service before publishing. An independent catalog of public API data warns that statuses and metadata can change.
   — <https://popitcharts.live/legal.html>
-- Start with genre and mood; this is the confirmed input format for promptless creation instead of a text prompt.
+- Start with genre and mood. That is the confirmed promptless input format, not a text prompt.
 
 ## Superseded by this
 
-- 2026-07-28 — The original workflow without advanced production tools was partially replaced by the v2 audio engine, mixer, Composer, and Remix.
+- 2026-07-28 — The v2 audio engine, mixer, Composer, and Remix partially replaced the original workflow that lacked advanced production tools.
 
 ## Still unknown
 
-- No primary public Popit Music document names the generation model, current rates, limits, or rights terms.
-- The service page failed to load, so interactive tests have not confirmed whether the Home and Publish routes work.
-- Claims of royalty-free rights, removal of losing tracks, and NACKL rest on a third-party description of the 2026-06-25 step and need verification in the active service rules.
+- No primary public Popit Music document gives the generation model name, current tiers, limits, or rights terms.
+- The service page did not return during research access, so an interactive test has not confirmed that the Home and Publish routes work.
+- Claims of royalty-free rights, deleting losing tracks, and NACKL come from a third-party description of the 2026-06-25 step and need verification against active service rules.
 
 ## Sources
 
