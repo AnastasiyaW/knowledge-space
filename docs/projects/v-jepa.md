@@ -13,47 +13,58 @@ aliases: ["V-JEPA"]
 
 ## What it is
 
-V-JEPA — семейство PyTorch-моделей Meta для разработчиков video understanding и robotics. — извлекает представления из видео без ручной разметки; — прогнозирует действия и состояния в латентном пространстве; — V-JEPA 2-AC добавляет action-conditioned планирование для манипуляторов; — V-JEPA 2.1 ориентирована на пространственно и временно согласованные dense-признаки. Линейка 2.1: ViT-B 80M, ViT-L 300M, ViT-g 1B и ViT-G 2B параметров при 384 px. Вердикт: для новых задач сегментации, depth, трекинга и video features стоит начинать с V-JEPA 2.1; 2-AC нужен только для воспроизведения исследовательского robotics-контура.
+V-JEPA is a family of PyTorch models from Meta for video understanding and robotics developers.
+
+- Feature extraction: pulls representations from video without manual annotations.
+- Latent prediction: predicts actions and states in latent space.
+- V-JEPA 2-AC: adds action-conditioned planning for manipulators.
+- V-JEPA 2.1: targets spatially and temporally consistent dense features.
+
+The 2.1 line provides ViT-B 80M, ViT-L 300M, ViT-g 1B, and ViT-G 2B parameters at 384 px.
+
+Start with V-JEPA 2.1 for new segmentation, depth, tracking, and video features; 2-AC is needed only to reproduce the robotics research loop.
 
 ## Development line
 
-- **2026-03-20 — V-JEPA was linked to the V-JEPA 2 repository.** Семейство dense video/image encoders с Dense Predictive Loss, deep self-supervision и multimodal tokenizers; первичный анонс в README датирован 2026-03-16, статья опубликована 2026-03-15.
+- **2026-03-20 — V-JEPA was linked to the V-JEPA 2 repository.** Dense video and image encoders using Dense Predictive Loss, deep self-supervision, and multimodal tokenizers; the initial README announcement is dated 2026-03-16, and the paper was published on 2026-03-15.
 
 ## What changed
 
-2026-03-20 — в репозитории V-JEPA была доступна V-JEPA 2.1: семейство dense video/image encoders с Dense Predictive Loss, deep self-supervision и multimodal tokenizers; первичный анонс в README датирован 2026-03-16, статья опубликована 2026-03-15. 2025-06-11 — Meta представила V-JEPA 2, 1.2B-параметрическую video world model, и V-JEPA 2-AC: action-conditioned вариант, дообученный менее чем на 62 часах неразмеченного видео DROID для zero-shot pick-and-place. 2026-03-15 — статья V-JEPA 2.1 добавила четыре checkpoint-размера от 80M до 2B и заявила улучшение dense-задач, включая 0.307 RMSE на NYUv2 и 77.7% на Something-Something-V2.
+- 2026-03-20 — V-JEPA 2.1 became available in the V-JEPA repository: a family of dense video and image encoders using Dense Predictive Loss, deep self-supervision, and multimodal tokenizers. The initial README announcement is dated 2026-03-16, and the paper was published on 2026-03-15.
+- 2025-06-11 — Meta introduced V-JEPA 2, a 1.2B-parameter video world model, and V-JEPA 2-AC: an action-conditioned variant fine-tuned on under 62 hours of unlabeled DROID video for zero-shot pick-and-place.
+- 2026-03-15 — The V-JEPA 2.1 paper added four checkpoint sizes from 80M to 2B and reported dense task gains, including 0.307 RMSE on NYUv2 and 77.7% on Something-Something-V2.
 
 ## How to use this
 
-As of 2026-03-20, practitioners should treat the linked facebookresearch/vjepa2 repository as the recorded implementation reference for this V-JEPA line; the sealed evidence alone does not justify operational guidance beyond that.
+As of 2026-03-20, treat facebookresearch/vjepa2 as the reference implementation for V-JEPA; available documentation gives no operational guidance beyond it.
 
-1. Установите PyTorch, timm и einops; для локального запуска предпочтительна сборка PyTorch с CUDA.
+1. Install PyTorch, timm, and einops; use a CUDA build of PyTorch for local runs.
   — <https://github.com/facebookresearch/vjepa2/blob/main/README.md>
-2. Загрузите препроцессор и нужный backbone 2.1 через torch.hub; для меньшего ресурса начните с vjepa2_1_vit_base_384, для максимального качества — с gigantic.
+2. Load the preprocessor and the required 2.1 backbone via torch.hub; start with vjepa2_1_vit_base_384 for lower resource use, or gigantic for maximum quality.
   — <https://github.com/facebookresearch/vjepa2/blob/main/README.md>
-3. Прогоните видео через encoder и обучите лёгкую голову или linear probe для своей downstream-задачи; готовый demo показывает inference на видео.
+3. Pass video through the encoder and train a lightweight head or linear probe for downstream tasks; the provided demo shows video inference.
   — <https://github.com/facebookresearch/vjepa2/blob/main/README.md>
-4. Для роботического эксперимента используйте V-JEPA 2-AC с image goals и model-predictive control; это отдельный action-conditioned checkpoint, а не обычный encoder 2.1.
+4. Use V-JEPA 2-AC with image goals and model-predictive control for robotics experiments; this is a separate action-conditioned checkpoint, not the standard 2.1 encoder.
   — <https://ai.meta.com/blog/v-jepa-2-world-model-benchmarks/>
 
 ## Best practices
 
-- Выбирайте V-JEPA 2.1 для dense-представлений: релиз специально меняет objective и tokenizer для пространственно-временной согласованности, а не только увеличивает модель.
+- Choose V-JEPA 2.1 for dense representations: the release changes the objective and tokenizer for spatial-temporal consistency rather than just scaling the model.
   — <https://arxiv.org/abs/2603.14482>
-- Сопоставляйте размер checkpoint с задачей и ресурсами: доступны 80M, 300M, 1B и 2B варианты 2.1 при 384 px.
+- Match checkpoint size to task and compute budget: 2.1 offers 80M, 300M, 1B, and 2B variants at 384 px.
   — <https://github.com/facebookresearch/vjepa2/blob/main/README.md>
-- На macOS заранее замените decord: базовый пакет не поддерживает macOS; авторы не закрепляют один рекомендованный fork.
+- Replace decord in advance on macOS: the base package lacks macOS support, and the authors pin no single recommended fork.
   — <https://github.com/facebookresearch/vjepa2/blob/main/README.md>
 
 ## Superseded by this
 
-- 2026-03-15 — для новых задач dense video/image representation прежний V-JEPA 2 не является предпочтительной стартовой точкой: V-JEPA 2.1 выпущена именно для улучшения dense и temporally consistent features.
-- 2026-03-15 — нельзя считать V-JEPA 2.1 новым robotics action-conditioned checkpoint: V-JEPA 2-AC остаётся отдельной post-training веткой V-JEPA 2.
+- 2026-03-15 — For new dense video and image representation tasks, V-JEPA 2 is no longer the preferred starting point: V-JEPA 2.1 replaces it specifically to improve dense and temporally consistent features.
+- 2026-03-15 — Do not treat V-JEPA 2.1 as a new robotics action-conditioned checkpoint: V-JEPA 2-AC remains a separate post-training variant of V-JEPA 2.
 
 ## Still unknown
 
-- Официальный репозиторий не публикует GitHub Releases; датировка шага 2026-03-20 подтверждается как присутствие V-JEPA 2.1 в репозитории, но первичные даты самой статьи и README — 2026-03-15 и 2026-03-16 соответственно.
-- Официальные инструкции показывают PyTorch Hub для V-JEPA 2.1, но Transformers-пример в README перечисляет только репозитории V-JEPA 2; поддержка 2.1 через этот путь не подтверждена README.
+- The official repository does not publish GitHub Releases: the 2026-03-20 date confirms V-JEPA 2.1 presence in the repository, but the paper and README are dated 2026-03-15 and 2026-03-16.
+- Official instructions document PyTorch Hub for V-JEPA 2.1, but the Transformers example in the README lists only V-JEPA 2 repositories; the README does not confirm 2.1 support through that path.
 
 ## Sources
 
