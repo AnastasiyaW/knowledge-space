@@ -13,42 +13,41 @@ aliases: ["RiGS"]
 
 ## What it is
 
-RiGS is the codebase for Rigid-aware 4D Gaussian Splatting.
+RiGS provides the codebase for Rigid-aware 4D Gaussian Splatting:
+- Primitives: separates scenes into static, rigid, and transient Gaussian components.
+- Data preparation: generates inputs through ViPE and TAPIR/BootsTAPIR.
+- Workflow: trains, evaluates, renders, and displays scenes in a viewer.
 
-- Scene decomposition into static, rigid, and transient Gaussian primitives
-- Data preparation with ViPE and TAPIR/BootsTAPIR
-- Training, evaluation, rendering, and visual inspection in a viewer
-
-It requires Python 3.10 and a CUDA 12.x stack. This is a research repository without packaged releases.
+Requires Python 3.10 and a CUDA 12.x compatible stack. Research code without release packages.
 
 ## Development line
 
-- **2026-07-25 — RiGS project repository was referenced.** On 2026-07-25, the RiGS development line linked to the project GitHub repository. We record the repository reference as a public development-history event without asserting features, release status, or repository contents.
+- **2026-07-25 — RiGS project repository was referenced.** On 2026-07-25, the project line linked to the RiGS GitHub repository. The reference documents public availability without claiming features, release status, or repository contents.
 
 ## What changed
 
-2026-07-25 — The RiGS implementation repository became available. First-party materials specify that the method runs on a single monocular video and uses static, rigid, and transient components for different motion time scales.
+2026-07-25 — The RiGS implementation repository became available. Source materials specify that the method operates on a single monocular video and uses static, rigid, and transient components across distinct motion timescales.
 
-2026-05-22 — Earlier date added: the authors posted the RiGS paper on arXiv (v1), describing object-wise dynamic masks and scene-flow supervision.
+2026-05-22 — Earlier date: the authors published the RiGS paper on arXiv (v1), describing object-wise dynamic masks and scene-flow supervision.
 
 ## How to use this
 
-From 2026-07-25, use the linked RiGS GitHub repository as the dated source reference for this project line, and verify its current contents separately.
+From 2026-07-25, use the linked RiGS GitHub repository as the dated source reference for this project line, while verifying its current contents separately.
 
-1. Clone the repository with the ViPE submodule, create a Python 3.10 conda environment, install requirements and the local ViPE package, then download the TAPIR/BootsTAPIR checkpoint.
+1. Clone the repository with its ViPE submodule, create a Python 3.10 conda environment, install requirements and the local ViPE package, then download the TAPIR/BootsTAPIR checkpoint.
   — <https://github.com/ladvu/RiGS>
 2. Prepare video and frames, extract depth, poses, intrinsics, optical flow, flow consistency, and static masks through ViPE, then build TAPIR tracks.
   — <https://github.com/ladvu/RiGS>
-3. Run src/main.py with data paths and the experiment name. For checkpoint results, use --eval_step, --render_video, or run_viewer.py.
+3. Run src/main.py with data paths and an experiment name; use --eval_step, --render_video, or run_viewer.py to inspect checkpoint results.
   — <https://github.com/ladvu/RiGS>
 
 ## Best practices
 
-- Clone with --recursive, or initialize the submodule separately; monocular preprocessing will not run without it.
+- Clone with --recursive, or initialize submodules manually afterward; monocular preprocessing will not run without them.
   — <https://github.com/ladvu/RiGS>
-- Check PyTorch, CUDA toolkit, and driver versions against pinned requirements before training, because the repository targets CUDA 12.x.
+- Match PyTorch, CUDA toolkit, and driver versions against pinned requirements before training, because the repository targets CUDA 12.x.
   — <https://github.com/ladvu/RiGS>
-- Inspect preprocessing visualizations and generate TAPIR tracks before reconstruction, because the pipeline requires both ViPE outputs and 2D tracks.
+- Inspect preprocessing visualizations and generate TAPIR tracks before reconstruction: the pipeline requires both ViPE outputs and 2D tracks.
   — <https://github.com/ladvu/RiGS>
 
 ## Superseded by this
@@ -57,8 +56,8 @@ From 2026-07-25, use the linked RiGS GitHub repository as the dated source refer
 
 ## Still unknown
 
-- GitHub does not publish releases, so the repository provides no versioned release history and no packaged installation path.
-- First-party pages do not provide a creation date or commit record that ties code publication directly to 2026-07-25; that date remains the dated event for the repository link.
+- GitHub does not publish releases, so the repository does not provide a versioned release history or a packaged-installation path.
+- The available first-party pages do not expose a dated repository-creation or commit record that independently ties the code publication specifically to 2026-07-25; that date remains the dated event supplied for the repository link.
 
 ## Sources
 
