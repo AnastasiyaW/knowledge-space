@@ -13,46 +13,46 @@ aliases: ["MatrAIx"]
 
 ## What it is
 
-MatrAIx is infrastructure for running LLM agents with user profiles across Survey, AI Chatbot, Web, and App tasks.
+MatrAIx runs LLM agents with user profiles across Survey, AI Chatbot, Web, and App tasks.
 
 - 1 290 categorical persona attributes.
-- Public Persona 1M dataset with 599 847 grounded and 400 000 synthetic entries.
-- 1 010 benchmark tasks across more than 25 domains.
+- Public Persona 1M with 599 847 grounded and 400 000 synthetic records.
+- 1 010 tasks across more than 25 domains.
 
-It generates and stress-tests hypotheses, but does not replace research with real people. It fits reproducible product and agent evaluations if we do not present the results as human validation.
+We use it to generate and stress-test hypotheses, not to replace research with real people. It fits reproducible product and agent evals as long as results are not treated as human validation.
 
 ## Development line
 
-- **2026-08-11 — MatrAIx Persona 8B was publicly referenced with a visual playground quickstart.** Practical scope covers Survey, AI Chatbot, Web, and OS-app. Live runs require model provider API keys. Docker is required for Web and OS-app tasks.
+- **2026-08-11 — MatrAIx Persona 8B was publicly referenced with a visual playground quickstart.** The practical scope covers Survey, AI Chatbot, Web, and OS-app. Real runs require model provider API keys. Web and OS-app require Docker.
 
 ## What changed
 
-2026-08-04 — MatrAIx published its technical report. Persona 8B claims 8.3 billion records, a Playground with four environments, and 18 189 completed eval trajectories. 2026-08-11 — MatrAIx became available as an open Playground and task library. Practical scope covers Survey, AI Chatbot, Web, and OS-app. Live runs require model provider API keys, and Docker is required for Web and OS-app. Note on the 2026-08-11 milestone: the initial release is MatrAIx-Persona-8B, not a standalone Persona-8B inference model. Its public dataset is Persona 1M, not the full 8.3 billion claimed personas. New dated milestones: 2026-07-31 opened the Playground and task library; 2026-08-01 published Persona 1M; 2026-08-04 presented the report on arXiv.
+2026-08-04 — MatrAIx published its technical report. Persona 8B claims 8.3 billion records, a Playground with four environments, and 18 189 completed eval trajectories. 2026-08-11 — MatrAIx was available as an open Playground and task library. The practical scope covers Survey, AI Chatbot, Web, and OS-app. Real runs require model provider API keys, and Docker is required for Web and OS-app. Note on the 2026-08-11 step: the initial release is MatrAIx-Persona-8B, not a standalone Persona-8B inference model. Its public dataset is Persona 1M, not the full 8.3 billion claimed personas. New dated steps: 2026-07-31 opened the Playground and task library; 2026-08-01 published Persona 1M; 2026-08-04 released the report on arXiv.
 
 ## How to use this
 
-As of 2026-08-11, start evaluating MatrAIx Persona 8B using its repository and visual playground quickstart.
+As of 2026-08-11, practitioners should begin evaluation or hands-on use of MatrAIx Persona 8B from its repository and visual-playground quickstart.
 
 1. Install Python 3.12, uv, and Docker. On Windows, use WSL2 because native PowerShell and cmd do not support task verifiers.
   — <https://github.com/MatrAIx-ai/MatrAIx-Persona-8B>
-2. Clone the repository, create a uv environment, and install the core package alongside Playground, Rewardkit, and Harbor-LangSmith.
+2. Clone the repository, create a uv environment, and install the core package with Playground, Rewardkit, and Harbor-LangSmith.
   — <https://github.com/MatrAIx-ai/MatrAIx-Persona-8B>
 3. Verify the environment with a Survey and Chat smoke test without Docker, then run Harbor smoke for Web and OS-app with Docker.
   — <https://github.com/MatrAIx-ai/MatrAIx-Persona-8B>
-4. For real evaluation, set a compatible model provider API key, select a task and persona, generate a job recipe, and run it with matraix run. Retrieve results with matraix results.
+4. For real evals, set a compatible provider API key, pick a task and persona, generate a job recipe, and run it with matraix run. Get results with matraix results.
   — <https://github.com/MatrAIx-ai/MatrAIx-Persona-8B/blob/main/docs/quickstart.md#10-playground--play-tasks-visually>
-5. For cohort testing rather than smoke checks, download Persona 1M and specify it as the dataset in the Playground or CLI.
+5. For a cohort rather than a smoke test, download Persona 1M and set it as the dataset in the Playground or CLI.
   — <https://github.com/MatrAIx-ai/MatrAIx-Persona-8B>
 
 ## Best practices
 
-- Start with dev-sample and smoke tests to check the installation, not to draw conclusions about user populations.
+- Start with dev-sample and smoke tests to verify the setup, not to draw conclusions about user populations.
   — <https://github.com/MatrAIx-ai/MatrAIx-Persona-8B>
-- Use Persona 1M for research instead of the local sample of roughly 200 personas. Fix the recipe, model, and cohort so runs remain reproducible.
+- For research, use Persona 1M instead of the local sample of roughly 200 personas. Pin the recipe, model, and cohort so the run is reproducible.
   — <https://github.com/MatrAIx-ai/MatrAIx-Persona-8B>
-- Treat simulation as hypothesis generation and stress testing. Validate product decisions with real user data afterward.
+- Treat simulation as hypothesis generation and stress testing, then confirm significant product decisions with real user data.
   — <https://github.com/MatrAIx-ai/MatrAIx-Persona-8B>
-- Do not run Web and OS-app evaluations without Docker. On Windows, keep the repository inside the WSL2 filesystem instead of /mnt/c.
+- Do not plan Web and OS-app evals without Docker. On Windows, keep the repository on the WSL2 filesystem rather than /mnt/c.
   — <https://github.com/MatrAIx-ai/MatrAIx-Persona-8B>
 
 ## Superseded by this
@@ -61,9 +61,9 @@ As of 2026-08-11, start evaluating MatrAIx Persona 8B using its repository and v
 
 ## Still unknown
 
-- Official sources show no separate release dated exactly 2026-08-11. The date reflects the state of the repository and documentation, not a formal release tag.
-- No independent benchmark proves that these simulation results predict user behavior in a specific product.
-- The repository does not use GitHub Releases. Commit compatibility with future model provider APIs is not pinned to a release version.
+- Official sources show no separate release dated exactly 2026-08-11. The step reflects the documentation and repository state available on that date, not a formal release.
+- No independent practical validation confirms that simulation results predict user behavior in a specific product.
+- The repository develops without GitHub Releases. No release version pins the compatibility of a specific commit with future provider APIs.
 
 ## Sources
 
