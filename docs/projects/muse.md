@@ -13,56 +13,56 @@ aliases: ["Muse"]
 
 ## What it is
 
-Muse is a model family from Meta Superintelligence Labs. Muse Image generates and edits images, while Muse Video remains a preview.
+Muse is a model family from Meta Superintelligence Labs. Muse Image generates and edits images, while Muse Video remains an unreleased preview.
 
-- Image generation from conversational prompts
-- Image editing on uploaded or generated files with markup
-- Reference combination across multiple inputs, using web or coding tools
-- Content Seal provenance on images made in Meta AI
+- Conversational prompts: generates images from natural language.
+- Direct markup: edits uploaded or generated images in place.
+- Multiple references: combines reference images with web and coding tools.
+- Content Seal: marks provenance on images produced in Meta AI.
 
-Meta announced app and web access for Muse Image. It has not announced a public Muse Image API or a Muse Video release. Use Muse Image as an in-product workflow, not as a production video or developer API dependency.
+Meta announced only app and web access for Muse Image, with no public Muse Image API and no Muse Video release. We can use it for in-product image workflows, but not as a production video pipeline or developer API dependency.
 
 ## Development line
 
-- **2026-07-08 — Muse Image, Muse Video, and MSL announcement.** Meta AI published an announcement on 2026-07-08 identifying Muse Image, Muse Video, and MSL. The release introduced named components of the Muse project without technical specifications, capabilities, or availability details.
+- **2026-07-08 — Muse Image, Muse Video, and MSL announcement.** Meta AI published an announcement on 2026-07-08 whose URL names Muse Image, Muse Video, and MSL. The link introduces named components of the Muse project. The release does not detail their technical specifications, availability, or full capabilities.
 
 ## What changed
 
-- **2026-04-08** — Muse Spark introduced the Muse model family and supplied the reasoning and tool-use layer for Muse Image.
-- **2026-07-07** — Meta launched Muse Image and previewed Muse Video. Muse Image became available in Meta AI and selected Meta surfaces, while video remained forthcoming.
-- **2026-07-10** — Meta removed the public Instagram account @-mention reference feature after feedback. It is not current workflow guidance.
+- 2026-04-08 — Muse Spark introduced the Muse model family, providing the reasoning and tool-use layer paired with Muse Image.
+- 2026-07-07 — Meta launched Muse Image and previewed Muse Video. Muse Image arrived in Meta AI and selected surfaces, while video remained forthcoming.
+- 2026-07-10 — Meta removed public Instagram account @-mentions after feedback, so the reference feature is no longer recommended.
 
 ## How to use this
 
-Treat Muse Image, Muse Video, and MSL as a dated development line from 2026-07-08. Check the primary announcement for access details and capabilities before adoption.
+From 2026-07-08, practitioners should treat Muse Image, Muse Video, and MSL as a dated Muse-project development line and consult the primary announcement for capabilities and access details before adoption.
 
-1. Open Meta AI in the app or at meta.ai, describe the image in plain language, and generate from scratch or an uploaded photo.
-  — [Introducing Muse Image](https://about.fb.com/news/2026/07/introducing-muse-image-meta-ai/)
-2. For an edit, use the markup control to circle, sketch, or annotate the area. State the change and continue the conversation for refinements.
-  — [Introducing Muse Image](https://about.fb.com/news/2026/07/introducing-muse-image-meta-ai/)
-3. For a composition, attach reference images and state the roles, scene, and style together. Muse Image supports multiple references in one prompt.
-  — [Introducing Muse Image and Muse Video](https://ai.meta.com/blog/introducing-muse-image-muse-video-msl/)
+1. Open Meta AI in the app or at meta.ai, describe the target image in ordinary language, and generate from scratch or an uploaded photo.
+  — <https://about.fb.com/news/2026/07/introducing-muse-image-meta-ai/>
+2. Circle, sketch, or annotate the target region with the markup tool, state the edit, and refine the result in the same conversation.
+  — <https://about.fb.com/news/2026/07/introducing-muse-image-meta-ai/>
+3. Pass reference images with scene, role, and style descriptions; Muse Image accepts multiple references in one prompt.
+  — <https://ai.meta.com/blog/introducing-muse-image-muse-video-msl/>
 
 ## Best practices
 
-- Combine direct markup with a specific edit instruction when altering one area. This gives the tool a target region and an intended result.
-  — [Introducing Muse Image](https://about.fb.com/news/2026/07/introducing-muse-image-meta-ai/)
-- Treat Instagram public-account @-mentions as unavailable. Do not design workflows around them.
-  — [Introducing Muse Image](https://about.fb.com/news/2026/07/introducing-muse-image-meta-ai/)
-- Check Content Seal when provenance matters. Do not assume it covers third-party or non-Meta images.
-  — [Introducing Muse Image and Muse Video](https://ai.meta.com/blog/introducing-muse-image-muse-video-msl/)
+- Combine markup with a clear instruction when only one part of an image should change so the model receives both the target area and the goal.
+  — <https://about.fb.com/news/2026/07/introducing-muse-image-meta-ai/>
+- Avoid Instagram public-account @-mentions in production workflows; the feature is unavailable.
+  — <https://about.fb.com/news/2026/07/introducing-muse-image-meta-ai/>
+- Inspect Content Seal when provenance matters, and remember it excludes non-Meta and third-party images.
+  — <https://ai.meta.com/blog/introducing-muse-image-muse-video-msl/>
 
 ## Superseded by this
 
-- **2026-07-10** — Guidance to use public Instagram-account @-mentions as visual references is obsolete. Meta withdrew the feature.
+- 2026-07-10 — Visual references via public Instagram @-mentions are obsolete because Meta withdrew the feature.
 
 ## Still unknown
 
-- Country-by-country availability, pricing, generation limits, and a public Muse Image API remain unannounced by first-party sources.
-- Verified release workflows for Muse Video; Meta still describes it as a forthcoming preview.
-- Regional rollout details outside Meta AI, meta.ai, US Instagram Stories, and limited-country WhatsApp for the 2026-07-08 announcement (noted from Meta’s July 7 release, source date 2026-07-07: [Introducing Muse Image and Muse Video](https://ai.meta.com/blog/introducing-muse-image-muse-video-msl/)).
-- Reasoning and tool-use integration specifics for Muse Spark beyond its 2026-04-08 launch in Meta AI and meta.ai ([Introducing Muse Spark](https://ai.meta.com/blog/introducing-muse-spark-msl/)).
-- Replacement reference features after Meta removed public Instagram account @-mentions on 2026-07-10 ([Introducing Muse Image](https://about.fb.com/news/2026/07/introducing-muse-image-meta-ai/)).
+- First-party sources do not document country availability, pricing, generation limits, or a public Muse Image API.
+- Muse Video remains a preview without a verified public workflow.
+- 2026-07-08 — Meta’s July 7 release confirms the names Muse Image (launched) and Muse Video (previewed); Muse Image was available in Meta AI, meta.ai, US Instagram Stories, and limited-country WhatsApp, while video was forthcoming. Source date: 2026-07-07; https://ai.meta.com/blog/introducing-muse-image-muse-video-msl/.
+- 2026-04-08 — Muse Spark, the first Muse-family model, launched in Meta AI and meta.ai, establishing the reasoning/tool-use model integrated with Muse Image. Source: https://ai.meta.com/blog/introducing-muse-spark-msl/.
+- 2026-07-10 — Meta removed the newly announced feature for referencing public Instagram accounts by @-mention after feedback. Source: https://about.fb.com/news/2026/07/introducing-muse-image-meta-ai/.
 
 ## Sources
 
