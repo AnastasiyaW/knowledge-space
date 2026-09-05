@@ -13,54 +13,55 @@ aliases: ["OpenMontage"]
 
 ## What it is
 
-OpenMontage is an automated video production pipeline where an AI coding assistant manages research, scripting, assets, editing, and rendering.
+OpenMontage is an automated video pipeline where an AI coding assistant runs research, scripting, assets, editing, and rendering.
 
 - 11 documented pipeline types, from documentary editing to localization.
-- Human approval gates, with a log recording provider choices.
+- Human approval gates and a provider selection log to control each step.
 
-Requires Python 3.10+, FFmpeg, Node.js 18+, and an AI coding assistant.
-Built as a repository for controlled local production work, not a one-button cloud editor.
+Needs Python 3.10+, FFmpeg, Node.js 18+, and a coding assistant.
+
+This is a local environment for controlled production work, not a one-button cloud editor.
 
 ## Development line
 
-- **2026-06-28 — OpenMontage GitHub repository was referenced.** On 2026-06-28, public references pointed to the OpenMontage GitHub repository. No source text, repository snapshot, release record, or description of a code change accompanied it, so this notes the public repository reference rather than a specific implementation milestone.
+- **2026-06-28 — OpenMontage GitHub repository was referenced.** On 2026-06-28, a public link pointed to the OpenMontage GitHub repository. The source material includes no repository snapshot, release notes, or code diffs, marking a public repository reference instead of a code release.
 
 ## What changed
 
-- 2026-06-28 — OpenMontage was documented as a standalone project from its official repository; no dated description of a specific change was found for this day.
-- 2026-06-29 — Added a native ComfyUI provider to generate images and videos through a local server.
-- 2026-07-15 — Published a reproducible example of a full news video produced with OpenMontage.
+- 2026-06-28 — OpenMontage tracked as a separate project via its official repository; no dated description of a specific change exists for this day.
+- 2026-06-29 — Added a native ComfyUI provider to generate images and video through a local server.
+- 2026-07-15 — Published a reproducible sample of a full news clip built with OpenMontage.
 
 ## How to use this
 
-As of 2026-06-28, practitioners can use the OpenMontage GitHub repository as the starting reference for the project's source and development context; no specific installation or workflow change can be inferred.
+As of 2026-06-28, we use the OpenMontage GitHub repository as the starting reference for source and development context; no installation or workflow change is documented for this date.
 
-1. Install Python 3.10+, FFmpeg, Node.js 18+, and an AI coding assistant. Clone the official repository and run `make setup` or an equivalent manual install.  
+1. Install Python 3.10+, FFmpeg, Node.js 18+, and an AI coding assistant; clone the official repository and run `make setup` or the manual equivalent.
   — <https://github.com/calesthio/OpenMontage>
-2. Open the project in the coding assistant and provide a concrete brief covering duration, topic, format, and limits on assets or APIs.  
+2. Open the project in a coding assistant and provide a brief with duration, topic, format, and asset or API limits.
   — <https://github.com/calesthio/OpenMontage>
-3. Choose a suitable pipeline first, then follow its manifest and stage skills instead of bypassing them with ad-hoc scripts.  
+3. Choose a pipeline first, then follow its manifest and stage skills instead of running arbitrary scripts.
   — <https://github.com/calesthio/OpenMontage>
-4. Review proposal, script, scene plan, and assets at approval gates before rendering; open local Backlot if needed.  
+4. Review the project draft, script, scene plan, and assets at approval gates before rendering; open local Backlot if needed.
   — <https://github.com/calesthio/OpenMontage>
 
 ## Best practices
 
-- Clone only `calesthio/OpenMontage`: a June report warned of a likely malicious lookalike repository under another owner.  
+- Clone only `calesthio/OpenMontage`: a report in June flagged a lookalike repository under another owner as potential malware.
   — <https://github.com/calesthio/OpenMontage/issues/200>
-- Choose the pipeline and render runtime in advance: edit decisions record the runtime choice, and changing runtimes silently breaks the workflow.  
+- Pick the pipeline and render runtime early: edit decisions log the runtime, and silent runtime changes violate the process.
   — <https://github.com/calesthio/OpenMontage>
-- Use a custom workflow with an explicit `output_node` for custom ComfyUI setups: readiness on custom paths depends on server availability rather than bundled models.  
+- Use a custom workflow with an explicit `output_node` for local ComfyUI setups; server availability determines readiness on custom paths rather than bundled models.
   — <https://github.com/calesthio/OpenMontage/pull/230>
 
 ## Superseded by this
 
-- 2026-06-29 — PR #230 replaced obsolete PR #29: code was rebased onto current main with the .gitignore conflict resolved.
+- 2026-06-29 — PR #230 replaced PR #29 by rebasing on main and resolving a .gitignore conflict.
 
 ## Still unknown
 
-- No primary dated source describes a specific functional change on 2026-06-28; event_findings remains empty.
-- The reported malicious lookalike comes from a GitHub issue, not an independent antivirus finding.
+- No primary dated material describes a functional change on 2026-06-28; event_findings remains empty.
+- The report of a lookalike malware repository comes from a GitHub issue, not an independent antivirus audit.
 
 ## Sources
 
