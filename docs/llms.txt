@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1075+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1076+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -751,6 +751,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Google Photos](https://happyin.space/projects/google-photos/): **Development line:** `project:google-photos` · thread `ai-photo-editing`
 - [Google Veo — Veo model and access releases](https://happyin.space/projects/google-veo/): **Development line:** `project:google-veo` · thread `veo-model-and-access-releases`
 - [GPT-4](https://happyin.space/projects/gpt-4/): **Development line:** `project:gpt-4` · thread `gpt-4-development`
+- [Hailuo Light Studio — Relight tool](https://happyin.space/projects/hailuo-light-studio/): **Development line:** `project:hailuo-light-studio` · thread `relight-tool`
 - [Haiper — Public launch and iOS availability](https://happyin.space/projects/haiper/): **Development line:** `project:haiper` · thread `public-launch-and-ios-availability`
 - [Hugging Bay](https://happyin.space/projects/hugging-bay/): **Development line:** `project:hugging-bay` · thread `hugging-bay-development`
 - [HuggingChat](https://happyin.space/projects/huggingchat/): **Development line:** `project:huggingchat` · thread `huggingchat-launch`
