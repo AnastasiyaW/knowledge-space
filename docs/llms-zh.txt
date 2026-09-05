@@ -1,6 +1,6 @@
 # 综合技术知识库 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1076+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1077+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -742,6 +742,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [FreeToken](https://happyin.space/projects/freetoken/): **Development line:** `project:freetoken` · thread `freetoken-development`
 - [Gabi](https://happyin.space/projects/gabi-robot/): **Development line:** `project:gabi-robot` · thread `gabi-ordination`
 - [GalaxyAce LoRA](https://happyin.space/projects/galaxyace-lora/): **Development line:** `project:galaxyace-lora` · thread `galaxyace-lora`
+- [Gemini 3.5 Live Translate — Gemini Live Translation](https://happyin.space/projects/gemini-3-5-live-translate/): **Development line:** `project:gemini-3-5-live-translate` · thread `gemini-live-translation`
 - [Gemini](https://happyin.space/projects/gemini/): **Development line:** `project:gemini` · thread `gemini-development`
 - [GeneX](https://happyin.space/projects/genex/): **Development line:** `project:genex` · thread `genex-development`
 - [GenMM](https://happyin.space/projects/genmm/): **Development line:** `project:genmm` · thread `genmm-development`
