@@ -13,16 +13,15 @@ aliases: ["MiniMax Music 3 Latent Refiner"]
 
 ## What it is
 
-MiniMax Music 3 Latent Refiner is a community checkpoint for restoring existing audio, not a text-to-music generator.
+MiniMax Music 3 Latent Refiner is a community checkpoint to restore existing audio rather than generate music from text.
 
-- Audio repair: cleans damaged audio tracks.
-- Fidelity: preserves performance, timing, vocals, and arrangement.
-- Runtime: runs through MiniMax Music 3 DAV.
-- Interfaces: available via CLI, Python, Diffusers attachment, and ComfyUI.
+- Audio repair: cleans damaged audio while preserving performance, timing, vocals, and arrangement.
+- Engine: operates through MiniMax Music 3 DAV.
+- Integration: available through CLI, Python, Diffusers attachment, and ComfyUI.
 
-Tested only on CUDA with FP32; severe damage outside the training pipeline destroys unrecoverable information.
+Tested only on CUDA and FP32; severe corruption outside the training pipeline can destroy unrecoverable data.
 
-Use it as post-processing for MiniMax Music 3 audio with listening checks, never as a replacement for original recordings or a text-to-music pipeline.
+Use it as post-processing for MiniMax Music 3 audio and audition the output first, not as a replacement for original recordings or a text-to-music pipeline.
 
 ## Development line
 
@@ -30,8 +29,8 @@ Use it as post-processing for MiniMax Music 3 audio with listening checks, never
 
 ## What changed
 
-- **2026-08-23** — The page `BornSaint/minimax-music3-latent-refiner-v0.10` appeared, but the saved link alone does not confirm a working release or its specifications.
-- **2026-09-01** — Published v0.10 at `terminusresearch/minimax-music3-latent-refiner-v0.10`: a 137,253,888-parameter bridge-hybrid checkpoint-1000 for restoring audio in DAV latents.
+- 2026-08-23 — Hugging Face listed `BornSaint/minimax-music3-latent-refiner-v0.10`, but the saved link does not confirm a working release or its specifications.
+- 2026-09-01 — v0.10 released under `terminusresearch/minimax-music3-latent-refiner-v0.10` as a 137,253,888-parameter bridge-hybrid checkpoint-1000 for audio restoration in DAV latents.
 
 ## How to use this
 
@@ -43,28 +42,28 @@ As of 2026-08-23, treat the linked v0.10 artifact as a candidate version to insp
   — <https://github.com/bghira/minimax-music3-latent-refiner>
 3. For Python, load `MiniMaxMusic3RefinerPipeline`, pass waveform and sample rate, then save the returned audio tensor.
   — <https://github.com/bghira/minimax-music3-latent-refiner>
-4. For ComfyUI, install the custom node, restart ComfyUI, and open the included workflow; use the refiner loader, DAV encoder loader, and latent refine node.
+4. For ComfyUI, connect the custom node, restart ComfyUI, and open the included workflow; use the refiner loader, DAV encoder loader, and latent refine node.
   — <https://github.com/bghira/minimax-music3-latent-refiner>
 
 ## Best practices
 
-- Use overlapping 30-second windows with a two-second latent overlap: the checkpoint was trained on 30-second windows, which is the stated quality baseline.
+- Use overlapping 30-second windows with two-second latent overlap: the checkpoint was trained on 30-second windows, and that is the stated quality baseline.
   — <https://github.com/bghira/minimax-music3-latent-refiner>
 - Prefer CUDA and FP32: this is the verified release precision; do not treat the bfloat16 example in the auto-generated Hub instructions as a confirmed mode for this audio pipeline.
   — <https://github.com/bghira/minimax-music3-latent-refiner>
-- Check the result by ear, and do not expect recovery of information destroyed by severe damage outside the training pipeline.
+- Check results by ear and do not expect recovery of information removed by heavy corruption outside the training pipeline.
   — <https://github.com/bghira/minimax-music3-latent-refiner>
 
 ## Superseded by this
 
-- 2026-08-23 — The instructions on the `BornSaint/minimax-music3-latent-refiner-v0.10` page showing an image prompt and `pipe(prompt).images[0]` are not a valid way to run an audio refiner.
-- 2026-09-01 — The active release identifier in the source code and model card is `terminusresearch/minimax-music3-latent-refiner-v0.10`; do not substitute the BornSaint page of the same name.
+- 2026-08-23 — the instructions on `BornSaint/minimax-music3-latent-refiner-v0.10` showing an image prompt and `pipe(prompt).images[0]` are not a valid way to run an audio refiner.
+- 2026-09-01 — the active release repository in the source code and model card is `terminusresearch/minimax-music3-latent-refiner-v0.10`; do not substitute the BornSaint page of the same name.
 
 ## Still unknown
 
-- `BornSaint/minimax-music3-latent-refiner-v0.10` currently shows an inconsistent image-generation snippet, though it links to `terminusresearch` in the ComfyUI section. Without a historical snapshot, we cannot verify what was published there on 2026-08-23.
-- The v0.10 release is confirmed by a commit shown four days before the 2026-09-05 check; the 2026-09-01 date is derived from this relative timestamp.
-- No independent quality benchmarks, checks across damage types, or VRAM measurements exist.
+- `BornSaint/minimax-music3-latent-refiner-v0.10` currently contains mismatched image-generation instructions, though it points to `terminusresearch` in the ComfyUI section. Without a historical snapshot, we cannot confirm what was published there on 2026-08-23.
+- The v0.10 release is confirmed by a commit shown as four days old during the 2026-09-05 check; 2026-09-01 is inferred from that relative timestamp.
+- We found no independent quality benchmarks, no tests across corruption types, and no VRAM measurements.
 
 ## Sources
 
