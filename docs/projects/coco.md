@@ -13,43 +13,49 @@ aliases: ["CoCo"]
 
 ## What it is
 
-CoCo is a research workflow that turns text prompts into executable Python and Matplotlib scene code. It renders a draft in a sandbox, checks the layout against the prompt, and refines the draft into a final image. It targets structured layouts, spatial relations and dense text. Across three benchmarks, it reports a 10K draft–final training set and gains of 68.83%, 54.8% and 41.23% over direct generation. It works as a research reference, not a ready inference package.
+CoCo is a research workflow that turns text prompts into executable Python and Matplotlib scene code for image generation.
+
+We use it to generate structured layouts, spatial relations and dense text:
+- Scene preview: renders a draft layout in a sandbox and checks it against the prompt.
+- Image refinement: uses the draft layout to guide final generation.
+
+The paper reports a 10K draft–final training set and gains of 68.83%, 54.8% and 41.23% over direct generation across three benchmarks. It is a research reference, not a ready inference package.
 
 ## Development line
 
-- **2026-03-15 — CoCo public project resources linked.** On 2026-03-15, CoCo was referenced through linked GitHub and Hugging Face project resources. This creates a dated public reference point for the project's code and model-related materials.
+- **2026-03-15 — CoCo public project resources linked.** On 2026-03-15, project resources linked CoCo to GitHub and Hugging Face as public references for its code and model materials.
 
 ## What changed
 
-- 2026-03-15 — CoCo appeared with code and a Hugging Face model link. The repository documents the code-to-draft-to-refinement method, but ships no documented end-user inference command.
-- 2026-08-06 — arXiv v2 became the current paper version and recorded ECCV 2026 acceptance.
+- 2026-03-15 — CoCo appeared as code plus a Hugging Face model link. The public repository describes the code-to-draft-to-refinement method, but ships no documented end-user inference command.
+- 2026-08-06 — The paper's arXiv v2 became the current version and records ECCV 2026 acceptance.
 
 ## How to use this
 
-From 2026-03-15, start from the linked GitHub repository and Hugging Face page to locate public assets. Review the source files directly before using them.
+From 2026-03-15, use the linked GitHub repository and Hugging Face page to locate public resources. Review their contents at source level before use.
 
-1. Start from the repository’s method description: generate executable Matplotlib scene-layout code from a prompt, render the draft, then use it as the intermediate plan for image refinement.
+1. Start from the repository method description: generate executable Matplotlib scene-layout code from a prompt. Render the draft, then use it as the intermediate plan for image refinement.
   — <https://github.com/micky-li-hd/CoCo>
-2. Treat the bundled sandbox as research code: it executes supplied Python with an `exec` call, so run it only in an isolated environment and do not feed it untrusted code.
+2. Treat the bundled sandbox as research code. It executes supplied Python with an `exec` call, so run it only in an isolated environment and do not feed it untrusted code.
   — <https://github.com/micky-li-hd/CoCo/blob/main/sandbox.py>
-3. Use the paper for the training and evaluation design; the public Hugging Face page has no model card, tracked downloads, or hosted inference provider.
+3. Use the paper for the training and evaluation design. The public Hugging Face page has no model card, tracked downloads, or hosted inference provider.
   — <https://arxiv.org/abs/2603.08652>
 
 ## Best practices
 
-- Use an executable draft where prompt-only planning loses spatial or structural precision; verify the draft before committing to final image generation.
+- Use an executable draft when prompt-only planning loses spatial or structural precision. Verify the draft before committing to final image generation.
   — <https://arxiv.org/abs/2603.08652>
-- Keep code execution isolated and time-bounded: the supplied sandbox performs a dangerous-code check and applies a timeout, but still executes generated Python.
+- Keep code execution isolated and time-bounded. The supplied sandbox checks for dangerous code and applies a timeout, but it still executes generated Python.
   — <https://github.com/micky-li-hd/CoCo/blob/main/sandbox.py>
 
 ## Superseded by this
 
-- 2026-08-06 — arXiv v1 (2026-03-09) is no longer the current paper version; use v2 when citing the paper.
+- 2026-08-06 — arXiv v1 (2026-03-09) is no longer current. Use v2 when citing the paper.
 
 ## Still unknown
 
-- The Hugging Face page has no model card or tracked-download data, and the repository contains only a README, figures, and sandbox code. A reproducible public inference setup, checkpoint contents, hardware requirements and license are not documented in the inspected sources.
-- The repository announces the paper’s release on 2026-03-09, while the dated event is 2026-03-15. The inspected first-party sources do not establish what changed specifically on 2026-03-15.
+- The Hugging Face page has no model card or tracked-download data. The repository contains only a README, figures, and sandbox code. Checkpoint contents, hardware requirements, license, and a reproducible public inference setup remain undocumented.
+- The repository announces the paper release on 2026-03-09, while the dated event is 2026-03-15. First-party sources do not state what changed on 2026-03-15.
 
 ## Sources
 
@@ -63,5 +69,5 @@ From 2026-03-15, start from the linked GitHub repository and Hugging Face page t
 ## Agent brief {#agent-brief}
 
 - **Subject:** `project:coco`, thread `coco-development`, 1 dated events 2026-03-15 → 2026-03-15.
-- **Practical note:** From 2026-03-15, practitioners should use the linked GitHub repository and Hugging Face page as the starting points for locating CoCo's public resources; their contents and applicability still require source-level review.
-- **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
+- **Practical note:** From 2026-03-15, use the linked GitHub repository and Hugging Face page to locate public resources. Review their contents at source level before use.
+- **Confidence:** medium. Dated supersedes above govern what is obsolete.
