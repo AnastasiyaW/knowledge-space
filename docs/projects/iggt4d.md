@@ -13,44 +13,36 @@ aliases: ["IGGT4D"]
 
 ## What it is
 
-IGGT4D processes video frames sequentially to predict camera, geometry, persistent object identities, and instance masks together.
-
-- Streaming 4D reconstruction
-- Pose estimation
-- Object tracking
-- Open-vocabulary segmentation
-
-The 1B parameter checkpoint requires accepting access terms on Hugging Face; dataset, benchmark, training, and evaluation code are not released yet.
-It works for inference experiments on custom image sequences, but not for reproducible training or benchmarking.
+IGGT4D — модель, которая последовательно обрабатывает видеокадры и совместно предсказывает камеру, геометрию, устойчивые идентичности объектов и instance masks. Возможности: потоковая 4D-реконструкция; оценка позы; трекинг объектов; open-vocabulary сегментация. Ограничение: checkpoint на 1B параметров требует принять условия доступа на Hugging Face; датасет, benchmark, обучение и оценочный код ещё не выпущены. Вердикт: пригоден для inference-исследований с собственными последовательностями изображений, но не для полного воспроизводимого обучения или бенчмаркинга.
 
 ## Development line
 
-- **2026-07-22 — IGGT4D GitHub Pages site was linked.** Causal streaming model that unifies scene geometry and persistent object identities.
+- **2026-07-22 — IGGT4D GitHub Pages site was linked.** Причинная потоковая модель для объединения геометрии сцены и постоянных идентичностей объектов.
 
 ## What changed
 
-2026-07-22 — IGGT4D was presented as Streaming 4D Instance-Grounded Geometry Transformer: a causal streaming model that unifies scene geometry and persistent object identities.
+2026-07-22 — IGGT4D был представлен как Streaming 4D Instance-Grounded Geometry Transformer: причинная потоковая модель для объединения геометрии сцены и постоянных идентичностей объектов.
 
 ## How to use this
 
 From 2026-07-22, practitioners should treat the linked IGGT4D GitHub Pages site as a project reference point, while verifying its specific guidance or release status before relying on it.
 
-1. Clone the official repository and create a Conda environment with Python 3.10.
+1. Клонируйте официальный репозиторий и создайте окружение Conda с Python 3.10.
   — <https://github.com/HorizonRobotics/IGGT4D>
-2. Install PyTorch; the README gives the example of PyTorch 2.8.0 with CUDA 12.8, then install the package with `pip install -e .`.
+2. Установите PyTorch; README приводит пример PyTorch 2.8.0 с CUDA 12.8, затем установите пакет через `pip install -e .`.
   — <https://github.com/HorizonRobotics/IGGT4D>
-3. Accept the checkpoint access terms on Hugging Face, download it, and save it as `checkpoints/model.safetensors`.
+3. Примите условия доступа к checkpoint на Hugging Face, скачайте его и сохраните как `checkpoints/model.safetensors`.
   — <https://huggingface.co/HorizonRobotics/IGGT4D>
-4. Run `python streaming_infer.py` for the demo, or pass `--image-dir` and `--output-dir` for a custom sequence of RGB frames.
+4. Запустите `python streaming_infer.py` для demo либо передайте `--image-dir` и `--output-dir` для собственной последовательности RGB-кадров.
   — <https://github.com/HorizonRobotics/IGGT4D>
-5. If needed, enable `--camera` for external camera parameters and save results via `--save-npy` or `--save-ply`.
+5. При необходимости включите `--camera` для внешних параметров камеры и сохранение результатов через `--save-npy` или `--save-ply`.
   — <https://github.com/HorizonRobotics/IGGT4D>
 
 ## Best practices
 
-- Keep streaming mode as the default for long sequences; `--mode full` is the offline full-attention variant.
+- Оставляйте streaming-режимом режим по умолчанию для длинных последовательностей; `--mode full` — offline full-attention вариант.
   — <https://github.com/HorizonRobotics/IGGT4D>
-- Do not plan training, evaluation, or comparison on the official benchmark before release: the repository lists them as pending artifacts.
+- Не планируйте обучение, оценку или сравнение на официальном benchmark до их релиза: в репозитории они остаются в списке ожидаемых артефактов.
   — <https://github.com/HorizonRobotics/IGGT4D>
 
 ## Superseded by this
@@ -59,9 +51,9 @@ From 2026-07-22, practitioners should treat the linked IGGT4D GitHub Pages site 
 
 ## Still unknown
 
-- For the 2026-07-22 event, the primary arXiv source specifies the paper submission date as 2026-07-21 16:00:01 UTC; this confirms the title, ten authors, and the InsScene4D-147K scale, but gives no separate dated publication for 2026-07-22.
-- The exact date when inference code and the checkpoint became available is not stated on the primary pages read; therefore we did not add it as a separate dated event.
-- The public project page states that the dataset and benchmark will arrive later, and the repository also awaits training and evaluation code.
+- Для события 2026-07-22 первичный arXiv-источник уточняет дату подачи статьи: 2026-07-21 16:00:01 UTC; это подтверждает название, десять авторов и масштаб InsScene4D-147K, но не даёт отдельной датированной публикации именно на 2026-07-22.
+- Точная дата, когда inference-код и checkpoint стали доступны, не указана на прочитанных первичных страницах; поэтому это не добавлено как отдельное датированное событие.
+- Публичная страница проекта говорит, что датасет и benchmark выйдут позднее, а репозиторий также ожидает training и evaluation code.
 
 ## Sources
 
