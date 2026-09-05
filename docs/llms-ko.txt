@@ -1,6 +1,6 @@
 # 종합 기술 지식 베이스 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 996+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 997+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -789,6 +789,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [StreamingT2V](https://happyin.space/projects/streamingt2v/): **Development line:** `project:streamingt2v` · thread `streamingt2v`
 - [Suno Studio 2.0 — Suno Studio development](https://happyin.space/projects/suno-studio/): **Development line:** `project:suno-studio` · thread `studio-development`
 - [TAPTR](https://happyin.space/projects/taptr/): **Development line:** `project:taptr` · thread `taptr-public-availability`
+- [Tencent Hunyuan — Hunyuan model releases](https://happyin.space/projects/tencent-hunyuan/): **Development line:** `project:tencent-hunyuan` · thread `hunyuan-model-releases`
 - [Vidu](https://happyin.space/projects/vidu/): **Development line:** `project:vidu` · thread `vidu`
 
 ## Python
