@@ -13,44 +13,44 @@ aliases: ["Qwen3.5-40B-Claude-4.6-Opus-Deckard-Heretic-Uncensored-Thinking-GGUF"
 
 ## What it is
 
-Qwen3.5-40B-Claude-4.6-Opus-Deckard-Heretic-Uncensored-Thinking-GGUF is a set of static GGUF quants of a 39B multimodal fine-tuned model for llama.cpp, Ollama, and local OpenAI-compatible servers.
+Qwen3.5-40B-Claude-4.6-Opus-Deckard-Heretic-Uncensored-Thinking-GGUF is a set of static GGUF quants of a 39B multimodal fine-tuned model for users of llama.cpp, Ollama and local OpenAI-compatible servers.
 
-- Text and image processing when paired with an mmproj file.
-- Local CLI and local server execution.
-- Quant selection based on available memory and quality.
+- Text and images with mmproj
+- Local CLI and server execution
+- Quant selection by memory and quality
 
-Q4_K_M takes 24.0 GB, Q8_0 takes 41.6 GB, and standalone mmproj files take 0.7–1.0 GB.
+Q4_K_M takes 24.0 GB, Q8_0 takes 41.6 GB, and separate mmproj files take 0.7–1.0 GB.
 
-We get a practical local release, but uncensored claims and fine-tune quality require separate testing against your own tasks and risks.
+The release is a practical local distribution, but claims of being uncensored and fine-tune quality do not replace our own assessment of tasks and risks.
 
 ## Development line
 
-- **2026-03-25 — Hugging Face reference recorded for the GGUF model line.** Files range from Q2_K (14.5 GB) to Q8_0 (41.6 GB), plus two multimodal-projector files; the model card links directly to the upstream DavidAU repository and a separate i1/imatrix variant.
+- **2026-03-25 — Hugging Face reference recorded for the GGUF model line.** Files range from Q2_K (14.5 GB) to Q8_0 (41.6 GB), plus two multimodal-projector files. The card points directly to the original DavidAU repository and a separate i1/imatrix release.
 
 ## What changed
 
-2026-03-25 — Static GGUF quants of the base 39B model are out: from Q2_K (14.5 GB) to Q8_0 (41.6 GB), plus two multimodal-projector files; the card points directly to the upstream DavidAU repository and a separate i1/imatrix variant.
+2026-03-25 — Static GGUF quants of the original 39B model appeared, ranging from Q2_K (14.5 GB) to Q8_0 (41.6 GB), plus two multimodal-projector files. The card points directly to the original DavidAU repository and a separate i1/imatrix release.
 
-2026-03-25 — The quant index also lists a separate mradermacher i1-GGUF release; this is a parallel weighted imatrix build of the same checkpoint rather than an update to the static GGUF line.
+2026-03-25 — The quant index also records a separate mradermacher i1-GGUF release. This is not an update to the static GGUF, but a parallel weighted/imatrix build of the same source checkpoint.
 
 ## How to use this
 
 As of 2026-03-25, practitioners can use the linked Hugging Face page as a lead for this GGUF model line, while independently verifying its files, provenance, licence, and runtime compatibility before use.
 
-1. Pick a quant by available memory; the card suggests Q4_K_M for an initial local run, and marks Q4_K_S as a fast recommended option.
+1. Pick a quant by available memory; the card suggests Q4_K_M for a first run, and marks Q4_K_S as a fast recommended option.
   — <https://huggingface.co/mradermacher/Qwen3.5-40B-Claude-4.6-Opus-Deckard-Heretic-Uncensored-Thinking-GGUF>
 2. Run the model through llama.cpp: `llama serve -hf mradermacher/Qwen3.5-40B-Claude-4.6-Opus-Deckard-Heretic-Uncensored-Thinking-GGUF:Q4_K_M`; the server provides an OpenAI-compatible local endpoint.
   — <https://huggingface.co/mradermacher/Qwen3.5-40B-Claude-4.6-Opus-Deckard-Heretic-Uncensored-Thinking-GGUF>
-3. For Ollama, run `ollama run hf.co/mradermacher/Qwen3.5-40B-Claude-4.6-Opus-Deckard-Heretic-Uncensored-Thinking-GGUF:Q4_K_M`; download a matching mmproj from the static repository to process images.
+3. For Ollama use `ollama run hf.co/mradermacher/Qwen3.5-40B-Claude-4.6-Opus-Deckard-Heretic-Uncensored-Thinking-GGUF:Q4_K_M`; download a matching mmproj from the static repository when processing images.
   — <https://huggingface.co/mradermacher/Qwen3.5-40B-Claude-4.6-Opus-Deckard-Heretic-Uncensored-Thinking-GGUF>
 
 ## Best practices
 
-- Do not pick a quant by file size alone: the author notes the list is sorted by size, and IQ quants often beat non-IQ variants of similar size.
+- Do not select a quant by file size alone: the author notes the list is sorted by size, but IQ quants often beat non-IQ options at similar sizes.
   — <https://huggingface.co/mradermacher/Qwen3.5-40B-Claude-4.6-Opus-Deckard-Heretic-Uncensored-Thinking-GGUF>
-- Pull mmproj from the static GGUF repository for vision tasks; the i1/imatrix repository notes its mmproj lives there.
+- For vision tasks, take the mmproj from the static GGUF repository; the i1/imatrix repository states its mmproj lives there.
   — <https://huggingface.co/mradermacher/Qwen3.5-40B-Claude-4.6-Opus-Deckard-Heretic-Uncensored-Thinking-i1-GGUF>
-- Test the model against your own tasks and safety requirements before deployment: the card describes provenance and claimed traits, but provides no independent benchmark or behavioral guarantee.
+- Test the model against your own tasks and safety requirements before deployment: the card describes provenance and claimed traits, but provides no independent benchmark or behavioural guarantee.
   — <https://huggingface.co/DavidAU/Qwen3.5-40B-Claude-4.6-Opus-Deckard-Heretic-Uncensored-Thinking>
 
 ## Superseded by this
@@ -59,9 +59,9 @@ As of 2026-03-25, practitioners can use the linked Hugging Face page as a lead f
 
 ## Still unknown
 
-- The requested event_findings and new_events fields are absent from the response schema; facts belonging to 2026-03-25 appear in what_changed.
-- The exact release date of the upstream DavidAU model and independent quality metrics remain unconfirmed by the cited sources.
-- The model card calls it a vision model and provides mmproj, but runtime compatibility with images depends on runtime version and configuration.
+- Requested fields event_findings and new_events are absent from the returned response schema; facts from 2026-03-25 appear in what_changed.
+- The exact initial publication date of the source DavidAU model and independent quality metrics remain unverified by the sources used.
+- The card labels the model as vision capable and publishes an mmproj, but runtime compatibility with images depends on engine version and configuration.
 
 ## Sources
 
