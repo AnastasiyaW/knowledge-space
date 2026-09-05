@@ -19,24 +19,24 @@ Context-Matched Distillation (CMD) is NVIDIA’s causal distribution-matching di
 - Long rollouts.
 - Camera-conditioned variants.
 
-The released CMD code and derivatives are non-commercial research and education only. The underlying Cosmos base model also requires access approval. Use it to evaluate interactive causal image-to-video research, not as a drop-in commercial video stack.
+The released CMD code and its derivatives cover non-commercial research and education only. The underlying Cosmos base model also requires access approval. Use it to evaluate interactive causal I2V research, not as a drop-in commercial video stack.
 
 ## Development line
 
-- **2026-08-21 — Context-Matched Distillation resources published.** On 2026-08-21, NVIDIA published the Context-Matched Distillation (CMD) project page, code repository, model page, and image-to-video demo. These links opened the project to public inspection.
+- **2026-08-21 — Context-Matched Distillation resources published.** On 2026-08-21, Context-Matched Distillation (CMD) was presented through linked project, code, model, and image-to-video demo resources. We can examine the project through its website, GitHub repository, Hugging Face model page, and demo.
 
 ## What changed
 
-- 2026-08-13 — CMD paper introduced causal teacher scoring, Prefix Scoring, and Prefix Corruption for few-step autoregressive video distillation.
-- 2026-08-19 — The Hugging Face CMD repository was created.
-- 2026-08-21 — CMD was documented with its project page, code repository, model repository, and an image-to-video demo link.
-- 2026-08-23 — NVIDIA added the CMD model card and checkpoints, covering short, long, and camera-conditioned chunk-1/chunk-4 variants.
-- 2026-08-24 — NVIDIA updated the model card with the arXiv citation.
-- 2026-08-30 — The model repository added config.json.
+- **2026-08-13** — The CMD paper introduced causal teacher scoring, Prefix Scoring, and Prefix Corruption for few-step autoregressive video distillation.
+- **2026-08-19** — The Hugging Face CMD repository was created.
+- **2026-08-21** — CMD was documented with its project page, code repository, model repository, and an image-to-video demo link.
+- **2026-08-23** — NVIDIA added the CMD model card and checkpoints, covering short, long, and camera-conditioned chunk-1/chunk-4 variants.
+- **2026-08-24** — The model card was updated with the arXiv citation.
+- **2026-08-30** — The model repository added config.json.
 
 ## How to use this
 
-As of 2026-08-21, evaluate CMD by examining the linked code, model page, documentation, and demo together.
+As of 2026-08-21, consult the linked code repository, model page, project documentation, and image-to-video demo together. Do not treat the announcement as an unsupported research reference.
 
 1. Request access to the Cosmos-Predict2.5 2B base model before running CMD.
   — <https://huggingface.co/nvidia/Cosmos-Predict2.5-2B>
@@ -44,20 +44,20 @@ As of 2026-08-21, evaluate CMD by examining the linked code, model page, documen
   — <https://github.com/nv-tlabs/cmd>
 3. Download all CMD checkpoints, or download only the checkpoint needed for a chosen variant.
   — <https://huggingface.co/nvidia/cmd>
-4. Match the checkpoint to its supplied configuration, image, prompt, block size, local-attention window, and requested output-frame count; the repository gives a chunk-4 short-video invocation.
+4. Match the checkpoint to its supplied configuration, image, prompt, block size, local-attention window, and requested output-frame count. The repository gives a chunk-4 short-video invocation.
   — <https://github.com/nv-tlabs/cmd>
 5. Run the supplied example runner for one of the short, long, or camera-conditioned variants before replacing the example inputs.
   — <https://github.com/nv-tlabs/cmd>
 
 ## Best practices
 
-- Treat checkpoint and configuration pairing as an invariant: t denotes frame duration and l denotes local-attention length, while chunk-1 and chunk-4 use different generation granularity.
+- Pair checkpoints and configurations strictly. Here t denotes frame duration and l denotes local-attention length, while chunk-1 and chunk-4 use different generation granularity.
   — <https://huggingface.co/nvidia/cmd>
-- Evaluate long rollouts on representative inputs: autoregressive errors accumulate, degrading temporal consistency, fine detail, faces, hands, text, and fast motion.
+- Evaluate long rollouts on representative inputs. Autoregressive errors accumulate and degrade temporal consistency, fine detail, faces, hands, text, and fast motion.
   — <https://huggingface.co/nvidia/cmd>
-- Do not expect the public DL3DV setup to reproduce reported quality; it is only an end-to-end pipeline check, while the reported training data is not released.
+- Do not expect the public DL3DV setup to reproduce reported quality. It serves only as an end-to-end pipeline check because the reported training data is not released.
   — <https://github.com/nv-tlabs/cmd>
-- Keep CMD use and derivatives non-commercial unless licensing changes; redistribution must retain the license and notices.
+- Keep CMD use and derivatives non-commercial unless licensing changes. Redistribution must retain the license and notices.
   — <https://github.com/nv-tlabs/cmd/blob/main/LICENSE>
 
 ## Superseded by this
@@ -66,9 +66,9 @@ As of 2026-08-21, evaluate CMD by examining the linked code, model page, documen
 
 ## Still unknown
 
-- The Hugging Face commit history dates the initial CMD repository to 2026-08-19 and the checkpoint and model-card upload to 2026-08-23, while the 2026-08-21 event already carried the model URL. The link list may have been enriched after the dated event; this cannot be resolved from the available first-party history.
-- The public demo page was reachable as a Hugging Face Space but exposed no reproducible runtime settings or availability guarantee.
-- No first-party post-release benchmark or production-deployment evidence was found; paper results remain research evidence rather than a production SLA.
+- The Hugging Face commit history dates the initial CMD repository to 2026-08-19 and the checkpoint and model card upload to 2026-08-23, while the 2026-08-21 event already carried the model URL. The link list may have been enriched after the dated event. We cannot resolve this from the available first-party history.
+- The public demo page was reachable as a Hugging Face Space, but exposed no reproducible runtime settings or availability guarantee.
+- We found no first-party post-release benchmark or production-deployment evidence. Paper results remain research evidence rather than a production SLA.
 
 ## Sources
 
