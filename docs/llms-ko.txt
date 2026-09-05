@@ -1,6 +1,6 @@
 # 종합 기술 지식 베이스 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1078+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1079+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -752,6 +752,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Google Opal](https://happyin.space/projects/google-opal/): **Development line:** `project:google-opal` · thread `google-opal`
 - [Google Photos](https://happyin.space/projects/google-photos/): **Development line:** `project:google-photos` · thread `ai-photo-editing`
 - [Google Veo — Veo model and access releases](https://happyin.space/projects/google-veo/): **Development line:** `project:google-veo` · thread `veo-model-and-access-releases`
+- [Google Vids](https://happyin.space/projects/google-vids/): **Development line:** `project:google-vids` · thread `google-vids-veo-integration`
 - [GPT-4](https://happyin.space/projects/gpt-4/): **Development line:** `project:gpt-4` · thread `gpt-4-development`
 - [Hailuo Light Studio — Relight tool](https://happyin.space/projects/hailuo-light-studio/): **Development line:** `project:hailuo-light-studio` · thread `relight-tool`
 - [Haiper — Public launch and iOS availability](https://happyin.space/projects/haiper/): **Development line:** `project:haiper` · thread `public-launch-and-ios-availability`
