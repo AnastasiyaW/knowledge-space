@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1185+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1186+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -730,6 +730,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [ComfyUI Desktop](https://happyin.space/projects/comfyui-desktop/): **Development line:** `project:comfyui-desktop` · thread `comfyui-desktop`
 - [ComfyUI KSampler Matrix Lab — Repository reference](https://happyin.space/projects/comfyui-ksampler-matrix-lab/): **Development line:** `project:comfyui-ksampler-matrix-lab` · thread `repository-reference`
 - [ComfyUI-LoraTags](https://happyin.space/projects/comfyui-loratags/): **Development line:** `project:comfyui-loratags` · thread `comfyui-loratags`
+- [comfyui-lrw-nodes — ComfyUI LRW Nodes](https://happyin.space/projects/comfyui-lrw-nodes/): **Development line:** `project:comfyui-lrw-nodes` · thread `comfyui-lrw-nodes`
 - [ComfyUI-NKD-VFX-Tools](https://happyin.space/projects/comfyui-nkd-vfx-tools/): **Development line:** `project:comfyui-nkd-vfx-tools` · thread `comfyui-nkd-vfx-tools-development`
 - [OpenPose Studio for ComfyUI — Project development](https://happyin.space/projects/comfyui-openpose-studio/): **Development line:** `project:comfyui-openpose-studio` · thread `project-development`
 - [ComfyUI-PuLID-Flux2 — PuLID-Flux2 ComfyUI integration](https://happyin.space/projects/comfyui-pulid-flux2/): **Development line:** `project:comfyui-pulid-flux2` · thread `pulid-flux2-comfyui-integration`
