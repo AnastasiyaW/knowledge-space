@@ -13,27 +13,26 @@ aliases: ["Laminar"]
 
 ## What it is
 
-Laminar is an OpenTelemetry-native platform for agent builders. It is an alternative to agent-focused tracing layers such as Langfuse or Helicone, not an LLM gateway.
+Laminar is an OpenTelemetry-native platform for agent builders, and an alternative to Langfuse or Helicone rather than an LLM gateway.
 
-Abilities:
-- Traces: trace LLM and tool calls.
-- Browser sessions: inspect browser interactions.
-- Debugger: replay a failed run from a breakpoint.
+- Tracing: trace LLM and tool calls.
+- Browser sessions: inspect interactive runs.
 - Evaluations: run evaluation datasets.
 - Signals: detect recurring failures.
-- SQL: query run data directly.
+- SQL: query execution data directly.
+- Breakpoints: replay a failed run.
 
 Self-hosting requires a multi-service stack. Signals requires a Google Generative AI API key.
 
 ## Development line
 
-- The dated line is not written up yet; what is known stands in the sections below.
+- We have not written up the dated timeline yet; what we know stands in the sections below.
 
 ## What changed
 
-- 2026-03-16 — Laminar announced a $3 million seed round and positioned its product around debugging and monitoring long-running agents: trace transcript views, browser-session replay, step-level debugger, Signals, SQL analysis, and evaluation datasets.
+- 2026-03-16 — Laminar announced a $3 million seed round and positioned the product around debugging and monitoring long-running agents: trace transcript views, browser-session replay, step-level debugger, Signals, SQL analysis, and evaluation datasets.
 - 2026-03-18 — The reported funding was $3 million, led by Atlantic.vc with participation from Y Combinator, AAL.vc, Ben Sigelman, and Ant Wilson; the product scope was agent observability rather than a model release.
-- 2026-07-09 — Release v0.2.1 added a refreshed Clusters UI, configurable frontend base path, API-key expiration metadata, CLI connection in onboarding, and Signals/alerting changes.
+- 2026-07-09 — Release v0.2.1 added a refreshed Clusters UI, configurable frontend base path, API-key expiration metadata, CLI connection in onboarding, and Signals alerting changes.
 
 ## How to use this
 
@@ -52,23 +51,23 @@ As of 2026-03-18, make no implementation or adoption change yet; first verify th
 
 ## Best practices
 
-- Initialize the SDK once and as early as possible, rather than repeatedly per request or tool call.
+- Initialize the SDK once early in startup, rather than repeatedly per request or tool call.
   — <https://github.com/lmnr-ai/lmnr-python>
 - Preserve an existing OpenTelemetry span design and point its OTLP exporter to Laminar instead of duplicating instrumentation.
   — <https://github.com/lmnr-ai/lmnr/blob/main/frontend/assets/blog/2026-03-05-migrate-from-helicone-to-laminar.mdx>
-- Use the lightweight Docker Compose stack only for quick starts or light usage; use managed hosting or docker-compose-full.yml for production workloads.
+- Use the lightweight Docker Compose stack only for quick starts or light usage; use managed hosting or docker-compose-full.yml for production.
   — <https://github.com/lmnr-ai/lmnr>
 - Do not treat Laminar as a replacement for gateway functions such as provider routing, response caching, or rate limiting.
   — <https://github.com/lmnr-ai/lmnr/blob/main/frontend/assets/blog/2026-03-05-migrate-from-helicone-to-laminar.mdx>
 
 ## Superseded by this
 
-- 2026-03-16 — The initial launch description is incomplete for current deployment planning: release v0.2.1 added configurable frontend base paths and API-key expiration metadata.
+- 2026-03-16 — The initial launch description is incomplete for deployment planning: the current project has v0.2.1 release changes, including configurable frontend base paths and API-key expiration metadata.
 
 ## Still unknown
 
-- The supplied Hugging Face short link could not be retrieved, so it was not used as evidence.
-- The required event_findings and new_events fields are not present in the response schema supplied for this task; their supported facts sit in what_changed instead.
+- The supplied Hugging Face short link could not be retrieved, so we did not use it as evidence.
+- The schema omitted event_findings and new_events fields, so we incorporated their supported facts into What changed.
 
 ## Sources
 
