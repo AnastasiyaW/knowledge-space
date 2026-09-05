@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1030+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1031+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -776,6 +776,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Odyssey](https://happyin.space/projects/odyssey/): **Development line:** `project:odyssey` · thread `odyssey`
 - [Ollama — Product development](https://happyin.space/projects/ollama/): **Development line:** `project:ollama` · thread `product-development`
 - [OmniAvatar — Public release and demo availability](https://happyin.space/projects/omniavatar/): **Development line:** `project:omniavatar` · thread `public-release-and-demo`
+- [Ornith-1.5](https://happyin.space/projects/ornith-1-5/): **Development line:** `project:ornith-1-5` · thread `ornith-1-5`
 - [Pika](https://happyin.space/projects/pika/): **Development line:** `project:pika` · thread `pika-product-development`
 - [PixVerse — Public availability](https://happyin.space/projects/pixverse/): **Development line:** `project:pixverse` · thread `public-availability`
 - [PowerPaint](https://happyin.space/projects/powerpaint/): **Development line:** `project:powerpaint` · thread `powerpaint`
