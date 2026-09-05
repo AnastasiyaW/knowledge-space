@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1148+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1150+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -817,6 +817,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Laminar](https://happyin.space/projects/laminar/): **Development line:** `project:laminar` · thread `laminar-development`
 - [Latent-to-4D — Beyond Pixels](https://happyin.space/projects/latent-to-4d/): **Development line:** `project:latent-to-4d` · thread `beyond-pixels`
 - [LEDITS](https://happyin.space/projects/ledits/): **Development line:** `project:ledits` · thread `ledits-development`
+- [LingBot-World 2.0](https://happyin.space/projects/lingbot-world-2/): **Development line:** `project:lingbot-world-2` · thread `lingbot-world-2-development`
 - [Llama 3.1](https://happyin.space/projects/llama-3-1/): **Development line:** `project:llama-3-1` · thread `llama-3-1`
 - [LlamaServerLauncher](https://happyin.space/projects/llama-server-launcher/): **Development line:** `project:llama-server-launcher` · thread `llama-server-launcher-development`
 - [LMarena Video Arena — Video Arena](https://happyin.space/projects/lmarena/): **Development line:** `project:lmarena` · thread `video-arena`
@@ -936,6 +937,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [WAN 2.2 — WAN](https://happyin.space/projects/wan-2-2/): **Development line:** `project:wan-2-2` · thread `wan`
 - [Wan Video](https://happyin.space/projects/wan-video/): **Development line:** `project:wan-video` · thread `wan-video-development`
 - [WAN](https://happyin.space/projects/wan/): **Development line:** `project:wan` · thread `wan-video-generation`
+- [WhatModels — Public website](https://happyin.space/projects/whatmodels/): **Development line:** `project:whatmodels` · thread `public-website`
 - [WonderWorld](https://happyin.space/projects/wonderworld/): **Development line:** `project:wonderworld` · thread `wonderworld-development`
 - [XVerse — Public resources and demo](https://happyin.space/projects/xverse/): **Development line:** `project:xverse` · thread `public-resources-and-demo`
 - [YouTube](https://happyin.space/projects/youtube/): **Development line:** `project:youtube` · thread `youtube-automatic-dubbing`
