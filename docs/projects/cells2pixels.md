@@ -15,11 +15,11 @@ aliases: ["Cells2Pixels"]
 
 Cells2Pixels is the code and interactive demo of Neural Cellular Automata: From Cells to Pixels for generative graphics researchers.
 
-- Jointly trained NCA and Local Pattern Producing Network (LPPN).
-- 2D morphogenesis, PBR textures, mesh textures, and 3D textures.
-- Experimental dynamic textures, radiance fields, and voxel growth.
+- NCA and Local Pattern Producing Network (LPPN) train jointly.
+- Core modes cover 2D morphogenesis, PBR textures, textures on meshes, and 3D textures.
+- Experimental modes cover dynamic textures, radiance field, and voxel growth.
 
-The repository is for training, with no packaged release and no ready Colab; the README still marks Colab and testing as TODO. Suitable for reproducible NCA experiments, not as a ready image generator.
+The repository is built for training, without a packaged release or ready Colab. The README still lists Colab and testing as TODO items. It fits reproducible NCA experiments, not production image generation.
 
 ## Development line
 
@@ -27,30 +27,30 @@ The repository is for training, with no packaged release and no ready Colab; the
 
 ## What changed
 
-2026-07-11 — Cells2Pixels is presented as the SIGGRAPH 2026 implementation. A coarse cell grid evolves through local updates. The LPPN decodes interpolated cell states and local coordinates into images or surface properties at arbitrary resolution.
+2026-07-11 — Cells2Pixels arrived as a SIGGRAPH 2026 implementation. A coarse cellular grid evolves through local updates. The LPPN decodes interpolated cell states and local coordinates into images or surface properties at arbitrary resolution.
 
 ## How to use this
 
 As of 2026-07-11, treat Cells2Pixels as a project requiring source review through its website and repository; no practitioner workflow change is justified from the dated links alone.
 
-1. Install dependencies with `pip install -r requirements.txt`; Kaolin is optional for experiments without meshes.
+1. Install dependencies with `pip install -r requirements.txt`. Kaolin is optional for runs without meshes.
   — <https://github.com/TheDevilWillBeBee/Cells2Pixels>
-2. Download datasets and input directory structure: `python scripts/download_data.py`.
+2. Download datasets and input directory structures with `python scripts/download_data.py`.
   — <https://github.com/TheDevilWillBeBee/Cells2Pixels>
-3. Run training via `python train.py --config <path>`; start with `configs/nca2d/growing.yaml` for 2D growth, `configs/nca2d/pbr_texture.yaml` for PBR, `configs/meshnca/texture.yaml` for meshes, and `configs/nca3d/3d_texture.yaml` for 3D.
+3. Run training with `python train.py --config <path>`. Start with `configs/nca2d/growing.yaml` for 2D growth, `configs/nca2d/pbr_texture.yaml` for PBR, `configs/meshnca/texture.yaml` for meshes, or `configs/nca3d/3d_texture.yaml` for 3D.
   — <https://github.com/TheDevilWillBeBee/Cells2Pixels>
-4. Add `--test` after training to load the checkpoint and save an image and rollout video to the configured outputs directory.
+4. Pass `--test` after training to load the checkpoint and save images and rollout videos into the configured outputs directory.
   — <https://github.com/TheDevilWillBeBee/Cells2Pixels>
-5. Use the interactive canvas to inspect model behavior quickly: select a mode, adjust LPPN scale, and perturb the NCA by clicking or tapping.
+5. Test model behavior in the interactive canvas by choosing a mode, adjusting the LPPN scale, and clicking or touching the NCA.
   — <https://cells2pixels.github.io/>
 
 ## Best practices
 
-- Keep PyTorch and Kaolin versions aligned with requirements; Kaolin is needed only for mesh rendering and rasterization.
+- Match PyTorch and Kaolin versions with requirements. Kaolin is needed only for mesh rendering and rasterization.
   — <https://github.com/TheDevilWillBeBee/Cells2Pixels>
-- Do not treat experimental dynamic texture, radiance-field growth, or voxel growth modes as paper results: the README separates them from the four paper training modes.
+- Do not present dynamic texture, radiance-field growth, or voxel growth as paper results. The README separates these experimental modes from the four paper training modes.
   — <https://github.com/TheDevilWillBeBee/Cells2Pixels>
-- Evaluate the model using a saved checkpoint and an explicit test rollout, not just the training run.
+- Evaluate models with a saved checkpoint and an explicit test rollout instead of relying on the training run alone.
   — <https://github.com/TheDevilWillBeBee/Cells2Pixels>
 
 ## Superseded by this
@@ -59,8 +59,8 @@ As of 2026-07-11, treat Cells2Pixels as a project requiring source review throug
 
 ## Still unknown
 
-- The project page and README lack a dated repository changelog, so we cannot date the release of the code, demo, or individual configs reliably.
-- No confirmed packaged release, ready checkpoint catalog, or supported production workflow was found.
+- The project page and README provide no dated repository changelog, so publication dates for code, demos, and specific configs cannot be verified.
+- No confirmed packaged release, checkpoint catalogue, or supported production workflow exists.
 
 ## Sources
 
