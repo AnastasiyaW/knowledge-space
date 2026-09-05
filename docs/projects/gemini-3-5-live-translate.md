@@ -15,20 +15,19 @@ aliases: ["Gemini 3.5 Live Translate"]
 
 Gemini 3.5 Live Translate is Google’s low-latency audio-to-audio translation model for real-time spoken conversations.
 
-Abilities:
-- Automatic detection across 70+ languages.
-- Continuous translated speech.
-- Optional input and output transcripts.
+- Automatic detection across 70+ languages
+- Continuous translated speech
+- Optional input and output transcripts
 
-It remains a preview model, accepts audio only, and does not support tools or instructions. Use it as an interpreter pipeline rather than a general-purpose voice agent.
+The model remains in preview, accepts audio only, and does not support tools or instructions. Use it as an interpreter pipeline, not as a general-purpose voice agent.
 
 ## Development line
 
-- **2026-06-13 — Google presented Gemini 3.5 Live Translate preview.** On 2026-06-13, Google identified Gemini 3.5 Live Translate as a preview model for real-time translation in Gemini Live. The release included a Live API guide, an AI Studio Live preview URL, and integration references for LiveKit and Pipecat.
+- **2026-06-13 — Google presented Gemini 3.5 Live Translate preview.** On 2026-06-13, Google introduced Gemini 3.5 Live Translate as a preview model for real-time translation in Gemini Live. The release provided a Live API guide, an AI Studio Live preview URL, and integration references for LiveKit and Pipecat.
 
 ## What changed
 
-- 2026-06-13 — Gemini 3.5 Live Translate opened in public preview through the Gemini Live API and Google AI Studio.
+- 2026-06-13 — Gemini 3.5 Live Translate became available to developers in public preview through the Gemini Live API and Google AI Studio.
 - 2026-08-26 — Google published the Gemini 3.5 Audio model card. It documented Live Translate’s 128K input and 64K output context limits, along with failure modes for voice, language detection, and background noise.
 
 ## How to use this
@@ -39,14 +38,14 @@ From 2026-06-13, evaluate Gemini 3.5 Live Translate preview through the Gemini L
   — <https://ai.google.dev/gemini-api/docs/live-api/live-translate>
 2. Set `response_modalities` to audio and provide `translationConfig.targetLanguageCode` as a BCP-47 target-language code.
   — <https://ai.google.dev/gemini-api/docs/live-api/live-translate>
-3. Stream 16-bit, 16 kHz, mono, little-endian PCM in roughly 100 ms chunks, then consume the returned 24 kHz PCM audio.
+3. Stream 16-bit, 16 kHz, mono, little-endian PCM in roughly 100 ms chunks; consume the returned 24 kHz PCM audio.
   — <https://ai.google.dev/gemini-api/docs/live-api/live-translate>
 4. Enable input and output transcription when the product needs captions, logging, or a readable translation alongside audio.
   — <https://ai.google.dev/gemini-api/docs/live-api/live-translate>
 
 ## Best practices
 
-- Treat it as a continuous translation stream rather than a turn-based agent: translation mode has no tool, instruction, text-input, image, or video support.
+- Treat it as a continuous translation stream rather than a turn-based agent. Translation mode has no tool, instruction, text-input, image, or video support.
   — <https://ai.google.dev/gemini-api/docs/live-api/live-translate>
 - For browser or mobile clients, use v1beta ephemeral tokens and constrain `translationConfig` server-side unless users must choose the target language themselves.
   — <https://ai.google.dev/gemini-api/docs/live-api/live-translate>
@@ -57,12 +56,12 @@ From 2026-06-13, evaluate Gemini 3.5 Live Translate preview through the Gemini L
 
 ## Superseded by this
 
-- 2026-06-09 — Google’s prior Google Meet speech-translation limit of five languages and English-centered translation was slated to be replaced by 70+ languages and 2,000+ language combinations.
+- 2026-06-09 — Google planned to replace the prior Google Meet speech-translation limit of five languages and English-centered translation with 70+ languages and 2,000+ language combinations.
 
 ## Still unknown
 
-- LiveKit and Pipecat document generic Gemini Live integrations, not a Gemini 3.5 Live Translate adapter or configuration. Validate that framework path before relying on either for translation.
-- Google established public preview for developers, but gave no general-availability date for the API model.
+- The current LiveKit and Pipecat pages describe generic Gemini Live integrations, not a documented Gemini 3.5 Live Translate-specific adapter or configuration. Validate that framework path before treating either as translation support.
+- Google’s public material establishes public preview for developers, but does not provide a general-availability date for the API model.
 
 ## Sources
 
