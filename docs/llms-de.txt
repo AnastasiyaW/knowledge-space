@@ -1,6 +1,6 @@
 # Umfassende technische Wissensbasis - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1051+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1052+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -812,6 +812,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [RealityScan — Mobile Photogrammetry Launch and Release](https://happyin.space/projects/realityscan/): **Development line:** `project:realityscan` · thread `mobile-photogrammetry-launch-and-release`
 - [Reflection 70B](https://happyin.space/projects/reflection-70b/): **Development line:** `project:reflection-70b` · thread `reflection-70b-development`
 - [Reve](https://happyin.space/projects/reve/): **Development line:** `project:reve` · thread `reve-product-development`
+- [RiGS — Repository reference](https://happyin.space/projects/rigs/): **Development line:** `project:rigs` · thread `repository-reference`
 - [Runway Gen-1](https://happyin.space/projects/runway-gen-1/): **Development line:** `project:runway-gen-1` · thread `runway-gen-1-public-release`
 - [Runway Gen-3 Alpha](https://happyin.space/projects/runway-gen-3-alpha/): **Development line:** `project:runway-gen-3-alpha` · thread `runway-gen-3-alpha`
 - [SANA-Streaming — SANA Streaming](https://happyin.space/projects/sana-streaming/): **Development line:** `project:sana-streaming` · thread `sana-streaming`
