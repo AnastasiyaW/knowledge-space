@@ -13,23 +13,30 @@ aliases: ["ARDY"]
 
 ## What it is
 
-ARDY is an autoregressive diffusion system for real-time humanoid motion: streaming text prompts, root paths and waypoints, full-body keyframes, and sparse joint constraints. It ships four 326M-parameter Core and Unitree G1 checkpoints; released models generate up to eight seconds of motion per output. Practical verdict: use it for Linux/NVIDIA-GPU prototypes and integration work, not as a drop-in DCC animation tool.
+ARDY is an autoregressive diffusion system for real-time humanoid motion across Core and Unitree G1 rigs.
+
+- Streaming text prompts: guides character motion on the fly.
+- Root paths and waypoints: steers trajectory across space.
+- Full-body keyframes: sets poses at specific frames.
+- Sparse joint constraints: pins individual limbs during movement.
+
+It ships four 326M-parameter checkpoints and generates up to eight seconds of motion per output. Use it for Linux and NVIDIA GPU prototypes and integration work, not as a drop-in DCC animation tool.
 
 ## Development line
 
-- **2026-07-15 — ARDY public project resources were linked.** On 2026-07-15, ARDY was linked through its NVIDIA Research project page, source repository, Hugging Face collection, and interactive Hugging Face Space. This is a material public-availability milestone because it connects the project to its research, code, model, and hands-on entry points. The dated links alone do not establish the exact announcement wording, version, capabilities, or release status.
+- **2026-07-15 — ARDY public project resources were linked.** On 2026-07-15, ARDY was linked through its NVIDIA Research project page, source repository, Hugging Face collection, and interactive Hugging Face Space. The links connect the project to its research, code, model, and hands-on entry points. The dated links alone do not establish the exact announcement wording, version, capabilities, or release status.
 
 ## What changed
 
 2026-07-15 — ARDY’s project page, official code, checkpoint collection and interactive demo became available; the release covers Core and Unitree G1 rigs, rather than a single generic character model.
 
-Event finding for 2026-07-15: the linked official repository specifies four checkpoints released 2026-07-10: 20-FPS Core models with 8- or 40-frame horizons and 25-FPS Unitree G1 models with 8- or 52-frame horizons. The NVIDIA model card dates the 40-frame Core checkpoint to 2026-07-10, gives it 326M parameters, and says it was trained on 630 hours of Bones Rigplay 1 motion capture.
+On 2026-07-15, the linked official repository specifies four checkpoints released 2026-07-10: 20-FPS Core models with 8- or 40-frame horizons and 25-FPS Unitree G1 models with 8- or 52-frame horizons. The NVIDIA model card dates the 40-frame Core checkpoint to 2026-07-10, gives it 326M parameters, and says it was trained on 630 hours of Bones Rigplay 1 motion capture.
 
-New events: 2026-07-09 — the accompanying ARDY paper was posted to arXiv, describing the hybrid root-motion/body-latent representation and two-stage transformer denoiser. 2026-07-10 — NVIDIA released the four pretrained checkpoints under the NVIDIA Open Model Agreement.
+2026-07-09 — the accompanying ARDY paper was posted to arXiv, describing the hybrid root-motion/body-latent representation and two-stage transformer denoiser. 2026-07-10 — NVIDIA released the four pretrained checkpoints under the NVIDIA Open Model Agreement.
 
 ## How to use this
 
-As of 2026-07-15, practitioners should use the ARDY project page, source repository, Hugging Face collection, and interactive Space together as the starting points for evaluating or trying the project, while independently verifying the exact supported workflow and versions.
+As of 2026-07-15, evaluate ARDY through its project page, source repository, Hugging Face collection, and interactive Space, while verifying supported workflows and versions directly.
 
 1. Create a Python 3.10+ environment on Linux, install a CUDA-matched PyTorch build, then install ARDY; the official setup was mainly tested on Ubuntu 22.04 with an RTX 4090, driver 575 and Python 3.11.
   — <https://github.com/nv-tlabs/ardy>
