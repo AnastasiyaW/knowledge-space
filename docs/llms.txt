@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1170+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1171+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -690,6 +690,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [PHP Type System](https://happyin.space/php/php-type-system/): PHP is dynamically typed with optional strict mode. Eight primitive types: int, float, string, bool, array, object, null, resource. Type juggling performs implicit conversions; `declare(strict_type...
 
 ## Projects
+- [ACE Studio Video Composer — ACE Studio development](https://happyin.space/projects/ace-studio/): **Development line:** `project:ace-studio` · thread `ace-studio-development`
 - [ACTI](https://happyin.space/projects/acti/): **Development line:** `project:acti` · thread `acti-development`
 - [Firefly Graph](https://happyin.space/projects/adobe-firefly-graph/): **Development line:** `project:adobe-firefly-graph` · thread `firefly-graph`
 - [Adobe Firefly Video Model — Firefly Video Model rollout](https://happyin.space/projects/adobe-firefly-video-model/): **Development line:** `project:adobe-firefly-video-model` · thread `firefly-video-model-rollout`
