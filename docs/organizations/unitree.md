@@ -13,13 +13,15 @@ aliases: ["Unitree"]
 
 ## What it is
 
-Unitree builds humanoid and quadruped robots for robotics development and hardware integration.
+Unitree builds hardware and software for hands-on work with the G1 humanoid, quadruped robots, and robotic arms.
 
-- Physical hardware: G1 humanoid, quadruped robots, and robotic arms.
-- Simulation and control: SDK2/DDS, ROS, and MuJoCo simulation.
-- Training: telepresence kits and policy training environments.
+- Physical robots: humanoid and quadruped platforms for field testing.
+- SDK2 and DDS: programmatic communication and robot control.
+- ROS and MuJoCo: simulation environments for controllers.
+- Teleoperation and policy kits: tools for data collection and policy training.
 
-G1 EDU provides 23–43 degrees of freedom, about 2 hours of runtime, and secondary development; the base G1 has 23 degrees of freedom. We use it as a platform for engineering integration and testing on real hardware, not as a finished universal autonomous worker.
+G1 EDU offers 23–43 degrees of freedom, about 2 hours of runtime, and secondary development; base G1 has 23 degrees of freedom.
+This is a platform for engineering integration and testing on real hardware, not a ready-made general-purpose autonomous worker.
 
 ## Development line
 
@@ -27,41 +29,41 @@ G1 EDU provides 23–43 degrees of freedom, about 2 hours of runtime, and second
 
 ## What changed
 
-- 2026-04-12 — A published Unitree video could not be reliably attributed to a specific model, version, or release: available viewing returned no metadata, so we cannot expand this fact.
-- 2026-06-01 — Unitree announced H2 Plus as the reference humanoid robot for NVIDIA Isaac GR00T in academic research; this is a separate, later event, not an elaboration of the April video.
-- 2026-09-05 — The current G1 page lists a starting price from $13,500, while a historical 2024 company news post listed a price from $16,000.
+- 2026-04-12 — A published Unitree video could not be reliably attributed to a specific model, version, or release. The available viewing returned no metadata, so we cannot expand this fact.
+- 2026-06-01 — Unitree announced H2 Plus as the reference humanoid robot for NVIDIA Isaac GR00T academic research. This is a separate, later event, not a clarification of the April video.
+- 2026-09-05 — The current G1 page lists a starting price from $13,500. The historical 2024 news post listed a price from $16,000.
 
 ## How to use this
 
 As of 2026-04-12, make no practice change from this line until the linked video is researched and its event facts are verified.
 
-1. Select a specific model and configuration; for G1 development, use the EDU variant, because the standard G1 lists no secondary development.
+1. Choose the specific model and package. G1 development requires the EDU variant because base G1 does not support secondary development.
   — <https://www.unitree.com/g1/>
-2. Connect the robot to the network using the official instructions, install the SDK2 Python interface and Cyclone DDS dependencies, then start with status and control examples.
+2. Connect the robot to the network following official instructions. Install the Python SDK2 interface and Cyclone DDS dependencies, then start with status and control examples.
   — <https://github.com/unitreerobotics/unitree_sdk2_python>
-3. Port the controller to the Unitree MuJoCo simulator before running on the robot; for G1, use unitree_hg messages rather than unitree_go.
+3. Test the controller in the Unitree MuJoCo simulator before deploying to hardware. Use unitree_hg messages for G1, not unitree_go.
   — <https://github.com/unitreerobotics/unitree_mujoco>
-4. Use the published Unitree imitation learning stack to train and deploy policies: it covers data collection, algorithm development, training, and testing on G1.
+4. Use the published Unitree imitation learning stack to train and deploy policies. It covers data collection, algorithm development, training, and verification on G1.
   — <https://www.unitree.com/mobile/opensource/>
 
 ## Best practices
 
-- Start with the official SDK2 examples, and check the network interface name before sending commands to the robot.
+- Start with official SDK2 examples and verify the network interface name before sending commands to the robot.
   — <https://github.com/unitreerobotics/unitree_sdk2_python>
-- Test control in MuJoCo first; for G1, explicitly select the unitree_hg message type.
+- Run control loops in MuJoCo first. Select unitree_hg messages explicitly for G1.
   — <https://github.com/unitreerobotics/unitree_mujoco>
-- Do not mix low-level and high-level control modes without checking state: open reports on the official SDK show RPC errors and conflicts after low-level examples.
+- Do not mix low-level and high-level control modes without checking state. Open SDK reports confirm RPC errors and conflicts after running low-level examples.
   — <https://github.com/unitreerobotics/unitree_sdk2_python/issues/39>
 
 ## Superseded by this
 
-- 2024-07-05 — The historical Unitree notice of "G1 from $16,000" is obsolete as a price benchmark: the current G1 page lists pricing from $13,500.
+- 2024-07-05 — The historical Unitree figure of G1 from $16,000 is obsolete as a price benchmark. The current G1 page lists pricing from $13,500.
 
 ## Still unknown
 
-- The 2026-04-12 video returned no verifiable title, author, publication date, or description when querying YouTube; the specific model and event meaning remain unknown.
-- Unitree has several independent product lines; without metadata, we cannot assign the April video to G1, H2, H1, R1, or a quadruped robot.
-- The current starting price from $13,500 applies to the G1 page and does not confirm pricing for a specific configuration, region, delivery, or taxes.
+- The 2026-04-12 video returned no verifiable title, author, publish date, or description from YouTube. The specific model and meaning of the event remain unknown.
+- Unitree maintains multiple product lines. Without metadata, we cannot assign the April video to G1, H2, H1, R1, or a quadruped robot.
+- The current price from $13,500 applies to the G1 page. It does not confirm the price for a specific configuration, region, shipping, or taxes.
 
 ## Sources
 
