@@ -1,6 +1,6 @@
 # Umfassende technische Wissensbasis - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1215+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1216+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1005,6 +1005,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [XVerse — Public resources and demo](https://happyin.space/projects/xverse/): **Development line:** `project:xverse` · thread `public-resources-and-demo`
 - [YouTube](https://happyin.space/projects/youtube/): **Development line:** `project:youtube` · thread `youtube-automatic-dubbing`
 - [Z-Image-Turbo-Fun-Controlnet-Union](https://happyin.space/projects/z-image-turbo-fun-controlnet-union/): **Development line:** `project:z-image-turbo-fun-controlnet-union` · thread `z-image-turbo-fun-controlnet-union-development`
+- [Z-Image Turbo++ — Research reference](https://happyin.space/projects/z-image-turbo-plus-plus/): **Development line:** `project:z-image-turbo-plus-plus` · thread `research-reference`
 - [ZCode 3.0 — ZCode IDE](https://happyin.space/projects/zcode/): **Development line:** `project:zcode` · thread `zcode-ide`
 - [Zeta-Chroma](https://happyin.space/projects/zeta-chroma/): **Development line:** `project:zeta-chroma` · thread `zeta-chroma-base-model`
 - [Zhirinovsky AI](https://happyin.space/projects/zhirinovsky-ai/): **Development line:** `project:zhirinovsky-ai` · thread `zhirinovsky-ai-development`
