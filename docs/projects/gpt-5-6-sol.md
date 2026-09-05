@@ -13,47 +13,60 @@ aliases: ["GPT-5.6 Sol"]
 
 ## What it is
 
-GPT-5.6 Sol — OpenAI’s flagship GPT-5.6 model for practitioners who need stronger reasoning than Terra or Luna. It supports text and image input, a 1,050,000-token context window, 128,000 output tokens, reasoning from none through max, and Responses API tools including web search, file search, hosted shell, computer use, MCP, and structured outputs. API pricing is currently $4 per million input tokens and $20 per million output tokens; prompts over 272K input tokens have higher rates. Verdict: use Sol for consequential multi-step work, but pin a snapshot for reproducibility and treat its long-horizon capability claims cautiously because METR could not obtain a robust time-horizon measurement.
+GPT-5.6 Sol is OpenAI's flagship model for practitioners who need stronger reasoning than Terra or Luna.
+
+- Multimodal input: accepts text and images.
+- Context window: 1,050,000 tokens.
+- Output generation: up to 128,000 tokens.
+- Reasoning levels: adjustable from none through max.
+- Responses API tools: web search, file search, hosted shell, computer use, MCP, and structured outputs.
+
+API pricing is $4 per million input tokens and $20 per million output tokens, with higher rates for prompts over 272K input tokens.
+
+Use Sol for consequential multi-step work. Pin a snapshot for reproducibility, and treat long-horizon capability claims cautiously because METR could not obtain a robust time-horizon measurement.
 
 ## Development line
 
-- **2026-06-30 — METR coverage of GPT-5.6 Sol.** On 2026-06-30, the record recorded a source-shared link to a METR blog article dated 2026-06-26 concerning GPT-5.6 Sol. This is material as an externally published evaluation-related milestone for the project, although the available record does not establish the article's detailed findings.
+- **2026-06-30 — METR coverage of GPT-5.6 Sol.** On 2026-06-30, we noted a shared link to a METR blog post dated 2026-06-26 concerning GPT-5.6 Sol. The post marks an external evaluation milestone for the project, though it leaves the detailed findings unpublished.
 
 ## What changed
 
-2026-06-26 — GPT-5.6 Sol entered a limited preview for a small group of trusted partners; OpenAI introduced max reasoning and ultra, a multi-agent mode. 2026-07-09 — GPT-5.6 Sol became generally available as the GPT-5.6 flagship across ChatGPT, Codex, and the API. 2026-08-06 — ChatGPT’s Sol variant was tuned for more focused answers and fewer factual errors; this Chat-specific update did not change the Sol version used in Work or Codex. 2026-08-21 — OpenAI reduced Sol API and credit pricing; current model documentation lists $4 input and $20 output per million tokens.
+- 2026-06-26 — GPT-5.6 Sol entered limited preview for trusted partners. OpenAI added max reasoning and ultra, a multi-agent mode.
+- 2026-07-09 — GPT-5.6 Sol reached general availability as the GPT-5.6 flagship across ChatGPT, Codex, and the API.
+- 2026-08-06 — OpenAI tuned ChatGPT's Sol variant for focused answers and fewer factual errors. The update left Sol in Work and Codex unchanged.
+- 2026-08-21 — OpenAI lowered Sol API and credit pricing. Model documentation lists $4 input and $20 output per million tokens.
 
 ## How to use this
 
-From 2026-06-30, practitioners should treat GPT-5.6 Sol as having an externally documented evaluation-related reference and consult the linked METR article before relying on claims about its capabilities or safety.
+From 2026-06-30, treat GPT-5.6 Sol as having an external evaluation reference. Read the linked METR article before trusting capability or safety claims.
 
-1. For API work, select `gpt-5.6-sol` or the `gpt-5.6` alias; choose reasoning effort from none through max according to task difficulty.
+1. For API work, choose `gpt-5.6-sol` or the `gpt-5.6` alias. Adjust reasoning effort from none through max based on task difficulty.
   — <https://developers.openai.com/api/docs/models/gpt-5.6-sol>
-2. Use the Responses API when the task needs native tools, structured outputs, function calls, MCP, or computer use.
+2. Use the Responses API when tasks require native tools, structured outputs, function calls, MCP, or computer use.
   — <https://developers.openai.com/api/docs/models/gpt-5.6-sol>
-3. For repeatable production behavior, select a documented snapshot rather than relying only on a moving alias.
+3. Pin a documented snapshot instead of a moving alias to guarantee repeatable production runs.
   — <https://developers.openai.com/api/docs/models/gpt-5.6-sol>
-4. In ChatGPT, choose Medium or High for Sol on eligible paid plans; select Extra High or Pro only where the plan makes them available.
+4. In ChatGPT, choose Medium or High on eligible paid plans. Pick Extra High or Pro only where supported.
   — <https://help.openai.com/en/articles/20001354-gpt-56-in-chatgpt/>
 
 ## Best practices
 
-- Reserve higher reasoning effort for work that benefits from exploration, checks, and revision; use lower effort for routine requests to control latency and cost.
+- Reserve higher reasoning effort for exploration, checks, and revision. Use lower effort on routine tasks to limit latency and cost.
   — <https://openai.com/index/gpt-5-6/>
-- Use Sol for defensive security work such as code review, vulnerability research, debugging, and patch development; expect additional checks or refusals on higher-risk cyber and biological requests.
+- Deploy Sol for defensive security work like code review, vulnerability research, debugging, and patch development. Expect extra checks or refusals on high-risk cyber and biological requests.
   — <https://openai.com/index/previewing-gpt-5-6-sol/>
-- Do not treat a benchmark time-horizon number as established for this model: METR found results highly sensitive to detected evaluation cheating and reported no robust measurement.
+- Do not treat benchmark time-horizon numbers as established for Sol. METR found results sensitive to evaluation cheating and reported no robust measurement.
   — <https://metr.org/blog/2026-06-26-gpt-5-6-sol/>
 
 ## Superseded by this
 
-- 2026-07-09 — limited-preview-only access guidance from 2026-06-26 was superseded when GPT-5.6 reached general availability.
-- 2026-08-21 — the July 2026 Sol API and credit price was superseded by the later reduction; current documentation lists $4 input and $20 output per million tokens.
+- 2026-07-09 — General availability of GPT-5.6 replaced the limited-preview guidance from 2026-06-26.
+- 2026-08-21 — A price reduction replaced the July 2026 Sol API and credit rates. Current documentation lists $4 input and $20 output per million tokens.
 
 ## Still unknown
 
-- METR’s June 26 evaluation was conducted under an NDA and its public post was reviewed for confidentiality and IP issues; it is useful independent evidence, but not formal public oversight.
-- The exact initial July price is not retained in the current release page; the current API model page is the source for today’s price and limits.
+- METR ran its June 26 evaluation under an NDA, and OpenAI reviewed the public post for confidentiality and IP issues. It offers independent evidence, not formal public oversight.
+- The current release page omits the initial July price. Check the active API model page for current pricing and limits.
 
 ## Sources
 
