@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1141+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1143+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -718,6 +718,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [ChronoEdit](https://happyin.space/projects/chronoedit/): **Development line:** `project:chronoedit` · thread `chronoedit-release-and-adapters`
 - [claude-video](https://happyin.space/projects/claude-video/): **Development line:** `project:claude-video` · thread `claude-video-development`
 - [Claude](https://happyin.space/projects/claude/): **Development line:** `project:claude` · thread `claude-product-development`
+- [CLI-Anything](https://happyin.space/projects/cli-anything/): **Development line:** `project:cli-anything` · thread `cli-anything-development`
 - [Clipdrop](https://happyin.space/projects/clipdrop/): **Development line:** `project:clipdrop` · thread `clipdrop-image-editing`
 - [North](https://happyin.space/projects/cohere-north/): **Development line:** `project:cohere-north` · thread `north-mini-code`
 - [Comfy-MSS](https://happyin.space/projects/comfy-mss/): **Development line:** `project:comfy-mss` · thread `comfy-mss-development`
@@ -921,6 +922,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Tripo](https://happyin.space/projects/tripo/): **Development line:** `project:tripo` · thread `tripo-development`
 - [UltraPixel](https://happyin.space/projects/ultrapixel/): **Development line:** `project:ultrapixel` · thread `ultrapixel-development`
 - [UnityShots](https://happyin.space/projects/unityshots/): **Development line:** `project:unityshots` · thread `unityshots-development`
+- [UnitySplats](https://happyin.space/projects/unitysplats/): **Development line:** `project:unitysplats` · thread `unitysplats`
 - [V-RAE](https://happyin.space/projects/v-rae/): **Development line:** `project:v-rae` · thread `v-rae-development`
 - [Veo](https://happyin.space/projects/veo/): **Development line:** `project:veo` · thread `veo-development`
 - [VideoLifter](https://happyin.space/projects/videolifter/): **Development line:** `project:videolifter` · thread `videolifter`
