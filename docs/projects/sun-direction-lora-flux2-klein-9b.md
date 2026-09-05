@@ -13,23 +13,23 @@ aliases: ["Sun Direction LoRA Flux 2 Klein 9B"]
 
 ## What it is
 
-Sun Direction LoRA Flux 2 Klein 9B is a 331 MB image-to-image LoRA for FLUX.2 [klein] 9B users. It shifts the apparent sun position in exterior photographs.
+Sun Direction LoRA Flux 2 Klein 9B — a 331 MB image-to-image LoRA for FLUX.2 [klein] 9B users who need to move the apparent sun in exterior photographs.
 
-- Sun elevation and rotation: sets the angle relative to the camera.
-- Lit-sphere reference: conditions the edit on a rendered sphere.
-- Preparatory overcast pass: strips existing shadows before relighting.
+- sets sun elevation and rotation relative to the camera;
+- conditions the edit on a rendered, lit sphere reference;
+- supports a preparatory overcast pass.
 
 ## Development line
 
-- **2026-07-03 — Sun Direction LoRA Flux 2 Klein 9B resource reference recorded.** On 2026-07-03, the Flux 2 Klein LoRAs thread linked to its Hugging Face repository. We have no post body or model card yet, so we make no claims about release version, training setup, license, or performance.
+- **2026-07-03 — Sun Direction LoRA Flux 2 Klein 9B resource reference recorded.** On 2026-07-03, the project thread linked the Hugging Face resource. There is no post body or model card text, so this entry notes only the reference without claims on release version, training setup, license, or performance.
 
 ## What changed
 
-2026-07-03 — a runnable FLUX.2 [klein] 9B demo documented the two-pass relighting workflow using sphere conditioning for the v1 adapter.
+2026-07-03 — a runnable FLUX.2 [klein] 9B demo documented the two-pass, sphere-conditioned relighting workflow for the v1 adapter.
 
 ## How to use this
 
-Inspect the Hugging Face repository from 2026-07-03 before use. We have no confirmed compatibility, triggers, license, or quality claims.
+From 2026-07-03, inspect the linked Hugging Face resource before use, as compatibility, triggers, licensing, and quality claims remain unverified.
 
 1. Update ComfyUI, then install the required FLUX.2 [klein] 9B diffusion model, 9B text encoder, and FLUX.2 VAE for an image-edit workflow.
   — <https://docs.comfy.org/tutorials/flux/flux-2-klein>
@@ -42,13 +42,13 @@ Inspect the Hugging Face repository from 2026-07-03 before use. We have no confi
 
 ## Best practices
 
-- Use exterior photos and treat indoor output as unsupported rather than a broken setup.
+- Use exterior images and treat indoor output as unsupported rather than a failed configuration.
   — <https://huggingface.co/eric-venti-seeds/Sun-Direction-Lora-Flux2Klein9B>
-- Skip overcast preparation only when the input already lacks clear shadow direction.
+- Skip the overcast preparation only when the input already has no clear light direction.
   — <https://huggingface.co/eric-venti-seeds/Sun-Direction-Lora-Flux2Klein9B>
-- Keep the seed fixed when rendering a relighting timelapse to reduce flicker.
+- Keep the seed fixed when generating a relighting timelapse to reduce flicker.
   — <https://huggingface.co/eric-venti-seeds/Sun-Direction-Lora-Flux2Klein9B>
-- Update ComfyUI if the supplied workflow has missing core nodes.
+- Use a current ComfyUI build when the supplied workflow has missing or unavailable core nodes.
   — <https://docs.comfy.org/tutorials/flux/flux-2-klein>
 
 ## Superseded by this
@@ -57,9 +57,9 @@ Inspect the Hugging Face repository from 2026-07-03 before use. We have no confi
 
 ## Still unknown
 
-- No public v2 weights, release notes, benchmarks, or training datasets were published. The v1 card only states that v2 is in progress.
-- The author does not publish a validated LoRA-strength range or hardware requirements for this adapter.
-- The 2026-07-03 development entry is a same-day runnable demo; repository v1 weights and workflows were committed on 2026-06-29.
+- We found no public v2 weights, release notes, benchmarks, or dataset descriptions. The current v1 card only notes that v2 is in progress.
+- The author does not publish a validated LoRA-strength range or hardware requirement for this adapter.
+- The listed 2026-07-03 development entry is a same-day runnable demonstration; the model repository’s initial v1 weights and workflow were committed on 2026-06-29.
 
 ## Sources
 
@@ -74,5 +74,5 @@ Inspect the Hugging Face repository from 2026-07-03 before use. We have no confi
 ## Agent brief {#agent-brief}
 
 - **Subject:** `project:sun-direction-lora-flux2-klein-9b`, thread `flux2-klein-loras`, 1 dated events 2026-07-03 → 2026-07-03.
-- **Practical note:** From 2026-07-03, inspect the linked Hugging Face resource before attempting use; we establish no compatibility, triggers, licensing, or quality claims.
+- **Practical note:** From 2026-07-03, inspect the linked Hugging Face resource before use; we have not verified compatibility, triggers, licensing, or quality claims.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
