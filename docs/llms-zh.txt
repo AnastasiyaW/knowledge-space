@@ -1,6 +1,6 @@
 # 综合技术知识库 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1110+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1111+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -817,6 +817,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [MiniMax Music](https://happyin.space/projects/minimax-music/): **Development line:** `project:minimax-music` · thread `minimax-music-development`
 - [MiniMax Music 3 Latent Refiner](https://happyin.space/projects/minimax-music3-latent-refiner/): **Development line:** `project:minimax-music3-latent-refiner` · thread `minimax-music3-latent-refiner`
 - [Moebius — Public availability](https://happyin.space/projects/moebius/): **Development line:** `project:moebius` · thread `public-availability`
+- [MosaicMem](https://happyin.space/projects/mosaicmem/): **Development line:** `project:mosaicmem` · thread `mosaicmem-development`
 - [MOSS-Video-Preview](https://happyin.space/projects/moss-video-preview/): **Development line:** `project:moss-video-preview` · thread `moss-video-preview`
 - [Mozart AI](https://happyin.space/projects/mozart-ai/): **Development line:** `project:mozart-ai` · thread `mozart-ai-product-development`
 - [MTVCrafter](https://happyin.space/projects/mtvcrafter/): **Development line:** `project:mtvcrafter` · thread `mtvcrafter-public-development`
