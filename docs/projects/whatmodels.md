@@ -13,56 +13,56 @@ aliases: ["WhatModels"]
 
 ## What it is
 
-WhatModels selects local LLMs for Ollama, llama.cpp and similar runtimes by GPU model or manual VRAM limits, estimating maximum context and generation speed.
+WhatModels is a model selector for users of Ollama, llama.cpp and other local runtimes to pick models by GPU or manual VRAM, estimating maximum context and generation speed.
 
-- GPU catalog to select existing video cards.
-- Manual VRAM input for custom memory configurations.
-- Minimum context filters to narrow down model choices.
-- Quantization comparison across formats.
-- Fit categories grouping models into "runs well", "tight fit" and "doesn't fit".
+- GPU catalog to choose hardware presets.
+- Manual VRAM input to specify custom memory limits.
+- Minimum context filters to screen out configurations that fall short.
+- Quantization comparison to evaluate size against memory.
+- Fit categories to group models into "runs well", "tight fit" and "doesn't fit".
 
-Speed estimates apply only to catalog GPUs and remain theoretical rather than runtime benchmarks.
+Generation speed appears only for catalog GPUs and remains an estimate rather than a runtime benchmark.
 
-We use it for initial model and hardware screening, but production deployment requires a local run.
+The tool suits initial model and hardware selection, but production inference requires verification on local hardware.
 
 ## Development line
 
-- **2026-05-15 — WhatModels public website documented.** On 2026-05-15, the project documented its public website. This gives a dated reference point for WhatModels, without a confirmed launch, release, or feature change.
+- **2026-05-15 — WhatModels public website documented.** On 2026-05-15, a message in the WhatModels thread linked to the project's public website. This establishes a dated public reference point for WhatModels, but the available evidence does not identify a launch, release, or feature change.
 
 ## What changed
 
-2026-05-15 — WhatModels served as a web compatibility calculator for local LLMs; the published example specified two RTX 5060 Ti 16 GB cards, 16K context, minimum 10 tokens/s and 64 GB RAM.
+2026-05-15 — WhatModels operated as a web compatibility calculator for local LLMs. The published example configured two RTX 5060 Ti 16 GB cards, 16K context, a minimum of 10 tokens/s and 64 GB RAM.
 
-After 2026-05-15 — no dated releases appeared beyond the initial event. Current repository documentation describes static in-browser calculation without a backend or API: VRAM sums weights and KV-cache, while speed derives from memory bandwidth and weight size.
+After 2026-05-15 — We found no confirmed dated releases beyond the initial event. Current repository documentation describes a static browser calculation with no backend or API: VRAM combines model weights and KV-cache, and generation speed derives from memory bandwidth and weight size.
 
 ## How to use this
 
-As of 2026-05-15, we use the WhatModels public website as a project discovery point; specific capabilities and release status still require separate verification.
+As of 2026-05-15, practitioners can use the documented WhatModels public website as a project discovery point; its specific capabilities and release status still require separate verification.
 
-1. Open the calculator and select a GPU from the list or enter available VRAM manually.
+1. Open the calculator and choose a GPU from the list or enter available VRAM manually.
   — <https://whatmodelscanirun.com/>
-2. Set minimum acceptable context, and compare estimated tokens per second when choosing a GPU from the list.
+2. Set the minimum acceptable context; when selecting a GPU from the list, compare estimated tokens per second.
   — <https://github.com/BenD10/whatmodels>
-3. Start with "Runs well" results, and verify "Tight fit" options with a local run using the required context and quantization.
+3. Start with "Runs well" results; verify "Tight fit" options locally with the required context and quantization.
   — <https://github.com/BenD10/whatmodels>
 
 ## Best practices
 
-- Count KV-cache with model weights: a model fitting by GGUF file size can still run out of memory at the required context.
+- Include KV-cache alongside weights: a model fitting by GGUF file size can run out of memory at the target context.
   — <https://github.com/BenD10/whatmodels>
-- Treat speed estimates as preliminary: generation speed depends on memory bandwidth, quantization, context length and engine overhead.
+- Treat speed estimates as preliminary: generation speed depends on memory bandwidth, quantization, context and runtime engine overhead.
   — <https://github.com/BenD10/whatmodels>
-- Compare the same model and quantization at the target context length, then verify the result in your runtime.
+- Compare configurations on the same model and quantization at the same required context, then confirm the result in the target runtime.
   — <https://habr.com/ru/articles/1035862/>
 
 ## Superseded by this
 
-- 2026-05-16 — Sizing a local LLM solely by parameter count or file size is obsolete for long-context tasks: calculation must include KV-cache and quantization.
+- 2026-05-16 — Choosing a local LLM solely by parameter count or file size is obsolete for long-context tasks: calculation must include KV-cache and quantization.
 
 ## Still unknown
 
-- No dated changelog exists for WhatModels on 2026-05-15 or later; the GitHub repository shows current state without dated release milestones.
-- Outside the 2026-05-15 event, no new dated development steps are confirmed.
+- No primary dated changelog for WhatModels exists for 2026-05-15 or later changes; the GitHub repository shows current code but provides no dated release milestones in the available material.
+- The initial schema recorded the 2026-05-15 event without dedicated finding fields; outside this event, no subsequent dated development steps are confirmed.
 
 ## Sources
 
