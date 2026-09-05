@@ -1,14 +1,15 @@
 ---
-title: Netflix — Netflix AI Development and Adoption
+title: Netflix
 category: organizations
+date: 2026-07-18
 tags: [ai-development-and-adoption, netflix, netflix_ai_anime, netflix_mgs, organization]
 aliases: ["Netflix"]
 ---
 
-# Netflix — Netflix AI Development and Adoption
+# Netflix
 
 **Development line:** `organization:netflix` · thread `ai-development-and-adoption`  
-**Events:** 3 dated, 2023-02-02 → 2026-07-18 · **Researched:** 2026-09-04 · confidence: medium
+**Last event:** 2026-07-18 · 3 dated since 2023-02-02 · **Researched:** 2026-09-05 · confidence: medium
 
 ## What it is
 
