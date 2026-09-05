@@ -1,6 +1,6 @@
 # Umfassende technische Wissensbasis - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1197+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1198+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -948,6 +948,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [SketchVideo](https://happyin.space/projects/sketchvideo/): **Development line:** `project:sketchvideo` · thread `sketchvideo-development`
 - [Snapchat](https://happyin.space/projects/snapchat/): **Development line:** `project:snapchat` · thread `snapchat-lenses-and-filters`
 - [Sol-Attn](https://happyin.space/projects/sol-attn/): **Development line:** `project:sol-attn` · thread `sol-attn-development`
+- [Sonilo](https://happyin.space/projects/sonilo/): **Development line:** `project:sonilo` · thread `sonilo-v1-1`
 - [Sora](https://happyin.space/projects/sora/): **Development line:** `project:sora` · thread `sora-public-development`
 - [SpatialBoost](https://happyin.space/projects/spatialboost/): **Development line:** `project:spatialboost` · thread `spatialboost-development`
 - [SpatialClaw](https://happyin.space/projects/spatialclaw/): **Development line:** `project:spatialclaw` · thread `spatialclaw-development`
