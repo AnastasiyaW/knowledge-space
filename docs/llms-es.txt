@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1147+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1148+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -931,6 +931,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Video-DeepResearch](https://happyin.space/projects/video-deepresearch/): **Development line:** `project:video-deepresearch` · thread `video-deepresearch`
 - [VideoLifter](https://happyin.space/projects/videolifter/): **Development line:** `project:videolifter` · thread `videolifter`
 - [Vidu](https://happyin.space/projects/vidu/): **Development line:** `project:vidu` · thread `vidu`
+- [Violin](https://happyin.space/projects/violin/): **Development line:** `project:violin` · thread `violin`
 - [VLC media player — Video enhancement](https://happyin.space/projects/vlc-media-player/): **Development line:** `project:vlc-media-player` · thread `video-enhancement`
 - [WAN 2.2 — WAN](https://happyin.space/projects/wan-2-2/): **Development line:** `project:wan-2-2` · thread `wan`
 - [Wan Video](https://happyin.space/projects/wan-video/): **Development line:** `project:wan-video` · thread `wan-video-development`
