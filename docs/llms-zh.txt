@@ -1,6 +1,6 @@
 # 综合技术知识库 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1199+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1200+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -718,6 +718,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Cells2Pixels](https://happyin.space/projects/cells2pixels/): **Development line:** `project:cells2pixels` · thread `cells2pixels-development`
 - [ChatGPT](https://happyin.space/projects/chatgpt/): **Development line:** `project:chatgpt` · thread `chatgpt-product-development`
 - [ChronoEdit](https://happyin.space/projects/chronoedit/): **Development line:** `project:chronoedit` · thread `chronoedit-release-and-adapters`
+- [Claude Mythos](https://happyin.space/projects/claude-mythos/): **Development line:** `project:claude-mythos` · thread `claude-mythos-security-findings`
 - [claude-video](https://happyin.space/projects/claude-video/): **Development line:** `project:claude-video` · thread `claude-video-development`
 - [Claude](https://happyin.space/projects/claude/): **Development line:** `project:claude` · thread `claude-product-development`
 - [CLI-Anything](https://happyin.space/projects/cli-anything/): **Development line:** `project:cli-anything` · thread `cli-anything-development`
