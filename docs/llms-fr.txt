@@ -1,6 +1,6 @@
 # Base de connaissances techniques complète - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1050+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1051+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -720,6 +720,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [DiffIR2VR-Zero](https://happyin.space/projects/diffir2vr-zero/): **Development line:** `project:diffir2vr-zero` · thread `diffir2vr-zero-development`
 - [DisCO](https://happyin.space/projects/disco/): **Development line:** `project:disco` · thread `disco-development`
 - [dots.mocr](https://happyin.space/projects/dots-mocr/): **Development line:** `project:dots-mocr` · thread `dots-mocr`
+- [DRIFT — Project resources](https://happyin.space/projects/drift/): **Development line:** `project:drift` · thread `project-resources`
 - [DynamicsLab Chaos — Chaos and Drift demos](https://happyin.space/projects/dynamicslab-chaos/): **Development line:** `project:dynamicslab-chaos` · thread `chaos-and-drift-demos`
 - [EgoForce](https://happyin.space/projects/egoforce/): **Development line:** `project:egoforce` · thread `egoforce-development`
 - [EU AI Act — Political agreement](https://happyin.space/projects/eu-ai-act/): **Development line:** `project:eu-ai-act` · thread `political-agreement`
