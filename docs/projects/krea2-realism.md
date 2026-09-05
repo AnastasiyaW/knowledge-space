@@ -17,55 +17,57 @@ Krea2-realism is a community LoRA line for the gated Krea 2 Turbo text-to-image 
 
 - V1 targets SFW and NSFW photorealistic subjects.
 - V2 targets facial expression, texture, lighting, composition, and compatibility with character LoRAs.
-- Generation and image-to-image aid, not an image-editing model.
+- It is a generation and image-to-image aid, not an image-editing model.
 
 The maintained V2 guidance recommends a 4–5 sentence natural-language prompt and LoRA strength 1.5–2.0.
 
-We use V2 for new Krea 2 work, particularly when a character LoRA must retain its face. Keep V1 only to reproduce an existing setup.
+Use V2 for new Krea 2 work, particularly when a character LoRA must retain its face; keep V1 only to reproduce an existing setup.
 
 ## Development line
 
-- **2026-07-04 — Krea2 Realism v1 version-specific model references recorded.** On 2026-07-04, the Krea2-realism development line recorded two version-specific Civitai references for Krea2 Realism v1. The links identify distinct model-version artifacts, 3066973 and 3090634, so we track available versions in project history.
+- **2026-07-04 — Krea2 Realism v1 version-specific model references recorded.** On 2026-07-04, the Krea2-realism development line recorded two version-specific Civitai references for Krea2 Realism v1. The links identify distinct model-version artifacts, 3066973 and 3090634, preserving a dated pointer to the available versions in project history.
 
 ## What changed
 
-- 2026-06-24 — Krea2-realism-V1, model version 3066973, arrived as a Krea 2 realism LoRA for SFW and NSFW generation.
-- 2026-07-02 — Krea2-realism-V2, model version 3090634, replaced V1 as the active revision. It brought more natural faces, improved texture, lighting, composition, and better coexistence with character LoRAs.
-- 2026-07-04 — Both V1 and V2 model-version links were collected together. This was not an independently dated release.
+2026-06-24 — Krea2-realism-V1, model version 3066973, arrived as a Krea 2 realism LoRA for SFW and NSFW generation.
+
+2026-07-02 — Krea2-realism-V2, model version 3090634, replaced V1 as the current revision. Its stated changes were more natural faces, improved texture, lighting and composition, plus better coexistence with character LoRAs.
+
+2026-07-04 — we collected both V1 and V2 model-version links together; this was not an independently dated release.
 
 ## How to use this
 
-From 2026-07-04, we pin Krea2 Realism v1 by its exact Civitai modelVersionId and record which of the two referenced versions was used, rather than treating the model page as a single unversioned artifact.
+From 2026-07-04, pin Krea2 Realism v1 by its exact Civitai modelVersionId and record which of the two referenced versions was used, rather than treating the model page as a single unversioned artifact.
 
 1. Request access to Krea 2 Turbo and accept its community licence before downloading or running the base model.
   — <https://huggingface.co/krea/Krea-2-Turbo>
-2. Download Krea2-realism-V2, the current revision of this LoRA line.
+2. Download Krea2-realism-V2; it is the current revision of this LoRA line.
   — <https://huggingface.co/RudySen/Krea2-realism-V2>
 3. In ComfyUI, place the LoRA file in `ComfyUI/models/loras/` and select it with a Load LoRA node in a Krea 2 workflow.
   — <https://note.com/yasashii_maou/n/naf58ef9a48fb?hl=en>
-4. Start from the V1 workflow if available, replacing only the LoRA with V2. Use image-to-image rather than treating it as a dedicated editor.
+4. Start from the V1 workflow if available, replacing only the LoRA with V2; use image-to-image rather than treating it as a dedicated editor.
   — <https://www.reddit.com/r/StableDiffusion/comments/1ulonm8/krea2realismv2_is_finally_here_things_got_a/>
-5. Describe the scene in a short natural-language paragraph. Render and tune LoRA weight against the chosen subject and character LoRA.
+5. Describe the scene in a short natural-language paragraph, then render and tune LoRA weight against the chosen subject and character LoRA.
   — <https://huggingface.co/RudySen/Krea2-realism-V2>
 
 ## Best practices
 
-- Prefer V2 over V1 when stacking a character LoRA: V2 does not alter faces supplied by other character LoRAs.
+- Prefer V2 over V1 when stacking a character LoRA: its author says V2 is intended not to alter faces supplied by other character LoRAs.
   — <https://www.reddit.com/r/StableDiffusion/comments/1ulonm8/krea2realismv2_is_finally_here_things_got_a/>
-- Use a 4–5 sentence scene description instead of tag stacking. Begin around strength 1.0 for a controlled comparison, then test 1.5–2.0 if the result needs more effect.
+- Use a 4–5 sentence scene description instead of tag stacking; begin around strength 1.0 only for a controlled comparison, then test 1.5–2.0 if the result needs more effect.
   — <https://huggingface.co/RudySen/Krea2-realism-V2>
 - Treat V2 as an image-generation or image-to-image component, not as a semantic image editor.
   — <https://www.reddit.com/r/StableDiffusion/comments/1ulonm8/krea2realismv2_is_finally_here_things_got_a/>
 
 ## Superseded by this
 
-- 2026-06-24 — Krea2-realism-V1 (model version 3066973) is superseded for new work by Krea2-realism-V2 (model version 3090634, released 2026-07-02). The V1 workflow remains usable by swapping the LoRA.
+- 2026-06-24 — Krea2-realism-V1 (model version 3066973) is superseded for new work by Krea2-realism-V2 (model version 3090634, released 2026-07-02); the V1 workflow remains usable by swapping the LoRA.
 
 ## Still unknown
 
-- Original Civitai endpoints were inaccessible, so model metadata, download availability, and licence terms on those pages could not be verified.
-- The Hugging Face V2 mirror declares MIT, while the Krea 2 base model has the Krea 2 Community License. Applicable distribution and use terms for the combined workflow need confirmation from the original model page.
-- No source documents a release on 2026-07-04 itself. That date records both version links rather than a new model change.
+- The original Civitai endpoints were inaccessible during this review, so model metadata, download availability, and licence terms on those pages could not be independently verified.
+- The Hugging Face V2 mirror declares MIT, while the Krea 2 base model has the Krea 2 Community License; the applicable distribution and use terms for the combined workflow need confirmation from the original model page.
+- No independent source documents a release on 2026-07-04 itself: that date records both version links rather than a new model change.
 
 ## Sources
 
@@ -82,5 +84,5 @@ From 2026-07-04, we pin Krea2 Realism v1 by its exact Civitai modelVersionId and
 ## Agent brief {#agent-brief}
 
 - **Subject:** `project:krea2-realism`, thread `krea2-loras`, 1 dated events 2026-07-04 → 2026-07-04.
-- **Practical note:** From 2026-07-04, we pin Krea2 Realism v1 by its exact Civitai modelVersionId and record which of the two referenced versions was used, rather than treating the model page as a single unversioned artifact.
+- **Practical note:** From 2026-07-04, practitioners should pin Krea2 Realism v1 by its exact Civitai modelVersionId and record which of the two referenced versions was used, rather than treating the model page as a single unversioned artifact.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
