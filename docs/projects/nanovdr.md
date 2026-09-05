@@ -13,29 +13,27 @@ aliases: ["NanoVDR"]
 
 ## What it is
 
-NanoVDR is a visual-document retrieval system for teams searching PDF pages, reports and other page images.
+NanoVDR is a visual-document retrieval system for teams searching PDF pages, reports, and page images. It acts as a query-side replacement rather than a standalone document indexer.
 
-- Indexes documents offline with Qwen3-VL-Embedding-2B.
-- Encodes text queries with 69–151M-parameter student models.
-- Scores compatible vectors with a dot product.
+- Document indexer: indexes pages offline with Qwen3-VL-Embedding-2B.
+- Query encoder: embeds text queries with 69–151M-parameter student models.
+- Scorer: ranks compatible vectors with a dot product.
 
-The 69M multilingual query model runs at 51 ms per CPU query and requires teacher-indexed documents. It is a practical query-side replacement, not a standalone document indexer.
+The 69M multilingual query model runs at 51 ms per CPU query and requires teacher-indexed documents.
 
 ## Development line
 
-- **2026-03-17 — NanoVDR linked public Hugging Face resources and a demo.** On 2026-03-17, NanoVDR linked a Hugging Face blog article, a project page, and a public demo space. These resources make the project discoverable, but we did not research their contents for this review.
+- **2026-03-17 — NanoVDR linked public Hugging Face resources and a demo.** On 2026-03-17, the line published a Hugging Face blog article, a project page, and a demo space. This established discoverable project and demonstration resources for the public release, though we did not research their contents for this review.
 
 ## What changed
 
-2026-03-17 — NanoVDR was presented as a 69M text-only query encoder distilled from Qwen3-VL-Embedding-2B for visual-document retrieval. The first-party article is dated 2026-03-16 and reports 95.1% teacher retention for NanoVDR-S-Multi.
-
-2026-08-11 — Checkpoint names were changed to encode tower, teacher and embedding width. Old links redirect.
-
-2026-08-29 — The authors posted arXiv v3. The project repository distinguishes the later DistilVDR document-tower work from NanoVDR’s original query-tower line.
+- **2026-03-17** — NanoVDR was presented as a 69M text-only query encoder distilled from Qwen3-VL-Embedding-2B for visual-document retrieval. The first-party article is dated 2026-03-16 and reports 95.1% teacher retention for NanoVDR-S-Multi.
+- **2026-08-11** — Checkpoint names changed to encode tower, teacher, and embedding width. Old links redirect.
+- **2026-08-29** — The team posted arXiv v3. The project repository distinguishes the later DistilVDR document-tower work from the original NanoVDR query-tower line.
 
 ## How to use this
 
-As of 2026-03-17, consult NanoVDR’s linked Hugging Face project resources and public demo before evaluating it. Specific capabilities, requirements, and results remain unverified.
+Check the linked Hugging Face resources and public demo before evaluation as of 2026-03-17; specific capabilities, requirements, and results remain unverified.
 
 1. Load a compatible query checkpoint with SentenceTransformers and encode the text query.
   — <https://github.com/Ryenhails/NanoVDR>
@@ -55,11 +53,14 @@ As of 2026-03-17, consult NanoVDR’s linked Hugging Face project resources and 
 
 ## Superseded by this
 
-- 2026-08-11 — Earlier checkpoint names are superseded by names that state tower, teacher and vector width; legacy model links redirect.
+- **2026-08-11** — Checkpoint names stating tower, teacher, and vector width replace earlier names; legacy model links redirect.
 
 ## Still unknown
 
-- A first-party article dated 2026-03-16 corroborates the 2026-03-17 event; the later 2026-08-11 rename and 2026-08-29 arXiv v3 do not belong to that event. The public demo was observed sleeping, so a successful interactive run was not verified.
+- The event_findings and new_events fields are absent from the response schema, so the dated additions stay in what_changed.
+- A first-party article dated 2026-03-16 corroborates the 2026-03-17 event.
+- The 2026-08-11 rename and 2026-08-29 arXiv v3 belong to later updates, not the 2026-03-17 event.
+- The public demo was sleeping when checked, so an interactive run is unverified.
 
 ## Sources
 
