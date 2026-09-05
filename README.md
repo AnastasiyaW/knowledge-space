@@ -4,7 +4,7 @@ A curated technical reference across 28 domains — Kafka, Python, SQL, ML, secu
 
 We built it because agents kept confidently hallucinating API flags, version-specific behavior, and config options. Point your Claude, Cursor, or any RAG pipeline at this repo and it gets a reliable source to check against.
 
-**997+ articles | 28 domains | 3134+ cross-references**
+**998+ articles | 28 domains | 3134+ cross-references**
 
 [![Live site](https://img.shields.io/badge/Live_site-happyin.space-FFD740?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGNpcmNsZSBjeD0iMjgiIGN5PSIyMiIgcj0iOSIgZmlsbD0iI2JiODZmYyIvPjxjaXJjbGUgY3g9IjQyIiBjeT0iMzAiIHI9IjciIGZpbGw9IiMwM2RhYzYiLz48Y2lyY2xlIGN4PSIxOCIgY3k9IjQwIiByPSI2IiBmaWxsPSIjZmY3NTk3Ii8+PC9zdmc+)](https://happyin.space/)
 
@@ -12,7 +12,7 @@ We built it because agents kept confidently hallucinating API flags, version-spe
 
 | Domain | Articles | Coverage |
 |--------|:--------:|----------|
-| `projects/` | 107 | One page per tool, model or product the news conveyor follows: dated development line, current use, obsolete guidance, sources |
+| `projects/` | 108 | One page per tool, model or product the news conveyor follows: dated development line, current use, obsolete guidance, sources |
 | `image-generation/` | 77 | Diffusion models, flow matching, LoRA training, inpainting, tiled inference |
 | `llm-agents/` | 71 | RAG, fine-tuning, agent frameworks, prompt engineering, multi-agent |
 | `security/` | 61 | Web security, pentesting, Active Directory, anti-fraud, model protection, CWE |
