@@ -1,6 +1,6 @@
 # 종합 기술 지식 베이스 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1106+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1107+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -843,6 +843,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [PhotoQuilt](https://happyin.space/projects/photoquilt/): **Development line:** `project:photoquilt` · thread `photoquilt-development`
 - [PiD — Research release](https://happyin.space/projects/pid/): **Development line:** `project:pid` · thread `research-release`
 - [Pika](https://happyin.space/projects/pika/): **Development line:** `project:pika` · thread `pika-product-development`
+- [PixVerse CLI — Terminal generation](https://happyin.space/projects/pixverse-cli/): **Development line:** `project:pixverse-cli` · thread `terminal-generation`
 - [PixVerse — Public availability](https://happyin.space/projects/pixverse/): **Development line:** `project:pixverse` · thread `public-availability`
 - [PowerPaint](https://happyin.space/projects/powerpaint/): **Development line:** `project:powerpaint` · thread `powerpaint`
 - [Proactor — Public launch and access](https://happyin.space/projects/proactor/): **Development line:** `project:proactor` · thread `public-launch-and-access`
