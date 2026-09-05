@@ -13,14 +13,14 @@ aliases: ["StudioRecon"]
 
 ## What it is
 
-StudioRecon reconstructs dynamic 4D scenes from sparse low-overlap video captures.
+StudioRecon reconstructs dynamic 4D scenes from sparse video captures.
 
-- Scene separation: builds separate Gaussian representations for the background and each person.
-- Novel view synthesis: renders orbit, dolly, and static camera trajectories, including an option without enhancement.
-- Temporal refinement: applies diffusion enhancement across frames.
-- Capture input: requires at least four synchronized low-overlap videos.
+- Background and person modeling: builds separate Gaussian representations for the background and each person.
+- Novel-view rendering: outputs orbit, dolly, and static camera trajectories, including an unenhanced option.
+- Video refinement: applies temporal diffusion enhancement across frames.
+- Multi-view input: requires at least four synchronized videos with low overlap.
 
-The offline stack requires multiple Conda environments, CUDA, and about 110 GB to download GEN3C, Cosmos, and T5 weights. This is reproducible research code, not a fast production tool.
+The offline stack requires CUDA, multiple Conda environments, and about 110 GB just to download GEN3C, Cosmos, and T5 weights. This is reproducible research code, not a fast production tool.
 
 ## Development line
 
@@ -28,19 +28,19 @@ The offline stack requires multiple Conda environments, CUDA, and about 110 GB t
 
 ## What changed
 
-2026-07-15 — StudioRecon was presented as a SIGGRAPH 2026 4D reconstruction method from sparse low-overlap video. The initial v1 paper from 2026-07-10 specifies the pipeline components. GEN3C generates hundreds of synthetic background views, while CoMotion/DWPose and NLF/SMPL track people. The method builds separate Gaussian representations and applies DiFiX for temporal enhancement.
+2026-07-15 — StudioRecon appeared as a SIGGRAPH 2026 method for 4D reconstruction from sparse, low-overlap video. The initial v1 paper from 2026-07-10 details the pipeline. GEN3C generates hundreds of synthetic background views, while CoMotion/DWPose and NLF/SMPL track humans. The pipeline fits separate Gaussian representations and runs DiFiX for temporal enhancement.
 
 ## How to use this
 
-No practitioner workflow change can be established from the dated project-page link alone; research the linked page or source post before treating it as a StudioRecon development milestone.
+We cannot establish a practitioner workflow change from the project page link alone. Research the linked page or source post before treating it as a StudioRecon development milestone.
 
 1. Clone the repository with submodules and bootstrap third-party sources.
   — <https://github.com/sisyphm/StudioRecon>
-2. Create separate Conda environments for the main pipeline, SAM3, GEN3C, CoMotion, Segment Anything, and DiFiX using pinned Torch and CUDA versions.
+2. Create separate Conda environments for the main pipeline, SAM3, GEN3C, CoMotion, Segment Anything, and DiFiX using the pinned Torch and CUDA versions.
   — <https://github.com/sisyphm/StudioRecon/blob/master/docs/INSTALL.md>
-3. Download the required weights, request access to gated SAM3 in advance, and verify paths for NLF, SMPL, SAM, and GEN3C.
+3. Fetch the required weights, request access to the gated SAM3 model early, and verify paths for NLF, SMPL, SAM, and GEN3C.
   — <https://github.com/sisyphm/StudioRecon/blob/master/docs/CHECKPOINTS.md>
-4. Prepare a scene from a supported dataset, test the pipeline with --dry-run first, and run the scene configuration on assigned GPUs.
+4. Prepare a scene from a supported dataset, run the pipeline with --dry-run first, then execute the scene configuration on assigned GPUs.
   — <https://github.com/sisyphm/StudioRecon>
 5. Render the trained scene with scripts/render.sh; use --no-enhance for the raw Gaussian render without DiFiX.
   — <https://github.com/sisyphm/StudioRecon>
@@ -49,9 +49,9 @@ No practitioner workflow change can be established from the dated project-page l
 
 - Keep DiFiX dependencies separate from the main environment so incompatible pinned Torch, CUDA, and diffusers versions do not conflict.
   — <https://github.com/sisyphm/StudioRecon/blob/master/docs/INSTALL.md>
-- Run a --dry-run and a smoke test before downloading large models; verify mandatory checkpoint files and the NLF checksum once downloaded.
+- Run a --dry-run and a smoke test before downloading heavy models, then verify required checkpoint files and the NLF checksum.
   — <https://github.com/sisyphm/StudioRecon/blob/master/docs/INSTALL.md>
-- Request manual approval for SAM3 before starting; keep runtime weights in documented paths or specify them explicitly in the scene YAML.
+- Request manual access approval for SAM3 before starting, and keep runtime weights in documented paths or set them explicitly in the scene YAML.
   — <https://github.com/sisyphm/StudioRecon/blob/master/docs/CHECKPOINTS.md>
 
 ## Superseded by this
@@ -60,9 +60,9 @@ No practitioner workflow change can be established from the dated project-page l
 
 ## Still unknown
 
-- Independent end-to-end execution on third-party infrastructure remains unverified; the papers and repository confirm only the method and code.
-- Paper results cover only its four-camera protocols, leaving performance unproven for arbitrary cameras, scenes, person counts, or real-time operation.
-- Repository layout and instructions are available now, but individual commit dates and public release dates are not reliably extracted; we cannot treat them as dated development events.
+- Papers and the repository confirm the method and code, but no independent end-to-end run on third-party hardware has been verified.
+- Paper results reflect four-camera protocols; quality on arbitrary cameras, scenes, person counts, or real-time operation is unproven.
+- Repository layout and instructions are visible, but commit dates and public release timing were not reliably extracted, so they do not count as dated milestones.
 
 ## Sources
 
