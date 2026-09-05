@@ -1,6 +1,6 @@
 # 종합 기술 지식 베이스 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1069+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1070+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -778,6 +778,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Lovart](https://happyin.space/projects/lovart/): **Development line:** `project:lovart` · thread `lovart-development`
 - [LTX-2.3](https://happyin.space/projects/ltx-video/): **Development line:** `project:ltx-video` · thread `ltx-video`
 - [Lucida](https://happyin.space/projects/lucida/): **Development line:** `project:lucida` · thread `lucida-development`
+- [Lyria](https://happyin.space/projects/lyria/): **Development line:** `project:lyria` · thread `lyria-development`
 - [MagicQuill](https://happyin.space/projects/magicquill/): **Development line:** `project:magicquill` · thread `magicquill-development`
 - [MeshAnything](https://happyin.space/projects/meshanything/): **Development line:** `project:meshanything` · thread `meshanything-development`
 - [MetaHuman](https://happyin.space/projects/metahuman/): **Development line:** `project:metahuman` · thread `metahuman-development-and-applications`
