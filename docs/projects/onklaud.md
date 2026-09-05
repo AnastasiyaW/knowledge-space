@@ -13,23 +13,24 @@ aliases: ["Onklaud 5"]
 
 ## What it is
 
-Onklaud 5: a Python orchestration tool for developers who want a code draft assessed by several language models rather than one model.
+Onklaud 5 is a Python orchestration tool for developers who want code drafts reviewed by several language models instead of one.
 
-- finds known library or standard-library solutions before generation;
-- runs Kimi and GLM review passes, then an arbitration loop and a local quality gate;
-- accepts an OpenRouter key and can use an OpenAI-compatible local endpoint.
+- pre-generation search: finds known library and standard-library solutions before generation;
+- review pipeline: runs Kimi and GLM review passes, an arbitration loop, and a local quality gate;
+- provider support: accepts an OpenRouter key and connects to an OpenAI-compatible local endpoint.
 
 ## Development line
 
-- **2026-07-02 — On 2026-07-02, Onklaud 5 was linked to a public GitHub repository.** On 2026-07-02, the Onklaud 5 development line included a link to the GitHub repository KorroAi/onklaud-5. The dated link establishes a public repository reference for the project, but does not establish a release, feature set, or code change.
+- **2026-07-02 — Onklaud 5 linked to GitHub repository.** On 2026-07-02, the Onklaud 5 development line linked to the public GitHub repository KorroAi/onklaud-5. That dated link gives us a public repository reference, but proves no release, feature set, or code change.
 
 ## What changed
 
-2026-06-22 — current documentation says the project ran its internal benchmark suite, reporting 20 of 35 Ponytail hits and 29 of 30 pipeline checks. 2026-07-02 — Onklaud 5 was made available through the linked repository; the current checkout configures Kimi K2.7 Code and GLM 5.2, but no dated tag or commit proves that this exact state existed on the event date.
+- 2026-06-22 — Project documentation reported benchmark results from its internal suite: 20 of 35 Ponytail hits and 29 of 30 pipeline checks.
+- 2026-07-02 — Onklaud 5 became available through the linked repository. The current checkout configures Kimi K2.7 Code and GLM 5.2, but no dated tag or commit proves this state existed on that date.
 
 ## How to use this
 
-From 2026-07-02, practitioners should treat KorroAi/onklaud-5 as the identified public repository reference for Onklaud 5 and inspect its contents before relying on it.
+From 2026-07-02, treat KorroAi/onklaud-5 as the identified public repository reference for Onklaud 5 and inspect its contents before relying on it.
 
 1. Clone the repository, copy `.env.example` to `.env`, and set `OPENROUTER_API_KEY` for the Kimi and GLM calls.
   — <https://github.com/KorroAi/onklaud-5>
