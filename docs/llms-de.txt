@@ -1,6 +1,6 @@
 # Umfassende technische Wissensbasis - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1212+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1213+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -727,6 +727,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Clipdrop](https://happyin.space/projects/clipdrop/): **Development line:** `project:clipdrop` · thread `clipdrop-image-editing`
 - [CoCo](https://happyin.space/projects/coco/): **Development line:** `project:coco` · thread `coco-development`
 - [North](https://happyin.space/projects/cohere-north/): **Development line:** `project:cohere-north` · thread `north-mini-code`
+- [Cohere Transcribe](https://happyin.space/projects/cohere-transcribe/): **Development line:** `project:cohere-transcribe` · thread `cohere-transcribe`
 - [Comfy-MSS](https://happyin.space/projects/comfy-mss/): **Development line:** `project:comfy-mss` · thread `comfy-mss-development`
 - [ComfyUI-3D-Pack](https://happyin.space/projects/comfyui-3d-pack/): **Development line:** `project:comfyui-3d-pack` · thread `comfyui-3d-pack-development`
 - [ComfyUI Cloud — Hosted access and billing](https://happyin.space/projects/comfyui-cloud/): **Development line:** `project:comfyui-cloud` · thread `hosted-access-and-billing`
