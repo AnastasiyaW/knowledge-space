@@ -1,6 +1,6 @@
 # 综合技术知识库 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1023+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1024+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -703,6 +703,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [ComfyUI-3D-Pack](https://happyin.space/projects/comfyui-3d-pack/): **Development line:** `project:comfyui-3d-pack` · thread `comfyui-3d-pack-development`
 - [ComfyUI Cloud — Hosted access and billing](https://happyin.space/projects/comfyui-cloud/): **Development line:** `project:comfyui-cloud` · thread `hosted-access-and-billing`
 - [ComfyUI Desktop](https://happyin.space/projects/comfyui-desktop/): **Development line:** `project:comfyui-desktop` · thread `comfyui-desktop`
+- [ComfyUI KSampler Matrix Lab — Repository reference](https://happyin.space/projects/comfyui-ksampler-matrix-lab/): **Development line:** `project:comfyui-ksampler-matrix-lab` · thread `repository-reference`
 - [ControlNet for SDXL — SDXL ControlNet model releases](https://happyin.space/projects/controlnet-sdxl/): **Development line:** `project:controlnet-sdxl` · thread `sdxl-controlnet-model-releases`
 - [ControlNet](https://happyin.space/projects/controlnet/): **Development line:** `project:controlnet` · thread `controlnet-development`
 - [ControlVideo](https://happyin.space/projects/controlvideo/): **Development line:** `project:controlvideo` · thread `controlvideo`
