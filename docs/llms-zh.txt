@@ -1,6 +1,6 @@
 # 综合技术知识库 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1079+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1080+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -808,6 +808,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Odyssey](https://happyin.space/projects/odyssey/): **Development line:** `project:odyssey` · thread `odyssey`
 - [Ollama — Product development](https://happyin.space/projects/ollama/): **Development line:** `project:ollama` · thread `product-development`
 - [OmniAvatar — Public release and demo availability](https://happyin.space/projects/omniavatar/): **Development line:** `project:omniavatar` · thread `public-release-and-demo`
+- [OmniRoute](https://happyin.space/projects/omniroute/): **Development line:** `project:omniroute` · thread `omniroute`
 - [OmniStream](https://happyin.space/projects/omnistream/): **Development line:** `project:omnistream` · thread `omnistream-development`
 - [OpenMAIC](https://happyin.space/projects/openmaic/): **Development line:** `project:openmaic` · thread `openmaic-development`
 - [OpenMontage](https://happyin.space/projects/openmontage/): **Development line:** `project:openmontage` · thread `openmontage-development`
