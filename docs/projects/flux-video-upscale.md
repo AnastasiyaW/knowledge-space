@@ -13,11 +13,11 @@ aliases: ["FLUX Video Upscale"]
 
 ## What it is
 
-FLUX Video Upscale is a FLUX 3 video super-resolution endpoint for API users.
+FLUX Video Upscale is a FLUX 3-powered video super-resolution endpoint for API users.
 
-- Video upscaling at 1.5×–3× scale, up to 4K.
-- Precise mode for identity-sensitive footage and Creative mode for generated detail.
-- Audio preservation for the source audio track.
+- Regenerates video at 1.5×–3× scale, up to 4K.
+- Offers Precise mode for identity-sensitive footage and Creative mode for generated detail.
+- Preserves the source audio track.
 
 Inputs are at most 20 seconds, 50 MB, and 2560×1440; output frames cap at about 14.4 MP.
 
@@ -25,7 +25,7 @@ Use Precise for faces, products and brand assets; use Creative for generated sce
 
 ## Development line
 
-- **2026-08-21 — Black Forest Labs introduced FLUX Video Upscale.** On 2026-08-21, Black Forest Labs linked an official blog announcement, product documentation, and a playground model for FLUX Video Upscale. The official links establish the public introduction, but do not show detailed capabilities, availability, pricing, or performance.
+- **2026-08-21 — Black Forest Labs introduced FLUX Video Upscale.** On 2026-08-21, Black Forest Labs linked an official blog announcement, product documentation, and a playground model for FLUX Video Upscale. The links confirm the public launch, but do not show detailed capabilities, availability, pricing, or performance.
 
 ## What changed
 
@@ -35,7 +35,7 @@ Use Precise for faces, products and brand assets; use Creative for generated sce
 
 ## How to use this
 
-From 2026-08-21, we evaluate FLUX Video Upscale through Black Forest Labs’ documented workflow and linked playground rather than treating it as an unannounced or undocumented capability.
+From 2026-08-21, practitioners should evaluate FLUX Video Upscale through Black Forest Labs’ documented workflow and linked playground rather than treating it as an unannounced or undocumented capability.
 
 1. Prepare an MP4 no longer than 20 seconds and either host it at an accessible HTTPS URL or encode it as base64.
   — <https://docs.bfl.ai/flux_tools/flux_video_upscale>
@@ -59,8 +59,8 @@ From 2026-08-21, we evaluate FLUX Video Upscale through Black Forest Labs’ doc
 
 ## Still unknown
 
-- Our entry dates the event to 2026-08-21, while BFL’s first-party release note and blog date the launch to 2026-08-20; distribution was likely logged one day later.
-- We had no independently accessible playground response during research, so current browser UI controls and account-tier availability were not verified.
+- The entry date is 2026-08-21, while BFL’s first-party release note and blog date the launch to 2026-08-20; distribution was likely tracked one day later.
+- No independently accessible playground response was available during research, so current browser UI controls and account-tier availability were not verified.
 
 ## Sources
 
@@ -75,5 +75,5 @@ From 2026-08-21, we evaluate FLUX Video Upscale through Black Forest Labs’ doc
 ## Agent brief {#agent-brief}
 
 - **Subject:** `project:flux-video-upscale`, thread `black-forest-labs`, 1 dated events 2026-08-21 → 2026-08-21.
-- **Practical note:** From 2026-08-21, evaluate FLUX Video Upscale through Black Forest Labs’ documented workflow and linked playground rather than treating it as an unannounced or undocumented capability.
+- **Practical note:** From 2026-08-21, practitioners should evaluate FLUX Video Upscale through Black Forest Labs’ documented workflow and linked playground rather than treating it as an unannounced or undocumented capability.
 - **Confidence:** high. Dated supersedes above are the authority for what is obsolete.
