@@ -13,7 +13,7 @@ aliases: ["Qwen 3.6 Plus Preview"]
 
 ## What it is
 
-Qwen 3.6 Plus Preview is a hosted preview model available under `qwen/qwen3.6-plus-preview:free` on OpenRouter.
+Qwen 3.6 Plus Preview is a Qwen-hosted preview model available as `qwen/qwen3.6-plus-preview:free` on OpenRouter.
 
 - Agentic coding, front-end work, and general reasoning.
 - 1,000,000-token context window.
@@ -21,17 +21,15 @@ Qwen 3.6 Plus Preview is a hosted preview model available under `qwen/qwen3.6-pl
 
 ## Development line
 
-- **2026-03-31 — OpenRouter availability signal for Qwen 3.6 Plus Preview.** On 2026-03-31, OpenRouter listed an endpoint for Qwen 3.6 Plus Preview marked as free. We note this public-availability signal rather than a verified model launch. The evidence does not establish the operator, capabilities, terms, or whether the endpoint was live on that date.
+- **2026-03-31 — OpenRouter availability signal for Qwen 3.6 Plus Preview.** On 2026-03-31, the record linked Qwen 3.6 Plus Preview to an OpenRouter URL marked as a free endpoint. This proposes recording that dated public-availability signal, rather than a verified model launch: the supplied evidence does not establish the operator, capabilities, terms, or whether the endpoint was live on that date.
 
 ## What changed
 
-2026-03-31 — Qwen 3.6 Plus Preview became available through OpenRouter as a free preview endpoint; OpenRouter identifies the release date as 2026-03-30.
-
-2026-04-03 — An unresolved community report said the model was unavailable through the international DashScope API, despite availability on Qwen Chat and the free Qwen Code CLI.
+2026-03-31 — Qwen 3.6 Plus Preview became available through OpenRouter as a free preview endpoint; OpenRouter identifies the release date as 2026-03-30. 2026-04-03 — an unresolved community report said the model was unavailable through the international DashScope API, despite availability on Qwen Chat and the free Qwen Code CLI.
 
 ## How to use this
 
-From 2026-03-31, we treat Qwen 3.6 Plus Preview as a possible OpenRouter free-endpoint option only after checking current availability and terms. We establish no capability or provenance claims.
+From 2026-03-31, practitioners should treat Qwen 3.6 Plus Preview as a possible OpenRouter free-endpoint option only after checking current availability and terms; this record establishes no capability or provenance claims.
 
 1. Create an OpenRouter API key, then send a standard OpenAI-compatible request to `POST /api/v1/chat/completions` with model `qwen/qwen3.6-plus-preview:free`.
   — <https://openrouter.ai/docs/api_reference/overview>
@@ -42,11 +40,11 @@ From 2026-03-31, we treat Qwen 3.6 Plus Preview as a possible OpenRouter free-en
 
 ## Best practices
 
-- Pin the exact model ID and retain outputs from representative tests before making it a dependency, so evaluations remain reproducible.
+- Treat this as a preview evaluation path: pin the exact model ID and retain outputs from representative tests before making it a dependency.
   — <https://openrouter.ai/qwen/qwen3.6-plus-preview:free>
-- Do not send sensitive prompts or completions through this endpoint, because OpenRouter states that they may be collected for model improvement.
+- Do not send sensitive prompts or completions through this endpoint because OpenRouter states that they may be collected for model improvement.
   — <https://openrouter.ai/qwen/qwen3.6-plus-preview:free>
-- Implement exponential backoff and quota monitoring for free-model requests, because provider capacity and platform limits can return 429 errors.
+- Implement backoff and quota monitoring for free-model requests; provider capacity and platform limits can return 429 errors.
   — <https://openrouter.ai/docs/api_reference/limits>
 
 ## Superseded by this
@@ -73,5 +71,5 @@ From 2026-03-31, we treat Qwen 3.6 Plus Preview as a possible OpenRouter free-en
 ## Agent brief {#agent-brief}
 
 - **Subject:** `project:qwen-3-6-plus-preview`, thread `public-model-availability`, 1 dated events 2026-03-31 → 2026-03-31.
-- **Practical note:** From 2026-03-31, we treat Qwen 3.6 Plus Preview as a possible OpenRouter free-endpoint option only after checking current availability and terms. We establish no capability or provenance claims.
+- **Practical note:** From 2026-03-31, practitioners should treat Qwen 3.6 Plus Preview as a possible OpenRouter free-endpoint option only after checking current availability and terms; this record establishes no capability or provenance claims.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
