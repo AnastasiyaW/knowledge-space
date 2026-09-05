@@ -1,6 +1,6 @@
 # Umfassende technische Wissensbasis - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1097+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1098+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -806,6 +806,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [MiniMax H3](https://happyin.space/projects/minimax-h3/): **Development line:** `project:minimax-h3` · thread `minimax-h3`
 - [MiniMax Music](https://happyin.space/projects/minimax-music/): **Development line:** `project:minimax-music` · thread `minimax-music-development`
 - [Moebius — Public availability](https://happyin.space/projects/moebius/): **Development line:** `project:moebius` · thread `public-availability`
+- [MOSS-Video-Preview](https://happyin.space/projects/moss-video-preview/): **Development line:** `project:moss-video-preview` · thread `moss-video-preview`
 - [Mozart AI](https://happyin.space/projects/mozart-ai/): **Development line:** `project:mozart-ai` · thread `mozart-ai-product-development`
 - [MTVCrafter](https://happyin.space/projects/mtvcrafter/): **Development line:** `project:mtvcrafter` · thread `mtvcrafter-public-development`
 - [MUSIKA](https://happyin.space/projects/musika/): **Development line:** `project:musika` · thread `musika`
