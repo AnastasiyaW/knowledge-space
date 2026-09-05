@@ -1,6 +1,6 @@
 # 综合技术知识库 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1213+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1214+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -927,6 +927,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [ProxyPose](https://happyin.space/projects/proxypose/): **Development line:** `project:proxypose` · thread `proxypose-development`
 - [Qwen 3.6 Plus Preview — Public model availability](https://happyin.space/projects/qwen-3-6-plus-preview/): **Development line:** `project:qwen-3-6-plus-preview` · thread `public-model-availability`
 - [Qwen-Image-Edit-Rapid-AIO](https://happyin.space/projects/qwen-image-edit-rapid-aio/): **Development line:** `project:qwen-image-edit-rapid-aio` · thread `qwen-image-edit-rapid-aio`
+- [Qwen-Image-Flash](https://happyin.space/projects/qwen-image-flash/): **Development line:** `project:qwen-image-flash` · thread `qwen-image-flash-development`
 - [Qwen-Video-Edit](https://happyin.space/projects/qwen-video-edit/): **Development line:** `project:qwen-video-edit` · thread `qwen-video-edit`
 - [Qwen2.5-Coder](https://happyin.space/projects/qwen2-5-coder/): **Development line:** `project:qwen2-5-coder` · thread `qwen2-5-coder-launch`
 - [Qwen3.5-40B-Claude-4.6-Opus-Deckard-Heretic-Uncensored-Thinking-GGUF — GGUF distribution](https://happyin.space/projects/qwen3-5-40b-claude-4-6-opus-deckard-heretic-uncensored-thinking-gguf/): **Development line:** `project:qwen3-5-40b-claude-4-6-opus-deckard-heretic-uncensored-thinking-gguf` · thread `gguf-distribution`
