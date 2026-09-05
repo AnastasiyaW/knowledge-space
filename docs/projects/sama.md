@@ -13,7 +13,13 @@ aliases: ["SAMA"]
 
 ## What it is
 
-SAMA: открытая модель instruction-guided video editing для пользователей Wan, которые меняют объекты, стиль или текст в ролике, сохраняя движение. — semantic anchoring планирует правку на опорных кадрах; — motion alignment удерживает временную динамику; — доступны SAMA-14B и официальный ComfyUI workflow. Лимит: Linux, NVIDIA GPU, Python 3.10, CUDA 12.1-совместимая среда и Wan2.1-T2V-14B. Вердикт: это локальный inference stack поверх Wan, не hosted-сервис.
+An open-source instruction-guided video editing model for Wan users who change objects, style, or text in a video while keeping motion.
+
+- Semantic anchoring plans edits across keyframes.
+- Motion alignment preserves temporal dynamics.
+- SAMA-14B checkpoint and an official ComfyUI workflow are available.
+
+Requires Linux, an NVIDIA GPU, Python 3.10, a CUDA 12.1-compatible environment, and Wan2.1-T2V-14B. This is a local inference stack on top of Wan, not a hosted service.
 
 ## Development line
 
@@ -21,37 +27,41 @@ SAMA: открытая модель instruction-guided video editing для по
 
 ## What changed
 
-2026-03-20 — опубликована статья SAMA; препринт был подан 2026-03-19 и содержит 24 страницы, 12 фигур. 2026-03-21 — выпущен checkpoint SAMA-14B; SAMA-5B всё ещё отмечен как Coming soon. 2026-03-24 — открыт официальный SAMA-ComfyUI workflow. 2026-06-20 — SAMA принят на ECCV 2026. 2026-06-26 — опубликован metadata-набор SAMA-edit-filtered-1M.
+- **2026-03-20** — SAMA paper published; preprint submitted on 2026-03-19 with 24 pages and 12 figures.
+- **2026-03-21** — SAMA-14B checkpoint released; SAMA-5B still marked as Coming soon.
+- **2026-03-24** — Official SAMA-ComfyUI workflow opened.
+- **2026-06-20** — SAMA accepted to ECCV 2026.
+- **2026-06-26** — SAMA-edit-filtered-1M metadata set published.
 
 ## How to use this
 
-As of 2026-03-20, practitioners can use the linked SAMA website, source repository, and SAMA-14B model page as the primary starting points for evaluation, while verifying capabilities, licensing, and usage requirements from those resources before adoption.
+As of 2026-03-20, we use the linked SAMA website, source repository, and SAMA-14B model page as starting points for evaluation, verifying capabilities, licensing, and usage requirements from those resources before adoption.
 
-1. Клонируйте репозиторий, создайте окружение Python 3.10 и установите зависимости.
+1. Clone the repository, create a Python 3.10 environment, and install dependencies.
   — <https://github.com/Cynthiazxy123/SAMA>
-2. Скачайте SAMA-14B и подготовьте полную локальную директорию Wan2.1-T2V-14B.
+2. Download SAMA-14B and prepare the full local Wan2.1-T2V-14B directory.
   — <https://huggingface.co/syxbb/SAMA-14B>
-3. Задайте MODEL_ROOT, STATE_DICT, SRC_VIDEO, PROMPT и OUTPUT_DIR в infer_sh/run_sama.sh, затем запустите скрипт.
+3. Set MODEL_ROOT, STATE_DICT, SRC_VIDEO, PROMPT, and OUTPUT_DIR in infer_sh/run_sama.sh, then run the script.
   — <https://github.com/Cynthiazxy123/SAMA>
-4. Для node-based workflow используйте официальный ComfyUI integration с Wan base model и SAMA-14B.
+4. For a node-based workflow, use the official ComfyUI integration with the Wan base model and SAMA-14B.
   — <https://github.com/Cynthiazxy123/SAMA>
 
 ## Best practices
 
-- Проверьте, что базовая директория Wan2.1-T2V-14B полна: скрипт намеренно останавливается при отсутствующих файлах.
+- Verify the base Wan2.1-T2V-14B directory is complete: the script intentionally stops if files are missing.
   — <https://github.com/Cynthiazxy123/SAMA>
-- Используйте исходный FPS; при его отсутствии явно задайте --fps.
+- Use the source FPS; set --fps explicitly when it is missing.
   — <https://github.com/Cynthiazxy123/SAMA>
-- Учитывайте автоматический padding входных кадров к требованию Wan 4k+1.
+- Account for automatic padding of input frames to the Wan 4k+1 requirement.
   — <https://github.com/Cynthiazxy123/SAMA>
 
 ## Superseded by this
 
-- 2026-03-20 — состояние «только статья»: с 2026-03-21 доступен SAMA-14B, а с 2026-03-24 есть официальный ComfyUI workflow.
+- 2026-03-20 — paper-only state: SAMA-14B is available as of 2026-03-21, and the official ComfyUI workflow is available as of 2026-03-24.
 
 ## Still unknown
 
-- Официальные материалы не дают измеренного VRAM, скорости inference или поддерживаемых разрешений; для планирования железа нужна отдельная проверка конфигурации и workflow.
+- Official materials do not provide measured VRAM, inference speed, or supported resolutions. Hardware planning requires separate testing of the configuration and workflow.
 
 ## Sources
 
