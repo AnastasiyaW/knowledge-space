@@ -13,11 +13,11 @@ aliases: ["SeFi-Image"]
 
 ## What it is
 
-SeFi-Image separates semantic and texture latent streams so structure denoises ahead of detail. It offers 1B, 2B, and 5B Base models, a 5B RL model, and 1B/2B/5B Turbo models. Base and RL use 50 steps at guidance 4.0; Turbo defaults to four steps at guidance 1.0. We run it for controlled local research, not commercial deployment or hosted inference.
+SeFi-Image separates semantic and texture latent streams so structure denoises ahead of detail. It offers 1B, 2B, and 5B Base models, a 5B RL model, and 1B/2B/5B Turbo models. Base and RL use 50 steps at guidance 4.0; Turbo defaults to four steps at guidance 1.0. Use it for controlled local research, not commercial deployment or hosted inference.
 
 ## Development line
 
-- **2026-06-26 — SeFi-Image official project resources were linked.** On 2026-06-26, a development-line message linked the project website, source repository, and Hugging Face page. The evidence confirms these links, but shows no specific release, model, or technical milestone.
+- **2026-06-26 — SeFi-Image official project resources were linked.** On 2026-06-26, links appeared for the project website, source repository, and Hugging Face page. They give the starting resources, but no specific release, model, or technical milestone.
 
 ## What changed
 
@@ -25,11 +25,11 @@ SeFi-Image separates semantic and texture latent streams so structure denoises a
 
 ## How to use this
 
-As of 2026-06-26, we use the linked project website, GitHub repository, and Hugging Face page to evaluate SeFi-Image.
+As of 2026-06-26, use the linked project website, GitHub repository, and Hugging Face page to evaluate or follow SeFi-Image.
 
 1. Accept the checkpoint access conditions, then choose a checkpoint: Base for analysis or fine-tuning, RL for alignment-oriented generation, or Turbo for fast generation.
   — <https://huggingface.co/SeFi-Image/SeFi-Image-5B-Base>
-2. Install the repository runtime in Python 3.11 with PyTorch matching local CUDA, then install Diffusers, Transformers, Accelerate, Safetensors, Hugging Face Hub, OmegaConf, and Pillow.
+2. Install the repository runtime in a Python 3.11 environment with a PyTorch build compatible with the local CUDA stack, then install Diffusers, Transformers, Accelerate, Safetensors, Hugging Face Hub, OmegaConf, and Pillow.
   — <https://github.com/jmliu206/SeFi-Image>
 3. Run `inference.py` with a checkpoint ID, prompt, output directory, and seed; use a Base checkpoint such as `SeFi-Image/SeFi-Image-5B-Base` for the default 50-step path.
   — <https://github.com/jmliu206/SeFi-Image>
@@ -54,7 +54,7 @@ As of 2026-06-26, we use the linked project website, GitHub repository, and Hugg
 ## Still unknown
 
 - The sources do not provide a dated changelog describing the substantive differences between arXiv v3, v4, and v5.
-- No first-party source establishes a production-serving option; reviewed Hugging Face Diffusers cards state that no Inference Provider deploys the models.
+- No first-party source provides a production-serving option; the Hugging Face Diffusers cards state that no Inference Provider deploys the models.
 
 ## Sources
 
@@ -70,5 +70,5 @@ As of 2026-06-26, we use the linked project website, GitHub repository, and Hugg
 ## Agent brief {#agent-brief}
 
 - **Subject:** `project:sefi-image`, thread `sefi-image-development`, 1 dated events 2026-06-26 → 2026-06-26.
-- **Practical note:** As of 2026-06-26, use the linked project website, GitHub repository, and Hugging Face page as starting points to evaluate SeFi-Image.
+- **Practical note:** As of 2026-06-26, use the linked project website, GitHub repository, and Hugging Face page as the starting points to evaluate or follow SeFi-Image.
 - **Confidence:** high. Dated supersedes above are the authority for what is obsolete.
