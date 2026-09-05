@@ -1,6 +1,6 @@
 # 综合技术知识库 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1204+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1205+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -881,6 +881,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Nano Banana Pro](https://happyin.space/projects/nano-banana-pro/): **Development line:** `project:nano-banana-pro` · thread `nano-banana-pro`
 - [NanoVDR](https://happyin.space/projects/nanovdr/): **Development line:** `project:nanovdr` · thread `nanovdr-public-release`
 - [Nemotron 3 Super](https://happyin.space/projects/nemotron-3-super/): **Development line:** `project:nemotron-3-super` · thread `nemotron-3-super`
+- [NeumaTex](https://happyin.space/projects/neumatex/): **Development line:** `project:neumatex` · thread `neumatex-development`
 - [neural.love](https://happyin.space/projects/neural-love/): **Development line:** `project:neural-love` · thread `neural-love-image-tools`
 - [NexVid — Browser extension distribution](https://happyin.space/projects/nexvid/): **Development line:** `project:nexvid` · thread `browser-extension-distribution`
 - [NIGHTBORNE](https://happyin.space/projects/nightborne/): **Development line:** `project:nightborne` · thread `nightborne`
