@@ -1,6 +1,6 @@
 # 综合技术知识库 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1175+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1176+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -823,6 +823,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Laminar](https://happyin.space/projects/laminar/): **Development line:** `project:laminar` · thread `laminar-development`
 - [Latent-to-4D — Beyond Pixels](https://happyin.space/projects/latent-to-4d/): **Development line:** `project:latent-to-4d` · thread `beyond-pixels`
 - [LEDITS](https://happyin.space/projects/ledits/): **Development line:** `project:ledits` · thread `ledits-development`
+- [LingBot-Video](https://happyin.space/projects/lingbot-video/): **Development line:** `project:lingbot-video` · thread `lingbot-video-development`
 - [LingBot-World 2.0](https://happyin.space/projects/lingbot-world-2/): **Development line:** `project:lingbot-world-2` · thread `lingbot-world-2-development`
 - [Llama 3.1](https://happyin.space/projects/llama-3-1/): **Development line:** `project:llama-3-1` · thread `llama-3-1`
 - [LlamaServerLauncher](https://happyin.space/projects/llama-server-launcher/): **Development line:** `project:llama-server-launcher` · thread `llama-server-launcher-development`
