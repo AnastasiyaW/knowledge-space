@@ -13,58 +13,48 @@ aliases: ["Ultra Real - Klein 9b"]
 
 ## What it is
 
-Ultra Real - Klein 9b is a LoRA for FLUX.2 Klein 9B users in ComfyUI.
-
-- Portrait generation: creates portraits.
-- Image-edit: modifies existing images.
-- Upscale: restores old images.
-
-Versions run V1–V4: V3 produces a more delicate texture, while V4 handles detailing.
-The LoRA is not a base model and requires a compatible Klein 9B workflow.
-For natural skin, start with V3 and add V4 only for a detail pass.
+Ultra Real - Klein 9b — LoRA для пользователей FLUX.2 Klein 9B в ComfyUI: генерация портретов, image-edit и апскейл старых изображений. Версии: V1–V4; V3 делает более деликатную текстуру, V4 предназначена для детализации. Ограничение: это не базовая модель и требует совместимого Klein 9B workflow. Вердикт: для натуральной кожи стоит начинать с V3, а V4 подключать только для detail-pass.
 
 ## Development line
 
-- **2026-03-23 — Ultra Real - Klein 9b linked to a Civitai model page and ComfyUI workflows.** V2 claims more natural skin texture with better preservation of tone and lighting.
+- **2026-03-23 — Ultra Real - Klein 9b linked to a Civitai model page and ComfyUI workflows.** V2 заявлена как более естественная текстура кожи с лучшим сохранением тона и освещения.
 
 ## What changed
 
-- 2026-03-23 — Ultra Real - Klein 9b was available as a V1/V2 LoRA line for FLUX.2 Klein 9B; V2 claimed more natural skin texture with better tone and lighting preservation.
-- 2026-04-10 — The model entry was updated to show the V1–V4 line; V3 was described as a more delicate texture without extra freckles, and V4 as a separate detailing mode.
-- 2026-04-13 — The current card lists FLUX.2 Klein 9B as the base model and V1–V4 as variants of one LoRA line.
+2026-03-23 — Ultra Real - Klein 9b был доступен как LoRA-линейка V1/V2 для FLUX.2 Klein 9B: V2 заявлена как более естественная текстура кожи с лучшим сохранением тона и освещения. 2026-04-10 — запись модели обновлена и показывает линейку V1–V4; V3 описана как более деликатная текстура без лишних веснушек, V4 — как отдельный режим детализации. 2026-04-13 — текущая карточка указывает FLUX.2 Klein 9B как базовую модель и V1–V4 как варианты одной LoRA-линейки.
 
 ## How to use this
 
-From 2026-03-23, use the linked Civitai model page and ComfyUI workflows repository as dated reference points to evaluate Ultra Real - Klein 9b. The links alone do not verify a specific version, workflow compatibility, or performance claim.
+From 2026-03-23, practitioners should use the linked Civitai model page and ComfyUI workflows repository as the dated reference points for evaluating Ultra Real - Klein 9b; the links alone do not verify a specific version, workflow compatibility, or performance claim.
 
-1. Install compatible FLUX.2 Klein 9B components into the matching ComfyUI folders: the diffusion model, Qwen 3 8B text encoder, and flux2 VAE.
+1. Установите совместимые компоненты FLUX.2 Klein 9B: diffusion model, Qwen 3 8B text encoder и flux2 VAE в соответствующие каталоги ComfyUI.
   — <https://github.com/Comfy-Org/docs/blob/main/ja/tutorials/flux/flux-2-klein.mdx>
-2. Load Ultra Real - Klein 9b into the LoRA slot of the Klein 9B workflow; for image editing with V3, start at weight 0.6, and for V4 at 0.55.
+2. Загрузите Ultra Real - Klein 9b в LoRA-слот Klein 9B workflow; для V3 при image-edit начните с веса 0.6, для V4 — с 0.55.
   — <https://www.seaart.ai/indo/models/detail/0b4b3278ab4fd5b6471cd029ef88fc09>
-3. For editing, use an instruction that preserves face, expression, build, pose, and composition; for V2 the published target weight is 0.5.
+3. Для редактирования используйте instruction, сохраняющую лицо, выражение, фигуру, позу и композицию; для V2 опубликован ориентир веса 0.5.
   — <https://tensor.art/models/981017447823890853>
-4. For text-to-image, start at weight 0.7–0.8 and describe the shot as a photograph; the published V2 target weight is 0.7.
+4. Для text-to-image начните с веса 0.7–0.8 и описывайте кадр как фотографию; опубликованный V2 ориентир — 0.7.
   — <https://www.seaart.ai/indo/models/detail/0b4b3278ab4fd5b6471cd029ef88fc09>
 
 ## Best practices
 
-- Do not use V4 as a universal style LoRA: the description limits it to detailing; for standard generation, use a text prompt or another LoRA.
+- Не использовать V4 как универсальный style LoRA: в описании она предназначена для детализации; для обычной генерации применяйте текстовый prompt или другую LoRA.
   — <https://www.seaart.ai/indo/models/detail/0b4b3278ab4fd5b6471cd029ef88fc09>
-- Do not carry over V1 settings without testing: V1 can exaggerate pores and freckles or shift lighting and skin tone; V3 claims a more delicate result.
+- Не переносить настройки V1 без проверки: V1 может усиливать поры и веснушки и менять свет или тон кожи; V3 заявлена как более деликатный вариант.
   — <https://www.seaart.ai/indo/models/detail/0b4b3278ab4fd5b6471cd029ef88fc09>
-- For image-edit, explicitly instruct the model to keep features, expression, pose, and composition, so the LoRA does not change more than skin texture.
+- Для image-edit явно просите сохранить черты, выражение, позу и композицию, иначе LoRA может менять больше, чем только фактуру кожи.
   — <https://tensor.art/models/981017447823890853>
 
 ## Superseded by this
 
-- 2026-04-10 — V1 is no longer the preferred mode for natural skin: the current card describes V3 as a more delicate texture and V4 as a dedicated detail-pass.
-- 2026-04-10 — The recommendation to use the same LoRA for both generation and detailing is obsolete: V4 is separately restricted to detailing.
+- 2026-04-10 — V1 не является предпочтительным режимом для естественной кожи: текущая карточка описывает V3 как более деликатную текстуру, а V4 как специализированный detail-pass.
+- 2026-04-10 — совет применять одну и ту же LoRA для генерации и детализации устарел: V4 отдельно ограничена задачей детализации.
 
 ## Still unknown
 
-- The direct Civitai page and the workflow repository were unavailable for meaningful download during review; settings are confirmed by mirrors and publication pages rather than source workflow files.
-- The current SeaArt card lists an announcement date of 2026-03-13, an update date of 2026-04-10, and a publication date of 2026-04-13, but gives no separate release dates for V3 and V4; we cannot date them more precisely.
-- Civitai ID 2462105 appears later on some mirrors for UltraReal - Krea2, Klein9b as well; nothing proves this is a continuation of the same Klein 9B LoRA rather than card reuse.
+- Прямая страница Civitai и репозиторий workflow были недоступны для содержательной загрузки при проверке; настройки подтверждены зеркалами и страницами публикации, а не исходными файлами workflow.
+- Текущая карточка SeaArt показывает даты объявления 2026-03-13, обновления 2026-04-10 и публикации 2026-04-13, но не даёт отдельных дат релиза V3 и V4; поэтому их нельзя датировать точнее.
+- Идентификатор Civitai 2462105 позднее отображается на некоторых зеркалах также для UltraReal - Krea2, Klein9b; не доказано, что это продолжение той же Klein 9B LoRA, а не переиспользование карточки.
 
 ## Sources
 
