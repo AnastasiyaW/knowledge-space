@@ -1,6 +1,6 @@
 # Base de connaissances techniques complète - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1202+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1203+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -986,6 +986,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [WAN 2.2 — WAN](https://happyin.space/projects/wan-2-2/): **Development line:** `project:wan-2-2` · thread `wan`
 - [Wan Video](https://happyin.space/projects/wan-video/): **Development line:** `project:wan-video` · thread `wan-video-development`
 - [WAN](https://happyin.space/projects/wan/): **Development line:** `project:wan` · thread `wan-video-generation`
+- [WavTTS](https://happyin.space/projects/wavtts/): **Development line:** `project:wavtts` · thread `wavtts-development`
 - [WhatModels — Public website](https://happyin.space/projects/whatmodels/): **Development line:** `project:whatmodels` · thread `public-website`
 - [WonderWorld](https://happyin.space/projects/wonderworld/): **Development line:** `project:wonderworld` · thread `wonderworld-development`
 - [X-Dub — Project development](https://happyin.space/projects/x-dub/): **Development line:** `project:x-dub` · thread `project-development`
