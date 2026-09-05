@@ -13,45 +13,43 @@ aliases: ["HATCHA"]
 
 ## What it is
 
-HATCHA is an open-source reverse CAPTCHA from monday.com for Next.js and Express. It issues a computational challenge, stores the answer only on the server, signs the hash and expiry with an HMAC token, and returns a verification token.
+HATCHA is an open-source reverse CAPTCHA from monday.com for Next.js and Express. It issues a computational challenge and stores the answer only on the server. It signs the hash and expiry with an HMAC token, then returns a verification token.
 
-- Five built-in challenges: run computational tasks for agent verification.
-- React components: provide client integration and provider wrappers.
-- Server handlers: route verification requests in Next.js and Express.
-- Custom generators: register non-standard challenges.
+- Five built-in challenges that issue verification tasks.
+- React components that handle client interactions.
+- Server handlers that verify solutions.
+- Custom generators that create user-defined challenges.
 
-Built-in challenges are capped at 30 seconds.
-
-This provides an extra gate for low-risk agent-only scenarios, not proof of identity, authority, or agent safety.
+Built-in challenges are capped at 30 seconds. It provides an extra gate for low-risk agent-only scenarios, not proof of identity, authority, or agent security.
 
 ## Development line
 
-- **2026-06-27 — HATCHA's GitHub repository was referenced.** The monorepo splits into core, React, and server packages, with adapters for Next.js and Express.
+- **2026-06-27 — HATCHA's GitHub repository was referenced.** The monorepo splits into core, React, and server packages, with Next.js and Express adapters.
 
 ## What changed
 
-2026-06-27 — monday.com released HATCHA as a public MIT project. The monorepo splits into core, React, and server packages, with adapters for Next.js and Express.
+2026-06-27 — HATCHA became available as a public MIT project from monday.com. The monorepo splits into core, React, and server packages, with Next.js and Express adapters.
 
 ## How to use this
 
-We can treat the HATCHA GitHub repository as the implementation source after the 2026-06-27 repository reference. Check its contents and release status before relying on a specific feature.
+After the 2026-06-27 repository reference, we can treat the HATCHA GitHub repository as the implementation source. Check its contents and release status before relying on any feature.
 
 1. Install the React and server packages: `npm install @mondaycom/hatcha-react @mondaycom/hatcha-server`.
   — <https://github.com/mondaycom/HATCHA>
-2. Create a Next.js route handler with `createHatchaHandler` and pass a unique server `HATCHA_SECRET`.
+2. In Next.js, create a route handler with `createHatchaHandler` and pass a unique server `HATCHA_SECRET`.
   — <https://github.com/mondaycom/HATCHA>
 3. Wrap the application in `HatchaProvider`, import styles, and call `requestVerification` before the target agent-only action.
   — <https://usehatcha.dev/>
-4. Verify the issued verification token on the server before allowing the protected action; do not expose the challenge or response as client secrets.
+4. Verify the issued verification token on the server before granting the restricted action; never expose the challenge and answer as client secrets.
   — <https://github.com/mondaycom/HATCHA>
 
 ## Best practices
 
-- Place HATCHA in front of low-risk agent-only workflows, demos, or sandboxes, but keep separate authentication, authorization, audit logs, anti-abuse controls, and spend limits for data or financial actions.
+- Place HATCHA before low-risk agent-only flows, demos, or sandboxes. Keep separate authentication, authorization, audit logs, abuse controls, and spend limits for actions with data or money.
   — <https://news.lavx.hu/article/monday-com-releases-hatcha-a-reverse-captcha-for-ai-agents>
-- Keep `HATCHA_SECRET` strictly on the server, use a strong value, and set rate limits alongside an explicit threat model.
+- Keep `HATCHA_SECRET` only on the server, set a strong value, and configure rate limits alongside an explicit threat model.
   — <https://news.lavx.hu/article/monday-com-releases-hatcha-a-reverse-captcha-for-ai-agents>
-- Register a custom challenge generator for non-standard use cases, but retain server-side verification and a bounded TTL.
+- Register a custom challenge generator for non-standard scenarios, but keep server validation and a bounded TTL.
   — <https://github.com/mondaycom/HATCHA>
 
 ## Superseded by this
@@ -60,8 +58,8 @@ We can treat the HATCHA GitHub repository as the implementation source after the
 
 ## Still unknown
 
-- The repository has no published GitHub Releases; primary sources do not identify the exact commit or version corresponding to 2026-06-27.
-- No primary changelog post was dated 2026-06-27; details rely on a 2026-06-26 publication and current documentation, leaving subsequent changes unconfirmed.
+- The repository has no published GitHub Releases; primary sources do not identify the exact commit and version for 2026-06-27.
+- We found no dated primary changelog post for 2026-06-27. A publication on 2026-06-26 and current documentation confirm event details, but they do not prove later changes did not occur.
 
 ## Sources
 
@@ -76,5 +74,5 @@ We can treat the HATCHA GitHub repository as the implementation source after the
 ## Agent brief {#agent-brief}
 
 - **Subject:** `project:hatcha`, thread `public-repository-reference`, 1 dated events 2026-06-27 → 2026-06-27.
-- **Practical note:** We can treat the HATCHA GitHub repository as the implementation source after the 2026-06-27 repository reference, while verifying its contents and release status before relying on a specific feature.
+- **Practical note:** After the 2026-06-27 repository reference, we can treat the HATCHA GitHub repository as the implementation source. Check its contents and release status before relying on any feature.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
