@@ -1,6 +1,6 @@
 # 종합 기술 지식 베이스 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1071+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1072+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -738,6 +738,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [FLUX 3](https://happyin.space/projects/flux-3/): **Development line:** `project:flux-3` · thread `flux-3-development`
 - [Fooocus](https://happyin.space/projects/fooocus/): **Development line:** `project:fooocus` · thread `fooocus-development`
 - [FramePack Studio](https://happyin.space/projects/framepack-studio/): **Development line:** `project:framepack-studio` · thread `framepack-studio-development`
+- [FreeToken](https://happyin.space/projects/freetoken/): **Development line:** `project:freetoken` · thread `freetoken-development`
 - [GalaxyAce LoRA](https://happyin.space/projects/galaxyace-lora/): **Development line:** `project:galaxyace-lora` · thread `galaxyace-lora`
 - [Gemini](https://happyin.space/projects/gemini/): **Development line:** `project:gemini` · thread `gemini-development`
 - [GeneX](https://happyin.space/projects/genex/): **Development line:** `project:genex` · thread `genex-development`
