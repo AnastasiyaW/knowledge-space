@@ -13,58 +13,59 @@ aliases: ["claude-video", "claude-video (watch)"]
 
 ## What it is
 
-claude-video is a `/watch` skill for video analysis for agents.
+claude-video is a `/watch` skill for video analysis across URLs and local files.
 
-- Input: takes a URL or a local file.
-- Extraction: pulls frames and subtitles.
-- Audio fallback: uses Whisper when subtitles are missing.
-- Result handoff: passes output to the agent.
+- Frame extraction from local files and web video.
+- Subtitle extraction, falling back to Whisper when subtitles are missing.
+- Result handover to the agent.
 
-The default limit for long videos is up to 100 frames; `token-burner` mode is unlimited. It fits screen recordings, video clips, and targeted timestamps, but context cost grows with the number of frames.
+The default limit for long videos is up to 100 frames; `token-burner` mode has no limit.
+
+We use it for screen recordings, video clips, and targeted time ranges, but context cost grows with frame count.
 
 ## Development line
 
-- **2026-07-27 — claude-video repository publicly referenced.** On 2026-07-27, an entry linked to the bradautomates/claude-video GitHub repository. This is the earliest public reference in the project history and provides a concrete source to inspect.
+- **2026-07-27 — claude-video repository publicly referenced.** On 2026-07-27, a public link pointed to the bradautomates/claude-video GitHub repository. This is the earliest public reference in this development line and gives a concrete project source to consult.
 
 ## What changed
 
-- 2026-07-27 — repository link recorded. Primary sources show no separate commit or release on that exact date.
-- 2026-06-29 — version 0.2.0 added four detail modes, frame deduplication, automatic splitting of long audio for Whisper, and a portable skill package for multiple hosts.
+- **2026-07-27** — A link pointed to the repository, with no separate commit or release dated that day in primary sources.
+- **2026-06-29** — Version 0.2.0 added four detail modes, frame deduplication, automatic long audio splitting for Whisper, and a portable skill package across hosts.
 
 ## How to use this
 
-From 2026-07-27, treat the linked bradautomates/claude-video GitHub repository as the source for implementation and usage details.
+From 2026-07-27, we inspect the linked bradautomates/claude-video GitHub repository for implementation and usage details.
 
-1. Install the skill for Claude Code through the marketplace, or for Codex and other Agent Skills hosts with `npx skills add bradautomates/claude-video -g`.
+1. Install the skill for Claude Code through the marketplace, or for Codex and other Agent Skills hosts run `npx skills add bradautomates/claude-video -g`.
   — <https://github.com/bradautomates/claude-video>
-2. Run `/watch <URL-or-path> <question>`. It supports URLs handled by yt-dlp, and local MP4, MOV, MKV, and WebM files.
+2. Run `/watch <URL-or-path> <question>`; this accepts URLs supported by yt-dlp as well as local MP4, MOV, MKV, and WebM files.
   — <https://github.com/bradautomates/claude-video>
-3. Pass `--start` and `--end` for a targeted excerpt. This samples frames more densely while spending fewer context tokens.
+3. Pass `--start` and `--end` for a specific segment to get denser frames with less context consumption.
   — <https://github.com/bradautomates/claude-video>
-4. Select `transcript`, `efficient`, `balanced`, or `token-burner`. If subtitles are missing, set a Groq key for `whisper-large-v3` or an OpenAI key for `whisper-1`.
+4. Choose `transcript`, `efficient`, `balanced`, or `token-burner`; if subtitles are missing, configure a Groq key for `whisper-large-v3` or an OpenAI key for `whisper-1`.
   — <https://github.com/bradautomates/claude-video>
 
 ## Best practices
 
-- Narrow the time window with `--start` and `--end` for questions about a specific moment, instead of scanning the full video.
+- Limit the time window with `--start` and `--end` for questions about a specific moment instead of scanning the full video.
   — <https://github.com/bradautomates/claude-video>
-- Start with `transcript` for videos with subtitles or `efficient` for a fast visual pass; save `token-burner` for cases that justify the cost of many frames.
+- Start with `transcript` for subtitled videos or `efficient` for a fast visual pass; save `token-burner` for cases that justify high frame costs.
   — <https://github.com/bradautomates/claude-video>
-- Keep frame deduplication enabled: by default it discards nearly identical frames before applying the limit.
+- Keep frame deduplication enabled: it discards near-identical frames before applying the limit.
   — <https://github.com/bradautomates/claude-video>
-- Do not append comments after the `WATCH_DETAIL` value: this previously caused a silent fallback to the default mode, fixed in commit 83da59f.
+- Do not add comments after the `WATCH_DETAIL` value: this previously triggered a silent fallback to the default mode, fixed in commit 83da59f.
   — <https://github.com/bradautomates/claude-video/commit/83da59f>
 
 ## Superseded by this
 
-- 2026-04-24 — the standalone `commands/watch.md` wrapper and non-self-contained skill layout were replaced by the `skills/watch/` package in version 0.2.0.
-- 2026-04-24 — the Windows instruction using `python3` is obsolete: on Windows, run scripts with `python`.
-- 2026-04-24 — the early fixed limit of `--max-frames=80` was replaced by limits tied to the detail mode.
+- 2026-04-24 — The separate `commands/watch.md` wrapper and non-contained skill layout are replaced by the `skills/watch/` package in version 0.2.0.
+- 2026-04-24 — The Windows instruction specifying `python3` is obsolete: run scripts on Windows using `python`.
+- 2026-04-24 — The early fixed `--max-frames=80` limit is replaced by limits tied to the detail mode.
 
 ## Still unknown
 
-- The dated event provides only the repository URL. No first-party release or commit dated 2026-07-27 was found, so there is no source-backed addition for that date.
-- The schema lacks `event_findings` and `new_events` fields; the 2026-06-29 release stays in `what_changed` rather than as a separate structured event.
+- The event dated 2026-07-27 provides only the repository URL, with no first-party release or commit found for that date.
+- The 2026-06-29 release has no separate event entry and remains tracked in changes.
 
 ## Sources
 
@@ -77,5 +78,5 @@ From 2026-07-27, treat the linked bradautomates/claude-video GitHub repository a
 ## Agent brief {#agent-brief}
 
 - **Subject:** `project:claude-video`, thread `claude-video-development`, 1 dated events 2026-07-27 → 2026-07-27.
-- **Practical note:** From 2026-07-27, treat the linked bradautomates/claude-video GitHub repository as the source to inspect for implementation and usage details.
+- **Practical note:** From 2026-07-27, treat the linked bradautomates/claude-video GitHub repository as the source for implementation and usage details.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
