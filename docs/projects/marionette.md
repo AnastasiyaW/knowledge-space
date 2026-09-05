@@ -13,49 +13,49 @@ aliases: ["Marionette"]
 
 ## What it is
 
-Marionette is an Alaya Lab pipeline for world-model researchers. ActionGPT and PoseGPT predict a 276-dimensional articulated state. A deterministic bridge renders geometry, and fine-tuned Wan2.2-Fun-5B-Control generates RGB video.
+Marionette: пайплайн Alaya Lab для исследователей world models: ActionGPT и PoseGPT предсказывают 276-мерное артикулированное состояние, детерминированный bridge рендерит геометрию, а дообученный Wan2.2-Fun-5B-Control создаёт RGB-видео.
 
-- Control: swaps an action token or trajectory root at state level.
-- Runtime: requires two Python environments for stage 1 and stage 2.
-- Scope: covers one monster type, scans of specific locations, and a non-commercial research license.
+- управление: подмена action token или trajectory root на уровне состояния;
+- запуск: два Python-окружения для stage 1 и stage 2;
+- границы: один вид монстра, сканы конкретных локаций и non-commercial research license.
 
-The released observation checkpoint is 10.0 GB, and the required third-party base model takes about 23 GB.
+Мера: опубликованный checkpoint observation весит 10.0 GB, а необходимая сторонняя базовая модель — около 23 GB.
 
-This is a reproducible research pipeline, not a general game engine or a ready-made video generation service.
+Вердикт: это воспроизводимый исследовательский pipeline, а не универсальный игровой движок или готовый сервис генерации видео.
 
 ## Development line
 
-- **2026-08-18 — Marionette public project resources were linked.** On 2026-08-18, the project linked its project page, source repository, Hugging Face model page, and hosted world-model space. The release ties together documentation, code, model distribution, and a runnable demonstration.
+- **2026-08-18 — Marionette public project resources were linked.** On 2026-08-18, the Marionette development line was represented by links to its project page, source repository, Hugging Face model page, and hosted world-model space. This is a material public-project milestone because it connects the project’s documentation, code, model distribution, and runnable demonstration.
 
 ## What changed
 
-2026-08-13 — The project page, inference code, runtime assets, and controllability demos were published; the full three-stage pipeline became available for local runs. 2026-08-14 — The paper «Marionette: Predicting World States, Rendering Geometry, Painting Appearance» appeared on arXiv, documenting the architecture and claimed state-control results. 2026-08-18 — Project materials, repository code, Hugging Face weights, and the demo came together in one release; the model card specifies the exact base model name, checkpoint sizes, inference settings, and limits.
+2026-08-13 — опубликованы project page, inference code, runtime assets и controllability demos; полный трёхступенчатый pipeline стал доступен для локального запуска. 2026-08-14 — на arXiv опубликована работа «Marionette: Predicting World States, Rendering Geometry, Painting Appearance»; она зафиксировала архитектуру и заявленные результаты контроля состояния. 2026-08-18 — материалы проекта, репозиторий, веса Hugging Face и демонстрация были собраны в одном выпуске; карточка весов уточняет точное имя базовой модели, размеры checkpoints, настройки inference и ограничения.
 
 ## How to use this
 
-From 2026-08-18, practitioners should use the linked project page, repository, Hugging Face model page, and hosted space as the starting set for evaluating Marionette. Capabilities, licensing, and reproduction steps still require source research before adoption.
+From 2026-08-18, practitioners should use the linked project page, repository, Hugging Face model page, and hosted space as the starting set for evaluating Marionette; capabilities, licensing, and reproduction steps still require source research before adoption.
 
-1. Clone the repository, download the Marionette weights and third-party base model, then run `bash run_demo.sh`.
+1. Клонировать репозиторий, загрузить веса Marionette и стороннюю базовую модель, затем запустить `bash run_demo.sh`.
   — <https://huggingface.co/AlayaLab/Marionette>
-2. For a split run, create a render environment for stage 1 and a Wan environment for stage 2; run `run_stage1_render.sh`, then `run_stage2_wan.sh`.
+2. Для раздельного запуска создать render-окружение для stage 1 и Wan-окружение для stage 2; запустить `run_stage1_render.sh`, затем `run_stage2_wan.sh`.
   — <https://github.com/AlayaLab/Marionette>
-3. Keep the observation checkpoint and its prompt paired; published settings are 704×1280, 40 steps, guidance 6.0, 81-frame chunks, 30 fps.
+3. Держать checkpoint observation и его prompt одной парой; опубликованные настройки — 704×1280, 40 steps, guidance 6.0, 81-frame chunks, 30 fps.
   — <https://huggingface.co/AlayaLab/Marionette>
 
 ## Best practices
 
-- Do not combine stage 1 and stage 2 into one environment: the renderer needs Python 3.12 and EGL, while the diffusion stage requires torch, diffusers, and decord.
+- Не объединять stage 1 и stage 2 в одно окружение: рендеру нужен Python 3.12 и EGL, а diffusion stage требует torch, diffusers и decord.
   — <https://github.com/AlayaLab/Marionette>
-- Pin `TORCH_SEED` for dynamics stage reproducibility; compare runs on one machine by matching output artifacts rather than portable video hashes.
+- Фиксировать `TORCH_SEED` для воспроизводимости dynamics stage; сравнивать результаты на одной машине по равенству воспроизводимых артефактов, а не с переносимым хешем видео.
   — <https://github.com/AlayaLab/Marionette>
-- Do not transfer action IDs between checkpoints: their meaning depends on the vocabulary of a specific training split.
+- Не переносить action IDs между checkpoints: их смысл определяется словарём конкретной обучающей выборки.
   — <https://huggingface.co/AlayaLab/Marionette>
-- Do not apply the model to new geometry without a fresh terrain scan, and do not treat it as a general character-motion model.
+- Не применять модель к новой геометрии без нового terrain scan и не интерпретировать её как general character-motion model.
   — <https://huggingface.co/AlayaLab/Marionette>
 
 ## Superseded by this
 
-- 2026-08-13 — The roadmap status «pretrained weights uploading» is obsolete: the AlayaLab/Marionette model card now lists published checkpoints and download instructions.
+- 2026-08-13 — статус roadmap «pretrained weights uploading» устарел: модельная карточка AlayaLab/Marionette теперь перечисляет опубликованные checkpoints и инструкции загрузки.
 
 ## Still unknown
 
