@@ -1,6 +1,6 @@
 # 종합 기술 지식 베이스 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1081+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1082+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -765,6 +765,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [ideogram-4-GGUF — Ideogram 4](https://happyin.space/projects/ideogram-4-gguf/): **Development line:** `project:ideogram-4-gguf` · thread `ideogram-4`
 - [Ideogram 4](https://happyin.space/projects/ideogram-4/): **Development line:** `project:ideogram-4` · thread `ideogram-4-development`
 - [Ideogram](https://happyin.space/projects/ideogram/): **Development line:** `project:ideogram` · thread `model-and-product-releases`
+- [img2threejs](https://happyin.space/projects/img2threejs/): **Development line:** `project:img2threejs` · thread `img2threejs`
 - [InstantX SD3 ControlNet — SD3 ControlNet checkpoint releases](https://happyin.space/projects/instantx-sd3-controlnet/): **Development line:** `project:instantx-sd3-controlnet` · thread `sd3-controlnet-checkpoint-releases`
 - [InternVL](https://happyin.space/projects/internvl/): **Development line:** `project:internvl` · thread `internvl-model-releases`
 - [James Webb Space Telescope — First Images Release](https://happyin.space/projects/james-webb-space-telescope/): **Development line:** `project:james-webb-space-telescope` · thread `first-images-release`
