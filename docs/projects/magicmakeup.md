@@ -13,11 +13,11 @@ aliases: ["MagicMakeup Transfer"]
 
 ## What it is
 
-MagicMakeup Transfer is an image-to-image makeup-transfer system with region control for research users who prepare face crops and masks.
+MagicMakeup Transfer is a region-controlled image-to-image makeup transfer system for research users who prepare face crops and masks.
 
-- Reference transfer: transfers full-face, eye, and lip appearance from a reference portrait.
-- Model checkpoint: uses a MagicMakeup checkpoint on FLUX.1-Kontext-dev.
-- Output resolution: produces 1024 × 1024 crops and supports single-pair or all-to-all batch inference.
+- Region transfer: moves full-face, eye, and lip appearance from a reference portrait.
+- Model base: runs a MagicMakeup checkpoint on FLUX.1-Kontext-dev.
+- Batch output: generates 1024 × 1024 crops for single pairs or all-to-all batches.
 
 ## Development line
 
@@ -25,30 +25,30 @@ MagicMakeup Transfer is an image-to-image makeup-transfer system with region con
 
 ## What changed
 
-2026-07-28 — The official code and checkpoint release arrived. MagicMakeup became usable as a region-controllable diffusion-transformer pipeline with face, eye, and lip transfer, built on FLUX.1-Kontext-dev.
+2026-07-28 — MagicMakeup released official code and checkpoints: a region-controllable diffusion-transformer pipeline with face, eye, and lip transfer, built on FLUX.1-Kontext-dev.
 
 ## How to use this
 
-Start with the project page, repository, and hosted model resource as of 2026-07-28. Check those primary materials so exact versions and usage details stay verified.
+As of 2026-07-28, start from the project page, repository, and checkpoint, then verify exact versions against those primary sources.
 
 1. Clone the official repository and create its recommended Python 3.10 environment with PyTorch 2.6.0/CUDA 12.4 and the listed dependencies.
   — <https://github.com/vivoCameraResearch/Magic-Makeup>
 2. Accept the FLUX.1-Kontext-dev license, download that base model, then download the Anyou/MagicMakeup checkpoint.
   — <https://github.com/vivoCameraResearch/Magic-Makeup>
-3. Place source and makeup-reference portraits in separate directories. Crop primary faces to centered 1024 × 1024 images and retain the preprocessing log.
+3. Place source and makeup-reference portraits in separate directories; crop primary faces to centered 1024 × 1024 images and retain the preprocessing log.
   — <https://github.com/vivoCameraResearch/Magic-Makeup>
-4. Generate matching face, eye, or lip masks for both images. Run test_single.py with the desired --label value: eyes, lip, or eyes,lip,face.
+4. Generate matching face, eye, or lip masks for both images, then run test_single.py with the desired --label value: eyes, lip, or eyes,lip,face.
   — <https://github.com/vivoCameraResearch/Magic-Makeup>
-5. Confirm filename-stem matches for every image and mask before running test_dir.py. The script pairs every source with every reference and skips unmatched masks.
+5. Use test_dir.py only after confirming filename-stem matches for every image and mask; it pairs every source with every reference and skips unmatched masks.
   — <https://github.com/vivoCameraResearch/Magic-Makeup>
 
 ## Best practices
 
-- Start with a single pair and inspect the comparison panel before an all-to-all batch. Batch mode skips pairs when crop and mask mismatches occur.
+- Start with a single pair and inspect the comparison panel before batch runs, because batch mode skips mismatched crops and masks.
   — <https://github.com/vivoCameraResearch/Magic-Makeup>
-- Use the default model-offload mode first. Choose sequential CPU offload only when GPU memory is constrained, because it slows inference.
+- Use the default model-offload mode first, and pick sequential CPU offload only when GPU memory is constrained, because sequential offload slows inference.
   — <https://github.com/vivoCameraResearch/Magic-Makeup>
-- Keep use within the stated non-commercial academic cosmetics-research scope. Do not repurpose it for face swapping, identity recognition, impersonation, or deceptive edits.
+- Keep use within non-commercial academic cosmetics research, and never repurpose the model for face swapping, identity recognition, impersonation, or deceptive edits.
   — <https://github.com/vivoCameraResearch/Magic-Makeup>
 
 ## Superseded by this
@@ -57,8 +57,8 @@ Start with the project page, repository, and hosted model resource as of 2026-07
 
 ## Still unknown
 
-- We found no versioned GitHub release or dated checkpoint publication, so the exact publication time of the code and checkpoint cannot be separated from the 2026-07-28 release event.
-- The Hugging Face page exposes a generic Diffusers example that omits MagicMakeup’s mask-conditioned pipeline. The official repository remains the authoritative inference route.
+- No versioned GitHub release or dated checkpoint publication was found, so the exact publication time of the code and checkpoint cannot be separated from the 2026-07-28 release event.
+- The Hugging Face page exposes a generic Diffusers example that does not describe MagicMakeup’s mask-conditioned pipeline; the official repository is the authoritative inference route.
 
 ## Sources
 
@@ -72,5 +72,5 @@ Start with the project page, repository, and hosted model resource as of 2026-07
 ## Agent brief {#agent-brief}
 
 - **Subject:** `project:magicmakeup`, thread `magicmakeup-transfer`, 1 dated events 2026-07-28 → 2026-07-28.
-- **Practical note:** Start with the project page, repository, and hosted model resource as of 2026-07-28. Verify exact versions and usage details from those primary materials.
+- **Practical note:** As of 2026-07-28, practitioners evaluating MagicMakeup Transfer should begin with its project page, repository, and hosted model resource, then verify exact versions and usage details from those primary materials.
 - **Confidence:** high. Dated supersedes above are the authority for what is obsolete.
