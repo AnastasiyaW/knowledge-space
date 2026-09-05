@@ -13,26 +13,21 @@ aliases: ["Self Gradient Forcing"]
 
 ## What it is
 
-Self Gradient Forcing (SGF) is a training method for autoregressive video diffusion models. It replays sampled self-generated context so future-frame losses train causal KV memory without retaining gradients through the full rollout.
-
-- Code and checkpoints: built on Wan2.1 T2V 1.3B and 14B foundations in framewise and chunkwise settings.
-- Horizon: 5 seconds reported training window, with demonstrations and evaluation extending to 60 and 240 seconds.
-
-Use it as a research implementation for long-horizon video extrapolation, not as a drop-in hosted video generator.
+Self Gradient Forcing (SGF) is a training method for autoregressive video diffusion. It replays sampled self-generated context so future-frame losses can train causal KV memory without retaining gradients through the entire rollout. The project ships code and checkpoints on Wan2.1 T2V 1.3B and 14B foundations, with framewise and chunkwise settings. The reported training window is 5 seconds; demonstrations and evaluation extend to 60 and 240 seconds. Use it as a research implementation for long-horizon video extrapolation, not as a drop-in hosted video generator.
 
 ## Development line
 
-- **2026-07-24 — Self Gradient Forcing project resources were linked.** On 2026-07-24, the project page, GitHub repository, and Hugging Face model page were linked. They provide the project overview, code, and model weights in one place. The links do not show whether this was an initial release, an update, or another technical milestone.
+- **2026-07-24 — Self Gradient Forcing project resources were linked.** On 2026-07-24, links connected the project page, source repository, and Hugging Face model page. These links make the project overview, implementation location, and hosted model resource discoverable together. They do not establish whether this was an initial release, a versioned update, or another specific technical milestone.
 
 ## What changed
 
-- 2026-07-22 — the paper introduced bounded two-pass reconstruction to bridge the historical context-gradient gap in frozen-cache Self Forcing.
-- 2026-07-23 — the authors publicly released the paper, inference and training code, and model checkpoints.
-- 2026-07-24 — the linked project page, repository, and model collection made the release discoverable, specifying framewise and chunkwise releases rather than one generic checkpoint.
+- 2026-07-22 — The paper introduced SGF's bounded two-pass reconstruction to address the context-gradient gap in frozen-cache Self Forcing.
+- 2026-07-23 — The authors publicly released the paper, inference and training code, and model checkpoints.
+- 2026-07-24 — The linked project, repository, and model collection made the release discoverable; the official material specifies both framewise and chunkwise releases rather than one generic checkpoint.
 
 ## How to use this
 
-As of 2026-07-24, practitioners can use the linked project page, GitHub repository, and Hugging Face page to locate Self Gradient Forcing's public overview, implementation, and model resources.
+As of 2026-07-24, practitioners could use the linked project page, GitHub repository, and Hugging Face page to locate Self Gradient Forcing's public overview, implementation, and model resource.
 
 1. Create a Python 3.10 environment, install the repository requirements and FlashAttention, then install the project in development mode.
   — <https://github.com/zhuang2002/Self_Gradient_Forcing>
@@ -54,12 +49,12 @@ As of 2026-07-24, practitioners can use the linked project page, GitHub reposito
 
 ## Superseded by this
 
-- 2026-07-22 — frozen-cache Self Forcing is superseded by SGF only for the missing context-gradient path: SGF preserves the no-gradient serial rollout but reconstructs the sampled computation so future losses train memory writing. This is not a general deprecation of all Self Forcing workflows.
+- 2026-07-22 — Frozen-cache Self Forcing is superseded by SGF only for the missing context-gradient path: SGF preserves the no-gradient serial rollout but reconstructs the sampled computation so future losses train memory writing. This is not a general deprecation of all Self Forcing workflows.
 
 ## Still unknown
 
-- Independent results: no outside reproduction covers quality, compute cost, or compatibility; reported long-horizon gains remain author-reported.
-- Production support: the release material does not establish a stable production support policy or a maintained inference service.
+- No independently reproduced quality, compute-cost, or compatibility result was found in the reviewed first-party materials; reported long-horizon gains remain author-reported.
+- The release material does not establish a stable production support policy or a maintained inference service.
 
 ## Sources
 
