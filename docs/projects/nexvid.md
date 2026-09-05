@@ -13,64 +13,64 @@ aliases: ["NexVid"]
 
 ## What it is
 
-NexVid is a browser extension for people who watch anime, cartoons, and web video in Chrome or Firefox.
-- Anime4K GPU upscaling for real-time video playback.
-- Quality and FPS profiles to match hardware performance.
-- Filters and WebGL shaders for image adjustment.
-- Presets to save shader and filter chains.
-- Local player for desktop video files.
+NexVid is a browser extension for watching anime, cartoons and web video in Chrome or Firefox.
 
-Processing runs during playback and requires access to data on all websites; v1.1.9 from 2026-08-20 is current.
-It tunes playback, but does not replace video export with neural upscaling.
+- Anime4K GPU upscaling for anime and cartoons.
+- Quality and FPS profiles for hardware tuning.
+- WebGL shaders and custom filters.
+- Presets to save custom configurations.
+- Local player for disk files.
+
+Processing runs during playback and requires access to all website data; current release is v1.1.9 from 2026-08-20. We can tune playback in real time, but the extension does not replace video export with neural upscaling.
 
 ## Development line
 
-- **2026-04-17 — NexVid browser-extension listings appeared for Chrome and Firefox.** On 2026-04-17, listings for the NexVid browser extension appeared on the Chrome Web Store and Firefox Add-ons. This step expanded distribution across Chrome and Firefox. The source listings do not state a version, feature set, availability status, or changes made on that date.
+- **2026-04-17 — NexVid browser-extension listings appeared for Chrome and Firefox.** On 2026-04-17, NexVid listings appeared on the Chrome Web Store and Firefox Add-ons. The paired listings mark a distribution step across Chrome and Firefox. Public listings on that date show no version number, feature set, availability status, or change log.
 
 ## What changed
 
-- 2025-10-27 — Firefox 1.0.2 became the earliest publicly visible version in AMO history.
-- 2025-11-10 — Firefox 1.0.5 added local videos and extra effects.
-- 2025-12-01 — Firefox 1.1.0 added dark and minimalist themes, raised the maximum FPS, and fixed Twitch; 1.1.1 on the same day fixed profile selection in the minimal interface.
-- 2026-01-20 — Firefox 1.1.2 added a resolution threshold to skip high-quality sources, along with experimental shaders.
+- 2025-10-27 — Firefox 1.0.2 became the earliest publicly visible release in AMO history.
+- 2025-11-10 — Firefox 1.0.5 added local video support and extra effects.
+- 2025-12-01 — Firefox 1.1.0 added dark and minimalist themes, raised maximum FPS, and fixed Twitch. Release 1.1.1 fixed profile selection in the minimal interface on the same day.
+- 2026-01-20 — Firefox 1.1.2 added experimental shaders and a resolution threshold to skip high-quality video.
 - 2026-03-08 — Firefox 1.1.3 added a website whitelist.
 - 2026-04-17 — Chrome 1.1.6 was updated; this confirms a Chrome release, not an identical Firefox release on that date.
-- 2026-08-20 — Chrome and Firefox offer 1.1.9; current store descriptions list Anime4K, performance profiles, shaders, presets, and a local player.
+- 2026-08-20 — Chrome and Firefox both offer 1.1.9; store listings specify Anime4K, performance profiles, shaders, presets, and a local player.
 
 ## How to use this
 
-From 2026-04-17, practitioners evaluating NexVid should check its browser-extension availability through the Chrome Web Store and Firefox Add-ons, while independently verifying current compatibility and capabilities.
+We check extension availability on the Chrome Web Store and Firefox Add-ons from 2026-04-17, and verify compatibility directly.
 
-1. Install NexVid from the Chrome Web Store or Firefox Add-ons and open the target web video.
+1. Install NexVid from the Chrome Web Store or Firefox Add-ons, then open the target web video.
   — <https://chromewebstore.google.com/detail/nexvid-real-time-video-up/hiocbajaikpcckgeagcngaeoioncmbim>
-2. Select an Anime4K profile and target FPS to match computer performance, then set a resolution threshold to skip high-quality sources.
+2. Select an Anime4K profile and target FPS for hardware capacity, then set a resolution threshold to skip high-quality sources.
   — <https://addons.mozilla.org/fr/firefox/addon/nexvid-realtime-video-upscaler/>
 3. Build a chain of filters and WebGL shaders if needed, then save it as a preset.
   — <https://chromewebstore.google.com/detail/nexvid-real-time-video-up/hiocbajaikpcckgeagcngaeoioncmbim>
-4. Open local files with the built-in player instead of expecting an export of an upscaled video.
+4. Use the built-in local player for disk files instead of expecting an export of the upscaled video.
   — <https://addons.mozilla.org/fr/firefox/addon/nexvid-realtime-video-upscaler/>
 
 ## Best practices
 
-- Start with anime and cartoons; the author notes them as the best sources.
+- Start with anime and cartoons because they are the best-suited sources.
   — <https://www.reddit.com/r/upscaling/comments/1sl1vy1/i_made_a_browser_extension_that_let_you_upscale/>
-- Do not raise FPS above the source rate. The slider caps processed frames rather than generating new ones; a limit of 30 FPS on a 60 FPS source can cause dropped frames.
+- Do not set FPS above the source rate because the slider limits processed frames rather than creating new ones. Setting a 30 FPS limit on a 60 FPS source causes frame drops.
   — <https://www.reddit.com/r/SideProject/comments/1okqhgx/i_made_a_browser_extension_that_let_you_upscale/>
-- Select a profile for hardware load, then tune filters separately. The author recommends unsharp mask and high-pass for sharpness before saving a preset.
+- Pick a profile based on hardware load, then adjust filters separately. Use unsharp mask and high-pass for sharpness, then save the preset.
   — <https://www.reddit.com/r/upscaling/comments/1sl1vy1/i_made_a_browser_extension_that_let_you_upscale/>
-- Check the permission for all-site data access before installing, and restrict the extension to a site whitelist when available.
+- Check all-sites permission requirements before installing, and restrict the extension to a site whitelist when available.
   — <https://addons.mozilla.org/fr/firefox/addon/nexvid-realtime-video-upscaler/>
 
 ## Superseded by this
 
-- 2025-10-31 — Advice that local files cannot open in NexVid is obsolete after local-video support arrived in Firefox 1.0.5 on 2025-11-10.
-- 2026-04-17 — Chrome 1.1.6 is obsolete as the recommended version: the current store listing specifies 1.1.9 from 2026-08-20.
+- 2025-10-31 — Claims that NexVid cannot open local files are obsolete since Firefox 1.0.5 added local video support on 2025-11-10.
+- 2026-04-17 — Chrome 1.1.6 is obsolete as the recommended release; the current store listing shows 1.1.9 from 2026-08-20.
 
 ## Still unknown
 
-- Public Firefox version history ends at 1.1.3 on 2026-03-08, while the current listing shows 1.1.9; no changelog between them is available.
-- Chrome v1.1.6 and its stats snapshot are confirmed for 2026-04-17, but no primary changelog explains the contents of that update.
-- The Chrome store lists location and user activity data collection, while the Firefox listing requires data access for all websites; a comparable permissions breakdown across both platforms is not established.
+- Public Firefox version history ends at 1.1.3 from 2026-03-08, though the current store listing shows 1.1.9; changelogs between them are missing.
+- Chrome v1.1.6 and its stats snapshot are confirmed for 2026-04-17, but no primary changelog documents that update.
+- The Chrome listing reports collecting location and user activity, while Firefox lists all-sites access. A comparative permission list for both platforms is missing.
 
 ## Sources
 
