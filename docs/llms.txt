@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1022+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1023+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -685,6 +685,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 
 ## Projects
 - [ACTI](https://happyin.space/projects/acti/): **Development line:** `project:acti` · thread `acti-development`
+- [Firefly Graph](https://happyin.space/projects/adobe-firefly-graph/): **Development line:** `project:adobe-firefly-graph` · thread `firefly-graph`
 - [Adobe Firefly Video Model — Firefly Video Model rollout](https://happyin.space/projects/adobe-firefly-video-model/): **Development line:** `project:adobe-firefly-video-model` · thread `firefly-video-model-rollout`
 - [Align3R](https://happyin.space/projects/align3r/): **Development line:** `project:align3r` · thread `align3r`
 - [Topaz Labs Astra — Astra development](https://happyin.space/projects/astra/): **Development line:** `project:astra` · thread `astra-development`
