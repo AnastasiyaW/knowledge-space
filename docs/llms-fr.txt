@@ -1,6 +1,6 @@
 # Base de connaissances techniques complète - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1209+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1210+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -872,6 +872,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [MiniMax Music 3 Latent Refiner](https://happyin.space/projects/minimax-music3-latent-refiner/): **Development line:** `project:minimax-music3-latent-refiner` · thread `minimax-music3-latent-refiner`
 - [Mistral Small 4 — Mistral Small](https://happyin.space/projects/mistral-small-4/): **Development line:** `project:mistral-small-4` · thread `mistral-small`
 - [MLSLabsRenderer-Lite](https://happyin.space/projects/mlslabsrenderer-lite/): **Development line:** `project:mlslabsrenderer-lite` · thread `mlslabsrenderer-lite`
+- [Modly](https://happyin.space/projects/modly/): **Development line:** `project:modly` · thread `modly-development`
 - [Moebius — Public availability](https://happyin.space/projects/moebius/): **Development line:** `project:moebius` · thread `public-availability`
 - [MolmoMotion](https://happyin.space/projects/molmomotion/): **Development line:** `project:molmomotion` · thread `molmomotion-model-availability`
 - [MosaicMem](https://happyin.space/projects/mosaicmem/): **Development line:** `project:mosaicmem` · thread `mosaicmem-development`
