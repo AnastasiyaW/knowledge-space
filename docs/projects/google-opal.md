@@ -1,6 +1,7 @@
 ---
 title: Google Opal
 category: projects
+date: 2025-07-25
 tags: [google-opal, opal, project]
 aliases: ["Google Opal"]
 ---
@@ -8,58 +9,64 @@ aliases: ["Google Opal"]
 # Google Opal
 
 **Development line:** `project:google-opal` · thread `google-opal`  
-**Events:** 1 dated, 2025-07-25 → 2025-07-25 · **Researched:** 2026-09-04 · confidence: medium
+**Last event:** 2025-07-25 · 1 dated since 2025-07-25 · **Researched:** 2026-09-05 · confidence: medium
 
 ## What it is
 
-Google Opal — a no-code alternative to building a small custom web app, for people who need a shareable AI workflow without deploying a server. - Creates and edits node-based workflows from natural language. - Chains inputs, prompts, model calls, tools, and outputs. - Lets Agent Mode use tools, memory, routing, and follow-up chat. Limit: it remains labelled an Experiment; the editor is desktop-optimized and access is country-specific. Verdict: use it for prototypes and bounded workflow tools; retain fixed steps when the logic must be rigid.
+Google Opal is a no-code alternative to small custom web apps, built for people who want shareable AI workflows without running a server.
+
+- Workflow editor: builds and edits node-based pipelines from natural language.
+- Visual canvas: chains inputs, prompts, model calls, tools, and outputs.
+- Agent Mode: selects tools, uses memory, routes execution, and conducts follow-up chat.
 
 ## Development line
 
-- **2025-07-25 — Google introduced Opal.** On 2025-07-25 Google published an official introduction to Opal on the Google Developers Blog and linked an Opal web address. The supplied dated links establish this as the project's launch-related history event, without independently establishing its features, availability, or regional scope.
+- **2025-07-25 — Google introduced Opal.** On 2025-07-25, Google published an introduction to Opal and shared its web entry point. The launch confirmed the project, but did not establish its full feature set, regional availability, or account limits.
 
 ## What changed
 
-2025-07-25 (original announcement dated 2025-07-24) — Opal entered a U.S.-only public beta as a natural-language and visual builder for multi-step apps that chain prompts, model calls, and tools. 2026-02-25 (official announcement dated 2026-02-24) — the Generate step gained Agent Mode, which can select tools and models against an objective, use memory, route dynamically, and ask follow-up questions. 2026-03-24 (found today in current first-party documentation) — Agent Mode is documented as enabled by default and exposes Search/Maps, Code Exec, Memory, and media-generation tools; fixed workflows remain available for high-precision or rigid logic.
+- **2025-07-25** (original announcement dated 2025-07-24) — Opal launched in U.S.-only public beta as a visual and natural-language builder for multi-step apps chaining prompts, model calls, and tools.
+- **2026-02-25** (official announcement dated 2026-02-24) — The Generate step gained Agent Mode to pick tools and models against a goal, retain memory, route dynamically, and ask follow-up questions.
+- **2026-03-24** — First-party documentation shows Agent Mode enabled by default, exposing Search/Maps, Code Exec, Memory, and media generation. Fixed workflows remain available for rigid or high-precision logic.
 
 ## How to use this
 
-From 2025-07-25, practitioners could evaluate Google Opal through Google's official project introduction and linked web entry point; the supplied evidence does not establish a later workflow or capability change.
+We evaluate Google Opal through its official introduction and web entry point from 2025-07-25. Official documentation shows no later workflow or capability changes.
 
-1. Sign in to Opal, open a Gallery demo, and choose Remix to make an editable copy; alternatively choose Create New for a blank app.
+1. Sign in to Opal, open a Gallery demo, and select Remix to create an editable copy. Select Create New to build an app from scratch.
   — <https://developers.google.com/opal/quickstart>
-2. For an open-ended app, add a Generate step, select Agent if needed, and state the outcome the app should achieve.
+2. For open-ended workflows, add a Generate step, turn on Agent if needed, and define the target outcome.
   — <https://developers.google.com/opal/Agent_Mode>
-3. Explicitly name needed capabilities with the @ menu, such as @Search or @Memory, then connect input, generation, output, or routed steps in the visual editor.
+3. Reference needed capabilities with the @ menu, such as @Search or @Memory, then link inputs, generation steps, and outputs in the visual editor.
   — <https://developers.google.com/opal/Agent_Mode>
-4. Preview the app with representative inputs, inspect the resulting workflow, and revise prompts or nodes before sharing it.
+4. Preview the app with representative inputs, inspect the resulting graph, and refine prompts or nodes before sharing.
   — <https://developers.google.com/opal/quickstart>
-5. Keep an Opal private by default; when sharing, choose whether recipients get only the app view or also editor/remix access.
+5. Keep an Opal private by default. When sharing, restrict users to the app view or grant full editor and remix access.
   — <https://developers.google.com/opal/faq>
 
 ## Best practices
 
-- Start by remixing a Gallery app rather than designing the first workflow from a blank canvas.
+- Remix an existing Gallery app rather than designing the first workflow on an empty canvas.
   — <https://developers.google.com/opal/quickstart>
-- For Agent Mode, describe the objective and desired result rather than prescribing every micro-step.
+- For Agent Mode, specify the goal and required output rather than prescribing every intermediate step.
   — <https://developers.google.com/opal/Agent_Mode>
-- Use explicit @ tool references when a particular capability is required; the documentation calls this the more precise option.
+- Call tools explicitly with @ when you need a particular capability, which official documentation describes as more precise.
   — <https://developers.google.com/opal/Agent_Mode>
-- Test prompts and the completed app before relying on it, because Opal can make mistakes.
+- Test prompts and the full workflow before relying on it, because Opal can make mistakes.
   — <https://developers.google.com/opal/faq>
-- Treat editor/remix sharing as prompt disclosure: it exposes the workflow graph and prompts, and a shared Opal also shares its Drive file.
+- Treat remix and editor sharing as prompt disclosure: sharing exposes prompts, the workflow graph, and the underlying Drive file.
   — <https://developers.google.com/opal/faq>
 
 ## Superseded by this
 
-- 2025-07-25 — the original “U.S.-only public beta” access guidance is obsolete: the current FAQ lists supported countries rather than a U.S.-only scope.
-- Before 2026-02-25 — treating every Opal as a static linear prompt chain is obsolete for open-ended work; Agent Mode adds tool selection, memory, routing, and interactive follow-ups. Fixed workflows remain appropriate for rigid or high-precision logic.
+- **2025-07-25** — The original U.S.-only public beta access rule is obsolete: the current FAQ lists supported countries instead of restricting access to the U.S.
+- **Before 2026-02-25** — Treating every Opal purely as a static prompt chain is obsolete for open-ended tasks; Agent Mode adds tool selection, memory, routing, and interactive chat. Fixed workflows remain appropriate for rigid or high-precision logic.
 
 ## Still unknown
 
-- No signed-in run was performed, so quotas, billing, publication limits, and feature availability for a particular Google account were not verified.
-- No first-party Simplified-Chinese Opal documentation was found in the Chinese-language search; the practical guidance relies on English official documentation.
-- Availability is country-specific; verify the current official FAQ before committing a workflow to Opal.
+- We ran no signed-in tests, leaving quotas, billing, publication caps, and account-specific feature availability unverified.
+- Chinese-language searches found no first-party Simplified-Chinese Opal documentation, so guidance relies entirely on official English sources.
+- Availability remains country-specific; check the current official FAQ before committing a workflow to Opal.
 
 ## Sources
 
