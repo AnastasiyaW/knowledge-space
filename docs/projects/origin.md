@@ -13,7 +13,15 @@ aliases: ["Origin"]
 
 ## What it is
 
-Origin is Cursor’s early-beta Git forge for paid Cursor users. It can host native repositories, mirror GitHub repositories, browse and search code, run pull-request review, and connect cloud agents and automations. Native repositories use Origin as source of truth; mirrored repositories keep GitHub as source of truth. Verdict: use it for Cursor-native code workflows or a GitHub mirror, but treat its API and beta contracts as changeable.
+Origin is Cursor’s early-beta Git forge for paid Cursor users.
+
+- Native repositories: host code with Origin as the source of truth.
+- GitHub mirroring: mirror repositories while GitHub remains the source of truth.
+- Code search and browsing: search and inspect code in the repository.
+- Pull-request review: review diffs and checks before merging.
+- Agent connections: connect cloud agents and automations to repositories.
+
+Use it for Cursor-native code workflows or a GitHub mirror, but treat its API and beta contracts as changeable.
 
 ## Development line
 
@@ -21,7 +29,15 @@ Origin is Cursor’s early-beta Git forge for paid Cursor users. It can host nat
 
 ## What changed
 
-2026-08-19 — Origin entered early-beta rollout: native repositories, GitHub mirroring, code browsing, pull requests, and Cursor agents; the launch page itself is dated 2026-08-17. 2026-08-26 — the public API added repository labels and check-run annotations, while reviewer webhook payloads changed shape. 2026-08-27 — the API specification became more generator-friendly and added optional check-run deadlines. 2026-08-28 — passed deadlines began completing in-progress check runs as timed out; the API added repository tarballs and comparison-file listing. 2026-08-29 — API support expanded for requested reviewers, resolvable review threads, inline comments, and atomic review comments. 2026-09-01 — repository-deletion and metadata-update webhooks were added. 2026-09-02 — list endpoints for check suites and check runs changed to return only the latest attempt, hiding superseded retries from normal listings. 2026-09-03 — check-run and pull-request-comment listing gained filters for incremental polling. 2026-09-04 — app `slug` was removed from API and webhook actor metadata; integrations must use app `id` and optional `displayName`.
+- 2026-08-19 — Origin entered early-beta rollout: native repositories, GitHub mirroring, code browsing, pull requests, and Cursor agents; the launch page itself is dated 2026-08-17.
+- 2026-08-26 — The public API added repository labels and check-run annotations; reviewer webhook payloads changed shape.
+- 2026-08-27 — The API specification became more generator-friendly and added optional check-run deadlines.
+- 2026-08-28 — Passed deadlines began completing in-progress check runs as timed out; the API added repository tarballs and comparison-file listing.
+- 2026-08-29 — API support expanded for requested reviewers, resolvable review threads, inline comments, and atomic review comments.
+- 2026-09-01 — Repository-deletion and metadata-update webhooks were added.
+- 2026-09-02 — List endpoints for check suites and check runs changed to return only the latest attempt, hiding superseded retries from normal listings.
+- 2026-09-03 — Check-run and pull-request-comment listing gained filters for incremental polling.
+- 2026-09-04 — App `slug` was removed from API and webhook actor metadata; integrations must use app `id` and optional `displayName`.
 
 ## How to use this
 
@@ -59,7 +75,7 @@ From 2026-08-19, practitioners evaluating code-hosting workflows should include 
 
 ## Still unknown
 
-- The supplied event date is 2026-08-19, but Cursor’s primary launch page is dated 2026-08-17; this brief retains 2026-08-19 as the event date and records the correction below.
+- The supplied event date is 2026-08-19, but Cursor’s primary launch page is dated 2026-08-17; we retain 2026-08-19 as the event date.
 - No independent production-use evidence was found for Origin; feature availability is documented as staged and early beta. Most post-launch changes found were API changes rather than a dated product-release narrative.
 
 ## Sources
