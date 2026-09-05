@@ -1,27 +1,28 @@
 ---
-title: DiffIR2VR-Zero — DiffIR2VR-Zero development
+title: DiffIR2VR-Zero
 category: projects
+date: 2024-07-14
 tags: [diffir2vr-zero, diffir2vr-zero-development, diffir2vr_zero, project]
 aliases: ["DiffIR2VR-Zero"]
 ---
 
-# DiffIR2VR-Zero — DiffIR2VR-Zero development
+# DiffIR2VR-Zero
 
 **Development line:** `project:diffir2vr-zero` · thread `diffir2vr-zero-development`  
-**Events:** 2 dated, 2024-07-01 → 2024-07-14 · **Researched:** 2026-09-04 · confidence: medium
+**Last event:** 2024-07-14 · 2 dated since 2024-07-01 · **Researched:** 2026-09-05 · confidence: medium
 
 ## What it is
 
-DiffIR2VR-Zero — research code that adapts pretrained image-restoration diffusion models to temporally consistent video restoration. — Blind denoising (`dn`) and super-resolution (`sr`). — Claimed up to 8× super-resolution without task-specific retraining. — Hierarchical latent warping plus flow- and similarity-based token merging. Limit: the launcher defaults to CUDA, has no tagged GitHub release, and the hosted demo reports a build error. Verdict: use the repository for controlled experiments, not the demo as a production endpoint.
+DiffIR2VR-Zero — research code that adapts pretrained image-restoration diffusion models to temporally consistent video restoration. — Blind denoising (`dn`) and super-resolution (`sr`). — Claimed up to 8× super-resolution without task-specific retraining. — Hierarchical latent warping plus flow- and similarity-based token merging. Limit: the launcher defaults to CUDA, has no tagged GitHub release, and the hosted demo reports a build error. use the repository for controlled experiments, not the demo as a production endpoint.
 
 ## Development line
 
 - **2024-07-01 — DiffIR2VR-Zero project page and interactive demo entered the public record.** On 2024-07-01, the DiffIR2VR-Zero development line was linked to a project website and a Hugging Face Space. This is a material public project-and-demo presence in the historical record. The sealed evidence does not establish the model version, capabilities, or release status behind those links.
-- **2024-07-14 — DiffIR2VR-Zero GitHub repository was linked in the development line.** On 2024-07-14, the DiffIR2VR-Zero development line linked an earlier The source item alongside the project's GitHub repository. This is treated as a material source-access milestone for the public history. The sealed links alone do not show whether this was a new code release or a reference to code already available earlier.
+- **2024-07-14 — DiffIR2VR-Zero GitHub repository was linked in the development line.** On 2024-07-14, the DiffIR2VR-Zero development line linked an earlier item alongside the project's GitHub repository. This is treated as a material source-access milestone for the public history. The sealed links alone do not show whether this was a new code release or a reference to code already available earlier.
 
 ## What changed
 
-DiffIR2VR-Zero — the method and source arrived in July 2024; later evidence shows paper revisions, a checkpoint-link repair, and an unavailable hosted demo rather than a new product generation. — 2024-07-01: arXiv v1 and the repository’s first commit established the training-free video-restoration method, project page, and local code path. — 2024-07-14: the GitHub route made source checkout explicit. Repository history, checked today, places the initial commit on 2024-07-01, so this is not evidenced as a second algorithmic release. — 2025-12-31 (found today): arXiv v5 was posted. Its metadata does not describe a corresponding runnable-code change. — 2026-01-22 (found today): commit `2cf4737` replaced the unavailable official SD 2.1 checkpoint URL with a mirror; the inference method was unchanged. — 2026-09-04 (found today): the public Hugging Face Space reports a build error, leaving the local repository as the practical entry point. Limit: no fresh end-to-end installation was run in this review. Verdict: treat it as lightly maintained research code with a working source path but a fragile dependency chain.
+DiffIR2VR-Zero — the method and source arrived in July 2024; later evidence shows paper revisions, a checkpoint-link repair, and an unavailable hosted demo rather than a new product generation. — 2024-07-01: arXiv v1 and the repository’s first commit established the training-free video-restoration method, project page, and local code path. — 2024-07-14: the GitHub route made source checkout explicit. Repository history, checked today, places the initial commit on 2024-07-01, so this is not evidenced as a second algorithmic release. — 2025-12-31 (found today): arXiv v5 was posted. Its metadata does not describe a corresponding runnable-code change. — 2026-01-22 (found today): commit `2cf4737` replaced the unavailable official SD 2.1 checkpoint URL with a mirror; the inference method was unchanged. — 2026-09-04 (found today): the public Hugging Face Space reports a build error, leaving the local repository as the practical entry point. Limit: no fresh end-to-end installation was run in this review. treat it as lightly maintained research code with a working source path but a fragile dependency chain.
 
 ## How to use this
 
