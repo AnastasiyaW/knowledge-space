@@ -13,13 +13,13 @@ aliases: ["Glob3R"]
 
 ## What it is
 
-Glob3R is a global Structure-from-Motion pipeline that couples frozen Pi3X 3D predictions with dense matching, tracks, motion averaging, and bundle adjustment.
+Glob3R is an offline global Structure-from-Motion pipeline that links frozen Pi3X 3D model predictions with dense matching, tracks, motion averaging, and bundle adjustment.
 
-- Image inputs: processes ordered sequences and unordered image collections.
-- Scene geometry: refines camera poses and dense geometry.
-- Target use: runs offline reconstruction rather than a finished user product.
+- Ordered and unordered image sets: processes both sequences and unordered image collections.
+- Geometry refinement: refines camera poses and dense geometry together.
+- Pipeline role: designed for offline reconstruction rather than an end-user product.
 
-The official repository contains only a README, with inference code and the evaluation script marked TODO. We can evaluate the method from the paper, but we cannot deploy it reproducibly from the official repository today.
+The official repository contains only a README; inference code and evaluation script are marked TODO. We can evaluate the method from the paper, but we cannot reproducibly deploy it from the official repository today.
 
 ## Development line
 
@@ -33,18 +33,18 @@ The official repository contains only a README, with inference code and the eval
 
 As of 2026-07-16, use the linked Glob3R project page only as a starting point for primary-source verification; the dated link alone supports no implementation or workflow change.
 
-1. Do not plan a production or research run from the official repository: it has no inference code, evaluation script, weights, or run instructions.
+1. Do not plan a production or research run from the official repository: it lacks inference code, evaluation script, weights, and launch instructions.
   — <https://github.com/aigc3d/Glob3R>
-2. Use the paper to evaluate the approach: feed an image sequence or build a retrieval-based pseudo-sequence for an unordered set, then use overlapping windows, keyframes, tracks, and global optimization.
+2. Use the paper to evaluate the approach: feed an image sequence or build a retrieval-based pseudo-sequence for an unordered set; the method then uses overlapping windows, keyframes, tracks, and global optimization.
   — <https://arxiv.org/html/2607.09225>
 
 ## Best practices
 
-- Build a pseudo-sequence with image retrieval first for unordered images; keep frame order for an original sequence.
+- Build a pseudo-sequence through image retrieval first for unordered images; preserve the frame order for an existing sequence.
   — <https://arxiv.org/html/2607.09225>
-- Do not replace global optimization with simple window stitching: keyframes and overlapping windows connect poses and tracks across windows.
+- Do not replace global optimization with simple window stitching: keyframes and window overlap are needed to link poses and tracks across windows.
   — <https://arxiv.org/html/2607.09225>
-- Treat the paper results as a research baseline until code and the evaluation script appear.
+- Treat the paper results as a research baseline until code and evaluation script are published.
   — <https://github.com/aigc3d/Glob3R>
 
 ## Superseded by this
@@ -53,8 +53,8 @@ As of 2026-07-16, use the linked Glob3R project page only as a starting point fo
 
 ## Still unknown
 
-- The project and repository pages state no official release date; for the 2026-07-16 event, only project page availability on that date is confirmed.
-- Official inference code, weights, license, system requirements, and reproducible run commands remain unpublished as of 2026-09-05.
+- Official project and repository dates do not appear on the pages themselves; for the 2026-07-16 event, only project page availability on that date is confirmed.
+- Official inference code, weights, license, system requirements, and reproducible launch commands are not published as of 2026-09-05.
 
 ## Sources
 
