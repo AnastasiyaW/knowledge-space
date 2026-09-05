@@ -1,6 +1,6 @@
 # 종합 기술 지식 베이스 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1092+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1093+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -806,6 +806,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Mozart AI](https://happyin.space/projects/mozart-ai/): **Development line:** `project:mozart-ai` · thread `mozart-ai-product-development`
 - [MTVCrafter](https://happyin.space/projects/mtvcrafter/): **Development line:** `project:mtvcrafter` · thread `mtvcrafter-public-development`
 - [MUSIKA](https://happyin.space/projects/musika/): **Development line:** `project:musika` · thread `musika`
+- [MVTrack4Gen](https://happyin.space/projects/mvtrack4gen/): **Development line:** `project:mvtrack4gen` · thread `mvtrack4gen-development`
 - [Nano Banana Pro](https://happyin.space/projects/nano-banana-pro/): **Development line:** `project:nano-banana-pro` · thread `nano-banana-pro`
 - [NanoVDR](https://happyin.space/projects/nanovdr/): **Development line:** `project:nanovdr` · thread `nanovdr-public-release`
 - [Nemotron 3 Super](https://happyin.space/projects/nemotron-3-super/): **Development line:** `project:nemotron-3-super` · thread `nemotron-3-super`
