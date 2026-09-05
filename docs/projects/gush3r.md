@@ -13,28 +13,28 @@ aliases: ["GUSH3R"]
 
 ## What it is
 
-GUSH3R is research code for novel-view rendering of people moving in a scene from monocular video, replacing a separate AnySplat background plus LHM human pipeline.
+GUSH3R is research code for novel-view rendering of moving people from monocular video, replacing a two-step AnySplat background and LHM human pipeline.
 
-- Static scene Gaussians: reconstructs the background.
-- Dynamic human Gaussians: reconstructs moving people.
-- Shared metric-space render: unifies background and human geometry.
-- Causal frame processing: processes frames causally and can use recurrent TTT3R updates.
+- Static scene Gaussians: reconstructs the background scene.
+- Dynamic human Gaussians: reconstructs moving people over time.
+- Shared metric-space render: unifies the scene and humans in one space.
+- Causal frame processing: processes streaming frames in order and supports recurrent TTT3R updates.
 
-The downloadable merged checkpoint is 4.87 GB, and inference additionally requires separately licensed SMPL/SMPL-X assets.
+The merged checkpoint is 4.87 GB, and inference requires separately licensed SMPL and SMPL-X assets.
 
-We can use it for research reproduction and controlled video experiments. It is not a robust production capture pipeline because errors in pose, camera, detection, and occluded identities propagate to the result.
+We can use it for research reproduction and controlled video experiments. It is not ready for production capture because errors in pose, camera, detection, and occluded identities propagate into the result.
 
 ## Development line
 
-- **2026-07-08 — GUSH3R public project resources linked.** On 2026-07-08, the GUSH3R development line was associated with a public project page, a source-code repository, and a Hugging Face resource. These links open public access to the project without establishing further technical details.
+- **2026-07-08 — GUSH3R public project resources linked.** On 2026-07-08, the project page, source code repository, and Hugging Face resource went public. The release opens public access to the project without establishing further technical details.
 
 ## What changed
 
-2026-07-08 — The first public research release of GUSH3R pairs code, a merged `gush3r.pth` inference checkpoint, and a project page. The associated arXiv v1, submitted on 2026-07-06, identifies the method as Gaussian-Unified Scene Human 3D Reconstruction. The release adds a single-pass, streaming 3D-Gaussian representation for static scenes and dynamic humans. It reports 1.70 FPS on its single-human benchmark and 1.45 FPS on its multi-human BEDLAM benchmark.
+2026-07-08 — The first public research release paired code, a merged `gush3r.pth` inference checkpoint, and a project page. The authors submitted arXiv v1 on 2026-07-06, introducing the method as Gaussian-Unified Scene Human 3D Reconstruction. The release adds a single-pass, streaming 3D-Gaussian representation for static scenes and dynamic humans. It runs at 1.70 FPS on the single-human benchmark and 1.45 FPS on the multi-human BEDLAM benchmark.
 
 ## How to use this
 
-From 2026-07-08, we can assess GUSH3R through the linked project page, source repository, and Hugging Face resource. Their contents remain unresearched in this review.
+From 2026-07-08, evaluate GUSH3R through the linked project page, source repository, and Hugging Face resource as the dated public entry points; their contents remain unresearched in this review.
 
 1. Clone the repository, create the recommended Python 3.10 environment, install CUDA 12.1 PyTorch, requirements, PyTorch3D, and the Gaussian rasterizer.
   — <https://github.com/abkeito/GUSH3R>
@@ -47,7 +47,7 @@ From 2026-07-08, we can assess GUSH3R through the linked project page, source re
 
 - Run the three-frame smoke test before a full sequence, and use `--subsample` to reduce sequence load during diagnosis.
   — <https://github.com/abkeito/GUSH3R>
-- Review outputs manually when encountering identity association, severe person-to-person occlusion, motion blur, large pose changes, faces, hands, and clothing texture.
+- Review outputs manually when videos contain identity association issues, severe person-to-person occlusion, motion blur, large pose changes, faces, hands, or clothing texture.
   — <https://arxiv.org/html/2607.05243v1>
 - Control accumulated background complexity with `--bg_gaussian_max`, mask threshold, and voxel size rather than allowing unbounded scene growth.
   — <https://github.com/abkeito/GUSH3R>
@@ -58,7 +58,8 @@ From 2026-07-08, we can assess GUSH3R through the linked project page, source re
 
 ## Still unknown
 
-- No later official release, benchmark replication, hardware-specific inference requirement, or maintained production-support policy was found in the reviewed first-party materials.
+- No later official release or benchmark replication exists.
+- Hardware-specific inference requirements and production-support policies are not documented in first-party materials.
 
 ## Sources
 
