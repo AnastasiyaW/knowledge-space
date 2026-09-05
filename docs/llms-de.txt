@@ -1,6 +1,6 @@
 # Umfassende technische Wissensbasis - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1127+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1128+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -764,6 +764,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Gemini](https://happyin.space/projects/gemini/): **Development line:** `project:gemini` · thread `gemini-development`
 - [GeneX](https://happyin.space/projects/genex/): **Development line:** `project:genex` · thread `genex-development`
 - [GenMM](https://happyin.space/projects/genmm/): **Development line:** `project:genmm` · thread `genmm-development`
+- [Glob3R](https://happyin.space/projects/glob3r/): **Development line:** `project:glob3r` · thread `glob3r`
 - [Google Colab](https://happyin.space/projects/google-colab/): **Development line:** `project:google-colab` · thread `google-colab-platform-evolution`
 - [Gemini](https://happyin.space/projects/google-gemini/): **Development line:** `project:google-gemini` · thread `gemini-product-development`
 - [Google Opal](https://happyin.space/projects/google-opal/): **Development line:** `project:google-opal` · thread `google-opal`
