@@ -13,7 +13,7 @@ aliases: ["InfiniSplat"]
 
 ## What it is
 
-InfiniSplat turns one RGB image, or an aligned RGB-depth pair, into a 3D Gaussian scene for novel-view rendering. It offers RGB-only and depth-sensor-guided modes. The released workflow is single-image rather than multi-view reconstruction. Use it for fast spatial-photo output, not metric scene capture from arbitrary imagery.
+InfiniSplat turns one RGB image, or an aligned RGB-depth pair, into a 3D Gaussian scene for novel-view rendering. It offers RGB-only and depth-sensor-guided modes. The released workflow is single-image rather than multi-view reconstruction. We use it for fast spatial-photo output, not metric scene capture from arbitrary imagery.
 
 ## Development line
 
@@ -27,7 +27,7 @@ InfiniSplat turns one RGB image, or an aligned RGB-depth pair, into a 3D Gaussia
 
 ## How to use this
 
-From 2026-08-07, we can use the linked InfiniSplat project page, repository, and Hugging Face Space to inspect the implementation and test the interface before adoption.
+From 2026-08-07, we use the linked InfiniSplat project page, repository, and Hugging Face Space to assess the project, inspect its implementation, and try its public interface before adoption.
 
 1. Create the documented Python 3.10 environment, install the CUDA 12.8 PyTorch dependencies, then download the two checkpoints.
   — <https://github.com/zju3dv/InfiniSplat/blob/main/INSTALL.md>
@@ -40,17 +40,17 @@ From 2026-08-07, we can use the linked InfiniSplat project page, repository, and
 
 ## Best practices
 
-- Provide camera intrinsics or focal length when known. Otherwise, the runner falls back to a fixed 30 mm full-frame-equivalent focal length.
+- Provide camera intrinsics or focal length when known. Otherwise the runner falls back to a fixed 30 mm full-frame-equivalent focal length.
   — <https://github.com/zju3dv/InfiniSplat/blob/main/docs/inference.md>
 - Use depth aligned to the RGB image, expressed as depth rather than disparity. Valid decoded values must be finite and strictly between 1 and 100.
   — <https://github.com/zju3dv/InfiniSplat/blob/main/docs/inference.md>
-- Avoid `--overwrite` when outputs are already valid. The runner skips completed artifacts and only creates a missing requested artifact.
+- Avoid `--overwrite` when outputs are already valid: the runner skips completed artifacts and only creates a missing requested artifact.
   — <https://github.com/zju3dv/InfiniSplat/blob/main/docs/inference.md>
 
 ## Superseded by this
 
 - 2026-08-04 — arXiv v2 supersedes the 2026-08-03 v1 preprint.
-- 2026-08-07 — Treat InfiniSplat as a released two-mode inference workflow, not only a paper or preview.
+- 2026-08-07 — We treat InfiniSplat as a released two-mode inference workflow, not only a paper or preview.
 
 ## Still unknown
 
@@ -70,5 +70,5 @@ From 2026-08-07, we can use the linked InfiniSplat project page, repository, and
 ## Agent brief {#agent-brief}
 
 - **Subject:** `project:infinisplat`, thread `infinisplat-public-availability`, 1 dated events 2026-08-07 → 2026-08-07.
-- **Practical note:** From 2026-08-07, we can use the linked InfiniSplat project page, repository, and Hugging Face Space to inspect the implementation and test the interface before adoption.
+- **Practical note:** From 2026-08-07, we use the linked InfiniSplat project page, repository, and Hugging Face Space to assess the project, inspect its implementation, and try its public interface before adoption.
 - **Confidence:** high. Dated supersedes above are the authority for what is obsolete.
