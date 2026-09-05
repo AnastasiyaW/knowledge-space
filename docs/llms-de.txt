@@ -1,6 +1,6 @@
 # Umfassende technische Wissensbasis - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1220+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1221+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -990,6 +990,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Unity CLI](https://happyin.space/projects/unity-cli/): **Development line:** `project:unity-cli` · thread `unity-cli-introduction`
 - [UnityShots](https://happyin.space/projects/unityshots/): **Development line:** `project:unityshots` · thread `unityshots-development`
 - [UnitySplats](https://happyin.space/projects/unitysplats/): **Development line:** `project:unitysplats` · thread `unitysplats`
+- [UPAL](https://happyin.space/projects/upal/): **Development line:** `project:upal` · thread `upal-development`
 - [V-JEPA](https://happyin.space/projects/v-jepa/): **Development line:** `project:v-jepa` · thread `v-jepa`
 - [V-RAE](https://happyin.space/projects/v-rae/): **Development line:** `project:v-rae` · thread `v-rae-development`
 - [Veo](https://happyin.space/projects/veo/): **Development line:** `project:veo` · thread `veo-development`
