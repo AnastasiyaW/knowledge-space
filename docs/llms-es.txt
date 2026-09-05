@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1203+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1204+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -634,6 +634,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Anthropic — Anthropic Development](https://happyin.space/organizations/anthropic/): **Development line:** `organization:anthropic` · thread `anthropic-development`
 - [Apple — Apple AI: research releases to product capabilities](https://happyin.space/organizations/apple/): **Development line:** `organization:apple` · thread `apple-ai-research-to-product`
 - [ByteDance — ByteDance AI development and compute constraints](https://happyin.space/organizations/bytedance/): **Development line:** `organization:bytedance` · thread `bytedance-ai-development-and-compute-constraints`
+- [Canva — Magic Layers](https://happyin.space/organizations/canva/): **Development line:** `organization:canva` · thread `magic-layers`
 - [Civitai — Civitai platform, business, and access evolution](https://happyin.space/organizations/civitai/): **Development line:** `organization:civitai` · thread `platform-business-and-access-evolution`
 - [Cursor — Product development](https://happyin.space/organizations/cursor/): **Development line:** `organization:cursor` · thread `product-development`
 - [D-ID — Public product surfaces](https://happyin.space/organizations/d-id/): **Development line:** `organization:d-id` · thread `public-product-surfaces`
