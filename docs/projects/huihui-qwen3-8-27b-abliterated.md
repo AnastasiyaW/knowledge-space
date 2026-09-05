@@ -13,53 +13,53 @@ aliases: ["Huihui-Qwen3.8-27B-abliterated"]
 
 ## What it is
 
-Huihui-Qwen3.8-27B-abliterated is an abliterated variant of base Qwen3.8-27B for developers who need an open checkpoint with text and image input compatible with Transformers, vLLM, or SGLang.
+Huihui-Qwen3.8-27B-abliterated is an abliterated variant of base Qwen3.8-27B for developers who need an open multimodal checkpoint compatible with Transformers, vLLM, or SGLang.
 
-- Chat: handles text dialogue.
-- Image processing: accepts visual input.
-- Server calls: exposes an OpenAI-compatible endpoint.
+- Chat for conversational text generation.
+- Image processing for visual inputs.
+- OpenAI-compatible serving for remote API calls.
 
 Safety filtering is substantially reduced, and the model card recommends research and controlled environments. It is not a replacement for a safe production model.
 
 ## Development line
 
-- **2026-08-17 — Huihui-Qwen3.8-27B-abliterated became publicly available through Hugging Face.** The artifact contains 18 safetensors files and takes 55,6 GB. The README clarifies that MTP and the vision component are unmodified.
+- **2026-08-17 — Huihui-Qwen3.8-27B-abliterated became publicly available through Hugging Face.** The artifact contains 18 safetensors files and takes 55,6 GB; the README specifies that MTP and the vision component remain unmodified.
 
 ## What changed
 
-2026-08-17 — verified revision d42ca89 was recorded. The artifact contains 18 safetensors files and takes 55,6 GB. Its README clarifies that MTP and the vision component are unmodified.
+2026-08-17 — verified revision d42ca89 is pinned: the artifact contains 18 safetensors files and takes 55,6 GB; the README clarifies that MTP and the vision component remain unmodified.
 
-The model card reports that ablation applies only to layers 18–51 to preserve most of the original performance. We can pin the earlier version with revision d42ca89.
+The model card reports that ablation applies only to layers 18–51 to preserve most original performance. We can pin the previous version to revision d42ca89.
 
 ## How to use this
 
-As of 2026-08-17, we can treat Huihui-Qwen3.8-27B-abliterated as a publicly discoverable model line. We can evaluate the linked model artifact, related quantized variants, and the ZeroGPU Space. The dated links alone do not support choosing a specific variant or relying on performance claims.
+As of 2026-08-17, we can treat Huihui-Qwen3.8-27B-abliterated as a publicly discoverable model line and evaluate the linked model artifact, related quantized variants, and ZeroGPU Space; the dated links alone do not support choosing a specific variant or relying on performance claims.
 
-1. Load AutoProcessor and AutoModelForMultimodalLM for local multimodal execution. Format text and image messages with the chat template and call generate.
+1. For multimodal local runs, load AutoProcessor and AutoModelForMultimodalLM, format messages with text and images through the chat template, and call generate.
   — <https://huggingface.co/huihui-ai/Huihui-Qwen3.8-27B-abliterated>
-2. Install vLLM for an OpenAI-compatible endpoint. Run `vllm serve "huihui-ai/Huihui-Qwen3.8-27B-abliterated"` and send requests to `/v1/chat/completions`.
+2. For an OpenAI-compatible endpoint, install vLLM, run `vllm serve "huihui-ai/Huihui-Qwen3.8-27B-abliterated"`, and send requests to `/v1/chat/completions`.
   — <https://huggingface.co/huihui-ai/Huihui-Qwen3.8-27B-abliterated>
-3. Run `python3 -m sglang.launch_server --model-path "huihui-ai/Huihui-Qwen3.8-27B-abliterated"` for SGLang and use the endpoint on the chosen port.
+3. For SGLang, run `python3 -m sglang.launch_server --model-path "huihui-ai/Huihui-Qwen3.8-27B-abliterated"`, and use the endpoint on the chosen port.
   — <https://huggingface.co/huihui-ai/Huihui-Qwen3.8-27B-abliterated>
 
 ## Best practices
 
-- Pin the revision for reproducible runs: the card explicitly points to d42ca89 for the earlier version.
+- Pin the revision for reproducible runs: the model card points directly to d42ca89 for the earlier version.
   — <https://huggingface.co/huihui-ai/Huihui-Qwen3.8-27B-abliterated>
-- Keep manual output review and do not use the checkpoint directly in public or high-risk products: the author warns of reduced safety filtering.
+- Keep manual output review and avoid using the checkpoint directly in public or high-risk products: the author warns of reduced safety filtering.
   — <https://huggingface.co/huihui-ai/Huihui-Qwen3.8-27B-abliterated>
-- Pick separate downstream quantizations for llama.cpp, Ollama, or LM Studio. Do not treat the BF16 repository as ready for these runtimes.
+- For llama.cpp, Ollama, or LM Studio, pick separate derivative quantizations rather than treating the BF16 repository as ready for these runtimes.
   — <https://huggingface.co/models?other=base_model%3Aquantized%3Ahuihui-ai%2FHuihui-Qwen3.8-27B-abliterated>
 
 ## Superseded by this
 
-- After 2026-08-17, the description of pinned revision d42ca89 as having only MTP unchanged is obsolete. Its README was updated to clarify that the vision component is also unmodified.
+- After 2026-08-17, describing pinned revision d42ca89 as having only MTP unmodified became obsolete: its README clarified that the vision component is also unmodified.
 
 ## Still unknown
 
-- In the available primary history, the exact calendar time for commit d42ca89 appears as relative ("19 days ago"). It matches 2026-08-17 on the verification date, but the primary source gave no ISO timestamp.
-- Nothing confirms whether the ZeroGPU Space from the event is an official launch route or represents the same model revision.
-- The date for changing the ablation range to layers 18–51 is not visible in the available primary output, so we do not record it as a separate dated event.
+- In the available primary history, the exact calendar timestamp for commit d42ca89 is relative ("19 days ago"); it matches 2026-08-17 on the check date, but the primary source gave no ISO timestamp.
+- Whether the ZeroGPU Space from the event is an official launch path or represents the same model revision remains unconfirmed.
+- The date of the subsequent ablation change to layers 18–51 does not appear in the available primary output, so we do not list it as a separate dated event.
 
 ## Sources
 
