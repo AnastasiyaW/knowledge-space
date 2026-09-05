@@ -13,29 +13,29 @@ aliases: ["Data2Story"]
 
 ## What it is
 
-Data2Story turns a CSV, data folder, paper, or—using Pro—an idea into a self-contained HTML story.
+Data2Story turns a CSV, data folder, paper, or an idea in Pro into a self-contained HTML story. It generates charts and media alongside an evidence viewer.
 
-- Seven newsroom roles that run sequentially.
-- Claim tracing back to data, code, or citations.
-- Charts and media backed by an evidence viewer.
-- Pro workflow with 14 agents and in-page recomputation.
+- Seven newsroom roles structure the canonical drafting pipeline.
+- Claim tracing links each assertion and visual back to data, code, or citations.
+- Pro adds a 14-agent workflow and in-page recomputation.
 
-The paper evaluated 18 articles with 53 participants. Use it when evidence traceability is a delivery requirement, not to replace editorial judgment.
+The paper evaluated 18 articles with 53 participants.
+Use it when evidence traceability is a delivery requirement, not to replace editorial judgment.
 
 ## Development line
 
-- **2026-06-16 — Data2Story was publicly linked with its website and GitHub repository.** On 2026-06-16, a message linked the project website and the data2story-skill repository so the agentic data-storytelling line has a public reference point.
+- **2026-06-16 — Data2Story was publicly linked with its website and GitHub repository.** On 2026-06-16, public links connected Data2Story to its project website and the data2story-skill GitHub repository. This sets the reference point for the agentic data-storytelling line without claiming unverified features.
 
 ## What changed
 
-- 2026-05-11 — The ACM Conference on AI and Agentic Systems workshop accepted Data2Story as a Spotlight paper.
-- 2026-06-09 — The paper and repository were released. The canonical implementation set up a seven-role sequential newsroom and evaluated 18 articles with 53 participants.
+- 2026-05-11 — Data2Story was accepted as a Spotlight paper at the ACM Conference on AI and Agentic Systems workshop.
+- 2026-06-09 — The paper and repository were released. The canonical implementation established a seven-role sequential newsroom and evaluated 18 articles with 53 participants.
 - 2026-06-16 — Data2Story was publicly presented as a dataset-to-verifiable-story workflow. The Inspector traces each claim and visual back to data, code, or references.
-- 2026-06 — Version 0.1.0 optimized visual effects. The repository now marks data2story-pro as the current implementation alongside the paper-reproducible seven-role skill.
+- 2026-06 — Version 0.1.0 optimized visual effects. The repository identifies data2story-pro as the richer implementation alongside the paper-reproducible seven-role skill.
 
 ## How to use this
 
-As of 2026-06-16, use the project website and GitHub repository as starting references when evaluating Data2Story for agentic data-storytelling work.
+As of 2026-06-16, use the project website and GitHub repository as starting references for agentic data storytelling.
 
 1. Clone or open the repository, then use the canonical `data2story` skill when reproducing the paper’s seven-role pipeline.
   — <https://github.com/QinghongLin/data2story-skill>
@@ -50,7 +50,7 @@ As of 2026-06-16, use the project website and GitHub repository as starting refe
   — <https://raw.githubusercontent.com/QinghongLin/data2story-skill/main/skills/data2story/SKILL.md>
 - Archive the exact skills used for every run so a result can be traced and rechecked.
   — <https://raw.githubusercontent.com/QinghongLin/data2story-skill/main/skills/data2story/SKILL.md>
-- Use the Pro idea mode only when it can acquire and validate a real dataset; it is designed to stop rather than fabricate supporting data.
+- Use the Pro idea mode only when it can acquire and validate a real dataset; it stops rather than fabricates supporting data.
   — <https://raw.githubusercontent.com/QinghongLin/data2story-skill/main/skills/data2story-pro/README.md>
 - Treat Pro’s published duration as a planning estimate: `--fast` is listed at roughly 15–25 minutes and premium at roughly 2 hours 40–50 minutes.
   — <https://raw.githubusercontent.com/QinghongLin/data2story-skill/main/skills/data2story-pro/README.md>
@@ -61,8 +61,8 @@ As of 2026-06-16, use the project website and GitHub repository as starting refe
 
 ## Still unknown
 
-- The repository’s public update notes use month-level dates for Version 0.1.0, so its exact release day is unverified.
-- No first-party source found here establishes production operating cost, model-specific media-generation defaults, or a formal release changelog for Data2Story Pro.
+- The repository update notes give only the month for Version 0.1.0, leaving the exact release day unverified.
+- No first-party source establishes production operating cost, model-specific media-generation defaults, or a formal release changelog for Data2Story Pro.
 
 ## Sources
 
