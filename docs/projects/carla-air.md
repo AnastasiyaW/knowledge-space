@@ -13,62 +13,50 @@ aliases: ["CARLA-Air"]
 
 ## What it is
 
-CARLA-Air is an open air-ground simulation environment for embodied AI, navigation, perception, and RL researchers.
-
-- Unified world, combines air and ground actors in one simulation.
-- Synchronous sensors, capture feeds across both platforms at the same time.
-- Two Python APIs, CARLA for cars and AirSim for multicopters.
-
-Current public release is v0.1.7. Town10HD requires about 8 GB VRAM, and coordinate calibration depends on the map. It beats running CARLA and AirSim as separate processes when drone and car need a shared world.
+CARLA-Air — открытая среда air-ground симulation для исследователей embodied AI, навигации, восприятия и RL. Она даёт единый мир, синхронные сенсоры и два Python API: CARLA для автомобилей и AirSim для мультикоптеров. Текущий публичный релиз — v0.1.7; основной предел — карта Town10HD требует около 8 GB VRAM, а координатная калибровка зависит от карты. Вердикт: практичнее связки CARLA с отдельным AirSim-процессом, когда нужен общий мир для дрона и автомобиля.
 
 ## Development line
 
-- **2026-04-03 — CARLA-Air GitHub repository linked.** On 2026-04-03, the CARLA-Air development line linked the project's GitHub repository, louis zeng CN/CarlaAir. This provides a dated public-source reference for the project. Available evidence does not show a release, version, change set, or repository contents.
+- **2026-04-03 — CARLA-Air GitHub repository linked.** On 2026-04-03, the CARLA-Air development line included a link to the project's GitHub repository, louis zeng CN/CarlaAir. This provides a dated public-source reference for the project. The available evidence does not establish a release, version, change set, or repository contents.
 
 ## What changed
 
-- 2026-03-19 — Public release v0.1.6: single process CARLA 0.9.16 and AirSim, autotraffic, collision toggle, and ground clamping.
-- 2026-03-24 — Release v0.1.7 fixed VSync and traffic stability, adding one-click setup, flight recording, and coordinate documentation; compatibility with v0.1.6 scripts and configurations is preserved.
-- 2026-04-03 — Project link recorded; primary source has no changelog entry for this date, so we cannot treat it as a new release.
-- 2026-04-10 — Published a Windows source code branch.
-- 2026-04-16 — Prebuilt binary package v0.1.7 became available for Windows 11 x86_64.
-- 2026-04-17 — Published project website.
-- 2026-04-20 — Added minimal ROS 2 Humble examples for car and drone sensors, with RViz 2.
+2026-03-19 — вышел публичный v0.1.6: единый процесс CARLA 0.9.16 и AirSim, автотрафик, collision toggle и ground clamping. 2026-03-24 — v0.1.7 исправил VSync и стабильность трафика, добавил one-click setup, запись полёта и документацию координат; совместимость со скриптами и конфигурациями v0.1.6 заявлена сохранённой. 2026-04-03 — зафиксирована ссылка на проект; первичный источник не содержит отдельного changelog-события этой датой, поэтому считать её новым релизом нельзя. 2026-04-10 — опубликована ветка исходников для Windows. 2026-04-16 — стал доступен готовый бинарный пакет v0.1.7 для Windows 11 x86_64. 2026-04-17 — опубликован сайт проекта. 2026-04-20 — добавлены минимальные примеры ROS 2 Humble для сенсоров автомобиля и дрона, с RViz 2.
 
 ## How to use this
 
-As of 2026-04-03, use the linked GitHub repository as a candidate source for CARLA-Air, verifying its contents and relevance before relying on it.
+As of 2026-04-03, practitioners can use the linked GitHub repository as a candidate source for CARLA-Air, while verifying its contents and relevance before relying on it.
 
-1. Download and unpack the prebuilt Linux or Windows package; for a first run on Linux, use supported Ubuntu 20.04/22.04.
+1. Скачайте и распакуйте готовый Linux- или Windows-пакет; для первого запуска на Linux используйте поддерживаемый Ubuntu 20.04/22.04.
   — <https://github.com/louiszengCN/CarlaAir>
-2. In the v0.1.7 directory, run `bash env_setup/setup_env.sh`, then `bash env_setup/test_env.sh`, and activate the `carlaAir` conda environment.
+2. В каталоге v0.1.7 запустите `bash env_setup/setup_env.sh`, затем `bash env_setup/test_env.sh` и активируйте conda-окружение `carlaAir`.
   — <https://github.com/louiszengCN/CarlaAir/releases>
-3. Run `./CarlaAir.sh Town10HD`; wait until CARLA is ready on localhost:2000 and AirSim on localhost:41451.
+3. Запустите `./CarlaAir.sh Town10HD`; дождитесь готовности CARLA на localhost:2000 и AirSim на localhost:41451.
   — <https://github.com/louiszengCN/CarlaAir/blob/main/CarlaAir_Release/guide/Quick-Start.md>
-4. Test both APIs with separate `carla.Client` and `airsim.MultirotorClient` clients, then start with `examples/quick_start_showcase.py`.
+4. Проверьте оба API отдельными клиентами `carla.Client` и `airsim.MultirotorClient`, затем начните с `examples/quick_start_showcase.py`.
   — <https://github.com/louiszengCN/CarlaAir/blob/main/CarlaAir_Release/guide/Quick-Start.md>
 
 ## Best practices
 
-- Keep asynchronous mode for interactive control; for datasets, replay, and recording, use fixed-step synchronous mode and sync Traffic Manager.
+- Для интерактивного управления оставляйте асинхронный режим; для датасета, воспроизведения и записи используйте fixed-step synchronous mode и синхронизируйте Traffic Manager.
   — <https://github.com/louiszengCN/CarlaAir/blob/main/CarlaAir_Release/guide/FAQ.md>
-- Always restore the world to asynchronous mode in `finally`, so the server does not hang waiting for `world.tick()` after script completion.
+- Всегда возвращайте мир в асинхронный режим в `finally`, иначе сервер будет ждать `world.tick()` после завершения скрипта.
   — <https://github.com/louiszengCN/CarlaAir/blob/main/CarlaAir_Release/guide/FAQ.md>
-- Recalibrate CARLA-AirSim offsets when switching maps; the release formula is calibrated for Town10HD.
+- При смене карты повторно калибруйте CARLA-AirSim offsets; формула из релиза откалибрована для Town10HD.
   — <https://github.com/louiszengCN/CarlaAir/releases>
-- Start with a smaller map and lower quality or actor counts if VRAM runs low or frame rates drop.
+- При нехватке VRAM или низком FPS начните с меньшей карты и снизьте качество либо число actors.
   — <https://github.com/louiszengCN/CarlaAir/blob/main/CarlaAir_Release/guide/Quick-Start.md>
 
 ## Superseded by this
 
-- 2026-03-24: v0.1.7 replaces v0.1.6 as the current release; update into a clean directory by rerunning setup rather than over an old install.
-- 2026-04-16: Windows no longer lacks a prebuilt package; a Windows 11 x86_64 binary is available for v0.1.7.
-- 2026-04-20: Basic ROS 2 visualization no longer requires building carla-ros-bridge from source; project examples use direct Python APIs and rclpy. The full bridge remains necessary only for its extra actions, services, and Ackermann control.
+- 2026-03-24: v0.1.7 заменяет v0.1.6 как текущий релиз; обновляться следует в новый каталог, повторно запустив setup, а не поверх старой установки.
+- 2026-04-16: для Windows прежнее отсутствие готового пакета устарело — доступен Windows 11 x86_64 binary v0.1.7.
+- 2026-04-20: для базовой ROS 2 визуализации больше не требуется собирать carla-ros-bridge из исходников; проектные примеры используют прямые Python API и rclpy. Полный bridge всё ещё нужен для его дополнительных actions, services и Ackermann control.
 
 ## Still unknown
 
-- Message text for 2026-04-03 is unavailable; the repository link alone does not prove a release or a specific change on that date.
-- Primary sources checked provide no dated fact that ties directly to the 2026-04-03 event.
+- Текст сообщения от 2026-04-03 недоступен; ссылка на репозиторий сама по себе не доказывает, что в этот день был релиз или конкретное изменение.
+- Первичные материалы, найденные при проверке, не дают отдельного датированного факта, который можно без натяжки добавить именно к событию 2026-04-03.
 
 ## Sources
 
