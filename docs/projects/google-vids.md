@@ -13,13 +13,17 @@ aliases: ["Google Vids"]
 
 ## What it is
 
-Google Vids — веб-приложение рядом с Docs, Sheets и Slides для сценария, сцен, записи экрана, совместной правки и экспорта видео.
+Google Vids is a Workspace video app alongside Docs, Sheets and Slides for storyboarding, recording, editing and exporting video.
 
-Возможности: Help me create; импорт Google Slides; запись камеры и экрана; Veo-клипы и аватары; комментарии и экспорт MP4.
+- Help me create drafts scripts, scenes, media and voiceovers.
+- Google Slides import turns presentation decks into video scenes.
+- Recording captures camera feeds and screen shares directly.
+- Veo clips and avatars generate AI scenes and presenters.
+- Comments and MP4 export support team review and sharing.
 
-Лимит: ролик — до 30 минут; Veo-клип — 8 секунд, 720p, 24 fps и 16:9; доступ к AI-функциям зависит от аккаунта и настроек администратора.
+Videos run up to 30 minutes; Veo clips run 8 seconds at 720p, 24 fps and 16:9; AI access depends on account type and administrator settings.
 
-Вердикт: практичнее Adobe Premiere Pro для обучения, онбординга и проектных обновлений, но не для покадрового профессионального монтажа.
+We find it more practical than Adobe Premiere Pro for onboarding, training and project updates, but not for frame-by-frame professional editing.
 
 ## Development line
 
@@ -27,44 +31,49 @@ Google Vids — веб-приложение рядом с Docs, Sheets и Slides
 
 ## What changed
 
-2026-04-04 — Google Vids получил расширение работы с AI-аватарами: на опубликованном 3 апреля обновлении стали доступны настройка внешности, одежды и окружения аватара, а также постановка аватара в сцене через Veo 3.1.
+2026-04-04 — Google Vids expanded AI avatar support. The update published April 3 added appearance, clothing and environment customization, and avatar staging through Veo 3.1.
 
-2024-04-09 — Google представила Vids как AI-приложение Workspace с раскадровкой, сценами, стоковым медиа и озвучкой. 2024-11-21 — Vids начал развёртываться для подходящих тарифов Workspace и дополнений Gemini. 2025-05-20 — Google анонсировала импорт Slides, AI-аватары и доступ Vids для Google AI Pro и Ultra. 2025-06-25 — генерация клипов в Vids перешла на Veo 3 со звуком; доступ расширили на Business Starter и Enterprise Starter. 2025-08-27 — image-to-video с Veo 3, AI-аватары и transcript trim стали общедоступными. 2026-04-03 — появились настраиваемые и режиссируемые Veo 3.1-аватары, семь новых языков для аватаров и озвучки, а также музыка Lyria 3/3 Pro.
+2024-04-09 — Google announced Vids as a Workspace AI app with storyboarding, scenes, stock media and voiceover.
+2024-11-21 — Vids began rolling out to eligible Workspace editions and Gemini add-ons.
+2025-05-20 — Google announced Slides import, AI avatars and Vids access for Google AI Pro and Ultra.
+2025-06-25 — Clip generation in Vids switched to Veo 3 with audio; access expanded to Business Starter and Enterprise Starter.
+2025-08-27 — Image-to-video with Veo 3, AI avatars and transcript trim reached general availability.
+2026-04-03 — Custom and directed Veo 3.1 avatars arrived, along with seven new languages for avatars and voiceovers, and Lyria 3/3 Pro music.
 
 ## How to use this
 
-As of 2026-04-04, treat the Google Vids documentation link as a lead for investigating a possible Veo integration; do not rely on it as evidence of a specific product change until the original post and dated documentation are reviewed.
+As of 2026-04-04, treat the Google Vids documentation link as a lead for investigating a possible Veo integration. Do not rely on it as evidence of a specific product change until we review the original post and dated documentation.
 
-1. Откройте vids.new, выберите формат и начните с Help me create, шаблона, Slides, записи, загрузки или пустого ролика.
+1. Open vids.new, pick a format and start with Help me create, a template, Slides, recording, upload or a blank video.  
   — <https://support.google.com/docs/answer/15082958?hl=en>
-2. Для AI-черновика опишите цель и добавьте связанные файлы через @; проверьте предложенные сценарий, сцены, медиа и озвучку.
+2. For an AI draft, describe the goal and attach relevant files with @; verify the suggested script, scenes, media and voiceover.  
   — <https://support.google.com/a/users/answer/14819770?hl=en>
-3. Добавьте или замените сцены записями, загруженными материалами, Veo-клипами, текстом и переходами; для Veo подробно опишите объект и сцену.
+3. Add or replace scenes with recordings, uploads, Veo clips, text and transitions; describe the subject and scene in detail for Veo.  
   — <https://support.google.com/a/users/answer/14819770?hl=en>
-4. Предоставьте коллегам права просмотра, комментариев или редактирования; затем экспортируйте MP4 в Drive, скачайте файл или отправьте в YouTube.
+4. Grant teammates view, comment or edit access; export MP4 to Drive, download the file or publish to YouTube.  
   — <https://support.google.com/docs/answer/15082958?hl=en>
 
 ## Best practices
 
-- Выбирайте исходный путь по материалам: Help me create — для идеи и документов, импорт Slides — для готовой презентации, запись — для демонстрации, шаблон — для повторяемого формата.
+- Pick the starting path by source material: Help me create for prompt and docs, Slides import for finished decks, recording for demos, and templates for recurring formats.  
   — <https://support.google.com/a/users/answer/15599399?hl=en>
-- Перед созданием черновика приложите релевантные файлы через @, затем вручную проверьте сценарий, сцены и озвучку до публикации.
+- Attach source files with @ before drafting, then check the script, scenes and voiceover before publishing.  
   — <https://support.google.com/a/users/answer/14819770?hl=en>
-- Планируйте Veo-вставки как короткие иллюстративные сцены: один клип ограничен восемью секундами, 720p и горизонтальным форматом.
+- Plan Veo segments as short cutaways: one clip is limited to 8 seconds, 720p and landscape format.  
   — <https://support.google.com/a/users/answer/14819770?hl=en>
-- Держите рабочий исходник в формате Google Vids для комментариев и правок, а MP4 экспортируйте только как материал для просмотра и распространения.
+- Keep the working project in Google Vids for team comments, and export MP4 only for final delivery.  
   — <https://support.google.com/docs/answer/15082958?hl=en>
 
 ## Superseded by this
 
-- 2025-05-20 — статус AI-аватаров «coming to Labs next month» устарел: 2025-08-27 Google объявила их общедоступными.
-- 2025-06-25 — описание Veo в Vids только как текстовой генерации клипов устарело: 2025-08-27 стала общедоступна image-to-video генерация, а 2026-04-03 — режиссирование аватаров через Veo 3.1.
-- 2025-08-27 — практическая рекомендация ограничиваться базовыми аватарами устарела: 2026-04-03 доступны настройка внешности, одежды, окружения и постановка аватара в сцене.
+- 2025-05-20 — The AI avatar status "coming to Labs next month" is obsolete: Google announced general availability on 2025-08-27.
+- 2025-06-25 — Treating Veo in Vids as text-to-video only is obsolete: image-to-video launched on 2025-08-27, and Veo 3.1 avatar directing followed on 2026-04-03.
+- 2025-08-27 — Sticking to stock avatars is obsolete: custom appearance, clothing, environment and scene staging became available on 2026-04-03.
 
 ## Still unknown
 
-- Страница https://docs.google.com/videos/ не содержит собственного публичного времени публикации и не доказывает, что изменение произошло именно 2026-04-04. Ближайшее первичное подтверждение — обновление Google Workspace от 2026-04-03; оно использовано как датированное уточнение события 2026-04-04.
-- Точная доступность Veo, аватаров, Lyria и лимитов зависит от плана, региона, языка и настроек администратора; перед развёртыванием нужно проверить экран доступности для конкретного аккаунта.
+- The page https://docs.google.com/videos/ has no public timestamp and does not prove the change happened on 2026-04-04. The nearest primary confirmation is the Google Workspace update from 2026-04-03; we use it to date the 2026-04-04 event.
+- Availability for Veo, avatars, Lyria and account limits depends on plan, region, language and administrator controls; check the account feature matrix before rollout.
 
 ## Sources
 
