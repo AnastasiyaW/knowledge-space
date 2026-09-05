@@ -13,31 +13,31 @@ aliases: ["LTX-2.3-Foley-LoRA"]
 
 ## What it is
 
-LTX-2.3-Foley-LoRA is a 400-step video-to-audio LoRA for LTX-2.3 base or distilled models. It takes a silent video and an action prompt to generate synchronised, non-speech Foley. It is not a general music or dialogue model. Use a LoRA multiplier of 1–3. It fixes LTX-2.3 generations that add background score, but speech behaviour remains insufficiently documented.
+LTX-2.3-Foley-LoRA is a 400-step video-to-audio LoRA for LTX-2.3 base or distilled models. It conditions on a silent video and an action prompt to generate synchronised, non-speech Foley. It is not a general music or dialogue model. Use a LoRA multiplier of 1–3. It fixes LTX-2.3 generations that keep adding score, but speech behaviour remains insufficiently documented.
 
 ## Development line
 
-- **2026-07-01 — LTX-2.3-Foley-LoRA model page was recorded.** On 2026-07-01, FuzzPuppy published the Hugging Face model page for LTX-2.3-Foley-LoRA. The page provides the Foley LoRA artifact, but does not detail its capabilities, provenance, compatibility, or release details.
+- **2026-07-01 — LTX-2.3-Foley-LoRA model page was recorded.** On 2026-07-01, the project recorded a Hugging Face model page at FuzzPuppy/LTX-2.3-Foley-LoRA. This provides a public reference for the named Foley LoRA artifact, though the link alone does not establish capabilities, compatibility, or release details.
 
 ## What changed
 
 - 2026-07-01 — LTX-2.3-Foley-LoRA was released as a 400-step adapter to suppress music overlays and generate visually matched sound effects. Its author trained it without speech examples and did not test speech.
-- 2026-07-04 — The companion ComfyUI repository added a long-video sliding-window workflow with overlap and audio stitching, extending the original short-clip workflow.
+- 2026-07-04 — The companion ComfyUI repository added a long-video sliding-window workflow with overlap and audio stitching. This extends the original short-clip workflow.
 
 ## How to use this
 
-From 2026-07-01, evaluate and verify LTX-2.3-Foley-LoRA on Hugging Face before relying on it in production; this line alone does not support operational claims.
+From 2026-07-01, evaluate and verify LTX-2.3-Foley-LoRA on Hugging Face before relying on it; this line alone does not support operational claims.
 
 1. Download `ltx-2.3-foley-400-steps.safetensors`, load it with an LTX-2.3 base or distilled video-to-audio model, and start at LoRA strength 1.0.
   — <https://huggingface.co/FuzzPuppy/LTX-2.3-Foley-LoRA>
-2. For ComfyUI, install the official LTXVideo nodes and the workflow repository's `ltx_foley_v2a` helper nodes; put the LoRA in `ComfyUI/models/loras`.
+2. For ComfyUI, install the official LTXVideo nodes and the workflow repository's `ltx_foley_v2a` helper nodes. Put the LoRA in `ComfyUI/models/loras`.
   — <https://huggingface.co/FuzzPuppy/LTX-2.3-Foley-Workflow>
-3. Use the short workflow for a quick clip; use `foley-sliding-window.json` for longer video so windows are overlapped and stitched.
+3. Use the short workflow for a quick clip. Use `foley-sliding-window.json` for longer video so windows are overlapped and stitched.
   — <https://huggingface.co/FuzzPuppy/LTX-2.3-Foley-Workflow>
 
 ## Best practices
 
-- Describe only the visible action, then add “No speech is present. No music is present”; use an anti-music negative prompt.
+- Describe only the visible action, then add “No speech is present. No music is present”. Use an anti-music negative prompt.
   — <https://huggingface.co/FuzzPuppy/LTX-2.3-Foley-LoRA>
 - Increase LoRA strength from 1 toward 2 or 3 only if score remains in the output.
   — <https://huggingface.co/FuzzPuppy/LTX-2.3-Foley-LoRA>
@@ -46,12 +46,12 @@ From 2026-07-01, evaluate and verify LTX-2.3-Foley-LoRA on Hugging Face before r
 
 ## Superseded by this
 
-- 2026-07-04 — Treating the original short-clip workflow as the only supported route is obsolete for long videos; use the sliding-window workflow instead.
+- 2026-07-04 — Do not treat the original short-clip workflow as the only route for long videos. Use the sliding-window workflow instead.
 
 ## Still unknown
 
 - The model card does not document training data, evaluation metrics, exact VRAM requirements, or reliable dialogue preservation.
-- The 2026-07-04 workflow update appears in repository history and long-video documentation, but lacks an immutable release note.
+- The 2026-07-04 workflow update appears in repository history and long-video documentation, but an immutable release note was not found.
 
 ## Sources
 
