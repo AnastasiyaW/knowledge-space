@@ -1,6 +1,6 @@
 # Umfassende technische Wissensbasis - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 972+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 973+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -765,6 +765,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Qwen-Image-Edit-Rapid-AIO](https://happyin.space/projects/qwen-image-edit-rapid-aio/): **Development line:** `project:qwen-image-edit-rapid-aio` · thread `qwen-image-edit-rapid-aio`
 - [Qwen2.5-Coder](https://happyin.space/projects/qwen2-5-coder/): **Development line:** `project:qwen2-5-coder` · thread `qwen2-5-coder-launch`
 - [Qwen3-TTS](https://happyin.space/projects/qwen3-tts/): **Development line:** `project:qwen3-tts` · thread `qwen3-tts-release-and-distribution`
+- [RayGauss](https://happyin.space/projects/raygauss/): **Development line:** `project:raygauss` · thread `raygauss`
 - [Vidu](https://happyin.space/projects/vidu/): **Development line:** `project:vidu` · thread `vidu`
 
 ## Python
