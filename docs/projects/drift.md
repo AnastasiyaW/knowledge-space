@@ -13,11 +13,15 @@ aliases: ["DRIFT"]
 
 ## What it is
 
-DRIFT is an open claim-centric framework to localize trajectory spans where an unverified or contradicted claim becomes harmful in a deep-research agent. It includes Claim Keeper, Support Seeker, and Dependency Tracer. TELBench provides 1 000 expert-verified trajectory tasks from 2 790 collected runs. It is a reproducible tool to compare trajectory audits and investigate failures, not a live monitoring layer for a running agent.
+DRIFT is an open claim-centric framework for deep-research agent trajectories. It localizes spans where an unverified or contradicting claim becomes harmful.
+
+It includes Claim Keeper, Support Seeker, and Dependency Tracer. TELBench provides 1 000 expert-verified trajectory tasks from 2 790 collected runs.
+
+This is a reproducible tool to compare trajectory audits and investigate failures, not a ready monitoring layer for a running agent.
 
 ## Development line
 
-- **2026-06-04 — DRIFT project page and repository were linked.** On 2026-06-04, a dated message associated with DRIFT linked to the DRIFT project page and its GitHub repository. That message places those resources in the development line, but confirms no release, version, technical change, or project-launch claim.
+- **2026-06-04 — DRIFT project page and repository were linked.** On 2026-06-04, a dated message linked to the DRIFT project page and its GitHub repository. That message places both resources in the development line. It does not establish a release, version, technical change, or project launch.
 
 ## What changed
 
@@ -25,26 +29,26 @@ DRIFT is an open claim-centric framework to localize trajectory spans where an u
 
 ## How to use this
 
-From 2026-06-04, practitioners evaluating DRIFT use the linked project page and GitHub repository as the available primary resources. The event establishes no installation or workflow change.
+From 2026-06-04, evaluate DRIFT using the linked project page and GitHub repository. The event does not establish an installation or workflow change.
 
 1. Clone the repository and install the package in editable mode.
   — <https://github.com/NJU-LINK/DRIFT/blob/main/docs/USAGE.md>
-2. Download encrypted TELBench through Hugging Face and decrypt it with the provided script; the script checks the SHA-256 of the result.
+2. Download encrypted TELBench from Hugging Face and decrypt it with the provided script; the script checks the SHA-256 hash.
   — <https://github.com/NJU-LINK/DRIFT/blob/main/docs/USAGE.md>
-3. Configure an OpenAI-compatible Chat Completions or Responses API via arguments or an env file and run `drift --setting drift` on JSONL trajectories.
+3. Configure OpenAI-compatible Chat Completions or Responses API via arguments or an env file. Run `drift --setting drift` on JSONL trajectories.
   — <https://github.com/NJU-LINK/DRIFT/blob/main/docs/USAGE.md>
-4. Pass `summary.json` to `drift-eval`; the report contains macro/micro precision, recall, F1, first-error accuracy, and missing or extra identifiers.
+4. Pass `summary.json` to `drift-eval`. The report outputs macro/micro precision, recall, F1, first-error accuracy, and missing or extra identifiers.
   — <https://github.com/NJU-LINK/DRIFT/blob/main/docs/USAGE.md>
 
 ## Best practices
 
-- Run `bare` first on the same input data and model, then `drift`, so the claim-centric pipeline effect stays separate from the base model.
+- Run `bare` first on the same inputs and model, then run `drift`. This author-intended comparison separates the claim-centric pipeline effect from the base model.
   — <https://github.com/NJU-LINK/DRIFT/blob/main/docs/USAGE.md>
-- Check the checksum of decrypted TELBench, and do not add downloaded artifacts, the key, or decrypted JSONL to Git.
+- Check the checksum of decrypted TELBench. Do not commit downloaded artifacts, the key, or decrypted JSONL to Git.
   — <https://github.com/NJU-LINK/DRIFT/blob/main/docs/USAGE.md>
-- Do not pass gold labels, annotations, metadata, judge results, or manual notes to the model: evaluation allows only the question and ordered raw span text.
+- Do not pass gold labels, annotations, metadata, judge outputs, or manual notes to the model. Evaluation accepts only the question and ordered raw span text.
   — <https://huggingface.co/datasets/NJU-LINK/TELBench>
-- Keep `--reasoning-effort low` for the Responses API unless a measured reason requires a change: that is the project default for JSON-only prompts.
+- Leave `--reasoning-effort low` for Responses API unless you have a measured reason to change it. That is the project default for JSON-only prompts.
   — <https://github.com/NJU-LINK/DRIFT/blob/main/docs/USAGE.md>
 
 ## Superseded by this
@@ -53,8 +57,8 @@ From 2026-06-04, practitioners evaluating DRIFT use the linked project page and 
 
 ## Still unknown
 
-- Public primary sources confirm paper submission on 1 June 2026 and its revision v2 on 2 June, but record no separate DRIFT release on 4 June; 4 June remains the event date, not a confirmed release date.
-- No primary dated changelog exists after 4 June 2026 to name later code or dataset changes with confidence.
+- Public primary sources confirm the paper submission on 1 June 2026 and its revision v2 on 2 June. They do not record a separate DRIFT release on 4 June. The date 4 June remains the event date, not a confirmed release date.
+- There is no primary dated changelog after 4 June 2026 to name later code or dataset changes.
 
 ## Sources
 
