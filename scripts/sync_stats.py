@@ -88,21 +88,21 @@ def main() -> int:
     sub("docs/index.md", [
         (r'(id="ks-graph-nodes">)\d+(</span>)', rf"\g<1>{total}\g<2>"),
         (r'(id="ks-total-domains">)\d+(</span>)', rf"\g<1>{domains}\g<2>"),
-        (r"\b\d{3}\+ articles across \d+ domains", f"{total}+ articles across {domains} domains"),
+        (r"\b\d{3,}\+ articles across \d+ domains", f"{total}+ articles across {domains} domains"),
         (r"\bacross \d+ domains\b", f"across {domains} domains"),
     ])
     sub("mkdocs.yml", [
-        (r"\b\d{3}\+ curated articles", f"{total}+ curated articles"),
+        (r"\b\d{3,}\+ curated articles", f"{total}+ curated articles"),
         (r"\(\d+ articles across \d+ domains\)", f"({total} articles across {domains} domains)"),
         (r"\bacross \d+ domains\b", f"across {domains} domains"),
     ])
-    sub("AGENTS.md", [(r"\(\d{3}\+ articles, \d+ domains\)", f"({total}+ articles, {domains} domains)")])
+    sub("AGENTS.md", [(r"\(\d{3,}\+ articles, \d+ domains\)", f"({total}+ articles, {domains} domains)")])
     sub("docs/blog/posts/welcome.md", [
-        (r"\*\*\d{3}\+ dense reference articles\*\*", f"**{total}+ dense reference articles**"),
+        (r"\*\*\d{3,}\+ dense reference articles\*\*", f"**{total}+ dense reference articles**"),
         (r"across \d+ technical domains", f"across {domains} technical domains"),
     ])
     sub(".claude/rules/article-rules.md",
-        [(r"\b\d{3}\+ articles across \d+ domains", f"{total}+ articles across {domains} domains")])
+        [(r"\b\d{3,}\+ articles across \d+ domains", f"{total}+ articles across {domains} domains")])
     print()
     print("GitHub description (run manually):")
     print(f'  gh repo edit --description "... {total}+ ... {domains} domains ..."')
