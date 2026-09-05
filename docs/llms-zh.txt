@@ -1,6 +1,6 @@
 # 综合技术知识库 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1219+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1220+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -940,6 +940,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Qwen3-TTS](https://happyin.space/projects/qwen3-tts/): **Development line:** `project:qwen3-tts` · thread `qwen3-tts-release-and-distribution`
 - [Qwopus3.6-27B-Coder-MTP](https://happyin.space/projects/qwopus3-6-27b-coder-mtp/): **Development line:** `project:qwopus3-6-27b-coder-mtp` · thread `qwopus3-6-27b-coder-mtp-development`
 - [Qwythos-27B-v1](https://happyin.space/projects/qwythos-27b-v1/): **Development line:** `project:qwythos-27b-v1` · thread `qwythos-27b-v1-release`
+- [Ramp Router](https://happyin.space/projects/ramp-router/): **Development line:** `project:ramp-router` · thread `ramp-router`
 - [RayGauss](https://happyin.space/projects/raygauss/): **Development line:** `project:raygauss` · thread `raygauss`
 - [RealFusion](https://happyin.space/projects/realfusion/): **Development line:** `project:realfusion` · thread `realfusion-development`
 - [RealityScan — Mobile Photogrammetry Launch and Release](https://happyin.space/projects/realityscan/): **Development line:** `project:realityscan` · thread `mobile-photogrammetry-launch-and-release`
