@@ -15,58 +15,58 @@ aliases: ["PiD"]
 
 PiD is a pixel diffusion decoder for generative image pipelines that replaces standard VAE and RAE decoders.
 
-- Latent decoding: decodes latents into pixels with 4× upscaling, and 8× upscaling for Scale-RAE.
-- Latent support: handles conventional VAE and semantic latents, including DINOv2 and SigLIP.
-- Distilled sampling: runs distilled checkpoints in four steps.
+- Latent decoding: decodes latents to pixels with simultaneous 4× upscale, or 8× upscale for Scale-RAE.
+- Latent support: works with conventional VAE latents and semantic latents, including DINOv2 and SigLIP.
+- Fast inference: distilled checkpoints decode in four steps.
 
-NSCLv1 weights permit only non-commercial research or evaluation.
-Choose PiD when you need controlled latent-to-2K/4K decoding on a supported backbone instead of a separate pixel upscaler after VAE.
+NSCLv1 weights are restricted to non-commercial research or evaluation.
+Use PiD when you need controlled latent-to-2K/4K decoding on a supported backbone instead of a separate pixel upscaler after the VAE.
 
 ## Development line
 
-- **2026-05-25 — PiD research, code, and model resources were made publicly available.** On 2026-05-25, PiD published linked research, source code, and Hugging Face model resources. These links establish usable technical entry points, though the supplied evidence does not establish a precise version or capabilities.
+- **2026-05-25 — PiD research, code, and model resources were made publicly available.** On 2026-05-25, PiD was released with linked research, source code, and Hugging Face model resources. These links establish public technical entry points for the project, though the release evidence does not establish a precise version or full capabilities.
 
 ## What changed
 
-- **2026-05-25** — Published paper, source code, and PiD weights for FLUX, FLUX.2, Z-Image, Z-Image-Turbo, SD3, DINOv2, and SigLIP.
-- **2026-05-27** — ComfyUI added PiD support.
-- **2026-06-02** — Released SDXL, Qwen-Image, and Qwen-Image-2512 checkpoints; cleaned code and added `torch.compile` mode.
-- **2026-07-09** — Released training code, distilled and undistilled PiD v1.5 2K→4K, and v1.5 for FLUX, Z-Image, Z-Image-Turbo, FLUX.2, and Qwen-Image.
-- **2026-07-14** — Added optional Boogu-Image support for native generation and PiD decoding of its Flux-style VAE latents.
+- 2026-05-25 — Published paper, source code, and PiD weights for FLUX, FLUX.2, Z-Image, Z-Image-Turbo, SD3, DINOv2, and SigLIP.
+- 2026-05-27 — Added PiD support to ComfyUI.
+- 2026-06-02 — Released checkpoints for SDXL, Qwen-Image, and Qwen-Image-2512; cleaned the codebase and enabled torch.compile support.
+- 2026-07-09 — Released training code, distilled and undistilled PiD v1.5 2K→4K, and v1.5 checkpoints for FLUX, Z-Image, Z-Image-Turbo, FLUX.2, and Qwen-Image.
+- 2026-07-14 — Added optional support for Boogu-Image native generation and PiD decoding of its Flux-style VAE latents.
 
 ## How to use this
 
-From 2026-05-25, treat PiD's research page, source repository, and Hugging Face model page as dated public technical entry points.
+From 2026-05-25, practitioners should treat PiD's research page, source repository, and Hugging Face model page as its dated public technical entry points.
 
-1. Clone the repository, create a Python 3.12/CUDA environment with `uv sync --frozen` or install the listed dependencies, then run `PYTHONPATH=. python verify_env.py`.
+1. Clone the repository, create a Python 3.12/CUDA environment with `uv sync --frozen` or install the dependencies, then run `PYTHONPATH=. python verify_env.py`.
   — <https://github.com/nv-tlabs/PiD>
 2. Download only the checkpoints tree: `hf download nvidia/PiD --local-dir . --include "checkpoints/*"`.
   — <https://github.com/nv-tlabs/PiD>
-3. For prompt-to-image, use `from_ldm` with `--backbone`. For existing images, use `from_clean` to encode and then decode with PiD.
+3. Use `from_ldm` with `--backbone` for prompt-to-image generation; use `from_clean` to encode an existing image and decode it with PiD.
   — <https://github.com/nv-tlabs/PiD>
-4. For 2K, choose `--pid_ckpt_type 2k`. For supported 4K, choose `2kto4k_v1pt5`; for SD3 and SDXL, choose `2kto4k`.
+4. Select `--pid_ckpt_type 2k` for 2K output; choose `2kto4k_v1pt5` for supported 4K models, or `2kto4k` for SD3 and SDXL.
   — <https://github.com/nv-tlabs/PiD>
 
 ## Best practices
 
-- Test the environment with `verify_env.py` before the first inference; run commands from the repository root with `PYTHONPATH=.`.
+- Verify the environment with `verify_env.py` before running inference, and run commands from the repository root with `PYTHONPATH=.`.
   — <https://github.com/nv-tlabs/PiD>
-- Do not mistake VAE files for PiD models: `PiD_*` are distilled decoder checkpoints, while `ae.safetensors`, VAE/RAE, and similar files are dependency encoders and decoders.
+- Do not confuse VAE files with PiD models: `PiD_*` files are distilled decoder checkpoints, while `ae.safetensors`, VAE/RAE, and similar files are dependent encoders and decoders.
   — <https://huggingface.co/nvidia/PiD>
-- For FLUX, FLUX.2, and Qwen-Image, select v1.5 2K→4K: it fixes color and corner-grid artifacts, but the 2K variant stays sharper at exactly 2048 px.
+- Choose v1.5 2K→4K for FLUX, FLUX.2, and Qwen-Image to resolve color and corner-grid artifacts; the 2K checkpoint remains sharper at exactly 2048 px.
   — <https://github.com/nv-tlabs/PiD>
-- Check licenses before deployment: published weights are restricted to non-commercial research or evaluation.
+- Verify the license before deployment: published weights are restricted to non-commercial research or evaluation.
   — <https://huggingface.co/nvidia/PiD>
 
 ## Superseded by this
 
-- 2026-07-09 — Earlier FLUX, FLUX.2, and Qwen-Image `2kto4k` checkpoints are obsolete; use `2kto4k_v1pt5`. Old weights moved to `checkpoints_deprecated/`.
-- 2026-07-09 — Guidance to use v1 `2kto4k` for new FLUX, FLUX.2, and Qwen-Image 4K decodes is obsolete; v1 `2kto4k` remains current for SD3 and SDXL.
+- 2026-07-09 — Earlier FLUX, FLUX.2, and Qwen-Image `2kto4k` checkpoints are deprecated in favor of `2kto4k_v1pt5`; older weights moved to `checkpoints_deprecated/`.
+- 2026-07-09 — Advice to use v1 `2kto4k` for new FLUX, FLUX.2, and Qwen-Image 4K decodes is obsolete; v1 `2kto4k` remains current for SD3 and SDXL.
 
 ## Still unknown
 
-- The initial README records dates of subsequent releases, but GitHub publishes no separate versioned releases; exact commit SHAs and timestamps remain unverified.
-- Speed and quality claims come from author measurements; independent reproducible evaluation on a specific workflow has not been tested here.
+- The initial README lists dates for subsequent updates, but GitHub does not publish separate versioned releases; exact commit SHAs and timestamps are not established.
+- Speed and quality claims come from the authors' own benchmarks; independent reproducible evaluation on a specific workflow was not tested here.
 
 ## Sources
 
