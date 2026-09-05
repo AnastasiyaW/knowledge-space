@@ -13,47 +13,50 @@ aliases: ["Holo3"]
 
 ## What it is
 
-Holo3 — мультимодальная MoE-модель для computer use: принимает текст и до пяти изображений, возвращает текстовое действие или решение для агентного контура. Доступны API-модели 35B-A3B и 122B-A10B с контекстом 65 536 токенов; открытые веса исходной 35B-A3B опубликованы по Apache-2.0. Практический вывод: для новой интеграции следует начинать с текущей Holo3.1-линейки, а исходную Holo3 рассматривать как предшественника и совместимый открытый чекпойнт.
+Holo3 is a multimodal MoE model for computer use. It accepts text and up to five images, and returns a text action or decision for agent workflows. API models are 35B-A3B and 122B-A10B with a 65 536 token context. Open weights for the original 35B-A3B are released under Apache-2.0. For new integrations, start with the current Holo3.1 line; treat the original Holo3 as an earlier compatible open checkpoint.
 
 ## Development line
 
-- **2026-04-02 — H Company released the Holo3 model.** On 2026-04-02, H Company published Holo3 as a new model release. The linked project, API, and model-repository pages indicate that the release was intended for both direct use and model access. The record contains no source text or independent research, so the exact capabilities and release terms remain unconfirmed.
+- **2026-04-02 — H Company released the Holo3 model.** On 2026-04-02, H Company published Holo3 as a new model release. Linked project, API, and model-repository pages indicate the release was intended for both direct use and model access. Without source text or independent research, exact capabilities and release terms remain unconfirmed.
 
 ## What changed
 
-2026-04-02 — опубликованы открытые веса Holo3-35B-A3B; релизная страница относит Holo3 к computer-use моделям и заявляет 122B-A10B как API-флагман. 2026-04-15 — HoloTab сделал модель доступной через браузерное агентное приложение. 2026-04-28 — выпущен Holotron 3 Nano (30B-A3B), отдельная более быстрая модель для автоматизации компьютерных задач. 2026-06-01 — Holo3.1 расширила линию вариантами 0.8B, 4B, 9B и 35B-A3B, function calling, мобильной поддержкой и локальными квантованными весами.
+- 2026-04-02 — Holo3-35B-A3B open weights released; release page frames Holo3 as a computer-use model and names 122B-A10B as the API flagship.
+- 2026-04-15 — HoloTab made the model available through a browser agent application.
+- 2026-04-28 — Holotron 3 Nano (30B-A3B) released as a faster separate model for computer automation tasks.
+- 2026-06-01 — Holo3.1 expanded the line with 0.8B, 4B, 9B, and 35B-A3B variants, function calling, mobile support, and local quantized weights.
 
 ## How to use this
 
-From 2026-04-02, practitioners should evaluate Holo3 through H Company’s model and API documentation before selecting it for a workflow; the exact supported capabilities and access terms require verification from the linked pages.
+From 2026-04-02, evaluate Holo3 through H Company’s model and API documentation before choosing it for a workflow; verify supported capabilities and access terms on the linked pages.
 
-1. Создайте аккаунт Portal-H и API-ключ; бесплатный уровень даёт ограниченный доступ к API 35B-A3B.
+1. Create a Portal-H account and API key; the free tier gives limited access to the 35B-A3B API.
   — <https://hcompany.ai/holo-models-api>
-2. Для ограниченных по времени и хорошо заданных задач используйте `holo3-1-35b-a3b`; для сложных многошаговых сценариев — `holo3-122b-a10b`, если условия коммерческого использования и тарифа подходят.
+2. Use `holo3-1-35b-a3b` for time-capped, well-defined tasks; use `holo3-122b-a10b` for complex multi-step scenarios if commercial terms and pricing fit.
   — <https://hcompany.ai/holo-models-api>
-3. Для локального запуска исходного открытого Holo3 загрузите `Hcompany/Holo3-35B-A3B` через Transformers, vLLM или SGLang и передавайте сообщения в мультимодальном chat template.
+3. For local runs of the original open Holo3, download `Hcompany/Holo3-35B-A3B` via Transformers, vLLM, or SGLang and pass messages in the multimodal chat template.
   — <https://huggingface.co/Hcompany/Holo3-35B-A3B>
-4. Если нужны мобильные сценарии, function calling или локальные квантизованные веса, переходите на Holo3.1 и выбирайте размер и формат весов под целевое железо.
+4. For mobile setups, function calling, or local quantized weights, move to Holo3.1 and match weight size and format to target hardware.
   — <https://hcompany.ai/holo3.1>
 
 ## Best practices
 
-- Выбирайте 35B-A3B для latency-sensitive, экономичных и хорошо определённых автоматизаций; 122B-A10B — для новых или сложных многошаговых сред.
+- Pick 35B-A3B for latency-sensitive, economical, and well-defined automations; pick 122B-A10B for new or complex multi-step environments.
   — <https://hcompany.ai/holo-models-api>
-- Перед локальным развёртыванием проверяйте формат весов и рантайм: исходный Holo3 документирован для Transformers, vLLM и SGLang; Holo3.1 добавляет FP8, Q4 GGUF и NVFP4.
+- Check weight format and runtime before local deployment: original Holo3 is documented for Transformers, vLLM, and SGLang; Holo3.1 adds FP8, Q4 GGUF, and NVFP4.
   — <https://huggingface.co/Hcompany/Holo3-35B-A3B>
-- Не считать заявление о zero data retention заменой собственной оценки данных: API указывает, что по умолчанию не сохраняет prompts и responses, но учётные метаданные и токены логируются.
+- Do not treat zero data retention claims as a substitute for data review: the API does not store prompts and responses by default, but logs account metadata and tokens.
   — <https://hcompany.ai/holo-models-api>
 
 ## Superseded by this
 
-- 2026-06-01 — Holo3.1 заменяет исходную Holo3 как рекомендуемую линия для мобильных сред, function calling и локального запуска в квантованном виде.
-- 2026-06-01 — совет ограничиваться единственным 35B-A3B вариантом устарел: доступны 0.8B, 4B, 9B и 35B-A3B варианты Holo3.1.
+- 2026-06-01 — Holo3.1 supersedes original Holo3 as the recommended line for mobile setups, function calling, and local quantized runs.
+- 2026-06-01 — Limiting to a single 35B-A3B variant is obsolete: 0.8B, 4B, 9B, and 35B-A3B variants of Holo3.1 are available.
 
 ## Still unknown
 
-- Для 122B-A10B текущая API-страница указывает лицензию Research only (non-commercial); условия доступа и лицензирования на дату релиза 2 апреля отдельно не подтверждены.
-- Публичные источники подтверждают выпуск Holo3-35B-A3B 2 апреля, тогда как основная анонсная страница датирована 31 марта; различие похоже на дату анонса и дату публикации весов, но точное время публикации не указано.
+- For 122B-A10B, the current API page lists a Research only (non-commercial) license; access terms and licensing on the 2 April release date are not separately confirmed.
+- Public sources confirm Holo3-35B-A3B released on 2 April, while the main announcement page is dated 31 March; the gap looks like announcement date versus weights release date, but exact publication time is not stated.
 
 ## Sources
 
