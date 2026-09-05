@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1133+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1134+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -841,6 +841,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [MOSS-Video-Preview](https://happyin.space/projects/moss-video-preview/): **Development line:** `project:moss-video-preview` · thread `moss-video-preview`
 - [Mozart AI](https://happyin.space/projects/mozart-ai/): **Development line:** `project:mozart-ai` · thread `mozart-ai-product-development`
 - [MTVCrafter](https://happyin.space/projects/mtvcrafter/): **Development line:** `project:mtvcrafter` · thread `mtvcrafter-public-development`
+- [Muse](https://happyin.space/projects/muse/): **Development line:** `project:muse` · thread `muse-image-video-msl`
 - [MUSIKA](https://happyin.space/projects/musika/): **Development line:** `project:musika` · thread `musika`
 - [MVTrack4Gen](https://happyin.space/projects/mvtrack4gen/): **Development line:** `project:mvtrack4gen` · thread `mvtrack4gen-development`
 - [Nano Banana Pro](https://happyin.space/projects/nano-banana-pro/): **Development line:** `project:nano-banana-pro` · thread `nano-banana-pro`
