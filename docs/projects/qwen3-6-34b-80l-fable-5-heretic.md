@@ -13,38 +13,38 @@ aliases: ["Qwen3.6-34B-80L-Fable-5-Heretic"]
 
 ## What it is
 
-Qwen3.6-34B-80L-Fable-5-Heretic is a BF16 derivative of Qwen3.6-27B for teams that deploy models locally using Transformers or vLLM.
+Qwen3.6-34B-80L-Fable-5-Heretic is a BF16 derivative of Qwen3.6-27B for self-hosting with Transformers or vLLM.
 
-- 80 layers, ~34B parameters, context claimed up to 256K.
-- Training claimed on 4 665 Fable-5 agentic CoT traces with QLoRA.
+- 80 layers, ~34B parameters, and context claimed up to 256K.
+- QLoRA training on 4 665 Fable-5 agentic CoT traces.
 - MTP weights in the repository for speculative decoding.
 
 ## Development line
 
-- **2026-06-29 — Qwen3.6-34B-80L-Fable-5-Heretic model page recorded on Hugging Face.** The Qwen3.6-27B derivative expands from 64 to 80 layers, claiming ~34B parameters, BF16 weights, 4 665 QLoRA traces, and 15 MTP weights. We found no independent dated confirmation for publication on 2026-06-29.
+- **2026-06-29 — Qwen3.6-34B-80L-Fable-5-Heretic model page recorded on Hugging Face.** A Qwen3.6-27B derivative expanded from 64 to 80 layers, claiming ~34B parameters, BF16 weights, 4 665 QLoRA traces, and 15 MTP weights. We found no independent dated confirmation of publication on 2026-06-29.
 
 ## What changed
 
-2026-06-29 — We recorded the link to hiebo/Qwen3.6-34B-80L-Fable-5-Heretic. The model card details this step: the Qwen3.6-27B derivative expands from 64 to 80 layers, claiming ~34B parameters, BF16 weights, 4 665 QLoRA traces, and 15 MTP weights. We found no independent dated confirmation for publication on 2026-06-29.
+2026-06-29 — We recorded the link to hiebo/Qwen3.6-34B-80L-Fable-5-Heretic. The model card details this step: the Qwen3.6-27B derivative expands from 64 to 80 layers, claiming ~34B parameters, BF16 weights, 4 665 QLoRA traces, and 15 MTP weights. We found no independent dated confirmation of publication on 2026-06-29.
 
-После 2026-06-29 — We found no reliable dated changes for the model. Hugging Face hosts copies of the repository, but they distribute the existing artifacts rather than a new version.
+After 2026-06-29 — We found no verified dated changes to the model. Mirrors on Hugging Face redistribute the same artifacts rather than a new version.
 
 ## How to use this
 
-From 2026-06-29, practitioners can locate the Qwen3.6-34B-80L-Fable-5-Heretic Hugging Face entry and should verify the model card, files, licensing, provenance, and compatibility before adopting it.
+From 2026-06-29, locate the Qwen3.6-34B-80L-Fable-5-Heretic entry on Hugging Face and verify the model card, files, licensing, provenance, and compatibility before adopting it.
 
-1. Load the exact ID `hiebo/Qwen3.6-34B-80L-Fable-5-Heretic` in Transformers with `device_map="auto"` and test a short prompt before loading full context.
+1. Load the exact ID `hiebo/Qwen3.6-34B-80L-Fable-5-Heretic` through Transformers with `device_map="auto"` and test a short prompt before loading the full context.
   — <https://huggingface.co/hiebo/Qwen3.6-34B-80L-Fable-5-Heretic>
-2. For serving, use the card's vLLM command with BF16 and an explicit `--max-model-len`; start with a lower limit if you have not measured KV-cache and GPU memory.
+2. Serve with the vLLM command from the model card using BF16 and an explicit `--max-model-len`. Start with a lower limit until you measure KV-cache and GPU memory.
   — <https://huggingface.co/hiebo/Qwen3.6-34B-80L-Fable-5-Heretic>
 
 ## Best practices
 
-- Do not copy base model settings automatically: the custom derivative changes layer count and adds MTP weights, so verify loader, tokenizer, and generation pipeline compatibility on a local smoke test first.
+- Do not carry over base model settings automatically: the custom derivative changes the layer count and adds MTP weights, so verify loader, tokenizer, and generation pipeline compatibility with a local smoke test first.
   — <https://huggingface.co/hiebo/Qwen3.6-34B-80L-Fable-5-Heretic>
-- Treat the reported 78% acceptance rate and 2× throughput as a hypothesis from the model card; measure acceptance, latency, and quality on your own workload.
+- Treat the claimed 78% acceptance rate and 2× throughput as a model card hypothesis; measure acceptance, latency, and quality on your own task suite.
   — <https://huggingface.co/hiebo/Qwen3.6-34B-80L-Fable-5-Heretic>
-- For complex tasks, base Qwen recommends a large output limit; use this as a separate experimental setting rather than proof of the derivative's quality.
+- The base Qwen model recommends a large generation limit for complex tasks; treat that as an experimental setting, not proof of derivative quality.
   — <https://huggingface.co/Qwen/Qwen3.6-27B>
 
 ## Superseded by this
@@ -53,9 +53,9 @@ From 2026-06-29, practitioners can locate the Qwen3.6-34B-80L-Fable-5-Heretic Hu
 
 ## Still unknown
 
-- The model card represents claims from the repository author; we found no independent evaluation results, reproducible training runs, or verified speedups.
-- Primary verified pages omitted the release date and repository update timestamps, so we cannot confirm that the release occurred on 2026-06-29.
-- Fields `event_findings` and `new_events` are absent from the required output schema; relevant findings appear in `what_changed` and `unknowns`.
+- The model card is an author claim from a personal repository; we found no independent evaluations, reproducible training runs, or verified speedups.
+- Primary sources omit exact publication and update dates, so we cannot confirm the release occurred on 2026-06-29.
+- The schema lacks `event_findings` and `new_events` fields; we recorded relevant findings in `what_changed` and `unknowns`.
 
 ## Sources
 
