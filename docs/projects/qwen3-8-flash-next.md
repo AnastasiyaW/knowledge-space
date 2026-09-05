@@ -13,40 +13,34 @@ aliases: ["Qwen3.8-Flash-Next"]
 
 ## What it is
 
-Qwen3.8-Flash-Next is an open multimodal MoE model for developers who need vision, text, coding, and agent workflows.
-
-- Runtimes: runs across Transformers, vLLM, SGLang, TokenSpeed, and llama.cpp.
-- Architecture: uses Gated DeltaNet, Qwen Sparse Attention, Gated Residual, and n-gram embeddings.
-
-125B parameters in the base model, 51B parameters in n-gram embedding tables, 6B active parameters per token, and a 262 144 token context in the official serving example. The model fits open-weight experiments; Qwen Cloud positions managed Qwen3.8-Flash separately for production APIs.
+Qwen3.8-Flash-Next: открытая мультимодальная MoE-модель для разработчиков, которым нужны vision+text, кодинг и агентные сценарии. — запускается через Transformers, vLLM, SGLang, TokenSpeed и llama.cpp; — использует Gated DeltaNet, Qwen Sparse Attention, Gated Residual и n-gram embeddings. 125B параметров основной модели, 51B параметров таблиц n-gram embeddings и 6B активных параметров на токен; официальный пример сервинга задаёт контекст 262 144 токена. Практический выбор для экспериментов с открытыми весами; для managed production API официальный Qwen3.8-Flash позиционируется отдельно.
 
 ## Development line
 
-- **2026-08-26 — Qwen3.8-Flash-Next project resources were documented.** The release provides a multimodal MoE model and an early preview of the Qwen4 architecture.
+- **2026-08-26 — Qwen3.8-Flash-Next project resources were documented.** Мультимодальной MoE-модели и раннего preview архитектуры Qwen4.
 
 ## What changed
 
-- 2026-08-26 — open weights released for Qwen3.8-Flash-Next, an open multimodal MoE model and early preview of the Qwen4 architecture.
-- 2026-08-31 — technical report published with architecture ablations, efficiency evaluation, and training stability analysis.
+2026-08-26 — опубликованы открытые веса Qwen3.8-Flash-Next: мультимодальной MoE-модели и раннего preview архитектуры Qwen4. 2026-08-31 — вышел технический отчёт с абляциями архитектуры, оценкой эффективности и стабильности обучения.
 
 ## How to use this
 
-As of 2026-08-26, verify Qwen3.8-Flash-Next through the linked source repository, model-hosting resources, and demo before selecting a checkpoint or deployment route.
+As of 2026-08-26, practitioners should verify Qwen3.8-Flash-Next through its linked source repository, model-hosting resources, and demo before selecting a checkpoint or deployment route.
 
-1. For an image and text prototype, load `Qwen/Qwen3.8-Flash-Next` through the Transformers `image-text-to-text` pipeline or with `AutoProcessor` and `AutoModelForMultimodalLM`.
+1. Для прототипа с изображением и текстом загрузите `Qwen/Qwen3.8-Flash-Next` через Transformers pipeline `image-text-to-text` или через `AutoProcessor` и `AutoModelForMultimodalLM`.
   — <https://huggingface.co/Qwen/Qwen3.8-Flash-Next>
-2. For a self-hosted OpenAI-compatible API, run vLLM: the official example uses tensor parallelism 4, `--max-model-len 262144`, reasoning parser `qwen3`, and tool-call parser `qwen3_coder`.
+2. Для self-hosted OpenAI-compatible API запустите vLLM; официальный пример использует tensor parallelism 4, `--max-model-len 262144`, reasoning parser `qwen3` и tool-call parser `qwen3_coder`.
   — <https://github.com/QwenLM/Qwen3.8-Flash-Next>
-3. Use Qwen Cloud when we do not want to maintain open-weights infrastructure: managed Qwen3.8-Flash is compatible with OpenAI and Anthropic APIs.
+3. Если инфраструктуру для open weights поддерживать не нужно, используйте Qwen Cloud: текущий managed Qwen3.8-Flash совместим с API OpenAI и Anthropic.
   — <https://www.qwencloud.com/>
 
 ## Best practices
 
-- Enable reasoning parser `qwen3` and tool-call parser `qwen3_coder` together for tool calls; the official recipe provides no serving instructions without both.
+- Для запуска с tool calls включайте одновременно reasoning parser `qwen3` и tool-call parser `qwen3_coder`; без них официальный serving-рецепт для этого режима не приведён.
   — <https://github.com/QwenLM/Qwen3.8-Flash-Next>
-- On Apple Silicon, use mlx-vlm or prebuilt MLX quantizations; pick compatible GGUF weights for llama.cpp instead of the raw checkpoint.
+- На Apple Silicon используйте mlx-vlm либо готовую MLX-квантизацию; для llama.cpp выбирайте совместимые GGUF-веса, а не исходный checkpoint.
   — <https://github.com/QwenLM/Qwen3.8-Flash-Next>
-- Do not apply the 262K limit from the self-hosted example to the managed model: Qwen Cloud specifies 1M context for Qwen3.8-Flash separately.
+- Не переносите лимит 262K из self-hosted примера на managed модель: Qwen Cloud отдельно заявляет для Qwen3.8-Flash контекст 1M.
   — <https://www.qwencloud.com/>
 
 ## Superseded by this
@@ -55,9 +49,9 @@ As of 2026-08-26, verify Qwen3.8-Flash-Next through the linked source repository
 
 ## Still unknown
 
-- For the 2026-08-26 event: the official repository dates the release to 2026-08-26 and notes open weights for Qwen3.8-Flash-Next, a 125B parameter multimodal MoE model with 6B active parameters per token; source_date=2026-08-26; source_url=https://github.com/QwenLM/Qwen3.8-Flash-Next.
-- New event: 2026-08-31 — the technical report evaluated 14 pre-training benchmarks: the model beats its 397B-A17B predecessor on eight and trails on the rest by no more than 2,6 points, using roughly a third of active parameters, a third of training tokens, and about one ninth of FLOPs; source_date=2026-08-31; source_url=https://arxiv.org/abs/2608.30320.
-- The model card calls Qwen3.8-Flash a production release based on Flash-Next with 1M context and built-in tools, but gives no date for the transition; we cannot tie it to 2026-08-26 or record it as a dated supersedes.
+- Для события 2026-08-26: официальный репозиторий датирует выпуск 2026-08-26 и уточняет, что открыты веса Qwen3.8-Flash-Next — 125B-параметровой мультимодальной MoE-модели с 6B активных параметров на токен; source_date=2026-08-26; source_url=https://github.com/QwenLM/Qwen3.8-Flash-Next.
+- Новое событие: 2026-08-31 — технический отчёт описал 14 pre-training бенчмарков: модель опережает 397B-A17B predecessor на восьми и отстаёт на остальных не более чем на 2,6 пункта, при примерно трети активных параметров, трети токенов обучения и около одной девятой FLOPs; source_date=2026-08-31; source_url=https://arxiv.org/abs/2608.30320.
+- Текущая модельная карточка называет Qwen3.8-Flash production-версией на базе Flash-Next с 1M context и встроенными tools, но не указывает дату этого перехода; его нельзя привязать к событию 2026-08-26 или оформить как датированное supersedes.
 
 ## Sources
 
