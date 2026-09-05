@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1002+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1003+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -796,6 +796,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Veo](https://happyin.space/projects/veo/): **Development line:** `project:veo` · thread `veo-development`
 - [VideoLifter](https://happyin.space/projects/videolifter/): **Development line:** `project:videolifter` · thread `videolifter`
 - [Vidu](https://happyin.space/projects/vidu/): **Development line:** `project:vidu` · thread `vidu`
+- [VLC media player — Video enhancement](https://happyin.space/projects/vlc-media-player/): **Development line:** `project:vlc-media-player` · thread `video-enhancement`
 
 ## Python
 - [Async Programming (asyncio)](https://happyin.space/python/async-programming/): Python's `asyncio` provides cooperative multitasking for I/O-bound workloads in a single thread. During I/O waits (network, disk), control yields to other tasks via `await`, enabling concurrent han...
