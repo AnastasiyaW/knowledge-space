@@ -1,14 +1,15 @@
 ---
-title: Roblox — Roblox AI Creation
+title: Roblox
 category: organizations
+date: 2026-02-05
 tags: [model_releases, organization, roblox, roblox-ai, roblox-ai-creation]
 aliases: ["Roblox"]
 ---
 
-# Roblox — Roblox AI Creation
+# Roblox
 
 **Development line:** `organization:roblox` · thread `roblox-ai-creation`  
-**Events:** 2 dated, 2023-02-18 → 2026-02-05 · **Researched:** 2026-09-04 · confidence: high
+**Last event:** 2026-02-05 · 2 dated since 2023-02-18 · **Researched:** 2026-09-05 · confidence: high
 
 ## What it is
 
@@ -17,7 +18,7 @@ Roblox — игровая платформа и Roblox Studio для разра�
 ## Development line
 
 - **2023-02-18 — Wired Reports on Roblox's Generative-AI Direction.** On 2023-02-18, Wired published a report connecting Roblox with generative AI and its gaming universe. The dated linked source marks an early public milestone in Roblox's generative-AI development direction, although the supplied evidence does not establish a specific released product or capability.
-- **2026-02-05 — Roblox Advances Creation with the Cube Foundation Model.** On 2026-02-05, Roblox published a newsroom update on accelerating creation with its Cube foundation model. The supplied links also identify an earlier Cube announcement plus public GitHub and Hugging Face resources, making this a concrete public development step in Roblox's AI-creation tooling.
+- **2026-02-05 — Roblox Advances Creation with the Cube Foundation Model.** Схема задаёт части, а скрипты подстраиваются под её размер и форму.
 
 ## What changed
 
