@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1090+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1091+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -700,6 +700,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [AvatarArtist](https://happyin.space/projects/avatarartist/): **Development line:** `project:avatarartist` · thread `avatarartist-public-release-and-space`
 - [FLUX.1-Kontext-dev-onnx — FLUX.1 Kontext ONNX and editing](https://happyin.space/projects/black-forest-labs/): **Development line:** `project:black-forest-labs` · thread `flux-kontext`
 - [Bonsai Image 4B — Bonsai Image development](https://happyin.space/projects/bonsai-image/): **Development line:** `project:bonsai-image` · thread `bonsai-image`
+- [Seed Audio 1.0 — Seed Audio](https://happyin.space/projects/bytedance-seed-audio-1-0/): **Development line:** `project:bytedance-seed-audio-1-0` · thread `seed-audio`
 - [CameraCtrl](https://happyin.space/projects/cameractrl/): **Development line:** `project:cameractrl` · thread `cameractrl-development`
 - [CapCut Video Studio — AI Creator Home](https://happyin.space/projects/capcut/): **Development line:** `project:capcut` · thread `ai-creator-home`
 - [Capybara](https://happyin.space/projects/capybara/): **Development line:** `project:capybara` · thread `capybara-development`
