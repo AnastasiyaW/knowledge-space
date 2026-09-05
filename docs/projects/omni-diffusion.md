@@ -13,12 +13,12 @@ aliases: ["Omni-Diffusion"]
 
 ## What it is
 
-Omni-Diffusion is an any-to-any multimodal model using masked discrete diffusion. It gives researchers and engineers one open stack instead of separate autoregressive models.
+Omni-Diffusion is an open any-to-any multimodal model built on masked discrete diffusion for researchers and engineers who need one shared stack instead of separate autoregressive models.
 
-- Text-to-image, speech-to-image, VQA, spoken VQA, ASR, and TTS tasks.
+- Text-to-image, speech-to-image, VQA, spoken VQA, ASR, and TTS.
 - Joint generation and understanding across text, images, and speech.
 
-The published checkpoint has 8B parameters in BF16. Audio tasks require separate GLM-4-Voice tokenizer and decoder; images require MagViT-v2. This is a reproducible research stack rather than a hosted API, because the model card has no connected inference provider.
+The published checkpoint has 8B parameters in BF16. Audio tasks require separate GLM-4-Voice tokenizer and decoder; image tasks require MagViT-v2. Omni-Diffusion is a reproducible research stack rather than a hosted API: the model card has no connected inference provider.
 
 ## Development line
 
@@ -26,38 +26,38 @@ The published checkpoint has 8B parameters in BF16. Audio tasks require separate
 
 ## What changed
 
-- 2026-03-11 — Code, project page, and the open 8B BF16 Omni-Diffusion checkpoint published for any-to-any text/image/speech tasks.
-- 2026-07-03 — arXiv v2 updated the ICML version of the paper and specified an optimized model checkpoint.
+- 2026-03-11 — Code, project page, and open 8B BF16 checkpoint released for any-to-any text, image, and speech tasks.
+- 2026-07-03 — arXiv v2 updated the ICML paper version and noted an optimized model checkpoint.
 
 ## How to use this
 
-As of 2026-03-11, evaluate Omni-Diffusion through its linked project site, source repository, and Hugging Face model page rather than relying on an unverified secondary description.
+As of 2026-03-11, practitioners should evaluate Omni-Diffusion through its linked project site, source repository, and Hugging Face model page rather than relying on an unverified secondary description.
 
-1. Clone the repository, initialize submodules, and install dependencies and the package in an environment from the official Docker image.
+1. Clone the repository, initialize submodules, and install dependencies and the package inside the official Docker image.
   — <https://github.com/VITA-MLLM/Omni-Diffusion>
-2. Download the main checkpoint into ../models/Omni-Diffusion; for audio tasks add the GLM-4-Voice tokenizer and decoder, and for images add MagViT-v2.
+2. Download the main checkpoint into `../models/Omni-Diffusion`. For audio tasks, add the GLM-4-Voice tokenizer and decoder; for images, add MagViT-v2.
   — <https://github.com/VITA-MLLM/Omni-Diffusion>
-3. Run tools/inference.py with paths to the main weight, image tokenizer, audio tokenizer, audio decoder, and output directory.
+3. Run `tools/inference.py` with paths to the main weights, image tokenizer, audio tokenizer, audio decoder, and output directory.
   — <https://github.com/VITA-MLLM/Omni-Diffusion>
 
 ## Best practices
 
-- Use the official repository inference path for multimodal tasks: loading through Transformers does not replace the required image and audio tokenizers.
+- Use the official repository inference path for multimodal tasks: standard loading via Transformers does not replace the required image and audio tokenizers.
   — <https://github.com/VITA-MLLM/Omni-Diffusion>
-- Pin and verify the model revision before enabling trust_remote_code, because the card explicitly requires custom architecture.
+- Pin and verify the model revision before enabling `trust_remote_code`: the model card requires custom architecture.
   — <https://huggingface.co/lijiang/Omni-Diffusion>
-- Keep the main weight and the three helper artifacts in matching paths and environment, or the claimed full text/image/speech stack will not build.
+- Keep the main weights and the three helper artifacts in matching paths and environments so the complete text, image, and speech stack functions.
   — <https://github.com/VITA-MLLM/Omni-Diffusion>
 
 ## Superseded by this
 
-- 2026-07-03 — arXiv v2 replaces v1 from 2026-03-06 as the current paper version; v2 is marked as the ICML version with an optimized checkpoint.
+- 2026-07-03 — arXiv v2 supersedes v1 from 2026-03-06 as the active paper version; v2 is marked as the ICML version with an optimized checkpoint.
 
 ## Still unknown
 
-- Primary published requirements for VRAM, latency, or supported CUDA version for inference are not found.
-- No official Chinese source or independent Chinese operating report is confirmed; Chinese search yielded only secondary summaries.
-- The lack of an inference provider on the Hugging Face card confirms the absence of a listed hosted provider, but does not rule out self-hosted third-party deployments.
+- Primary published requirements for VRAM, latency, and supported CUDA versions for inference remain unlisted.
+- No official Chinese primary source or independent Chinese operating report is confirmed; Chinese search returned only secondary summaries.
+- The lack of an inference provider on the Hugging Face model card confirms no listed hosted provider, but third-party standalone deployments remain possible.
 
 ## Sources
 
