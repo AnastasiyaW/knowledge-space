@@ -1,6 +1,6 @@
 # Umfassende technische Wissensbasis - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1103+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1104+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -746,6 +746,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [FLOAT](https://happyin.space/projects/float/): **Development line:** `project:float` · thread `float-public-releases`
 - [FLUX 3](https://happyin.space/projects/flux-3/): **Development line:** `project:flux-3` · thread `flux-3-development`
 - [Fooocus](https://happyin.space/projects/fooocus/): **Development line:** `project:fooocus` · thread `fooocus-development`
+- [Frame Extractor](https://happyin.space/projects/frame-extractor/): **Development line:** `project:frame-extractor` · thread `frame-extractor`
 - [FramePack Studio](https://happyin.space/projects/framepack-studio/): **Development line:** `project:framepack-studio` · thread `framepack-studio-development`
 - [FreeToken](https://happyin.space/projects/freetoken/): **Development line:** `project:freetoken` · thread `freetoken-development`
 - [Gabi](https://happyin.space/projects/gabi-robot/): **Development line:** `project:gabi-robot` · thread `gabi-ordination`
