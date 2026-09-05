@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1191+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1192+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -930,6 +930,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Reflection 70B](https://happyin.space/projects/reflection-70b/): **Development line:** `project:reflection-70b` · thread `reflection-70b-development`
 - [Reve](https://happyin.space/projects/reve/): **Development line:** `project:reve` · thread `reve-product-development`
 - [RiGS — Repository reference](https://happyin.space/projects/rigs/): **Development line:** `project:rigs` · thread `repository-reference`
+- [Cursor Router](https://happyin.space/projects/router/): **Development line:** `project:router` · thread `router`
 - [Runway Gen-1](https://happyin.space/projects/runway-gen-1/): **Development line:** `project:runway-gen-1` · thread `runway-gen-1-public-release`
 - [Runway Gen-3 Alpha](https://happyin.space/projects/runway-gen-3-alpha/): **Development line:** `project:runway-gen-3-alpha` · thread `runway-gen-3-alpha`
 - [SAMA](https://happyin.space/projects/sama/): **Development line:** `project:sama` · thread `sama`
