@@ -1,6 +1,6 @@
 # 综合技术知识库 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1109+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1110+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -740,6 +740,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [DynamicsLab Chaos — Chaos and Drift demos](https://happyin.space/projects/dynamicslab-chaos/): **Development line:** `project:dynamicslab-chaos` · thread `chaos-and-drift-demos`
 - [EgoForce](https://happyin.space/projects/egoforce/): **Development line:** `project:egoforce` · thread `egoforce-development`
 - [EU AI Act — Political agreement](https://happyin.space/projects/eu-ai-act/): **Development line:** `project:eu-ai-act` · thread `political-agreement`
+- [EVA](https://happyin.space/projects/eva/): **Development line:** `project:eva` · thread `eva-public-resources`
 - [EVIE-Preview-4.5B](https://happyin.space/projects/evie-preview-4-5b/): **Development line:** `project:evie-preview-4-5b` · thread `evie-preview-4-5b`
 - [EvoQuality](https://happyin.space/projects/evoquality/): **Development line:** `project:evoquality` · thread `bytedance-evoquality-development`
 - [ExAvatar](https://happyin.space/projects/exavatar/): **Development line:** `project:exavatar` · thread `exavatar-development`
