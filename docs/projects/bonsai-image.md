@@ -13,57 +13,46 @@ aliases: ["Bonsai Image 4B"]
 
 ## What it is
 
-Bonsai Image 4B is a family of text-to-image diffusion models for local devices.
-Binary 1-bit gives the smallest size, and Ternary gives better quality.
-The WebGPU version remains experimental.
-
-- Binary 1-bit, smallest size.
-- Ternary, better image quality.
-- WebGPU variant, experimental browser execution.
-
-The ternary transformer takes 1,21 GB, and the full Apple Silicon payload takes 3,88 GB.
-Start with the ternary low-bit pack for local generation instead of FP16.
+Bonsai Image 4B: семейство text-to-image diffusion-моделей для локального запуска; Binary 1-bit — для минимального размера, Ternary — для лучшего качества; WebGPU-вариант остаётся экспериментальным. Предел: ternary-трансформер занимает 1,21 GB, а полный Apple Silicon payload — 3,88 GB. Вердикт: для локальной генерации следует начинать с ternary low-bit pack, а не с FP16-версии.
 
 ## Development line
 
-- **2026-05-29 — Bonsai Image 4B appeared on Hugging Face.** A dated record linked to the Hugging Face collection and WebGPU Space for the project. The links identify public project resources for evaluation. The links alone do not establish a model release, update, or benchmark on that date.
+- **2026-05-29 — Bonsai Image 4B was surfaced through Hugging Face resources.** On 2026-05-29, a dated record pointed readers to a Hugging Face collection for Bonsai Image and to a WebGPU Space associated with the project. This is treated as a material distribution and evaluation-access event because it identifies concrete public project resources. The links alone do not establish whether a model release, update, or benchmark occurred on that date.
 
 ## What changed
 
-2026-05-26 — PrismML released Bonsai Image 4B in Binary 1-bit and Ternary variants.
-2026-05-29 — Links to the weight collection and WebGPU demo showed model availability. The initial release specifies the FLUX.2 Klein 4B base, 0,93 GB for Binary, 1,21 GB for the Ternary diffusion transformer, and local paths for Apple Silicon and CUDA.
-2026-06-01 — Platform low-bit packs and unpacked FP16 variants arrived in the collection. FP16 exists for standard Diffusers compatibility, not for memory savings or speed.
+2026-05-26 — PrismML выпустила Bonsai Image 4B в двух вариантах: Binary 1-bit и Ternary. 2026-05-29 — ссылки на коллекцию весов и WebGPU-демо отражали доступность модели; первичный релиз уточняет базу FLUX.2 Klein 4B, размер 0,93 GB для Binary и 1,21 GB для Ternary diffusion transformer, а также локальные Apple Silicon и CUDA пути. 2026-06-01 — в коллекции появились платформенные low-bit packs и FP16 unpacked варианты; FP16 предназначен для совместимости с обычным Diffusers, не для экономии памяти или ускорения.
 
 ## How to use this
 
-From 2026-05-29, practitioners can use the linked Hugging Face collection and WebGPU Space to find and evaluate Bonsai Image 4B. Release status, capabilities, or usage guidance require more than these links alone.
+From 2026-05-29, practitioners can use the linked Hugging Face collection and WebGPU Space as starting points for locating and evaluating Bonsai Image 4B; they should not infer release status, capabilities, or usage guidance from these links alone.
 
-1. Clone Bonsai Image Demo and run the setup for your platform: MLX on macOS, or gemlite/HQQ on Linux or Windows.
+1. Клонируйте Bonsai Image Demo и выполните setup для своей платформы: MLX на macOS либо gemlite/HQQ на Linux или Windows.
   — <https://github.com/PrismML-Eng/Bonsai-image-demo>
-2. Download the Ternary variant by default; pick Binary when minimum size matters more than quality.
+2. Загрузите Ternary-вариант по умолчанию; выберите Binary, если важнее минимальный размер, чем качество.
   — <https://github.com/PrismML-Eng/Bonsai-image-demo>
-3. Run the studio via scripts/serve, or send requests to the running backend via send_request to avoid a cold start on every image.
+3. Запустите studio через scripts/serve или отправляйте запросы в уже запущенный backend через send_request, чтобы не оплачивать cold start на каждом изображении.
   — <https://github.com/PrismML-Eng/Bonsai-image-demo>
-4. Open the WebGPU demo for experimental browser generation, load the Ternary model, and set the prompt and parameters; the page requests a Hugging Face access token.
+4. Для экспериментального браузерного запуска откройте WebGPU-демо, загрузите Ternary model, укажите prompt и параметры; страница запрашивает Hugging Face access token.
   — <https://huggingface.co/spaces/webml-community/bonsai-image-webgpu>
 
 ## Best practices
 
-- Use Ternary as the default choice: the official demo recommends it for better quality with moderate size growth.
+- Используйте Ternary как стандартный вариант: официальный demo рекомендует его за лучшее качество при умеренном росте размера.
   — <https://github.com/PrismML-Eng/Bonsai-image-demo>
-- Do not choose unpacked FP16 safetensors for local efficiency: they serve as a fallback for stock Diffusers and lose low-bit pack benefits.
+- Не выбирайте unpacked FP16 safetensors ради локальной эффективности: они нужны как fallback для stock Diffusers и не сохраняют преимущества low-bit pack.
   — <https://huggingface.co/prism-ml/bonsai-image-ternary-4B-unpacked>
-- Treat browser demo compatibility as unverified outside Apple M4 Max and M5 Max; Chrome/Edge offers the unsafe WebGPU flag for performance only.
+- Для браузерного демо рассматривайте совместимость как непроверенную вне Apple M4 Max и M5 Max; Chrome/Edge предлагает unsafe WebGPU flag только для производительности.
   — <https://webml-community-bonsai-image-webgpu.static.hf.space/index.html>
 
 ## Superseded by this
 
-- 2026-06-01 — The recommendation to use unpacked FP16 as the primary path is obsolete: official cards recommend optimized MLX or gemlite low-bit packs.
+- 2026-06-01 — рекомендация использовать unpacked FP16 как основной путь устарела: официальные карточки рекомендуют optimized MLX или gemlite low-bit packs.
 
 ## Still unknown
 
-- The initial release is dated 2026-05-26, while the recorded step is 2026-05-29; checked sources do not confirm the exact creation date of the collection and WebGPU Space.
-- Required fields event_findings and new_events are absent in the provided output schema; what_changed reflects the clarified event and the earlier release.
+- Первичный релиз датирован 2026-05-26, тогда как зафиксированный шаг — 2026-05-29; точная дата создания коллекции и WebGPU Space в просмотренных источниках не подтверждена.
+- Требуемые поля event_findings и new_events отсутствуют в предоставленной выходной схеме; относящееся к событию уточнение и более ранний релиз отражены в what_changed.
 
 ## Sources
 
