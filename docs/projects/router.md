@@ -13,11 +13,11 @@ aliases: ["Cursor Router"]
 
 ## What it is
 
-Cursor Router routes each Agent request across Cursor’s changing model pool instead of making a developer choose a model per request. It offers Cost, Balance, and Intelligence modes for Teams and Enterprise. Balance and Intelligence use usage limits faster than Cost, so pick an explicit mode rather than treating Auto as a fixed model. The router suits team-level cost and quality control, but not workloads that require a pinned underlying model.
+Cursor Router routes each Agent request across Cursor’s changing model pool instead of making a developer choose a model per request. It offers Cost, Balance, and Intelligence modes; current documentation limits it to Teams and Enterprise. Balance and Intelligence use usage limits faster than Cost, so use explicit mode choice rather than treating Auto as a fixed model. It works for team-level cost and quality control, but not for workloads that require a pinned underlying model.
 
 ## Development line
 
-- **2026-07-25 — Cursor published a public update associated with Router.** On 2026-07-25, Cursor published a public blog article associated with Router. The post marks a public milestone for the Cursor Router development line, but Cursor did not detail its functionality, rollout status, or user impact.
+- **2026-07-25 — Cursor published a public update associated with Router.** On 2026-07-25, Cursor published a public blog article associated with Router. Its existence marks a public milestone for Router, but the article does not detail rollout status, functionality, or user impact.
 
 ## What changed
 
@@ -27,7 +27,7 @@ Cursor Router routes each Agent request across Cursor’s changing model pool in
 
 ## How to use this
 
-From 2026-07-25, consult Cursor's Router announcement before relying on or configuring Router.
+From 2026-07-25, consult Cursor's Router announcement before relying on or configuring Router; specific workflow changes remain unverified until the article is researched.
 
 1. In Cursor’s model picker, select Auto, then choose Cost for spend control, Balance for the default compromise, or Intelligence for harder multi-step work.
   — <https://prod.cursor.com/docs/cursor-router>
@@ -42,7 +42,7 @@ From 2026-07-25, consult Cursor's Router announcement before relying on or confi
   — <https://cursor.com/guides/model-routing>
 - Keep a price-efficient routing option enabled; Cursor’s Enterprise documentation says blocking too many models can reduce quality or disable Router, and names Cursor Grok 4.5 as required for Router to work.
   — <https://prod.cursor.com/docs/cursor-router>
-- Do not guess which model answered from output alone: the routed model is hidden by default, and the pool can change as models ship.
+- Do not infer which model answered from output alone: the routed model is hidden by default, and the pool can change as models ship.
   — <https://prod.cursor.com/docs/cursor-router>
 
 ## Superseded by this
@@ -54,7 +54,6 @@ From 2026-07-25, consult Cursor's Router announcement before relying on or confi
 
 - Cursor does not publish a stable, exhaustive mapping from request types to underlying model names; the model pool changes over time.
 - The published savings and satisfaction figures are first-party measurements, not an independently reproducible benchmark.
-- Specific workflow changes remain unverified until the announcement article is researched.
 
 ## Sources
 
@@ -69,5 +68,5 @@ From 2026-07-25, consult Cursor's Router announcement before relying on or confi
 ## Agent brief {#agent-brief}
 
 - **Subject:** `project:router`, thread `router`, 1 dated events 2026-07-25 → 2026-07-25.
-- **Practical note:** From 2026-07-25, consult Cursor's Router announcement before relying on or configuring Router.
+- **Practical note:** From 2026-07-25, practitioners should consult Cursor's Router announcement before relying on or configuring Router; the specific workflow change remains unverified until the article is researched.
 - **Confidence:** high. Dated supersedes above are the authority for what is obsolete.
