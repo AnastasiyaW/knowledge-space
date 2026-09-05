@@ -13,55 +13,45 @@ aliases: ["LMX-Omni-52B-Halo"]
 
 ## What it is
 
-LMX-Omni-52B-Halo bundles Qwen3.6-35B-A3B-MTP, Flux-2-Klein-9B, Whisper-Large-v3-Turbo and kokoro-v1 for local multimodal applications.
-
-- Chat and image analysis
-- Image generation and editing
-- Audio transcription
-- Speech synthesis
-
-Component downloads take about 44,8 GB, and the Halo class targets Strix Halo hardware.
-Choose it for local any-to-any prototypes when the download size and internal tool-calling latency are justified.
+LMX-Omni-52B-Halo — набор из Qwen3.6-35B-A3B-MTP, Flux-2-Klein-9B, Whisper-Large-v3-Turbo и kokoro-v1 для локальных мультимодальных приложений. Возможности: чат и анализ изображений; генерация и редактирование изображений; транскрибация; синтез речи. Ограничение: загрузка компонентов занимает около 44,8 ГБ, а класс Halo ориентирован на устройства уровня Strix Halo. Вердикт: выбирать для локального any-to-any прототипа или приложения, если оправданы объём загрузки и задержка внутреннего tool-calling цикла.
 
 ## Development line
 
-- **2026-06-12 — LMX-Omni-52B-Halo was linked to its Hugging Face model repository.** On 2026-06-12, a link connected LMX-Omni-52B-Halo to its Hugging Face repository. That establishes the repository as a project artifact by that date. It does not establish its release status, capabilities, licensing, or intended use.
+- **2026-06-12 — LMX-Omni-52B-Halo was linked to its Hugging Face model repository.** On 2026-06-12, the record recorded a link to the Hugging Face repository for LMX-Omni-52B-Halo. This establishes the repository as a project artifact by that date, but does not establish its release status, capabilities, licensing, or intended use.
 
 ## What changed
 
-- 2026-06-12 — The model card described LMX-Omni-52B-Halo as a unified OpenAI-compatible omni bundle. The initial repository was created on 2026-06-03, and on 2026-06-04 its manifest switched to the unified format while deleting `collection.json`.
-- 2026-06-23 — The published manifest added a configurable collection system prompt.
-- 2026-08-08 — An open issue reported that the collection does not stream planner `reasoning_content` to Open WebUI. That remains a limitation for interfaces requiring visible reasoning.
+2026-06-12 — модельная карточка описывала LMX-Omni-52B-Halo как единый OpenAI-совместимый omni-набор; первичный репозиторий был создан 2026-06-03, а 2026-06-04 его манифест перевели на unified format и удалили старый collection.json. 2026-06-23 — в опубликованный манифест добавлен настраиваемый для коллекции system prompt. 2026-08-08 — открыт нерешённый отчёт: коллекция не передаёт planner reasoning_content в поток Open WebUI; для интерфейса, которому нужен видимый ход рассуждений, это остаётся ограничением.
 
 ## How to use this
 
-As of 2026-06-12, verify LMX-Omni-52B-Halo artifacts and documentation in the linked Hugging Face repository before relying on the project.
+As of 2026-06-12, practitioners should use the linked Hugging Face repository as the starting point for verifying LMX-Omni-52B-Halo artifacts and documentation before relying on the project.
 
-1. Install Lemonade, download all components with `lemonade pull LMX-Omni-52B-Halo`, and launch the model with `lemonade run LMX-Omni-52B-Halo`.
+1. Установите Lemonade, затем скачайте все компоненты командой `lemonade pull LMX-Omni-52B-Halo` и запустите модель командой `lemonade run LMX-Omni-52B-Halo`.
   — <https://huggingface.co/lemonade-sdk/LMX-Omni-52B-Halo>
-2. Point an OpenAI-compatible client to `/chat/completions` using the model name; the server dispatches components and returns images and audio in the response message.
+2. В OpenAI-совместимом клиенте выбирайте имя модели для запросов к `/chat/completions`; сервер сам вызывает компоненты и возвращает изображения и аудио в сообщении ответа.
   — <https://huggingface.co/lemonade-sdk/LMX-Omni-52B-Halo>
-3. Pass `model: "LMX-Omni-52B-Halo"` to `lemonade_omni` in an MCP client for a single multimodal turn with images and audio.
+3. В MCP-клиенте передайте `model: "LMX-Omni-52B-Halo"` в `lemonade_omni`, если нужен один мультимодальный turn с изображениями и аудио.
   — <https://github.com/lemonade-sdk/lemonade/blob/main/docs/api/mcp.md>
 
 ## Best practices
 
-- Specify Halo explicitly only on supported hardware; MCP defaults to the smaller and faster LMX-Omni-5.5B-Lite.
+- Явно указывайте Halo только на подходящем оборудовании; MCP по умолчанию использует меньшую и более быструю LMX-Omni-5.5B-Lite.
   — <https://github.com/lemonade-sdk/lemonade/blob/main/docs/api/mcp.md>
-- Set `output_dir` for MCP artifacts: that creates unique file names and supports clients that do not render audio content blocks.
+- Для артефактов MCP задавайте `output_dir`: это даёт уникальные имена файлов и подходит клиентам, которые не отображают audio content blocks.
   — <https://github.com/lemonade-sdk/lemonade/blob/main/docs/api/mcp.md>
-- Do not expect streaming reasoning in Open WebUI: the filed issue for Omni collections remains open.
+- Не рассчитывайте на потоковое отображение reasoning в Open WebUI: зарегистрированная проблема для Omni-коллекций остаётся открытой.
   — <https://github.com/lemonade-sdk/lemonade/issues/2990>
 
 ## Superseded by this
 
-- 2026-05-21 — The old guide for legacy collections is obsolete: Lemonade v10.6.0 replaced them with LMX-Omni-52B-Halo and LMX-Omni-5.5B-Lite.
-- 2026-06-04 — The legacy `collection.json` manifest for this model was replaced with unified `LMX-Omni-52B-Halo.json`.
+- 2026-05-21 — прежнее руководство по старым «collections» устарело: релиз Lemonade v10.6.0 заменил их моделями LMX-Omni-52B-Halo и LMX-Omni-5.5B-Lite.
+- 2026-06-04 — старый формат manifest `collection.json` для этой модели заменён unified-файлом `LMX-Omni-52B-Halo.json`.
 
 ## Still unknown
 
-- The primary source does not date 2026-06-12 with a release or change. It confirms page state, but records no distinct event on that day.
-- The response schema omits the requested `event_findings` and `new_events` fields. Their additions appear in `what_changed` and `unknowns` instead.
+- Первичный источник не датирует именно 2026-06-12 выпуском или изменением; он подтверждает состояние страницы, но не даёт отдельной записи о событии в этот день.
+- Схема ответа не содержит запрошенные поля event_findings и new_events; их фактические дополнения отражены в what_changed и unknowns.
 
 ## Sources
 
@@ -77,5 +67,5 @@ As of 2026-06-12, verify LMX-Omni-52B-Halo artifacts and documentation in the li
 ## Agent brief {#agent-brief}
 
 - **Subject:** `project:lmx-omni-52b-halo`, thread `lmx-omni-52b-halo`, 1 dated events 2026-06-12 → 2026-06-12.
-- **Practical note:** As of 2026-06-12, verify LMX-Omni-52B-Halo artifacts and documentation in the linked Hugging Face repository before relying on the project.
+- **Practical note:** As of 2026-06-12, practitioners should use the linked Hugging Face repository as the starting point for verifying LMX-Omni-52B-Halo artifacts and documentation before relying on the project.
 - **Confidence:** high. Dated supersedes above are the authority for what is obsolete.
