@@ -15,46 +15,48 @@ aliases: ["MAGI-2"]
 
 MAGI-2 Preview is a 114B-parameter unified audio-video MoE model for teams generating 10-second clips with synchronized audio locally from text or images.
 
-- T2V creates video from text prompts with joint audio.
-- I2V animates a starting frame into video with joint audio.
-- Two-stage pipeline generates a preview and refines output up to 1080p.
+- T2V: generates video and audio from text prompts.
+- I2V: animates an input frame with audio.
+- Joint audio-video generation: aligns sound and motion in a single model.
+- Two-stage pipeline: outputs up to 1080p using preview and refiner stages.
 
-The model uses 6B active parameters per token, roughly 307 GB of weights, and eight Hopper GPUs. This is an infrastructure-heavy open preview release, not a lightweight API tool.
+6B active parameters per token, about 307 GB of weights, and eight Hopper GPUs.
+This is an infrastructure-heavy open preview release rather than a lightweight API tool.
 
 ## Development line
 
-- **2026-08-07 — Sand AI published MAGI-2 preview materials.** The model uses 114B parameters with about 6B active per token on a unified MagiMoE audio-video architecture. Repository documentation limits the release to 10-second clips, a preview stage with a refiner up to 1080p, and T2V and I2V with synchronized sound.
+- **2026-08-07 — Sand AI published MAGI-2 preview materials.** 114B parameters, about 6B active per token, and a unified MagiMoE audio-video architecture. Repository documentation limits the release to 10-second clips, a preview stage with a refiner up to 1080p, and T2V and I2V with audio.
 
 ## What changed
 
-2026-08-07 — MAGI-2 Preview became available with weights and inference code. Primary material from Sand AI on 2026-08-05 specifies the scale: 114B parameters, about 6B active per token, and a unified MagiMoE audio-video architecture. Repository documentation limits the release to 10-second clips, a preview stage and refiner up to 1080p, and T2V and I2V with sound.
+2026-08-07 — MAGI-2 Preview became available with weights and inference code. Primary Sand AI material from 2026-08-05 specifies the scale: 114B parameters, about 6B active per token, and a unified MagiMoE audio-video architecture. Current repository documentation defines the release scope: only 10-second clips, a preview stage and a refiner up to 1080p, and T2V and I2V with audio.
 
 ## How to use this
 
-As of 2026-08-07, practitioners should treat MAGI-2 as a publicly previewed Sand AI project and consult its linked repository, model page, and API v2 documentation before evaluating or integrating it; specific capabilities and access conditions still require direct verification.
+As of 2026-08-07, treat MAGI-2 as a public preview from Sand AI. Check the linked repository, model page, and API v2 documentation before evaluating or integrating it. Specific capabilities and access conditions still require direct verification.
 
 1. Prepare a Linux environment with Python 3.12, current CUDA, ffmpeg, and eight NVIDIA Hopper GPUs as required by the inference code.
   — <https://github.com/SandAI-org/MAGI-2-preview>
-2. Pull the Docker image or build from source. Specify the image tag matching the commit rather than moving latest for reproducibility.
+2. Pull the Docker image or build from source; pin the image tag to a specific commit rather than moving latest for reproducibility.
   — <https://github.com/SandAI-org/MAGI-2-preview>
-3. Download the full checkpoint set from sand-ai/MAGI-2-preview into the ckpt folder without renaming directories.
+3. Download the full checkpoint set from sand-ai/MAGI-2-preview into the ckpt directory without renaming directories.
   — <https://huggingface.co/sand-ai/MAGI-2-preview>
-4. Run T2V with a text prompt or I2V with a prompt and first frame. The output is a 10-second clip, and 1080p passes through preview and refiner.
+4. Run T2V with a text prompt or I2V with a prompt and source frame; the result is a 10-second clip, and 1080p passes through preview and refiner stages.
   — <https://github.com/SandAI-org/MAGI-2-preview>
 
 ## Best practices
 
-- Pin the Docker tag to a specific commit and log it with results, because latest changes.
+- Pin the Docker tag to a specific commit and record it with results: latest changes.
   — <https://github.com/SandAI-org/MAGI-2-preview>
-- Keep the default staged offload for preview and refiner at 1080p, because both components and activations do not fit together even on an 80 GB GPU.
+- Keep the default staged offloading of preview and refiner for 1080p: both components together with activations do not fit even on an 80 GB GPU.
   — <https://github.com/SandAI-org/MAGI-2-preview>
-- Use structured prompt expansion for the full 10-second scene when a manual prompt does not set action, framing, and audio.
+- Use structured prompt expansion for the full 10-second scenario when a manual prompt does not sufficiently define action, framing, and audio.
   — <https://github.com/SandAI-org/MAGI-2-preview>
 
 ## Superseded by this
 
-- 2026-08-05 — MAGI-2 Preview is not replaced by a separate publicly dated subsequent release in verified primary sources; documentation marks the distilled variant as coming soon.
-- 2026-08-07 — The assumption that MAGI-2 is a ready public API product is obsolete: the verified implementation provides open weights and inference code with cluster requirements.
+- 2026-08-05 — No dated subsequent release supersedes MAGI-2 Preview in verified primary sources; documentation marks the distilled variant as coming soon.
+- 2026-08-07 — The assumption that MAGI-2 is a ready public API product is obsolete: the verifiable current implementation provides open weights and inference code with cluster requirements.
 
 ## Still unknown
 
@@ -72,5 +74,5 @@ As of 2026-08-07, practitioners should treat MAGI-2 as a publicly previewed Sand
 ## Agent brief {#agent-brief}
 
 - **Subject:** `project:magi-2`, thread `magi-2-preview`, 1 dated events 2026-08-07 → 2026-08-07.
-- **Practical note:** As of 2026-08-07, practitioners should treat MAGI-2 as a publicly previewed Sand AI project and consult its linked repository, model page, and API v2 documentation before evaluating or integrating it; specific capabilities and access conditions still require direct verification.
+- **Practical note:** As of 2026-08-07, treat MAGI-2 as a public preview from Sand AI. Consult its linked repository, model page, and API v2 documentation before evaluating or integrating it; specific capabilities and access conditions still require direct verification.
 - **Confidence:** high. Dated supersedes above are the authority for what is obsolete.
