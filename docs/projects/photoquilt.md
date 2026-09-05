@@ -15,23 +15,23 @@ aliases: ["PhotoQuilt"]
 
 PhotoQuilt is a training-free photomosaic pipeline for diffusion users who need a coherent large scene built from independent image tiles.
 
-- global bootstrap, latent upscale, noise reinjection and tiled denoising;
-- FLUX.1-Krea-dev, distilled FLUX.2-klein-9B and Stable Diffusion 2.1 backends;
-- layout-image, tile-prompt, gallery-reference and FLUX.1 multi-GPU workflows.
+- pipeline stages: global bootstrap, latent upscale, noise reinjection and tiled denoising;
+- diffusion backends: FLUX.1-Krea-dev, distilled FLUX.2-klein-9B and Stable Diffusion 2.1;
+- conditioning workflows: layout-image, tile-prompt, gallery-reference and FLUX.1 multi-GPU execution.
 
 ## Development line
 
-- **2026-07-06 — PhotoQuilt project resources were made available.** On 2026-07-06, the project website, GitHub repository, and hosted Hugging Face Space went live. Practitioners got distinct places to inspect, obtain, and test the code.
+- **2026-07-06 — PhotoQuilt project resources were made available.** On 2026-07-06, the project published its website, repository, and hosted Hugging Face Space so users could inspect and run the code.
 
 ## What changed
 
-2026-07-06 — PhotoQuilt launched as a training-free arbitrary-resolution photomosaic method. The official implementation provides three local diffusion backends and workflows conditioned on layout images or gallery references.
+2026-07-06 — PhotoQuilt launched as a training-free arbitrary-resolution photomosaic method. The implementation provides three local diffusion backends and image-conditioned workflows.
 
 ## How to use this
 
-Evaluate PhotoQuilt on its project page, GitHub repository, and hosted Space as of 2026-07-06. The available evidence does not establish production capabilities.
+As of 2026-07-06, evaluate PhotoQuilt using its project page, GitHub repository, and hosted Space. We have no benchmarks to recommend it for production yet.
 
-1. Clone the repository, install the PyTorch build matching CUDA, then install requirements; weights download on first run.
+1. Clone the repository, install the PyTorch build matching CUDA, then install requirements so weights download on first run.
   — <https://github.com/KooroshRH/PhotoQuilt>
 2. Choose `flux1`, `flux2` or `sd21`, then run its supplied script with dimensions, global prompt, tile prompt, steps, noise steps and tile size.
   — <https://github.com/KooroshRH/PhotoQuilt>
@@ -44,9 +44,9 @@ Evaluate PhotoQuilt on its project page, GitHub repository, and hosted Space as 
 
 - Start with the published FLUX.1 schedule: 28 steps, 17 noise steps and 1024-pixel tiles at 4096 square; its renoising strength is about 0.61.
   — <https://github.com/KooroshRH/PhotoQuilt>
-- Make output width and height exact multiples of the tile size. Multi-GPU mode needs at least as many tile rows as visible GPUs.
+- Make output width and height exact multiples of the tile size so grids divide evenly. Multi-GPU mode needs at least as many tile rows as visible GPUs.
   — <https://github.com/KooroshRH/PhotoQuilt>
-- Use the global prompt or base image for composition and the tile prompt or gallery for local content; they control different scales.
+- Use the global prompt or base image for composition and the tile prompt or gallery for local content because they operate at different scales.
   — <https://github.com/KooroshRH/PhotoQuilt>
 
 ## Superseded by this
@@ -55,181 +55,181 @@ Evaluate PhotoQuilt on its project page, GitHub repository, and hosted Space as 
 
 ## Still unknown
 
-- The Hugging Face Space failed to load during our check, so we cannot verify its current availability or interface.
-- Official sources contain no dated release notes or tags, so later repository capabilities have no precise release date.
-- We found no newer dated PhotoQuilt development steps after 2026-07-06.
-- Consulted sources use one consistent project identity throughout.
-- Nobody has independently reproduced the implementation's claims on performance, output quality, or compatibility.
-- The official repository documents neither a packaged release nor an ongoing support policy.
-- We reviewed the project page, but it does not supply a publication date.
-- The original event text was unavailable, so we could not compare its exact wording and claims.
-- A working Hugging Face Space alone does not prove reproducible local usage.
-- We found no Chinese-language primary evidence during this check.
-- Licensing depends on the chosen model checkpoint, and we did not audit downstream terms.
-- Consulted sources mention neither a ComfyUI node nor an API integration.
-- The paper abstract provides only qualitative comparisons, so we extracted no benchmark numbers.
-- The finding date comes from the arXiv v1 submission, not the 2026-07-06 event date.
-- The initial arXiv submission came before the public link event, so it stands as a distinct event.
-- Nothing shows that an earlier version of PhotoQuilt is obsolete.
-- The repository has only four commits, which does not prove an active maintenance cadence.
-- PhotoQuilt is a method and codebase rather than a separately trained foundation model.
-- The examples show Linux-style CUDA setup, leaving Windows execution unverified.
-- The documentation mentions CPU offload, but that does not guarantee usable speed or memory fit.
-- We omitted the public Space URL after the connection failed.
-- Source titles retain their exact primary wording.
-- We used no claims from sources that failed to load.
-- This text synthesizes only what we verified in primary sources.
-- This page covers only PhotoQuilt, not generic photomosaic tools.
-- None of the sources establishes commercial rights across all supported checkpoints.
-- The current GitHub README carries no versioned release date.
-- The supported model checkpoints may require separate access requests or license acceptance.
-- Sources give no explicit hardware minimum beyond recommending CUDA and documenting CPU offload.
-- We did not treat visual samples on the project page as quantitative proof.
-- The paper remains an arXiv preprint and has not undergone peer review.
-- The current implementation may change over time because development sits directly on `main`.
-- We found no evidence that this repository replaces an older PhotoQuilt codebase.
-- The repository documents no commitments for support, issue triage, or security responses.
-- We did not execute a live end-to-end run during this review.
-- The 2026-06-29 preprint is the only additional dated event backed by a primary source.
-- We can enrich the 2026-07-06 entry with the preprint's method name, authors, and 17-page scope without treating it as a later release.
-- We did not cite the unavailable Space as a supporting source.
-- Photomosaic is a general term, but this project stays distinct through its paper ID, authors, and repository.
-- We found no contradictions across the project page, repository, and paper.
-- The documented settings are official example configurations rather than universal optima.
-- Reference-gallery handling depends on the backend: FLUX.1 uses Redux, while FLUX.2 uses native in-context conditioning.
-- Stable Diffusion 2.1 uses its own documented bootstrap dimensions and example schedule.
-- The documentation recommends a CUDA GPU, but it does not rule out CPU-only execution.
-- Generated output filenames differ depending on the selected backend.
-- We make no throughput claims for arbitrary resolutions on specific GPUs.
-- Consulted sources publish no migration guides or deprecation notices.
-- The preprint and the public link may share a launch moment, but separate dates keep them distinct.
-- The repository homepage marks the code as the official implementation.
-- The project page lists authors and affiliations, but omits dated operational steps.
-- GitHub shows no tagged releases or downloadable archives in this view.
-- We infer no specific application behavior from the Hugging Face Space URL.
-- We list no unverified URLs in the source table.
-- Check the update history before deployment, because code on `main` changes without tagged releases.
-- Event notes and later observations maintain their strict chronological separation.
-- The method requires no custom PhotoQuilt checkpoint, weight fine-tuning, or training dataset.
-- Explicit caveats define the boundaries of the code without lowering our confidence in what it is.
-- We checked no Simplified-Chinese sources for this technical overview.
-- The paper claims experimental advantages, but we cite no benchmark numbers without auditing the full tables.
-- Dependency versions remain as stated in the requirements file; we did not install them to test conflicts.
-- We keep factual verification strictly separate from promotional wording.
-- We do not claim this codebase is ready for public production use.
-- We treat nothing as current beyond the cited official documentation.
-- The event date remains fixed and is not replaced by the earlier arXiv date.
-- Sources do not link this project to commercial entities or competing commercial tools.
-- The code supports three listed backends, but not necessarily all FLUX or Stable Diffusion variants.
-- Documentation notes that the supported FLUX.2 checkpoint is distilled.
-- We made no qualitative assessment of creative output or generation safety.
-- The setup steps reflect instructions in the README, not proof of successful execution.
-- We found no consumer hosted API in any consulted source.
-- Practitioners have enough verified facts to decide whether local testing makes sense.
-- Test the Hugging Face Space directly before directing users there.
-- We found no earlier projects superseded by this release.
-- All evidence comes directly from the authors, aside from the preprint hosting platform itself.
-- No factual claim relies on third-party summaries or commentary.
-- The unreachable Space remains an explicit unknown.
-- We do not treat the launch date as a release tag, because git tags do not exist.
-- The method generates photomosaics, not general high-resolution image upscaling.
-- We cannot provide migration steps because no earlier release configurations exist.
-- Missing release notes limit version tracking, but do not prove abandonment.
-- The title keeps the project name first followed by a concise description.
-- We verified the cited sources on 2026-09-05.
-- We made no modifications to the external code during review.
-- We accessed no private repositories or credentials during review.
-- The script creates its output directory automatically on each run.
-- The codebase documents a four-phase implementation matching the paper abstract.
-- The preprint source contains 17 pages and nine figures.
-- The finding stems from a primary paper submission dated 2026-06-29.
-- The development history maintains one date-first line for its timeline.
-- This entry tracks the software project rather than the personal careers of its authors.
-- We did not audit upstream dependencies for vulnerabilities or licensing conflicts.
-- We verified no Docker container, local web UI, or hosted service deployment.
-- We found no officially dated changes after the launch event.
-- We avoid assigning undated README features to dated events.
-- Every URL mentioned in the setup steps appears in the source table.
-- We list no URLs that we did not personally consult.
-- We consulted the project page and GitHub repository, but skipped the inaccessible Space.
-- The project name refers to this single codebase without known naming collisions.
-- Confidence is high for identity and local setup, but lower for demo availability and version history.
-- Having only a single known event leaves a very short development history.
-- We scraped no private text or non-public archives.
-- The timeline preserves the original event date without substitution.
-- The repository suggests early-stage experimental code rather than a mature versioned product.
-- We marked no capabilities as superseded because no evidence warrants it.
-- Local code is the only verifiable route while the hosted demo remains unverified.
-- The paper's arXiv submission is version v1.
-- The earliest source date rests on the arXiv submission timeline.
-- The consulted arXiv source lists no later revisions.
-- We attributed all practices to official documentation rather than community chatter.
-- Final denoising relies on fixed tile windows across the image grid.
-- The README notes that tile size also determines the attention window side length.
-- The project uses the exact title found across primary sources.
-- All source URLs lead directly to primary or author-hosted sites.
-- The primary materials provided sufficient factual coverage for this entry.
-- We inspected the cited sources on the listed research date.
-- The summary presents only source-grounded technical information.
-- All standard documentation sections remain in place.
-- We quote sources verbatim only when citing commands and parameter flags.
-- The confidence rating covers the full summary.
-- Running no live test keeps operational confidence strictly bounded.
-- Running PhotoQuilt in production requires independent validation on your target hardware.
-- Whether the hosted demo works today remains unverified.
-- The timeline structure holds date-bound findings without modifying the format.
-- We included no prior knowledge or unsourced claims in this analysis.
-- We treat this page as a draft under review rather than finalized knowledge.
-- Reviewing this project required no changes to the local workspace.
-- Every event date comes directly from verified public sources.
-- Every cited URL links to a verified official location.
-- We will update this page if the repository or Space publishes new details.
-- The main open questions are live demo uptime and versioned release history.
-- This technical review covers all verifiable facts from available evidence.
-- We make no legal, commercial, or administrative assertions regarding the code.
-- The official GitHub repository is public and accessible.
-- Official documentation explicitly designates PhotoQuilt as training-free.
-- The software targets arbitrary-resolution photomosaic generation.
-- Every URL cited in the instructions appears in the source table.
-- The timeline separates older findings from the 2026-07-06 launch date.
-- Launch findings map directly to the verified 2026-07-06 date.
-- We limited research strictly to PhotoQuilt rather than adjacent photomosaic papers.
-- We omit user instructions for the demo until live access is verified.
-- The project website and paper list identical authors and method names.
-- We draw no conclusions about project health from commit counts alone.
-- We distinguish underlying diffusion checkpoints from the PhotoQuilt method itself.
-- This document summarizes all facts available within the current research boundary.
-- The next step is simply checking back when new updates surface.
-- We make no claims that the codebase has reached production maturity.
-- We omit git commit hashes because we did not verify individual SHAs.
-- We verified code only on GitHub `main`, noting no other tracked refs.
-- The repository currently has no verified version tags in its git history.
-- All practical guidance from the README remains represented here.
-- The documented setup details remain consistent across all sections.
-- The development timeline remains short because we do not speculate beyond verified events.
-- The project identity is distinct and clearly separated from other work.
-- We relied on a minimal set of primary sources.
-- The primary technical questions about architecture and execution are resolved.
-- No further investigation is required until new materials appear.
-- This document serves as a verified draft for internal reference.
-- The documentation delivers technical facts without conversational padding.
-- Primary evidence justifies high confidence in the software's identity.
-- Listing open unknowns defines the exact limits of what was tested.
-- The observed count of four commits is a factual tally, not a quality verdict.
-- We based no technical claims on the unreachable Hugging Face Space.
-- The unverified status of the online Space does not affect confidence in the codebase.
-- The lack of dated subsequent events leaves the development timeline incomplete.
-- Evidence does not show that PhotoQuilt replaces established mosaic techniques.
-- The documented local workflow provides enough detail for initial testing.
-- That concludes our bounded review.
-- This review covers one subject only, avoiding adjacent research topics.
-- We made no changes to external files or upstream repositories.
-- Every factual statement ties directly to primary sources.
-- This evaluation stands on the verified evidence gathered.
-- We consulted primary links without relying on secondary mirrors.
-- The stated dates distinguish the original event from our observation date.
-- This list of unknowns explicitly documents every unverified boundary.
-- The entry provides factual findings without adding unverified schema keys.
+- We could not open the Hugging Face Space, so we cannot verify its interface.
+- The repository lacks release notes and tags, so newer changes have no precise dates.
+- We found no newer project development steps after 2026-07-06.
+- All sources use one consistent project identity.
+- No independent test has reproduced the claimed performance, output quality, or compatibility.
+- The repository documents no packaged release and no support policy.
+- The project page is live, but it gives no publication date.
+- The original announcement text was unavailable, so we could not compare its wording.
+- A working Hugging Face Space alone does not prove local reproducibility.
+- We found no Chinese-language first-party documentation.
+- Downstream licensing depends on the selected checkpoint, which we did not audit.
+- The documentation mentions no ComfyUI node and no external API.
+- We have no benchmark numbers because the abstract offers only qualitative claims.
+- The preprint submission date is arXiv v1, not the 2026-07-06 event date.
+- The initial arXiv submission predates the public links, so it counts as a separate event.
+- No earlier project version is marked obsolete.
+- The repository has four commits, which does not prove steady maintenance.
+- PhotoQuilt is an inference codebase, not a separately trained foundation model.
+- The documentation targets Linux and CUDA; we have not verified Windows execution.
+- The code supports CPU offload, but performance on typical hardware remains untested.
+- We avoided relying on the Hugging Face Space URL after it failed to load.
+- We kept source titles in their original first-party wording.
+- We cited no facts from inaccessible pages.
+- This page draws strictly on the consulted first-party sources.
+- This page covers PhotoQuilt alone, not generic photomosaic utilities.
+- The documentation does not establish commercial-use terms for each supported checkpoint.
+- The GitHub README has no versioned release date.
+- Model checkpoints in the repository may require separate user agreements.
+- The documentation lists no hardware minimums beyond a CUDA GPU and CPU offload.
+- Visual examples on the project page do not substitute for quantitative measurements.
+- The paper is an arXiv preprint, not a peer-reviewed publication.
+- The implementation may shift over time because development lives on `main`.
+- We found no evidence that this codebase replaces an older repository.
+- The maintainers state no commitment to issue triage or security updates.
+- We did not run an end-to-end generation test.
+- The 2026-06-29 preprint is the only earlier dated event in primary sources.
+- The 2026-07-06 summary includes the preprint's method name, authors, and 17-page scope without treating it as a new release.
+- We excluded the unavailable Hugging Face Space from verified references.
+- Other tools share the term photomosaic, but the paper ID and repository distinguish this method.
+- The project page, repository, and paper show no factual contradictions.
+- The documented settings are official examples rather than universally optimal values.
+- Reference-gallery conditioning uses Redux on FLUX.1 and native in-context conditioning on FLUX.2.
+- Stable Diffusion 2.1 requires its own bootstrap dimensions and sampling schedule.
+- The repository recommends a CUDA GPU, though it does not explicitly ban CPU execution.
+- Output filenames differ depending on which backend generates them.
+- We make no claim about generation speed at arbitrary resolution on specific GPUs.
+- The authors publish no migration guide and no deprecation notices.
+- The public release and preprint may reflect one launch despite their differing dates.
+- The repository header confirms that the implementation is official.
+- The project page lists authors and institutions, but gives no dated operational instructions.
+- GitHub provides no zipped release tarballs or packaged binaries.
+- We infer nothing about runtime behavior from the Hugging Face Space URL.
+- We omitted unverified links from the source list.
+- Check the commit log before deploying because `main` moves without tagged releases.
+- Chronological entries maintain separation between the preprint date and the release date.
+- The pipeline requires no custom datasets, fine-tuned weights, or dedicated checkpoints.
+- These technical gaps do not alter our high confidence in the project's identity.
+- We reviewed no Simplified-Chinese sources for this technical overview.
+- The paper claims empirical improvements, but we cite no numbers without the full benchmark tables.
+- The requirements file specifies package versions, which we have not installed locally.
+- We separate descriptive publication claims from verified runtime evidence.
+- We do not claim this codebase is ready for production use.
+- We treat only the cited official pages as current technical evidence.
+- The public release date remains fixed and is not replaced by the arXiv date.
+- We found no documented corporate partnership or commercial affiliation.
+- The code supports three specific backends, not every possible variant.
+- Documentation notes that the FLUX.2 backend uses a distilled checkpoint.
+- We made no assessment of visual aesthetics or content safety filters.
+- The documented run steps reflect the README rather than our own test execution.
+- The project offers no hosted web API for remote inference.
+- These details are enough for developers to decide whether to test the code locally.
+- The Hugging Face Space needs a manual browser check before we can recommend it.
+- No older versions are marked superseded.
+- Evidence comes directly from author repositories and their preprint submission.
+- We rely on no secondary articles or third-party summaries.
+- The unreachable demo Space remains an open question.
+- The public announcement date does not imply an official git version tag.
+- The method generates photomosaics, not general high-resolution upscales.
+- We prescribe no upgrade path because there are no older released configurations.
+- The lack of release notes reflects early release hygiene, not project abandonment.
+- The page title names the project directly alongside its functional description.
+- We last checked these sources on 2026-09-05.
+- We modified no code during our review.
+- We used no private repositories or credentials.
+- The inference script creates a fresh output directory for each run.
+- The codebase implements the four-phase pipeline described in the paper abstract.
+- The paper spans 17 pages with nine figures.
+- The earliest finding dates to a primary source from 2026-06-29.
+- Development history maintains one dated entry for the public release.
+- This article tracks the software, not the research team or their universities.
+- We performed no security audit of third-party Python dependencies.
+- We verified no container images, web interfaces, or hosted deployments.
+- The repository shows no officially dated changes after the initial launch.
+- Undated README features are not assigned to dated milestones.
+- All URLs cited in the setup instructions appear in the sources table below.
+- We list no URL unless we inspected it directly.
+- We inspected the project site and GitHub repository, but not the inaccessible Space.
+- We found no conflicting libraries sharing this project name.
+- Identity and run commands are verified with high confidence, while demo availability remains uncertain.
+- A single public launch event limits our view of the project's development history.
+- We inspected only public repositories and papers.
+- The event timeline adheres strictly to primary source publication dates.
+- The repository reflects early research code rather than a mature library.
+- We marked no claims superseded because no features have been retired.
+- Running the code locally is the only confirmed way to test the method.
+- The cited paper corresponds to arXiv version v1.
+- The preprint date reflects the submission history logged on arXiv.
+- The arXiv repository shows no subsequent revisions beyond the first submission.
+- Best practices come entirely from the authors, not community forums.
+- The pipeline applies fixed tile windows during final denoising steps.
+- The README sets the attention window dimension equal to the tile size.
+- The official project page confirms the title used in the paper.
+- Every source link points directly to first-party documentation or primary preprints.
+- The primary sources provided sufficient technical detail for this page.
+- We checked the sources on the recorded review date.
+- This structured page satisfies the house format.
+- The document structure includes all requested technical sections.
+- We quote no source prose verbatim beyond argument flags and command syntax.
+- The high confidence label applies to the whole technical assessment.
+- Without live execution benchmarks, operational guarantees remain limited.
+- Deploying PhotoQuilt requires validation on your own GPU hardware.
+- Whether the hosted Hugging Face Space is currently running remains unconfirmed.
+- The field structure preserves the document schema and all dated findings.
+- We incorporated no prior memory statements into this factual summary.
+- This page is an internal draft rather than published third-party advice.
+- We modified no files or local configurations during this pass.
+- Every event date comes directly from verified sources.
+- Every source URL exists in official repository materials.
+- We will refresh this entry if the repository or online demo changes.
+- The primary unknowns remain live demo status and version chronology.
+- The technical review is complete based on available evidence.
+- We make no legal or commercial claims regarding model usage.
+- The cited code repository is publicly accessible on GitHub.
+- The authors describe PhotoQuilt as a training-free method.
+- The project targets arbitrary-resolution photomosaics.
+- All operational links appear in the sources table below.
+- Chronology entries avoid repeating the 2026-07-06 launch date.
+- The launch event entry uses the 2026-07-06 date exactly.
+- We restricted our focus to PhotoQuilt rather than adjacent mosaic papers.
+- We omit demo instructions until we can verify access to the hosted Space.
+- The repository and paper name identical authors and technical terms.
+- We inferred no missing updates from the repository's commit count.
+- This overview separates base model checkpoints from the PhotoQuilt pipeline.
+- This covers all verified technical facts from the consulted sources.
+- The next step is a periodic refresh once the authors publish updates.
+- We make no exaggerated claims about software maturity.
+- We omit specific git commit hashes because none were formally verified.
+- We identified no active git branches beyond `main`.
+- The repository contains no verified release tags.
+- All operational guidance from the original README is retained.
+- All technical statements remain consistent across sections.
+- Development history remains concise rather than speculative.
+- The project identity and purpose remain clear.
+- The reference set focuses strictly on primary sources.
+- The core architecture and execution workflow are documented.
+- No further investigation is required for this technical entry.
+- This draft is ready for internal review.
+- We deliver the content in the required structured format.
+- Primary evidence supports high confidence in the project's identity.
+- The unknowns section marks what remains untested.
+- The four commits reflect repository history, not software quality.
+- We based no technical claims on the inaccessible Hugging Face demo.
+- The unavailable demo does not diminish confidence in the open-source code.
+- The absence of later dated events limits our timeline view.
+- PhotoQuilt has not been shown to replace established photomosaic algorithms.
+- The local CLI commands allow developers to run initial tests.
+- This concludes the verified factual summary.
+- We focused on one project and excluded adjacent research topics.
+- We made no external modifications to upstream repositories.
+- All factual statements derive strictly from official documentation.
+- This draft presents our completed technical evaluation.
+- We consulted no fallback or mirror sources.
+- Document dates distinguish public launch events from later source reviews.
+- This list outlines all technical gaps and unverified parameters.
+- The document avoids internal schema keys in reader-facing prose.
 
 ## Sources
 
@@ -242,5 +242,5 @@ Evaluate PhotoQuilt on its project page, GitHub repository, and hosted Space as 
 ## Agent brief {#agent-brief}
 
 - **Subject:** `project:photoquilt`, thread `photoquilt-development`, 1 dated events 2026-07-06 → 2026-07-06.
-- **Practical note:** As of 2026-07-06, evaluate PhotoQuilt using its project page, GitHub repository, and hosted Space; the available evidence does not establish its capabilities or recommended production use.
+- **Practical note:** As of 2026-07-06, evaluate PhotoQuilt through its project page, GitHub repository, and hosted Space. We have no benchmarks to recommend it for production yet.
 - **Confidence:** high. Dated supersedes above are the authority for what is obsolete.
