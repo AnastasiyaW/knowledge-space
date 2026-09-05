@@ -13,51 +13,53 @@ aliases: ["Base44"]
 
 ## What it is
 
-Base44 is a managed backend and AI app builder for internal tools and automated workflows.
+Base44 is a managed backend and application builder with autonomous background agents.
 
-- Applications, databases, authentication, server functions, integrations, and hosting.
-- Superagents for scheduled actions and event-driven tasks.
+- Applications and hosting: creates web applications with managed hosting and custom frontends.
+- Backend infrastructure: provides databases, user authentication, and server functions.
+- Superagents: runs persistent background workers on schedules or incoming events.
+- Integrations: connects external services to workspace logic.
 
-Agent access is bounded by connected tools and their permissions. We can use it for quick internal apps and scoped automations, but integration permissions must be planned separately.
+Agent access depends strictly on connected tools and their assigned permissions. The platform fits internal applications and bounded automations, but integration permissions require explicit design.
 
 ## Development line
 
-- **2026-03-31 — Base44’s Superagent page and documentation were referenced.** Persistent agents connect to Gmail, Calendar, Stripe, Slack, CRM, and over 100 services. Base44 tested the feature with roughly 20% of users before release. Current documentation outlines the model. We build the agent in chat, attach connectors, knowledge, and memory, and run scheduled tasks or connector triggers.
+- **2026-03-31 — Base44’s Superagent page and documentation were referenced.** Base44 added persistent agents with connections to Gmail, Calendar, Stripe, Slack, CRM, and more than 100 services. The company tested the feature with roughly 20% of users before launch. Current documentation defines the operating model. We configure the agent in chat with connectors, knowledge, and memory, then run scheduled tasks or connector triggers.
 
 ## What changed
 
-2026-03-31 — Base44 moved Superagents from test to general availability. Persistent agents connect to Gmail, Calendar, Stripe, Slack, CRM, and over 100 services. Base44 tested the feature with roughly 20% of users before release. Documentation outlines the workflow: we build the agent in chat, add connectors, knowledge, and memory, then set up scheduled tasks or connector triggers.
+2026-03-31 — Base44 moved Superagents from test to general availability. These persistent agents connect to Gmail, Calendar, Stripe, Slack, CRM, and more than 100 services. Base44 tested the feature with roughly 20% of users before general release. The documentation outlines the workflow. We build the agent in chat, assign connectors, knowledge, and memory, then run scheduled tasks or connector triggers.
 
 ## How to use this
 
 From 2026-03-31 onward, treat Base44’s Superagent-labelled page as a discovery lead and consult the official documentation before choosing a workflow; do not assume a launch or capability change without follow-up evidence.
 
-1. Create a Superagent in the Superagents section and describe the first task in chat.
+1. Create a Superagent in the Superagents section and describe the specific task in chat.
   — <https://docs.base44.com/superagents/creating-a-superagent>
-2. Connect the tool through Brain → Integrations and grant the minimum permissions needed: read-only or manage.
+2. Connect the required tool through Brain → Integrations and set the minimum required mode: read-only or manage.
   — <https://docs.base44.com/superagents/creating-a-superagent>
-3. Add knowledge and skills, then set up a scheduled task or a connector trigger.
+3. Add knowledge and skills, then configure a scheduled task or a connector trigger.
   — <https://docs.base44.com/Getting-Started/superagent>
-4. Install the CLI, create a backend, and connect the SDK client when building an app with a custom frontend.
+4. For applications with custom frontends, install the CLI, create the backend, and connect the SDK client.
   — <https://docs.base44.com/developers/home>
 
 ## Best practices
 
-- Start with one recurring task, then refine agent behavior in chat based on observed results.
+- Start with a single recurring task and refine agent behavior in chat based on observed output.
   — <https://docs.base44.com/Getting-Started/superagent>
-- Connect tools first, then grant permissions separately; use read-only instead of manage to inspect data.
+- Connect tools first and grant permissions separately; use read-only instead of manage for viewing data.
   — <https://docs.base44.com/superagents/creating-a-superagent>
-- Keep reference documents in Knowledge and working files in Files, so context boundaries stay clean.
+- Store reference documents in Knowledge and working files in Files; they form separate agent context boundaries.
   — <https://docs.base44.com/Getting-Started/superagent>
 
 ## Superseded by this
 
-- 2026-03-31 — Base44 added Superagents alongside the app builder. A Superagent operates across the workspace, while an app agent stays inside its own app.
+- 2026-03-31 — Base44 expanded beyond application building by adding Superagents. A Superagent operates across the whole workspace, while an app agent stays bounded to a single application.
 
 ## Still unknown
 
-- Base44 has no official dated changelog entry for the 2026-03-31 event. A founder's public post confirms the launch date and test group size, not a release note.
-- The response schema lacks fields for event_findings and new_events; the 2026-03-31 finding is included in what_changed. We added no new dated events without a primary source.
+- No official dated changelog entry from Base44 exists for 2026-03-31; a public post by the founder confirms the launch date and test participation, not a release note.
+- The response format lacks fields for event findings and new events; the fact for 2026-03-31 stays under what changed. We added no new dated events without a reliable primary source.
 
 ## Sources
 
