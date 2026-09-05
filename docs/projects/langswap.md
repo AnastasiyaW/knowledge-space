@@ -13,63 +13,61 @@ aliases: ["Langswap"]
 
 ## What it is
 
-Langswap is a local video dubbing tool for teams that need direct control over media files and models.
+Langswap is a local video dubbing tool for teams that need control over files and models. It handles ASR, translation, voice-cloning TTS, timing, and SRT files.
 
-Default stack components:
-- ASR: transcribes audio with faster-whisper large-v3 and marks speech segments with Silero VAD.
-- Translation: translates text using Gemma-4-E2B GGUF.
-- Voice cloning TTS: synthesizes speech through OmniVoice.
-- Output timing: aligns speech timing and exports SRT subtitle files.
+The default stack uses:
+- faster-whisper large-v3 with Silero VAD for transcription and voice detection
+- Gemma-4-E2B GGUF for translation
+- OmniVoice for voice cloning and synthesis
 
-Requirements and limits:
-Requires Python 3.12 and an NVIDIA GPU with a CUDA-13 stack. High-stakes content requires manual review.
+It requires Python 3.12 and an NVIDIA GPU with a CUDA-13-compatible stack. Sensitive content requires manual review.
 
 ## Development line
 
-- **2026-06-11 — Langswap surfaced a modular speech translation and dubbing stack.** On 2026-06-11, Langswap linked source paths for a speech-to-text manager, an ASR/VAD client, a Llama.cpp translation client, an OmniVoice TTS client, and FFmpeg. The links also included the main repository and an article on AI dubbing. We cannot confirm from these links whether the referenced files were created or modified on that date.
+- **2026-06-11 — Langswap organized a modular speech translation and dubbing stack.** On 2026-06-11, Langswap linked source paths for a speech-to-text manager, an ASR/VAD client, a Llama.cpp translation client, an OmniVoice TTS client, and FFmpeg support. The dated link set included the project repository and an article about AI dubbing. The available links do not show whether files were added or changed on 2026-06-11.
 
 ## What changed
 
-- 2026-06-11 — the sources describe a modular pipeline from video to ASR segments, translation, TTS, and FFmpeg assembly. The available snapshot does not confirm a distinct release on that date.
+2026-06-11 — The source files describe a modular pipeline from video to ASR segments, translation, TTS, and FFmpeg assembly. The available snapshot does not prove a standalone release on 2026-06-11.
 
 ## How to use this
 
-As of 2026-06-11, treat ASR/VAD, translation, TTS, and FFmpeg as distinct integration points. Verify their runtime behavior and versions before production use.
+As of 2026-06-11, treat ASR/VAD, translation, TTS, and FFmpeg as distinct integration points. Verify their runtime behavior and versions before relying on them.
 
-1. Install Python 3.12, NVIDIA GPU drivers, ffmpeg, and rubberband-cli. Use uv with the gpu extra for the local GPU stack.
+1. Install Python 3.12, an NVIDIA GPU, ffmpeg, and rubberband-cli. For a local GPU stack, use uv and extra gpu.
   — <https://raw.githubusercontent.com/langswap-app/langswap/main/docs/advanced.md>
-2. Build the Docker image, run it with `--gpus all`, and mount the weights and data directories for a quick start.
+2. For a fast start, build the Docker image, run it with --gpus all, and mount the weights and data directories.
   — <https://github.com/langswap-app/langswap>
-3. Open Gradio at localhost:7860, upload a video, and choose the target language to produce an MP4 and source and translated SRT files.
+3. Open Gradio at localhost:7860, upload a video, and set the target language. Output includes MP4 video and original and translated SRT files.
   — <https://github.com/langswap-app/langswap>
-4. Run `main.py local` for debugging: intermediate JSON saves to `data/<id>`, so restarts skip finished stages.
+4. Run main.py local for debugging. Intermediate JSON files save to data/<id>, so reruns skip finished stages.
   — <https://raw.githubusercontent.com/langswap-app/langswap/main/docs/advanced.md>
-5. Enable diarization only when needed, as it requires HF_TOKEN access to pyannote/speaker-diarization-3.1.
+5. Enable diarization only when needed. It requires access to pyannote/speaker-diarization-3.1 via HF_TOKEN.
   — <https://raw.githubusercontent.com/langswap-app/langswap/main/docs/advanced.md>
 
 ## Best practices
 
-- Keep VAD ASR as the default unless you need separate forced alignment: faster-whisper provides the text, and Silero VAD marks speech boundaries.
+- Keep VAD ASR as the default unless you need forced alignment. faster-whisper provides text, while Silero VAD marks speech segment boundaries.
   — <https://github.com/langswap-app/langswap/blob/main/langswap/ml/speech_to_text_service/asr_vad_client.py>
-- Rerun failed stages through the local runner instead of reprocessing the whole video: transcript and segment remapping are cached.
+- On failure, rerun the failed stage through the local runner instead of reprocessing the whole video. The stack caches transcripts and segment remapping.
   — <https://github.com/langswap-app/langswap/blob/main/langswap/ml/speech_to_text_service/speech_to_text_manager.py>
-- Check text, timecodes, and intonation with a human reviewer before publishing news or film: a human-in-the-loop workflow marks the practical boundary of automation.
+- Review text, timecodes, and delivery manually before publishing news, film, or high-stakes video. An analysis describes human-in-the-loop editing as the working boundary of automation.
   — <https://www.forbes.ru/tekhnologii/554358-masinal-naa-ozvucka-v-cem-zaklucautsa-problemy-ii-dublaza>
-- Check AGPL-3.0-or-later for the codebase and license terms for downloaded models before commercial or network deployment.
+- Verify AGPL-3.0-or-later for the codebase and individual licenses for downloaded models before commercial or network deployment.
   — <https://github.com/langswap-app/langswap>
 
 ## Superseded by this
 
-- 2026-06-24 — no confirmed replacement for SRT exists: PR #12 suggests WebVTT, but remains open and does not change the documented output.
+- 2026-06-24 — There is no confirmed replacement for SRT. PR #12 proposes WebVTT, but it remains open and does not change the documented output.
 
 ## Still unknown
 
-- We have no dated Git snapshot for 2026-06-11, so we cannot verify a release or exact code state on that date.
-- Documentation conflicts on HF_TOKEN: the README lists Gemma as a gated model, while the advanced guide requires the token only for pyannote diarization.
-- No independent end-to-end benchmark confirms quality, speed, or hardware compatibility for the current stack.
-- Chinese search queries yielded no usable primary or practical sources.
-- 2026-06-11: an article published 2026-02-01 notes the limits of modular dubbing: automation speeds up draft work, but precision, culture, and emotion require a human in the loop. This is an opinion piece, not a benchmark.
-- 2026-06-24: PR #12 suggests moving subtitle generation from SRT to WebVTT, but the changes are not merged and do not represent a release.
+- No dated Git snapshot exists for 2026-06-11, so we cannot confirm a release or the exact code state on that date.
+- Documentation conflicts on HF_TOKEN: the README lists Gemma as an example of a gated model, while the advanced guide requires the token only for pyannote diarization.
+- No independent live end-to-end testing confirms the quality, speed, or compatibility of the stack.
+- Chinese search channels yielded no usable primary or practical source.
+- 2026-06-11 — An analysis published 2026-02-01 clarifies the practical limits of this modular setup: automation speeds up draft dubbing, but accuracy, cultural nuance, and emotion need a human in the loop. This is an authorial analysis rather than an independent benchmark.
+- 2026-06-24 — PR #12 proposes switching subtitle generation from SRT to WebVTT. The changes are not merged, so this is not a current release.
 
 ## Sources
 
