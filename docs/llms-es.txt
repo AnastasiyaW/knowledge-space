@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1192+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1193+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -954,6 +954,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Stable Diffusion](https://happyin.space/projects/stable-diffusion/): **Development line:** `project:stable-diffusion` · thread `stable-diffusion-development`
 - [StreamingT2V](https://happyin.space/projects/streamingt2v/): **Development line:** `project:streamingt2v` · thread `streamingt2v`
 - [StudioRecon](https://happyin.space/projects/studiorecon/): **Development line:** `project:studiorecon` · thread `studiorecon`
+- [Sun Direction LoRA Flux 2 Klein 9B — Flux 2 Klein LoRAs](https://happyin.space/projects/sun-direction-lora-flux2-klein-9b/): **Development line:** `project:sun-direction-lora-flux2-klein-9b` · thread `flux2-klein-loras`
 - [Suno Studio 2.0 — Suno Studio development](https://happyin.space/projects/suno-studio/): **Development line:** `project:suno-studio` · thread `studio-development`
 - [TAPTR](https://happyin.space/projects/taptr/): **Development line:** `project:taptr` · thread `taptr-public-availability`
 - [Tencent Hunyuan — Hunyuan model releases](https://happyin.space/projects/tencent-hunyuan/): **Development line:** `project:tencent-hunyuan` · thread `hunyuan-model-releases`
