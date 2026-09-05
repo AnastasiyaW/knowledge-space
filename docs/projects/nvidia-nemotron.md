@@ -13,45 +13,56 @@ aliases: ["Nemotron 3.5 Lightning"]
 
 ## What it is
 
-Nemotron 3.5 Lightning — текстовая гибридная MoE-модель с 30B общих и 3B активных параметров для разработчиков агентных систем, чат-ботов и RAG. Возможности: рассуждение с переключателем thinking, tool use, код, длинный контекст до 1M токенов, speculative decoding; доступны NVFP4 и BF16 варианты. Практический предел: NVFP4 checkpoint занимает около 22 GB; NVIDIA указывает запуск на одной DGX Spark или H100. Вердикт: это исполнительная модель для частых агентных вызовов, а не замена более крупной модели для сложного планирования.
+Nemotron 3.5 Lightning is a text hybrid MoE model with 30B total and 3B active parameters. It targets developers of agent systems, chat bots, and RAG.
+
+- Reasoning with a thinking switch.
+- Tool use.
+- Code generation.
+- Long context up to 1M tokens.
+- Speculative decoding.
+- NVFP4 and BF16 release checkpoints.
+
+The NVFP4 checkpoint takes about 22 GB of memory; NVIDIA specifies running it on one DGX Spark or H100. This is an execution model for frequent agent calls, not a replacement for a larger model for complex planning.
 
 ## Development line
 
-- **2026-08-12 — Nemotron 3.5 Lightning public model and playground resources surfaced.** Вышла NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4 — коммерчески применимый 30B/3B-active гибрид Mamba-2/MoE/attention с контекстом до 1M токенов; вместе с ним представлены BF16, NVFP4, DSpark/DFlash для speculative decoding и маршрутизация через NeMo Switchyard. Первичная карточка модели датирует релиз 2026-08-11, поэтому событие 12 августа отражает следующий день публикации/распространения, а не отдельную модель.
+- **2026-08-12 — Nemotron 3.5 Lightning public model and playground resources surfaced.** NVIDIA released NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4, a commercially usable 30B/3B-active Mamba-2/MoE/attention hybrid with context up to 1M tokens. NVIDIA also presented BF16, NVFP4, DSpark/DFlash for speculative decoding, and routing through NeMo Switchyard. The primary model card dates the release to 2026-08-11, so the 2026-08-12 event reflects the distribution day rather than a separate model.
 
 ## What changed
 
-2026-08-12: вышла NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4 — коммерчески применимый 30B/3B-active гибрид Mamba-2/MoE/attention с контекстом до 1M токенов; вместе с ним представлены BF16, NVFP4, DSpark/DFlash для speculative decoding и маршрутизация через NeMo Switchyard. Первичная карточка модели датирует релиз 2026-08-11, поэтому событие 12 августа отражает следующий день публикации/распространения, а не отдельную модель. 2026-08-17: NVIDIA опубликовала разбор QAD-рецепта NVFP4: checkpoint сжат примерно с 66 GB BF16 до 22 GB; это документация к уже вышедшему checkpoint, не новый базовый релиз.
+2026-08-12: NVIDIA released NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4, a commercially usable 30B/3B-active Mamba-2/MoE/attention hybrid with context up to 1M tokens. The release includes BF16, NVFP4, DSpark/DFlash for speculative decoding, and routing through NeMo Switchyard. The primary model card dates the release to 2026-08-11, so the 2026-08-12 event reflects the distribution day rather than a separate model.
+
+2026-08-17: NVIDIA published a breakdown of the QAD recipe for NVFP4. The checkpoint shrinks from about 66 GB in BF16 to 22 GB. This post documents the existing checkpoint and is not a new base model release.
 
 ## How to use this
 
 From 2026-08-12, practitioners should treat Nemotron 3.5 Lightning as a line with public model artifacts, a hosted playground, and related Switchyard tooling; select the specific published model or deployment path from those resources rather than relying on an unverified repost.
 
-1. Для быстрого прототипа вызовите NVIDIA Build API через OpenAI-совместимый клиент с именем модели `nvidia/nemotron-3.5-lightning-30b-a3b`; задайте `enable_thinking` и ограничьте reasoning budget под задачу.
+1. Call the NVIDIA Build API for fast prototypes through an OpenAI-compatible client using model name `nvidia/nemotron-3.5-lightning-30b-a3b`. Set `enable_thinking` and cap the reasoning budget for the task.
   — <https://build.nvidia.com/nvidia/nemotron-3.5-lightning-30b-a3b>
-2. Для self-hosting запустите NVFP4 checkpoint через vLLM или SGLang и используйте возвращаемое `/v1/models` имя в OpenAI-совместимом клиенте.
+2. Run the NVFP4 checkpoint through vLLM or SGLang for self-hosting. Use the returned `/v1/models` name in an OpenAI-compatible client.
   — <https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4>
-3. В агентной системе направляйте в Lightning массовые действия — вызовы инструментов, проверку результатов и форматирование — а сложное планирование оставляйте более сильной модели.
+3. Route high-frequency steps to Lightning in agent systems: tool calls, result checks, and formatting. Reserve complex planning for a stronger model.
   — <https://developer.nvidia.com/blog/nvidia-nemotron-3-5-lightning-delivers-fast-accurate-specialized-task-execution-for-long-running-agents/>
 
 ## Best practices
 
-- Сначала измерьте базовый NVFP4/BF16 путь на собственных задачах; speculative decoding выбирайте по concurrency: DSpark рекомендован для DGX Spark и низкой concurrency, а MTP — для средней и высокой.
+- Measure the baseline NVFP4 or BF16 path on internal workloads first. Choose speculative decoding by concurrency: DSpark fits DGX Spark and low concurrency, while MTP fits medium and high concurrency.
   — <https://developer.nvidia.com/blog/nvidia-nemotron-3-5-lightning-delivers-fast-accurate-specialized-task-execution-for-long-running-agents/>
-- Не используйте маршрутизацию как неявный fallback: задайте явные правила, какой класс задач идёт в Lightning, и проверяйте качество и стоимость маршрутов через Switchyard.
+- Set explicit routing rules for Lightning instead of using implicit fallbacks. Validate route quality and cost in Switchyard.
   — <https://github.com/NVIDIA-NeMo/Switchyard>
-- Для жёсткого лимита памяти рассматривайте NVFP4; QAD-рецепт NVIDIA предназначен для восстановления качества после агрессивной квантизации и требует отдельной проверки на целевых agentic benchmarks.
+- Use NVFP4 under strict memory limits. NVIDIA designed the QAD recipe to recover quality after aggressive quantization, but verify it on target agent benchmarks.
   — <https://developer.nvidia.com/blog/developing-nemotron-3-5-lightning-nvfp4-with-qad-using-nvidia-model-optimizer/>
 
 ## Superseded by this
 
-- 2026-08-17: представление, что NVFP4 — только обычная post-training quantization, устарело для официального Lightning NVFP4 checkpoint: NVIDIA описывает QAD-дистилляцию поверх PTQ.
-- 2026-08-12: для исполнения рутинных высокочастотных агентных шагов прежняя рекомендация назначать ту же крупную reasoning-модель на каждый вызов заменена архитектурой «планирование — сильная модель, исполнение — Lightning».
+- 2026-08-17: the official Lightning NVFP4 checkpoint is not simple post-training quantization. NVIDIA applies QAD distillation on top of PTQ.
+- 2026-08-12: routine agent steps no longer require the same large reasoning model for every call. Strong models now handle planning, while Lightning handles execution.
 
 ## Still unknown
 
-- Нельзя по доступным первичным материалам установить точное время публикации всех пяти ссылок 12 августа; модельная карточка указывает release date 2026-08-11, поэтому расхождение в один день может быть следствием времени публикации или часового пояса.
-- Заявления NVIDIA о скорости и бенчмарках не заменяют измерение на конкретном железе, версии сервера, concurrency и агентном harness.
+- Primary sources do not record the exact publication time for all five links on 2026-08-12. The model card lists a 2026-08-11 release date, so the one-day difference may reflect time zones or publication schedules.
+- NVIDIA claims on speed and benchmarks do not replace testing on local hardware, server versions, concurrency, and agent harnesses.
 
 ## Sources
 
