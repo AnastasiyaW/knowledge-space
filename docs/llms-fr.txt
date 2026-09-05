@@ -1,6 +1,6 @@
 # Base de connaissances techniques complète - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1181+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1182+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -875,6 +875,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [NIGHTBORNE](https://happyin.space/projects/nightborne/): **Development line:** `project:nightborne` · thread `nightborne`
 - [NotebookLM](https://happyin.space/projects/notebooklm/): **Development line:** `project:notebooklm` · thread `notebooklm-development`
 - [Nunchaku — Model integration expansion](https://happyin.space/projects/nunchaku/): **Development line:** `project:nunchaku` · thread `model-integration-expansion`
+- [Context-Matched Distillation](https://happyin.space/projects/nvidia-cmd/): **Development line:** `project:nvidia-cmd` · thread `context-matched-distillation`
 - [Cosmos 3 Edge](https://happyin.space/projects/nvidia-cosmos-3-edge/): **Development line:** `project:nvidia-cosmos-3-edge` · thread `cosmos-3-edge`
 - [Nemotron 3.5 Lightning](https://happyin.space/projects/nvidia-nemotron/): **Development line:** `project:nvidia-nemotron` · thread `nemotron-3-5-lightning`
 - [OctaneRender](https://happyin.space/projects/octanerender/): **Development line:** `project:octanerender` · thread `octanerender-major-releases`
