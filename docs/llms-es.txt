@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1118+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1119+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -798,6 +798,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Krea](https://happyin.space/projects/krea/): **Development line:** `project:krea` · thread `krea-product-development`
 - [Krea2 Filter Bypass](https://happyin.space/projects/krea2-filter-bypass/): **Development line:** `project:krea2-filter-bypass` · thread `krea2-filter-bypass`
 - [Krea2 TextFusion Refusal-Reduction LoRA](https://happyin.space/projects/krea2-textfusion-refusal-reduction-lora/): **Development line:** `project:krea2-textfusion-refusal-reduction-lora` · thread `krea2-textfusion-refusal-reduction-lora`
+- [Laminar](https://happyin.space/projects/laminar/): **Development line:** `project:laminar` · thread `laminar-development`
 - [Latent-to-4D — Beyond Pixels](https://happyin.space/projects/latent-to-4d/): **Development line:** `project:latent-to-4d` · thread `beyond-pixels`
 - [LEDITS](https://happyin.space/projects/ledits/): **Development line:** `project:ledits` · thread `ledits-development`
 - [Llama 3.1](https://happyin.space/projects/llama-3-1/): **Development line:** `project:llama-3-1` · thread `llama-3-1`
