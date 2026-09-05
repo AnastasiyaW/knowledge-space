@@ -13,52 +13,52 @@ aliases: ["Flux2-Klein-9B-Consistency"]
 
 ## What it is
 
-Flux2-Klein-9B-Consistency is an image-to-image LoRA for base model black-forest-labs/FLUX.2-klein-9B.
+Flux2-Klein-9B-Consistency is an image-to-image LoRA adapter for black-forest-labs/FLUX.2-klein-9B.
 
-- Source composition and detail preservation during semantic editing.
+- Source composition and detail preservation during semantic edits.
 - Reduced color shift and oversaturation in V2.
 
-The adapter is not an independent 9B model; base model license terms apply separately. Use V2 for controlled source image editing, not as a general generator.
+It is an adapter rather than a standalone 9B model, so the base model license applies separately. Use V2 for controlled source image edits instead of general generation.
 
 ## Development line
 
-- **2026-03-13 — Flux2-Klein-9B-Consistency resource linked.** On 2026-03-13, the Flux2-Klein-9B-Consistency line linked to a Hugging Face resource under dx8152 and to a YouTube video. The links mark a public availability milestone without establishing model capabilities, version details, or intended workflow.
+- **2026-03-13 — Flux2-Klein-9B-Consistency resource linked.** On 2026-03-13, the Flux2-Klein-9B-Consistency development line was linked to a Hugging Face resource under dx8152 and to a YouTube video. The dated links mark a public release milestone, but leave model capabilities, version details, and intended workflow unverified.
 
 ## What changed
 
-- 2026-03-13 — Released the Consistency adapter for FLUX.2 Klein 9B; a third-party entry from 2026-03-06 specified the workflow graph and CFG=1.
-- 2026-04-17 — Added Flux2-Klein-9B-consistency-V2.safetensors to fix color tint, excessive detail, and oversaturation in V1. The V2 file is 331 MB with SHA-256 61db2017ce420b97bd5ef11984e5a894c90003a6bbf0dc9473f8d7b9ebb3ff93.
+- 2026-03-13: dx8152 published the Consistency adapter for FLUX.2 Klein 9B. A 2026-03-06 third-party post clarifies the workflow graph and sets CFG=1.
+- 2026-04-17: dx8152 added Flux2-Klein-9B-consistency-V2.safetensors to fix color tint, excessive detail, and V1 oversaturation. The V2 file is 331 MB with SHA-256 61db2017ce420b97bd5ef11984e5a894c90003a6bbf0dc9473f8d7b9ebb3ff93.
 
 ## How to use this
 
-Check the dx8152 Hugging Face repository and linked video from 2026-03-13 to evaluate fit before adoption.
+As of 2026-03-13, check the dx8152 Hugging Face repository and linked video before deciding on adoption; capabilities and compatibility remain unverified.
 
-1. Install current diffusers, transformers, and accelerate; load base black-forest-labs/FLUX.2-klein-9B in bfloat16 on CUDA.
+1. Install current diffusers, transformers, and accelerate, then load black-forest-labs/FLUX.2-klein-9B in bfloat16 on CUDA.
   — <https://huggingface.co/dx8152/Flux2-Klein-9B-Consistency>
-2. Load adapter weights via load_lora_weights("dx8152/Flux2-Klein-9B-Consistency") and pass the source image with edit instructions.
+2. Load adapter weights with load_lora_weights("dx8152/Flux2-Klein-9B-Consistency") and pass the source image with the edit prompt.
   — <https://huggingface.co/dx8152/Flux2-Klein-9B-Consistency>
-3. For local ComfyUI, place the base 9B model, Qwen 3 8B text encoder, and flux2 VAE in their respective directories, then apply the LoRA in an image-edit workflow.
+3. In local ComfyUI, place the base 9B model, Qwen 3 8B text encoder, and flux2 VAE into their directories, then apply the LoRA in an image-edit workflow.
   — <https://docs.comfy.org/tutorials/flux/flux-2-klein>
 
 ## Best practices
 
-- Prefer V2 over V1: it addresses color shift, noisy detail, and oversaturation.
+- Prefer V2 over V1 to eliminate color shift, dirty detail, and excessive saturation.
   — <https://huggingface.co/dx8152/Flux2-Klein-9B-Consistency>
-- Start at strength 0.3–0.5 when combining with lighting LoRAs: this protects details but dampens the lighting shift.
+- Set strength to 0.3–0.5 when pairing with lighting LoRAs to preserve details without losing the lighting effect.
   — <https://www.patreon.com/foxfuressence/posts/lighting-angle-162733880>
-- Test against your base model version and workflow: user reports diverge, with poor results reported on FP8 and GGUF variants.
+- Test outputs against your base model setup; user reports diverge, with poor results on FP8 and GGUF variants.
   — <https://www.reddit.com/r/comfyui/comments/1rv6juw/fixing_the_plastic_look_in_flux2_klein_9b_with/>
 
 ## Superseded by this
 
-- 2026-04-17 — V1 is obsolete whenever neutral color, clean detail, and controlled saturation matter.
+- 2026-04-17 — V1 is obsolete for tasks that require neutral color, clean detail, and controlled saturation.
 
 ## Still unknown
 
-- Primary logs do not confirm the exact upload date for V1; records from 2026-03-06 confirm the base model, purpose, and CFG=1 for the 2026-03-13 release.
-- Video JXMbbbdfnSg was unreadable, leaving its contents unused as evidence.
-- No independent reproducible benchmark confirms the claimed consistency gains; user reports diverge on quality and compatibility.
-- The adapter repository lists Apache-2.0, whereas BFL documentation specifies the FLUX Non-Commercial License for 9B Base; verify base model weights before commercial use.
+- The exact first commit or upload date for V1 is unconfirmed in primary logs; only the purpose, base model, and CFG=1 from the 2026-03-06 post are verified for the 2026-03-13 event.
+- Video JXMbbbdfnSg was unreadable, so we cannot verify its content.
+- No independent benchmark confirms the claimed consistency gains, and user reports on quality and compatibility diverge.
+- The adapter repository lists Apache-2.0, while BFL documentation specifies the FLUX Non-Commercial License for 9B Base; check the base weights license before commercial use.
 
 ## Sources
 
@@ -75,5 +75,5 @@ Check the dx8152 Hugging Face repository and linked video from 2026-03-13 to eva
 ## Agent brief {#agent-brief}
 
 - **Subject:** `project:flux2-klein-9b-consistency`, thread `flux2-klein-9b-consistency-releases`, 1 dated events 2026-03-13 → 2026-03-13.
-- **Practical note:** As of 2026-03-13, practitioners should recognize Flux2-Klein-9B-Consistency as a publicly linked dx8152 resource and inspect its Hugging Face page and linked video before deciding whether it fits their workflow; its capabilities and compatibility remain unverified.
+- **Practical note:** As of 2026-03-13, check the dx8152 Hugging Face repository and linked video before adopting Flux2-Klein-9B-Consistency; capabilities and compatibility remain unverified.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
