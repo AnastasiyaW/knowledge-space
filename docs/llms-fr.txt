@@ -1,6 +1,6 @@
 # Base de connaissances techniques complète - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1211+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1212+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -980,6 +980,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Ultra Real - Klein 9b — Klein 9b](https://happyin.space/projects/ultra-real-klein-9b/): **Development line:** `project:ultra-real-klein-9b` · thread `klein-9b`
 - [UltraPixel](https://happyin.space/projects/ultrapixel/): **Development line:** `project:ultrapixel` · thread `ultrapixel-development`
 - [Unitree GD01](https://happyin.space/projects/unitree/): **Development line:** `project:unitree` · thread `unitree-gd01-development`
+- [Unity CLI](https://happyin.space/projects/unity-cli/): **Development line:** `project:unity-cli` · thread `unity-cli-introduction`
 - [UnityShots](https://happyin.space/projects/unityshots/): **Development line:** `project:unityshots` · thread `unityshots-development`
 - [UnitySplats](https://happyin.space/projects/unitysplats/): **Development line:** `project:unitysplats` · thread `unitysplats`
 - [V-JEPA](https://happyin.space/projects/v-jepa/): **Development line:** `project:v-jepa` · thread `v-jepa`
