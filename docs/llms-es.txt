@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1026+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1027+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -736,6 +736,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [HuggingChat](https://happyin.space/projects/huggingchat/): **Development line:** `project:huggingchat` · thread `huggingchat-launch`
 - [HunyuanVideo-I2V — Public project availability](https://happyin.space/projects/hunyuanvideo-i2v/): **Development line:** `project:hunyuanvideo-i2v` · thread `public-project-availability`
 - [Hyper-SD](https://happyin.space/projects/hyper-sd/): **Development line:** `project:hyper-sd` · thread `hyper-sd`
+- [ID-LoRA](https://happyin.space/projects/id-lora/): **Development line:** `project:id-lora` · thread `id-lora-development`
 - [ideogram-4-GGUF — Ideogram 4](https://happyin.space/projects/ideogram-4-gguf/): **Development line:** `project:ideogram-4-gguf` · thread `ideogram-4`
 - [Ideogram 4](https://happyin.space/projects/ideogram-4/): **Development line:** `project:ideogram-4` · thread `ideogram-4-development`
 - [Ideogram](https://happyin.space/projects/ideogram/): **Development line:** `project:ideogram` · thread `model-and-product-releases`
