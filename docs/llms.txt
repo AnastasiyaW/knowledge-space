@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 983+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 984+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -776,6 +776,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [RealityScan — Mobile Photogrammetry Launch and Release](https://happyin.space/projects/realityscan/): **Development line:** `project:realityscan` · thread `mobile-photogrammetry-launch-and-release`
 - [Reflection 70B](https://happyin.space/projects/reflection-70b/): **Development line:** `project:reflection-70b` · thread `reflection-70b-development`
 - [Reve](https://happyin.space/projects/reve/): **Development line:** `project:reve` · thread `reve-product-development`
+- [Runway Gen-1](https://happyin.space/projects/runway-gen-1/): **Development line:** `project:runway-gen-1` · thread `runway-gen-1-public-release`
 - [Vidu](https://happyin.space/projects/vidu/): **Development line:** `project:vidu` · thread `vidu`
 
 ## Python
