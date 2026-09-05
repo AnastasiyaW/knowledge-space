@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1041+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1042+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -660,6 +660,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [neural.love — AI creation and model training](https://happyin.space/organizations/neural-love/): **Development line:** `organization:neural-love` · thread `ai-creation-and-model-training`
 - [OpenAI](https://happyin.space/organizations/openai/): **Development line:** `organization:openai` · thread `openai-development`
 - [Pika](https://happyin.space/organizations/pika/): **Development line:** `project:pika` · thread `pika-product-development`
+- [Resemble AI](https://happyin.space/organizations/resemble-ai/): **Development line:** `organization:resemble-ai` · thread `voice-and-audio-tools`
 - [Runway](https://happyin.space/organizations/runway/): **Development line:** `organization:runway` · thread `runway-video-ai-development`
 - [Stability AI](https://happyin.space/organizations/stability-ai/): **Development line:** `organization:stability-ai` · thread `stability-ai-development`
 - [Suno — Product development and industry relationships](https://happyin.space/organizations/suno/): **Development line:** `organization:suno` · thread `product-development-and-industry-relationships`
