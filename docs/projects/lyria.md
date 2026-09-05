@@ -13,12 +13,12 @@ aliases: ["Lyria"]
 
 ## What it is
 
-Lyria is Google DeepMind’s music-generation system for creators and developers.
-Text prompts produce music and lyrics.
-Lyria 3.5 is available through Flow Music, Gemini, Gemini API, AI Studio, and Google Vids.
-Generated tracks carry SynthID watermarking.
-Track length runs from short clips up to three minutes.
-Use it for original, prompt-directed music, then review every output before release.
+Lyria is Google DeepMind’s music-generation system for creators and developers. Lyria 3.5 is available through Flow Music, Gemini, Gemini API, AI Studio, and Google Vids.
+
+- Text prompts produce music and lyrics.
+- Generated tracks carry SynthID watermarking.
+
+Current product messaging supports tracks from short clips to up to three minutes. Use it for original, prompt-directed music, then review every output before release.
 
 ## Development line
 
@@ -28,7 +28,7 @@ Use it for original, prompt-directed music, then review every output before rele
 
 - 2026-02-18 — Lyria 3 entered the Gemini app beta for 30-second text- or image-directed tracks.
 - 2026-03-25 — Google opened Lyria 3 and Lyria 3 Pro developer preview in Gemini API and AI Studio. Clip targeted 30-second assets and Pro targeted songs up to about three minutes.
-- 2026-07-29 — Lyria 3.5 launched in Google Flow Music with claimed improvements to melodic structure, lyric adherence, vocal expression and pronunciation, and tempo and duration control.
+- 2026-07-29 — Lyria 3.5 launched in Google Flow Music with claimed improvements to melodic structure, lyric adherence, vocal expression/pronunciation, and tempo/duration control.
 - 2026-07-30 — Flow Music’s linked launch corresponds to Lyria 3.5, not a separate Lyria model or a first launch. Google’s primary announcement is dated 2026-07-29, while Google Korea published its local announcement on 2026-07-30.
 - 2026-09-04 — Lyria 3.5 became available globally in Gemini web and mobile, plus Gemini API, AI Studio, and Google Vids.
 
@@ -51,18 +51,18 @@ As of 2026-07-30, do not treat the Flow Music URL alone as a documented Lyria de
   — <https://blog.google/innovation-and-ai/technology/developers-tools/lyria-3-developers/>
 - Use the shorter clip-oriented option for rapid prototypes and social assets. Reserve full-song generation for longer structured work.
   — <https://blog.google/innovation-and-ai/technology/developers-tools/lyria-3-developers/>
-- Treat generated music as a draft. Review whether the track matches the creative brief before publication.
+- Treat generated music as a draft: review whether the track matches the creative brief before publication.
   — <https://deepmind.google/models/lyria/>
 
 ## Superseded by this
 
 - 2026-02-18 — Lyria 3’s Gemini-app 30-second-track limit is superseded for current consumer use by Lyria 3.5’s short-or-longer-track options.
-- 2026-07-29 — Lyria 3 guidance is superseded where Lyria 3.5 is available. Use the newer model for improved lyrics, vocals, musicality, and tempo and duration control.
+- 2026-07-29 — Lyria 3 guidance is superseded where Lyria 3.5 is available. Use the newer model for improved lyrics, vocals, musicality, and tempo/duration control.
 
 ## Still unknown
 
-- The required response schema has no event_findings or new_events fields. The dated additions and correction are therefore preserved in what_changed rather than emitted as separate fields.
-- The Flow Music homepage yielded no readable product text in the retrieved page. It is included only as the supplied product URL and current access surface.
+- The required response schema has no event_findings or new_events fields, so dated additions and correction are preserved in what_changed rather than emitted as separate fields.
+- The Flow Music homepage yielded no readable product text in the retrieved page; it is included only as the supplied product URL and current access surface.
 - Google’s public materials do not provide independent benchmark scores or a complete public training-data inventory for Lyria 3.5.
 
 ## Sources
@@ -81,5 +81,5 @@ As of 2026-07-30, do not treat the Flow Music URL alone as a documented Lyria de
 ## Agent brief {#agent-brief}
 
 - **Subject:** `project:lyria`, thread `lyria-development`, 0 dated events - → -.
-- **Practical note:** As of 2026-07-30, do not treat the Flow Music URL alone as a documented Lyria development event; research the linked resource and the underlying post before relying on it.
+- **Practical note:** As of 2026-07-30, do not treat the Flow Music URL alone as a documented Lyria development event. Research the linked resource and the underlying post before relying on it.
 - **Confidence:** high. Dated supersedes above are the authority for what is obsolete.
