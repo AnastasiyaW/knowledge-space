@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1156+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1170+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -773,6 +773,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [GenMM](https://happyin.space/projects/genmm/): **Development line:** `project:genmm` · thread `genmm-development`
 - [Glob3R](https://happyin.space/projects/glob3r/): **Development line:** `project:glob3r` · thread `glob3r`
 - [Google Colab](https://happyin.space/projects/google-colab/): **Development line:** `project:google-colab` · thread `google-colab-platform-evolution`
+- [Google Earth](https://happyin.space/projects/google-earth/): **Development line:** `project:google-earth` · thread `google-earth-flight-simulator`
 - [Gemini](https://happyin.space/projects/google-gemini/): **Development line:** `project:google-gemini` · thread `gemini-product-development`
 - [Google Opal](https://happyin.space/projects/google-opal/): **Development line:** `project:google-opal` · thread `google-opal`
 - [Google Photos](https://happyin.space/projects/google-photos/): **Development line:** `project:google-photos` · thread `ai-photo-editing`
@@ -800,6 +801,8 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [IGGT4D](https://happyin.space/projects/iggt4d/): **Development line:** `project:iggt4d` · thread `iggt4d`
 - [Image-to-LoRA](https://happyin.space/projects/image-to-lora/): **Development line:** `project:image-to-lora` · thread `image-to-lora-v2-release`
 - [img2threejs](https://happyin.space/projects/img2threejs/): **Development line:** `project:img2threejs` · thread `img2threejs`
+- [InfiniSplat](https://happyin.space/projects/infinisplat/): **Development line:** `project:infinisplat` · thread `infinisplat-public-availability`
+- [Inline Studio](https://happyin.space/projects/inline-studio/): **Development line:** `project:inline-studio` · thread `inline-studio-development`
 - [InstantX SD3 ControlNet — SD3 ControlNet checkpoint releases](https://happyin.space/projects/instantx-sd3-controlnet/): **Development line:** `project:instantx-sd3-controlnet` · thread `sd3-controlnet-checkpoint-releases`
 - [InternVL](https://happyin.space/projects/internvl/): **Development line:** `project:internvl` · thread `internvl-model-releases`
 - [James Webb Space Telescope — First Images Release](https://happyin.space/projects/james-webb-space-telescope/): **Development line:** `project:james-webb-space-telescope` · thread `first-images-release`
@@ -824,6 +827,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [LMX-Omni-52B-Halo](https://happyin.space/projects/lmx-omni-52b-halo/): **Development line:** `project:lmx-omni-52b-halo` · thread `lmx-omni-52b-halo`
 - [Lovart](https://happyin.space/projects/lovart/): **Development line:** `project:lovart` · thread `lovart-development`
 - [LTX-2.3 IC-LoRA Ingredients — LTX-2.3](https://happyin.space/projects/ltx-2-3-ic-lora-ingredients/): **Development line:** `project:ltx-2-3-ic-lora-ingredients` · thread `ltx-2-3`
+- [LTX-2.3 inpaint LoRA](https://happyin.space/projects/ltx-2-3-inpaint-lora/): **Development line:** `project:ltx-2-3-inpaint-lora` · thread `ltx-2-3-inpaint-lora`
 - [LTX-2.3-Foley-LoRA — LTX Video](https://happyin.space/projects/ltx-foley-lora/): **Development line:** `project:ltx-foley-lora` · thread `ltx-video`
 - [LTX-2.3](https://happyin.space/projects/ltx-video/): **Development line:** `project:ltx-video` · thread `ltx-video`
 - [Lucida](https://happyin.space/projects/lucida/): **Development line:** `project:lucida` · thread `lucida-development`
@@ -845,6 +849,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [MiniMax Music 3 Latent Refiner](https://happyin.space/projects/minimax-music3-latent-refiner/): **Development line:** `project:minimax-music3-latent-refiner` · thread `minimax-music3-latent-refiner`
 - [Mistral Small 4 — Mistral Small](https://happyin.space/projects/mistral-small-4/): **Development line:** `project:mistral-small-4` · thread `mistral-small`
 - [Moebius — Public availability](https://happyin.space/projects/moebius/): **Development line:** `project:moebius` · thread `public-availability`
+- [MolmoMotion](https://happyin.space/projects/molmomotion/): **Development line:** `project:molmomotion` · thread `molmomotion-model-availability`
 - [MosaicMem](https://happyin.space/projects/mosaicmem/): **Development line:** `project:mosaicmem` · thread `mosaicmem-development`
 - [MOSS-Video-Preview](https://happyin.space/projects/moss-video-preview/): **Development line:** `project:moss-video-preview` · thread `moss-video-preview`
 - [Mozart AI](https://happyin.space/projects/mozart-ai/): **Development line:** `project:mozart-ai` · thread `mozart-ai-product-development`
@@ -858,6 +863,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Nemotron 3 Super](https://happyin.space/projects/nemotron-3-super/): **Development line:** `project:nemotron-3-super` · thread `nemotron-3-super`
 - [neural.love](https://happyin.space/projects/neural-love/): **Development line:** `project:neural-love` · thread `neural-love-image-tools`
 - [NexVid — Browser extension distribution](https://happyin.space/projects/nexvid/): **Development line:** `project:nexvid` · thread `browser-extension-distribution`
+- [NIGHTBORNE](https://happyin.space/projects/nightborne/): **Development line:** `project:nightborne` · thread `nightborne`
 - [NotebookLM](https://happyin.space/projects/notebooklm/): **Development line:** `project:notebooklm` · thread `notebooklm-development`
 - [Nunchaku — Model integration expansion](https://happyin.space/projects/nunchaku/): **Development line:** `project:nunchaku` · thread `model-integration-expansion`
 - [Cosmos 3 Edge](https://happyin.space/projects/nvidia-cosmos-3-edge/): **Development line:** `project:nvidia-cosmos-3-edge` · thread `cosmos-3-edge`
@@ -865,12 +871,15 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [OctaneRender](https://happyin.space/projects/octanerender/): **Development line:** `project:octanerender` · thread `octanerender-major-releases`
 - [Odyssey](https://happyin.space/projects/odyssey/): **Development line:** `project:odyssey` · thread `odyssey`
 - [Ollama — Product development](https://happyin.space/projects/ollama/): **Development line:** `project:ollama` · thread `product-development`
+- [Omni-Diffusion](https://happyin.space/projects/omni-diffusion/): **Development line:** `project:omni-diffusion` · thread `omni-diffusion-development`
 - [OmniAvatar — Public release and demo availability](https://happyin.space/projects/omniavatar/): **Development line:** `project:omniavatar` · thread `public-release-and-demo`
 - [OmniRoute](https://happyin.space/projects/omniroute/): **Development line:** `project:omniroute` · thread `omniroute`
 - [OmniStream](https://happyin.space/projects/omnistream/): **Development line:** `project:omnistream` · thread `omnistream-development`
+- [ONYX Ai Matte](https://happyin.space/projects/onyx-ai-matte/): **Development line:** `project:onyx-ai-matte` · thread `onyx-ai-matte`
 - [OpenMAIC](https://happyin.space/projects/openmaic/): **Development line:** `project:openmaic` · thread `openmaic-development`
 - [OpenMontage](https://happyin.space/projects/openmontage/): **Development line:** `project:openmontage` · thread `openmontage-development`
 - [OpenWorker — Project introduction](https://happyin.space/projects/openworker/): **Development line:** `project:openworker` · thread `project-introduction`
+- [OrbitQuant](https://happyin.space/projects/orbitquant/): **Development line:** `project:orbitquant` · thread `orbitquant-development`
 - [Origin F1 — Robotics](https://happyin.space/projects/origin-f1/): **Development line:** `project:origin-f1` · thread `robotics`
 - [Origin — Code hosting](https://happyin.space/projects/origin/): **Development line:** `project:origin` · thread `code-hosting`
 - [Ornith-1.5](https://happyin.space/projects/ornith-1-5/): **Development line:** `project:ornith-1-5` · thread `ornith-1-5`
@@ -912,6 +921,8 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Seamless-Equirectangular LTX-2.3 LoRA — Seamless-Equirectangular LoRA release](https://happyin.space/projects/seamless-equirectangular-lora/): **Development line:** `project:seamless-equirectangular-lora` · thread `seamless-equirectangular-lora-release`
 - [SeedRealtime](https://happyin.space/projects/seedrealtime/): **Development line:** `project:seedrealtime` · thread `seedrealtime-development`
 - [SeedVR2](https://happyin.space/projects/seedvr2/): **Development line:** `project:seedvr2` · thread `seedvr2-development-and-distribution`
+- [SeFi-Image](https://happyin.space/projects/sefi-image/): **Development line:** `project:sefi-image` · thread `sefi-image-development`
+- [Self Gradient Forcing](https://happyin.space/projects/self-gradient-forcing/): **Development line:** `project:self-gradient-forcing` · thread `self-gradient-forcing-development`
 - [SIMART](https://happyin.space/projects/simart/): **Development line:** `project:simart` · thread `simart-development`
 - [SketchVideo](https://happyin.space/projects/sketchvideo/): **Development line:** `project:sketchvideo` · thread `sketchvideo-development`
 - [Sol-Attn](https://happyin.space/projects/sol-attn/): **Development line:** `project:sol-attn` · thread `sol-attn-development`
@@ -929,6 +940,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Tencent Hunyuan — Hunyuan model releases](https://happyin.space/projects/tencent-hunyuan/): **Development line:** `project:tencent-hunyuan` · thread `hunyuan-model-releases`
 - [ToonComposer](https://happyin.space/projects/tooncomposer/): **Development line:** `project:tooncomposer` · thread `tooncomposer-public-availability`
 - [Tripo](https://happyin.space/projects/tripo/): **Development line:** `project:tripo` · thread `tripo-development`
+- [Tutu MCP](https://happyin.space/projects/tutu-mcp/): **Development line:** `project:tutu-mcp` · thread `tutu-mcp-development`
 - [UltraPixel](https://happyin.space/projects/ultrapixel/): **Development line:** `project:ultrapixel` · thread `ultrapixel-development`
 - [UnityShots](https://happyin.space/projects/unityshots/): **Development line:** `project:unityshots` · thread `unityshots-development`
 - [UnitySplats](https://happyin.space/projects/unitysplats/): **Development line:** `project:unitysplats` · thread `unitysplats`
@@ -945,9 +957,11 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [WAN](https://happyin.space/projects/wan/): **Development line:** `project:wan` · thread `wan-video-generation`
 - [WhatModels — Public website](https://happyin.space/projects/whatmodels/): **Development line:** `project:whatmodels` · thread `public-website`
 - [WonderWorld](https://happyin.space/projects/wonderworld/): **Development line:** `project:wonderworld` · thread `wonderworld-development`
+- [X-Dub — Project development](https://happyin.space/projects/x-dub/): **Development line:** `project:x-dub` · thread `project-development`
 - [XVerse — Public resources and demo](https://happyin.space/projects/xverse/): **Development line:** `project:xverse` · thread `public-resources-and-demo`
 - [YouTube](https://happyin.space/projects/youtube/): **Development line:** `project:youtube` · thread `youtube-automatic-dubbing`
 - [Z-Image-Turbo-Fun-Controlnet-Union](https://happyin.space/projects/z-image-turbo-fun-controlnet-union/): **Development line:** `project:z-image-turbo-fun-controlnet-union` · thread `z-image-turbo-fun-controlnet-union-development`
+- [Zeta-Chroma](https://happyin.space/projects/zeta-chroma/): **Development line:** `project:zeta-chroma` · thread `zeta-chroma-base-model`
 - [Zhirinovsky AI](https://happyin.space/projects/zhirinovsky-ai/): **Development line:** `project:zhirinovsky-ai` · thread `zhirinovsky-ai-development`
 - [ZoeDepth](https://happyin.space/projects/zoedepth/): **Development line:** `project:zoedepth` · thread `zoedepth-public-release`
 
