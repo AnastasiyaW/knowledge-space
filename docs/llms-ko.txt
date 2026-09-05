@@ -1,6 +1,6 @@
 # 종합 기술 지식 베이스 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1176+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1177+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -782,6 +782,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [Google Vids](https://happyin.space/projects/google-vids/): **Development line:** `project:google-vids` · thread `google-vids-veo-integration`
 - [GPT-4](https://happyin.space/projects/gpt-4/): **Development line:** `project:gpt-4` · thread `gpt-4-development`
 - [GPT-5.6 Sol Ultra](https://happyin.space/projects/gpt-5-6-sol-ultra/): **Development line:** `project:gpt-5-6-sol-ultra` · thread `gpt-5-6-sol-ultra`
+- [GPT-5.6 Sol — External evaluation](https://happyin.space/projects/gpt-5-6-sol/): **Development line:** `project:gpt-5-6-sol` · thread `external-evaluation`
 - [Grok Imagine Image 2.0 — Grok Imagine image generation](https://happyin.space/projects/grok-imagine-image-2-0/): **Development line:** `project:grok-imagine-image-2-0` · thread `grok-imagine-image`
 - [GUSH3R](https://happyin.space/projects/gush3r/): **Development line:** `project:gush3r` · thread `gush3r-development`
 - [Holo3](https://happyin.space/projects/h-company-holo3/): **Development line:** `project:h-company-holo3` · thread `holo3-model-release`
