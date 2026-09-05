@@ -15,42 +15,42 @@ aliases: ["EVA"]
 
 EVA (Efficient Video Agent) is a video agent built on Qwen2.5-VL for researchers and engineers.
 
-- Agent loop that runs summary, plan, action, and reflection steps.
-- Frame extractor that selects and retrieves video frames by query.
-- Planner that adjusts subsequent actions based on observation results.
+- Agent cycle: runs a summary → plan → action → reflection loop.
+- Frame selection: picks and extracts video frames, then updates the next step from the result.
+- Model weights: hosted at `WRHC/EfficientVideoAgent` for evaluation across six video datasets.
 
-Weights are available as `WRHC/EfficientVideoAgent`, and the code evaluates on six video datasets. The published code runs evaluation through vLLM across multiple GPUs without a ready user interface. It suits reproducible evaluation of query-driven video understanding, but practical inference requires a separate pipeline around the model.
+The published repository covers multi-GPU evaluation through vLLM rather than an interactive interface. The setup works for reproducible query-driven video evaluation, but practical serving requires a separate inference pipeline.
 
 ## Development line
 
-- **2026-03-26 — EVA source code and model weights were published.** On 2026-03-26, EVA linked to a GitHub source repository and a Hugging Face model page. These links mark public access for the project. They do not establish a version, capabilities, evaluation results, or whether either resource was first published that day.
+- **2026-03-26 — EVA source and model resources were recorded.** On 2026-03-26, EVA appeared with a GitHub source repository and a Hugging Face model page. Both links mark public access for the project. The dated links alone do not confirm a version, capabilities, evaluation results, or whether either resource was first published that day.
 
 ## What changed
 
-2026-03-26 — Official evaluation code and weights for EVA were published. The system switched from passive uniform frame sampling to an agent loop that decides what to inspect and when.
+2026-03-26 — Official evaluation code and EVA weights are public. The model replaces passive uniform frame sampling with an agent loop that chooses what to inspect and when.
 
 ## How to use this
 
-As of 2026-03-26, verify setup and model details directly from the repository and model page before use.
+As of 2026-03-26, practitioners should treat EVA as having both a source-code reference and a model-hosting reference, then verify setup and model details directly from those resources before use.
 
-1. Download the `WRHC/EfficientVideoAgent` weights and install repository dependencies with FFmpeg.
+1. Download weights for `WRHC/EfficientVideoAgent` and install the repository dependencies with FFmpeg.
   — <https://github.com/wangruohui/EfficientVideoAgent>
 2. Prepare one of the six supported video datasets for evaluation and set the local `video_root` in `DATASET_CONFIG`.
   — <https://github.com/wangruohui/EfficientVideoAgent>
-3. Serve the weights through a vLLM OpenAI-compatible endpoint, then set its URL, tokenizer path, and allowed media paths in `eval-eva.py`.
+3. Serve the weights with a vLLM OpenAI-compatible endpoint, then set its URL, tokenizer path, and allowed media paths in `eval-eva.py`.
   — <https://huggingface.co/WRHC/EfficientVideoAgent>
-4. Run the target dataset with `eval-eva.py`. For interrupted runs, rerun the same command to resume from the cache file.
+4. Run the chosen dataset with `eval-eva.py`. Re-run the same command to resume an interrupted run from the cache file.
   — <https://github.com/wangruohui/EfficientVideoAgent>
 
 ## Best practices
 
-- Keep `ffprobe` in `PATH` and FFmpeg libraries in `LD_LIBRARY_PATH` so standard frame extraction works during evaluation.
+- Keep `ffprobe` in `PATH` and FFmpeg libraries in `LD_LIBRARY_PATH` because frame extraction runs during evaluation.
   — <https://github.com/wangruohui/EfficientVideoAgent>
-- Verify vLLM access to local videos through `--allowed-local-media-path`, or the agent cannot pass extracted frames to the model.
+- Grant vLLM access to local video files with `--allowed-local-media-path` so the agent can pass extracted frames to the model.
   — <https://huggingface.co/WRHC/EfficientVideoAgent>
-- Fix `--max-visual-tokens` across runs. Exceeding the visual token budget reduces resolution and frame count, which skews comparisons.
+- Lock `--max-visual-tokens` across runs because exceeding the token budget lowers resolution and drops frames.
   — <https://huggingface.co/WRHC/EfficientVideoAgent>
-- Do not treat a single run as an exact reproduction. The authors report final accuracy varies by fractions of a percent even at `temperature=0`.
+- Do not treat a single run as an exact reproduction because accuracy varies by fractions of a percent even at `temperature=0`.
   — <https://github.com/wangruohui/EfficientVideoAgent>
 
 ## Superseded by this
@@ -59,8 +59,8 @@ As of 2026-03-26, verify setup and model details directly from the repository an
 
 ## Still unknown
 
-- No dated first-party changelog exists after the initial release. We cannot confirm whether subsequent repository or model updates changed EVA capabilities.
-- Public documentation covers only the benchmark evaluation workflow. No supported production inference, standalone API, or user interface is confirmed.
+- No dated first-party changelog exists after the initial release. We cannot confirm whether later commits or model updates changed EVA's capabilities.
+- Public documentation covers only the benchmark evaluation workflow. We find no confirmed production inference setup, standalone API, or user interface.
 
 ## Sources
 
