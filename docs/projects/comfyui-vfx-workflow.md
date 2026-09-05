@@ -13,32 +13,32 @@ aliases: ["heydoughogan ComfyUI VFX Workflow"]
 
 ## What it is
 
-VFX Utilities is a ComfyUI workflow by Doug Hogan for compositors and VFX artists. It builds passes without a separate CG render.
+VFX Utilities is a ComfyUI workflow by Doug Hogan for compositors and VFX artists. It generates passes for relighting, compositing, and look development without a separate CG render.
 
-- Source-video ingestion: feeds image or video plates into the pipeline.
-- RMBG and SAM3: extract alpha and mattes via text prompts or points.
-- Face segmentation: isolates facial regions for targeted passes.
-- Depth and normal passes: generate spatial maps for relighting, compositing, and look development.
+- Alpha and matte extraction with RMBG and SAM3
+- Text prompt and point segmentation
+- Face segmentation
+- Depth and normal pass generation
 
-The card provides one downloadable JSON graph.
+The card currently provides 1 downloadable JSON graph.
 
 ## Development line
 
-- **2026-06-12 — Dated Comfy workflow reference for VFX passes.** The workflow combines source-video ingestion, RMBG, SAM3 prompt and points, face segmentation, depth, and normals in one ComfyUI graph. The current card lists alpha, depth, and normal maps as outputs. The graph version from the publication date is unconfirmed.
+- **2026-06-12 — Dated Comfy workflow reference for VFX passes.** The graph combines source video ingestion, RMBG, SAM3 prompts and points, face segmentation, depth, and normals in 1 ComfyUI graph. The current card lists alpha, depth, and normal maps as outputs. We do not have confirmation for the graph state on the publication date.
 
 ## What changed
 
-2026-06-12 — Doug Hogan published the VFX Utilities workflow. It combines source-video ingestion, RMBG, SAM3 prompt and points, face segmentation, depth, and normals in one ComfyUI graph. The card lists alpha, depth, and normal maps as outputs.
+2026-06-12 — Published VFX Utilities workflow. It combines source video ingestion, RMBG, SAM3 prompts and points, face segmentation, depth, and normals in 1 ComfyUI graph. The current card lists alpha, depth, and normal maps as outputs. The historical version of the graph on the release date remains unconfirmed.
 
 ## How to use this
 
-As of 2026-06-12, we treat the workflow as a reference for manual inspection on VFX passes, not as a verified recipe.
+As of 2026-06-12, treat the linked Comfy workflow as a reference to inspect manually for VFX-pass work, rather than as a verified or fully documented recipe.
 
 1. Open the card and download the workflow JSON.
   — <https://comfy.org/workflows/be0889296f65-be0889296f65/>
-2. Load the JSON into ComfyUI, supply an image or video plate, and set a text prompt or segmentation points.
+2. Load the JSON into ComfyUI, provide an image or video plate, and set prompt text or segmentation points.
   — <https://comfy.org/workflows/download/be0889296f65.json?filename=be0889296f65>
-3. Run the needed branches and use the alpha, depth, and normal outputs as passes for compositing, relighting, or look development.
+3. Run the required paths and use the alpha, depth, and normal outputs as passes for compositing, relighting, or look development.
   — <https://comfy.org/workflows/be0889296f65-be0889296f65/>
 
 ## Superseded by this
@@ -47,9 +47,9 @@ As of 2026-06-12, we treat the workflow as a reference for manual inspection on 
 
 ## Still unknown
 
-- The event listed an account URL for heydoughogan, but we could not verify it. The confirmed card author is Doug Hogan / @doughogan.
-- The card displays the current JSON and a relative creation date. We cannot confirm the exact nodes and models active on 2026-06-12.
-- No dated primary source confirms later changes to this workflow. We added no new dated events.
+- The event listed an account URL for heydoughogan, but we could not verify it. The confirmed card author is Doug Hogan (@doughogan).
+- The card displays the current JSON with a relative creation date, so the exact node and model setup on 2026-06-12 is not confirmed.
+- We found no dated primary source confirming later changes to this workflow, so no new dated events are added.
 
 ## Sources
 
