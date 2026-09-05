@@ -13,19 +13,22 @@ aliases: ["TimeLens2"]
 
 ## What it is
 
-TimeLens2 is an open Qwen3-VL-based model family for researchers and video-search builders that converts a video plus text query into one or more evidence intervals. It supports short, long, repeated-event, question-form, and egocentric grounding. Released sizes are 2B, 4B, and 8B. The 8B model reports 48.0 average mIoU across seven benchmarks. Local inference requires a compatible Transformers and video stack; no hosted inference provider exists.
+TimeLens2 is an open Qwen3-VL-based model family for researchers and video-search builders. It converts a video plus text query into one or more evidence intervals.
+Released sizes are 2B, 4B, and 8B. It handles short, long, repeated-event, question-form, and egocentric grounding. The 8B model reports 48.0 average mIoU across seven benchmarks. Local inference needs a compatible Transformers and video stack rather than a hosted inference provider.
 
 ## Development line
 
-- **2026-07-22 — TimeLens2 public project resources were linked.** On 2026-07-22, a TimeLens2 development-line message linked the public project page, GitHub source repository, Hugging Face collection, and a temporal-grounding Space. This public release provides material access to the project, but specifies no version, model configuration, or feature claim.
+- **2026-07-22 — TimeLens2 public project resources were linked.** On 2026-07-22, the project linked its public project page, GitHub source repository, Hugging Face collection, and temporal-grounding Space. The initial links gave no specific version, model configuration, or feature claim.
 
 ## What changed
 
-2026-07-22 — TimeLens2 launched as a generalist temporal-grounding release with a project page, Apache-2.0 code, TimeLens2-93K data, 2B/4B/8B checkpoints, and an 8B demo. The linked paper, submitted 2026-07-19, frames the task as set-valued interval prediction. Over the Qwen3-VL backbone, it reports gains of 14.2 mIoU for 2B, 13.0 for 4B, and 18.1 for 8B. On 2026-07-27, matching 2B/4B/8B SFT checkpoints were added for rollout generation and GRPO reproduction.
+2026-07-22 — TimeLens2 launched as a generalist temporal-grounding release with a project page, Apache-2.0 code, TimeLens2-93K data, 2B/4B/8B checkpoints, and an 8B demo.
+The paper, submitted 2026-07-19, frames the task as set-valued interval prediction. It reports Qwen3-VL backbone gains of 14.2 mIoU (2B), 13.0 (4B), and 18.1 (8B).
+On 2026-07-27, matching 2B/4B/8B SFT checkpoints arrived for rollout generation and GRPO reproduction.
 
 ## How to use this
 
-From 2026-07-22, start with the project page and repository for TimeLens2, and use the Hugging Face collection and Space for assets and demos.
+From 2026-07-22, start with the project page and repository for TimeLens2, and use the linked Hugging Face collection and Space for public assets and demos.
 
 1. Install the inference dependencies, load `MCG-NJU/TimeLens2-8B` with Transformers, and provide a local video URI.
   — <https://huggingface.co/MCG-NJU/TimeLens2-8B>
@@ -36,9 +39,9 @@ From 2026-07-22, start with the project page and repository for TimeLens2, and u
 
 ## Best practices
 
-- Request all matching spans, not one guessed moment, and constrain the response format to timestamp pairs.
+- Request all matching spans instead of a single moment, and constrain the response format to timestamp pairs.
   — <https://huggingface.co/MCG-NJU/TimeLens2-8B>
-- Use a separate rollout output root for every model, data, and seed combination so concurrent shard jobs do not overwrite outputs.
+- Use a separate rollout output root for every model, data, and seed combination so concurrent jobs with identical shard names do not overwrite outputs.
   — <https://github.com/MCG-NJU/TimeLens2/blob/main/grpo/README.md>
 - Do not start GRPO until rollout merging succeeds and every training row has the expected eight responses.
   — <https://github.com/MCG-NJU/TimeLens2/blob/main/grpo/README.md>
@@ -49,7 +52,7 @@ From 2026-07-22, start with the project page and repository for TimeLens2, and u
 
 ## Still unknown
 
-- The 2026-07-22 event links an 8B Space, but the inspected Space page exposes no operational limits or deployment configuration. The official 8B model card says it is not deployed by an inference provider, so availability of that demo is not evidence of a supported hosted API.
+- The 2026-07-22 release links an 8B Space, but the page exposes no operational limits or deployment configuration. The official 8B model card confirms it is not deployed by an inference provider, so the demo is not a supported hosted API.
 
 ## Sources
 
@@ -66,5 +69,5 @@ From 2026-07-22, start with the project page and repository for TimeLens2, and u
 ## Agent brief {#agent-brief}
 
 - **Subject:** `project:timelens2`, thread `timelens2-development`, 1 dated events 2026-07-22 → 2026-07-22.
-- **Practical note:** From 2026-07-22, practitioners should use the project page and repository as the starting point for TimeLens2, with the linked Hugging Face collection and Space as public asset and demo entry points; exact capabilities remain unverified.
+- **Practical note:** From 2026-07-22, start from the project page and repository for TimeLens2, using the linked Hugging Face collection and Space as public asset and demo entry points; exact capabilities remain unverified.
 - **Confidence:** high. Dated supersedes above are the authority for what is obsolete.
