@@ -1,6 +1,6 @@
 # Umfassende technische Wissensbasis - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1214+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1215+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -955,6 +955,7 @@ This knowledge base contains deep technical articles organized by domain. Each a
 - [SeedVR2](https://happyin.space/projects/seedvr2/): **Development line:** `project:seedvr2` · thread `seedvr2-development-and-distribution`
 - [SeFi-Image](https://happyin.space/projects/sefi-image/): **Development line:** `project:sefi-image` · thread `sefi-image-development`
 - [Self Gradient Forcing](https://happyin.space/projects/self-gradient-forcing/): **Development line:** `project:self-gradient-forcing` · thread `self-gradient-forcing-development`
+- [ShutterMuse](https://happyin.space/projects/shuttermuse/): **Development line:** `project:shuttermuse` · thread `shuttermuse`
 - [SIMART](https://happyin.space/projects/simart/): **Development line:** `project:simart` · thread `simart-development`
 - [SketchVideo](https://happyin.space/projects/sketchvideo/): **Development line:** `project:sketchvideo` · thread `sketchvideo-development`
 - [Snapchat](https://happyin.space/projects/snapchat/): **Development line:** `project:snapchat` · thread `snapchat-lenses-and-filters`
