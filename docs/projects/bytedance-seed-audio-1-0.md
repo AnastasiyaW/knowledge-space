@@ -13,53 +13,46 @@ aliases: ["Seed Audio 1.0"]
 
 ## What it is
 
-Seed Audio 1.0 is a ByteDance audio model for creators of video, games, ads, and podcasts.
-
-- Speech and dialogue from a prompt with voice or image references.
-- Sound effects and ambience generated in the same pass.
-
-The confirmed external API limits inputs to three audio references of 30 seconds each. Official material claims up to two minutes of audio in one pass.
-
-The model is an alternative to TTS and manual sound design for draft audio scenes. Voice reference rights remain the user's responsibility.
+Seed Audio 1.0 — аудиомодель ByteDance для создателей видео, игр, рекламы и подкастов: генерирует речь, диалоги, эффекты и атмосферу из промпта, с референсом голоса или изображения. Лимит подтверждённого внешнего API — до трёх аудиореференсов по 30 секунд; официальный материал заявляет до двух минут аудио за один проход. Вердикт: это альтернатива связке TTS и ручного саунд-дизайна для черновой звуковой сцены, но права на голосовой референс остаются обязанностью пользователя.
 
 ## Development line
 
-- **2026-07-22 — Seed Audio 1.0 product page and BytePlus activation path.** On 2026-07-22, public links connected the official Seed Audio 1.0 product page and a BytePlus Voice console activation path. Together, those dated official links mark a public-facing product and onboarding step for the project. They do not establish the exact announcement wording, feature set, availability, or release scope.
+- **2026-07-22 — Seed Audio 1.0 product page and BytePlus activation path.** On 2026-07-22, the development record linked Seed Audio 1.0’s official product page and a BytePlus Voice console activation path. Together, those dated official links mark a public-facing product and onboarding step for the project, although they do not establish the exact announcement wording, feature set, availability, or release scope.
 
 ## What changed
 
-2026-07-22 — Seed Audio 1.0 became available through BytePlus as a single model for speech, sound effects, and atmosphere. The official announcement is dated 2026-07-20, so the July 22 date marks appearance in the feed rather than the primary announcement.
+2026-07-22 — Seed Audio 1.0 стал доступен через BytePlus как единая модель для речи, звуковых эффектов и атмосферы; официальный анонс датирован 2026-07-20, поэтому дата 22 июля описывает появление в выбранной ленте, а не первичную дату анонса.
 
-2026-07-20 — ByteDance described the model as a full sound scene generator. Speech timing is configurable down to 100 ms. A single pass can produce up to two minutes of audio with continuation.
+2026-07-20 — ByteDance описала модель как генератор полной звуковой сцены: тайминг реплик задаётся с точностью 100 мс, один проход может дать до двух минут аудио с продолжением.
 
 ## How to use this
 
-We can evaluate Seed Audio 1.0 through Seed and BytePlus Voice as of 2026-07-22. Confirm activation eligibility, availability, and capabilities before relying on it.
+As of 2026-07-22, practitioners can treat Seed Audio 1.0 as an official product path to evaluate through Seed and BytePlus Voice, while confirming activation eligibility, availability, and capabilities before relying on it.
 
-1. Activate Seed Audio in BytePlus through the console and create a project.
+1. Активируйте Seed Audio в BytePlus через предоставленную консоль и создайте проект.
   — <https://console.byteplus.com/voice/new/setting/activate?projectName=default>
-2. Describe the scene in one prompt: characters, lines, emotion, environment, and key sounds. Set line entry points when needed.
+2. Опишите сцену одним промптом: персонажей, реплики, эмоцию, среду и ключевые звуки; при необходимости укажите моменты входа реплик.
   — <https://seed.bytedance.com/en/blog/from-speech-to-audio-creation-introducing-the-seed-audio-1-0-audio-creation-model>
-3. For programmatic calls, pass the required prompt, label audio references as @Audio1–@Audio3, and save the result URL.
+3. Для программного вызова передайте обязательный prompt; референсы аудио обозначайте как @Audio1–@Audio3 и сохраните URL результата.
   — <https://fal.ai/models/bytedance/seed-audio-1.0/api>
 
 ## Best practices
 
-- Use only authorized voice references. Official documentation explicitly limits voice cloning to authorized samples.
+- Используйте только разрешённые голосовые референсы; официальный материал прямо ограничивает такой сценарий авторизованным образцом.
   — <https://seed.bytedance.com/en/blog/from-speech-to-audio-creation-introducing-the-seed-audio-1-0-audio-creation-model>
-- Do not block the application on async requests. Poll the queue or use a webhook instead.
+- Для асинхронной генерации не блокируйте приложение: отслеживайте очередь или используйте webhook.
   — <https://fal.ai/models/bytedance/seed-audio-1.0/api>
-- Keep the API key on the server rather than in the browser or client application.
+- Держите API-ключ на сервере, а не в браузере или клиентском приложении.
   — <https://fal.ai/models/bytedance/seed-audio-1.0/api>
 
 ## Superseded by this
 
-- 2026-07-20: audio scenes no longer require assembling speech, effects, and atmosphere as isolated clips. Seed Audio 1.0 handles them in a single scene prompt, but results and source voice rights still require verification.
+- 2026-07-20: для аудиосцены больше не обязательно собирать речь, эффекты и атмосферу как изолированные клипы; Seed Audio 1.0 предлагает единый сценовый запрос, но не отменяет проверку результата и прав на исходные голоса.
 
 ## Still unknown
 
-- The official project page returned no technical specifications during verification, and the BytePlus console requires interactive access. Current pricing, available regions, and the exact BytePlus API contract remain unconfirmed.
-- The entry is dated 2026-07-22, but primary ByteDance material is dated 2026-07-20. The two-day gap is unexplained.
+- Официальная страница проекта не отдала технические спецификации при проверке, а консоль BytePlus требует интерактивного доступа; текущие тарифы, регионы и точный API-контракт BytePlus не подтверждены.
+- Список содержит событие 2026-07-22, но первичный материал ByteDance датирован 2026-07-20; причина двухдневного расхождения не раскрыта.
 
 ## Sources
 
