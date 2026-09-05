@@ -13,12 +13,12 @@ aliases: ["hf-mount"]
 
 ## What it is
 
-hf-mount is a Rust CLI for developers and ML infrastructure to mount Hugging Face storage to local filesystems.
+hf-mount is a Rust CLI for developers and ML infrastructure.
 
-- Hugging Face Buckets, mounted with write access over NFS or FUSE.
-- Model and dataset repositories, mounted read-only with files loaded on first access.
+- Hugging Face Buckets: mounts with write support over NFS or FUSE.
+- Model and dataset repositories: mounts read-only with data loaded on first access.
 
-Repositories remain read-only, and remote changes settle within 10 seconds under FUSE and 30 seconds under NFS. We run it for read-heavy ML tasks on constrained disks, but not for multi-user writes, cross-machine locking, or latency-sensitive random I/O.
+Remote changes have eventual consistency, usually up to 10 seconds in FUSE and up to 30 seconds in NFS. Repositories stay read-only. It fits read-heavy ML workloads and tight disks, but not multi-writer setups, cross-machine locks, or latency-sensitive random I/O.
 
 ## Development line
 
@@ -26,37 +26,36 @@ Repositories remain read-only, and remote changes settle within 10 seconds under
 
 ## What changed
 
-2026-03-25 — hf-mount became available to mount Hub models, datasets, and Storage Buckets to a local path; Buckets support writes, while repositories remain read-only.
+2026-03-25 — hf-mount became available to mount Hub Storage Buckets, models, and datasets into a local path. Buckets support writing; repositories are read-only.
 
-An official announcement on 2026-03-24 clarifies the scale for the 2026-03-25 launch: users can connect remote storage claimed to reach up to 100 times local disk size; this is not a new release on 25 March, but clarification of the original launch.
+Update to the 2026-03-25 entry: the official announcement from 2026-03-24 clarifies scale: we can attach remote storage up to 100 times larger than the local disk. This is clarification of the original launch, not a new release on 25 March.
 
-New events:
-- 2026-06-10 — v0.7.0 added JSON log formatting and FUSE/NFS shutdown fixes preventing pod hangs.
-- 2026-07-08 — v0.9.0 capped remote chunk-read duration, cut CAS read timeout to 30 seconds, and turned FUSE link() into a server-side copy.
-- 2026-08-14 — v0.9.2 fixed phantom directories during raw-prefix tree matches, path URL-encoding, and object_store writer support.
+- 2026-06-10 — v0.7.0 added JSON log formatting and FUSE/NFS shutdown fixes that prevent hung pods.
+- 2026-07-08 — v0.9.0 capped remote chunk-read time and cut CAS read timeout to 30 seconds; FUSE link() became server-side copy.
+- 2026-08-14 — v0.9.2 fixed phantom directories on raw-prefix tree matches, URL-encoding of paths, and added object_store writer support.
 
 ## How to use this
 
 As of 2026-03-25, practitioners can use the hf-mount GitHub repository as the starting point for evaluating the project, while verifying its capabilities and maturity from primary documentation.
 
-1. Install via Homebrew on macOS/Linux or download the binary for Linux x86_64/aarch64 or macOS Apple Silicon.
+1. Install via Homebrew on macOS/Linux, or download the binary for Linux x86_64/aarch64 or macOS Apple Silicon.
   — <https://github.com/huggingface/hf-mount>
 2. Mount a public model or dataset as a read-only path: `hf-mount start repo openai-community/gpt2 /tmp/gpt2`; pass `HF_TOKEN` or `--hf-token` for a private resource.
   — <https://huggingface.co/docs/hub/main/models-downloading>
-3. For mutable checkpoints, logs, and artifacts, mount a Bucket: `hf-mount start --hf-token $HF_TOKEN bucket username/my-bucket /mnt/data`.
+3. Mount a Bucket for mutable checkpoints, logs, and artifacts: `hf-mount start --hf-token $HF_TOKEN bucket username/my-bucket /mnt/data`.
   — <https://huggingface.co/docs/hub/storage-buckets-access>
-4. Inspect and stop mounts with `hf-mount status` and `hf-mount stop <mount-path>`; logs live in `~/.hf-mount/logs/`.
+4. Check and stop the mount with `hf-mount status` and `hf-mount stop <mount-path>`; logs live in `~/.hf-mount/logs/`.
   — <https://github.com/huggingface/hf-mount>
 
 ## Best practices
 
-- Default to NFS: it requires no root, kernel extension, or system FUSE dependencies; choose FUSE when tighter integration with kernel cache and metadata matters.
+- Choose NFS by default: it requires no root, kernel extension, or system FUSE dependencies; choose FUSE when closer kernel cache and metadata integration matter.
   — <https://github.com/huggingface/hf-mount>
-- Do not use the mount as a distributed filesystem: there are no cross-client locks, concurrent writes lack conflict detection, and stale views can persist up to the polling interval.
+- Do not use the mount as a distributed filesystem: it lacks cross-client locks and concurrent write conflict detection, and views can stay stale until the polling interval ends.
   — <https://github.com/huggingface/hf-mount>
-- Enable `--advanced-writes` for interactive editing: streaming mode blocks typical editor unlink-and-create saves and drops the buffer on crash before `close()`.
+- Enable `--advanced-writes` for interactive editing: streaming mode blocks editor unlink-and-create saves and loses buffers on crashes before close().
   — <https://github.com/huggingface/hf-mount>
-- Prefer managed volume mounts for HF Jobs and Spaces unless you need a standalone host mount.
+- Prefer managed volume mounts on HF Jobs and Spaces unless you need a standalone mount on the host.
   — <https://huggingface.co/docs/hub/storage-buckets-access>
 
 ## Superseded by this
@@ -65,7 +64,7 @@ As of 2026-03-25, practitioners can use the hf-mount GitHub repository as the st
 
 ## Still unknown
 
-- The exact tag or commit matching the state of hf-mount on 2026-03-25 is unconfirmed by available primary pages. The official announcement is dated 2026-03-24, so it serves as a clarification source for the 2026-03-25 event rather than a separate event.
+- The exact tag or commit matching hf-mount on 2026-03-25 is unconfirmed by primary pages. The official announcement is dated 2026-03-24, so we treat it as clarification for the 2026-03-25 event rather than a separate event.
 
 ## Sources
 
