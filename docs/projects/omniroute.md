@@ -13,41 +13,49 @@ aliases: ["OmniRoute"]
 
 ## What it is
 
-OmniRoute — MIT-шлюз для подключения Claude Code, Codex, Cursor, Cline и других клиентов к провайдерам моделей через один endpoint. Возможности: провайдеры и модели, fallback и combo-маршрутизация, квоты, MCP/A2A, desktop/PWA. Мера: в текущем README заявлены 352 провайдера и 1 312 chat-model IDs для линии v3.8.50. Вердикт: подходит для самостоятельного развёртывания и управления несколькими API-источниками; сведения о доступных бесплатных квотах нужно перепроверять перед расчётом нагрузки.
+OmniRoute is an MIT-licensed gateway connecting Claude Code, Codex, Cursor, Cline and other clients to model providers through one endpoint.
+
+- Providers and models: route traffic to upstream targets.
+- Fallback and combo routing: handle failover across multiple endpoints.
+- Quotas: track usage limits.
+- MCP/A2A: connect tool and agent protocols.
+- Desktop/PWA: run local and web interfaces.
+
+The README lists 352 providers and 1 312 chat-model IDs for line v3.8.50. It fits self-hosted deployment and manages multiple API sources. Check free quota data before sizing traffic.
 
 ## Development line
 
-- **2026-07-25 — OmniRoute GitHub repository reference.** Поддержка Gemini 3.6 flash-high, flash-medium и flash-low уже была добавлена через провайдер Antigravity CLI, но ожидала выпуска v3.8.49; это подтверждено сопровождающим 2026-07-26.
+- **2026-07-25 — OmniRoute GitHub repository reference.** Support for Gemini 3.6 flash-high, flash-medium and flash-low was added through the Antigravity CLI provider, but waited for release v3.8.49. The maintainer confirmed this on 2026-07-26.
 
 ## What changed
 
-2026-07-25 — опубликованная v3.8.48 отставала от ветки разработки: поддержка Gemini 3.6 flash-high, flash-medium и flash-low уже была добавлена через провайдер Antigravity CLI, но ожидала выпуска v3.8.49; это подтверждено сопровождающим 2026-07-26. 2026-08-06 — дорожная карта закрепила переход от линии v3.8.x к v3.9.0 LTS и модульному v4: v3 остаётся стабильной веткой, а новые возможности переносятся в v4.
+2026-07-25 — published v3.8.48 lagged behind development: support for Gemini 3.6 flash-high, flash-medium and flash-low was added through the Antigravity CLI provider, but waited for release v3.8.49; the maintainer confirmed this on 2026-07-26. 2026-08-06 — the roadmap committed the transition from line v3.8.x to v3.9.0 LTS and modular v4: v3 remains the stable line, while new features move to v4.
 
 ## How to use this
 
 From 2026-07-25, practitioners should use the linked OmniRoute GitHub repository as the starting point for source inspection, without inferring a supported feature set or release status until the repository is researched.
 
-1. Для разработки из исходников клонируйте репозиторий, выполните npm install, npm run build и npm start; сервер разработки запускается через npm run dev на порту 20128.
+1. To develop from source, clone the repository, run npm install, npm run build and npm start; start the development server with npm run dev on port 20128.
   — <https://github.com/diegosouzapw/OmniRoute/discussions/8556>
-2. Подключите совместимый клиент к endpoint OmniRoute и настройте провайдеры, модели и правила fallback в панели или конфигурации проекта.
+2. Connect a compatible client to the OmniRoute endpoint and configure providers, models and fallback rules in the dashboard or project configuration.
   — <https://github.com/diegosouzapw/OmniRoute>
 
 ## Best practices
 
-- Не принимайте наличие модели в ветке разработки за наличие в опубликованном релизе: для Gemini 3.6 на 25 июля требовалась ветка release/v3.8.49 либо сборка из исходников.
+- Do not mistake a model in development for availability in a published release: Gemini 3.6 on 25 July required release/v3.8.49 or a build from source.
   — <https://github.com/diegosouzapw/OmniRoute/discussions/8556>
-- Для рабочего окружения выбирайте стабильную v3/LTS-линию, а nightly и release-ветки используйте только для проверки новых возможностей.
+- For production, choose the stable v3/LTS line; use nightly and release builds only to test new features.
   — <https://github.com/diegosouzapw/OmniRoute/blob/release/v3.8.51/ROADMAP.md>
 
 ## Superseded by this
 
-- 2026-07-25: предположение, что опубликованная v3.8.48 содержит Gemini 3.6, устарело; поддержка была только в готовящейся ветке v3.8.49.
-- 2026-08-06: стратегия, при которой все новые возможности добавляются в v3, заменяется разделением на стабильную v3/LTS и модульную v4.
+- 2026-07-25: assuming published v3.8.48 included Gemini 3.6 is obsolete; support existed only in upcoming release/v3.8.49.
+- 2026-08-06: adding all new features to v3 is replaced by splitting into stable v3/LTS and modular v4.
 
 ## Still unknown
 
-- В заданной схеме нет полей event_findings и new_events. Деталь события 2026-07-25 и последующее событие 2026-08-06 сохранены в what_changed; первоисточник для первого дополнения датирован 2026-07-26.
-- Текущая стабильная опубликованная версия не подтверждена этим набором источников: репозиторий отображает ветку release/v3.8.51, но не является доказательством опубликованного релиза.
+- The given schema lacks event_findings and new_events fields. Event detail for 2026-07-25 and subsequent event 2026-08-06 are saved in what_changed; the primary source for the first addition is dated 2026-07-26.
+- The current stable published release is unconfirmed by these sources: the repository shows release/v3.8.51, but that does not prove a published release.
 
 ## Sources
 
