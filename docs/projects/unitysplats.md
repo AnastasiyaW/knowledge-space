@@ -13,20 +13,19 @@ aliases: ["UnitySplats"]
 
 ## What it is
 
-UnitySplats is a Unity 6 package for importing, loading and rendering 3D Gaussian Splats instead of building a renderer from scratch. It supports PLY, SOG, SPZ and KHR_gaussian_splatting GLB across Built-in, URP and HDRP pipelines. It loads files, byte arrays and streams at runtime, using GPU or CPU sorting. Unity 6000.0 is the minimum engine version. WebGL 2 relies on main-thread CPU sorting and cannot handle large uncompressed scenes. Use it when a Unity project needs multi-format splat playback, but benchmark the GPU and render pipeline before targeting mobile, VR or web delivery.
+UnitySplats — a Unity 6 package for importing, loading and rendering 3D Gaussian Splats instead of building a renderer from scratch. It supports PLY, SOG, SPZ and KHR_gaussian_splatting GLB; Built-in, URP and HDRP; runtime file, byte-array and stream loading; GPU and CPU sorting. Minimum engine version is Unity 6000.0; WebGL 2 uses main-thread CPU sorting and is unsuitable for large uncompressed scenes. Verdict: use it when a Unity project needs multi-format splat playback, but benchmark the target GPU and rendering path before committing to mobile, VR or web delivery.
 
 ## Development line
 
-- **2026-07-26 — UnitySplats public project references.** On 2026-07-26, UnitySplats linked to a public GitHub repository and an Arloopa experience page. These references set the public development baseline for the project.
+- **2026-07-26 — UnitySplats public project references.** On 2026-07-26, UnitySplats was associated with a public GitHub repository and an Arloopa experience page. Together, those dated references establish a public development reference point for the project.
 
 ## What changed
 
-2026-07-26 — UnitySplats launched as an open-source Unity package. The initial v1.0.0 release from 2026-07-22 introduced multi-format import and runtime rendering.  
-2026-08-18 — v1.2.0 fixed Direct3D 11 CPU-sort depth ordering and viewport selection bugs.
+2026-07-26 — UnitySplats was presented as an open-source Unity package; the linked repository’s initial v1.0.0 release was dated 2026-07-22 and introduced the multi-format import/runtime-rendering baseline. 2026-08-18 — v1.2.0 corrected Direct3D 11 CPU-sort depth ordering and viewport-selection defects.
 
 ## How to use this
 
-Evaluate the project starting from the UnitySplats repository and the linked Arloopa experience as of 2026-07-26, checking implementation details before adopting it.
+From 2026-07-26, practitioners can use the UnitySplats repository and linked Arloopa experience as starting points for evaluating the project, while verifying implementation details before adoption.
 
 1. Add the OpenUPM registry for the com.netpyoung scope and the UnitySplats Git dependency to Packages/manifest.json, or install Unity.WebP first and then UnitySplats from Git URLs in Package Manager.
   — <https://github.com/arloopa/UnitySplats>
@@ -39,24 +38,24 @@ Evaluate the project starting from the UnitySplats repository and the linked Arl
 
 ## Best practices
 
-- Prefer Vulkan on Android and Vulkan or Direct3D 12 on Windows, because Direct3D 11 and OpenGL fall back to the CPU sorter.
+- Prefer Vulkan on Android and Vulkan or Direct3D 12 on Windows; Direct3D 11 and OpenGL use the portable CPU sorter.
   — <https://github.com/arloopa/UnitySplats>
-- Use Spark-packed assets to save memory and speed up uploads; reserve Uncompressed for assets that need exact source values.
+- Use Spark-packed assets for lower memory and faster upload; reserve Uncompressed for cases requiring exact in-project values.
   — <https://github.com/arloopa/UnitySplats>
-- Keep cross-renderer sorting enabled for overlapping Spark renderers on Vulkan, Direct3D 12 and Metal; it cannot merge sorting on CPU paths.
+- Keep cross-renderer sorting enabled for overlapping Spark renderers on compatible Vulkan, Direct3D 12 and Metal targets; it cannot provide a merged order on CPU-sort paths.
   — <https://github.com/arloopa/UnitySplats>
-- Use Spark compression and moderate splat counts for WebGL 2, because browser memory is limited and sorting runs on the main thread.
+- For WebGL 2, use Spark compression and moderate splat counts because sorting is synchronous on the Unity main thread and browser memory is limited.
   — <https://github.com/arloopa/UnitySplats>
 
 ## Superseded by this
 
-- 2026-08-18 — v1.2.0 replaces the earlier Direct3D 11 CPU fallback’s 16-bit depth ordering and Main-camera Scene-view sort behavior.
-- 2026-07-22 — v1.1.0 enables compatible Spark-renderer sorting by default instead of keeping it optional, and migrates existing settings once.
+- 2026-08-18 — v1.2.0 supersedes the former Direct3D 11 CPU fallback’s 16-bit depth ordering and Main-camera-derived Scene-view sort behavior.
+- 2026-07-22 — v1.1.0 changes the earlier optional cross-renderer sorting posture by enabling compatible Spark-renderer sorting by default, while migrating existing settings once.
 
 ## Still unknown
 
-- No primary performance benchmark exists in the reviewed sources for a specific splat count, device class, frame-rate target or XR setup.
-- The ARLOOPA experience page did not return readable text during research, so we do not use it as evidence.
+- No primary performance benchmark for a specific splat count, device class, frame-rate target or XR configuration was found in the sources reviewed.
+- The ARLOOPA experience URL was supplied with the event but did not return readable page content during research, so it is not used as evidence.
 
 ## Sources
 
@@ -68,5 +67,5 @@ Evaluate the project starting from the UnitySplats repository and the linked Arl
 ## Agent brief {#agent-brief}
 
 - **Subject:** `project:unitysplats`, thread `unitysplats`, 1 dated events 2026-07-26 → 2026-07-26.
-- **Practical note:** Start evaluating the project from the UnitySplats repository and the linked Arloopa experience as of 2026-07-26, verifying implementation details before adoption.
+- **Practical note:** From 2026-07-26, practitioners can use the UnitySplats repository and linked Arloopa experience as starting points for evaluating the project, while verifying implementation details before adoption.
 - **Confidence:** high. Dated supersedes above are the authority for what is obsolete.
