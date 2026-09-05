@@ -13,15 +13,13 @@ aliases: ["FreeToken"]
 
 ## What it is
 
-FreeToken is an open-source inference server to run large open Mixture-of-Experts models on consumer PCs, built as an alternative to vLLM and SGLang for local MoE serving.
+FreeToken is an open-source inference server for running large Mixture-of-Experts models on consumer PCs as an alternative to vLLM and SGLang.
 
-- OpenAI, Anthropic, and Responses APIs for serving requests.
-- CPU–GPU offload, expert cache, and FTW weight format to manage memory.
-- CLI, Desktop app, and integrations for coding agents.
+- OpenAI, Anthropic, and Responses APIs for client compatibility.
+- CPU-GPU offload, expert cache, and FTW weight format to fit models in memory.
+- CLI, Desktop app, and coding-agent connections for local workflows.
 
-Official support requires x86_64, NVIDIA Ampere/RTX 30 or newer, and driver r580+; MoE requires free system RAM for experts.
-
-The project changes quickly, so we test it on each target GPU and model.
+The official setup requires x86_64, NVIDIA Ampere/RTX 30 or newer, driver r580+, and free system RAM for experts. The project changes rapidly, so test your specific GPU and model before relying on it.
 
 ## Development line
 
@@ -29,26 +27,27 @@ The project changes quickly, so we test it on each target GPU and model.
 
 ## What changed
 
-2026-08-19 — GitHub release v0.1.2 shipped with tag `9db1a39`, seven assets, and a fixed PyPI publication. 2026-08-23 — maintainers published an FAQ and roadmap: support targets NVIDIA/x86_64, while macOS, AMD, aarch64, tensor parallelism, vision, and expanded GGUF support remain planned.
+- 2026-08-19: GitHub release v0.1.2 shipped under tag `9db1a39` with seven assets and a fixed PyPI publication.
+- 2026-08-23: Maintainers published an FAQ and roadmap; official support targets NVIDIA/x86_64, while macOS, AMD, aarch64, tensor parallelism, vision, and expanded GGUF support remain planned.
 
 ## How to use this
 
 As of 2026-08-19, no practitioner workflow change can be supported from the dated links alone; research the project page and repository before relying on FreeToken.
 
-1. Check requirements: Linux x86_64, NVIDIA GPU, driver r580+, and Python 3.10+; then create an environment and install `freetoken[accel]` with uv.
+1. Check requirements for Linux x86_64, NVIDIA GPU, driver r580+, and Python 3.10+, then create an environment and install `freetoken[accel]` with uv.
   — <https://github.com/FlashML-org/FreeToken/blob/main/docs/install.md>
-2. Run `ft serve --model <local-path-or-HF-id>`; the server listens on `127.0.0.1:1919` by default.
+2. Run `ft serve --model <local-path-or-HF-id>`; by default the server listens on `127.0.0.1:1919`.
   — <https://github.com/FlashML-org/FreeToken/blob/main/docs/cli.md>
-3. Verify the installation with `ft --version` and a request to `/v1/chat/completions`, then connect a compatible client to the OpenAI-compatible API.
+3. Verify the installation with `ft --version` and a request to `/v1/chat/completions`, then connect an OpenAI-compatible client.
   — <https://github.com/FlashML-org/FreeToken/blob/main/docs/install.md>
 
 ## Best practices
 
-- Measure CPU and PCIe bandwidth with `ft bench bw` before choosing backend and offload settings, to calibrate the MoE backend.
+- Test CPU and PCIe bandwidth with `ft bench bw` before choosing a backend to calibrate MoE offloading.
   — <https://github.com/FlashML-org/FreeToken/blob/main/docs/cli.md>
-- Plan free RAM around the size of expert weights for MoE; the FAQ notes about 70 GB for bf16 Qwen3.6-35B-A3B.
+- Plan free RAM around expert weight size for MoE models; for bf16 Qwen3.6-35B-A3B, the FAQ states about 70 GB.
   — <https://github.com/FlashML-org/FreeToken/issues/84>
-- Do not expose the server to the network without custom configuration: default bind is `127.0.0.1`; verify responses locally first.
+- Do not expose the server to the network without explicit configuration; default bind is `127.0.0.1`. Confirm the response locally first.
   — <https://github.com/FlashML-org/FreeToken/blob/main/docs/cli.md>
 
 ## Superseded by this
@@ -57,8 +56,8 @@ As of 2026-08-19, no practitioner workflow change can be supported from the date
 
 ## Still unknown
 
-- The exact feature set and maturity of the Windows Desktop build are not confirmed by primary release assets in this research; official pip install instructions cover Linux.
-- The paper's claims on performance and hardware support lack independent benchmarks for any specific model, GPU, or workload.
+- Primary release assets do not confirm the feature set or maturity of the Windows Desktop build; official pip instructions cover Linux.
+- Paper claims about performance and hardware support lack independent benchmarks for specific models, GPUs, or workloads.
 - event_findings_placeholder
 
 ## Sources
