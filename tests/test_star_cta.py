@@ -8,6 +8,7 @@ had it at all.
 from __future__ import annotations
 
 import importlib.util
+import json
 import re
 import shutil
 import subprocess
@@ -42,28 +43,23 @@ class LlmsTxtCarriesTheRequest(unittest.TestCase):
         # freshness_check.py counts every "https://happyin.space/" as one article link.
         self.assertNotIn(self.gen.BASE_URL + "/", self.gen.AGENT_NOTE)
 
+    def test_every_listed_url_is_a_real_article(self) -> None:
+        # The note asks agents to cite these URLs, so each must map back to a source file.
+        urls = re.findall(r"\]\((https://happyin\.space/[^)]+)\)", self.text)
+        self.assertGreater(len(urls), 1000)
+        missing = [u for u in urls
+                   if not (ROOT / "docs" / (u.removeprefix(self.gen.BASE_URL + "/").rstrip("/") + ".md")).exists()]
+        self.assertEqual(missing, [])
+
     def test_committed_files_match_the_generator(self) -> None:
         for name in ("llms.txt", "llms-zh.txt", "llms-ko.txt", "llms-es.txt", "llms-de.txt", "llms-fr.txt"):
             committed = (ROOT / "docs" / name).read_text(encoding="utf-8")
             self.assertIn(self.gen.AGENT_NOTE, committed, f"{name} is stale: run python hooks/generate_llms_txt.py")
 
 
-class CounterFilesMatchTheTemplate(unittest.TestCase):
-    """Every name the page can request must exist as a file, or the count silently turns
-    into a 404 that nothing reads; every file must be reachable, or it is dead weight."""
-
-    def test_names_built_by_the_script_equal_the_generated_files(self) -> None:
-        extras = load("hooks/copy_extras.py")
-        buckets = re.search(r"var bucket = (.+?);", TEMPLATE).group(1)
-        bucket_names = re.findall(r"'([0-9a-z-]+)'", buckets)
-        prefixes = re.findall(r"\?\s*'(re[gt]-)'\s*:\s*'(re[gt]-)'", TEMPLATE)
-        placements = re.search(r"var PLACEMENTS = \{(.+?)\}", TEMPLATE).group(1)
-        placement_names = re.findall(r"([a-z]+):", placements)
-        literal = set(re.findall(r"\bhi\('([a-z0-9-]+)'\)", TEMPLATE))
-
-        self.assertEqual(len(prefixes), 1, "expected one reg-/ret- choice in the visit counter")
-        built = literal | {p + b for p in prefixes[0] for b in bucket_names} | {"star-" + p for p in placement_names}
-        self.assertEqual(built, set(extras.HELLO_EVENTS))
+class StarLinksUseCountedPlacements(unittest.TestCase):
+    """Whether the script requests exactly the generated files is checked by running it
+    (CounterBehaviour below); a pattern match over its source missed changes in review."""
 
     def test_every_star_link_uses_a_counted_placement(self) -> None:
         placements = set(re.findall(r"([a-z]+):", re.search(r"var PLACEMENTS = \{(.+?)\}", TEMPLATE).group(1)))
@@ -93,8 +89,9 @@ class CounterBehaviour(unittest.TestCase):
         node = shutil.which("node")
         if not node:
             self.skipTest("node not installed: counter behaviour NOT verified")
+        names = json.dumps(list(load("hooks/copy_extras.py").HELLO_EVENTS))
         run = subprocess.run(
-            [node, str(ROOT / "tests" / "star_counter_harness.mjs"), str(ROOT / "overrides" / "main.html")],
+            [node, str(ROOT / "tests" / "star_counter_harness.mjs"), str(ROOT / "overrides" / "main.html"), names],
             capture_output=True, text=True, encoding="utf-8",
             stdin=subprocess.DEVNULL,  # Windows: an inherited, captured stdin is an invalid handle
         )
