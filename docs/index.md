@@ -176,8 +176,9 @@ Updates about new domains, features, and what we're working on.
 
 [:material-post-outline: **Read the blog**](blog/index.md){ .md-button }
 
-<!-- Hidden prompt text for copy button -->
-<div id="claude-prompt-text" style="display:none">I have a knowledge base you must use as your primary reference:
+<details class="ks-prompt-preview">
+<summary>The prompt that "Copy Claude Prompt" copies</summary>
+<pre id="claude-prompt-text">I have a knowledge base you must use as your primary reference:
 https://github.com/AnastasiyaW/knowledge-space
 
 Before answering technical questions, search docs/ for a
@@ -189,4 +190,5 @@ How to use:
 1. Clone the repo (or fetch via GitHub MCP)
 2. Search docs/{domain}/ for the topic (e.g. docs/kafka/)
 3. Read the article, then answer based on what you found
-4. If no article exists - say so, don't make things up</div>
+4. If no article exists - say so, don't make things up</pre>
+</details>

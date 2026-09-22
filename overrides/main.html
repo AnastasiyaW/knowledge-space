@@ -6,6 +6,7 @@
     <a href="{{ config.site_url }}" class="ks-topnav__link">Home</a>
     <a href="{{ config.site_url }}knowledge-base/" class="ks-topnav__link">Knowledge Base</a>
     <a href="{{ config.site_url }}blog/" class="ks-topnav__link">Blog</a>
+    <a href="https://github.com/AnastasiyaW/knowledge-space" target="_blank" rel="noopener" class="ks-topnav__link ks-topnav__link--star" title="Star on GitHub" data-ks-star="topnav">⭐️ Star</a>
   </nav>
   <button class="ks-scroll-top" id="ks-scroll-top" title="Scroll to top">
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
@@ -37,8 +38,10 @@
 {% block extrahead %}
   {{ super() }}
   <link rel="icon" href="{{ config.site_url }}assets/favicon.png" type="image/png" sizes="32x32">
-  <!-- Cloudflare Web Analytics — SRI not used: Cloudflare updates beacon.min.js in-place -->
-  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f25c967baa8f46e9883f279471fee824"}'></script>
+  {# Web Analytics is injected at the edge (automatic setup for this zone, SPA mode on).
+     A second copy of the beacon here made every report from article pages fail with a
+     CORS error, so Web Analytics recorded only 404 pages (measured 2026-09-22: one
+     beacon -> HTTP 204, two beacons -> blocked). Do not add the snippet back. #}
   <link rel="icon" href="{{ config.site_url }}assets/favicon-16.png" type="image/png" sizes="16x16">
   <style>
     .md-search { max-width: 14rem; }
@@ -106,6 +109,118 @@
       border-color: rgba(187, 134, 252, 0.4) !important;
       color: #bb86fc !important;
     }
+    .ks-topnav__link--star {
+      border-color: rgba(255, 193, 7, 0.45);
+      color: #ffd740 !important;
+    }
+    .ks-topnav__link--star:hover {
+      box-shadow: 0 4px 14px rgba(255, 215, 64, 0.35);
+    }
+    /* The dark theme's #ffd740 on the light bar is about 1.4:1; this amber is about 5.9:1 (WCAG AA). */
+    [data-md-color-scheme="default"] .ks-topnav__link--star {
+      color: #7a5200 !important;
+    }
+
+    /* Article Support & Star CTA */
+    .ks-article-support {
+      margin-top: 2.5rem;
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(35, 22, 60, 0.95) 0%, rgba(20, 12, 40, 0.98) 100%);
+      border: 1px solid rgba(187, 134, 252, 0.25);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+    [data-md-color-scheme="default"] .ks-article-support {
+      background: linear-gradient(135deg, rgba(248, 243, 255, 0.95) 0%, rgba(238, 230, 252, 0.98) 100%);
+      border-color: rgba(140, 100, 200, 0.25);
+      box-shadow: 0 4px 16px rgba(100, 50, 160, 0.08);
+    }
+    .ks-article-support__header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.5rem;
+    }
+    /* A paragraph, not a heading: an h4 after the article's h2s skipped a level. */
+    .ks-article-support__title {
+      margin: 0 !important;
+      font-size: 1.05rem !important;
+      font-weight: 700 !important;
+      color: #ffd740 !important;
+    }
+    [data-md-color-scheme="default"] .ks-article-support__title {
+      color: #7b1fa2 !important;
+    }
+    .ks-article-support__text {
+      font-size: 0.88rem !important;
+      line-height: 1.5 !important;
+      margin: 0 0 1rem 0 !important;
+      color: rgba(220, 210, 240, 0.85) !important;
+    }
+    [data-md-color-scheme="default"] .ks-article-support__text {
+      color: rgba(60, 40, 90, 0.85) !important;
+    }
+    .ks-article-support__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+    .ks-article-support__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 1rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-decoration: none !important;
+      transition: all 0.2s ease;
+    }
+    .ks-article-support__btn--star {
+      background: linear-gradient(180deg, #ffc107 0%, #ff9800 100%);
+      color: #1a0f00 !important;
+      border: 1px solid #ffb300;
+      box-shadow: 0 2px 8px rgba(255, 179, 0, 0.25);
+    }
+    .ks-article-support__btn--star:hover {
+      background: linear-gradient(180deg, #ffd54f 0%, #ffa726 100%);
+      box-shadow: 0 4px 14px rgba(255, 179, 0, 0.45);
+      transform: translateY(-1px);
+    }
+
+    /* Star notice after a code copy. It appears once Material's own "Copied to clipboard"
+       notice is gone (both sit bottom-right), and while hidden it is visibility:hidden so
+       its link cannot take keyboard focus. */
+    .ks-copy-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 100;
+      padding: 0.7rem 1.2rem;
+      background: rgba(26, 16, 45, 0.96);
+      border: 1px solid rgba(255, 215, 64, 0.4);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 0.84rem;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+      transform: translateY(100px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0.3s;
+    }
+    .ks-copy-toast a {
+      color: #ffd740 !important;
+      font-weight: 700;
+      text-decoration: underline !important;
+    }
+    .ks-copy-toast--visible {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition-delay: 0s;
+    }
   </style>
   <script>
     document.addEventListener('DOMContentLoaded', function(){
@@ -143,7 +258,6 @@
           try{sessionStorage.setItem('__source_secondary',JSON.stringify(data))}catch(e){}
           if(!cached) renderFacts(data);
         }).catch(function(){});
-
 
       // ── Reorder sidebar by text content ──
       setTimeout(function() {
@@ -285,6 +399,149 @@
         }
       }, 50);
     });
+  </script>
+  <script>
+    /* Star buttons and the anonymous return counter; /privacy/ describes both for readers.
+       Counting is a GET of one of a fixed set of tiny files under /ks/hi/ (the list lives in
+       hooks/copy_extras.py). The request carries no cookie, no referrer and no identifier, so
+       its file name is all our counts use; like any request it still reaches the edge with the
+       usual IP address and browser headers. */
+    (function () {
+      var HI = '/ks/hi/';
+      var COUNTER = 'ks_counter', OFF = 'ks_counter_off', STARRED = 'ks_star_clicked', TOAST_AT = 'ks_star_toast_at';
+      var DAY = 86400000;
+      var LIFETIME_DAYS = 395;       // ~13 months from the first visit, never extended (CNIL guidance)
+      var TOAST_EVERY = 7 * DAY;     // the copy notice asks for a star at most once a week
+      var TOAST_DELAY = 2500;        // after Material's own "Copied to clipboard" notice has gone
+      var PLACEMENTS = { topnav: 1, article: 1, toast: 1 };
+      var storable = null;
+
+      function read(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+      function write(k, v) {
+        try { if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); return true; }
+        catch (e) { return false; }
+      }
+      // Without storage the off switch cannot be kept and a return looks like a first visit,
+      // so such a browser is not counted at all.
+      function storageWorks() {
+        if (storable === null) storable = write('ks_probe', '1') && write('ks_probe', null);
+        return storable;
+      }
+      // The visitor's own calendar day, so one evening is one day wherever they live.
+      function localDay() {
+        var d = new Date();
+        var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+        return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+      }
+      function daysBetween(a, b) { return Math.round((Date.parse(b) - Date.parse(a)) / DAY); }
+
+      function offReason() {
+        if (!storageWorks()) return 'storage';
+        if (read(OFF) === '1') return 'switch';
+        if (navigator.globalPrivacyControl === true || navigator.doNotTrack === '1' || window.doNotTrack === '1') return 'signal';
+        if (navigator.webdriver === true) return 'automation';
+        return '';
+      }
+      function counting() { return offReason() === ''; }
+      function hi(name) {
+        if (!counting()) return;
+        try {
+          fetch(HI + name + '.txt', { cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer', keepalive: true })
+            .catch(function () {});
+        } catch (e) {}
+      }
+
+      // One request per browser per day: "new", or returning after 1 / 2-7 / 8-30 / 31+ days.
+      // "reg-" instead of "ret-" once the browser has been here on 5 or more different days.
+      function countVisit() {
+        if (!counting()) { write(COUNTER, null); return; }
+        var now = localDay(), rec = null;
+        try { rec = JSON.parse(read(COUNTER) || 'null'); } catch (e) { rec = null; }
+        if (rec && !(typeof rec.f === 'string' && typeof rec.l === 'string' && daysBetween(rec.f, now) <= LIFETIME_DAYS)) rec = null;
+        if (!rec) {
+          if (write(COUNTER, JSON.stringify({ f: now, l: now, n: 1 }))) hi('new');
+          return;
+        }
+        var gap = daysBetween(rec.l, now);
+        if (!(gap >= 1)) return;     // same day, or the clock moved backwards
+        rec.n = (rec.n || 1) + 1;
+        rec.l = now;
+        if (!write(COUNTER, JSON.stringify(rec))) return;
+        var bucket = gap === 1 ? '1d' : gap <= 7 ? '2-7d' : gap <= 30 ? '8-30d' : '31d-plus';
+        hi((rec.n >= 5 ? 'reg-' : 'ret-') + bucket);
+      }
+      countVisit();
+
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest) return;
+        var star = e.target.closest('[data-ks-star]');
+        if (star) {
+          var where = star.getAttribute('data-ks-star');
+          write(STARRED, localDay());
+          if (Object.prototype.hasOwnProperty.call(PLACEMENTS, where)) hi('star-' + where);
+          return;
+        }
+        // Material 9.7 renders copy buttons as .md-code__button, older releases as .md-clipboard;
+        // both carry data-clipboard-target.
+        if (e.target.closest('[data-clipboard-target]')) scheduleStarToast();
+        if (e.target.closest('[data-ks-counter-toggle]')) {
+          if (read(OFF) === '1') write(OFF, null);
+          else if (write(OFF, '1')) write(COUNTER, null);
+          renderCounterState();
+        }
+      }, true);
+
+      // After a code copy, ask for a star: at most once a week, never after a star click, and
+      // not at all when the browser cannot remember that it already asked.
+      function scheduleStarToast() {
+        if (read(STARRED)) return;
+        var last = parseInt(read(TOAST_AT) || '0', 10);
+        if (Date.now() - last < TOAST_EVERY) return;
+        if (!write(TOAST_AT, String(Date.now()))) return;
+        var toast = document.getElementById('ks-copy-toast');
+        if (!toast) {
+          // The live region enters the page empty; screen readers announce the text set later.
+          toast = document.createElement('div');
+          toast.id = 'ks-copy-toast';
+          toast.className = 'ks-copy-toast';
+          toast.setAttribute('role', 'status');
+          document.body.appendChild(toast);
+        }
+        setTimeout(function () {
+          if (read(STARRED)) return;   // a star click during the wait cancels the notice
+          // Visible first, text on the next frame: a live region should not appear already filled.
+          toast.classList.add('ks-copy-toast--visible');
+          setTimeout(function () {
+            toast.innerHTML = '⭐️ If this page helped, its author would be glad of a <a href="https://github.com/AnastasiyaW/knowledge-space" target="_blank" rel="noopener" data-ks-star="toast">star on GitHub</a>';
+          }, 50);
+          clearTimeout(toast._timeout);
+          toast._timeout = setTimeout(function () { toast.classList.remove('ks-copy-toast--visible'); }, 6000);
+          hi('toast-shown');
+        }, TOAST_DELAY);
+      }
+
+      // The switch on the privacy page shows and flips this browser's own setting.
+      var STATE_TEXT = {
+        '': 'The return counter is on in this browser.',
+        switch: 'You turned the return counter off in this browser.',
+        signal: 'The return counter is off: your browser sends Global Privacy Control or Do Not Track.',
+        automation: 'The return counter is off: this browser is run by automation software.',
+        storage: 'This browser does not let the site store anything, so nothing is counted here.'
+      };
+      function renderCounterState() {
+        var state = document.querySelector('[data-ks-counter-state]');
+        var toggle = document.querySelector('[data-ks-counter-toggle]');
+        if (!state || !toggle) return;
+        var reason = offReason();
+        state.textContent = STATE_TEXT[reason];
+        toggle.disabled = reason === 'storage';
+        toggle.textContent = reason === 'switch' ? 'Turn it back on' : 'Turn it off';
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        if (window.document$ && window.document$.subscribe) window.document$.subscribe(renderCounterState);
+        else renderCounterState();
+      });
+    })();
   </script>
 
   {# hreflang for multilingual llms.txt discovery #}
@@ -436,10 +693,35 @@
   {% endif %}
 {% endblock %}
 
+{% block content %}
+  {{ super() }}
+  {% if page and not page.is_homepage and page.file.src_path != "privacy.md" %}
+    {# Visible text on purpose: agents that read this page get the same request people see. #}
+    {# Google honours data-nosnippet only on div, span and section, hence the inner div. #}
+    <aside class="ks-article-support" aria-label="Support the project">
+      <div data-nosnippet>
+        <div class="ks-article-support__header">
+          <span class="ks-article-support__icon" aria-hidden="true">⭐️</span>
+          <p class="ks-article-support__title">Did this page save you time?</p>
+        </div>
+        <p class="ks-article-support__text">
+          Happyin Knowledge Space is a free, open reference maintained for engineers and AI agents.
+          If this page helped, its author would be glad of a star on GitHub, and stars help others find it.
+        </p>
+        <div class="ks-article-support__actions">
+          <a href="https://github.com/AnastasiyaW/knowledge-space" target="_blank" rel="noopener" class="ks-article-support__btn ks-article-support__btn--star" data-ks-star="article">
+            <span>⭐ Star on GitHub</span>
+          </a>
+        </div>
+      </div>
+    </aside>
+  {% endif %}
+{% endblock %}
+
 {% block footer %}
   {{ super() }}
   <div class="ks-footer-privacy">
-    No cookies. No third-party tracking. Privacy-friendly analytics by Cloudflare.
+    No tracking cookies, no ad trackers. Privacy-friendly analytics by Cloudflare and an anonymous return counter - <a href="{{ config.site_url }}privacy/">details</a>.
   </div>
 
   {# Newsletter popup - article pages only, new visitors, 14-day cooldown #}
