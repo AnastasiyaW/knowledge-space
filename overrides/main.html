@@ -38,8 +38,10 @@
 {% block extrahead %}
   {{ super() }}
   <link rel="icon" href="{{ config.site_url }}assets/favicon.png" type="image/png" sizes="32x32">
-  <!-- Cloudflare Web Analytics — SRI not used: Cloudflare updates beacon.min.js in-place -->
-  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f25c967baa8f46e9883f279471fee824"}'></script>
+  {# Web Analytics is injected at the edge (automatic setup for this zone, SPA mode on).
+     A second copy of the beacon here made every report from article pages fail with a
+     CORS error, so Web Analytics recorded only 404 pages (measured 2026-09-22: one
+     beacon -> HTTP 204, two beacons -> blocked). Do not add the snippet back. #}
   <link rel="icon" href="{{ config.site_url }}assets/favicon-16.png" type="image/png" sizes="16x16">
   <style>
     .md-search { max-width: 14rem; }
