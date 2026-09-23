@@ -1,7 +1,10 @@
 site_name: Happyin Knowledge Space
+# The home page's meta description. scripts/sync_stats.py rewrites "<N>+ curated articles"
+# and "across <N> domains" with the real counts; "21 more domains" was outside its reach and
+# had gone stale.
 site_description: >-
   Comprehensive technical knowledge base with 1287+ curated articles
-  covering Kafka, Python, SQL, DevOps, Security, and 21 more domains.
+  across 28 domains: Kafka, Python, SQL, DevOps, Security and more.
   Built for software engineers and LLM agents.
 site_url: https://happyin.space/
 site_author: AnastasiyaW
@@ -28,7 +31,8 @@ theme:
     code: JetBrains Mono
   features:
     - navigation.instant
-    - navigation.instant.prefetch
+    # navigation.instant.prefetch removed: it refetched and re-parsed the 174 KB sitemap.xml
+    # up to 8 times per page load (measured 2026-09-23)
     - navigation.tracking
     - navigation.path
     - navigation.indexes
@@ -69,11 +73,12 @@ extra_css:
 
 extra_javascript:
   - javascripts/stats.js
-  - https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js
+  # three.js is loaded by graph.js only on pages that show the graph (the home page)
   - javascripts/graph.js
 
 hooks:
   - hooks/stats.py
+  - hooks/og_image.py
   - hooks/validate.py
   - hooks/link_checker.py
   - hooks/description.py

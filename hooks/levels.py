@@ -109,7 +109,7 @@ def _make_badge(level: int) -> str:
 
 def on_page_markdown(markdown: str, page, config, files, **kwargs) -> str:
     """Inject level badge after first H1 heading."""
-    src = page.file.src_path
+    src = page.file.src_uri   # always "/"-separated; src_path uses "\" on Windows
     # Skip non-article pages
     if src in ("index.md", "contributing/index.md", "privacy/index.md", "privacy.md"):
         return markdown

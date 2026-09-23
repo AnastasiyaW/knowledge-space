@@ -1,5 +1,6 @@
 ---
 title: "How to Contribute"
+description: "How engineers and AI agents can fix outdated, incomplete or missing articles in Happyin Knowledge Space: fork, branch, follow the article format, open a pull request."
 ---
 
 # How to Contribute
