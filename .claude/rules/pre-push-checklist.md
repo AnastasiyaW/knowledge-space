@@ -21,7 +21,7 @@ domain MOC and to the browse page, so a new article is never orphaned.
 The GitHub repository description is the one place no script reaches:
 
 ```bash
-gh repo edit AnastasiyaW/knowledge-space --description "... <N>+ ... across 26 domains ..."
+gh repo edit AnastasiyaW/knowledge-space --description "... <N>+ ... across <D> domains ..."
 ```
 
 Everything below is the manual fallback, kept for the case where a new place starts
@@ -60,8 +60,7 @@ grep -rn " 22 domain\| 23 domain\| 24 domain\| 25 domain\| 26 domain" \
 | `docs/index.md` | snippet "XXX+ articles across YY" | articles across |
 | `docs/blog/posts/welcome.md` | "XXX+ dense reference" | dense reference |
 | `docs/blog/posts/welcome.md` | "across YY technical" | across.*technical |
-| `mkdocs.yml` | site_description "XXX+ curated" | curated articles |
-| `mkdocs.yml` | "and NN more domains" | more domains |
+| `mkdocs.yml` | site_description "XXX+ curated articles across YY domains" (no thousands separator) | curated articles |
 | `.claude/rules/article-rules.md` | "XXX+ articles across YY" | articles across |
 | GitHub description | `gh repo edit --description` | - |
 
