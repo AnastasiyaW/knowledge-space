@@ -35,6 +35,14 @@
   </script>
 {% endblock %}
 
+{# Material preconnects only to fonts.gstatic.com, but the render-blocking font CSS comes
+   from fonts.googleapis.com. The hint has to come before that stylesheet link to help, so
+   it goes in the fonts block, not in extrahead (which renders after it). #}
+{% block fonts %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  {{ super() }}
+{% endblock %}
+
 {% block extrahead %}
   {{ super() }}
   <link rel="icon" href="{{ config.site_url }}assets/favicon.png" type="image/png" sizes="32x32">
@@ -43,8 +51,6 @@
      CORS error, so Web Analytics recorded only 404 pages (measured 2026-09-22: one
      beacon -> HTTP 204, two beacons -> blocked). Do not add the snippet back. #}
   <link rel="icon" href="{{ config.site_url }}assets/favicon-16.png" type="image/png" sizes="16x16">
-  {# Material preconnects only to fonts.gstatic.com; the font CSS comes from googleapis. #}
-  <link rel="preconnect" href="https://fonts.googleapis.com">
   <style>
     .md-search { max-width: 14rem; }
     .md-header__source { display: flex; gap: 0; max-width: none; width: auto; align-items: stretch; }
@@ -559,15 +565,8 @@
   <meta property="og:url" content="{{ page.canonical_url }}" />
   <meta property="og:site_name" content="{{ config.site_name }}" />
 
-  {# Per-domain OG image: /assets/og-{domain}.png where hooks/og_image.py found one,
-     otherwise og-image.png (domains without an image used to get a 404 URL) #}
-  {% set og_img = config.site_url ~ "assets/og-image.png" %}
-  {% if page.file and page.file.src_path %}
-    {% set parts = page.file.src_path.split("/") %}
-    {% if parts | length > 1 and parts[0] in config.extra.og_domains %}
-      {% set og_img = config.site_url ~ "assets/og-" ~ parts[0] ~ ".png" %}
-    {% endif %}
-  {% endif %}
+  {% from "partials/og-image.html" import og_image %}
+  {% set og_img = og_image(page, config) | trim %}
   <meta property="og:image" content="{{ og_img }}" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />

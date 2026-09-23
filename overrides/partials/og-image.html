@@ -1,0 +1,15 @@
+{#-
+  The page's Open Graph image: /assets/og-<domain>.png when hooks/og_image.py found that
+  file (config.extra.og_domains), otherwise the site-wide og-image.png. Pages in a domain
+  without its own image used to point at a URL that answered 404.
+  src_uri, not src_path: src_path uses backslashes on Windows, so local builds silently
+  gave every page the default image while CI on Linux did not.
+-#}
+{%- macro og_image(page, config) -%}
+  {%- set parts = page.file.src_uri.split("/") if page and page.file else [] -%}
+  {%- if parts | length > 1 and parts[0] in config.extra.og_domains -%}
+    {{ config.site_url }}assets/og-{{ parts[0] }}.png
+  {%- else -%}
+    {{ config.site_url }}assets/og-image.png
+  {%- endif -%}
+{%- endmacro -%}

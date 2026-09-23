@@ -53,10 +53,12 @@ def _truncate(text: str, max_len: int = MAX_LEN) -> str:
 
 
 # The news pipeline opens every projects/ and organizations/ page with a metadata block
-# ("**Development line:** `project:x` · thread ...", "**Events:** 9 dated ..."), and some
-# reference pages open with "**Scope checked: 2026-09-04.** <prose>". The first is not a
-# description at all; the second is a label in front of one (433 pages, 2026-09-23 audit).
-_METADATA_LINE = re.compile(r'^\*\*(Development line|Last event|Events|Researched):\*\*')
+# ("**Development line:** `project:x` · thread ...", "**Events:** 9 dated ...", "**Last
+# researched:** ...", "**Freshness check:** ..."), and some reference pages open with
+# "**Scope checked: 2026-09-04.** <prose>". The first is not a description at all; the
+# second is a label in front of one (434 pages, 2026-09-23 audit).
+_METADATA_LINE = re.compile(
+    r'^\*\*(Development line|Last event|Events|Researched|Last researched|Freshness check):\*\*')
 _SCOPE_PREFIX = re.compile(r'^\*\*Scope checked:[^*]*\*\*\s*')
 
 
@@ -161,7 +163,7 @@ def _hub_description(markdown: str) -> str | None:
 
 def on_page_markdown(markdown: str, page, config, files, **kwargs) -> str:
     """Set page.meta['description'] from first paragraph if not already set."""
-    src = page.file.src_path
+    src = page.file.src_uri   # always "/"-separated; src_path uses "\" on Windows
 
     # A description written in frontmatter is kept, made safe for the attribute.
     if page.meta and page.meta.get("description"):

@@ -234,25 +234,32 @@
 
 /* Knowledge base visibility controlled by order system above */
 
-/* ── Sticky sidebar — full article height ──
-   Desktop only (76.25em is where Material shows the primary sidebar inline). Below it
-   Material turns the sidebar into a slide-out drawer; applied at every width, this rule
-   pinned the sidebar into the page on phones and squeezed articles into a ~130px column
-   (measured on happyin.space at 375px, 2026-09-23). */
+/* ── Primary sidebar: a column, the site's buttons (.ks-sidebar-buttons, added by
+   overrides/main.html) on top and the navigation filling the rest. This holds in the
+   desktop sidebar and in the phone drawer alike: in the drawer the navigation is
+   absolutely positioned inside the scroll wrapper, which therefore needs the flex height. */
+.md-sidebar--primary {
+  display: flex;
+  flex-direction: column;
+}
+/* ── Sticky, full height — desktop only ──
+   76.25em is where Material shows the primary sidebar inline. Below it Material makes the
+   sidebar a fixed slide-out drawer; applied at every width, this rule pinned the sidebar
+   into the page on phones and squeezed articles into a narrow column (measured at 390px,
+   2026-09-23). */
 @media screen and (min-width: 76.25em) {
   .md-sidebar--primary {
     position: sticky;
     top: 0;
     height: 100vh;
     overflow-y: auto;
-    display: flex;
-    flex-direction: column;
     align-self: stretch;
   }
-}
-/* Hide sidebar on pages that opt out (homepage) */
-.md-sidebar--primary[hidden] {
-  display: none !important;
+  /* Pages that opt out (the home page). Desktop only: on phones the drawer is the menu,
+     and Material itself keeps it available there. */
+  .md-sidebar--primary[hidden] {
+    display: none !important;
+  }
 }
 
 /* ── Sticky buttons at top of sidebar ── */
@@ -366,28 +373,34 @@
   background: rgba(0, 0, 0, 0.2);
 }
 
-/* ── Fade indicators on scrollwrap (not sidebar — avoids flex gap) ── */
+/* The scroll wrapper takes the height left under the buttons, at every width. Material's
+   drawer rule positions it absolutely at top:0, which would cover the buttons. */
 .md-sidebar--primary .md-sidebar__scrollwrap {
   position: relative;
 }
-.md-sidebar--primary .md-sidebar__scrollwrap::before,
-.md-sidebar--primary .md-sidebar__scrollwrap::after {
-  content: '';
-  position: sticky;
-  left: 0;
-  right: 0;
-  height: 1rem;
-  pointer-events: none;
-  z-index: 2;
-  display: block;
-}
-.md-sidebar--primary .md-sidebar__scrollwrap::before {
-  top: 0;
-  background: linear-gradient(to bottom, var(--md-default-bg-color, #1a1a2e) 0%, transparent 100%);
-}
-.md-sidebar--primary .md-sidebar__scrollwrap::after {
-  bottom: 0;
-  background: linear-gradient(to top, var(--md-default-bg-color, #1a1a2e) 0%, transparent 100%);
+/* ── Fade indicators on scrollwrap (not sidebar — avoids flex gap) ──
+   Desktop only: in the phone drawer the navigation lies over the wrapper, and these
+   bands would sit across its title bar. */
+@media screen and (min-width: 76.25em) {
+  .md-sidebar--primary .md-sidebar__scrollwrap::before,
+  .md-sidebar--primary .md-sidebar__scrollwrap::after {
+    content: '';
+    position: sticky;
+    left: 0;
+    right: 0;
+    height: 1rem;
+    pointer-events: none;
+    z-index: 2;
+    display: block;
+  }
+  .md-sidebar--primary .md-sidebar__scrollwrap::before {
+    top: 0;
+    background: linear-gradient(to bottom, var(--md-default-bg-color, #1a1a2e) 0%, transparent 100%);
+  }
+  .md-sidebar--primary .md-sidebar__scrollwrap::after {
+    bottom: 0;
+    background: linear-gradient(to top, var(--md-default-bg-color, #1a1a2e) 0%, transparent 100%);
+  }
 }
 
 /* ── Domains collapsed by default ── */

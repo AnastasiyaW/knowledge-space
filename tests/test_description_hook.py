@@ -15,7 +15,9 @@ spec.loader.exec_module(description)
 
 
 def page(src: str, meta: dict | None = None):
-    return SimpleNamespace(file=SimpleNamespace(src_path=src), meta=meta or {})
+    # src_path as MkDocs gives it on Windows, src_uri as on every OS: code that reads
+    # src_path with "/" in mind passes on Linux CI and fails here.
+    return SimpleNamespace(file=SimpleNamespace(src_path=src.replace("/", "\\"), src_uri=src), meta=meta or {})
 
 
 class Extraction(unittest.TestCase):
@@ -39,6 +41,22 @@ class Extraction(unittest.TestCase):
               "## What it is\n\nAnthropic is an AI safety company that builds the Claude family of models.\n")
         self.assertEqual(description._extract_first_paragraph(md),
                          "Anthropic is an AI safety company that builds the Claude family of models.")
+
+    def test_every_pipeline_metadata_label_is_skipped(self) -> None:
+        # llm-agents/google-deepmind-leadership.md opens like this.
+        md = ("# Google DeepMind leadership\n\n"
+              "**Development line:** `organization:google-deepmind` · thread `leadership`\n"
+              "**Last researched:** 2026-09-02 · confidence: high · 11 sources\n"
+              "**Freshness check:** 2026-09-03 · no substantive leadership change\n\n"
+              "## What it is\n\nA leadership and talent reorganisation, not a model or API release.\n")
+        self.assertEqual(description._extract_first_paragraph(md),
+                         "A leadership and talent reorganisation, not a model or API release.")
+
+    def test_llms_txt_uses_the_same_metadata_pattern(self) -> None:
+        spec_llms = importlib.util.spec_from_file_location("generate_llms_txt", ROOT / "hooks" / "generate_llms_txt.py")
+        llms = importlib.util.module_from_spec(spec_llms)
+        spec_llms.loader.exec_module(llms)
+        self.assertEqual(llms._METADATA_LINE.pattern, description._METADATA_LINE.pattern)
 
     def test_scope_label_is_dropped_from_the_front(self) -> None:
         md = ("# ATI\n\n**Scope checked: 2026-09-04.** ATI is ByteDance's published trajectory-control "
@@ -83,6 +101,11 @@ class Hook(unittest.TestCase):
         description.on_page_markdown(self.HUB, p, {}, None)
         self.assertNotIn("description", p.meta)
 
+    def test_blog_posts_are_skipped_on_every_os(self) -> None:
+        p = page("blog/posts/welcome.md")
+        description.on_page_markdown(self.MD, p, {}, None)
+        self.assertNotIn("description", p.meta)
+
     def test_home_page_keeps_the_site_description(self) -> None:
         p = page("index.md")
         description.on_page_markdown(self.MD, p, {}, None)
@@ -95,17 +118,33 @@ class Hook(unittest.TestCase):
 
 
 class OgImage(unittest.TestCase):
-    def test_only_domains_with_an_image_file_use_their_own(self) -> None:
+    """hooks/og_image.py lists the domains with an image; partials/og-image.html picks one.
+    The config the macro sees comes from the hook itself, so the two cannot drift apart."""
+
+    def setUp(self) -> None:
+        import jinja2
         spec_og = importlib.util.spec_from_file_location("og_image", ROOT / "hooks" / "og_image.py")
-        og_image = importlib.util.module_from_spec(spec_og)
-        spec_og.loader.exec_module(og_image)
-        domains = og_image.og_domains(ROOT / "docs")
+        self.hook = importlib.util.module_from_spec(spec_og)
+        spec_og.loader.exec_module(self.hook)
+        config = self.hook.on_config({"docs_dir": str(ROOT / "docs"), "extra": {}})
+        config["site_url"] = "https://happyin.space/"
+        env = jinja2.Environment(loader=jinja2.FileSystemLoader(str(ROOT / "overrides")))
+        macro = env.get_template("partials/og-image.html").module.og_image
+        self.url = lambda src: str(macro(page(src), config)).strip()
+
+    def test_only_domains_with_an_image_file_use_their_own(self) -> None:
+        domains = self.hook.og_domains(ROOT / "docs")
         self.assertIn("kafka", domains)
         self.assertIn("image-generation", domains)
-        self.assertNotIn("image", domains)  # og-image.png is the default, not a domain
+        self.assertNotIn("image", domains)          # og-image.png is the default, not a domain
         self.assertNotIn("organizations", domains)  # no og-organizations.png: default image
         for d in domains:
             self.assertTrue((ROOT / "docs" / "assets" / f"og-{d}.png").is_file(), d)
+
+    def test_each_page_points_at_an_image_that_exists(self) -> None:
+        self.assertEqual(self.url("kafka/consumer-groups.md"), "https://happyin.space/assets/og-kafka.png")
+        self.assertEqual(self.url("organizations/anthropic.md"), "https://happyin.space/assets/og-image.png")
+        self.assertEqual(self.url("privacy.md"), "https://happyin.space/assets/og-image.png")
 
 
 class Template(unittest.TestCase):
@@ -117,6 +156,14 @@ class Template(unittest.TestCase):
     def test_titles_in_attributes_and_json_ld_are_escaped(self) -> None:
         self.assertNotIn('content="{{ page.title }}', self.TEXT)
         self.assertNotIn('"name": "{{ page.title }}"', self.TEXT)
+
+    def test_tech_article_carries_the_og_image(self) -> None:
+        self.assertIn('"image": {{ og_img | tojson }},', self.TEXT)
+
+    def test_googleapis_preconnect_comes_before_materials_font_stylesheet(self) -> None:
+        fonts = self.TEXT.split("{% block fonts %}", 1)[1].split("{% endblock %}", 1)[0]
+        self.assertLess(fonts.index('rel="preconnect" href="https://fonts.googleapis.com"'),
+                        fonts.index("{{ super() }}"))
 
 
 if __name__ == "__main__":

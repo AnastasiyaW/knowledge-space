@@ -65,7 +65,8 @@ AGENT_NOTE = (
 
 # Pipeline metadata that opens projects/ and organizations/ pages is not a description
 # (same rule as hooks/description.py; keep the two in step).
-_METADATA_LINE = re.compile(r'^\*\*(Development line|Last event|Events|Researched):\*\*')
+_METADATA_LINE = re.compile(   # same as hooks/description.py; tests keep them equal
+    r'^\*\*(Development line|Last event|Events|Researched|Last researched|Freshness check):\*\*')
 _SCOPE_PREFIX = re.compile(r'^\*\*Scope checked:[^*]*\*\*\s*')
 
 
