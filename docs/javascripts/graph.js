@@ -1,10 +1,25 @@
 // Knowledge Space — 3D Neural Galaxy
 // Pure Three.js with inline orbit controls
 
+// three.js (~600 KB) is loaded only on a page that has the graph container, instead of on
+// all 1300 pages through extra_javascript (lab mobile TBT 5.5-8.6 s, 2026-09-23 audit).
+var THREE_URL = "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js";
+var _threeRequested = false;
+function _loadThree(onReady) {
+  if (_threeRequested) return;
+  _threeRequested = true;
+  var s = document.createElement("script");
+  s.src = THREE_URL;
+  s.async = true;
+  s.onload = onReady;
+  document.head.appendChild(s);
+}
+
 function _initGalaxy() {
   "use strict";
   var container = document.getElementById("knowledge-graph");
-  if (!container || typeof THREE === "undefined") return;
+  if (!container) return;
+  if (typeof THREE === "undefined") { _loadThree(_initGalaxy); return; }
   if (container.querySelector("canvas")) return; // already initialized
 
   // ── Data ──

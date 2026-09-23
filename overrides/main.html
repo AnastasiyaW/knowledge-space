@@ -43,6 +43,8 @@
      CORS error, so Web Analytics recorded only 404 pages (measured 2026-09-22: one
      beacon -> HTTP 204, two beacons -> blocked). Do not add the snippet back. #}
   <link rel="icon" href="{{ config.site_url }}assets/favicon-16.png" type="image/png" sizes="16x16">
+  {# Material preconnects only to fonts.gstatic.com; the font CSS comes from googleapis. #}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <style>
     .md-search { max-width: 14rem; }
     .md-header__source { display: flex; gap: 0; max-width: none; width: auto; align-items: stretch; }
@@ -544,28 +546,25 @@
     })();
   </script>
 
-  {# hreflang for multilingual llms.txt discovery #}
-  <link rel="alternate" hreflang="en" href="{{ config.site_url }}llms.txt" />
-  <link rel="alternate" hreflang="zh" href="{{ config.site_url }}llms-zh.txt" />
-  <link rel="alternate" hreflang="ko" href="{{ config.site_url }}llms-ko.txt" />
-  <link rel="alternate" hreflang="es" href="{{ config.site_url }}llms-es.txt" />
-  <link rel="alternate" hreflang="de" href="{{ config.site_url }}llms-de.txt" />
-  <link rel="alternate" hreflang="fr" href="{{ config.site_url }}llms-fr.txt" />
-  <link rel="alternate" hreflang="x-default" href="{{ config.site_url }}llms.txt" />
+  {# One plain link to llms.txt. The former hreflang set pointed every page at six
+     llms-*.txt files: hreflang is for translated versions of the same page, and plain
+     text files cannot link back, so search engines report all ~9,300 tags as errors. #}
+  <link rel="alternate" type="text/plain" title="llms.txt" href="{{ config.site_url }}llms.txt" />
 
   {% if page %}
   {# Open Graph meta tags #}
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="{{ page.title }} - {{ config.site_name }}" />
+  <meta property="og:title" content="{{ page.title | e }} - {{ config.site_name }}" />
   <meta property="og:description" content="{{ (page.meta.description if page.meta and page.meta.description) | default(config.site_description) }}" />
   <meta property="og:url" content="{{ page.canonical_url }}" />
   <meta property="og:site_name" content="{{ config.site_name }}" />
 
-  {# Per-domain OG image: /assets/og-{domain}.png, fallback to og-image.png #}
+  {# Per-domain OG image: /assets/og-{domain}.png where hooks/og_image.py found one,
+     otherwise og-image.png (domains without an image used to get a 404 URL) #}
   {% set og_img = config.site_url ~ "assets/og-image.png" %}
   {% if page.file and page.file.src_path %}
     {% set parts = page.file.src_path.split("/") %}
-    {% if parts | length > 1 %}
+    {% if parts | length > 1 and parts[0] in config.extra.og_domains %}
       {% set og_img = config.site_url ~ "assets/og-" ~ parts[0] ~ ".png" %}
     {% endif %}
   {% endif %}
@@ -575,43 +574,14 @@
 
   {# Twitter Card #}
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="{{ page.title }} - {{ config.site_name }}" />
+  <meta name="twitter:title" content="{{ page.title | e }} - {{ config.site_name }}" />
   <meta name="twitter:description" content="{{ (page.meta.description if page.meta and page.meta.description) | default(config.site_description) }}" />
   <meta name="twitter:image" content="{{ og_img }}" />
   {% endif %}
 
   {# BreadcrumbList JSON-LD - helps Google show path in SERP #}
   {% if page and not page.is_homepage %}
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "{{ config.site_name }}",
-        "item": "{{ config.site_url }}"
-      }{% if page.parent %},
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "{{ page.parent.title }}",
-        "item": "{{ config.site_url }}{{ page.parent.url }}"
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "name": "{{ page.title }}"
-      }{% else %},
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "{{ page.title }}"
-      }{% endif %}
-    ]
-  }
-  </script>
+  {% include "partials/breadcrumb-jsonld.html" %}
   {% endif %}
 
   {# WebSite JSON-LD with availableLanguage - on homepage only #}
@@ -657,6 +627,7 @@
     "headline": {{ page.title | tojson }},
     "description": {{ page.meta.description | tojson }},
     "url": "{{ page.canonical_url }}",
+    "image": {{ og_img | tojson }},
     {% if page.meta.date %}"datePublished": "{{ page.meta.date }}",{% endif %}
     {% if page.meta.updated %}"dateModified": "{{ page.meta.updated }}",{% endif %}
     "author": [

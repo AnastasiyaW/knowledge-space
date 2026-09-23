@@ -1,0 +1,37 @@
+{#-
+  BreadcrumbList JSON-LD: the path Google shows in search results.
+  Google requires "item" (a URL) on every ListItem except the last one:
+  https://developers.google.com/search/docs/appearance/structured-data/breadcrumb
+  MkDocs sections have no URL of their own, so each level links to its section's index
+  page (the domain hub), named by that page's title; a section without one is left out.
+  An ancestor that is itself a page (the blog index above its posts) links to itself, and a
+  URL already in the trail is not repeated (the blog index is also its section's index page).
+  Until 2026-09 the second level pointed at the home page.
+-#}
+{%- set trail = namespace(items=[(config.site_name, config.site_url)]) -%}
+{%- for ancestor in page.ancestors | reverse -%}
+  {%- if ancestor.is_page -%}
+    {%- if ancestor.canonical_url not in trail.items | map(attribute="1") | list -%}
+      {%- set trail.items = trail.items + [(ancestor.title, ancestor.canonical_url)] -%}
+    {%- endif -%}
+  {%- else -%}
+    {%- for child in ancestor.children or [] -%}
+      {%- if child.is_page and child.is_index and child != page
+            and child.canonical_url not in trail.items | map(attribute="1") | list -%}
+        {%- set trail.items = trail.items + [(child.title or ancestor.title, child.canonical_url)] -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- set trail.items = trail.items + [(page.title, page.canonical_url)] -%}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {%- for name, url in trail.items %}
+      {"@type": "ListItem", "position": {{ loop.index }}, "name": {{ name | tojson }}, "item": {{ url | tojson }}}{{ "," if not loop.last }}
+      {%- endfor %}
+    ]
+  }
+  </script>

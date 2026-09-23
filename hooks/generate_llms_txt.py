@@ -63,6 +63,12 @@ AGENT_NOTE = (
 )
 
 
+# Pipeline metadata that opens projects/ and organizations/ pages is not a description
+# (same rule as hooks/description.py; keep the two in step).
+_METADATA_LINE = re.compile(r'^\*\*(Development line|Last event|Events|Researched):\*\*')
+_SCOPE_PREFIX = re.compile(r'^\*\*Scope checked:[^*]*\*\*\s*')
+
+
 def extract_article_info(path: Path) -> tuple[str, str]:
     """Extract H1 title and first paragraph from article."""
     content = path.read_text(encoding="utf-8", errors="replace")
@@ -86,7 +92,9 @@ def extract_article_info(path: Path) -> tuple[str, str]:
             # Skip frontmatter, empty lines, and headers
             if line.strip().startswith("```") or line.strip().startswith("|") or line.strip().startswith("-"):
                 continue
-            desc = line.strip()
+            if _METADATA_LINE.match(line.strip()):
+                continue
+            desc = _SCOPE_PREFIX.sub("", line.strip())
             break
 
     # Wiki-link syntax is a site-internal convention; consumers of llms.txt get the
