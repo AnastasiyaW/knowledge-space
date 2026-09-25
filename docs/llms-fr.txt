@@ -1,6 +1,6 @@
 # Base de connaissances techniques complète - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1292+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1293+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -878,6 +878,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [LFM2.5-2.6B](https://happyin.space/projects/lfm2-5-2-6b/): LFM2.5-2.6B is a post-trained text-only checkpoint for builders deploying local agents through an OpenAI-compatible endpoint.
 - [LingBot-Video](https://happyin.space/projects/lingbot-video/): LingBot-Video is a project under development. We have not researched its present state yet, so we keep only the dated line and the practical note.
 - [LingBot-World 2.0](https://happyin.space/projects/lingbot-world-2/): LingBot-World 2.0, also called LingBot-World-Infinity, generates navigable image-to-video worlds for researchers and developers. It supports unbounded streaming, action conditioning, and a pilot or...
+- [LiveEdit](https://happyin.space/projects/liveedit/): LiveEdit is a text-instructed video-to-video editor for Linux and NVIDIA setups. It builds on Wan2.1-T2V-1.3B instead of running as a hosted service.
 - [Llama 3.1](https://happyin.space/projects/llama-3-1/): Llama 3.1 — Meta’s static 2024 family for teams that need a downloadable, licensed alternative to a hosted text-generation API.
 - [LlamaServerLauncher](https://happyin.space/projects/llama-server-launcher/): LlamaServerLauncher: кроссплатформенное .NET 8/Avalonia-приложение для пользователей llama.cpp, которым нужны профили, запуск нескольких серверов и настройка GGUF-моделей через интерфейс. — выбирае...
 - [LMarena Video Arena — Video Arena](https://happyin.space/projects/lmarena/): LMarena Video Arena is the video-modality route on LMarena for model evaluation. We have not run present-state research yet, so we keep only the dated line and the practical note.
