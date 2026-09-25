@@ -1,6 +1,6 @@
 # 综合技术知识库 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1291+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1292+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -982,6 +982,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Qwen-Image-Flash](https://happyin.space/projects/qwen-image-flash/): Qwen-Image-Flash is a four-network-function-evaluation Qwen-Image-2.0 student for fast text-to-image generation and instruction-guided editing.
 - [Qwen-Video-Edit](https://happyin.space/projects/qwen-video-edit/): Qwen-Video-Edit provides code and checkpoints for instruction-based video editing without a video-pretrained transformer. Qwen-Image-Edit edits the latent representation of Wan 2.1 VAE, while Wan 2...
 - [Qwen2.5-Coder](https://happyin.space/projects/qwen2-5-coder/): Qwen2.5-Coder is a family of six base and instruction-tuned code LLMs from 0.5B to 32B for completion, chat, code repair, and fine-tuning.
+- [Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled-GGUF — Model publication](https://happyin.space/projects/qwen3-5-27b-claude-4-6-opus-reasoning-distilled-gguf/): Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled-GGUF is a user-published GGUF build of Qwen3.5-27B for local analysis, code, and reasoning tasks. The verified files page lists Q3_K_M at 13.3 GB, Q4...
 - [Qwen3.5-40B-Claude-4.6-Opus-Deckard-Heretic-Uncensored-Thinking-GGUF — GGUF distribution](https://happyin.space/projects/qwen3-5-40b-claude-4-6-opus-deckard-heretic-uncensored-thinking-gguf/): Qwen3.5-40B-Claude-4.6-Opus-Deckard-Heretic-Uncensored-Thinking-GGUF is a set of static GGUF quants of a 39B multimodal fine-tuned model for llama.cpp, Ollama, and local OpenAI-compatible servers.
 - [Qwen3.6-34B-80L-Fable-5-Heretic](https://happyin.space/projects/qwen3-6-34b-80l-fable-5-heretic/): Qwen3.6-34B-80L-Fable-5-Heretic is a BF16 derivative of Qwen3.6-27B for self-hosting with Transformers or vLLM.
 - [Qwen3.8-27B-Cold-Fusion — Qwen Derivatives](https://happyin.space/projects/qwen3-8-27b-cold-fusion/): Qwen3.8-27B-Cold-Fusion-GAIN-V1.1 is a third-party fine-tune of Qwen3.8-27B released as GGUF quantizations for local inference.
