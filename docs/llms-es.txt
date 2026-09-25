@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1298+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1299+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1063,6 +1063,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [UPAL](https://happyin.space/projects/upal/): UPAL is a standalone PyTorch feature extractor for CV and SLAM practitioners. It combines point detection, line detection, and local descriptors in one network.
 - [V-JEPA](https://happyin.space/projects/v-jepa/): V-JEPA — семейство PyTorch-моделей Meta для разработчиков video understanding и robotics. — извлекает представления из видео без ручной разметки; — прогнозирует действия и состояния в латентном про...
 - [V-RAE](https://happyin.space/projects/v-rae/): V-RAE is a research codebase and checkpoint set for video reconstruction and generation. It pairs frozen DINOv3, SigLIP2, V-JEPA2.1, or EUPE encoders with temporal pooling and a video decoder.
+- [Velorn](https://happyin.space/projects/velorn/): Velorn is a development line we track. We have not researched its current state yet, so we keep only the dated line and the practical note below.
 - [Veo](https://happyin.space/projects/veo/): Veo is Google DeepMind’s video-generation model family for filmmakers, creators, and API users.
 - [Vibe Coding XR](https://happyin.space/projects/vibe-coding-xr/): Vibe Coding XR is a Gemini-assisted workflow for designers and developers who need a WebXR prototype before committing to Unity or Unreal. It pairs the hosted XR Blocks Gem with the open-source XR ...
 - [Video-DeepResearch](https://happyin.space/projects/video-deepresearch/): Video-DeepResearch is an open research stack and two models for questions grounded in video objects and events before checking external sources.
