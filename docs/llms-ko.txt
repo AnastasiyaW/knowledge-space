@@ -1,6 +1,6 @@
 # 종합 기술 지식 베이스 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1313+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1314+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -925,6 +925,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [MiniMax Music 3 Latent Refiner](https://happyin.space/projects/minimax-music3-latent-refiner/): MiniMax Music 3 Latent Refiner is a community checkpoint for restoring existing audio, not a text-to-music generator.
 - [Mistral Small 4 — Mistral Small](https://happyin.space/projects/mistral-small-4/): Mistral Small 4 combines instruction following, configurable reasoning, tool calling, JSON output, and text-plus-image input with text output. It has 119B total parameters, 6.5B active per token, a...
 - [MLSLabsRenderer-Lite](https://happyin.space/projects/mlslabsrenderer-lite/): MLSLabsRenderer-Lite is an Unreal Engine renderer project from MLSLabs. We have not researched its present state yet. We keep only the dated line and the practical note below.
+- [Modality Forcing — Depth Prediction](https://happyin.space/projects/modality-forcing/): Modality Forcing is a post-training recipe and released BF16 FluxRGBD checkpoint for people who need one model for text-to-RGB-D, image-to-relative-depth, or depth-to-image work.
 - [Modly](https://happyin.space/projects/modly/): Modly is a local alternative to cloud image-to-3D tools such as Meshy for creators who run models on their own hardware.
 - [Moebius — Public availability](https://happyin.space/projects/moebius/): Moebius is an open image-inpainting framework for developers who supply an image and matching mask.
 - [MolmoMotion](https://happyin.space/projects/molmomotion/): MolmoMotion is a Molmo 2-based 4B model for researchers building robot planning or trajectory-guided video generation.
