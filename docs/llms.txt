@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1293+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1294+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -764,6 +764,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Cursor — Product development](https://happyin.space/projects/cursor/): Cursor is a coding editor and agent for developers who need to understand a repository, delegate edits, and merge changes.
 - [CutLER](https://happyin.space/projects/cutler/): CutLER is a pseudo-mask-to-detector pipeline for unsupervised object detection and instance segmentation.
 - [DALL-E 2 — Commercial adoption](https://happyin.space/projects/dalle-2/): DALL-E 2 — OpenAI’s 2022 prompt-to-image model, now a legacy dependency rather than a usable API product.
+- [DanceOPD](https://happyin.space/projects/danceopd/): DanceOPD is a training framework for teams that already have compatible flow-matching checkpoints or LoRAs and need one student to combine text-to-image and image-editing behaviors.
 - [Data2Story — Agentic Data Storytelling](https://happyin.space/projects/data2story/): Data2Story turns a CSV, data folder, paper, or an idea in Pro into a self-contained HTML story. It generates charts and media alongside an evidence viewer.
 - [DDColor](https://happyin.space/projects/ddcolor/): DDColor is a PyTorch model from ICCV 2023 for automatic photo colorization.
 - [DeerFlow 2.0 — Agent Platforms](https://happyin.space/projects/deerflow/): DeerFlow 2.0 — an open-source runtime for teams that need an agent harness rather than a research-only framework.
