@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1304+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1305+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -913,6 +913,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Midjourney](https://happyin.space/projects/midjourney/): Midjourney is a subscription image-and-video generator for art direction, concept work, and rapid visual iteration.
 - [MiniMax-H3-Fun-Controlnet-Union — MiniMax H3 Fun ControlNet Union](https://happyin.space/projects/minimax-h3-fun-controlnet-union/): MiniMax-H3-Fun-Controlnet-Union is a control adapter for the MiniMax-H3 base video generator, built for VideoX-Fun users.
 - [MiniMax-H3 Turbo LoRA](https://happyin.space/projects/minimax-h3-turbo-lora/): MiniMax-H3 Turbo LoRA is a community adapter with ComfyUI nodes for MiniMax-H3 text-to-video and image-to-video workflows.
+- [MiniMax-H3 x Z-Image](https://happyin.space/projects/minimax-h3-x-z-image/): MiniMax-H3 x Z-Image is a development line we track. Present-state research has not run yet, so we keep only the dated line and practical notes below.
 - [MiniMax H3](https://happyin.space/projects/minimax-h3/): MiniMax H3 is a 33B open-weight audiovisual video base model for creators and developers choosing local 768p generation or an API-backed 2K workflow.
 - [MiniMax M3](https://happyin.space/projects/minimax-m3/): MiniMax M3 is an open-weight native-multimodal MoE model for developers building coding agents, document/repository analysis, and image or video-input workflows.
 - [MiniMax Music](https://happyin.space/projects/minimax-music/): MiniMax Music produces complete songs from lyrics and a style brief for creators and developer teams.
