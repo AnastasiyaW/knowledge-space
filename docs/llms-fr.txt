@@ -1,6 +1,6 @@
 # Base de connaissances techniques complète - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1289+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1290+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -958,6 +958,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Origin — Code hosting](https://happyin.space/projects/origin/): Origin is Cursor’s early-beta Git forge for paid Cursor users.
 - [Ornith-1.5](https://happyin.space/projects/ornith-1-5/): Ornith-1.5 — семейство MIT-лицензированных мультимодальных моделей для разработчиков, которым нужен локальный OpenAI-совместимый endpoint вместо закрытого API. — 9B Dense для одного GPU и квантован...
 - [Ouroboros — Public project updates](https://happyin.space/projects/ouroboros/): Ouroboros is a desktop and headless AI-agent runtime, not a model.
+- [PAM — Public release](https://happyin.space/projects/pam/): PAM is a research pipeline for teams creating hand-object interaction data from simulation.
 - [Papers with Code](https://happyin.space/projects/papers-with-code/): Papers with Code is a Hugging Face–hosted revival of the former research index for practitioners who need to find papers, implementations, tasks, datasets, and evaluation results.
 - [pdf-inspector](https://happyin.space/projects/pdf-inspector/): pdf-inspector — a local Rust library and CLI for PDF-processing developers: it classifies native-text, scanned, image-based, and mixed PDFs, then returns structured Markdown and page-level routing ...
 - [Penguin-VL](https://happyin.space/projects/penguin-vl/): Penguin-VL is a Qwen3-based VLM family for practitioners who need local multimodal inference rather than a hosted vision API.
