@@ -1,6 +1,6 @@
 # Umfassende technische Wissensbasis - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1317+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1318+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -863,6 +863,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Inline Studio](https://happyin.space/projects/inline-studio/): Inline Studio is an open-source workspace for character-led image and video generation. It combines a node canvas, portable `.char` files, local LoRA training, model nodes, and take history.
 - [InstantX SD3 ControlNet — SD3 ControlNet checkpoint releases](https://happyin.space/projects/instantx-sd3-controlnet/): InstantX SD3 ControlNet provides control-image adapters for practitioners who need Stable Diffusion 3 to follow structural inputs:
 - [InternVL](https://happyin.space/projects/internvl/): InternVL is an open-weight vision-language model family for teams that need to analyse images, documents, multiple images, video and GUI states in a self-hosted workflow.
+- [Itsgiving: itsgiving](https://happyin.space/projects/itsgiving/): ItsGiving is a Python webcam tool for meeting participants. It detects face expressions and hand/body poses, then overlays matching images or GIFs. It publishes the result as a virtual camera.
 - [James Webb Space Telescope — First Images Release](https://happyin.space/projects/james-webb-space-telescope/): James Webb Space Telescope is an active NASA, ESA, and CSA infrared observatory for astronomers analysing public space-observatory data.
 - [jina-embeddings-v5-omni](https://happyin.space/projects/jina-embeddings-v5-omni/): jina-embeddings-v5-omni is a Jina AI embedding model line for indexing multiple media types in one index. We have not run the present-state research yet. This page carries the dated line and the pr...
 - [JoyAI-Video-Edit](https://happyin.space/projects/joyai-video-edit/): JoyAI-Video-Edit: an Apache-2.0, 16B autoregressive-diffusion video editor for causal, live video-to-video edits.
