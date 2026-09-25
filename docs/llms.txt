@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1309+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1310+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -913,6 +913,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [MeshAnything](https://happyin.space/projects/meshanything/): MeshAnything V2 is a local post-processing model for technical artists and 3D-pipeline engineers who need a compact triangle mesh from a dense 3D shape, rather than a prompt-to-3D asset generator.
 - [MetaHuman](https://happyin.space/projects/metahuman/): MetaHuman is an Unreal Engine framework for character artists, virtual-production teams, and game developers.
 - [Microsoft Copilot](https://happyin.space/projects/microsoft-copilot/): We track Microsoft Copilot as a project. We have not run present-state research yet, so this page keeps only the dated timeline and the practical note below.
+- [MicroZoom](https://happyin.space/projects/microzoom/): MicroZoom is an unresearched development project. We have not run the present-state research yet, so we keep only the dated line and the practical note below.
 - [Midjourney](https://happyin.space/projects/midjourney/): Midjourney is a subscription image-and-video generator for art direction, concept work, and rapid visual iteration.
 - [MiniMax-H3-Fun-Controlnet-Union — MiniMax H3 Fun ControlNet Union](https://happyin.space/projects/minimax-h3-fun-controlnet-union/): MiniMax-H3-Fun-Controlnet-Union is a control adapter for the MiniMax-H3 base video generator, built for VideoX-Fun users.
 - [MiniMax-H3 Turbo LoRA](https://happyin.space/projects/minimax-h3-turbo-lora/): MiniMax-H3 Turbo LoRA is a community adapter with ComfyUI nodes for MiniMax-H3 text-to-video and image-to-video workflows.
