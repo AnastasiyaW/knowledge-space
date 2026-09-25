@@ -1,6 +1,6 @@
 # 종합 기술 지식 베이스 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1318+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1319+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -886,6 +886,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Latent-to-4D — Beyond Pixels](https://happyin.space/projects/latent-to-4d/): Latent-to-4D is a research method from Beyond Pixels for text/image-to-4D. L4AR takes the final latent from a compatible video DiT and outputs cameras with dynamic world-space point maps. Checkpoin...
 - [LEDITS](https://happyin.space/projects/ledits/): LEDITS is an image editing pipeline for modifying real images with semantic text prompts instead of a generic img2img pass.
 - [LFM2.5-2.6B](https://happyin.space/projects/lfm2-5-2-6b/): LFM2.5-2.6B is a post-trained text-only checkpoint for builders deploying local agents through an OpenAI-compatible endpoint.
+- [Ling-3.0-flash — Model availability](https://happyin.space/projects/ling-3-0-flash/): Ling-3.0-flash is an Ant Group text-generation MoE for teams building coding, tool-using, and long-context agents.
 - [LingBot-Video](https://happyin.space/projects/lingbot-video/): LingBot-Video is a project under development. We have not researched its present state yet, so we keep only the dated line and the practical note.
 - [LingBot-World 2.0](https://happyin.space/projects/lingbot-world-2/): LingBot-World 2.0, also called LingBot-World-Infinity, generates navigable image-to-video worlds for researchers and developers. It supports unbounded streaming, action conditioning, and a pilot or...
 - [LiveEdit](https://happyin.space/projects/liveedit/): LiveEdit is a text-instructed video-to-video editor for Linux and NVIDIA setups. It builds on Wan2.1-T2V-1.3B instead of running as a hosted service.
