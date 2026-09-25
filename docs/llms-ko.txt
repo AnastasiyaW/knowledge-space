@@ -1,6 +1,6 @@
 # 종합 기술 지식 베이스 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1290+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1291+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -789,6 +789,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [F⁴Splat](https://happyin.space/projects/f4splat/): F⁴Splat is a 3DGS research framework for developers synthesizing novel views from sparse uncalibrated images. It is a code alternative to AnySplat for CUDA research, not a finished cloud service or...
 - [FASTER](https://happyin.space/projects/faster/): FASTER is an open-source fast-action sampling and streaming deployment method for teams fine-tuning flow Vision-Language-Action policies, not a standalone robot policy.
 - [FireRed Image Edit — ComfyUI Resources](https://happyin.space/projects/firered-image-edit/): FireRed Image Edit is a local instruction-driven image editor for ComfyUI and Diffusers.
+- [FlashMemory-Deepseek-V4 — DeepSeek Optimizations](https://happyin.space/projects/flashmemory-deepseek-v4/): FlashMemory-Deepseek-V4 is an optimization project for DeepSeek models. We have not researched its present state yet, so we keep only the dated line and the practical note below.
 - [FLOAT](https://happyin.space/projects/float/): FLOAT is a PyTorch research implementation that animates a single, mostly frontal portrait from speech audio.
 - [FLUX.2 [Klein] KV - 9B — Model release and local inference](https://happyin.space/projects/flux-2-klein-9b-kv/): FLUX.2 [klein] 9B-KV — 9B flow-модель для локального или API-редактирования, когда обычный FLUX.2 [klein] 9B тратит время на повторную обработку тех же референсов. — text-to-image; — редактирование...
 - [FLUX.2 Klein 9B Manga Colorization LoRA — Manga Colorization by Reference LoRA](https://happyin.space/projects/flux-2-klein-9b-manga-colorization-by-reference-lora/): FLUX.2 Klein 9B Manga Colorization LoRA is a LoRA adapter for artists and ComfyUI or Diffusers users who transfer character palettes from a color reference onto line art or grayscale panels.
