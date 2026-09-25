@@ -1,6 +1,6 @@
 # Base de connaissances techniques complète - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1315+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1316+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1022,6 +1022,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Aleph 2.0 — Runway Aleph](https://happyin.space/projects/runway-aleph-2/): Aleph 2.0 is Runway’s in-context editor for existing footage, built for teams that need to change a product, background, lighting, or style without rebuilding the shot.
 - [Runway Gen-1](https://happyin.space/projects/runway-gen-1/): Runway Gen-1 was a video-to-video model for creators who needed to keep a source clip's structure while altering its appearance with a prompt or reference image.
 - [Runway Gen-3 Alpha](https://happyin.space/projects/runway-gen-3-alpha/): Runway Gen-3 Alpha was Runway’s 2024 text-to-video and image-to-video model for creators making short controlled shots from prompts or a source image. It is retired. Gen-4.5 is the current replacem...
+- [SAM2Matting](https://happyin.space/projects/sam2matting/): SAM2Matting is an inference framework that turns foreground prompts into alpha mattes for image and video compositing.
 - [SAMA](https://happyin.space/projects/sama/): An open-source instruction-guided video editing model for Wan users who change objects, style, or text in a video while keeping motion.
 - [SANA-Streaming — SANA Streaming](https://happyin.space/projects/sana-streaming/): SANA-Streaming is a 2B video-to-video editor for creators who need text-guided edits while retaining source motion and unedited regions.
 - [SCoPE](https://happyin.space/projects/scope/): SCoPE — an image-to-video research release for teams that need camera-path control on Wan2.2-I2V-A14B.
