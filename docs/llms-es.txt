@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1310+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1311+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1057,6 +1057,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [TAPTR](https://happyin.space/projects/taptr/): TAPTR is a transformer approach to Tracking Any Point for developers building video tools, 3D reconstruction, and mask tracking.
 - [Tencent Hunyuan — Hunyuan model releases](https://happyin.space/projects/tencent-hunyuan/): Tencent Hunyuan — не одна последовательная модель, а бренд нескольких несовместимых семейств: HunyuanDiT для генерации изображений и Hunyuan-A13B для текста, reasoning и tool calling. Hunyuan-A13B:...
 - [Elastic-Wan2.2-I2V](https://happyin.space/projects/thestageai-elastic-wan22-i2v/): Elastic-Wan2.2-I2V is an image-to-video development line from TheStageAI. We have not run present-state research yet, so this page carries only the dated event and the practical note.
+- [ThinkingCap-Qwen3.6-27B](https://happyin.space/projects/thinkingcap-qwen3-6-27b/): ThinkingCap-Qwen3.6-27B is a tracked model development line. Present-state research has not run yet, so we keep only the dated line and the practical note below.
 - [TimeLens2](https://happyin.space/projects/timelens2/): TimeLens2 is an open Qwen3-VL-based model family for researchers and video-search builders that converts a video plus text query into one or more evidence intervals. It supports short, long, repeat...
 - [ToonComposer](https://happyin.space/projects/tooncomposer/): ToonComposer is a TencentARC post-keyframing model built on Wan2.1-I2V-14B-480P. It takes a colored reference frame, a text prompt, and one or more sketches at chosen frames. It generates an animat...
 - [Tripo](https://happyin.space/projects/tripo/): Tripo is a 3D asset generation suite for artists, game studios, and product teams.
