@@ -1,6 +1,6 @@
 # Base de connaissances techniques complète - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1296+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1297+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -967,6 +967,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Penguin-VL](https://happyin.space/projects/penguin-vl/): Penguin-VL is a Qwen3-based VLM family for practitioners who need local multimodal inference rather than a hosted vision API.
 - [Perceptron Mk1 — Initial public release](https://happyin.space/projects/perceptron-mk1/): Perceptron Mk1 is a closed vision-language model for teams adding image and video analysis to APIs, not a video generator.
 - [PhotoQuilt](https://happyin.space/projects/photoquilt/): PhotoQuilt is a training-free photomosaic pipeline for diffusion users who need a coherent large scene built from independent image tiles.
+- [Photoshop — Product updates](https://happyin.space/projects/photoshop/): Photoshop product updates. We have not run present-state research yet, so this page carries only the dated line and the practical note below.
 - [PiD — Research release](https://happyin.space/projects/pid/): PiD is a pixel diffusion decoder for generative image pipelines that replaces standard VAE and RAE decoders.
 - [Pika](https://happyin.space/projects/pika/): Pika: облачная платформа для авторов коротких роликов, конкурирующая с Runway в text-to-video, image-to-video и video-to-video. Возможности: Pika 2.5, Pikaframes, Pikascenes, Pikadditions, Pikaswap...
 - [PixVerse CLI — Terminal generation](https://happyin.space/projects/pixverse-cli/): PixVerse CLI is a command-line interface for PixVerse subscribers to generate video, images, and audio from prompts or references.
