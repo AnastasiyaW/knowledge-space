@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1307+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1309+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -777,6 +777,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [DiffIR2VR-Zero](https://happyin.space/projects/diffir2vr-zero/): DiffIR2VR-Zero — research code that adapts pretrained image-restoration diffusion models to temporally consistent video restoration. — Blind denoising (`dn`) and super-resolution (`sr`). — Claimed ...
 - [DIRECT](https://happyin.space/projects/direct/): DIRECT is a pose-controllable object-insertion system for compositors placing a reference object into a background.
 - [DisCO](https://happyin.space/projects/disco/): DisCO covers three task-specific research implementations for image practitioners rather than one deployable tool.
+- [DLSS 4.5 — Graphics technology](https://happyin.space/projects/dlss/): DLSS 4.5 is a graphics technology development line. Research has not run yet. We keep only the dated line and the practical note below.
 - [DMX](https://happyin.space/projects/dmx/): DMX is a Python package for teams distributing safetensors models: lossless `.dmx` archives, base-relative `.dmxd` deltas, round-trip verification, and embedded lineage metadata. Limit: every PyPI ...
 - [Doodles Stoodio — Public web presence](https://happyin.space/projects/doodles-stoodio/): Doodles Stoodio is the user portal for the Doodles ecosystem. It connects avatar customization, wearable browsing, item collecting, and community activities.
 - [dots.mocr](https://happyin.space/projects/dots-mocr/): dots.mocr — 3B VLM для команд, которым нужно извлекать из PDF и изображений не только текст, но и layout, таблицы, формулы и графику; конкурент PaddleOCR-VL и DeepSeek-OCR. Возможности: OCR и bbox,...
@@ -1074,6 +1075,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Velorn](https://happyin.space/projects/velorn/): Velorn is a development line we track. We have not researched its current state yet, so we keep only the dated line and the practical note below.
 - [Veo](https://happyin.space/projects/veo/): Veo is Google DeepMind’s video-generation model family for filmmakers, creators, and API users.
 - [Vibe Coding XR](https://happyin.space/projects/vibe-coding-xr/): Vibe Coding XR is a Gemini-assisted workflow for designers and developers who need a WebXR prototype before committing to Unity or Unreal. It pairs the hosted XR Blocks Gem with the open-source XR ...
+- [VibeVoice-ASR-BitNet — Public availability](https://happyin.space/projects/vibevoice-asr-bitnet/): VibeVoice-ASR-BitNet is an unresearched project line. We have not run the research pass yet, so we keep only the dated line and the practical note.
 - [Video-DeepResearch](https://happyin.space/projects/video-deepresearch/): Video-DeepResearch is an open research stack and two models for questions grounded in video objects and events before checking external sources.
 - [video_to_world](https://happyin.space/projects/video-to-world/): video_to_world is local ECCV 2026 research code for people reconstructing a generated video sequence as an explorable 2DGS or 3DGS scene, not a video generator or hosted service.
 - [VideoLifter](https://happyin.space/projects/videolifter/): VideoLifter — SfM-free фреймворк для исследователей 3D-реконструкции: принимает некалиброванные изображения из видео, использует DUSt3R и MASt3R для начальной геометрии, затем оптимизирует 3D Gauss...
