@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1294+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1295+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1004,6 +1004,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Reve](https://happyin.space/projects/reve/): Reve is a direct alternative to Midjourney and Adobe Firefly for browser image generation and editing.
 - [RiGS — Repository reference](https://happyin.space/projects/rigs/): RiGS provides the codebase for Rigid-aware 4D Gaussian Splatting:
 - [Cursor Router](https://happyin.space/projects/router/): Cursor Router routes each Agent request across Cursor’s changing model pool instead of making a developer choose a model per request. It offers Cost, Balance, and Intelligence modes for Teams and E...
+- [Aleph 2.0 — Runway Aleph](https://happyin.space/projects/runway-aleph-2/): Aleph 2.0 is Runway’s in-context editor for existing footage, built for teams that need to change a product, background, lighting, or style without rebuilding the shot.
 - [Runway Gen-1](https://happyin.space/projects/runway-gen-1/): Runway Gen-1 was a video-to-video model for creators who needed to keep a source clip's structure while altering its appearance with a prompt or reference image.
 - [Runway Gen-3 Alpha](https://happyin.space/projects/runway-gen-3-alpha/): Runway Gen-3 Alpha was Runway’s 2024 text-to-video and image-to-video model for creators making short controlled shots from prompts or a source image. It is retired. Gen-4.5 is the current replacem...
 - [SAMA](https://happyin.space/projects/sama/): An open-source instruction-guided video editing model for Wan users who change objects, style, or text in a video while keeping motion.
