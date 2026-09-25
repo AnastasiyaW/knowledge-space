@@ -1,6 +1,6 @@
 # Base de connaissances techniques complète - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1295+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1296+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -993,6 +993,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Qwopus3.6-27B-Coder-MTP](https://happyin.space/projects/qwopus3-6-27b-coder-mtp/): Qwopus3.6-27B-Coder-MTP is a Qwopus3.6-27B-v2 coding fine-tune with MTP draft heads for local repository work.
 - [Qwythos-27B-v1](https://happyin.space/projects/qwythos-27b-v1/): Qwythos-27B-v1 is an open-weight bf16 checkpoint on Qwen3.5-27B for developers who need a local model with function calling and image input.
 - [Ramp Router](https://happyin.space/projects/ramp-router/): Ramp Router is an OpenAI Responses-compatible LLM gateway for US developers and teams that want one integration across supported providers.
+- [Ray 3.2 — Luma AI Ray development](https://happyin.space/projects/ray/): Ray 3.2 is Luma’s video model for editors preserving real camera motion and developers embedding video generation.
 - [RayGauss](https://happyin.space/projects/raygauss/): RayGauss is novel view synthesis code and a method for researchers, built as a volumetric alternative to splatting.
 - [RealFusion](https://happyin.space/projects/realfusion/): RealFusion reconstructs a plausible 360-degree object from one masked image by combining single-image textual inversion, Stable Diffusion score distillation, and an Instant-NGP-style NeRF.
 - [Realism_Engine_Ideogram_4 — Ideogram LoRA](https://happyin.space/projects/realism-engine-ideogram-4/): Realism_Engine_Ideogram_4 is a user-hosted set of LoRA weight files and ComfyUI workflow JSON for local Ideogram 4 inference.
