@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1299+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1300+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -866,6 +866,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Kimi K2](https://happyin.space/projects/kimi-k2/): Kimi K2 — an open-weight MoE language-model family for builders who need a self-hosted text-and-tool-use model rather than the current Kimi hosted API.
 - [Kling AI](https://happyin.space/projects/kling-ai/): Kling AI is Kuaishou's web and app platform for creating short commercial, narrative, and character videos.
 - [KnowAct-GUIClaw](https://happyin.space/projects/knowact-guiclaw/): KnowAct-GUIClaw is an OpenClaw-style host and GUI executor for developers automating long-horizon work across Android, iOS, HarmonyOS, and desktop.
+- [Krea 2 Outpaint — Public resource distribution](https://happyin.space/projects/krea-2-outpaint/): Krea 2 Outpaint is an image outpainting project documented across Hugging Face and ComfyUI. We have not run the present-state research yet, so this page carries only the dated line and the practica...
 - [Krea 2 — Open-source release and ecosystem](https://happyin.space/projects/krea-2/): Krea 2 is an image generation model family for designers, developers, and researchers. The hosted API provides Medium, Large, and Medium Turbo with style references, moodboards, LoRA, and image-to-...
 - [Krea](https://happyin.space/projects/krea-agents/): Krea Agents is Krea’s application-based workspace for creative practitioners. It combines project files, persistent context, reusable image-based skills, Pinterest moodboards, connected work tools ...
 - [Krea AI](https://happyin.space/projects/krea-ai/): Krea AI is a browser workspace for image, video and 3D work across generation, targeted editing, enhancement, animation and LoRA training.
