@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1288+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1289+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -718,6 +718,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [FLUX.1-Kontext-dev-onnx — FLUX.1 Kontext ONNX and editing](https://happyin.space/projects/black-forest-labs/): FLUX.1-Kontext-dev-onnx is the ONNX export of FLUX.1 Kontext [dev] for local runtimes.
 - [Bonsai Image 4B — Bonsai Image development](https://happyin.space/projects/bonsai-image/): Bonsai Image 4B: семейство text-to-image diffusion-моделей для локального запуска; Binary 1-bit — для минимального размера, Ternary — для лучшего качества; WebGPU-вариант остаётся экспериментальным...
 - [Boogu-Image](https://happyin.space/projects/boogu-image/): Boogu-Image — исследовательское семейство открытых checkpoint’ов для команд, которым нужен локальный аналог связки Qwen-Image и ComfyUI. — Base: text-to-image, плотная китайская и английская типогр...
+- [BRDFusion](https://happyin.space/projects/brdfusion/): BRDFusion is an open research pipeline for turning urban video into a controllable 3D Gaussian/PBR scene, closer to UrbanIR plus diffusion refinement than to a general video generator.
 - [Seed Audio 1.0 — Seed Audio](https://happyin.space/projects/bytedance-seed-audio-1-0/): Seed Audio 1.0 is a ByteDance audio model for creators of video, games, ads, and podcasts.
 - [Calibri](https://happyin.space/projects/calibri/): Calibri: open-source метод калибровки Diffusion Transformer для разработчиков text-to-image пайплайнов. — добавляет коэффициенты на выходах блоков DiT; — подбирает их CMA-ES по reward-модели; — под...
 - [CameraCtrl](https://happyin.space/projects/cameractrl/): CameraCtrl is a research codebase for video generation with prescribed camera motion in AnimateDiffV3 and Stable Video Diffusion.
