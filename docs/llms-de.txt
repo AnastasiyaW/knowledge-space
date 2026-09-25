@@ -1,6 +1,6 @@
 # Umfassende technische Wissensbasis - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1305+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1306+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -747,6 +747,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [ComfyUI KSampler Matrix Lab — Repository reference](https://happyin.space/projects/comfyui-ksampler-matrix-lab/): ComfyUI KSampler Matrix Lab — two ComfyUI nodes for artists and model evaluators: KSampler Matrix Lab compares sampler/scheduler combinations, Model Matrix Lab compares installed checkpoints. Limit...
 - [ComfyUI-LoraTags](https://happyin.space/projects/comfyui-loratags/): ComfyUI-LoraTags — пара узлов для пользователей ComfyUI, которым нужно собирать несколько LoRA и не терять их trigger words. — LoRA Loader (LoraTags): загружает стек LoRA и отдаёт MODEL, CLIP и TAG...
 - [comfyui-lrw-nodes — ComfyUI LRW Nodes](https://happyin.space/projects/comfyui-lrw-nodes/): ComfyUI-LRW-Nodes provides custom nodes for ComfyUI to guide WAN2.2 First–Last Frame intermediate motion without replacing endpoint conditioning.
+- [ComfyUI-MiniMax-H3-LongMedia](https://happyin.space/projects/comfyui-minimax-h3-longmedia/): ComfyUI-MiniMax-H3-LongMedia is a project tracking thread. We have not run present-state research yet, so this page carries only the dated line and the practical note below.
 - [ComfyUI Mobile Frontend](https://happyin.space/projects/comfyui-mobile-frontend/): ComfyUI Mobile Frontend is a custom node for people who run ComfyUI and want to edit workflows, monitor queues, and manage outputs from a phone or tablet.
 - [ComfyUI-NKD-VFX-Tools](https://happyin.space/projects/comfyui-nkd-vfx-tools/): ComfyUI-NKD-VFX-Tools provides interactive VFX-oriented nodes rather than a model: Relight, Lens Blur, Preview 3D, fSpy Camera, Camera Delta Prompt, Perspective Unwarp/Rewarp, Lens Distort, and Mas...
 - [OpenPose Studio for ComfyUI — Project development](https://happyin.space/projects/comfyui-openpose-studio/): OpenPose Studio for ComfyUI — редактор поз внутри ComfyUI для художника, который хочет поправить скелет, руки или JSON, а не принимать результат pose-estimator как есть. Возможности: COCO-18 тело, ...
