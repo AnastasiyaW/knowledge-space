@@ -1,6 +1,6 @@
 # 종합 기술 지식 베이스 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1302+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1303+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -995,6 +995,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Qwen3.8-27B-Cold-Fusion — Qwen Derivatives](https://happyin.space/projects/qwen3-8-27b-cold-fusion/): Qwen3.8-27B-Cold-Fusion-GAIN-V1.1 is a third-party fine-tune of Qwen3.8-27B released as GGUF quantizations for local inference.
 - [Qwen3.8-Flash-Next — Qwen](https://happyin.space/projects/qwen3-8-flash-next/): Qwen3.8-Flash-Next: открытая мультимодальная MoE-модель для разработчиков, которым нужны vision+text, кодинг и агентные сценарии. — запускается через Transformers, vLLM, SGLang, TokenSpeed и llama....
 - [Qwen3-TTS](https://happyin.space/projects/qwen3-tts/): Qwen3-TTS is an open-weight speech synthesis series for developers, built to replace cloud TTS APIs such as ElevenLabs. It provides CustomVoice for preset timbres, VoiceDesign for text descriptions...
+- [Qwopus3.5-9B-Coder](https://happyin.space/projects/qwopus3-5-9b-coder/): Qwopus3.5-9B-Coder is a coding model project without first-party research yet. We keep the dated line and the practical note below until source research runs.
 - [Qwopus3.6-27B-Coder-MTP](https://happyin.space/projects/qwopus3-6-27b-coder-mtp/): Qwopus3.6-27B-Coder-MTP is a Qwopus3.6-27B-v2 coding fine-tune with MTP draft heads for local repository work.
 - [Qwythos-27B-v1](https://happyin.space/projects/qwythos-27b-v1/): Qwythos-27B-v1 is an open-weight bf16 checkpoint on Qwen3.5-27B for developers who need a local model with function calling and image input.
 - [Ramp Router](https://happyin.space/projects/ramp-router/): Ramp Router is an OpenAI Responses-compatible LLM gateway for US developers and teams that want one integration across supported providers.
