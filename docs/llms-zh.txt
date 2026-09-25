@@ -1,6 +1,6 @@
 # 综合技术知识库 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1297+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1298+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -805,6 +805,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [FreeToken](https://happyin.space/projects/freetoken/): FreeToken is an open-source inference server for running large Mixture-of-Experts models on consumer PCs as an alternative to vLLM and SGLang.
 - [Gabi](https://happyin.space/projects/gabi-robot/): Gabi — Unitree G1 высотой 1,32 м, которому 6 мая 2026 года дали дхармическое имя и приняли пять адаптированных обетов мирянина; его функции в проекте — жесты, ходьба и участие в публичных буддийски...
 - [GalaxyAce LoRA](https://happyin.space/projects/galaxyace-lora/): GalaxyAce LoRA — это отдельные style-LoRA для автора фото и видео, которому нужна съёмка с признаками недорогой Android-камеры начала 2010-х. — цветопередача, экспозиция и мягкость объектива; — для...
+- [GaussianGPT](https://happyin.space/projects/gaussiangpt/): GaussianGPT is a tracked development line. We have not run the present-state research yet, so this page carries only the dated line and the practical note below.
 - [Gemini 3.5 Live Translate — Gemini Live Translation](https://happyin.space/projects/gemini-3-5-live-translate/): Gemini 3.5 Live Translate is Google’s low-latency audio-to-audio translation model for real-time spoken conversations.
 - [Gemini Intelligence for Android](https://happyin.space/projects/gemini-intelligence-android/): Gemini Intelligence for Android is a hardware- and region-limited Gemini platform for owners of compatible Android devices.
 - [Gemini](https://happyin.space/projects/gemini/): Gemini is Google's model family for chat, text, code, images, audio, video, and API integrations.
