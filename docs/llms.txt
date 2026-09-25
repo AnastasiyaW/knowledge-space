@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1312+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1313+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -856,6 +856,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Ideogram 4](https://happyin.space/projects/ideogram-4/): Ideogram 4 is a structured-JSON image model for designers and developers who need controlled text, composition, and palette. It replaces generic flat-prompt workflows.
 - [Ideogram](https://happyin.space/projects/ideogram/): Ideogram is an image-generation platform for designers, content teams, and developers who need readable text, composition control, and iterative editing.
 - [IGGT4D](https://happyin.space/projects/iggt4d/): IGGT4D processes video frames sequentially to predict camera, geometry, persistent object identities, and instance masks together.
+- [image_caption_utility](https://happyin.space/projects/image-caption-utility/): image_caption_utility is a GitHub project without readable first-party documentation for its purpose or workflow.
 - [Image-to-LoRA](https://happyin.space/projects/image-to-lora/): Image-to-LoRA is DiffSynth-Studio’s i2L method for producing explicit style-LoRA weights from one or more reference images instead of optimizing a new LoRA per style.
 - [img2threejs](https://happyin.space/projects/img2threejs/): img2threejs — Apache-2.0 skill для Claude Code, Codex и OpenCode: из одного изображения он строит TypeScript-фабрику `THREE.Group`, а не GLB или извлечённую сетку. — разбирает объект на компоненты,...
 - [InfiniSplat](https://happyin.space/projects/infinisplat/): InfiniSplat turns one RGB image, or an aligned RGB-depth pair, into a 3D Gaussian scene for novel-view rendering. It offers RGB-only and depth-sensor-guided modes. The released workflow is single-i...
