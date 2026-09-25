@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1287+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1288+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1010,6 +1010,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [SeFi-Image](https://happyin.space/projects/sefi-image/): SeFi-Image separates semantic and texture latent streams so structure denoises ahead of detail. It offers 1B, 2B, and 5B Base models, a 5B RL model, and 1B/2B/5B Turbo models. Base and RL use 50 st...
 - [Self Gradient Forcing](https://happyin.space/projects/self-gradient-forcing/): Self Gradient Forcing (SGF) is a training method for autoregressive video diffusion models. It replays sampled self-generated context so future-frame losses train causal KV memory without retaining...
 - [SenseNova — U1 MoT model and infographic artifacts](https://happyin.space/projects/sensenova/): SenseNova U1 is an Apache-2.0 OpenSenseNova model family for practitioners running visual creation locally.
+- [Seoul World Model — Public project release](https://happyin.space/projects/seoul-world-model/): Seoul World Model (SWM) is a research world model. It generates route video from coordinates, camera trajectories, and text scripts by retrieving Seoul street-view imagery from a spatial index.
 - [ShotStream](https://happyin.space/projects/shotstream/): ShotStream is a CUDA research implementation for creators and video-model developers who need to steer a multi-shot text-to-video narrative while it runs.
 - [ShotVerse](https://happyin.space/projects/shotverse/): ShotVerse is a research system for creators and researchers who need explicit, consistent camera trajectories across multiple shots.
 - [ShutterMuse](https://happyin.space/projects/shuttermuse/): ShutterMuse is a capture-time photography assistant for photographers and portrait subjects.
