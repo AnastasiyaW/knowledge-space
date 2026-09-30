@@ -28,6 +28,7 @@ type: MOC
 - [[rights-first-text-to-mask-training]] - Rights-aware dataset contracts for grounding, masks, alpha, and multilingual queries
 
 ## Inference & Optimization
+- [[krea-2-prompting]] - Krea 2 open weights read one English paragraph with the medium early and the light described; convert guidance (ComfyUI cfg = 1 + Krea g), expect no negative prompt on Turbo, stay under 507 tokens, and use adapter-specific prompts for edits and box layouts.
 - [[diffusion-inference-acceleration]] - Diffusion acceleration is a model-and-runtime-specific trade-off; measure warm and steady-state latency, memory, output fidelity, and reproducibility for the exact checkpoint and workflow.
 - [[tiled-inference]] - Tiled inference is a model-bound high-resolution strategy; partitioning, overlap, blending, global context, coordinate mapping, and output review must be evaluated together on the pinned pipeline, while detection tiles and generative or retouch tiles remain separate contracts.
 - [[temporal-tiling]] - Temporal tiling is a model-specific research experiment for cross-tile consistency, not a direct reuse of video memory; bind the tile plan and runtime state, compare against an overlap baseline, and validate seams, composition, and cost on held-out images.
@@ -46,6 +47,7 @@ type: MOC
 - [[grayscale-overlay-nn-architectures]] - Grayscale overlay prediction is a paired, pixel-aligned retouching task; preserve the blend contract and no-op baseline, bind every source/target pair and mask, and evaluate the composited image plus the map before releasing an automated adjustment.
 
 ## Specialized Models
+- [[krea-2-anygles]] - Krea 2 Anygles re-renders one clear person from a new camera yaw, elevation or distance through a Control-LoRA driven by a SAM 3D Body normal map; it needs its own loader and an isolated, gated preparation step.
 - [[Calligrapher]] - Calligrapher customizes text imagery from style references through FLUX.1-Fill-dev, SigLIP, masks, and project weights; treat typography accuracy and licensing as separate acceptance checks.
 - [[PixelSmile]] - PixelSmile is a release-bound facial-expression editing project; pin its published human preview, base model, patched runtime, consented source image, and expression review rather than treating benchmark numbers or adapters as general guarantees.
 - [[X-Dub]] - X-Dub is a public Wan2.2-TI2V-5B-based visual-dubbing release; validate single-person cropping, identity, temporal stability, audio rights, and model terms on every target video.

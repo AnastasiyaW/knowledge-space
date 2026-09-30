@@ -1,6 +1,6 @@
 # 종합 기술 지식 베이스 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1319+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1321+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -359,6 +359,8 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [INSID3 with DINOv3: Candidate-Mask Contract](https://happyin.space/image-generation/in-context-segmentation-with-insid3-and-dinov3/): The upstream [INSID3 repository](https://github.com/visinf/INSID3) describes
 - [In-Context Segmentation: Reference-Bound Candidate Masks](https://happyin.space/image-generation/in-context-segmentation/): In-context segmentation uses one or more reference image/mask pairs to propose
 - [Intrinsic Decomposition: Assumption and Review Contract](https://happyin.space/image-generation/intrinsic-decomposition/): Intrinsic decomposition estimates components such as reflectance (often called
+- [Krea 2 Anygles Camera-View Adapter](https://happyin.space/image-generation/krea-2-anygles/): Community adapter for Krea 2 Turbo: from one image of one person it generates the same person and scene from a new camera position. A rank-32 Control-LoRA plus 4 ComfyUI nodes; the target view is g...
+- [Krea 2 Prompting](https://happyin.space/image-generation/krea-2-prompting/): Prompt and run-settings reference for the open-weights Krea 2 family: Krea-2-Turbo (8-step distilled, for images) and Krea-2-Raw (undistilled base, for LoRA training). A 12B DiT (per the Turbo card...
 - [LoRA Auxiliary Losses: Experiment and Evaluation Contract](https://happyin.space/image-generation/lora-auxiliary-losses/): An auxiliary loss changes a training objective. It does not make an adapter
 - [LoRA Fine-Tuning for Editing Models: Compatibility Contract](https://happyin.space/image-generation/lora-fine-tuning-for-editing-models/): LoRA reduces the number of trainable parameters by adding low-rank updates to
 - [FLUX.2 [klein] 9B Identity LoRA: Disentanglement Contract](https://happyin.space/image-generation/lora-identity-disentanglement-in-flux2-klein-9b/): An identity LoRA learns an adapter for a particular base-model release; it
