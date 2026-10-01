@@ -15,8 +15,15 @@ site build uses for `stats.js` - and prints the triple it wrote. Cross-reference
 counted as wiki-links **inside articles only**: `index.md`, the browse page and the blog
 are navigation, not cross-references, so they are excluded.
 
-`sync_indexes.py` also appends any article that is currently linked from no index to its
-domain MOC and to the browse page, so a new article is never orphaned.
+`sync_indexes.py` appends the articles this branch added or changed (against the merge base
+with `origin/master`) that no index links yet to their domain MOC and to the browse page, so
+a new article is never orphaned. It leaves other domains' indexes alone. Pass article paths
+to sync exactly those, `--check` to write nothing (exit 1 if an index is out of date), or
+`--all` for a full sweep of every orphan on disk; review that diff on its own. Every write is
+staged in memory, so an error (exit 2) leaves the tree untouched. A domain with neither a
+block on the browse page nor a `NEW_BLOCK_STYLE` entry stops the run as soon as one of its
+articles is in scope; on 2026-10-01 that was `organizations` and `projects`, so `--all` and
+any change to their articles exit 2 until one of the two is added.
 
 The GitHub repository description is the one place no script reaches:
 
@@ -72,5 +79,7 @@ grep -rn " 22 domain\| 23 domain\| 24 domain\| 25 domain\| 26 domain" \
 - `hooks/stats.py` - DOMAIN_META
 - `hooks/validate.py` - VALID_DOMAINS
 - `docs/javascripts/graph.js` - links array
+- `scripts/sync_indexes.py` - `NEW_BLOCK_STYLE` (name, planet gradient, glow), or a block on
+  `docs/knowledge-base/index.md` by hand; without one the script stops on the domain's first article
 - `CONTRIBUTING.md` - domains table
 - `.claude/rules/article-rules.md` - domain folders list
