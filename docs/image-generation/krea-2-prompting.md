@@ -8,13 +8,13 @@ aliases: ["Krea 2 prompts", "Krea-2-Turbo prompting", "Krea 2 CFG", "Krea 2 nega
 
 # Krea 2 Prompting
 
-Prompt and run-settings reference for the open-weights Krea 2 family: Krea-2-Turbo (8-step distilled, for images) and Krea-2-Raw (undistilled base, for LoRA training). A 12B DiT (per the Turbo card) reads prompts through a Qwen3-VL-4B-Instruct text encoder, so it responds to plain descriptive English, not tag soup. Sources reviewed 2026-09-30; diffusers 0.39/0.40, ComfyUI native Krea 2 support. Hosted Krea 2 Medium/Large (the krea.ai app and API) is a different surface; see [[krea-2]] for the release history.
+Open-weights Krea 2 has two variants: Krea-2-Turbo for images and Krea-2-Raw for LoRA training. Krea-2-Turbo is an 8-step distilled model. Krea-2-Raw is the undistilled base. A 12B DiT reads prompts through a Qwen3-VL-4B-Instruct text encoder per the Turbo card, so it responds to plain descriptive English rather than tag soup. Sources reviewed 2026-09-30, including the diffusers Krea2 pipeline and native Krea 2 support in ComfyUI. Hosted Krea 2 Medium/Large on the krea.ai app and API is a separate surface; see [[krea-2]] for the release history.
 
-**Measurement labels used below:** facts from code, cards and docs link to the source. Our own runs are marked *in our tests* and are small samples (one GPU, one seed or two per cell). Treat them as direction, not as benchmarks.
+Facts from code, cards and docs link to the source. Our own runs are marked *in our tests*; they use small samples, one to three seeds per cell. Treat them as direction, not as benchmarks.
 
 ## Settings before any prompt matters
 
-Wrong guidance breaks the image before wording does. Krea's reference code and diffusers use their own guidance convention; ComfyUI, SGLang and DiffSynth use standard CFG.
+Wrong guidance breaks the image before wording does. Krea reference code and diffusers use their own guidance convention. ComfyUI, SGLang and DiffSynth use standard CFG.
 
 | | Turbo (run images) | Raw (base; not for final images) |
 |---|---|---|
@@ -29,7 +29,7 @@ Wrong guidance breaks the image before wording does. Krea's reference code and d
 **Conversion rule:** standard CFG = 1 + Krea g. Krea computes `cond + g * (cond - uncond)`; ComfyUI computes `uncond + cfg * (cond - uncond)`. The diffusers docstring states the equivalence directly ("the usual CFG formulation with scale `1 + guidance_scale`").
 
 - Krea/diffusers `0.0` = ComfyUI `1.0`; Krea `3.5` = ComfyUI `4.5`.
-- **ComfyUI cfg 0 = unconditional sampling.** The prompt is ignored. At least one community ComfyUI guide gives cfg 0.0, copied from Krea's convention.
+- **ComfyUI cfg 0 = unconditional sampling.** The sampler ignores the prompt. At least one community ComfyUI guide gives cfg 0.0 by copying Krea's convention.
 - diffusers and Krea's `inference.py` CLI default to 28 steps / guidance 4.5 (Krea convention): base-checkpoint defaults, not Turbo values. Pass Turbo values explicitly.
 - Beyond 8 steps and cfg 1.0 on Turbo is untested territory: we found no controlled comparison of more steps or of ComfyUI cfg 1.2 to 1.5.
 
@@ -37,7 +37,7 @@ Wrong guidance breaks the image before wording does. Krea's reference code and d
 
 ```python
 import torch
-from diffusers import Krea2Pipeline  # diffusers >= 0.39.0
+from diffusers import Krea2Pipeline
 
 # Gated repo: accept the Krea 2 Community License on the model page and log in first.
 pipe = Krea2Pipeline.from_pretrained("krea/Krea-2-Turbo", torch_dtype=torch.bfloat16).to("cuda")
@@ -65,7 +65,7 @@ model_sampling_node: none       # shift 1.15 is in the model config
 
 ## Size and aspect ratio
 
-- **Sides in multiples of 16.** Krea's `sampling.py` pads up and prints a notice; diffusers 0.39+ rounds up with a logged warning; the AnyPaint edit adapter requires a multiple-of-16 canvas.
+- **Sides in multiples of 16.** Krea's `sampling.py` pads up and prints a notice; diffusers rounds up with a logged warning; the AnyPaint edit adapter requires a multiple-of-16 canvas.
 - **Turbo 1K to 2K, Raw up to about 1K.** Pretraining ran at 256/512/1024 px in same-aspect-ratio batches.
 - **1K ladder** (Krea's hosted size list, all multiples of 16): 1024x1024, 1184x896, 1248x832, 1376x768, 928x1152, 832x1248, 768x1376.
 - For 2K on Turbo, scale a 1K size by about 1.41 and round to 16. This is derived, not published by Krea.
@@ -80,17 +80,17 @@ krea_2k(1248, 832)  # (1760, 1184)
 
 ## Text-to-image prompt form
 
-Krea's own rule, from `docs/prompting.md` and the LLM expansion prompt `docs/expansion.txt`: natural language, one cohesive paragraph, longer and specific does better, short still works.
+Krea sets the rule in `docs/prompting.md` and the LLM expansion prompt `docs/expansion.txt`: use natural language in one cohesive paragraph. Longer and specific descriptions work better, though short ones still run.
 
-- **One paragraph, no bullets, headings, JSON or markdown** (the bbox LoRA block below is the one exception).
-- **Name the medium early:** "An editorial portrait photograph of...", "A macro photograph of...". The expansion prompt treats "photo of" as a medium to keep.
+- **One paragraph, no bullets, headings, JSON or markdown.** The bbox LoRA block below is the one exception.
+- **Name the medium early.** Write "An editorial portrait photograph of..." or "A macro photograph of...". The expansion prompt treats "photo of" as a medium to keep.
 - **Keep each subject together with its own attributes and actions.** Use concrete spatial words: left, right, foreground, behind, holding.
-- **Describe the light, always:** quality and direction ("soft window light from the left", "harsh noon sun", "warm low sunlight from the right"). Every official photo example does this.
-- **Photorealism:** concrete surface detail and small imperfections (skin pores, faint freckles, flyaway hairs, scuffed shoes, worn vinyl seats), shot type and depth of field (medium close-up, shallow depth of field), film grain or motion blur where wanted. The technical report says motion blur and softness were kept in the data on purpose. Lens numbers ("85mm at f/2") appear in one provider guide and are unproven either way.
-- **Text in the image:** the exact words in double quotes, kept short. Incidental background text is unreliable; distorted text is a named failure mode.
-- **Descriptive comma lists are in distribution:** 8 of the 20 official Turbo examples are comma-separated descriptor lists, and several card widget prompts end with a `, <style tag>`.
-- **No quality boilerplate, no weights.** "masterpiece, best quality, 8k" appears in no official example; `(word:1.2)` weighting is reported to destabilise the image (one community source).
-- **Say what is there instead of "no X".** "an unlit torch", not "a torch without flame"; "an empty courtyard at dawn", not "a courtyard, no people".
+- **Describe the light, always.** State quality and direction ("soft window light from the left", "harsh noon sun", "warm low sunlight from the right"). Every official photo example does this.
+- **Photorealism.** Specify concrete surface detail and small imperfections (skin pores, faint freckles, flyaway hairs, scuffed shoes, worn vinyl seats), shot type and depth of field (medium close-up, shallow depth of field), film grain or motion blur where wanted. The technical report says motion blur and softness were kept in the data on purpose. Lens numbers ("85mm at f/2") appear in one provider guide and are unproven either way.
+- **Text in the image.** Put exact words in double quotes and keep them short. Incidental background text is unreliable; distorted text is a named failure mode.
+- **Descriptive comma lists are in distribution.** 8 of the 20 official Turbo examples are comma-separated descriptor lists, and several card widget prompts end with a `, <style tag>`.
+- **No quality boilerplate, no weights.** "masterpiece, best quality, 8k" appears in no official example; `(word:1.2)` weighting is reported not to work reliably (one community source).
+- **Say what is there instead of "no X".** Write "an unlit torch", not "a torch without flame"; "an empty courtyard at dawn", not "a courtyard, no people".
 - **English only is documented.** The card declares `language: en`. Keep non-English words only as text to render, inside quotes, and treat even that as untested.
 
 ### Example prompts
@@ -130,12 +130,12 @@ shallow depth of field, the street behind softly out of focus.
 
 ## Token budget and language
 
-The encoder wraps the prompt in a fixed system template ("Describe the image by detailing the color, shape, size, texture, quantity, text, spatial relationships of the objects and background"), tokenizes prefix plus prompt to a fixed 541 tokens (truncating), appends the 5-token assistant suffix, and drops the 34-token system prefix, leaving 512 positions.
+The encoder wraps the prompt in a fixed system template ("Describe the image by detailing the color, shape, size, texture, quantity, text, spatial relationships of the objects and background"). Krea's reference code, diffusers and DiffSynth pad or truncate to 512 positions after stripping the 34-token system prefix; a 5-token assistant suffix follows the prompt.
 
-- **User-prompt cap: about 507 tokens** in Krea's reference code, diffusers and DiffSynth (512 + 34 prefix - 5 suffix - 34 dropped). The tail beyond it is cut silently.
+- **User-prompt cap: about 507 tokens** in Krea's reference code, diffusers and DiffSynth. The tail beyond it is cut silently.
 - **ComfyUI does not truncate** (its Qwen3-VL tokenizer has no 512 cap). The same long prompt behaves differently across runtimes.
-- Keep prompts under about 480 tokens and put the essentials first.
-- Rates measured with the Qwen tokenizer: English about 1.3 to 1.4 tokens per word (about 350 words fit); the longest official example is 252 tokens. A Russian translation of an 84-word official example took 215 tokens against 108 in English, 2.0x.
+- Keep prompts under about 500 tokens and put the essentials first.
+- Rates measured with the Qwen tokenizer: English about 1.3 to 1.4 tokens per word (about 360 to 390 words fit the cap); the longest official example is 252 tokens. The 84-word official "mouse" example is 108 tokens in English; a Russian translation took 215 tokens, 2.0x.
 
 ```python
 from transformers import AutoTokenizer
@@ -183,7 +183,7 @@ To suppress something on Turbo:
 
 ## Edits need an adapter
 
-Stock Krea 2 has **no reference-conditioned edit path**. The DiT has no reference-latent or inpaint input, so a VAE reference fed through plain `CLIPTextEncode` or the Qwen-Image-Edit encode node is silently discarded. Every edit route is an adapter LoRA plus its patch node.
+Stock Krea 2 has **no reference-conditioned edit path**. The DiT has no reference-latent or inpaint input, so a VAE reference fed through plain `CLIPTextEncode` or the Qwen-Image-Edit encode node is silently discarded. The edit routes we know are an adapter LoRA plus its patch node.
 
 | Task | Adapter | Prompt |
 |---|---|---|
@@ -194,7 +194,7 @@ Stock Krea 2 has **no reference-conditioned edit path**. The DiT has no referenc
 | Lay out a new picture by boxes | Coordinates in the prompt; bbox LoRA optional | JSON boxes, see next section |
 
 - **Mask convention:** white = regenerate, black = keep. Canvas in multiples of 16.
-- **Keep edits at or below about 2 MP** (the `comfyui-krea2edit` notes, single source): above that, content bleeds and subjects duplicate.
+- **With the Krea2Edit adapter keep output at or below about 2 MP** (its README, single source): above its trained range source content can bleed in. AnyPaint states no such limit.
 - **Removals:** the same notes say distilled Turbo at cfg 1 tends to re-render the subject and recommend Raw, cfg 3 (standard convention), about 20 steps (single source).
 
 ### Background replacement: describe only the new background
@@ -233,13 +233,13 @@ A sunny city park with a gravel path and tall linden trees, soft afternoon light
 
 ## Camera-angle adapter (krea2-anygles)
 
-A Control-LoRA plus 4 ComfyUI nodes that re-render one person from a new yaw, elevation or distance, driven by a SAM 3D Body normal map and a fixed camera sentence ("Same figure. Move the camera 310 degrees to the left relative to the input view."). Author settings: 8 steps, cfg 1, strength 1.0, 384 px reference, at most about 2 MP. A plain LoRA loader drops its control projection. Details, run steps and why we have not image-tested it yet: [[krea-2-anygles]].
+A Control-LoRA plus 4 ComfyUI nodes that re-render one person from a new yaw, elevation or distance, driven by a SAM 3D Body normal map and a fixed camera sentence ("Same figure. Move the camera 310 degrees to the left relative to the input view."). Author settings: 8 steps, cfg 1, strength 1.0, 384 px reference, at most about 2 MP. A plain LoRA loader drops its control projection. Details, run steps and our orbit test: [[krea-2-anygles]].
 
 ## Gotchas
 
 - **Issue:** A Turbo image ignores the prompt entirely in ComfyUI. -> **Fix:** cfg is 0 (Krea's "0.0" copied). Set cfg 1.0.
 - **Issue:** The negative prompt has no effect. -> **Fix:** Turbo at cfg 1 never computes it. Rephrase positively, use the NAG node, or switch to Raw with real CFG.
-- **Issue:** The tail of a long prompt is ignored in diffusers but not in ComfyUI. -> **Fix:** The reference encoder truncates at about 507 tokens and ComfyUI does not. Shorten to under about 480 and keep essentials first.
+- **Issue:** The tail of a long prompt is ignored in diffusers but not in ComfyUI. -> **Fix:** The reference encoder truncates at about 507 tokens and ComfyUI does not. Shorten to under about 500 and keep essentials first.
 - **Issue:** A second, smaller copy of the person appears after background replacement with an inpaint-edit adapter. -> **Fix:** The Ostris edit encoder caps the reference at about 1 MP; in our tests sampling at that size and upscaling removed the copy. Or use AnyPaint.
 - **Issue:** "no people" still gives passers-by. -> **Fix:** In our one comparison negation did not remove them. Pick a place or time of day without a crowd (remedy not A/B-tested).
 - **Issue:** A style LoRA looks weak. -> **Fix:** Official style triggers go at the end of the prompt; check the card for community LoRAs.

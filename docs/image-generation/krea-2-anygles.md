@@ -8,9 +8,9 @@ aliases: ["krea2-anygles", "Anygles", "Krea 2 camera angle LoRA"]
 
 # Krea 2 Anygles Camera-View Adapter
 
-Community adapter for Krea 2 Turbo: from one image of one person it generates the same person and scene from a new camera position. A rank-32 Control-LoRA plus 4 ComfyUI nodes; the target view is given as a rendered normal map, not only as words. Reviewed 2026-09-30 against the model card, node README and node code.
+Krea 2 Anygles is a community adapter for Krea 2 Turbo. From one image of one person, it generates the same person and scene from a new camera angle. It pairs a rank-32 Control-LoRA with 4 ComfyUI nodes. The target view is a rendered normal map rather than text prompts alone. We reviewed it on 2026-09-30 against the model card, node README and node code.
 
-> **Status:** tested by us with the real adapter, but with a substitute normal source: an open image-to-3D mesh (TripoSG) instead of the gated SAM 3D Body. See [Our orbit test](#our-orbit-test). Numbers are small-sample.
+We ran the real adapter with an open image-to-3D mesh (TripoSG) in place of the gated SAM 3D Body; the small-sample results are in [Our orbit test](#our-orbit-test).
 
 ## What it controls
 
@@ -20,27 +20,27 @@ Community adapter for Krea 2 Turbo: from one image of one person it generates th
 | Elevation | -60 to +60 degrees | -45 to +45 | negative moves the camera down, positive up |
 | Distance | 0.6x to 1.8x | 0.78x to 1.35x | below 1 closer, above 1 farther |
 
-- Scope: **one clear human subject.** Not for animals, general objects, crowds, or exact 3D reconstruction. Hidden sides and background are generated, not recovered.
-- The card calls elevation and distance "useful controls, not calibrated scene reconstruction"; treat the numbers as directions.
+- Scope: **one clear human subject.** It does not handle animals, general objects, crowds, or exact 3D reconstruction. The model generates hidden sides and background instead of recovering them.
+- Elevation and distance are useful controls rather than calibrated scene reconstruction. Treat the numbers as directions.
 
 ## How it works
 
-1. **Camera node.** SAM 3D Body recovers the body mesh; MoGe estimates the camera field of view. The mesh is rotated around the pelvis and rendered as a target normal map inside the source-aspect-ratio canvas. The node also writes the camera sentence the model was trained on.
-2. **Encode node.** Sends the photo to Qwen3-VL and to a clean reference path (max edge 384 px), and VAE-encodes the full-canvas target normal.
-3. **Load LoRA node.** Applies the LoRA pairs **and** the extra projection tensor `transformer.first_control.weight`. An ordinary LoRA loader skips that tensor, so the spatial control is silently lost.
-4. **Model patch node.** Injects the normal tokens at the noisy-image input and caches the reference K/V once per run.
+1. **Camera node.** SAM 3D Body extracts the body mesh, and MoGe estimates camera field of view. The node rotates the mesh around the pelvis and renders a target normal map in the source aspect ratio. It also generates the training camera sentence.
+2. **Encode node.** This node routes the image to Qwen3-VL and a clean reference path at max edge 384 px. It then VAE-encodes the full-canvas target normal.
+3. **Load LoRA node.** This node loads the LoRA pairs and the projection tensor `transformer.first_control.weight`. Standard loaders omit this tensor and lose spatial control silently.
+4. **Model patch node.** This injects normal tokens at the noisy-image input and caches reference K/V once per run.
 
-The weights file `krea2_anygles_rank32.safetensors` is 229 MB in BF16: 256 rank-32 LoRA pairs across the 32 transformer blocks (attention q, k, v, out and gate, plus the MLP) and the one control projection, shape [6144, 64] (our inspection of the file; it matched the author's published checksum).
+The weights file `krea2_anygles_rank32.safetensors` takes 229 MB in BF16. It contains 256 rank-32 LoRA pairs across the 32 transformer blocks (attention q, k, v, out, gate, and the MLP) plus the one control projection with shape [6144, 64]. We inspected the file and confirmed the author's published checksum.
 
 ### Camera sentence
 
-The model was trained on left-only yaw wording. The node converts signed yaw with `left_angle = (-yaw) mod 360`, so a right turn of +50 degrees becomes:
+Training used left-only yaw phrasing. The node converts signed yaw through `left_angle = (-yaw) mod 360`. A right turn of +50 degrees becomes:
 
 ```text
 Same figure. Move the camera 310 degrees to the left relative to the input view.
 ```
 
-Elevation and distance clauses are added only when requested; optional user text is appended unchanged. Write extra text as scene detail ("soft afternoon light"), not as a new camera instruction that contradicts the normal map.
+The node appends elevation and distance clauses only when requested, and passes user text through unchanged. Put scene details in extra text ("soft afternoon light"). Do not write camera instructions that clash with the normal map.
 
 ## Settings (author's card and README)
 
@@ -61,7 +61,9 @@ For guidance conventions (Krea 0.0 = ComfyUI 1.0) see [[krea-2-prompting]].
 
 ## Running it
 
-ComfyUI: clone the nodes into `custom_nodes`, install `requirements.txt`, download the SAM 3D Body checkpoint after accepting its license, put the LoRA in `models/loras`, and load the shipped `krea2_anygles_workflow.json`. Portable Python, from the model card:
+For ComfyUI, clone the repository into `custom_nodes`, install `requirements.txt`, accept the license to download the SAM 3D Body checkpoint, copy the LoRA into `models/loras`, and load `krea2_anygles_workflow.json`. 
+
+The model card provides a standalone Python workflow:
 
 ```bash
 python prepare_normal.py --source person.webp --output target_normal.png \
@@ -76,28 +78,28 @@ python example.py --source person.webp --normal target_normal.png --output resul
 
 ### What the normal-preparation step pulls in
 
-Our code review before installing found that the diffusion half of the nodes loads safetensors only, with no network calls, subprocesses, `eval` or `exec`. The normal-preparation half is heavier:
+Our pre-install code audit showed the diffusion nodes load safetensors files directly without network calls, subprocesses, `eval`, or `exec`. The normal-preparation pipeline carries heavy dependencies:
 
-- two pickle checkpoints, loaded with `torch.load(weights_only=False)` and `torch.jit.load`;
-- a pickle MoGe model;
-- a runtime `torch.hub` fetch of DINOv3 code from GitHub;
-- about 20 extra packages (pyrender, pytorch-lightning, MoGe from git);
-- the gated `facebook/sam-3d-body-dinov3` repo (separate SAM License).
+- two pickle checkpoints loaded through `torch.load(weights_only=False)` and `torch.jit.load`
+- a pickle MoGe model
+- a runtime `torch.hub` download of DINOv3 code from GitHub
+- about 20 extra packages, including pyrender, pytorch-lightning, and MoGe from git
+- the gated `facebook/sam-3d-body-dinov3` repository.
 
-The gated repo returned HTTP 403 for our accounts (access is approved by hand), and we do not unpickle third-party checkpoints in a shared runtime, so we did not use this path.
+The gated repository returned HTTP 403 for us, and we do not unpickle third-party checkpoints in a shared runtime, so we did not use this path.
 
-**Isolation pattern:** run normal preparation in a separate environment that only writes `target_normal.png`, then feed that PNG and the camera sentence to the Encode node. The shared ComfyUI never unpickles anything.
+Run normal preparation in a dedicated container or machine that outputs only `target_normal.png`. Pass that file and the camera sentence to the Encode node so the main ComfyUI environment never touches pickle files.
 
 ## Our orbit test
 
-We replaced only the mesh source and kept everything else from the author:
+We substituted the mesh generator and retained the rest of the author's pipeline:
 
-- **Mesh:** [TripoSG](https://github.com/VAST-AI-Research/TripoSG) (MIT, ungated, all weights `.safetensors`) on a [BiRefNet](https://huggingface.co/ZhengPeng7/BiRefNet) person matte of the source, in a separate environment. TripoSG settings: 50 steps, guidance 7.0, seed 42.
-- **Normals:** the author's own normal renderer, called unchanged with our mesh, with the author's camera sentences. Focal fixed at 1680 px (SAM 3D Body's default when it has no FOV estimate), because the MoGe checkpoint is pickle-only.
-- **Diffusion:** only the Encode, Load LoRA and Model patch nodes in ComfyUI. Settings as above: fp8 Turbo, 8 steps, euler/simple, cfg 1, strength 1.0, 384 px reference, 1008x1344, one fixed seed.
-- **Matrix:** 4 one-person subjects (one from an identity LoRA, three photoreal scenes) x 20 views. That is a full yaw circle in 22.5-degree steps (16 views), elevation +-20 and distance 0.78 / 1.35. 80 frames in total.
+- **Mesh:** [TripoSG](https://github.com/VAST-AI-Research/TripoSG) (MIT license, ungated, `.safetensors` weights) run on a [BiRefNet](https://huggingface.co/ZhengPeng7/BiRefNet) person matte in an isolated environment. TripoSG ran with 50 steps, guidance 7.0, and seed 42.
+- **Normals:** The author's normal renderer executed unchanged on our mesh using the author's camera sentences. We fixed focal length at 1680 px (SAM 3D Body default without FOV estimation) to avoid the pickle-based MoGe checkpoint.
+- **Diffusion:** We ran only Encode, Load LoRA, and Model patch nodes in ComfyUI: fp8 Turbo, 8 steps, euler/simple, cfg 1, strength 1.0, reference edge 384 px, resolution 1008x1344, and one fixed seed.
+- **Matrix:** 4 one-person subjects (one identity LoRA subject and three photoreal scenes) across 20 camera angles. This covered a full yaw circle in 22.5-degree steps (16 views), elevation +-20, and distances 0.78 / 1.35, producing 80 frames total.
 
-Measured (face similarity = OpenCV SFace cosine against the source face; 0.363 or more counts as the same person):
+Face similarity uses OpenCV SFace cosine distance against the source face; values of 0.363 or higher indicate the same identity:
 
 | Signal | Result |
 |---|---|
@@ -107,28 +109,28 @@ Measured (face similarity = OpenCV SFace cosine against the source face; 0.363 o
 | Back views (about +-135 to 180 degrees) | the detector usually finds no face, as expected |
 | Detected faces at or above the same-person line | 43 of 60 |
 
-What differs from the author's setup: TripoSG gives the clothed outline (coat, skirt, hair, objects in hand), while SAM 3D Body gives a bare parametric body, which is what the adapter was trained on. A seated pose fit the open mesh worst. Treat these numbers as a lower bound for the original pipeline, not a measurement of it.
+TripoSG gives a clothed outline. SAM 3D Body generates a bare parametric body mesh, which matches the adapter's training data. Seated poses fit our open mesh worst. These numbers describe this substitute setup, not the original SAM 3D Body pipeline.
 
 ## Gotchas
 
-- **Issue:** Loading the file with a standard LoRA loader. -> **Fix:** Use the Anygles Load LoRA node; a plain loader drops `transformer.first_control.weight` and the view control with it.
-- **Issue:** The normal map and the output canvas differ in size. -> **Fix:** Render the normal at exactly the output size and aspect ratio; a mismatched normal gives wrong control.
-- **Issue:** Several people or a small figure in the source. -> **Fix:** The adapter is built for one clear, reasonably large person; crop first.
-- **Issue:** Expecting a faithful back view. -> **Fix:** Hidden sides and background are invented; check identity and clothing on large yaw.
-- **Issue:** Swapping the checkpoint precision. -> **Fix:** The ComfyUI graph was validated on an int8 ConvRot Turbo checkpoint and the card warns quantized runtimes differ at pixel level from BF16; re-check on fp8.
-- **Issue:** Running the preparation step in a shared server. -> **Fix:** It unpickles checkpoints and fetches code at runtime; isolate it.
+- **Do not load the weights with a standard LoRA loader.** Use the Anygles Load LoRA node. Generic loaders drop `transformer.first_control.weight`, which silently removes view control.
+- **Match normal map dimensions to the canvas.** Render normals at the exact output resolution and aspect ratio so spatial steering stays accurate.
+- **Crop down to one clear person.** The adapter cannot handle groups or distant figures; crop the frame first.
+- **Check identity on rear views.** The model invents unseen angles and backgrounds rather than reconstructing them. Verify face and wardrobe consistency across wide yaw turns.
+- **Test quantized checkpoints.** The ComfyUI graph was validated with an int8 ConvRot Turbo checkpoint. Whether fp8 behaves the same is untested, so check the output when switching.
+- **Run normal preparation in its own environment.** The preparation scripts unpickle third-party checkpoints and download code at runtime.
 
 ## Open questions
 
-- The same orbit with the original SAM 3D Body normals (bare body instead of a clothed mesh).
-- The effect of strengths other than 1.0.
-- Whether fp8 Turbo behaves like the author's int8 ConvRot checkpoint.
+- Orbit results using native SAM 3D Body bare-mesh normals instead of clothed meshes.
+- Adapter behavior across LoRA strengths other than 1.0.
+- Parity between fp8 Turbo and the author's validated int8 ConvRot checkpoint.
 
 ## See Also
 
-- [[krea-2-prompting]] - settings, guidance conventions and prompt form for Krea 2
-- [[krea-2]] - Krea 2 release history
-- [[flux-klein-capability-map]] - the same "attest the exact variant and runtime" discipline
+- [[krea-2-prompting]] - Settings, guidance conventions, and prompt structure for Krea 2
+- [[krea-2]] - Krea 2 release milestones
+- [[flux-klein-capability-map]] - Variant and runtime verification rules
 
 ## Sources
 
@@ -137,7 +139,7 @@ What differs from the author's setup: TripoSG gives the clothed outline (coat, s
 - Node widget ranges: https://github.com/alexw5702-afk/krea2-anygles/blob/main/nodes.py
 - Pixel budget (`MAX_PIXELS = 2 * 1024 * 1024`): https://github.com/alexw5702-afk/krea2-anygles/blob/main/anygles.py
 - Demo Space: https://huggingface.co/spaces/yijunwang2/krea2-anygles
-- SAM 3D Body source: https://github.com/facebookresearch/sam-3d-body
+- SAM 3D Body repository: https://github.com/facebookresearch/sam-3d-body
 - SAM 3D Body checkpoint (gated): https://huggingface.co/facebook/sam-3d-body-dinov3
 - TripoSG (image-to-3D, MIT): https://github.com/VAST-AI-Research/TripoSG and weights https://huggingface.co/VAST-AI/TripoSG
 - BiRefNet (matting): https://huggingface.co/ZhengPeng7/BiRefNet
