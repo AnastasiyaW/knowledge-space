@@ -1,6 +1,6 @@
 ---
 title: Krea 2 Anygles Camera-View Adapter
-description: "Krea 2 Anygles re-renders one clear person from a new camera yaw, elevation or distance through a Control-LoRA driven by a SAM 3D Body normal map; it needs its own loader and a gated, pickle-based preparation step. What it is and how to run it, not yet image-tested by us."
+description: "Krea 2 Anygles re-renders one clear person from a new camera yaw, elevation or distance through a Control-LoRA driven by a SAM 3D Body normal map; it needs its own loader and a gated, pickle-based preparation step. Includes our 80-frame orbit test with an open image-to-3D mesh in place of SAM 3D Body."
 category: models
 tags: [krea-2, anygles, camera-control, novel-view, control-lora, comfyui, sam-3d-body, normal-map]
 aliases: ["krea2-anygles", "Anygles", "Krea 2 camera angle LoRA"]
@@ -10,7 +10,7 @@ aliases: ["krea2-anygles", "Anygles", "Krea 2 camera angle LoRA"]
 
 Community adapter for Krea 2 Turbo: from one image of one person it generates the same person and scene from a new camera position. A rank-32 Control-LoRA plus 4 ComfyUI nodes; the target view is given as a rendered normal map, not only as words. Reviewed 2026-09-30 against the model card, node README and node code.
 
-> **Status:** what it is and how to run it, **not yet image-tested by us.** Our run stopped at the normal-preparation step (see below). No quality claims here.
+> **Status:** tested by us with the real adapter, but with a substitute normal source: an open image-to-3D mesh (TripoSG) instead of the gated SAM 3D Body. See [Our orbit test](#our-orbit-test). Numbers are small-sample.
 
 ## What it controls
 
@@ -84,9 +84,30 @@ Our code review before installing found that the diffusion half of the nodes loa
 - about 20 extra packages (pyrender, pytorch-lightning, MoGe from git);
 - the gated `facebook/sam-3d-body-dinov3` repo (separate SAM License).
 
-Our attempt produced 0 of 56 planned renders: the gated repo returned HTTP 403 for our accounts, and we do not unpickle third-party checkpoints in a shared runtime, so we stopped before installing. The planned matrix, still open: 4 one-person subjects at 1008x1344, 14 views each at strength 1.0 (yaw +-45, +-90, +-135 and 180; elevation +-20 and +-45; distance 0.78 and 1.35; one combined move), against a no-adapter baseline with camera words in the prompt.
+The gated repo returned HTTP 403 for our accounts (access is approved by hand), and we do not unpickle third-party checkpoints in a shared runtime, so we did not use this path.
 
 **Isolation pattern:** run normal preparation in a separate environment that only writes `target_normal.png`, then feed that PNG and the camera sentence to the Encode node. The shared ComfyUI never unpickles anything.
+
+## Our orbit test
+
+We replaced only the mesh source and kept everything else from the author:
+
+- **Mesh:** [TripoSG](https://github.com/VAST-AI-Research/TripoSG) (MIT, ungated, all weights `.safetensors`) on a [BiRefNet](https://huggingface.co/ZhengPeng7/BiRefNet) person matte of the source, in a separate environment. TripoSG settings: 50 steps, guidance 7.0, seed 42.
+- **Normals:** the author's own normal renderer, called unchanged with our mesh, with the author's camera sentences. Focal fixed at 1680 px (SAM 3D Body's default when it has no FOV estimate), because the MoGe checkpoint is pickle-only.
+- **Diffusion:** only the Encode, Load LoRA and Model patch nodes in ComfyUI. Settings as above: fp8 Turbo, 8 steps, euler/simple, cfg 1, strength 1.0, 384 px reference, 1008x1344, one fixed seed.
+- **Matrix:** 4 one-person subjects (one from an identity LoRA, three photoreal scenes) x 20 views. That is a full yaw circle in 22.5-degree steps (16 views), elevation +-20 and distance 0.78 / 1.35. 80 frames in total.
+
+Measured (face similarity = OpenCV SFace cosine against the source face; 0.363 or more counts as the same person):
+
+| Signal | Result |
+|---|---|
+| Person silhouette vs target normal (IoU, median per subject) | 0.83-0.91 (the seated subject fits worst) |
+| Face similarity, near-front views (median per subject) | 0.47-0.61 |
+| Face similarity at +-90 degrees (profiles) | 0.07-0.53, strongly subject-dependent |
+| Back views (about +-135 to 180 degrees) | the detector usually finds no face, as expected |
+| Detected faces at or above the same-person line | 43 of 60 |
+
+What differs from the author's setup: TripoSG gives the clothed outline (coat, skirt, hair, objects in hand), while SAM 3D Body gives a bare parametric body, which is what the adapter was trained on. A seated pose fit the open mesh worst. Treat these numbers as a lower bound for the original pipeline, not a measurement of it.
 
 ## Gotchas
 
@@ -99,7 +120,7 @@ Our attempt produced 0 of 56 planned renders: the gated repo returned HTTP 403 f
 
 ## Open questions
 
-- Identity hold at large yaw for a person generated with an identity LoRA.
+- The same orbit with the original SAM 3D Body normals (bare body instead of a clothed mesh).
 - The effect of strengths other than 1.0.
 - Whether fp8 Turbo behaves like the author's int8 ConvRot checkpoint.
 
@@ -118,3 +139,6 @@ Our attempt produced 0 of 56 planned renders: the gated repo returned HTTP 403 f
 - Demo Space: https://huggingface.co/spaces/yijunwang2/krea2-anygles
 - SAM 3D Body source: https://github.com/facebookresearch/sam-3d-body
 - SAM 3D Body checkpoint (gated): https://huggingface.co/facebook/sam-3d-body-dinov3
+- TripoSG (image-to-3D, MIT): https://github.com/VAST-AI-Research/TripoSG and weights https://huggingface.co/VAST-AI/TripoSG
+- BiRefNet (matting): https://huggingface.co/ZhengPeng7/BiRefNet
+- OpenCV face recognition (SFace, 0.363 cosine threshold): https://docs.opencv.org/4.x/d0/dd4/tutorial_dnn_face.html
