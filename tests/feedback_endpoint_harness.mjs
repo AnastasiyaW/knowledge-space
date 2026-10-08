@@ -72,6 +72,11 @@ assert.ok(contract.get.includes("/api/feedback/report") && contract.wanted.inclu
   m.exec(readFileSync(root + "migrations/0002_reports.sql", "utf8"));   // re-run is harmless
   assert.deepEqual(m.prepare("SELECT id, topic, status, channel FROM reports").all().map((x) => ({ ...x })),
                    [{ id: 1, topic: "old row", status: "rejected", channel: "post" }]);
+  // The new code writes id 2; the old code, still live during the deploy, also writes its id 2.
+  m.prepare("INSERT INTO reports (created_at, day, kind, topic, client_hash) VALUES ('t2', '2026-10-08', 'gap', 'new code', 'n')").run();
+  m.prepare("INSERT INTO feedback (created_at, day, kind, topic, client_hash) VALUES ('t3', '2026-10-08', 'gap', 'old code', 'o')").run();
+  m.exec(readFileSync(root + "migrations/0002_reports.sql", "utf8"));
+  assert.deepEqual(m.prepare("SELECT topic FROM reports ORDER BY id").all().map((x) => x.topic), ["old row", "new code", "old code"]);
 }
 
 // Fail loud without storage or salt (negative control: no silent drop).
@@ -113,6 +118,8 @@ const bad = [
   { kind: "gap", topic: "ok topic", source_url: "javascript:alert(1)" },
   { kind: "finding", topic: "t", detail: "d" },
   { kind: "finding", topic: "t", source_url: "https://example.org/a" },
+  { kind: "gap", topic: "<what you looked for>" },
+  { kind: "outdated", article: "kafka/consumer-groups", detail: "<what changed>" },
 ];
 for (const body of bad) assert.equal((await post(env, body)).status, 400, JSON.stringify(body));
 assert.equal((await post(env, JSON.stringify({ kind: "gap", topic: "x".repeat(9000) }))).status, 413);

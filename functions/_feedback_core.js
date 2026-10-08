@@ -27,7 +27,7 @@ const ARTICLE = /^[a-z0-9][a-z0-9-]*(\/[a-z0-9][a-z0-9-]*)+$/;
 export const SITE = "https://happyin.space";
 
 // Coarse client family for the agent funnel metrics; the full user agent is not stored.
-// Tokens from vendor docs (see knowledge-space-usage usage/classify.py for sources).
+// Tokens are the ones vendors publish for their user-triggered fetchers and crawlers.
 const UA_FAMILIES = [
   ["claude-user", /claude-user/i], ["claude-code", /claude-code|claude-cli/i], ["claudebot", /claudebot/i],
   ["chatgpt-user", /chatgpt-user/i], ["openai", /oai-searchbot|gptbot|openai/i],
@@ -86,6 +86,9 @@ function text(value, max) {
   if (typeof value !== "string") throw new Error("must be a string");
   const trimmed = value.trim();
   if (trimmed.length > max) throw new Error(`longer than ${max} characters`);
+  // The templates on the site show <what you looked for>; an agent that sends it unchanged
+  // has not filled the field in.
+  if (/^<[^<>]*>$/.test(trimmed)) throw new Error("is still the <placeholder>: replace it with the real value");
   return trimmed || null;
 }
 

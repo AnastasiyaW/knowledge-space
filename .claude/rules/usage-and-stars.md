@@ -40,6 +40,6 @@ page every report is blocked (measured 2026-09-22), and `tests/test_analytics_be
   (owner-written `public_title` only, set by `feedback_queue.py triage --accept --title`). Table:
   `reports` (`migrations/0002_reports.sql`); 0001's `feedback` is the old, copied table.
 - The article footer shows the report URL as code, never as a link: it stores a report, and
-  crawlers follow links. Measured 2026-10-01..07: coding agents and assistants got 0 404s, so the
-  invitation lives on article pages and in llms.txt, not on the 404 page.
+  crawlers follow links. Agents that work for someone land on articles, not on the 404 page, so
+  the invitation lives on article pages and in llms.txt.
 - Changing the request contract means changing CONTRACT, AGENTS.md, `AGENT_NOTE` and the footer together.
