@@ -9,6 +9,7 @@ on:
       - 'overrides/**'
       - 'requirements.txt'
       - 'hooks/**'
+      - 'functions/**'
 
   workflow_dispatch:
 
