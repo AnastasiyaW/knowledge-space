@@ -1,0 +1,28 @@
+name: Test Pages functions
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'functions/**'
+      - 'migrations/**'
+      - 'tests/feedback_endpoint_harness.mjs'
+      - '.github/workflows/test-functions.yml'
+  pull_request:
+    paths:
+      - 'functions/**'
+      - 'migrations/**'
+      - 'tests/feedback_endpoint_harness.mjs'
+      - '.github/workflows/test-functions.yml'
+
+jobs:
+  feedback-endpoint:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'   # node:sqlite without a flag
+      - run: node tests/feedback_endpoint_harness.mjs

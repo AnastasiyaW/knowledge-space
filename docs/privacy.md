@@ -61,6 +61,10 @@ Page views in Web Analytics and the aggregate request statistics still apply. Sa
 
 <p class="ks-counter-switch"><span data-ks-counter-state>This switch needs JavaScript.</span> <button type="button" class="md-button" data-ks-counter-toggle>Turn it off</button></p>
 
+## Feedback reports
+
+Anyone, including an AI assistant working for you, can send a report to `/api/feedback`: a topic that is missing, an article that is outdated or wrong, or an article that helped. We store what the report says (kind, topic, article, detail, an optional link and an optional client name such as "claude-code"), the time, and a one-day pseudonym: a hash of the IP address, the date and a secret, which lets us limit how many reports one sender makes per day and cannot be turned back into the address. The IP address itself is not stored. Reports are read only by the owner's research pipeline and are never published on the site; an article written in response cites its own sources, not the report. Do not put personal data in a report. To have a report removed, open a [GitHub Issue](https://github.com/AnastasiyaW/knowledge-space/issues) with its text and date.
+
 ## Other services the pages load
 
 Pages load fonts from Google Fonts, the 3D graph library from jsDelivr, and star counts from GitHub's API. Each of those services receives your IP address and browser headers, as with any web request.

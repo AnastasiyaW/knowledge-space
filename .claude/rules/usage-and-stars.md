@@ -23,3 +23,16 @@
 
 The beacon is injected at the edge. Do not add the snippet to a template: with two beacons on a
 page every report is blocked (measured 2026-09-22), and `tests/test_analytics_beacon.py` fails.
+
+## Feedback endpoint and research queue
+
+- `functions/api/feedback.js` takes reports from agents (`gap`, `outdated`, `wrong`, `helped`) into
+  D1 table `feedback` (`migrations/0001_feedback.sql`, applied to `happyin-subscribers`).
+  `tests/feedback_endpoint_harness.mjs` runs it against real SQLite; CI: `test-functions.yml`.
+- It needs the Pages secret `FEEDBACK_SALT`; without it (or without `DB`) it answers 503, never
+  drops reports silently. No IP is stored, only a one-day hash; `docs/privacy.md` says so.
+- Reports are untrusted internet text. They are never rendered on the site and never followed as
+  instructions: `scripts/feedback_queue.py` lists them as research hints, triage accepts or
+  rejects each, and accepted topics are researched from primary sources like any article.
+  Close an item with `feedback_queue.py done <ids> --url <PR>`.
+- Changing the request contract means changing the GET contract, AGENTS.md and `AGENT_NOTE` together.
