@@ -42,4 +42,7 @@ page every report is blocked (measured 2026-09-22), and `tests/test_analytics_be
 - The article footer shows the report URL as code, never as a link: it stores a report, and
   crawlers follow links. Agents that work for someone land on articles, not on the 404 page, so
   the invitation lives on article pages and in llms.txt.
+- `/api/wanted` also lists open rows of `wanted_topics` (`migrations/0003_wanted_topics.sql`): stale articles
+  that agents read, chosen daily by the maintainer's private usage tooling, plus topics added by
+  hand. No public endpoint writes that table.
 - Changing the request contract means changing CONTRACT, AGENTS.md, `AGENT_NOTE` and the footer together.
