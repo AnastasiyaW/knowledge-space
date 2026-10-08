@@ -11,13 +11,22 @@ import { SITE, json } from "../_feedback_core.js";
 export async function onRequestGet(context) {
   const { env } = context;
   if (!env.DB) return json(503, { error: "feedback storage is not configured" });
-  const topics = await env.DB
+  try {
+    return json(200, await listWanted(env.DB));
+  } catch (e) {
+    // A missing table (migration not applied) is a deploy error: say so, never an empty list.
+    return json(503, { error: "wanted list unavailable", detail: String(e.message || e).slice(0, 200) });
+  }
+}
+
+async function listWanted(db) {
+  const topics = await db
     .prepare(
       `SELECT title AS topic, domain, article, why, substr(added_at, 1, 10) AS since
          FROM wanted_topics WHERE status = 'open' ORDER BY added_at, id LIMIT 50`
     )
     .all();
-  const asked = await env.DB
+  const asked = await db
     .prepare(
       `SELECT public_title AS topic, min(day) AS since, count(*) AS asked
          FROM reports WHERE status = 'accepted' AND public_title IS NOT NULL
@@ -32,10 +41,10 @@ export async function onRequestGet(context) {
     })),
     ...asked.results.map((t) => ({ topic: t.topic, since: t.since, asked: t.asked })),
   ];
-  return json(200, {
+  return {
     wanted,
     how_to_help: `Send verified facts for one of these topics: POST ${SITE}/api/feedback or GET ${SITE}/api/feedback/report `
       + "with kind=finding, topic, detail (the facts, with versions and dates) and source_url (primary source). "
       + "For an existing article, also pass article. Findings are checked against their sources before anything is written.",
-  });
+  };
 }

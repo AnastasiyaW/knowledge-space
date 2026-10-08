@@ -182,13 +182,17 @@ assert.ok(!JSON.stringify(g.body).includes("Kafka share groups"));
     `INSERT INTO wanted_topics (key, title, domain, article, why, source, added_at, updated_at, status)
      VALUES (?, ?, ?, ?, ?, 'demand', '2026-10-08T00:00:00Z', '2026-10-08T00:00:00Z', ?)`);
   ins.run("llm-agents/telegram-managed-bots", "Refresh: Telegram managed bots", "llm-agents",
-          "llm-agents/telegram-managed-bots", "read by agents 209 times in 30 days", "open");
+          "llm-agents/telegram-managed-bots", "fixture reason", "open");
   ins.run("x/closed", "Closed topic", "x", null, null, "closed");
   ins.run("x/dropped", "Dropped topic", "x", null, null, "dropped");
   g = await get(wanted, env, "");
   assert.deepEqual(g.body.wanted.map((w) => w.topic), ["Refresh: Telegram managed bots", "Kafka 4 share groups"]);
   assert.equal(g.body.wanted[0].article, "https://happyin.space/llm-agents/telegram-managed-bots/");
   assert.equal(g.body.wanted[0].since, "2026-10-08");
+  env.DB.sqlite.exec("ALTER TABLE wanted_topics RENAME TO wanted_topics_gone");
+  g = await get(wanted, env, "");
+  assert.equal(g.status, 503);
+  env.DB.sqlite.exec("ALTER TABLE wanted_topics_gone RENAME TO wanted_topics");
 }
 
 // Retention: a row older than a year goes on the next accepted report.
