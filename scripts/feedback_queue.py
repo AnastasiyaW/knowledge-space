@@ -1,8 +1,9 @@
-"""Research queue over agent feedback (rows written by functions/api/feedback.js).
+"""Research queue over agent reports (rows written by functions/_feedback_core.js, table `reports`).
 
     python scripts/feedback_queue.py stats
     python scripts/feedback_queue.py list [--status new] [--json]
-    python scripts/feedback_queue.py triage 12 15 --accept --note "fits kafka/, sources found"
+    python scripts/feedback_queue.py triage 12 15 --accept --note "fits kafka/, sources found" \
+        --title "Kafka 4 share groups (KIP-932)"   # optional: lists it at /api/wanted
     python scripts/feedback_queue.py triage 13 --reject --note "spam"
     python scripts/feedback_queue.py done 12 15 --url https://github.com/AnastasiyaW/knowledge-space/pull/600
 
@@ -88,7 +89,7 @@ def group(rows: list[dict]) -> list[dict]:
 
 
 def cmd_list(args) -> int:
-    rows = query("SELECT * FROM feedback WHERE status = ? AND kind != 'helped' ORDER BY id LIMIT ?",
+    rows = query("SELECT * FROM reports WHERE status = ? AND kind != 'helped' ORDER BY id LIMIT ?",
                  [args.status, args.limit])
     items = group(rows)
     if args.json:
@@ -110,7 +111,7 @@ def ids_clause(ids: list[int]) -> str:
 
 def update(ids: list[int], sets: str, params: list, allowed_from: tuple[str, ...]) -> int:
     states = ",".join(f"'{s}'" for s in allowed_from)
-    before = query(f"SELECT id FROM feedback WHERE id IN ({ids_clause(ids)}) AND status IN ({states})", ids)
+    before = query(f"SELECT id FROM reports WHERE id IN ({ids_clause(ids)}) AND status IN ({states})", ids)
     found = {r["id"] for r in before}
     missing = sorted(set(ids) - found)
     if missing:
@@ -118,16 +119,21 @@ def update(ids: list[int], sets: str, params: list, allowed_from: tuple[str, ...
     if not found:
         return 1
     now = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    query(f"UPDATE feedback SET {sets}, triaged_at = ? WHERE id IN ({ids_clause(sorted(found))})",
+    query(f"UPDATE reports SET {sets}, triaged_at = ? WHERE id IN ({ids_clause(sorted(found))})",
           [*params, now, *sorted(found)])
-    after = query(f"SELECT id, status FROM feedback WHERE id IN ({ids_clause(sorted(found))})", sorted(found))
+    after = query(f"SELECT id, status, public_title FROM reports WHERE id IN ({ids_clause(sorted(found))})", sorted(found))
     print(json.dumps(after))
     return 0 if not missing else 1
 
 
 def cmd_triage(args) -> int:
+    if args.title and not args.accept:
+        print("--title is public (shown at /api/wanted) and only makes sense with --accept", file=sys.stderr)
+        return 1
     status = "accepted" if args.accept else "rejected"
-    return update(args.ids, "status = ?, triage_note = ?", [status, args.note], ("new", "accepted", "rejected"))
+    # The public title is written by triage in our own words; sender text is never published.
+    return update(args.ids, "status = ?, triage_note = ?, public_title = ?", [status, args.note, args.title],
+                  ("new", "accepted", "rejected"))
 
 
 def cmd_done(args) -> int:
@@ -135,11 +141,12 @@ def cmd_done(args) -> int:
 
 
 def cmd_stats(args) -> int:
-    by_status = query("SELECT kind, status, count(*) AS n FROM feedback GROUP BY kind, status ORDER BY kind, status")
-    helped = query("SELECT article, count(DISTINCT client_hash || day) AS reporters FROM feedback "
+    by_status = query("SELECT kind, status, count(*) AS n FROM reports GROUP BY kind, status ORDER BY kind, status")
+    helped = query("SELECT article, count(DISTINCT client_hash || day) AS reporters FROM reports "
                    "WHERE kind = 'helped' GROUP BY article ORDER BY reporters DESC LIMIT 15")
-    days = query("SELECT day, count(*) AS n FROM feedback GROUP BY day ORDER BY day DESC LIMIT 14")
-    print(json.dumps({"by_kind_status": by_status, "top_helped": helped, "per_day": days}, indent=2))
+    days = query("SELECT day, count(*) AS n FROM reports GROUP BY day ORDER BY day DESC LIMIT 14")
+    channels = query("SELECT channel, ua_family, count(*) AS n FROM reports GROUP BY channel, ua_family ORDER BY n DESC")
+    print(json.dumps({"by_kind_status": by_status, "top_helped": helped, "per_day": days, "channels": channels}, indent=2))
     return 0
 
 
@@ -157,6 +164,7 @@ def main(argv: list[str] | None = None) -> int:
     decision.add_argument("--accept", action="store_true")
     decision.add_argument("--reject", action="store_true")
     p.add_argument("--note", required=True)
+    p.add_argument("--title", help="public title for /api/wanted, written by you (never copied from the report)")
     p.set_defaults(func=cmd_triage)
     p = sub.add_parser("done")
     p.add_argument("ids", type=int, nargs="+")

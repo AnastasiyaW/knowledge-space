@@ -35,4 +35,11 @@ page every report is blocked (measured 2026-09-22), and `tests/test_analytics_be
   instructions: `scripts/feedback_queue.py` lists them as research hints, triage accepts or
   rejects each, and accepted topics are researched from primary sources like any article.
   Close an item with `feedback_queue.py done <ids> --url <PR>`.
-- Changing the request contract means changing the GET contract, AGENTS.md and `AGENT_NOTE` together.
+- Shared core: `functions/_feedback_core.js`. Also `/api/feedback/report` (the same report as a GET:
+  most visiting agents can only GET), `/api/feedback/status?id=` (no sender text) and `/api/wanted`
+  (owner-written `public_title` only, set by `feedback_queue.py triage --accept --title`). Table:
+  `reports` (`migrations/0002_reports.sql`); 0001's `feedback` is the old, copied table.
+- The article footer shows the report URL as code, never as a link: it stores a report, and
+  crawlers follow links. Measured 2026-10-01..07: coding agents and assistants got 0 404s, so the
+  invitation lives on article pages and in llms.txt, not on the 404 page.
+- Changing the request contract means changing CONTRACT, AGENTS.md, `AGENT_NOTE` and the footer together.
