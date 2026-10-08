@@ -7,6 +7,7 @@
  * Rows are research hints for the owner's pipeline (scripts/feedback_queue.py). They are
  * never shown on the site, so nothing a sender writes reaches another visitor.
  * No IP is stored: only sha256(ip|day|FEEDBACK_SALT), which changes every day.
+ * Rows older than KEEP_DAYS are deleted on the next accepted report.
  */
 
 const KINDS = {
@@ -17,7 +18,8 @@ const KINDS = {
 };
 const LIMITS = { body: 8192, topic: 200, detail: 2000, source_url: 500, agent: 80 };
 const PER_CLIENT_PER_DAY = 30;   // one busy agent session; more looks like a loop or spam
-const ALL_PER_DAY = 3000;        // ~10x the 252 unique cloners measured over 14 days (2026-10-08)
+const ALL_PER_DAY = 3000;        // well above expected agent traffic; caps storage growth under a flood
+const KEEP_DAYS = 365;           // retention promised in docs/privacy.md
 const ARTICLE = /^[a-z0-9][a-z0-9-]*(\/[a-z0-9][a-z0-9-]*)+$/;
 
 const HEADERS = {
@@ -106,7 +108,9 @@ export async function onRequestPost(context) {
   // Fail loud: a silently dropped report is worse than a visible 503.
   if (!db || !salt) return json(503, { error: "feedback storage is not configured" });
 
-  const raw = await request.text();
+  const declared = Number(request.headers.get("Content-Length") || 0);
+  if (declared > LIMITS.body) return json(413, { error: `body larger than ${LIMITS.body} bytes` });
+  const raw = await request.text();   // still checked: Content-Length can be absent (chunked)
   if (raw.length > LIMITS.body) return json(413, { error: `body larger than ${LIMITS.body} bytes` });
   let body;
   try {
@@ -122,8 +126,9 @@ export async function onRequestPost(context) {
   const ip = request.headers.get("CF-Connecting-IP") || "unknown";
   const client = await clientHash(ip, day, salt);
 
-  // simplification: count-then-insert is not atomic, so a burst can pass a limit by a few rows;
-  // a Durable Object counter would make it exact if abuse ever needs that.
+  // simplification: count-then-insert is not atomic, so a burst can pass a limit by a few rows,
+  // and one sender rotating IPs can use up ALL_PER_DAY (reports then wait for tomorrow; nothing
+  // stored is lost). A Durable Object counter or Turnstile would close both if abuse appears.
   const counts = await db
     .prepare(
       `SELECT
@@ -146,5 +151,7 @@ export async function onRequestPost(context) {
     )
     .bind(now.toISOString(), day, row.kind, row.topic, row.article, row.detail, row.source_url, row.agent, client)
     .run();
+  const oldest = new Date(now.getTime() - KEEP_DAYS * 86400000).toISOString().slice(0, 10);
+  await db.prepare("DELETE FROM feedback WHERE day < ?").bind(oldest).run();
   return json(201, { ok: true, id: result.meta.last_row_id, note: "Thank you. Gaps and corrections go to the research queue." });
 }

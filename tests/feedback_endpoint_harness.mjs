@@ -84,6 +84,36 @@ const bad = [
 for (const body of bad) assert.equal((await post(env, body)).status, 400, JSON.stringify(body));
 assert.equal((await post(env, JSON.stringify({ kind: "gap", topic: "x".repeat(9000) }))).status, 413);
 
+// Content-Length over the limit is refused before the body is read.
+{
+  const request = new Request("https://happyin.space/api/feedback", {
+    method: "POST", headers: { "Content-Type": "application/json", "Content-Length": "999999" },
+    body: JSON.stringify({ kind: "gap", topic: "fine" }),
+  });
+  assert.equal((await mod.onRequestPost({ request, env })).status, 413);
+}
+
+// Same subject with a different detail is still one report per client per day.
+r = await post(env, { kind: "outdated", article: "kafka/consumer-groups", detail: "another wording" });
+assert.deepEqual(r.body, { ok: true, duplicate: true });
+
+// Retention: a row older than a year goes on the next accepted report.
+env.DB.sqlite.prepare("INSERT INTO feedback (created_at, day, kind, topic, client_hash) VALUES ('2020-01-01T00:00:00Z', '2020-01-01', 'gap', 'old', 'x')").run();
+assert.equal((await post(env, { kind: "gap", topic: "fresh topic" })).status, 201);
+assert.equal(env.DB.sqlite.prepare("SELECT count(*) AS n FROM feedback WHERE day = '2020-01-01'").get().n, 0);
+
+// GET answers cross-origin too.
+assert.equal((await mod.onRequestGet()).headers.get("Access-Control-Allow-Origin"), "*");
+
+// Global daily cap.
+{
+  const capped = { DB: d1(), FEEDBACK_SALT: "s" };
+  const today = new Date().toISOString().slice(0, 10);
+  const ins = capped.DB.sqlite.prepare("INSERT INTO feedback (created_at, day, kind, topic, client_hash) VALUES (?, ?, 'gap', ?, ?)");
+  for (let i = 0; i < 3000; i++) ins.run(`${today}T00:00:00Z`, today, `t${i}`, `c${i}`);
+  assert.equal((await post(capped, { kind: "gap", topic: "over the cap" })).status, 429);
+}
+
 // Per-client daily limit.
 const flood = { DB: d1(), FEEDBACK_SALT: "s" };
 for (let i = 0; i < 30; i++) assert.equal((await post(flood, { kind: "gap", topic: `topic ${i}` })).status, 201);
