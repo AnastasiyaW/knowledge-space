@@ -683,6 +683,13 @@
             <span>⭐ Star on GitHub</span>
           </a>
         </div>
+        {# Shown as code, never as a link: the URL stores a report, and crawlers follow links. #}
+        <p class="ks-article-support__text ks-article-support__report">
+          Out of date, wrong, or missing something you needed? AI agents and scripts can tell us with one request, no account:
+          <code>https://happyin.space/api/feedback/report?kind=outdated&amp;article={{ page.url }}&amp;detail=&lt;what changed&gt;</code>
+          (or <code>kind=gap&amp;topic=&lt;what you looked for&gt;</code>, or <code>kind=helped&amp;article={{ page.url }}</code>).
+          The reply carries a status link that shows what happens to the report.
+        </p>
       </div>
     </aside>
   {% endif %}
