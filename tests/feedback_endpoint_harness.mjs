@@ -227,6 +227,10 @@ assert.equal((await post(flood, { kind: "gap", topic: "other client" }, "198.51.
     { location: "kafka/groups/", title: "Kafka groups", text: "Consumer coordination" },
     { location: "kafka/groups/#share", title: "Share groups", text: "Kafka consumer coordination" },
     { location: "https://evil.example/a/b/", title: "Kafka", text: "coordination" },
+    { location: "security/cwe/CWE-79/", title: "CWE nested", text: "Scripting prevention" },
+    { location: "code/C++/", title: "Compiler guide", text: "templates" },
+    { location: "models/split/#first", title: "First", text: "quantization" },
+    { location: "models/split/#second", title: "Second", text: "deployment" },
   ] };
   const e = { DB: d1(), FEEDBACK_SALT: "s", ASSETS: { async fetch(url) {
     assert.equal(new URL(url).pathname, "/search/search_index.json");
@@ -235,6 +239,12 @@ assert.equal((await post(flood, { kind: "gap", topic: "other client" }, "198.51.
   let found = await get(search, e, "q=Kafka+coordination");
   assert.equal(found.status, 200);
   assert.equal(found.body.total, 1);
+  for (const q of ["CWE scripting", "compiler templates", "quantization deployment"]) {
+    const covered = await get(search, e, "q=" + encodeURIComponent(q));
+    assert.equal(covered.status, 200);
+    assert.equal(covered.body.total, 1, q);
+    assert.equal(covered.body.gap, undefined, q);
+  }
   assert.equal(e.DB.sqlite.prepare("SELECT count(*) AS n FROM reports").get().n, 0);
   for (const q of ["", "q=+++", "q=%21%21", "q=" + "a".repeat(201)]) {
     assert.equal((await get(search, e, q)).status, 400);

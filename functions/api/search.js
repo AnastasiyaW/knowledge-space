@@ -36,13 +36,22 @@ export function searchDocuments(docs, terms) {
       throw new Error("invalid search document");
     }
     const url = new URL(doc.location, SITE + "/");
-    if (url.origin !== SITE || !/^\/[a-z0-9-]+\/[a-z0-9-]+\/$/.test(url.pathname)) continue;
+    // The index is authoritative: article URLs include nested CWE paths, case
+    // and plus signs. Do not invent a narrower slug grammar than the builder.
+    if (url.origin !== SITE || url.pathname.split("/").filter(Boolean).length < 2) continue;
     const title = doc.title.toLowerCase();
     const text = doc.text.toLowerCase();
-    if (!terms.every((term) => title.includes(term) || text.includes(term))) continue;
-    const score = terms.reduce((sum, term) => sum + (title.includes(term) ? 2 : 1), 0);
+    const matched = terms.filter((term) => title.includes(term) || text.includes(term));
+    if (!matched.length) continue;
+    const score = matched.reduce((sum, term) => sum + (title.includes(term) ? 2 : 1), 0);
     const hit = { title: doc.title, url: url.href, excerpt: doc.text.replace(/\s+/g, " ").slice(0, 300), score };
-    if (!articles.has(url.pathname) || articles.get(url.pathname).score < score) articles.set(url.pathname, hit);
+    const article = articles.get(url.pathname) || { hit, matched: new Set() };
+    for (const term of matched) article.matched.add(term);
+    if (article.hit.score < score) article.hit = hit;
+    articles.set(url.pathname, article);
   }
-  return [...articles.values()].sort((a, b) => b.score - a.score || a.url.localeCompare(b.url));
+  // MkDocs emits separate section documents. A query spanning two sections is
+  // still covered by their article and must not create a research gap.
+  return [...articles.values()].filter(a => a.matched.size === terms.length)
+    .map(a => a.hit).sort((a, b) => b.score - a.score || a.url.localeCompare(b.url));
 }
