@@ -294,12 +294,13 @@ for (const empty of [false, true]) {
   assert.equal((await send("", { topic: "missing" })).status, 401);
   assert.equal((await send("Bearer wrong", { topic: "missing" })).status, 401);
   assert.equal((await send("Bearer test-only-secret", { topic: "missing", channel: "post" })).status, 400);
+  assert.equal((await send("Bearer test-only-secret", { topic: "missing", agent: "caller-owned" })).status, 400);
   assert.equal((await send("Bearer test-only-secret", { topic: "missing" }, { ...e, MCP_GAP_INGEST_SECRET: undefined })).status, 503);
   assert.equal(e.DB.sqlite.prepare("SELECT count(*) AS n FROM reports").get().n, 0);
-  assert.equal((await send("Bearer test-only-secret", { topic: "missing" })).status, 201);
+  assert.equal((await send("Bearer test-only-secret", { topic: "missing", detail: "query: missing\ndomain: image-generation" })).status, 201);
   assert.equal((await send("Bearer test-only-secret", { topic: "missing" })).status, 200);
-  assert.deepEqual({ ...e.DB.sqlite.prepare("SELECT channel,agent FROM reports").get() },
-    { channel: "mcp-search", agent: "diffusion-love-mcp" });
+  assert.deepEqual({ ...e.DB.sqlite.prepare("SELECT channel,agent,detail FROM reports").get() },
+    { channel: "mcp-search", agent: "diffusion-love-mcp", detail: "query: missing\ndomain: image-generation" });
   for (let i = 0; i < 31; i++) {
     assert.equal((await send("Bearer test-only-secret", { topic: `service gap ${i}` })).status, 201);
   }

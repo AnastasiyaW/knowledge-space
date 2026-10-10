@@ -21,11 +21,13 @@ export async function onRequestPost({ request, env }) {
   if (new TextEncoder().encode(raw).length > LIMITS.body) return json(413, { error: "body too large" });
   let body;
   try { body = JSON.parse(raw); } catch { return json(400, { error: "invalid JSON" }); }
-  if (!body || Array.isArray(body) || typeof body !== "object" || Object.keys(body).some(k => k !== "topic")) {
-    return json(400, { error: "body must contain only topic" });
+  if (!body || Array.isArray(body) || typeof body !== "object" || Object.keys(body).some(k => k !== "topic" && k !== "detail")) {
+    return json(400, { error: "body may contain only topic and detail" });
   }
   try {
-    const result = await storeReport(env, request, { kind: "gap", topic: body.topic, agent: "diffusion-love-mcp" }, "mcp-search");
+    const result = await storeReport(env, request, {
+      kind: "gap", topic: body.topic, detail: body.detail, agent: "diffusion-love-mcp",
+    }, "mcp-search");
     return json(result.status, result.body);
   } catch {
     return json(503, { error: "gap storage is unavailable" });
