@@ -45,8 +45,10 @@ class LastResearched(unittest.TestCase):
         )
 
     def test_rejects_frontmatter_that_mkdocs_could_not_parse(self):
-        raw = "---\ntitle: Example\nlast_researched: 2026-02-30\n---\n" + self.ARTICLE
-        with self.assertRaisesRegex(ValueError, "could not be parsed"):
-            researched.on_page_markdown(raw, page("llm-agents/example.md"), {}, None)
+        for closer in ("---", "..."):
+            with self.subTest(closer=closer):
+                raw = f"---\ntitle: Example\nlast_researched: 2026-02-30\n{closer}\n" + self.ARTICLE
+                with self.assertRaisesRegex(ValueError, "could not be parsed"):
+                    researched.on_page_markdown(raw, page("llm-agents/example.md"), {}, None)
         with self.assertRaises(ValueError):
             researched.on_page_markdown(self.ARTICLE, page("blog/index.md", {"last_researched": "2099-01-01"}), {}, None)
