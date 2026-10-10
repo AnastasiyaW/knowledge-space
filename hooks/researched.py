@@ -52,9 +52,16 @@ def _is_article(src: str) -> bool:
 def on_page_markdown(markdown: str, page, config, files, **kwargs) -> str:
     """Place a verified research date below the article title when supplied."""
     src = page.file.src_uri
-    if not _is_article(src) or not page.meta or FIELD not in page.meta:
+    if not page.meta or FIELD not in page.meta:
+        # MkDocs catches YAML errors and leaves the rejected front matter in
+        # the body. An impossible YAML date must not masquerade as legacy data.
+        front = re.match(r"\A\ufeff?---\s*\n(.*?)\n---\s*(?:\n|$)", markdown, re.DOTALL)
+        if front and re.search(r"^['\"]?last_researched['\"]?\s*:", front[1], re.MULTILINE):
+            raise ValueError(f"{src}: last_researched front matter could not be parsed")
         return markdown
     researched = parse_last_researched(page.meta[FIELD])
+    if not _is_article(src):
+        return markdown
     marker = f"\n*Last researched: <time datetime=\"{researched.isoformat()}\">{researched.isoformat()}</time>*\n"
     match = re.search(r"^(# .+)$", markdown, re.MULTILINE)
     if not match:

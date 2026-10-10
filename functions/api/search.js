@@ -1,5 +1,22 @@
 import { json, LIMITS, SITE, storeReport } from "../_feedback_core.js";
 
+// Static assets belong to a deployment. Share parsing across concurrent requests
+// to the same binding, and evict failures so a transient read can be retried.
+const indexes = new WeakMap();
+function loadIndex(assets, origin) {
+  if (!indexes.has(assets)) {
+    const pending = (async () => {
+      const response = await assets.fetch(new URL("/search/search_index.json", origin));
+      if (!response.ok) throw new Error("index unavailable");
+      const index = await response.json();
+      if (!Array.isArray(index.docs) || !index.docs.length) throw new Error("index missing documents");
+      return prepareDocuments(index.docs);
+    })().catch(error => { indexes.delete(assets); throw error; });
+    indexes.set(assets, pending);
+  }
+  return indexes.get(assets);
+}
+
 // Uses the same deployed MkDocs index as the site's browser search. No remote URL
 // or channel supplied by the caller is used to select storage or fetch a resource.
 export async function onRequestGet({ request, env }) {
@@ -10,11 +27,7 @@ export async function onRequestGet({ request, env }) {
   }
   let results;
   try {
-    const response = await env.ASSETS.fetch(new URL("/search/search_index.json", request.url));
-    if (!response.ok) throw new Error("index unavailable");
-    const index = await response.json();
-    if (!Array.isArray(index.docs) || !index.docs.length) throw new Error("index missing documents");
-    results = searchDocuments(index.docs, terms);
+    results = searchPrepared(await loadIndex(env.ASSETS, request.url), terms);
   } catch {
     return json(503, { error: "search index is unavailable; no gap was recorded" });
   }
@@ -30,7 +43,11 @@ export async function onRequestGet({ request, env }) {
 }
 
 export function searchDocuments(docs, terms) {
-  const articles = new Map();
+  return searchPrepared(prepareDocuments(docs), terms);
+}
+
+function prepareDocuments(docs) {
+  const prepared = [];
   for (const doc of docs) {
     if (typeof doc.location !== "string" || typeof doc.title !== "string" || typeof doc.text !== "string") {
       throw new Error("invalid search document");
@@ -39,16 +56,26 @@ export function searchDocuments(docs, terms) {
     // The index is authoritative: article URLs include nested CWE paths, case
     // and plus signs. Do not invent a narrower slug grammar than the builder.
     if (url.origin !== SITE || url.pathname.split("/").filter(Boolean).length < 2) continue;
-    const title = doc.title.toLowerCase();
-    const text = doc.text.toLowerCase();
+    prepared.push({ pathname: url.pathname, url: url.href, title: doc.title,
+      lowerTitle: doc.title.toLowerCase(), text: doc.text.toLowerCase(),
+      excerpt: doc.text.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim().slice(0, 300) });
+  }
+  return prepared;
+}
+
+function searchPrepared(docs, terms) {
+  const articles = new Map();
+  for (const doc of docs) {
+    const title = doc.lowerTitle;
+    const text = doc.text;
     const matched = terms.filter((term) => title.includes(term) || text.includes(term));
     if (!matched.length) continue;
     const score = matched.reduce((sum, term) => sum + (title.includes(term) ? 2 : 1), 0);
-    const hit = { title: doc.title, url: url.href, excerpt: doc.text.replace(/\s+/g, " ").slice(0, 300), score };
-    const article = articles.get(url.pathname) || { hit, matched: new Set() };
+    const hit = { title: doc.title, url: doc.url, excerpt: doc.excerpt, score };
+    const article = articles.get(doc.pathname) || { hit, matched: new Set() };
     for (const term of matched) article.matched.add(term);
     if (article.hit.score < score) article.hit = hit;
-    articles.set(url.pathname, article);
+    articles.set(doc.pathname, article);
   }
   // MkDocs emits separate section documents. A query spanning two sections is
   // still covered by their article and must not create a research gap.

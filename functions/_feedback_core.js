@@ -135,7 +135,11 @@ export async function storeReport(env, request, body, channel) {
   const now = new Date();
   const day = now.toISOString().slice(0, 10);
   const ip = request.headers.get("CF-Connecting-IP") || "unknown";
-  const client = await clientHash(ip, day, salt);
+  // The authenticated MCP sender represents the entire service, not one person.
+  // Public search has a separate per-client allowance from explicit feedback.
+  const identity = channel === "mcp-search" ? "mcp-service" : channel === "search" ? `${ip}|search` : ip;
+  const client = await clientHash(identity, day, salt);
+  const clientLimit = channel === "mcp-search" ? ALL_PER_DAY : PER_CLIENT_PER_DAY;
 
   // simplification: count-then-insert is not atomic, so a burst can pass a limit by a few rows,
   // and one sender rotating IPs can use up ALL_PER_DAY (reports then wait for tomorrow; nothing
@@ -151,7 +155,7 @@ export async function storeReport(env, request, body, channel) {
     .bind(day, client, row.kind, row.topic, row.article)
     .first();
   if (counts.same) return { status: 200, body: { ok: true, duplicate: true, id: counts.same, status_url: statusUrl(counts.same) } };
-  if (counts.client_today >= PER_CLIENT_PER_DAY || counts.all_today >= ALL_PER_DAY) {
+  if (counts.client_today >= clientLimit || counts.all_today >= ALL_PER_DAY) {
     return { status: 429, body: { error: "daily feedback limit reached, try tomorrow" } };
   }
 

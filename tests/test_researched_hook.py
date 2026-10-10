@@ -43,3 +43,10 @@ class LastResearched(unittest.TestCase):
         self.assertEqual(
             researched.parse_last_researched(date(2026, 9, 2), today=date(2026, 10, 10)), date(2026, 9, 2)
         )
+
+    def test_rejects_frontmatter_that_mkdocs_could_not_parse(self):
+        raw = "---\ntitle: Example\nlast_researched: 2026-02-30\n---\n" + self.ARTICLE
+        with self.assertRaisesRegex(ValueError, "could not be parsed"):
+            researched.on_page_markdown(raw, page("llm-agents/example.md"), {}, None)
+        with self.assertRaises(ValueError):
+            researched.on_page_markdown(self.ARTICLE, page("blog/index.md", {"last_researched": "2099-01-01"}), {}, None)

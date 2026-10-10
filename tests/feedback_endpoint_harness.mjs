@@ -232,7 +232,9 @@ assert.equal((await post(flood, { kind: "gap", topic: "other client" }, "198.51.
     { location: "models/split/#first", title: "First", text: "quantization" },
     { location: "models/split/#second", title: "Second", text: "deployment" },
   ] };
+  let indexReads = 0;
   const e = { DB: d1(), FEEDBACK_SALT: "s", ASSETS: { async fetch(url) {
+    indexReads++;
     assert.equal(new URL(url).pathname, "/search/search_index.json");
     return Response.json(index);
   } } };
@@ -262,6 +264,7 @@ assert.equal((await post(flood, { kind: "gap", topic: "other client" }, "198.51.
   broken.ASSETS.fetch = async () => Response.json({ docs: [] });
   assert.equal((await get(search, broken, "q=unavailable")).status, 503);
   assert.equal(e.DB.sqlite.prepare("SELECT count(*) AS n FROM reports").get().n, 1);
+  assert.equal(indexReads, 1, "one immutable index parse per asset binding");
 }
 
 // Widening channel CHECK preserves all fields, indexes and deleted-ID high water.
@@ -297,6 +300,10 @@ for (const empty of [false, true]) {
   assert.equal((await send("Bearer test-only-secret", { topic: "missing" })).status, 200);
   assert.deepEqual({ ...e.DB.sqlite.prepare("SELECT channel,agent FROM reports").get() },
     { channel: "mcp-search", agent: "diffusion-love-mcp" });
+  for (let i = 0; i < 31; i++) {
+    assert.equal((await send("Bearer test-only-secret", { topic: `service gap ${i}` })).status, 201);
+  }
+  assert.equal((await post(e, { kind: "gap", topic: "explicit report after service gaps" })).status, 201);
   assert.equal(mcpGap.onRequest().status, 405);
 }
 
