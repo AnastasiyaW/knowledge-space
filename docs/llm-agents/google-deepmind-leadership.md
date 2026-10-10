@@ -1,7 +1,11 @@
+---
+title: "Google DeepMind leadership — who runs what, as of 2026-08-05"
+last_researched: 2026-09-02
+---
+
 # Google DeepMind leadership — who runs what, as of 2026-08-05
 
 **Development line:** `organization:google-deepmind` · thread `leadership`
-**Last researched:** 2026-09-02 · confidence: high · 11 sources, each with the moment it was read
 **Freshness check:** 2026-09-03 · no substantive leadership change since this article; one stale-source caveat added
 
 ## What it is
@@ -89,7 +93,7 @@ Vinyals. Google named no replacement Google DeepMind CEO.
 
 ## Sources
 
-All read on 2026-09-02T18:32Z unless dated otherwise.
+All read on 2026-09-02T18:32Z unless dated otherwise. Confidence: high; 11 sources, each with the moment it was read.
 
 | source | title |
 |---|---|

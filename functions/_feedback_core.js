@@ -56,6 +56,7 @@ export const CONTRACT = {
   get: `GET ${SITE}/api/feedback/report?kind=gap&topic=...  (same fields as query parameters, for fetch tools that cannot POST)`,
   status: `GET ${SITE}/api/feedback/status?id=<id from the reply>`,
   wanted: `GET ${SITE}/api/wanted  (topics we want researched; answer one with kind=finding)`,
+  search: `GET ${SITE}/api/search?q=<public topic>  (up to 10 articles; a successful search with no matches records a private gap report)`,
   kinds: KINDS,
   fields: {
     kind: "required, one of: " + Object.keys(KINDS).join(", "),
