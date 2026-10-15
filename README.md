@@ -4,7 +4,7 @@ A curated technical reference across 28 domains — Kafka, Python, SQL, ML, secu
 
 We built it because agents kept confidently hallucinating API flags, version-specific behavior, and config options. Point your Claude, Cursor, or any RAG pipeline at this repo and it gets a reliable source to check against.
 
-**1322+ articles | 28 domains | 3153+ cross-references**
+**1323+ articles | 28 domains | 3153+ cross-references**
 
 [![Live site](https://img.shields.io/badge/Live_site-happyin.space-FFD740?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGNpcmNsZSBjeD0iMjgiIGN5PSIyMiIgcj0iOSIgZmlsbD0iI2JiODZmYyIvPjxjaXJjbGUgY3g9IjQyIiBjeT0iMzAiIHI9IjciIGZpbGw9IiMwM2RhYzYiLz48Y2lyY2xlIGN4PSIxOCIgY3k9IjQwIiByPSI2IiBmaWxsPSIjZmY3NTk3Ii8+PC9zdmc+)](https://happyin.space/)
 [![GitHub Stars](https://img.shields.io/github/stars/AnastasiyaW/knowledge-space?style=for-the-badge&logo=github&color=FFD740)](https://github.com/AnastasiyaW/knowledge-space/stargazers)
@@ -19,7 +19,7 @@ We built it because agents kept confidently hallucinating API flags, version-spe
 | `security/` | 61 | Web security, pentesting, Active Directory, anti-fraud, model protection, CWE |
 | `data-science/` | 57 | ML, statistics, neural networks, CV, NLP, math foundations |
 | `devops/` | 47 | Docker, Kubernetes, Terraform, CI/CD, monitoring, SRE, observability |
-| `organizations/` | 45 | One page per company or lab: leadership and structure changes, product lines, what each change made obsolete |
+| `organizations/` | 46 | One page per company or lab: leadership and structure changes, product lines, what each change made obsolete |
 | `kafka/` | 43 | Broker internals, consumers, producers, Streams, KSQL, Connect, replication |
 | `architecture/` | 38 | Microservices, DDD, system design, API patterns, CQRS |
 | `web-frontend/` | 36 | React, TypeScript, CSS, Figma, bundlers, accessibility, JS async |

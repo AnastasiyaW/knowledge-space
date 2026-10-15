@@ -1,6 +1,6 @@
 # Umfassende technische Wissensbasis - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1322+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1323+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -646,6 +646,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [D-ID — Public product surfaces](https://happyin.space/organizations/d-id/): D-ID is a platform for teams that need either a generated presenter video or a live visual agent on a website. — Creates talking-avatar videos from image, text, or audio, plus video translation. — ...
 - [DeepSeek — DeepSeek product and AI-content governance](https://happyin.space/organizations/deepseek/): DeepSeek — an AI model provider for developers who want a GPT- or Claude-compatible backend rather than a separate client stack. - V4 Flash, V4 Pro, and experimental Flash Vision - Chat Completions...
 - [Disney Research — Interactive Generative Motion Editing](https://happyin.space/organizations/disney-research/): Disney Research — DisneyResearch|Studios publishes machine-learning and visual-computing research for animation, VFX, and research teams. — public papers and technical demonstrations; — 2022 work o...
+- [Dodo Pizza: revenue-dashboard — Revenue Dashboard](https://happyin.space/organizations/dodo-pizza/): Dodo Pizza revenue dashboard is a public store-sales view for prospective partners and operators who compare Dodo Pizza locations.
 - [ElevenLabs — Voice Platform Development](https://happyin.space/organizations/elevenlabs/): ElevenLabs — AI audio platform for product teams and creators who need generated speech, transcription, voice cloning, dubbing, or a voice layer for an LLM. Capabilities: - Text to Speech, Speech t...
 - [fal.ai — Model platform expansion](https://happyin.space/organizations/fal-ai/): fal.ai: a development line the news conveyor tracks; the present-state research has not run yet, so this page carries the dated line and the practical note below, nothing more.
 - [Framestore](https://happyin.space/organizations/framestore/): Framestore is a production-services studio for teams commissioning screen and immersive work.
