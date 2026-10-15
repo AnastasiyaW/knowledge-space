@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1321+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1322+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1098,6 +1098,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Volumography](https://happyin.space/projects/volumography/): A directory for artists, coders and researchers working with Gaussian Splatting, photogrammetry, NeRF, LiDAR and related 3D/4D capture.
 - [WAN 2.2 — WAN](https://happyin.space/projects/wan-2-2/): WAN 2.2 — линейка открытых video-diffusion моделей для разработчиков и создателей: text-to-video, image-to-video, text-image-to-video, speech-to-video и анимация персонажа. Лимит: TI2V-5B заявлен д...
 - [Wan-Dancer](https://happyin.space/projects/wan-dancer/): Wan-Dancer is a 14B music-to-dance video system for creators who need a long choreographed clip from a portrait, music track and style prompt rather than manually stitching short clips.
+- [WAN](https://happyin.space/projects/wan-skills/): WAN Skills is an Alibaba Wan GitHub package for agent builders. It includes a wan2.7 image-generation-and-editing skill and a PPTX-generation skill. It provides API-call scripts, upload and task-st...
 - [Wan Video](https://happyin.space/projects/wan-video/): Wan Video is Alibaba's open model family for video generation and video transformation.
 - [WAN](https://happyin.space/projects/wan/): WAN — a video-generation family for creators and developers: text-to-video, image-to-video, speech/reference-driven video, character animation and replacement. Wan2.2 remains an Apache-2.0 local mo...
 - [Wan2.2-NVFP4-Sparse](https://happyin.space/projects/wan2-2-nvfp4-sparse/): Wan2.2-NVFP4-Sparse, с 27 июля в карточке именуемый LightWan2.2-A14B, — версия Wan2.2-T2V/I2V-A14B для владельцев Blackwell, которым нужен четырёхшаговый локальный видеогенератор. Возможности: T2V;...
