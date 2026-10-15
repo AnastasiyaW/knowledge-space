@@ -132,3 +132,31 @@ As of 2026-08-21, practitioners should check dated official Anthropic and partne
 - **Subject:** `organization:anthropic`, thread `anthropic-development`, 9 dated events 2023-03-17 → 2026-08-21.
 - **Practical note:** As of 2026-08-21, practitioners should check dated official Anthropic and partner sources before relying on Claude capabilities, integrations, or access conditions, and should use Claude Academy as the official learning entry point while keeping historical claims tied to their contemporaneous evidence.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:7d7c933453c578b0d0d51da0c846dc7dc4a605e73c6564632e6831e301d6a5dd -->
+## 2026-09-25 — D.C. Circuit denies Anthropic petitions over Pentagon supply-chain exclusion
+
+The D.C. Circuit denied Anthropic’s petitions against the Department of War’s decision to remove Claude from its supply chain. The opinion orders Anthropic products removed from department systems and bars contractors from using them for department work.
+
+### Usage and practices
+
+- Choose a current Claude model for the workload. Use its documented model ID and supported platform when deciding on an integration. [Source](https://platform.claude.com/docs/en/models/overview)
+- Start an API integration with a first Messages API call. Keep credentials out of source control and client-side code. [Source](https://platform.claude.com/docs/en/intro)
+- For repository work, install Claude Code, authenticate with an eligible account or supported provider, and start it from the project directory. Verify the installation with `claude --version`. [Source](https://code.claude.com/docs/en/getting-started)
+- Write direct task instructions and state the required output format. Use examples where needed, then apply the prompting guidance for the chosen model. [Source](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices)
+- Set an expiration for API keys. Keep them out of source control, client-side code, and prompts. Consider workload identity federation instead of a static key. [Source](https://platform.claude.com/docs/en/intro)
+
+### Additional evidence
+
+- 2026-09-25: The court’s opinion identifies the action as removing Claude from the Department of War’s supply chain under 41 U.S.C. § 4713. It directs the removal of Anthropic products as soon as practical, and no later than 180 days. It also prohibits contractors from using Anthropic products for work for the department. The majority denied Anthropic’s petitions for review; one judge dissented. [Source](https://media.cadc.uscourts.gov/opinions/docs/2026/09/26-1049-2194984.pdf)
+
+### Subsequent developments
+
+- 2026-09-22: Anthropic announced Claude Opus 5.5. Its product page lists availability for Pro, Max, Team, and Enterprise users, the Claude Platform, Amazon Web Services, Google Cloud, and Microsoft Foundry. The API model ID is `claude-opus-5-5`. [Source](https://www.anthropic.com/claude-opus-5-5)
+
+### Limits and open questions
+
+- The appellate opinion addresses the Department of War’s supply-chain procurement action. It does not establish the scope or current legal status of separate government-wide actions or litigation involving Anthropic.
+- The supplied organization subject combines product development with legal-regulatory developments. The dated reviewed event is legal-regulatory, not a Claude product release.
+
+<!-- Retained base: 98bad623879b21c4a6a25f2488404405e0740053; article blob: 5011865b6aaa145e9d53abd38646b3d546fddffc -->
