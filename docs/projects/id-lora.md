@@ -57,7 +57,6 @@ As of 2026-03-15, use the linked website and repository to explore ID-LoRA, but 
 
 ## Still unknown
 
-- We could not retrieve the supplied hf.ru short link, so we do not treat it as evidence.
 - Public sources provide no first-party publication date for the LTX-2.3 checkpoint release, so we do not assign it a dated development event.
 
 ## Sources

@@ -59,7 +59,6 @@ As of 2026-03-09, evaluate Penguin-VL through its website, source repository, Hu
 
 - The hosted Hugging Face Space displayed a configuration error when read on 2026-09-05; local Gradio remains the documented demo route.
 - We found no independent deployment or cost measurements in the consulted first-party sources.
-- We skipped the original event’s hf.ru redirect because its destination and publication context were not verified.
 
 ## Sources
 
