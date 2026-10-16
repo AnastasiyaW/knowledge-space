@@ -39,7 +39,7 @@ It serves as a working layer over multiple generative models rather than a repla
 - 2025-07-28: exited beta for public release alongside ChatCanvas; the company reported over 300 000 early users.
 - 2026-02-19: added Vectorize to convert PNG and JPG into SVG.
 - 2026-03-05: added cropping presets for social platforms.
-- 2026-03-09: found no verified primary information on a specific release in accessible links; short link hf.ru was not verifiable as a Lovart source.
+- 2026-03-09: found no verified primary information on a specific release in accessible links.
 - 2026-03-21: added toolbar customization.
 - 2026-03-23: added moving selected objects inside an image with generative fill for the vacated area.
 - 2026-03-27: found no verified standalone delivery for this date; nearest confirmed changes are Move Object on 23 March and PSD export on 29 March.
@@ -81,7 +81,6 @@ No practitioner action is proposed: on 2025-05-13, 2026-03-09, and 2026-03-27, t
 ## Still unknown
 
 - Dates 2026-03-09 and 2026-03-27 lack verified descriptions of specific releases in accessible links; we cannot link them reliably to Vectorize or neighboring changes.
-- Short link https://hf.ru/linkd4c82 remains unused: we could not verify its target material or connection to Lovart.
 - Lovart marketing pages state capabilities and user counts; no independent audit has verified quality, credit limits, or model availability.
 
 ## Sources
