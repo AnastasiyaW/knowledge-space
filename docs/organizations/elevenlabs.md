@@ -86,3 +86,29 @@ From 2025-11-12, practitioners should distinguish officially licensed voices off
 - **Subject:** `organization:elevenlabs`, thread `voice-platform-development`, 1 dated events 2025-11-12 → 2025-11-12.
 - **Practical note:** From 2025-11-12, practitioners should distinguish officially licensed voices offered through ElevenLabs’ Iconic Voices program from unlicensed celebrity-voice imitation, and verify the applicable rights before use.
 - **Confidence:** high. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:463d2c76338193a3159f2c71777af49ca92383d8f02ad28090db53d1eafdb2b7 -->
+## 2026-10-17 — ElevenLabs adds Instant Soundtracks for uploaded video
+
+Instant Soundtracks creates a score and timestamped sound effects from uploaded video. It keeps effects as editable layers and can return separate music and sound-effect files through the API.
+
+### Usage and practices
+
+- Open the ElevenCreative Music Video Editor, upload video, and generate a soundtrack with sound effects. The video’s existing audio can serve as a score reference. [Source](https://elevenlabs.io/blog/introducing-instant-soundtracks)
+- Review sound effects on separate timeline layers. Adjust timing or replace music, then export the result. [Source](https://elevenlabs.io/blog/introducing-instant-soundtracks)
+- For music outside the video workflow, describe the genre, mood, instrumentation, structure, and intended use in a natural-language prompt. Then edit sections or regenerate. [Source](https://elevenlabs.io/docs/eleven-creative/products/music)
+- Combine genre, mood, instrumentation, tempo, and use case in a detailed prompt instead of using a broad genre label. [Source](https://elevenlabs.io/docs/eleven-creative/products/music)
+- For longer compositions, generate and approve the intro first. Build the next sections one at a time, refining prompts instead of restarting the whole track. [Source](https://elevenlabs.io/docs/eleven-creative/products/music)
+- Use separate sound-effect layers to check cue timing and revise individual moments before export. [Source](https://elevenlabs.io/blog/introducing-instant-soundtracks)
+
+### Additional evidence
+
+- 2026-10-17: The release documents the API controls as add\_sfx, separate\_tracks, and use\_audio\_as\_reference. With separate\_tracks=true, the API returns a ZIP containing separate music and sound-effect files. Requests support up to 10 videos totaling 200 MB and 10 minutes. [Source](https://elevenlabs.io/blog/introducing-instant-soundtracks)
+
+### Limits and open questions
+
+- The reviewed public material does not state a minimum subscription tier for the full Instant Soundtracks workflow.
+- The public release does not name a distinct model for Instant Soundtracks.
+- No qualifying independent practitioner discussion specifically about Instant Soundtracks was found in the reviewed results.
+
+<!-- Retained base: fa3cccdfbdd5ddca7a3b01f3b752c0fa59966afe; article blob: fe6aa94482f605160178e07ded1bc76ca5ad03de -->
