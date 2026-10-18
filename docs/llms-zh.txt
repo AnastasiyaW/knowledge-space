@@ -1,6 +1,6 @@
 # 综合技术知识库 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1323+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1324+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -785,6 +785,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Doodles Stoodio — Public web presence](https://happyin.space/projects/doodles-stoodio/): Doodles Stoodio is the user portal for the Doodles ecosystem. It connects avatar customization, wearable browsing, item collecting, and community activities.
 - [dots.mocr](https://happyin.space/projects/dots-mocr/): dots.mocr — 3B VLM для команд, которым нужно извлекать из PDF и изображений не только текст, но и layout, таблицы, формулы и графику; конкурент PaddleOCR-VL и DeepSeek-OCR. Возможности: OCR и bbox,...
 - [DRIFT — Project resources](https://happyin.space/projects/drift/): DRIFT is an open claim-centric framework for deep-research agent trajectories. It localizes spans where an unverified or contradicting claim becomes harmful.
+- [Dynamic Band Splitting: dynamic-band-splitting-release — Dynamic Band Splitting Release](https://happyin.space/projects/dynamic-band-splitting/): Dynamic Band Splitting is an audio source-separation framework for researchers and developers. It changes frequency-band boundaries for each mixture and supports BSRNN and TIGER backbones.
 - [DynamicsLab Chaos — Chaos and Drift demos](https://happyin.space/projects/dynamicslab-chaos/): DynamicsLab Chaos / Mirage is a 2025 browser preview of a real-time generative game-world model for creators exploring AI-native UGC instead of a conventional game engine.
 - [Echo LongVideo](https://happyin.space/projects/echo-longvideo/): Echo LongVideo is the long-video sub-project of JoyAI-Echo 1.5 for multi-shot audio and video with identity, voice, and scene transfer across editable shots.
 - [Pascal Editor](https://happyin.space/projects/editor/): Pascal Editor is an open-source 3D building editor with a semantic scene graph.
