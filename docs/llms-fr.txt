@@ -1,6 +1,6 @@
 # Base de connaissances techniques complète - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1328+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1329+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -774,6 +774,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [DanceOPD](https://happyin.space/projects/danceopd/): DanceOPD is a training framework for teams that already have compatible flow-matching checkpoints or LoRAs and need one student to combine text-to-image and image-editing behaviors.
 - [Data2Story — Agentic Data Storytelling](https://happyin.space/projects/data2story/): Data2Story turns a CSV, data folder, paper, or an idea in Pro into a self-contained HTML story. It generates charts and media alongside an evidence viewer.
 - [DDColor](https://happyin.space/projects/ddcolor/): DDColor is a PyTorch model from ICCV 2023 for automatic photo colorization.
+- [DeepSeek V4.1 Flash 1017: deepseek-v4-1-flash-line — Deepseek V4 1 Flash Line](https://happyin.space/projects/deepseek-v4-1-flash-1017/): DeepSeek-V4.1-Flash-1017 is an open-weight mixture-of-experts model built for agentic coding and terminal work. It is an alternative to closed commercial flagships for autonomous developer workflow...
 - [DeerFlow 2.0 — Agent Platforms](https://happyin.space/projects/deerflow/): DeerFlow 2.0 — an open-source runtime for teams that need an agent harness rather than a research-only framework.
 - [DEMON](https://happyin.space/projects/demon/): DEMON turns ACE-Step v1.5 into a live music generator and transformer on GPU. It is an audio counterpart to StreamDiffusion for performers, creative-tool developers, and researchers.
 - [DICEPTION](https://happyin.space/projects/diception/): DICEPTION is an SD3-based diffusion model for practitioners who want one local model for visual-perception outputs.
