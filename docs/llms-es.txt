@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1327+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1328+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -747,6 +747,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [ComfyUI-3D-Pack](https://happyin.space/projects/comfyui-3d-pack/): ComfyUI-3D-Pack is an unresearched project with a published roadmap. We have not run present-state research yet, so this page carries only the dated milestone and practical guidance.
 - [ComfyUI Cloud — Hosted access and billing](https://happyin.space/projects/comfyui-cloud/): ComfyUI Cloud is hosted access to ComfyUI with cloud billing. We have not run the present-state research yet, so this page keeps only the dated line and the practical note.
 - [ComfyUI Desktop](https://happyin.space/projects/comfyui-desktop/): ComfyUI Desktop, now succeeded by Comfy Desktop, is a local launcher for practitioners who need separate ComfyUI environments instead of maintaining one manual Python installation.
+- [ComfyUI](https://happyin.space/projects/comfyui-drama3/): ComfyUI-Drama3 is a custom node extension for ComfyUI. It runs Fish Audio's Drama 3, a 35-billion parameter text-to-speech and voice cloning model, locally on consumer GPUs.
 - [ComfyUI KSampler Matrix Lab — Repository reference](https://happyin.space/projects/comfyui-ksampler-matrix-lab/): ComfyUI KSampler Matrix Lab — two ComfyUI nodes for artists and model evaluators: KSampler Matrix Lab compares sampler/scheduler combinations, Model Matrix Lab compares installed checkpoints. Limit...
 - [ComfyUI-LoraTags](https://happyin.space/projects/comfyui-loratags/): ComfyUI-LoraTags — пара узлов для пользователей ComfyUI, которым нужно собирать несколько LoRA и не терять их trigger words. — LoRA Loader (LoraTags): загружает стек LoRA и отдаёт MODEL, CLIP и TAG...
 - [comfyui-lrw-nodes — ComfyUI LRW Nodes](https://happyin.space/projects/comfyui-lrw-nodes/): ComfyUI-LRW-Nodes provides custom nodes for ComfyUI to guide WAN2.2 First–Last Frame intermediate motion without replacing endpoint conditioning.
