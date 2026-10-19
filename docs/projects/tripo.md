@@ -91,3 +91,33 @@ From 2025-03-31, treat TripoSG's public GitHub and Hugging Face resources as sep
 - **Subject:** `project:tripo`, thread `tripo-development`, 4 dated events 2024-09-20 → 2026-06-23.
 - **Practical note:** From 2025-03-31, treat TripoSG's public GitHub and Hugging Face resources as a distinct research/distribution route from Tripo's hosted application and Studio; from 2026-06-23, consult the official update page before assuming the current hosted workflow or feature set.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:9a22698ca8b1d44c45b9878f61fb75f78790f49dd7737df4a921e79e94e2a88d -->
+## 2026-10-17 — Tripo launches early access to UV unwrap and retopology
+
+Tripo opened early access to automated UV unwrapping and retopology. Low-poly mesh conversion and UV layout generation now sit directly inside its 3D modeling workflow.
+
+### Usage and practices
+
+- Generate a 3D asset in Tripo from a text description or a 2D image prompt. [Source](https://customuse.com/)
+- Run automated retopology to turn the dense generated mesh into an optimized quad or triangle structure, within polygon limits you set. [Source](https://customuse.com/)
+- Apply automated UV unwrapping: it calculates seams, packs 2D UV islands and rebakes texture maps onto the unwrapped mesh. [Source](https://customuse.com/)
+- Export the optimized asset as FBX, OBJ or USD for a game engine or a digital content creation tool. [Source](https://customuse.com/)
+- Set the target polygon count before you run retopology, so asset density matches the engine's performance budget. [Source](https://customuse.com/)
+- Check the 2D UV island layout and the seams on high-curvature areas before you bake the final texture maps. [Source](https://customuse.com/)
+
+### Additional evidence
+
+- 2026-10-17: Retopology produces low-poly output as quads or triangles, with what Tripo calls intelligent density allocation. UV seam calculation and island packing run in the same 3D asset generation pipeline. [Source](https://customuse.com/)
+
+### Superseded guidance (retained for history)
+
+- 2026-10-17: AI-generated 3D meshes need manual retopology and UV unwrapping in external software before texturing or going into a game engine. [Source](https://customuse.com/)
+
+### Limits and open questions
+
+- Direct paths to Tripo's documentation on tripo3d.ai could not be verified, because search results masked them behind redirects. So there is no direct first-party citation yet.
+- Long-term pricing and tier gating for the early access retopology and UV unwrapping are not announced.
+
+
+<!-- Retained base: 694331793733b8221866d9072af7e45999930387; article blob: 11d856f6dc8c75d0fae16ee7b15ee410955295d4 -->
