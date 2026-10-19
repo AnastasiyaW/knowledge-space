@@ -160,3 +160,31 @@ The D.C. Circuit denied Anthropic’s petitions against the Department of War’
 - The supplied organization subject combines product development with legal-regulatory developments. The dated reviewed event is legal-regulatory, not a Claude product release.
 
 <!-- Retained base: 98bad623879b21c4a6a25f2488404405e0740053; article blob: 5011865b6aaa145e9d53abd38646b3d546fddffc -->
+
+<!-- live-update:6e3b60e66a157faed1598e3a069731c9849cb56e1e61dfff530c201aca9e4558 -->
+## 2026-10-18 — Anthropic commits 5% equity stake to public benefit fund LLC
+
+Anthropic pledged 5% of its shares to create the Anthropic Public Benefit Fund LLC. The pledge still needs stockholder approval. The board can add 2% more equity for each 50% gain in valuation, for nonprofit support and labor mitigation.
+
+### Usage and practices
+
+- Stockholder filings: check corporate filings and disclosures for ratification of the 5% allocation to the fund. [Source](https://techcrunch.com/2026/10/18/anthropic-says-its-committing-5-of-its-shares-to-a-public-benefit-fund/)
+- Eligible areas: look for nonprofit research support and workforce displacement programs named in the LLC operating guidelines. [Source](https://techcrunch.com/2026/10/18/anthropic-says-its-committing-5-of-its-shares-to-a-public-benefit-fund/)
+- Governance review: assess the public benefit framework separately from commercial AI product roadmaps when auditing risk and safety compliance. [Source](https://techcrunch.com/2026/10/18/anthropic-says-its-committing-5-of-its-shares-to-a-public-benefit-fund/)
+- Approval status: confirm that an equity pledge has formal shareholder approval before counting on it for institutional funding. [Source](https://techcrunch.com/2026/10/18/anthropic-says-its-committing-5-of-its-shares-to-a-public-benefit-fund/)
+
+### Additional evidence
+
+- 2026-10-18: The fund is a wholly owned limited liability company, not a traditional 501\(c\)\(3\) nonprofit. The board has discretion to allocate another 2% of shares for each 50% rise in valuation above a baseline. The focus is on mitigating labor market disruption caused by AI. Committed equity may not be used for political lobbying or campaign donations. [Source](https://techcrunch.com/2026/10/18/anthropic-says-its-committing-5-of-its-shares-to-a-public-benefit-fund/)
+
+### Superseded guidance (retained for history)
+
+- 2026-10-18: Before this, Anthropic's public-interest governance had no explicit balance-sheet equity commitment to a dedicated public benefit fund. [Source](https://techcrunch.com/2026/10/18/anthropic-says-its-committing-5-of-its-shares-to-a-public-benefit-fund/)
+
+### Limits and open questions
+
+- The initial disclosure did not give a date for the shareholder vote that would formally approve the 5% allocation.
+- The baseline valuation and the timeline for the fund's first disbursements are not disclosed.
+- Direct links to Anthropic's own announcement and to secondary Chinese news coverage could not be verified, because the search returned redirects with no destination paths.
+
+<!-- Retained base: 3f975269bd62511173d758323b4801b7522156b5; article blob: 14f94cf359159a904a66651a7c7572c0e3318246 -->
