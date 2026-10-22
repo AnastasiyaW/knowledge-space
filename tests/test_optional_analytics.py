@@ -25,7 +25,7 @@ class OptionalAnalytics(unittest.TestCase):
         template = (ROOT / "overrides" / "main.html").read_text(encoding="utf-8")
         privacy = (ROOT / "docs" / "privacy.md").read_text(encoding="utf-8")
         self.assertIn('ga4_measurement_id: ""', config)
-        self.assertIn('javascripts/analytics.js', config)
+        self.assertIn('javascripts/analytics.js', template)
         self.assertIn('name="happyin-ga4-id"', template)
         self.assertIn("data-ks-analytics-preferences", privacy)
 

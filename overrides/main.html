@@ -45,7 +45,12 @@
 
 {% block extrahead %}
   {{ super() }}
-  <meta name="happyin-ga4-id" content="{{ config.extra.ga4_measurement_id | default('', true) }}">
+  {% set ga4_measurement_id = config.extra.ga4_measurement_id | default('', true) %}
+  <meta name="happyin-ga4-id" content="{{ ga4_measurement_id }}">
+  {% if ga4_measurement_id %}
+  <link rel="stylesheet" href="{{ config.site_url }}stylesheets/analytics.css">
+  <script src="{{ config.site_url }}javascripts/analytics.js" defer></script>
+  {% endif %}
   <link rel="icon" href="{{ config.site_url }}assets/favicon.png" type="image/png" sizes="32x32">
   {# Web Analytics is injected at the edge (automatic setup for this zone, SPA mode on).
      A second copy of the beacon here made every report from article pages fail with a

@@ -73,13 +73,11 @@ extra:
 
 extra_css:
   - stylesheets/graph.css
-  - stylesheets/analytics.css
 
 extra_javascript:
   - javascripts/stats.js
   # three.js is loaded by graph.js only on pages that show the graph (the home page)
   - javascripts/graph.js
-  - javascripts/analytics.js
 
 hooks:
   - hooks/stats.py
