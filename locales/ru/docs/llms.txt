@@ -1,0 +1,7 @@
+# Happyin Knowledge Space — Russian entry
+
+> Русский вход в техническую базу. Канонические инженерные статьи пока в основном на английском.
+
+- [Начните с задачи](https://happyin.space/ru/start-here/)
+- [Как использовать базу с AI-агентом](https://happyin.space/ru/for-llm-agents/)
+- [Английская база](https://happyin.space/knowledge-base/)

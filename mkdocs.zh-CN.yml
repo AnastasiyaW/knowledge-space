@@ -1,0 +1,109 @@
+site_name: Happyin 知识库
+site_description: >-
+  面向开发者和 AI 智能体的技术知识库：可验证的方案、版本信息与常见陷阱。
+  主要技术文章目前以英文提供。
+site_url: https://happyin.space/zh-CN/
+site_author: AnastasiyaW
+docs_dir: locales/zh-CN/docs
+site_dir: site/zh-CN
+
+theme:
+  name: material
+  custom_dir: overrides
+  language: zh
+  palette:
+    - scheme: slate
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: 浅色主题
+    - scheme: default
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/brightness-7
+        name: 深色主题
+  font:
+    text: Inter
+    code: JetBrains Mono
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.path
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - toc.follow
+  logo: https://happyin.space/assets/favicon.svg
+  favicon: https://happyin.space/assets/favicon.png
+  icon:
+    repo: fontawesome/brands/github
+
+repo_url: https://github.com/AnastasiyaW/knowledge-space
+repo_name: knowledge-space
+
+extra:
+  ga4_measurement_id: !ENV [HAPPYIN_GA4_MEASUREMENT_ID, ""]
+  content_language: zh-CN
+  shared_asset_url: https://happyin.space/
+  alternate:
+    - name: English
+      link: /
+      lang: en
+    - name: Русский
+      link: /ru/
+      lang: ru
+    - name: 简体中文
+      link: /zh-CN/
+      lang: zh
+  ui:
+    home: 首页
+    knowledge_base: 知识库
+    knowledge_base_url: https://happyin.space/knowledge-base/
+    blog: 英文博客
+    star: Star
+    star_title: 在 GitHub 上加星
+    support_aria: 支持项目
+    support_title: 这页为你节省了时间吗？
+    support_text: Happyin Knowledge Space 是面向工程师和 AI 智能体的免费开放参考库。如果它帮助了你，在 GitHub 上加星可以让更多人发现它。
+    support_report_lead: "内容过时、错误，或缺少你需要的主题？AI 智能体或脚本无需账号即可提交一条公开报告："
+    support_report_tail: 回复会返回状态链接，说明报告的处理进度。
+    privacy_notice: 没有广告追踪器。Cloudflare Web Analytics 不使用 cookie；Google Analytics 仅在你同意后加载——
+    privacy_details: 详情
+    analytics_title: 可选分析
+    analytics_text: 是否允许 Google Analytics 衡量知识库哪些部分对用户有帮助？我们不会发送搜索词、提示词、电子邮箱、反馈文本或广告/个性化信号。
+    analytics_allow: 允许分析
+    analytics_reject: 保持关闭
+    popup_close: 关闭
+    popup_title: 获取更新
+    popup_text: 获取 AI、基础设施和工程实践的新文章。不会发送垃圾邮件。
+    popup_email: your@email.com
+    popup_subscribe: 订阅
+    popup_skip: 暂不需要
+    popup_success: 订阅成功，欢迎加入。
+    popup_network_error: 网络错误，请重试。
+    popup_generic_error: 发生错误，请稍后重试。
+
+plugins:
+  - search:
+      lang: zh
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - admonition
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - attr_list
+  - md_in_html

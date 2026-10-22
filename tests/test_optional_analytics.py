@@ -20,11 +20,11 @@ class OptionalAnalytics(unittest.TestCase):
         self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
         self.assertIn("PASS analytics consent harness", completed.stdout)
 
-    def test_source_keeps_measurement_id_unconfigured(self) -> None:
+    def test_source_uses_an_empty_measurement_id_by_default(self) -> None:
         config = (ROOT / "mkdocs.yml").read_text(encoding="utf-8")
         template = (ROOT / "overrides" / "main.html").read_text(encoding="utf-8")
         privacy = (ROOT / "docs" / "privacy.md").read_text(encoding="utf-8")
-        self.assertIn('ga4_measurement_id: ""', config)
+        self.assertIn('ga4_measurement_id: !ENV [HAPPYIN_GA4_MEASUREMENT_ID, ""]', config)
         self.assertIn('javascripts/analytics.js', template)
         self.assertIn('name="happyin-ga4-id"', template)
         self.assertIn("data-ks-analytics-preferences", privacy)

@@ -1,0 +1,7 @@
+# Happyin Knowledge Space — Simplified Chinese entry
+
+> 简体中文入口。规范工程文章目前主要以英文提供。
+
+- [从任务开始](https://happyin.space/zh-CN/start-here/)
+- [面向 AI 智能体的使用说明](https://happyin.space/zh-CN/for-llm-agents/)
+- [英文知识库](https://happyin.space/knowledge-base/)
