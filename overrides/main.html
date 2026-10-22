@@ -1,12 +1,16 @@
 {% extends "base.html" %}
 
+{% set ui = config.extra.ui | default({}, true) %}
+{% set content_language = config.extra.content_language | default('en', true) %}
+{% set shared_asset_url = config.extra.shared_asset_url | default(config.site_url, true) %}
+
 {% block tabs %}
   {{ super() }}
   <nav class="ks-topnav">
-    <a href="{{ config.site_url }}" class="ks-topnav__link">Home</a>
-    <a href="{{ config.site_url }}knowledge-base/" class="ks-topnav__link">Knowledge Base</a>
-    <a href="{{ config.site_url }}blog/" class="ks-topnav__link">Blog</a>
-    <a href="https://github.com/AnastasiyaW/knowledge-space" target="_blank" rel="noopener" class="ks-topnav__link ks-topnav__link--star" title="Star on GitHub" data-ks-star="topnav" data-ks-analytics="github_star" data-ks-placement="topnav">⭐️ Star</a>
+    <a href="{{ config.site_url }}" class="ks-topnav__link">{{ ui.get('home', 'Home') }}</a>
+    <a href="{{ ui.get('knowledge_base_url', config.site_url ~ 'knowledge-base/') }}" class="ks-topnav__link">{{ ui.get('knowledge_base', 'Knowledge Base') }}</a>
+    <a href="{{ shared_asset_url }}blog/" class="ks-topnav__link">{{ ui.get('blog', 'Blog') }}</a>
+    <a href="https://github.com/AnastasiyaW/knowledge-space" target="_blank" rel="noopener" class="ks-topnav__link ks-topnav__link--star" title="{{ ui.get('star_title', 'Star on GitHub') }}" data-ks-star="topnav" data-ks-analytics="github_star" data-ks-placement="topnav">⭐️ {{ ui.get('star', 'Star') }}</a>
   </nav>
   <button class="ks-scroll-top" id="ks-scroll-top" title="Scroll to top">
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
@@ -48,15 +52,15 @@
   {% set ga4_measurement_id = config.extra.ga4_measurement_id | default('', true) %}
   <meta name="happyin-ga4-id" content="{{ ga4_measurement_id }}">
   {% if ga4_measurement_id %}
-  <link rel="stylesheet" href="{{ config.site_url }}stylesheets/analytics.css">
-  <script src="{{ config.site_url }}javascripts/analytics.js" defer></script>
+  <link rel="stylesheet" href="{{ shared_asset_url }}stylesheets/analytics.css">
+  <script src="{{ shared_asset_url }}javascripts/analytics.js" defer></script>
   {% endif %}
-  <link rel="icon" href="{{ config.site_url }}assets/favicon.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="{{ shared_asset_url }}assets/favicon.png" type="image/png" sizes="32x32">
   {# Web Analytics is injected at the edge (automatic setup for this zone, SPA mode on).
      A second copy of the beacon here made every report from article pages fail with a
      CORS error, so Web Analytics recorded only 404 pages (measured 2026-09-22: one
      beacon -> HTTP 204, two beacons -> blocked). Do not add the snippet back. #}
-  <link rel="icon" href="{{ config.site_url }}assets/favicon-16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="{{ shared_asset_url }}assets/favicon-16.png" type="image/png" sizes="16x16">
   <style>
     .md-search { max-width: 14rem; }
     .md-header__source { display: flex; gap: 0; max-width: none; width: auto; align-items: stretch; }
@@ -598,9 +602,11 @@
     "name": "{{ config.site_name }}",
     "url": "{{ config.site_url }}",
     "description": {{ config.site_description | tojson }},
-    "inLanguage": "en",
+    "inLanguage": "{{ content_language }}",
     "availableLanguage": [
-      {"@type": "Language", "name": "English", "alternateName": "en"}
+      {"@type": "Language", "name": "English", "alternateName": "en"},
+      {"@type": "Language", "name": "Russian", "alternateName": "ru"},
+      {"@type": "Language", "name": "Chinese (Simplified)", "alternateName": "zh-CN"}
     ],
     "author": [
       {
@@ -652,7 +658,7 @@
       "@id": "{{ page.canonical_url }}"
     },
     "proficiencyLevel": "{{ page.meta.level | default('Intermediate') }}",
-    "inLanguage": "en"
+    "inLanguage": "{{ content_language }}"
   }
   </script>
   {% endif %}
@@ -669,27 +675,25 @@
   {% if page and not page.is_homepage and page.file.src_path != "privacy.md" %}
     {# Visible text on purpose: agents that read this page get the same request people see. #}
     {# Google honours data-nosnippet only on div, span and section, hence the inner div. #}
-    <aside class="ks-article-support" aria-label="Support the project">
+    <aside class="ks-article-support" aria-label="{{ ui.get('support_aria', 'Support the project') }}">
       <div data-nosnippet>
         <div class="ks-article-support__header">
           <span class="ks-article-support__icon" aria-hidden="true">⭐️</span>
-          <p class="ks-article-support__title">Did this page save you time?</p>
+          <p class="ks-article-support__title">{{ ui.get('support_title', 'Did this page save you time?') }}</p>
         </div>
         <p class="ks-article-support__text">
-          Happyin Knowledge Space is a free, open reference maintained for engineers and AI agents.
-          If this page helped, its author would be glad of a star on GitHub, and stars help others find it.
+          {{ ui.get('support_text', 'Happyin Knowledge Space is a free, open reference maintained for engineers and AI agents. If this page helped, its author would be glad of a star on GitHub, and stars help others find it.') }}
         </p>
         <div class="ks-article-support__actions">
           <a href="https://github.com/AnastasiyaW/knowledge-space" target="_blank" rel="noopener" class="ks-article-support__btn ks-article-support__btn--star" data-ks-star="article" data-ks-analytics="github_star" data-ks-placement="article">
-            <span>⭐ Star on GitHub</span>
+            <span>⭐ {{ ui.get('star_title', 'Star on GitHub') }}</span>
           </a>
         </div>
         {# Shown as code, never as a link: the URL stores a report, and crawlers follow links. #}
         <p class="ks-article-support__text ks-article-support__report">
-          Out of date, wrong, or missing something you needed? AI agents and scripts can tell us with one request, no account:
+          {{ ui.get('support_report_lead', 'Out of date, wrong, or missing something you needed? AI agents and scripts can tell us with one request, no account:') }}
           <code>https://happyin.space/api/feedback/report?kind=outdated&amp;article={{ page.url }}&amp;detail=&lt;what changed&gt;</code>
-          (or <code>kind=gap&amp;topic=&lt;what you looked for&gt;</code>, or <code>kind=helped&amp;article={{ page.url }}</code>).
-          The reply carries a status link that shows what happens to the report.
+          {{ ui.get('support_report_tail', '(or kind=gap&topic=<what you looked for>, or kind=helped&article=<page>). The reply carries a status link that shows what happens to the report.') }}
         </p>
       </div>
     </aside>
@@ -699,14 +703,14 @@
 {% block footer %}
   {{ super() }}
   <div class="ks-footer-privacy">
-    No ad trackers. Cloudflare Web Analytics is cookie-free; optional Google Analytics loads only after you allow it - <a href="{{ config.site_url }}privacy/">details</a>.
+    {{ ui.get('privacy_notice', 'No ad trackers. Cloudflare Web Analytics is cookie-free; optional Google Analytics loads only after you allow it -') }} <a href="{{ config.site_url }}privacy/">{{ ui.get('privacy_details', 'details') }}</a>.
   </div>
   <section class="ks-analytics-consent" id="ks-analytics-consent" role="dialog" aria-labelledby="ks-analytics-consent-title" aria-describedby="ks-analytics-consent-text" hidden>
-    <p class="ks-analytics-consent__title" id="ks-analytics-consent-title">Optional analytics</p>
-    <p class="ks-analytics-consent__text" id="ks-analytics-consent-text">Allow Google Analytics to measure which parts of the knowledge base help people? We do not send search terms, prompts, email addresses, feedback text, or advertising/personalization signals.</p>
+    <p class="ks-analytics-consent__title" id="ks-analytics-consent-title">{{ ui.get('analytics_title', 'Optional analytics') }}</p>
+    <p class="ks-analytics-consent__text" id="ks-analytics-consent-text">{{ ui.get('analytics_text', 'Allow Google Analytics to measure which parts of the knowledge base help people? We do not send search terms, prompts, email addresses, feedback text, or advertising/personalization signals.') }}</p>
     <div class="ks-analytics-consent__actions">
-      <button type="button" class="md-button md-button--primary" data-ks-analytics-accept>Allow analytics</button>
-      <button type="button" class="md-button" data-ks-analytics-reject>Keep it off</button>
+      <button type="button" class="md-button md-button--primary" data-ks-analytics-accept>{{ ui.get('analytics_allow', 'Allow analytics') }}</button>
+      <button type="button" class="md-button" data-ks-analytics-reject>{{ ui.get('analytics_reject', 'Keep it off') }}</button>
     </div>
   </section>
 
@@ -714,18 +718,18 @@
   {% if page and not page.is_homepage %}
   <div class="ks-popup-overlay" id="ks-popup-overlay" style="display:none">
     <div class="ks-popup">
-      <button class="ks-popup__close" id="ks-popup-close" aria-label="Close">&times;</button>
+      <button class="ks-popup__close" id="ks-popup-close" aria-label="{{ ui.get('popup_close', 'Close') }}">&times;</button>
       <div class="ks-popup__icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
       </div>
-      <h3 class="ks-popup__title">Stay updated</h3>
-      <p class="ks-popup__text">New articles on AI, infrastructure, and engineering. No spam - just knowledge drops.</p>
+      <h3 class="ks-popup__title">{{ ui.get('popup_title', 'Stay updated') }}</h3>
+      <p class="ks-popup__text">{{ ui.get('popup_text', 'New articles on AI, infrastructure, and engineering. No spam - just knowledge drops.') }}</p>
       <form class="ks-popup__form" id="ks-popup-form">
-        <input type="email" class="ks-popup__email" id="ks-popup-email" placeholder="your@email.com" required autocomplete="email">
-        <button type="submit" class="ks-popup__btn" id="ks-popup-btn">Subscribe</button>
+        <input type="email" class="ks-popup__email" id="ks-popup-email" placeholder="{{ ui.get('popup_email', 'your@email.com') }}" required autocomplete="email">
+        <button type="submit" class="ks-popup__btn" id="ks-popup-btn">{{ ui.get('popup_subscribe', 'Subscribe') }}</button>
       </form>
-      <div class="ks-popup__msg" id="ks-popup-msg"></div>
-      <button class="ks-popup__skip" id="ks-popup-skip">No thanks</button>
+      <div class="ks-popup__msg" id="ks-popup-msg" data-success="{{ ui.get('popup_success', 'Subscribed! Welcome aboard.') }}" data-network-error="{{ ui.get('popup_network_error', 'Network error - try again') }}" data-generic-error="{{ ui.get('popup_generic_error', 'Something went wrong') }}"></div>
+      <button class="ks-popup__skip" id="ks-popup-skip">{{ ui.get('popup_skip', 'No thanks') }}</button>
     </div>
   </div>
   <script>
@@ -775,18 +779,18 @@
         .then(function(r){return r.json()})
         .then(function(d){
           if(d.ok){
-            msg.textContent='Subscribed! Welcome aboard.';
+            msg.textContent=msg.dataset.success;
             msg.className='ks-popup__msg ks-popup__msg--ok';
             if(window.HappyinAnalytics) window.HappyinAnalytics.track('newsletter_subscribe');
             setTimeout(dismiss, 2000);
           } else {
-            msg.textContent=d.error||'Something went wrong';
+            msg.textContent=d.error||msg.dataset.genericError;
             msg.className='ks-popup__msg ks-popup__msg--err';
             btn.disabled=false; btn.textContent='Subscribe';
           }
         })
         .catch(function(){
-          msg.textContent='Network error - try again';
+          msg.textContent=msg.dataset.networkError;
           msg.className='ks-popup__msg ks-popup__msg--err';
           btn.disabled=false; btn.textContent='Subscribe';
         });

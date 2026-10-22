@@ -5,10 +5,13 @@ on:
     branches: [master]
     paths:
       - 'docs/**'
+      - 'locales/**'
       - 'mkdocs.yml'
+      - 'mkdocs.*.yml'
       - 'overrides/**'
       - 'requirements.txt'
       - 'hooks/**'
+      - 'scripts/**'
       - 'functions/**'
 
   workflow_dispatch:
@@ -36,9 +39,12 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Build site
-        run: mkdocs build --strict
+        run: python scripts/build_all_locales.py
         env:
           DISABLE_MKDOCS_2_WARNING: 'true'
+          # Measurement IDs are public identifiers. Keeping this a repository variable
+          # makes the production setting apply to every language build without a source edit.
+          HAPPYIN_GA4_MEASUREMENT_ID: ${{ vars.HAPPYIN_GA4_MEASUREMENT_ID }}
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3

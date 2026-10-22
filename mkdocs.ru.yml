@@ -1,0 +1,109 @@
+site_name: База знаний Happyin
+site_description: >-
+  Техническая база знаний для людей и AI-агентов: проверяемые решения,
+  версии и типичные ошибки. Основные технические статьи пока на английском.
+site_url: https://happyin.space/ru/
+site_author: AnastasiyaW
+docs_dir: locales/ru/docs
+site_dir: site/ru
+
+theme:
+  name: material
+  custom_dir: overrides
+  language: ru
+  palette:
+    - scheme: slate
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: Светлая тема
+    - scheme: default
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/brightness-7
+        name: Тёмная тема
+  font:
+    text: Inter
+    code: JetBrains Mono
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.path
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - toc.follow
+  logo: https://happyin.space/assets/favicon.svg
+  favicon: https://happyin.space/assets/favicon.png
+  icon:
+    repo: fontawesome/brands/github
+
+repo_url: https://github.com/AnastasiyaW/knowledge-space
+repo_name: knowledge-space
+
+extra:
+  ga4_measurement_id: !ENV [HAPPYIN_GA4_MEASUREMENT_ID, ""]
+  content_language: ru
+  shared_asset_url: https://happyin.space/
+  alternate:
+    - name: English
+      link: /
+      lang: en
+    - name: Русский
+      link: /ru/
+      lang: ru
+    - name: 简体中文
+      link: /zh-CN/
+      lang: zh
+  ui:
+    home: Главная
+    knowledge_base: База знаний
+    knowledge_base_url: https://happyin.space/knowledge-base/
+    blog: Блог на английском
+    star: Звезда
+    star_title: Поставить звезду на GitHub
+    support_aria: Поддержать проект
+    support_title: Эта страница сэкономила вам время?
+    support_text: Happyin Knowledge Space — бесплатный открытый справочник для инженеров и AI-агентов. Если материал помог, звезда на GitHub поможет другим людям его найти.
+    support_report_lead: "Статья устарела, ошибочна или не хватает нужной темы? AI-агент или скрипт может отправить один публичный отчёт без аккаунта:"
+    support_report_tail: Ответ вернёт ссылку статуса, где видно, что происходит с отчётом.
+    privacy_notice: Без рекламных трекеров. Cloudflare Web Analytics работает без cookie; Google Analytics загружается только после вашего согласия —
+    privacy_details: подробнее
+    analytics_title: Необязательная аналитика
+    analytics_text: Разрешить Google Analytics измерять, какие части базы знаний помогают людям? Мы не передаём поисковые запросы, промпты, адреса email, текст обратной связи или рекламные/персонализирующие сигналы.
+    analytics_allow: Разрешить аналитику
+    analytics_reject: Не включать
+    popup_close: Закрыть
+    popup_title: Получать обновления
+    popup_text: Новые статьи об AI, инфраструктуре и инженерных практиках. Без спама — только обновления базы.
+    popup_email: ваш@email.com
+    popup_subscribe: Подписаться
+    popup_skip: Нет, спасибо
+    popup_success: Готово, вы подписаны.
+    popup_network_error: Ошибка сети — попробуйте ещё раз.
+    popup_generic_error: Что-то пошло не так.
+
+plugins:
+  - search:
+      lang: ru
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - admonition
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - attr_list
+  - md_in_html
