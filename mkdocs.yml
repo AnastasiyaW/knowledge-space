@@ -53,6 +53,9 @@ repo_url: https://github.com/AnastasiyaW/knowledge-space
 repo_name: knowledge-space
 
 extra:
+  # A GA4 Measurement ID is public configuration, not a secret. Keep this empty until
+  # the property and data stream are ready; analytics.js then makes no Google request.
+  ga4_measurement_id: ""
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/AnastasiyaW/knowledge-space

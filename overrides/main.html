@@ -6,7 +6,7 @@
     <a href="{{ config.site_url }}" class="ks-topnav__link">Home</a>
     <a href="{{ config.site_url }}knowledge-base/" class="ks-topnav__link">Knowledge Base</a>
     <a href="{{ config.site_url }}blog/" class="ks-topnav__link">Blog</a>
-    <a href="https://github.com/AnastasiyaW/knowledge-space" target="_blank" rel="noopener" class="ks-topnav__link ks-topnav__link--star" title="Star on GitHub" data-ks-star="topnav">⭐️ Star</a>
+    <a href="https://github.com/AnastasiyaW/knowledge-space" target="_blank" rel="noopener" class="ks-topnav__link ks-topnav__link--star" title="Star on GitHub" data-ks-star="topnav" data-ks-analytics="github_star" data-ks-placement="topnav">⭐️ Star</a>
   </nav>
   <button class="ks-scroll-top" id="ks-scroll-top" title="Scroll to top">
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
@@ -45,6 +45,12 @@
 
 {% block extrahead %}
   {{ super() }}
+  {% set ga4_measurement_id = config.extra.ga4_measurement_id | default('', true) %}
+  <meta name="happyin-ga4-id" content="{{ ga4_measurement_id }}">
+  {% if ga4_measurement_id %}
+  <link rel="stylesheet" href="{{ config.site_url }}stylesheets/analytics.css">
+  <script src="{{ config.site_url }}javascripts/analytics.js" defer></script>
+  {% endif %}
   <link rel="icon" href="{{ config.site_url }}assets/favicon.png" type="image/png" sizes="32x32">
   {# Web Analytics is injected at the edge (automatic setup for this zone, SPA mode on).
      A second copy of the beacon here made every report from article pages fail with a
@@ -679,7 +685,7 @@
           If this page helped, its author would be glad of a star on GitHub, and stars help others find it.
         </p>
         <div class="ks-article-support__actions">
-          <a href="https://github.com/AnastasiyaW/knowledge-space" target="_blank" rel="noopener" class="ks-article-support__btn ks-article-support__btn--star" data-ks-star="article">
+          <a href="https://github.com/AnastasiyaW/knowledge-space" target="_blank" rel="noopener" class="ks-article-support__btn ks-article-support__btn--star" data-ks-star="article" data-ks-analytics="github_star" data-ks-placement="article">
             <span>⭐ Star on GitHub</span>
           </a>
         </div>
@@ -698,8 +704,16 @@
 {% block footer %}
   {{ super() }}
   <div class="ks-footer-privacy">
-    No tracking cookies, no ad trackers. Privacy-friendly analytics by Cloudflare and an anonymous return counter - <a href="{{ config.site_url }}privacy/">details</a>.
+    No ad trackers. Cloudflare Web Analytics is cookie-free; optional Google Analytics loads only after you allow it - <a href="{{ config.site_url }}privacy/">details</a>.
   </div>
+  <section class="ks-analytics-consent" id="ks-analytics-consent" role="dialog" aria-labelledby="ks-analytics-consent-title" aria-describedby="ks-analytics-consent-text" hidden>
+    <p class="ks-analytics-consent__title" id="ks-analytics-consent-title">Optional analytics</p>
+    <p class="ks-analytics-consent__text" id="ks-analytics-consent-text">Allow Google Analytics to measure which parts of the knowledge base help people? We do not send search terms, prompts, email addresses, feedback text, or advertising/personalization signals.</p>
+    <div class="ks-analytics-consent__actions">
+      <button type="button" class="md-button md-button--primary" data-ks-analytics-accept>Allow analytics</button>
+      <button type="button" class="md-button" data-ks-analytics-reject>Keep it off</button>
+    </div>
+  </section>
 
   {# Newsletter popup - article pages only, new visitors, 14-day cooldown #}
   {% if page and not page.is_homepage %}
@@ -768,6 +782,7 @@
           if(d.ok){
             msg.textContent='Subscribed! Welcome aboard.';
             msg.className='ks-popup__msg ks-popup__msg--ok';
+            if(window.HappyinAnalytics) window.HappyinAnalytics.track('newsletter_subscribe');
             setTimeout(dismiss, 2000);
           } else {
             msg.textContent=d.error||'Something went wrong';

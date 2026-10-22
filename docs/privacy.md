@@ -4,7 +4,7 @@ title: Privacy Policy
 
 # Privacy Policy
 
-**Last updated:** September 2026
+**Last updated:** October 2026
 
 ## What we collect
 
@@ -14,7 +14,7 @@ When you subscribe to updates, we store:
 - Timestamp of subscription
 - IP address (for consent verification)
 
-We do not collect names, payment information, or any other personal data.
+Outside the optional analytics described below, we do not collect names, payment information, or other personal data.
 
 ## Why we collect it
 
@@ -61,14 +61,24 @@ Page views in Web Analytics and the aggregate request statistics still apply. Sa
 
 <p class="ks-counter-switch"><span data-ks-counter-state>This switch needs JavaScript.</span> <button type="button" class="md-button" data-ks-counter-toggle>Turn it off</button></p>
 
+## Optional Google Analytics
+
+Google Analytics is disabled unless the site owner has configured it and you choose **Allow analytics** in the site's own prompt. Until both happen, this site does not load Google's analytics tag or send Google Analytics events.
+
+If you opt in, we use Google Analytics 4 to understand aggregate use of the knowledge base: page and article views, search use and result opens, code copies, GitHub-star clicks, and successful newsletter subscriptions. We do **not** send search terms, prompts, email addresses, feedback text, URL query strings, or advertising identifiers in those events. Advertising storage, ad-user-data sharing, and ad-personalization signals remain denied.
+
+You can change the choice in this browser at any time; withdrawing it disables new analytics events and removes this site's accessible Google Analytics cookies. A browser Global Privacy Control or Do Not Track signal keeps Google Analytics off.
+
+<p class="ks-counter-switch"><span data-ks-analytics-state>Optional Google Analytics is not enabled for this release.</span> <button type="button" class="md-button" data-ks-analytics-preferences hidden>Manage analytics choices</button></p>
+
 ## Feedback reports
 
 Anyone, including an AI assistant working for you, can send a report to `/api/feedback`: a topic that is missing, an article that is outdated or wrong, or an article that helped. We store what the report says (kind, topic, article, detail, an optional link and an optional client name such as "claude-code"), the time, whether it came as a POST or a GET, the family of the sending software read from its User-Agent (for example "curl" or "claude-user"; the full User-Agent is not kept), and a one-day pseudonym: a hash of the IP address, the date and a secret, which lets us limit how many reports one sender makes per day and cannot be turned back into the address. The IP address itself is not stored. Reports are read only by the owner's research pipeline and are never published on the site; a report's status page shows only its number, kind, date and outcome, and once it is handled the title we gave it and a link to the result, and the list of wanted topics shows titles the owner writes, never the words of a report; an article written in response cites its own sources, not the report. Reports older than 12 months are deleted automatically when the next report arrives. Do not put personal data in a report. To have a report removed sooner, open a [GitHub Issue](https://github.com/AnastasiyaW/knowledge-space/issues) with its text and date.
 
 ## Other services the pages load
 
-Pages load fonts from Google Fonts, the 3D graph library from jsDelivr, and star counts from GitHub's API. Each of those services receives your IP address and browser headers, as with any web request.
+Pages load fonts from Google Fonts, the 3D graph library from jsDelivr, and star counts from GitHub's API. Each of those services receives your IP address and browser headers, as with any web request. When you opt into the optional analytics above, Google also receives the measurement events described there under its own privacy terms.
 
 ## Cookies
 
-This site uses no tracking cookies. Cloudflare may set essential cookies for security purposes.
+By default this site uses no analytics or advertising cookies. If you opt into optional Google Analytics, its analytics storage may be used for that measurement only; advertising and personalization storage remain denied. Cloudflare may set essential cookies for security purposes.
