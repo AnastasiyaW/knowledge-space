@@ -1,6 +1,6 @@
 # Umfassende technische Wissensbasis - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1331+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1332+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -878,6 +878,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [jina-embeddings-v5-omni](https://happyin.space/projects/jina-embeddings-v5-omni/): jina-embeddings-v5-omni is a Jina AI embedding model line for indexing multiple media types in one index. We have not run the present-state research yet. This page carries the dated line and the pr...
 - [JoyAI-Video-Edit](https://happyin.space/projects/joyai-video-edit/): JoyAI-Video-Edit: an Apache-2.0, 16B autoregressive-diffusion video editor for causal, live video-to-video edits.
 - [JoyCaption](https://happyin.space/projects/joycaption/): JoyCaption is an open image-captioning VLM for diffusion-model dataset builders, a local alternative to paid captioning APIs such as GPT-4o.
+- [karpathy-output-style: visual explanations](https://happyin.space/projects/karpathy-output-style/): karpathy-output-style is an open-source tool and prompt skill for developers who use AI coding assistants such as Claude Code and Codex. It makes model reasoning faster to inspect by putting each a...
 - [Katalist](https://happyin.space/projects/katalist/): Katalist is an AI creative studio for performance teams, not a standalone video model.
 - [Kimi Code CLI — Public project reference](https://happyin.space/projects/kimi-code-cli/): Kimi Code CLI — a terminal coding agent for developers, not a standalone model.
 - [Kimi K2](https://happyin.space/projects/kimi-k2/): Kimi K2 — an open-weight MoE language-model family for builders who need a self-hosted text-and-tool-use model rather than the current Kimi hosted API.
