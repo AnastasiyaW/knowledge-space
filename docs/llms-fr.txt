@@ -1,6 +1,6 @@
 # Base de connaissances techniques complète - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1332+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1333+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -963,6 +963,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Nunchaku — Model integration expansion](https://happyin.space/projects/nunchaku/): Nunchaku is an SVDQuant 4-bit inference engine for Diffusers and ComfyUI users who need lower-precision FLUX or Qwen Image transformers rather than another base model.
 - [Context-Matched Distillation](https://happyin.space/projects/nvidia-cmd/): Context-Matched Distillation (CMD) is NVIDIA’s causal distribution-matching distillation method and checkpoint release for autoregressive image-to-video generation.
 - [Cosmos 3 Edge](https://happyin.space/projects/nvidia-cosmos-3-edge/): Cosmos 3 Edge is a 4B open-weight multimodal world model for robotics, autonomous-driving, and smart-space teams.
+- [Cosmos-1.0-Diffusion: nvidia-cosmos-world-model-platform — Nvidia Cosmos World Model Platform](https://happyin.space/projects/nvidia-cosmos/): NVIDIA Cosmos is an open-weight world foundation model platform. It is built for robotics, embodied AI and autonomous vehicle developers.
 - [Nemotron 3.5 Lightning](https://happyin.space/projects/nvidia-nemotron/): Nemotron 3.5 Lightning — текстовая гибридная MoE-модель с 30B общих и 3B активных параметров для разработчиков агентных систем, чат-ботов и RAG. Возможности: рассуждение с переключателем thinking, ...
 - [OctaneRender](https://happyin.space/projects/octanerender/): OctaneRender — a GPU path-tracing renderer for 3D artists in supported DCC hosts, for interactive look development and final frames.
 - [Odysseus](https://happyin.space/projects/odysseus/): Odysseus is a self-hosted workspace for users wanting a ChatGPT- or Claude-style interface with local or API-backed models.
