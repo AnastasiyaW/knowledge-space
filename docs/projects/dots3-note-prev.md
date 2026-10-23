@@ -13,43 +13,42 @@ aliases: ["dots3-note preview"]
 
 ## What it is
 
-dots3-note preview — модель dots studio для команд, которым нужен локальный мультимодальный агент: текстовый вывод, понимание изображений, документов, графиков, аудио и видео, tool use и длинный контекст. 280B параметров всего, 16B активных, контекст до 512K токенов. Вердикт: практична только для крупного GPU-инференса; это не модель для одной обычной видеокарты.
+dots3-note preview is a model from dots studio for teams that need a local multimodal agent: text output, understanding of images, documents, charts, audio and video, tool use and long context. It has 280B parameters in total, 16B active, and a context of up to 512K tokens. Verdict: practical only for large-GPU inference; it is not a model for a single ordinary graphics card.
 
 ## Development line
 
-- **2026-08-17 — Dots Studio published public resources for dots3-note preview.** `dots3-note-prev` и FP8-вариант `dots3-note-prev-fp8`; опубликованы 280B/16B MoE, входы text/image/video/audio и текстовый вывод.
+- **2026-08-17 — Dots Studio published public resources for dots3-note preview.** `dots3-note-prev` and the FP8 variant `dots3-note-prev-fp8`; the 280B/16B MoE was published, with text, image, video and audio inputs and text output.
 
 ## What changed
 
-2026-08-17 — вышла preview-версия первых открытых весов семейства dots3: `dots3-note-prev` и FP8-вариант `dots3-note-prev-fp8`; опубликованы 280B/16B MoE, входы text/image/video/audio и текстовый вывод. 2026-08-25 — официальная интеграция в Transformers оставалась открытым PR #47844: добавлены inference-only обработка всех четырёх модальностей, BF16/FP8 и тесты, но это ещё не поддержка в стабильном релизе библиотеки.
+2026-08-17 — the preview of the first open weights of the dots3 family was released: `dots3-note-prev` and the FP8 variant `dots3-note-prev-fp8`; the 280B/16B MoE was published, with text, image, video and audio inputs and text output. 2026-08-25 — the official Transformers integration remained open as PR #47844, which adds inference-only handling of all four modalities, BF16/FP8 and tests, but is not yet support in a stable library release.
 
 ## How to use this
 
 As of 2026-08-17, practitioners should treat dots3-note preview as a separately documented project line and consult its Studio Dots, GitHub, and Hugging Face resources before attempting use; its exact capabilities and setup remain unverified from this evidence.
 
-1. Для серверного запуска возьмите FP8-чекпойнт `dots-studio/dots3-note-prev-fp8` и разверните его через vLLM или SGLang на одном 8-GPU узле; задайте меньший контекст, если память или требуемая параллельность не позволяют 512K.
+1. For server-side launch, take the FP8 checkpoint `dots-studio/dots3-note-prev-fp8` and serve it with vLLM or SGLang on one 8-GPU node; set a smaller context if memory or the required parallelism does not allow 512K.
   — <https://github.com/studio-dots-ai/dots3-note-prev>
-2. Поднимите OpenAI-совместимый endpoint с именем модели `dots3-note-prev`, затем вызывайте `/v1/chat/completions`; для прямого ответа отключите thinking через `enable_thinking=False`.
+2. Start an OpenAI-compatible endpoint with the model name `dots3-note-prev`, then call `/v1/chat/completions`; for direct answers disable thinking with `enable_thinking=False`.
   — <https://github.com/studio-dots-ai/dots3-note-prev>
-3. Передавайте изображение, аудио или видео как multimodal content; видео с аудиодорожкой обрабатывается вместе со звуком.
+3. Pass images, audio or video as multimodal content; video with an audio track is processed together with its sound.
   — <https://github.com/studio-dots-ai/dots3-note-prev>
 
 ## Best practices
 
-- Для production-подобного serving предпочтителен FP8 на восьми GPU: BF16 требует больше памяти, а длину контекста нужно подбирать вместе с числом одновременных запросов и модальностями.
+- For production-like serving, FP8 on eight GPUs is preferred: BF16 needs more memory, and the context length must be tuned together with the number of concurrent requests and modalities.
   — <https://github.com/studio-dots-ai/dots3-note-prev>
-- Не рассчитывайте на стабильный Transformers для нативного запуска: официальный PR #47844 на момент проверки открыт; используйте указанную ревизию PR только осознанно либо выберите vLLM main/nightly.
+- Do not rely on stable Transformers for native loading: official PR #47844 was still open at the time of checking; use the PR revision only deliberately, or choose vLLM main/nightly.
   — <https://github.com/huggingface/transformers/pull/47844>
 
 ## Superseded by this
 
-- 2026-08-25 — предположение, что модель уже имеет стабильную нативную поддержку Transformers, устарело: официальный PR #47844 остаётся открытым.
+- 2026-08-25 — the assumption that the model already has stable native Transformers support is outdated: official PR #47844 remains open.
 
 ## Still unknown
 
-- Дата 2026-08-17 подтверждает зафиксированный шаг, но доступный первичный initial commit на Hugging Face отображался как сделанный примерно 11 дней до 2026-09-05; точную причину расхождения дат без исторического timestamp релиза установить нельзя.
-- Полный технический отчёт на странице проекта помечен как forthcoming, поэтому независимая проверка заявленных бенчмарков и качества не выполнена.
-- Отдельные поля event_findings и new_events не представлены в обязательной схеме ответа; дополнения для шага 2026-08-17 и новый шаг 2026-08-25 отражены в what_changed.
+- The 2026-08-17 date confirms the recorded step, but the first available initial commit on Hugging Face appeared about 11 days before 2026-09-05; the exact cause of the date mismatch cannot be established without a historical release timestamp.
+- The full technical report on the project page is marked as forthcoming, so independent verification of the stated benchmarks and quality has not been performed.
 
 ## Sources
 
