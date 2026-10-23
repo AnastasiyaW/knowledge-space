@@ -1,6 +1,6 @@
 # 종합 기술 지식 베이스 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1337+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1338+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -826,6 +826,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [GenMM](https://happyin.space/projects/genmm/): GenMM — a SIGGRAPH 2023 research codebase for technical animators who need new skeletal-motion sequences from one or a few example clips, not a text-to-motion model.
 - [GitHub Store](https://happyin.space/projects/github-store/): Komi Store (formerly GitHub Store) is a Kotlin Multiplatform release browser and installer.
 - [Gitlab: gitlab-critical-vulnerability-patch-19-5-1 — Gitlab Critical Vulnerability Patch 19 5 1](https://happyin.space/projects/gitlab/): GitLab 19.5.1 is an emergency security release for self-managed GitLab, the code-collaboration and DevOps platform. It fixes an unauthenticated remote code execution flaw in the regular expression ...
+- [GLM-5.2-NVFP4](https://happyin.space/projects/glm-5-2-nvfp4/): GLM-5.2-NVFP4 is NVIDIA Model Optimizer’s NVFP4 checkpoint of Z.AI GLM-5.2 for self-hosting agents, chatbots, RAG, coding, and reasoning.
 - [GLM-5.2 — Model availability](https://happyin.space/projects/glm-5-2/): GLM-5.2 is a still-listed Z.ai model for software-engineering agents.
 - [GLM-5.3-Flash](https://happyin.space/projects/glm-5-3-flash/): GLM-5.3-Flash is a mixture-of-experts language and vision model from Zhipu AI. It is built for software engineers and autonomous agent pipelines, and it competes with Claude 3.5 Sonnet.
 - [Glob3R](https://happyin.space/projects/glob3r/): Glob3R is an offline global Structure-from-Motion pipeline that links frozen Pi3X 3D model predictions with dense matching, tracks, motion averaging, and bundle adjustment.
