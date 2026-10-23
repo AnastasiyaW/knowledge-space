@@ -13,46 +13,46 @@ aliases: ["d-OPSD"]
 
 ## What it is
 
-d-OPSD — исследовательский фреймворк post-training для diffusion language models. — строит self-teacher из собственного ответа как suffix conditioning; — переносит supervision с токенов на шаги денойзинга; — сравнивался с RLVR и SFT на четырёх reasoning-бенчмарках. Авторы сообщают около 10% числа оптимизационных шагов RLVR; публичный код есть, но готовой модели или независимой репликации результатов источник не показывает.
+d-OPSD is a research framework for post-training diffusion language models. It builds a self-teacher from the model's own answer as suffix conditioning, moves supervision from tokens to denoising steps, and was compared with RLVR and SFT on four reasoning benchmarks. The authors report about 10% of RLVR's optimization steps. Public code exists, but the source shows no ready model and no independent replication of the results.
 
 ## Development line
 
-- **2026-06-21 — d-OPSD research paper and code repository linked.** Self-generated answer используется как суффиксный контекст teacher, а loss считается по шагам денойзинга.
+- **2026-06-21 — d-OPSD research paper and code repository linked.** The self-generated answer is used as suffix context for the teacher, and the loss is computed over denoising steps.
 
 ## What changed
 
-2026-06-21 — d-OPSD был представлен как OPSD для dLLM: self-generated answer используется как суффиксный контекст teacher, а loss считается по шагам денойзинга.
+2026-06-21 — d-OPSD was presented as OPSD for dLLMs: the self-generated answer is used as suffix context for the teacher, and the loss is computed over denoising steps.
 
 ## How to use this
 
 From 2026-06-21, practitioners should treat d-OPSD as a project with a linked research paper and public code repository, and consult both before evaluating or attempting to use it.
 
-1. Создать Conda-окружение из `env.yml` и активировать `dOPSD`.
+1. Create a Conda environment from `env.yml` and activate `dOPSD`.
   — <https://github.com/xingzhejun/d-opsd-code>
-2. Заменить или пропатчить `trl/trainer/grpo_trainer.py` и `utils.py` версиями из репозитория; это требуется для допустимого числа generations и выравнивания teacher prompt/output.
+2. Replace or patch `trl/trainer/grpo_trainer.py` and `utils.py` with the versions from the repository; this is required for the allowed number of generations and for aligning the teacher prompt and output.
   — <https://github.com/xingzhejun/d-opsd-code>
-3. Запустить скрипт нужного набора: GSM, math, Countdown или Sudoku из `d-opsd/run`.
+3. Run the script for the set you need: GSM, math, Countdown or Sudoku from `d-opsd/run`.
   — <https://github.com/xingzhejun/d-opsd-code>
-4. Указать свой checkpoint в evaluation-скрипте, сохранить generations и посчитать accuracy через `eval/parse_and_get_acc.py`.
+4. Point the evaluation script at your checkpoint, save the generations, and compute accuracy with `eval/parse_and_get_acc.py`.
   — <https://github.com/xingzhejun/d-opsd-code>
 
 ## Best practices
 
-- Зафиксировать версию TRL и применить обе авторские замены trainer-файлов, а не только `grpo_trainer.py`.
+- Pin the TRL version and apply both of the authors' trainer-file replacements, not only `grpo_trainer.py`.
   — <https://github.com/xingzhejun/d-opsd-code>
-- Для A100 и H100 установить `BATCH_DIVIDE=8`, чтобы избежать OOM; значение `4` в скриптах предназначено для B200.
+- On A100 and H100 set `BATCH_DIVIDE=8` to avoid OOM; the value `4` in the scripts is meant for B200.
   — <https://github.com/xingzhejun/d-opsd-code>
-- Перед сравнением с результатами статьи сверить Python 3.10, CUDA 12.9 и конфигурацию из `used-env.txt`; авторы указывают A100/H100/B200.
+- Before comparing with the paper's results, check Python 3.10, CUDA 12.9 and the configuration in `used-env.txt`; the authors list A100/H100/B200.
   — <https://github.com/xingzhejun/d-opsd-code>
 
 ## Superseded by this
 
-- 2026-08-17 — ранняя инструкция окружения, где заменяется только `grpo_trainer.py`, устарела: README требует также заменить `utils.py` из-за исправлений TRL и формата warning.
+- 2026-08-17 — the early environment instruction, which replaces only `grpo_trainer.py`, is outdated: the README also requires replacing `utils.py` because of TRL fixes and the warning format.
 
 ## Still unknown
 
-- d-OPSD легко спутать с одноимённым D-OPSD для step-distilled image diffusion models (arXiv:2605.05204); этот материал относится к dLLM-работе Luo et al., arXiv:2606.18195.
-- Авторы заявляют преимущество на четырёх бенчмарках и около 10% числа шагов RLVR, но в проверенных источниках нет независимой репликации, релиза чекпойнтов или production-интеграции.
+- d-OPSD is easy to confuse with the identically named D-OPSD for step-distilled image diffusion models (arXiv:2605.05204); this material refers to the dLLM work of Luo et al., arXiv:2606.18195.
+- The authors claim an advantage on four benchmarks and about 10% of RLVR's steps, but the sources checked show no independent replication, no checkpoint release and no production integration.
 
 ## Sources
 
