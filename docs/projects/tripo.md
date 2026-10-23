@@ -121,3 +121,40 @@ Tripo opened early access to automated UV unwrapping and retopology. Low-poly me
 
 
 <!-- Retained base: 694331793733b8221866d9072af7e45999930387; article blob: 11d856f6dc8c75d0fae16ee7b15ee410955295d4 -->
+
+<!-- live-update:9bcb91cd3e2d7094b7f6c1e8ebd6eb64e2fe47fe3bfc2d61e36252d582e1a65e -->
+## 2026-10-23 — Tripo Studio adds skeletal auto-rigging and text-driven animation
+
+Tripo Studio now rigs characters automatically and animates them from text. Auto-rigging comes with five humanoid skeleton presets: UE5 Mannequin, Mixamo, VRM 1.0, Unity Humanoid and ActorCore. Text to Motion turns a prompt into a 1-10 second clip and can chain clips into multi-stage sequences. Humanoid auto-rigging only accepts meshes under 100,000 triangles. Skin weights may still need fixing in an external DCC tool.
+
+## 2026-10-23 — Tripo Studio introduces auto-rigging and motion generation workflow
+
+Rigging and animation now live inside Tripo Studio. Bones are placed automatically for five standard game engine presets. Animation comes from text prompts, and up to five motion segments can be chained. All of this works on models up to 100,000 triangles.
+
+### Usage and practices
+
+- Get a mesh: generate a 3D character from a text prompt or reference images in Tripo Studio, or import an existing 3D mesh. [Source](https://studio.tripo3d.ai/)
+- Rig it: open the Auto-Rigging module and pick one of the five presets (UE5 Mannequin, Mixamo, Unity Humanoid, VRM 1.0 or ActorCore). Check first that the mesh is under 100,000 triangles. [Source](https://www.tripo3d.ai/product-doc/module-post-processing/rigging-animation)
+- Animate it: pick a ready movement from the motion library, or type a prompt into Text to Motion for a custom 1-10 second clip or a multi-stage sequence. [Source](https://www.tripo3d.ai/blog/rigging-animation)
+- Export it: preview deformation in the 3D viewport, adjust stage timings for multi-stage sequences, then export as FBX or GLB with the skeletal animation embedded. [Source](https://www.tripo3d.ai/product-doc/module-post-processing/rigging-animation)
+- Retopologise first: keep the base mesh below 100,000 triangles before auto-rigging so vertex weights and joint deformation stay consistent. [Source](https://www.tripo3d.ai/product-doc/module-post-processing/rigging-animation)
+- Check the hard joints: shoulders, hips and fingers often need their automatic skin weights repaired in Blender or Maya before the character goes into a game engine. [Source](https://www.tripo3d.ai/blog/rigging-animation)
+- Block out with free presets: test with the free motion library first, so credits go to custom Text to Motion only when needed. [Source](https://www.tripo3d.ai/blog/rigging-animation)
+
+### Additional evidence
+
+- 2026-10-23: The post-processing release notes say exported rigs and text-to-motion sequences come out as standard editable skeletal animation tracks inside FBX and GLB. They can be retargeted in Unreal Engine, Unity, Blender and WebGL viewers. [Source](https://www.tripo3d.ai/product-doc/module-post-processing/rigging-animation)
+- 2026-10-23: The technical documentation says auto-rigging positions joints and applies initial heat-map skin weights across five skeletal hierarchies (UE5 Mannequin, Mixamo, VRM 1.0, Unity Humanoid, ActorCore). Prompt chaining allows up to five consecutive motion segments, each with its own duration of up to 10 seconds. [Source](https://www.tripo3d.ai/blog/rigging-animation)
+
+### Superseded guidance (retained for history)
+
+- 2026-10-23: Rigging a Tripo character meant exporting the static mesh to Mixamo, Blender or a similar tool and placing and weighting the skeleton by hand. [Source](https://www.tripo3d.ai/blog/rigging-animation)
+- 2026-10-23: Animating Tripo assets meant third-party motion capture libraries or manual keyframing outside Tripo Studio. [Source](https://www.tripo3d.ai/product-doc/module-post-processing/rigging-animation)
+
+### Limits and open questions
+
+- How well deformation holds up over time on non-humanoid or quadruped models with text-driven animation.
+- Independent community benchmarks of Tripo Studio skin weighting against the auto-rigging built into DCC tools.
+- The neural network architecture and training data behind Text to Motion.
+
+<!-- Retained base: d42a348223e0670592e2f1b683c46992af48130e; article blob: 990e6d08d55ddbad4d5d0b851ef0456aa73dd67f -->
