@@ -13,47 +13,47 @@ aliases: ["PrunaVAED"]
 
 ## What it is
 
-PrunaVAED — прuned decoder video VAE для LTX-2.3, заменяющий только декодирование существующих LTX-2.3 латентов. — сохраняет encoder и latent format LTX-2.3; — работает с distilled и two-stage LTX-2.3 pipelines; — не является T2V-моделью, денойзером или универсальным VAE. На H100 80 GB при bf16 и batch size 1 авторы заявляют 1.67–2.08× ускорение; на другом железе результат нужно замерять. Практический вердикт: это узкая оптимизация LTX-2.3 decode stage, а не способ ускорить всю генерацию.
+PrunaVAED is a pruned decoder video VAE for LTX-2.3 that replaces only the decoding of existing LTX-2.3 latents. It keeps the LTX-2.3 encoder and latent format, works with distilled and two-stage LTX-2.3 pipelines, and is not a T2V model, a denoiser or a general-purpose VAE. On an H100 80 GB at bf16 and batch size 1, the authors claim a 1.67–2.08x speedup; measure on other hardware. Practical verdict: a narrow optimization of the LTX-2.3 decode stage, not a way to speed up all generation.
 
 ## Development line
 
-- **2026-08-03 — PrunaVAED entered the LTX Video integration thread.** Drop-in decoder для `diffusers/LTX-2.3-Diffusers`, а не новый генератор видео.
+- **2026-08-03 — PrunaVAED entered the LTX Video integration thread.** A drop-in decoder for `diffusers/LTX-2.3-Diffusers`, not a new video generator.
 
 ## What changed
 
-2026-07-28 — поддержка PrunaVAED была влита в ComfyUI: нужен конвертированный `pruna_ltx2.3_vae_comfy_bf16.safetensors`, а PR описывает около 2× ускорение LTX-2.3 decoding. 2026-08-03 — PrunaVAED был зафиксирован как LTX-video development step; первичные материалы уточняют его область: drop-in decoder для `diffusers/LTX-2.3-Diffusers`, а не новый генератор видео.
+2026-07-28 — PrunaVAED support was merged into ComfyUI: it requires the converted `pruna_ltx2.3_vae_comfy_bf16.safetensors`, and the PR describes about 2x faster LTX-2.3 decoding. 2026-08-03 — PrunaVAED was recorded as an LTX video development step; primary materials clarify its scope: a drop-in decoder for `diffusers/LTX-2.3-Diffusers`, not a new video generator.
 
-Дополнение к событию 2026-08-03: ComfyUI PR датирован 2026-07-28 и уже был merged; поэтому это не новая интеграция августа, а более ранний факт, поясняющий состояние интеграции на дату события.
+Note on the 2026-08-03 event: the ComfyUI PR is dated 2026-07-28 and was already merged, so this is not a new August integration but an earlier fact that explains the integration state on the event date.
 
 ## How to use this
 
 As of 2026-08-03, practitioners should evaluate PrunaVAED from the linked Hugging Face resource and check the linked ComfyUI pull request for integration status before relying on it in an LTX Video workflow.
 
-1. Скачайте репозиторий весов, установите зависимости demo и запустите `demo/demo_distilled_decode.py`; он создаёт ролики stock LTX-2.3 VAE и PrunaVAED из одного latent и печатает decode time.
+1. Download the weights repository, install the demo dependencies and run `demo/demo_distilled_decode.py`; it creates videos of the stock LTX-2.3 VAE and PrunaVAED from one latent and prints the decode time.
   — <https://huggingface.co/PrunaAI/PrunaVAED>
-2. Для LTX-2 скачайте веса PrunaVAED и Gemma encoder, затем запустите distilled pipeline либо `ti2vid_two_stages_hq`; для image-to-video добавьте `--image path/to/image.jpg 0 0.8`.
+2. For LTX-2, download the PrunaVAED weights and the Gemma encoder, then run the distilled pipeline or `ti2vid_two_stages_hq`; for image-to-video add `--image path/to/image.jpg 0 0.8`.
   — <https://huggingface.co/PrunaAI/PrunaVAED>
-3. В ComfyUI используйте поддержку из merged PR и конвертированный bf16-файл, указанный автором PR; заменяйте video VAE, не audio VAE и не transformer.
+3. In ComfyUI use the support from the merged PR and the converted bf16 file named by the PR author; replace the video VAE only, not the audio VAE or the transformer.
   — <https://github.com/Comfy-Org/ComfyUI/pull/15129>
 
 ## Best practices
 
-- Сначала сравните оба декодера на одинаковом latent и своей целевой длине и разрешении: опубликованные цифры получены на одном H100 80 GB, bf16, batch size 1.
+- First compare both decoders on the same latent at your target length and resolution: the published numbers come from a single H100 80 GB, bf16, batch size 1.
   — <https://huggingface.co/PrunaAI/PrunaVAED>
-- Не применяйте модель к произвольным VAE latents и не рассчитывайте на bit-exact output; она проверялась только на двух LTX-2.3 pipelines.
+- Do not apply the model to arbitrary VAE latents and do not expect bit-exact output; it was verified only on two LTX-2.3 pipelines.
   — <https://huggingface.co/PrunaAI/PrunaVAED>
-- Перед коммерческим использованием или распространением проверьте ограничения LTX-2 Community License Agreement.
+- Before commercial use or redistribution, check the limits of the LTX-2 Community License Agreement.
   — <https://huggingface.co/PrunaAI/PrunaVAED>
 
 ## Superseded by this
 
-- 2026-07-28 — для ComfyUI устарело предположение, что PrunaVAED требует только внешнего custom-node решения: поддержка была merged в ComfyUI PR #15129.
-- 2026-08-03 — устарело описание PrunaVAED как полноценной video-generation модели: текущая модельная карточка прямо ограничивает её роль decoder для LTX-2.3.
+- 2026-07-28 — for ComfyUI, the assumption that PrunaVAED needs only an external custom-node solution is outdated: support was merged in ComfyUI PR #15129.
+- 2026-08-03 — the description of PrunaVAED as a full video-generation model is outdated: the current model card explicitly limits its role to the decoder for LTX-2.3.
 
 ## Still unknown
 
-- Модельная карточка не указывает дату первоначальной публикации репозитория, поэтому дату открытия весов нельзя надёжно сопоставить с событием 2026-08-03.
-- Нет независимого benchmark на consumer GPU; заявленные скорость и VRAM подтверждены только авторским тестом на H100 80 GB.
+- The model card does not give the original publication date of the repository, so the date the weights were opened cannot be reliably matched to the 2026-08-03 event.
+- No independent benchmark on consumer GPUs exists; the stated speed and VRAM figures are confirmed only by the author's test on an H100 80 GB.
 
 ## Sources
 
