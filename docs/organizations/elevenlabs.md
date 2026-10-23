@@ -112,3 +112,35 @@ Instant Soundtracks creates a score and timestamped sound effects from uploaded 
 - No qualifying independent practitioner discussion specifically about Instant Soundtracks was found in the reviewed results.
 
 <!-- Retained base: fa3cccdfbdd5ddca7a3b01f3b752c0fa59966afe; article blob: fe6aa94482f605160178e07ded1bc76ca5ad03de -->
+
+<!-- live-update:c8ce4024a7948cdb529aa05d26690a24bbae6d3aad2f4a65d8d0503d6ce199ef -->
+## 2026-10-22 — ElevenLabs Chimera in ElevenCreative
+
+ElevenLabs introduced Chimera, a character system inside ElevenCreative. It pairs the Eleven v4 emotive speech engine with the Seedance 2.5 video generation model. From a text script, emotion tags and a reference image, it produces a talking character with speech and face in sync.
+
+### Usage and practices
+
+- Open ElevenCreative and pick the character generation studio. [Source](https://elevenlabs.io/creative)
+- Upload a reference image of the character, or generate one from a text prompt. [Source](https://elevenlabs.io/creative)
+- Pick an Eleven v4 voice, or assign a cloned voice profile. [Source](https://elevenlabs.io/creative)
+- Type the dialogue in the script editor. Add bracketed emotion tags such as \[whispers\] or \[laughs\] to steer the voice and the facial expression. [Source](https://elevenlabs.io/creative)
+- Render the generation pass to export the lip-synced video. [Source](https://elevenlabs.io/creative)
+- Put each emotion tag right before the sentence or word it applies to, so the speech model and the video model match the expression to the tone. [Source](https://elevenlabs.io/creative)
+- Use a high-resolution, forward-facing portrait with clear features, so lip sync does not distort during complex emotional lines. [Source](https://elevenlabs.io/creative)
+- Keep each dialogue segment short, so the face stays consistent and does not drift over long renders. [Source](https://elevenlabs.io/creative)
+
+### Additional evidence
+
+- 2026-10-22: Chimera combines ByteDance's Seedance 2.5 video architecture with Eleven v4 speech synthesis inside ElevenCreative. The stated aim is to remove dubbing sync lag and drive facial movement from emotion, across more than ninety languages. [Source](https://elevenlabs.io/creative)
+
+### Superseded guidance (retained for history)
+
+- 2026-10-22: The old workflow split the job in two: synthesize the voiceover first, then lip-sync it with a separate post-processing tool. [Source](https://elevenlabs.io/creative)
+
+### Limits and open questions
+
+- "Voice Platform Development" is a general category, not a product name. This entry covers ElevenLabs Chimera within ElevenCreative only.
+- Third-party benchmarks and community discussion on Reddit, YouTube and Medium turned up, but without verifiable direct page links, so none of it is cited here.
+- Credit cost per render, batch API endpoints and export resolution caps for Chimera are not given on the main ElevenCreative page.
+
+<!-- Retained base: dfb3de9ab54eb4b0ebd0dce739bcda6b6bd59c78; article blob: 52948543a1ace86d5aefeb5f2fb50994000b8d6c -->
