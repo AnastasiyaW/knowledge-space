@@ -13,18 +13,18 @@ aliases: ["Qwen3-ForcedAligner-0.6B-hf"]
 
 ## What it is
 
-Qwen3-ForcedAligner-0.6B-hf — токен-классификационная NAR-модель для выравнивания аудиозаписи с транскриптом; подходит вместо WhisperX, когда нужны таймкоды и уже есть текст.
+Qwen3-ForcedAligner-0.6B-hf is a token-classification NAR model for aligning an audio recording with its transcript. It fits when you need timestamps and already have the text, as a replacement for WhisperX.
 
-Возможности:
+Capabilities:
 
-- принимает аудио, транскрипт и язык;
-- возвращает временные метки слов или символов;
-- работает с транскриптом Qwen3-ASR либо другого ASR;
-- поддерживает китайский, английский, кантонский, французский, немецкий, итальянский, японский, корейский, португальский, русский и испанский.
+- accepts audio, a transcript and a language;
+- returns timestamps for words or characters;
+- works with a transcript from Qwen3-ASR or another ASR;
+- supports Chinese, English, Cantonese, French, German, Italian, Japanese, Korean, Portuguese, Russian and Spanish.
 
-Лимит: до пяти минут речи на один запрос; это модель выравнивания, а не самостоятельный распознаватель речи.
+Limit: up to five minutes of speech per request. This is an alignment model, not a standalone speech recognizer.
 
-Вердикт: практична для субтитров и сегментации уже распознанной короткой речи, если язык входит в 11 поддерживаемых.
+Verdict: practical for subtitles and segmentation of already-transcribed short speech, if the language is one of the 11 supported.
 
 ## Development line
 
@@ -32,28 +32,28 @@ Qwen3-ForcedAligner-0.6B-hf — токен-классификационная NA
 
 ## What changed
 
-2026-06-26 — опубликован Transformers-совместимый checkpoint Qwen/Qwen3-ForcedAligner-0.6B-hf для принудительного выравнивания речи и текста.
+2026-06-26 — a Transformers-compatible checkpoint, Qwen/Qwen3-ForcedAligner-0.6B-hf, for forced alignment of speech and text was published.
 
 ## How to use this
 
 From 2026-06-26, practitioners can treat Qwen3-ForcedAligner-0.6B-hf as an identified forced-alignment model candidate in the Qwen3 ASR line, then verify the model card before adopting it.
 
-1. Установите актуальную сборку Transformers из исходников, как указано в карточке checkpoint, пока не подтверждена минимальная стабильная версия с этой архитектурой.
+1. Install the current Transformers build from source, as the checkpoint card instructs, until a minimum stable version with this architecture is confirmed.
   — <https://huggingface.co/Qwen/Qwen3-ForcedAligner-0.6B-hf>
-2. Загрузите AutoProcessor и AutoModelForTokenClassification из Qwen/Qwen3-ForcedAligner-0.6B-hf; для GPU используйте bfloat16 и device_map="auto".
+2. Load AutoProcessor and AutoModelForTokenClassification from Qwen/Qwen3-ForcedAligner-0.6B-hf; on GPU use bfloat16 and device_map="auto".
   — <https://huggingface.co/Qwen/Qwen3-ForcedAligner-0.6B-hf>
-3. Получите транскрипт и язык через Qwen3-ASR либо другой ASR, затем передайте аудио, текст и язык в prepare_forced_aligner_inputs.
+3. Get the transcript and language from Qwen3-ASR or another ASR, then pass the audio, text and language to prepare_forced_aligner_inputs.
   — <https://huggingface.co/Qwen/Qwen3-ForcedAligner-0.6B-hf>
-4. Запустите модель без вычисления градиентов и декодируйте logits через decode_forced_alignment, чтобы получить таймкоды.
+4. Run the model without gradients and decode the logits with decode_forced_alignment to get timestamps.
   — <https://huggingface.co/Qwen/Qwen3-ForcedAligner-0.6B-hf>
 
 ## Best practices
 
-- Подавайте запись речи не длиннее пяти минут и явно задавайте один из 11 поддерживаемых языков.
+- Feed recordings no longer than five minutes and set one of the 11 supported languages explicitly.
   — <https://huggingface.co/Qwen/Qwen3-ForcedAligner-0.6B-hf>
-- Сначала проверяйте соответствие транскрипта записи: модель выравнивает предоставленный текст, а не исправляет ошибки ASR.
+- First check that the transcript matches the recording: the model aligns the text you provide and does not correct ASR errors.
   — <https://github.com/huggingface/transformers/blob/main/docs/source/en/model_doc/qwen3_asr.md>
-- Для пакетной GPU-обработки измерьте torch.compile на собственных данных; в карточке приведён ориентир около 2,5× на A100 при batch size 4, а не универсальная гарантия.
+- For batched GPU processing, measure torch.compile on your own data; the card cites about 2.5x on A100 at batch size 4, a reference point rather than a guarantee.
   — <https://huggingface.co/Qwen/Qwen3-ForcedAligner-0.6B-hf>
 
 ## Superseded by this
@@ -62,8 +62,8 @@ From 2026-06-26, practitioners can treat Qwen3-ForcedAligner-0.6B-hf as an ident
 
 ## Still unknown
 
-- Официальная минимальная стабильная версия Transformers для checkpoint с суффиксом -hf не указана: карточка рекомендует установку из исходников, хотя актуальная документация Transformers уже описывает эту архитектуру.
-- Независимых датированных публикаций именно для checkpoint -hf, помимо обновления официальной коллекции 2026-06-26, не найдено.
+- The official minimum stable Transformers version for the -hf checkpoint is not stated: the card recommends installing from source, although current Transformers documentation already describes this architecture.
+- No independent dated publications specific to the -hf checkpoint, beyond the official collection update of 2026-06-26, were found.
 
 ## Sources
 
