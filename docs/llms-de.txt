@@ -1,6 +1,6 @@
 # Umfassende technische Wissensbasis - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1333+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1334+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1119,6 +1119,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Windows-Copilot-API](https://happyin.space/projects/windows-copilot-api/): Windows-Copilot-API is an unofficial cross-platform bridge. It turns a signed-in consumer Copilot session into Python calls or a local OpenAI-compatible chat endpoint.
 - [WithEveryone](https://happyin.space/projects/witheveryone/): WithEveryone is a research system for generating a single group scene with 5–10 specified people.
 - [WonderWorld](https://happyin.space/projects/wonderworld/): WonderWorld — код исследовательского метода для разработчиков 3D-генерации: из одной стартовой картинки он строит и интерактивно достраивает связанные 3D-сцены по движению камеры и текстовым описан...
+- [Worldstream: worldstream-3d-world-model — Worldstream 3D World Model](https://happyin.space/projects/worldstream/): WorldStream is an open-ended, interactive 3D world model architecture. It is meant for simulation researchers and developers of virtual environments.
 - [X-Dub — Project development](https://happyin.space/projects/x-dub/): X-Dub is an Apache-2.0 code-and-weights release for video-to-audio lip synchronization. The public model is X-Dub (Wan-5B), built on Wan2.2-TI2V-5B rather than the paper’s internal X-Dub (internal-...
 - [XVerse — Public resources and demo](https://happyin.space/projects/xverse/): XVerse — открытая реализация на базе FLUX.1-dev для художников и разработчиков, которым нужен управляемый text-to-image с одним или несколькими референсами. Возможности: раздельная идентичность суб...
 - [YouTube](https://happyin.space/projects/youtube/): YouTube is a video platform for viewers and creators.
