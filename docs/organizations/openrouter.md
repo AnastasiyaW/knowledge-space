@@ -81,8 +81,8 @@ Official material lists 400+ models across 70+ providers. Availability and endpo
 | https://openrouter.ai/docs/guides/features/tool-calling | Tool & Function Calling - Use Tools with OpenRouter | 2026-09-08 |
 | https://openrouter.ai/docs/guides/features/structured-outputs | Structured Outputs - Type-Safe JSON Responses from AI Models | 2026-09-08 |
 | https://openrouter.ai/docs/guides/best-practices/prompt-caching | Prompt Caching - Optimize AI Model Costs with Smart Caching | 2026-09-08 |
-| https://vc.ru/ai/2927281-openrouter-ogranichivaet-rossiyan-v-dostupe-k-chatgpt | Полная жесть: OpenRouter теперь закрывает россиянам доступ к ChatGPT, Claude и Gemini 😢 — AI на vc.ru | 2026-09-08 |
-| https://habr.com/ru/news/1034012/ | OpenRouter перестал принимать платежи для учеток с регионом Россия / Хабр | 2026-09-08 |
+| https://vc.ru/ai/2927281-openrouter-ogranichivaet-rossiyan-v-dostupe-k-chatgpt | OpenRouter now blocks users in Russia from ChatGPT, Claude and Gemini (AI on vc.ru) | 2026-09-08 |
+| https://habr.com/ru/news/1034012/ | OpenRouter stopped accepting payments for accounts with a Russia region (Habr) | 2026-09-08 |
 | https://www.reddit.com/r/openrouter/comments/1ufjcq3/anyone_else_got_this_openrouter_notice/ | anyone else got this openrouter notice? : r/openrouter | 2026-09-08 |
 | https://openrouter.ai/blog/announcements/ | Announcements — OpenRouter Blog | 2026-09-08 |
 | https://openrouter.ai/blog/announcements/may-release-spotlight/ | May Release Spotlight — OpenRouter Blog | 2026-09-08 |
