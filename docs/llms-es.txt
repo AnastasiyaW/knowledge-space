@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1336+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1337+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -762,6 +762,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [ComfyUI Sol-Attn — Blackwell and Triton implementations](https://happyin.space/projects/comfyui-sol-attn/): ComfyUI Sol-Attn — общее имя для двух community-расширений ComfyUI, которые подменяют attention в MiniMax H3 разреженным вариантом Sol-Attn. — Kijai: экспериментальный Triton-вариант, заявленно про...
 - [ComfyUI_StarNodes](https://happyin.space/projects/comfyui-starnodes/): ComfyUI_StarNodes is an MIT-licensed custom node suite for ComfyUI practitioners who need starter workflows, sampling, image processing, and video in one extension.
 - [heydoughogan ComfyUI VFX Workflow — ComfyUI VFX passes](https://happyin.space/projects/comfyui-vfx-workflow/): VFX Utilities is a ComfyUI workflow by Doug Hogan for compositors and VFX artists. It generates passes for relighting, compositing, and look development without a separate CG render.
+- [ComfyUI Video Tiler](https://happyin.space/projects/comfyui-video-tiler/): ComfyUI Video Tiler splits an IMAGE video batch into overlapping tiles, processes them through an upscale workflow, and merges them back without a visible grid. It targets LTX 2.3 and MiniMax H3 wo...
 - [ComfyUI](https://happyin.space/projects/comfyui/): ComfyUI-H3VAE_TRT is a third-party ComfyUI extension by lihaoyun6. It compiles MiniMax-H3 VAE ONNX models into TensorRT engines and loads them as a VAE. This is a custom-node integration, not a rel...
 - [ControlNet for SDXL — SDXL ControlNet model releases](https://happyin.space/projects/controlnet-sdxl/): ControlNet for SDXL adapts conditioning models to SDXL. We have not run present-state research yet, so this page carries the dated line and the practical note below, nothing more.
 - [ControlNet](https://happyin.space/projects/controlnet/): ControlNet is a spatial-conditioning adapter for diffusion models. We use it when a prompt must follow a reference image rather than only text.
