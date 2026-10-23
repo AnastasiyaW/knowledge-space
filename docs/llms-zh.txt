@@ -1,6 +1,6 @@
 # 综合技术知识库 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1335+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1336+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -981,6 +981,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [OpenCut](https://happyin.space/projects/opencut/): OpenCut is an MIT-licensed video editor for creators who want a CapCut workflow.
 - [OpenMAIC](https://happyin.space/projects/openmaic/): OpenMAIC is an open-source classroom generator for educators and learners: slides, quizzes, interactive HTML scenes, project-based learning, AI teacher/peer discussion, whiteboard, TTS, and exports...
 - [OpenMontage](https://happyin.space/projects/openmontage/): OpenMontage is an automated video pipeline where an AI coding assistant runs research, scripting, assets, editing, and rendering.
+- [OpenSandbox](https://happyin.space/projects/opensandbox/): OpenSandbox provides isolated environments for AI agents across Docker and Kubernetes.
 - [OpenWorker — Project introduction](https://happyin.space/projects/openworker/): OpenWorker is an MIT-licensed desktop AI coworker with a local Python agent server and a Tauri/React GUI. It supports bring-your-own models and 25+ integrations.
 - [OrbitQuant](https://happyin.space/projects/orbitquant/): OrbitQuant — Python-библиотека и метод постобучающей квантизации для image/video diffusion transformers. Возможности: RPBH-поворот, общие Lloyd–Max codebook, W2A4–W4A6 recipes, интеграции Transform...
 - [Origin F1 — Robotics](https://happyin.space/projects/origin-f1/): Origin F1 is AheadForm's desktop biomimetic humanoid robot for teams needing a physical shell with facial expressions and voice-visual interaction.
