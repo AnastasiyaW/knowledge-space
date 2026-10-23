@@ -79,6 +79,12 @@ extra:
     - name: 简体中文
       link: /zh-CN/
       lang: zh
+  # Every language branch: hooks/i18n.py links each page to the same page in the others.
+  # The order is the order of the language selector.
+  locales:
+    - {lang: en, hreflang: en, name: English, base: "https://happyin.space/", docs: docs}
+    - {lang: ru, hreflang: ru, name: Русский, base: "https://happyin.space/ru/", docs: locales/ru/docs}
+    - {lang: zh-CN, hreflang: zh-CN, name: 简体中文, base: "https://happyin.space/zh-CN/", docs: locales/zh-CN/docs}
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/AnastasiyaW/knowledge-space
@@ -103,6 +109,7 @@ extra_javascript:
   - javascripts/graph.js
 
 hooks:
+  - hooks/i18n.py
   - hooks/stats.py
   - hooks/og_image.py
   - hooks/validate.py

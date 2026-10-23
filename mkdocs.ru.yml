@@ -1,3 +1,4 @@
+INHERIT: mkdocs.yml
 site_name: База знаний Happyin
 site_description: >-
   Техническая база знаний для людей и AI-агентов: проверяемые решения,
@@ -72,6 +73,7 @@ extra:
       link: /zh-CN/
       lang: zh
   ui:
+    machine_translation_note: "Машинный перевод. Канонический текст — [оригинал на английском]({url})."
     home: Главная
     knowledge_base: База знаний
     knowledge_base_url: https://happyin.space/knowledge-base/
@@ -117,18 +119,19 @@ extra:
 plugins:
   - search:
       lang: ru
+  - meta
+  - minify:
+      minify_html: true
 
-markdown_extensions:
-  - pymdownx.highlight:
-      anchor_linenums: true
-      line_spans: __span
-      pygments_lang_class: true
-  - pymdownx.inlinehilite
-  - pymdownx.superfences
-  - admonition
-  - tables
-  - toc:
-      permalink: true
-      toc_depth: 3
-  - attr_list
-  - md_in_html
+# Article pages need the same Markdown as English; INHERIT brings markdown_extensions.
+# Shared assets live only in the English build, so the English-relative CSS/JS lists are cleared.
+extra_css: []
+extra_javascript: []
+
+hooks:
+  - hooks/i18n.py
+  - hooks/og_image.py
+  - hooks/description.py
+  - hooks/wikilinks.py
+  - hooks/levels.py
+  - hooks/faq_schema.py

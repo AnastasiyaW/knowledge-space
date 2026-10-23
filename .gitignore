@@ -38,3 +38,6 @@ docs/**/.concepts.json
 .claude/.handoff-reminded
 .claude/settings.json
 .claude/WORKFLOW.md
+
+# Translation batch state (scripts/translate_locales.py)
+var/

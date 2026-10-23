@@ -151,7 +151,10 @@ class Template(unittest.TestCase):
     TEXT = (ROOT / "overrides" / "main.html").read_text(encoding="utf-8")
 
     def test_no_hreflang_pointing_at_text_files(self) -> None:
-        self.assertNotIn("hreflang=", self.TEXT)
+        # The template writes only x-default itself; the per-language links come from
+        # hooks/i18n.py through extra.alternate and point at translated pages.
+        self.assertEqual(self.TEXT.count("hreflang="), 1)
+        self.assertIn('hreflang="x-default" href="{{ i18n_x_default }}"', self.TEXT)
 
     def test_titles_in_attributes_and_json_ld_are_escaped(self) -> None:
         self.assertNotIn('content="{{ page.title }}', self.TEXT)

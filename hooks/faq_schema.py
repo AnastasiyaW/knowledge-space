@@ -19,7 +19,7 @@ def _extract_gotchas(markdown: str) -> list[dict]:
     """Extract Q&A pairs from ## Gotchas section."""
     # Find Gotchas section
     gotchas_match = re.search(
-        r'^## Gotchas\s*\n(.*?)(?=^## |\Z)',
+        r'^## (?:Gotchas|.*\{#gotchas\})\s*\n(.*?)(?=^## |\Z)',
         markdown,
         re.MULTILINE | re.DOTALL,
     )

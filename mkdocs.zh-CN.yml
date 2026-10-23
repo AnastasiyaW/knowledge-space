@@ -1,3 +1,4 @@
+INHERIT: mkdocs.yml
 site_name: Happyin 知识库
 site_description: >-
   面向开发者和 AI 智能体的技术知识库：可验证的方案、版本信息与常见陷阱。
@@ -72,6 +73,7 @@ extra:
       link: /zh-CN/
       lang: zh
   ui:
+    machine_translation_note: "机器翻译。规范文本见[英文原文]({url})。"
     home: 首页
     knowledge_base: 知识库
     knowledge_base_url: https://happyin.space/knowledge-base/
@@ -117,18 +119,19 @@ extra:
 plugins:
   - search:
       lang: zh
+  - meta
+  - minify:
+      minify_html: true
 
-markdown_extensions:
-  - pymdownx.highlight:
-      anchor_linenums: true
-      line_spans: __span
-      pygments_lang_class: true
-  - pymdownx.inlinehilite
-  - pymdownx.superfences
-  - admonition
-  - tables
-  - toc:
-      permalink: true
-      toc_depth: 3
-  - attr_list
-  - md_in_html
+# Article pages need the same Markdown as English; INHERIT brings markdown_extensions.
+# Shared assets live only in the English build, so the English-relative CSS/JS lists are cleared.
+extra_css: []
+extra_javascript: []
+
+hooks:
+  - hooks/i18n.py
+  - hooks/og_image.py
+  - hooks/description.py
+  - hooks/wikilinks.py
+  - hooks/levels.py
+  - hooks/faq_schema.py

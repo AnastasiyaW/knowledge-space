@@ -8,6 +8,8 @@ If no level in frontmatter, auto-assigns based on content analysis.
 import re
 
 
+# Language builds pass their own names in extra.ui.level_names.
+_names = None
 LEVEL_NAMES = {
     1: "Intro",
     2: "Basic",
@@ -98,7 +100,7 @@ def _make_badge(level: int) -> str:
         else:
             stars.append('<span class="ks-level__star--empty">&#9733;</span>')
     stars_html = "".join(stars)
-    name = LEVEL_NAMES.get(level, "")
+    name = (_names or LEVEL_NAMES).get(level, "")
     return (
         f'\n<div class="ks-level-badge" markdown="0">'
         f'<span class="ks-level">{stars_html}</span>'
@@ -109,6 +111,9 @@ def _make_badge(level: int) -> str:
 
 def on_page_markdown(markdown: str, page, config, files, **kwargs) -> str:
     """Inject level badge after first H1 heading."""
+    global _names
+    localized = config["extra"].get("ui", {}).get("level_names")
+    _names = dict(enumerate(localized, start=1)) if localized else None
     src = page.file.src_uri   # always "/"-separated; src_path uses "\" on Windows
     # Skip non-article pages
     if src in ("index.md", "contributing/index.md", "privacy/index.md", "privacy.md"):
