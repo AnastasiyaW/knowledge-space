@@ -87,3 +87,36 @@ From 2025-09-03, practitioners distributing DeepSeek-generated material should v
 - **Subject:** `organization:deepseek`, thread `deepseek-product-and-governance`, 1 dated events 2025-09-03 → 2025-09-03.
 - **Practical note:** From 2025-09-03, practitioners distributing DeepSeek-generated material should verify whether visible AI-origin labeling applies before publication, using current primary documentation to confirm the policy's scope and implementation.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:d5f6e25dcc2866d67cbad5fc751aee84878deea99040c3620314db827151c4fc -->
+## 2026-10-22 — DeepSeek secures $15 billion round at $100 billion valuation
+
+DeepSeek reportedly closed a $15 billion financing round at an estimated $100 billion valuation. The money goes to compute expansion and next-generation model training, to rival US frontier labs.
+
+## 2026-10-22 — DeepSeek raises $15 billion following US federal deployment restrictions
+
+DeepSeek raised $15 billion shortly after US federal civilian agencies were ordered to stop using its models. The order cited national security.
+
+### Usage and practices
+
+- Regulatory check: review regional rules and federal compliance directives before putting the DeepSeek API or model weights into institutional workflows. [Source](https://techcrunch.com/2026/10/22/deepseek-reportedly-raises-15b-days-after-us-restrictions/)
+- Independent infrastructure: run commercial API access or private compute clusters on independent infrastructure, so operations continue. [Source](https://www.bloomberg.com/news/articles/2026-10-22/deepseek-raises-15-billion-in-challenge-to-leading-us-labs)
+- Isolated pipelines: keep deployment pipelines of Chinese-headquartered model providers apart from federal and regulated Western data environments, to comply with public procurement restrictions. [Source](https://techcrunch.com/2026/10/22/deepseek-reportedly-raises-15b-days-after-us-restrictions/)
+
+### Additional evidence
+
+- 2026-10-22: TechCrunch reports that the $15 billion arrived right after US federal directives ordered civilian agencies to remove DeepSeek models from government networks over national security concerns. The report sets capital consolidation at home against growing compliance barriers abroad. [Source](https://techcrunch.com/2026/10/22/deepseek-reportedly-raises-15b-days-after-us-restrictions/)
+- 2026-10-22: Bloomberg reports that the round values DeepSeek at about $100 billion. Founder Liang Wenfeng says the money goes to training frontier models and expanding compute, to compete directly with leading US AI labs. [Source](https://www.bloomberg.com/news/articles/2026-10-22/deepseek-raises-15-billion-in-challenge-to-leading-us-labs)
+
+### Superseded guidance (retained for history)
+
+- 2026-10-22: DeepSeek models and services could be deployed in US public sector environments without federal civilian agency restriction. [Source](https://techcrunch.com/2026/10/22/deepseek-reportedly-raises-15b-days-after-us-restrictions/)
+
+### Limits and open questions
+
+- The page title, 'DeepSeek product and AI-content governance', covers two different areas. One is product and content moderation governance. The other is corporate equity financing and international regulatory sanctions. The events here are a funding round ($15B) and a federal procurement ban, not product-level content governance releases or moderation tool updates.
+- We could not verify canonical Chinese press URLs for domestic reports on Liang Wenfeng's limited partnership voting structure and the 100-billion-yuan funding details. Search engine redirects hid the direct article paths. These claims have no qualified first-party Chinese link.
+- Official terms of service and first-party moderation documentation were not among the reviewed events. The research did not return stable paths for them either.
+
+
+<!-- Retained base: dfb3de9ab54eb4b0ebd0dce739bcda6b6bd59c78; article blob: 6e499cb91695b68997ab4c13f56183e07ab1c604 -->
