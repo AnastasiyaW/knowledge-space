@@ -5,6 +5,16 @@ hide:
   - toc
 ---
 
+<div class="ks-hero" markdown="0">
+  <h1 class="ks-hero__title">Knowledge Space</h1>
+  <p class="ks-hero__lead">Practical, source-checked notes for engineers: how a tool behaves, which settings matter, and the mistakes that cost an afternoon, across 28 domains: from Kafka and PostgreSQL to diffusion models and AI agents. Free to read, no sign-up.</p>
+  <div class="ks-hero__actions">
+    <a href="start-here/" class="md-button md-button--primary">Start here</a>
+    <a href="#domains" class="md-button">Browse domains</a>
+    <label for="__search" class="md-button ks-hero__search">Search</label>
+  </div>
+</div>
+
 <div class="ks-graph-wrapper" markdown="0">
 <div id="knowledge-graph"></div>
 <button class="ks-scroll-down" id="ks-scroll-down" title="Scroll down">
@@ -56,13 +66,10 @@ hide:
   </div>
 </div>
 
-# Knowledge Space
-
-Curated technical knowledge for people building, debugging, and making engineering decisions — and for the AI agents they work with.
-
-**New here?** Start from a concrete goal instead of a domain: [open the human guide](start-here.md).
-
 ## What is this?
+
+Curated technical knowledge for people building, debugging, and making engineering decisions — and for the AI agents they work with. **New here?** Start from a concrete goal instead of a domain: [open the human guide](start-here.md).
+
 
 A knowledge base designed **primarily for AI agents** - structured so that RAG retrieval, MCP tools, and context injection return dense, actionable technical content instead of blog-style prose.
 

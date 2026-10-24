@@ -1,7 +1,19 @@
 # Happyin Knowledge Space - robots.txt
 # Strategy: allow search crawlers (traditional + AI), block AI training crawlers
-# Last updated: 2026-09-22
+# Last updated: 2026-10-24 (crawler names checked against the vendors' own pages below)
 # /ks/ holds the empty files the anonymous visit counter requests - not content, not for crawling.
+#
+# Sources for the user-agent tokens:
+#   Google  https://developers.google.com/search/docs/crawling-indexing/google-common-crawlers
+#           https://developers.google.com/search/docs/crawling-indexing/google-special-case-crawlers
+#           (Mediapartners-Google and AdsBot-Google ignore the "*" group, so they are named here)
+#   OpenAI  https://platform.openai.com/docs/bots
+#   Anthropic https://support.claude.com/en/articles/8896518 (ClaudeBot collects training data;
+#           Claude-User fetches for a user; Claude-SearchBot indexes for search)
+#   Perplexity https://docs.perplexity.ai/guides/bots
+#   Apple   https://support.apple.com/en-us/119829 (Applebot-Extended is the training opt-out token)
+#   Meta    https://developers.facebook.com/docs/sharing/webmasters/web-crawlers/
+#   DuckDuckGo https://duckduckgo.com/duckduckgo-help-pages/results/duckassistbot
 #
 # Cloudflare Content Signals (April 2026 standard)
 # Default intent for ALL crawlers below unless overridden:
@@ -27,7 +39,16 @@ User-agent: DuckDuckBot
 Allow: /
 Disallow: /ks/
 
-# AI search crawlers - ALLOW (for citations and visibility)
+# Google advertising crawlers - ALLOW (AdSense needs to read pages to serve relevant ads)
+User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: AdsBot-Google
+User-agent: AdsBot-Google-Mobile
+Allow: /
+Disallow: /ks/
+
+# AI search and user-requested fetchers - ALLOW (for citations and visibility)
 User-agent: OAI-SearchBot
 Allow: /
 Disallow: /ks/
@@ -40,7 +61,7 @@ User-agent: PerplexityBot
 Allow: /
 Disallow: /ks/
 
-User-agent: ClaudeBot
+User-agent: Perplexity-User
 Allow: /
 Disallow: /ks/
 
@@ -56,12 +77,29 @@ User-agent: Applebot
 Allow: /
 Disallow: /ks/
 
-User-agent: Applebot-Extended
+User-agent: DuckAssistBot
+Allow: /
+Disallow: /ks/
+
+User-agent: Meta-WebIndexer
+Allow: /
+Disallow: /ks/
+
+User-agent: Meta-ExternalFetcher
 Allow: /
 Disallow: /ks/
 
 # AI training crawlers - BLOCK (content protection)
+# ClaudeBot and Applebot-Extended were listed as allowed above until 2026-10-24, but both
+# vendors document them as the training crawler / training opt-out token (sources above),
+# which contradicts ai-train=no. Claude-User, Claude-SearchBot and Applebot stay allowed.
 User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Applebot-Extended
 Disallow: /
 
 User-agent: Google-Extended
@@ -97,6 +135,8 @@ Allow: /
 Disallow: /ks/
 
 Sitemap: https://happyin.space/sitemap.xml
+Sitemap: https://happyin.space/ru/sitemap.xml
+Sitemap: https://happyin.space/zh-CN/sitemap.xml
 
 # LLM agent discovery files (multilingual)
 # llms.txt: https://happyin.space/llms.txt

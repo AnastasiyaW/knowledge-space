@@ -48,3 +48,28 @@
 [data-md-color-scheme="default"] .ks-analytics-consent__title {
   color: #6e289e;
 }
+
+/* The prompt lives outside .md-typeset, where Material does not style .md-button:
+   without these rules "Allow" and "Decline" rendered as small bare text. */
+.ks-analytics-consent__actions .md-button {
+  display: inline-block;
+  padding: 0.5em 1.4em;
+  border: 0.1rem solid currentColor;
+  border-radius: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: transparent;
+  color: inherit;
+}
+
+.ks-analytics-consent__actions .md-button--primary {
+  border-color: var(--md-primary-fg-color);
+  background: var(--md-primary-fg-color);
+  color: var(--md-primary-bg-color);
+}
+
+.ks-analytics-consent a {
+  color: inherit;
+  text-decoration: underline;
+}

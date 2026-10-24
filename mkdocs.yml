@@ -57,6 +57,16 @@ extra:
   # GitHub Actions from the repository variable only after the GA4 Web stream exists.
   # The empty fallback keeps every release telemetry-free until that point.
   ga4_measurement_id: !ENV [HAPPYIN_GA4_MEASUREMENT_ID, ""]
+  # Display ads (Google AdSense). Inert until client is set: with an empty client no ad
+  # markup, no ad script, no verification meta and no /ads.txt (functions/ads.txt.js) exist.
+  # Public identifiers, injected by the deploy workflow from repository variables.
+  # Precondition for setting the client: AdSense "Privacy & messaging" (Google-certified
+  # CMP) switched on for the EEA, UK and Switzerland, or ads there stay non-personalised.
+  ads:
+    client: !ENV [HAPPYIN_ADSENSE_CLIENT, ""]                     # ca-pub-XXXXXXXXXXXXXXXX
+    slot_article_top: !ENV [HAPPYIN_ADSENSE_SLOT_ARTICLE_TOP, ""]  # after an article's first section
+    slot_article_end: !ENV [HAPPYIN_ADSENSE_SLOT_ARTICLE_END, ""]  # after the article text
+    slot_sidebar: !ENV [HAPPYIN_ADSENSE_SLOT_SIDEBAR, ""]          # desktop table-of-contents column
   content_language: en
   shared_asset_url: https://happyin.space/
   alternate:

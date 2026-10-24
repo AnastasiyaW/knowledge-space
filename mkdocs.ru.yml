@@ -49,6 +49,16 @@ repo_name: knowledge-space
 
 extra:
   ga4_measurement_id: !ENV [HAPPYIN_GA4_MEASUREMENT_ID, ""]
+  # Display ads (Google AdSense). Inert until client is set: with an empty client no ad
+  # markup, no ad script, no verification meta and no /ads.txt (functions/ads.txt.js) exist.
+  # Public identifiers, injected by the deploy workflow from repository variables.
+  # Precondition for setting the client: AdSense "Privacy & messaging" (Google-certified
+  # CMP) switched on for the EEA, UK and Switzerland, or ads there stay non-personalised.
+  ads:
+    client: !ENV [HAPPYIN_ADSENSE_CLIENT, ""]                     # ca-pub-XXXXXXXXXXXXXXXX
+    slot_article_top: !ENV [HAPPYIN_ADSENSE_SLOT_ARTICLE_TOP, ""]  # after an article's first section
+    slot_article_end: !ENV [HAPPYIN_ADSENSE_SLOT_ARTICLE_END, ""]  # after the article text
+    slot_sidebar: !ENV [HAPPYIN_ADSENSE_SLOT_SIDEBAR, ""]          # desktop table-of-contents column
   content_language: ru
   shared_asset_url: https://happyin.space/
   alternate:
@@ -73,12 +83,27 @@ extra:
     support_text: Happyin Knowledge Space — бесплатный открытый справочник для инженеров и AI-агентов. Если материал помог, звезда на GitHub поможет другим людям его найти.
     support_report_lead: "Статья устарела, ошибочна или не хватает нужной темы? AI-агент или скрипт может отправить один публичный отчёт без аккаунта:"
     support_report_tail: Ответ вернёт ссылку статуса, где видно, что происходит с отчётом.
-    privacy_notice: Без рекламных трекеров. Cloudflare Web Analytics работает без cookie; Google Analytics загружается только после вашего согласия —
+    privacy_notice: Cloudflare Web Analytics считает посещения без cookie. Если включены Google Analytics и реклама Google, они могут использовать cookie; в ЕЭЗ, Великобритании и Швейцарии — только после вашего согласия —
     privacy_details: подробнее
-    analytics_title: Необязательная аналитика
-    analytics_text: Разрешить Google Analytics измерять, какие части базы знаний помогают людям? Мы не передаём поисковые запросы, промпты, адреса email, текст обратной связи или рекламные/персонализирующие сигналы.
-    analytics_allow: Разрешить аналитику
-    analytics_reject: Не включать
+    analytics_title: Cookie на этом сайте
+    analytics_text: Разрешить Google Analytics использовать cookie, чтобы видеть, какие страницы помогают читателям? Реклама, где она есть, помогает сайту оставаться бесплатным. Мы никогда не передаём поисковые запросы, промпты, адреса email и текст обратной связи.
+    analytics_allow: Разрешить
+    analytics_reject: Отклонить
+    analytics_state_off: Google Analytics и реклама Google на этом сайте не включены.
+    analytics_state_signal: "Cookie Google выключены: ваш браузер передаёт Global Privacy Control или Do Not Track."
+    analytics_state_granted: Вы разрешили cookie Google в этом браузере.
+    analytics_state_denied: Вы выключили cookie Google в этом браузере.
+    analytics_state_default: В этом браузере выбор ещё не сделан.
+    privacy_choices: Настройки конфиденциальности
+    footer_links_aria: Информация о сайте
+    footer_about: О проекте
+    footer_contact: Контакты
+    footer_privacy: Конфиденциальность
+    article_nav_aria: Ещё в этом разделе
+    article_nav_all: Все статьи раздела
+    article_nav_prev: Предыдущая
+    article_nav_next: Следующая
+    ad_label: Реклама
     popup_close: Закрыть
     popup_title: Получать обновления
     popup_text: Новые статьи об AI, инфраструктуре и инженерных практиках. Без спама — только обновления базы.

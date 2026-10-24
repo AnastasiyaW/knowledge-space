@@ -3,6 +3,7 @@
 {% set ui = config.extra.ui | default({}, true) %}
 {% set content_language = config.extra.content_language | default('en', true) %}
 {% set shared_asset_url = config.extra.shared_asset_url | default(config.site_url, true) %}
+{% import "partials/ads.html" as ads with context %}
 
 {% block tabs %}
   {{ super() }}
@@ -50,11 +51,18 @@
 {% block extrahead %}
   {{ super() }}
   {% set ga4_measurement_id = config.extra.ga4_measurement_id | default('', true) %}
+  {% set ads_client = ads.client() | trim %}
+  {% include "partials/consent-bootstrap.html" %}
   <meta name="happyin-ga4-id" content="{{ ga4_measurement_id }}">
-  {% if ga4_measurement_id %}
+  {% if ads_client %}
+  {# AdSense site verification (meta-tag method); functions/ads.txt.js reads it too. #}
+  <meta name="google-adsense-account" content="{{ ads_client }}">
+  {% endif %}
+  {% if ga4_measurement_id or ads_client %}
   <link rel="stylesheet" href="{{ shared_asset_url }}stylesheets/analytics.css">
   <script src="{{ shared_asset_url }}javascripts/analytics.js" defer></script>
   {% endif %}
+  <link rel="stylesheet" href="{{ shared_asset_url }}stylesheets/reading.css">
   <link rel="icon" href="{{ shared_asset_url }}assets/favicon.png" type="image/png" sizes="32x32">
   {# Web Analytics is injected at the edge (automatic setup for this zone, SPA mode on).
      A second copy of the beacon here made every report from article pages fail with a
@@ -63,9 +71,14 @@
   <link rel="icon" href="{{ shared_asset_url }}assets/favicon-16.png" type="image/png" sizes="16x16">
   <style>
     .md-search { max-width: 14rem; }
-    .md-header__source { display: flex; gap: 0; max-width: none; width: auto; align-items: stretch; }
-    .md-header__source .md-source { min-width: 0; width: 12rem; }
-    .md-header__source .md-source--secondary { border-left: 1px solid rgba(255,255,255,0.15); }
+    /* Two repo buttons side by side, only where Material shows the header source (60em+).
+       Unscoped, this display:flex overrode Material's phone rule and widened the page to
+       704px at a 375px viewport: sideways scrolling and dialogs pushed off-screen. */
+    @media screen and (min-width: 60em) {
+      .md-header__source { display: flex; gap: 0; max-width: none; width: auto; align-items: stretch; }
+      .md-header__source .md-source { min-width: 0; width: 12rem; }
+      .md-header__source .md-source--secondary { border-left: 1px solid rgba(255,255,255,0.15); }
+    }
 
     /* Top nav bar — lives inside md-header (block tabs), stays sticky with header */
     .ks-topnav {
@@ -290,6 +303,14 @@
           { match: 'for ai agents',            rank: 1, style: 'secondary' },
           { match: 'contributing',            rank: 2, style: 'secondary', rename: 'How to Contribute' },
           { match: 'privacy',                 rank: 3, style: 'secondary', sep: true },
+          // About and Contact are linked from every footer; in the sidebar they would
+          // push the domain list further down.
+          { match: 'about',                   rank: 0, hide: true },
+          { match: 'contact',                 rank: 0, hide: true },
+          { match: 'о проекте',               rank: 0, hide: true },
+          { match: 'контакты',                rank: 0, hide: true },
+          { match: '关于',                     rank: 0, hide: true },
+          { match: '联系',                     rank: 0, hide: true },
           { match: 'happyin knowledge space', rank: 0, hide: true },
         ];
 
@@ -672,7 +693,7 @@
 
 {% block content %}
   {{ super() }}
-  {% if page and not page.is_homepage and page.file.src_path != "privacy.md" %}
+  {% if page and not page.is_homepage and page.file.src_uri not in ("privacy.md", "about.md", "contact.md") %}
     {# Visible text on purpose: agents that read this page get the same request people see. #}
     {# Google honours data-nosnippet only on div, span and section, hence the inner div. #}
     <aside class="ks-article-support" aria-label="{{ ui.get('support_aria', 'Support the project') }}">
@@ -703,18 +724,30 @@
 {% block footer %}
   {{ super() }}
   <div class="ks-footer-privacy">
-    {{ ui.get('privacy_notice', 'No ad trackers. Cloudflare Web Analytics is cookie-free; optional Google Analytics loads only after you allow it -') }} <a href="{{ config.site_url }}privacy/">{{ ui.get('privacy_details', 'details') }}</a>.
+    <nav class="ks-footer-links" aria-label="{{ ui.get('footer_links_aria', 'Site information') }}">
+      <a href="{{ config.site_url }}about/">{{ ui.get('footer_about', 'About') }}</a>
+      <a href="{{ config.site_url }}contact/">{{ ui.get('footer_contact', 'Contact') }}</a>
+      <a href="{{ config.site_url }}privacy/">{{ ui.get('footer_privacy', 'Privacy') }}</a>
+      <button type="button" class="ks-footer-links__choices" data-ks-analytics-preferences hidden>{{ ui.get('privacy_choices', 'Privacy choices') }}</button>
+    </nav>
+    <p>{{ ui.get('privacy_notice', 'Cloudflare Web Analytics counts visits without cookies. When enabled, Google Analytics and Google ads may use cookies; in the EEA, the UK and Switzerland only after you allow them -') }} <a href="{{ config.site_url }}privacy/">{{ ui.get('privacy_details', 'details') }}</a>.</p>
   </div>
-  <section class="ks-analytics-consent" id="ks-analytics-consent" role="dialog" aria-labelledby="ks-analytics-consent-title" aria-describedby="ks-analytics-consent-text" hidden>
-    <p class="ks-analytics-consent__title" id="ks-analytics-consent-title">{{ ui.get('analytics_title', 'Optional analytics') }}</p>
-    <p class="ks-analytics-consent__text" id="ks-analytics-consent-text">{{ ui.get('analytics_text', 'Allow Google Analytics to measure which parts of the knowledge base help people? We do not send search terms, prompts, email addresses, feedback text, or advertising/personalization signals.') }}</p>
+  <section class="ks-analytics-consent" id="ks-analytics-consent" role="dialog" aria-labelledby="ks-analytics-consent-title" aria-describedby="ks-analytics-consent-text" hidden
+    data-state-off="{{ ui.get('analytics_state_off', 'Google Analytics and Google ads are not enabled on this site.') }}"
+    data-state-signal="{{ ui.get('analytics_state_signal', 'Google cookies are off: your browser sends Global Privacy Control or Do Not Track.') }}"
+    data-state-granted="{{ ui.get('analytics_state_granted', 'You allowed Google cookies in this browser.') }}"
+    data-state-denied="{{ ui.get('analytics_state_denied', 'You turned Google cookies off in this browser.') }}"
+    data-state-default="{{ ui.get('analytics_state_default', 'You have not made a choice in this browser yet.') }}">
+    <p class="ks-analytics-consent__title" id="ks-analytics-consent-title">{{ ui.get('analytics_title', 'Cookies on this site') }}</p>
+    <p class="ks-analytics-consent__text" id="ks-analytics-consent-text">{{ ui.get('analytics_text', 'May Google Analytics use cookies to measure which pages help readers? Ads, where shown, help keep the site free. We never send search terms, prompts, email addresses or feedback text.') }} <a href="{{ config.site_url }}privacy/">{{ ui.get('privacy_details', 'details') }}</a></p>
     <div class="ks-analytics-consent__actions">
-      <button type="button" class="md-button md-button--primary" data-ks-analytics-accept>{{ ui.get('analytics_allow', 'Allow analytics') }}</button>
-      <button type="button" class="md-button" data-ks-analytics-reject>{{ ui.get('analytics_reject', 'Keep it off') }}</button>
+      <button type="button" class="md-button md-button--primary" data-ks-analytics-accept>{{ ui.get('analytics_allow', 'Allow') }}</button>
+      <button type="button" class="md-button" data-ks-analytics-reject>{{ ui.get('analytics_reject', 'Decline') }}</button>
     </div>
   </section>
 
-  {# Newsletter popup - article pages only, new visitors, 14-day cooldown #}
+  {# Newsletter popup - article pages only, never on a browser's first page view, never
+     while the cookie prompt is open, 14-day cooldown #}
   {% if page and not page.is_homepage %}
   <div class="ks-popup-overlay" id="ks-popup-overlay" style="display:none">
     <div class="ks-popup">
@@ -734,16 +767,26 @@
   </div>
   <script>
   (function(){
-    var KEY='ks_popup_seen', COOLDOWN=14*86400*1000;
-    var last=localStorage.getItem(KEY);
+    var KEY='ks_popup_seen', VIEWS='ks_popup_views', COOLDOWN=14*86400*1000;
+    function get(k){ try { return localStorage.getItem(k); } catch(e) { return null; } }
+    function put(k,v){ try { localStorage.setItem(k,v); return true; } catch(e) { return false; } }
+    var views=parseInt(get(VIEWS)||'0',10)+1;
+    // Without storage the first view cannot be told apart from later ones: never show.
+    if(!put(VIEWS, String(views)) || views<2) return;
+    var last=get(KEY);
     if(last && Date.now()-parseInt(last,10)<COOLDOWN) return;
 
     var overlay=document.getElementById('ks-popup-overlay');
     if(!overlay) return;
 
     var shown=false;
+    function consentOpen(){
+      return !!(window.HappyinAnalytics && window.HappyinAnalytics.promptVisible && window.HappyinAnalytics.promptVisible());
+    }
     function show(){
-      if(shown) return; shown=true;
+      if(shown) return;
+      if(consentOpen()){ clearTimeout(timer); timer=setTimeout(show, 15000); return; }
+      shown=true;
       overlay.style.display='flex';
       overlay.offsetHeight; // force reflow
       overlay.classList.add('ks-popup--visible');
@@ -757,7 +800,7 @@
     });
 
     function dismiss(){
-      localStorage.setItem(KEY, String(Date.now()));
+      put(KEY, String(Date.now()));
       clearTimeout(timer);
       overlay.classList.remove('ks-popup--visible');
       setTimeout(function(){ overlay.style.display='none'; },300);
@@ -795,6 +838,43 @@
           btn.disabled=false; btn.textContent='Subscribe';
         });
     });
+  })();
+  </script>
+  {% endif %}
+
+  {# AdSense loader: rendered only when extra.ads.client is set. The library is requested
+     the first time a page actually has a visible slot (articles), after the Consent Mode
+     defaults in <head>; slots hidden by CSS (the desktop sidebar on phones) are skipped,
+     because AdSense cannot fill a zero-width slot. #}
+  {% set ads_client = ads.client() | trim %}
+  {% if ads_client %}
+  <script>
+  (function(){
+    if (window.__ksAds) return;
+    window.__ksAds = true;
+    var CLIENT = {{ ads_client | tojson }};
+    var loaded = false;
+    function fill(){
+      var slots = document.querySelectorAll('ins.adsbygoogle:not([data-adsbygoogle-status]):not([data-ks-queued])');
+      var visible = [];
+      for (var i = 0; i < slots.length; i++) if (slots[i].offsetWidth > 0) visible.push(slots[i]);
+      if (!visible.length) return;
+      if (!loaded) {
+        loaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.crossOrigin = 'anonymous';
+        s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + encodeURIComponent(CLIENT);
+        document.head.appendChild(s);
+      }
+      visible.forEach(function(slot){
+        slot.setAttribute('data-ks-queued', '1');
+        try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+      });
+    }
+    if (window.document$ && window.document$.subscribe) window.document$.subscribe(fill);
+    else if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fill);
+    else fill();
   })();
   </script>
   {% endif %}

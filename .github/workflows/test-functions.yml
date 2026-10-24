@@ -7,12 +7,14 @@ on:
       - 'functions/**'
       - 'migrations/**'
       - 'tests/feedback_endpoint_harness.mjs'
+      - 'tests/consent_functions_harness.mjs'
       - '.github/workflows/test-functions.yml'
   pull_request:
     paths:
       - 'functions/**'
       - 'migrations/**'
       - 'tests/feedback_endpoint_harness.mjs'
+      - 'tests/consent_functions_harness.mjs'
       - '.github/workflows/test-functions.yml'
 
 jobs:
@@ -26,3 +28,4 @@ jobs:
         with:
           node-version: '24'   # node:sqlite without a flag
       - run: node tests/feedback_endpoint_harness.mjs
+      - run: node tests/consent_functions_harness.mjs

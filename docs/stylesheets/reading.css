@@ -1,0 +1,258 @@
+/* Reading comfort for people (the site started agent-first), the home-page hero, the
+   end-of-article navigation, the footer links and the reserved ad slots.
+   Loaded by overrides/main.html on every language build. */
+
+/* ── Headings: the theme's light-weight grey h1 read as a placeholder ── */
+.md-typeset h1 {
+  font-weight: 700;
+  color: var(--md-typeset-color);
+  letter-spacing: -0.01em;
+  margin-bottom: 0.8em;
+}
+.md-typeset h2 {
+  font-weight: 650;
+  margin-top: 2em;
+}
+.md-typeset h3 {
+  font-weight: 600;
+}
+
+/* ── Inline code and code blocks: a visible edge in both themes ── */
+.md-typeset pre > code {
+  border: 1px solid var(--ks-code-edge);
+  border-radius: 6px;
+}
+:root,
+[data-md-color-scheme="default"] {
+  --ks-code-edge: rgba(0, 0, 0, 0.08);
+}
+[data-md-color-scheme="slate"] {
+  --ks-code-edge: rgba(255, 255, 255, 0.08);
+  /* Material's slate code text is a mid grey on a near-black panel; lift it. */
+  --md-code-fg-color: #d6d9e4;
+}
+
+/* ── Home hero: what this is and where to start, above the graph ── */
+.md-typeset .ks-hero {
+  max-width: 46rem;
+  margin: 1.2rem auto 1.4rem;
+  text-align: center;
+}
+.md-typeset .ks-hero__title {
+  margin: 0 0 0.4em;
+  font-size: 2.2rem;
+  line-height: 1.15;
+}
+.md-typeset .ks-hero__lead {
+  margin: 0 auto 1.1em;
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .ks-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+}
+.md-typeset .ks-hero__actions .md-button {
+  margin: 0;
+}
+.md-typeset .ks-hero__search {
+  cursor: pointer;
+}
+
+/* The graph is the site's signature, but it should not hide the page: leave the
+   counters and the domain list within reach of the first screen. */
+#knowledge-graph {
+  height: 58vh;
+  min-height: 380px;
+  max-height: 620px;
+}
+@media (max-width: 600px) {
+  .md-typeset .ks-hero {
+    margin-top: 0.6rem;
+    text-align: left;
+  }
+  .md-typeset .ks-hero__title {
+    font-size: 1.7rem;
+  }
+  .md-typeset .ks-hero__lead {
+    font-size: 0.92rem;
+  }
+  .md-typeset .ks-hero__actions {
+    justify-content: flex-start;
+  }
+  #knowledge-graph {
+    height: 280px;
+    min-height: 0;
+  }
+}
+
+/* ── Primary sidebar: domain names sat ~75px apart (section margins plus the hidden
+   Material label); keep them a scannable list ── */
+@media screen and (min-width: 76.25em) {
+  .md-nav--primary > .md-nav__list > .md-nav__item--section {
+    margin: 0;
+  }
+  .md-nav--primary > .md-nav__list > .md-nav__item--section > .md-nav__link {
+    margin-top: 0 !important;
+  }
+}
+
+/* ── Top bar on phones: one row instead of wrapping "Knowledge Base" onto two lines ── */
+@media (max-width: 600px) {
+  .ks-topnav {
+    justify-content: flex-start !important;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .ks-topnav::-webkit-scrollbar {
+    display: none;
+  }
+  .ks-topnav {
+    gap: 0.25rem !important;
+  }
+  .ks-topnav__link {
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding: 0.32rem 0.55rem !important;
+    font-size: 0.68rem !important;
+  }
+}
+
+/* ── Newsletter dialog: the email field and button overflowed the card ── */
+.ks-popup__form {
+  display: flex;
+  max-width: 100%;
+}
+.ks-popup__email {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.ks-popup__btn {
+  flex: 0 0 auto;
+}
+
+/* ── Tables on phones: scroll inside their frame, keep cells readable ── */
+@media (max-width: 600px) {
+  .md-typeset table:not([class]) {
+    font-size: 0.72rem;
+  }
+  .md-typeset table:not([class]) th,
+  .md-typeset table:not([class]) td {
+    min-width: 6rem;
+  }
+}
+
+/* ── End-of-article navigation ── */
+.md-typeset .ks-article-nav {
+  margin-top: 2.2rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+}
+.md-typeset .ks-article-nav__domain {
+  display: inline-block;
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+}
+.md-typeset .ks-article-nav__domain::before {
+  content: "\2190\00a0";
+}
+.md-typeset .ks-article-nav__pair {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+.md-typeset .ks-article-nav__link {
+  flex: 1 1 14rem;
+  display: block;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 8px;
+  line-height: 1.35;
+}
+.md-typeset .ks-article-nav__link--next {
+  text-align: right;
+}
+.md-typeset .ks-article-nav__link:hover {
+  border-color: var(--md-accent-fg-color);
+}
+.md-typeset .ks-article-nav__hint {
+  display: block;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--md-default-fg-color--light);
+}
+
+/* ── Footer: site pages and the privacy choices control ── */
+.ks-footer-privacy {
+  padding: 0.9rem 1rem 1.1rem;
+  font-size: 0.7rem;
+  text-align: center;
+  color: var(--md-footer-fg-color--light);
+  background: var(--md-footer-bg-color--dark);
+}
+.ks-footer-privacy p {
+  margin: 0.4rem auto 0;
+  max-width: 48rem;
+}
+.ks-footer-privacy a {
+  color: var(--md-footer-fg-color);
+  text-decoration: underline;
+}
+.ks-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.3rem 1.2rem;
+  font-size: 0.78rem;
+}
+.ks-footer-links__choices {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--md-footer-fg-color);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.ks-footer-links__choices[hidden] {
+  display: none;
+}
+
+/* ── Ad slots: the space is reserved before the ad arrives, so the text never jumps;
+   the slot heights are set on the <ins> by overrides/partials/ads.html ── */
+.md-typeset .ks-ad,
+.ks-ad {
+  margin: 2rem 0;
+  padding: 0.4rem 0 0;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  overflow: hidden;
+}
+.ks-ad__label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--md-default-fg-color--light);
+}
+.ks-ad--sidebar {
+  margin: 1.5rem 0.6rem 0;
+  border: 0;
+}
+/* The sidebar slot exists only where the table-of-contents column is shown. */
+@media screen and (max-width: 76.1875em) {
+  .ks-ad--sidebar {
+    display: none;
+  }
+}
+@media print {
+  .ks-ad {
+    display: none;
+  }
+}

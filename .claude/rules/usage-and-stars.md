@@ -24,6 +24,24 @@
 The beacon is injected at the edge. Do not add the snippet to a template: with two beacons on a
 page every report is blocked (measured 2026-09-22), and `tests/test_analytics_beacon.py` fails.
 
+## Google Analytics and ads
+
+- One tag source: `overrides/partials/consent-bootstrap.html` sets Consent Mode v2 defaults
+  (denied in the EEA, UK and Switzerland via gtag `region`, granted elsewhere, denied everywhere
+  under GPC/DNT) and then loads GA4. It renders nothing unless the repository variable
+  `HAPPYIN_GA4_MEASUREMENT_ID` or `HAPPYIN_ADSENSE_CLIENT` is set; never put either id in source.
+  The region list is duplicated in `functions/_consent_regions.js`; `tests/test_ads_and_consent.py`
+  keeps them equal.
+- `docs/javascripts/analytics.js` shows the prompt only where `/api/consent-region` says it is
+  needed (unknown = needed), keeps "Privacy choices" in every footer, and sends only the fixed
+  aggregate events: no search terms, prompts, emails, feedback text or query strings.
+- Ads: `extra.ads` (`HAPPYIN_ADSENSE_*` variables). Empty client = no ad markup, no script, no
+  `/ads.txt` (`functions/ads.txt.js` derives the line from the home page's
+  `google-adsense-account` meta). Placements live in `overrides/partials/ads.html`: after an
+  article's first section, after the article, desktop TOC column; never on the home page,
+  section indexes, privacy/about/contact/start-here. In the EEA/UK/CH personalised ads need
+  Google's certified CMP (AdSense "Privacy & messaging"), switched on in the AdSense account.
+
 ## Feedback endpoint and research queue
 
 - `functions/api/feedback.js` takes reports from agents (`gap`, `outdated`, `wrong`, `helped`) into

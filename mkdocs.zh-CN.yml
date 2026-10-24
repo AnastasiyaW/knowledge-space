@@ -49,6 +49,16 @@ repo_name: knowledge-space
 
 extra:
   ga4_measurement_id: !ENV [HAPPYIN_GA4_MEASUREMENT_ID, ""]
+  # Display ads (Google AdSense). Inert until client is set: with an empty client no ad
+  # markup, no ad script, no verification meta and no /ads.txt (functions/ads.txt.js) exist.
+  # Public identifiers, injected by the deploy workflow from repository variables.
+  # Precondition for setting the client: AdSense "Privacy & messaging" (Google-certified
+  # CMP) switched on for the EEA, UK and Switzerland, or ads there stay non-personalised.
+  ads:
+    client: !ENV [HAPPYIN_ADSENSE_CLIENT, ""]                     # ca-pub-XXXXXXXXXXXXXXXX
+    slot_article_top: !ENV [HAPPYIN_ADSENSE_SLOT_ARTICLE_TOP, ""]  # after an article's first section
+    slot_article_end: !ENV [HAPPYIN_ADSENSE_SLOT_ARTICLE_END, ""]  # after the article text
+    slot_sidebar: !ENV [HAPPYIN_ADSENSE_SLOT_SIDEBAR, ""]          # desktop table-of-contents column
   content_language: zh-CN
   shared_asset_url: https://happyin.space/
   alternate:
@@ -73,12 +83,27 @@ extra:
     support_text: Happyin Knowledge Space 是面向工程师和 AI 智能体的免费开放参考库。如果它帮助了你，在 GitHub 上加星可以让更多人发现它。
     support_report_lead: "内容过时、错误，或缺少你需要的主题？AI 智能体或脚本无需账号即可提交一条公开报告："
     support_report_tail: 回复会返回状态链接，说明报告的处理进度。
-    privacy_notice: 没有广告追踪器。Cloudflare Web Analytics 不使用 cookie；Google Analytics 仅在你同意后加载——
+    privacy_notice: Cloudflare Web Analytics 统计访问不使用 cookie。启用后，Google Analytics 和 Google 广告可能使用 cookie；在欧洲经济区、英国和瑞士，仅在你同意后使用——
     privacy_details: 详情
-    analytics_title: 可选分析
-    analytics_text: 是否允许 Google Analytics 衡量知识库哪些部分对用户有帮助？我们不会发送搜索词、提示词、电子邮箱、反馈文本或广告/个性化信号。
-    analytics_allow: 允许分析
-    analytics_reject: 保持关闭
+    analytics_title: 本站的 Cookie
+    analytics_text: 是否允许 Google Analytics 使用 cookie 来了解哪些页面对读者有帮助？展示的广告帮助本站保持免费。我们从不发送搜索词、提示词、电子邮箱或反馈文本。
+    analytics_allow: 允许
+    analytics_reject: 拒绝
+    analytics_state_off: 本站未启用 Google Analytics 和 Google 广告。
+    analytics_state_signal: Google cookie 已关闭：你的浏览器发送了 Global Privacy Control 或 Do Not Track。
+    analytics_state_granted: 你已在此浏览器中允许 Google cookie。
+    analytics_state_denied: 你已在此浏览器中关闭 Google cookie。
+    analytics_state_default: 你尚未在此浏览器中做出选择。
+    privacy_choices: 隐私选项
+    footer_links_aria: 网站信息
+    footer_about: 关于
+    footer_contact: 联系
+    footer_privacy: 隐私
+    article_nav_aria: 本领域的更多文章
+    article_nav_all: 查看全部文章：
+    article_nav_prev: 上一篇
+    article_nav_next: 下一篇
+    ad_label: 广告
     popup_close: 关闭
     popup_title: 获取更新
     popup_text: 获取 AI、基础设施和工程实践的新文章。不会发送垃圾邮件。

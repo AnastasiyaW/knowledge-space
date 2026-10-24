@@ -1,0 +1,34 @@
+{#- Display-ad placements. Inert until extra.ads.client is a ca-pub-… id and the
+    placement has a slot id: then nothing at all is rendered (no box, no script).
+    Import with context: {% import "partials/ads.html" as ads with context %} -#}
+
+{%- macro client() -%}
+  {%- set cfg = config.extra.ads | default({}, true) -%}
+  {%- set value = cfg.client | default('', true) | string | trim -%}
+  {%- if value.startswith('ca-pub-') -%}{{ value }}{%- endif -%}
+{%- endmacro -%}
+
+{#- Pages that never carry ads: the home page, section indexes, legal and site pages. -#}
+{%- macro eligible() -%}
+  {%- set cfg = config.extra.ads | default({}, true) -%}
+  {%- set excluded = cfg.exclude | default(['privacy.md', 'about.md', 'contact.md', 'start-here.md', 'for-llm-agents.md'], true) -%}
+  {%- if client() and page and not page.is_homepage and not page.is_index
+        and page.file.src_uri not in excluded
+        and not page.file.src_uri.startswith('contributing/')
+        and not (page.file.src_uri.startswith('blog/') and not page.file.src_uri.startswith('blog/posts/'))
+        and not (page.meta and page.meta.ads == false) -%}1{%- endif -%}
+{%- endmacro -%}
+
+{#- Fixed height reserves the space before the ad arrives, so nothing below it moves. -#}
+{%- macro slot(name) -%}
+  {%- set cfg = config.extra.ads | default({}, true) -%}
+  {%- set slot_id = cfg.get('slot_' ~ name) | default('', true) | string | trim -%}
+  {%- set heights = {'article_top': 280, 'article_end': 280, 'sidebar': 600} -%}
+  {%- set ui = config.extra.ui | default({}, true) -%}
+  {%- if slot_id and eligible() -%}
+  <div class="ks-ad ks-ad--{{ name | replace('_', '-') }}" data-nosnippet>
+    <span class="ks-ad__label">{{ ui.get('ad_label', 'Advertisement') }}</span>
+    <ins class="adsbygoogle" style="display:block;width:100%;height:{{ heights.get(name, 280) }}px" data-ad-client="{{ client() }}" data-ad-slot="{{ slot_id }}"></ins>
+  </div>
+  {%- endif -%}
+{%- endmacro -%}
