@@ -1,0 +1,24 @@
+{#- Material 9.7 partials/content.html plus two reader additions: optional ad slots
+    (inert until configured, see partials/ads.html) and a way back to the domain. -#}
+{% import "partials/ads.html" as ads with context %}
+{% include "partials/tags.html" %}
+{% include "partials/actions.html" %}
+{% if "<h1" not in page.content %}
+  <h1>{{ page.title | d(config.site_name, true)}}</h1>
+{% endif %}
+{#- The first in-article slot goes at a section boundary, before the second h2: never
+    inside a section, so never between a code block and the text that explains it. -#}
+{% set top_slot = ads.slot('article_top') | trim %}
+{% set sections = page.content.split('<h2', 2) %}
+{% if top_slot and sections | length == 3 %}
+{{ sections[0] }}<h2{{ sections[1] }}{{ top_slot }}<h2{{ sections[2] }}
+{% else %}
+{{ page.content }}
+{% endif %}
+{{ ads.slot('article_end') }}
+{#- Marks a content page for the aggregate article_view event (docs/javascripts/analytics.js). -#}
+{% if not page.is_homepage and not page.is_index %}<span hidden data-ks-article></span>{% endif %}
+{% include "partials/source-file.html" %}
+{% include "partials/feedback.html" %}
+{% include "partials/comments.html" %}
+{% include "partials/article-nav.html" %}

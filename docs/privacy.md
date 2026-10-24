@@ -4,7 +4,7 @@ title: Privacy Policy
 
 # Privacy Policy
 
-**Last updated:** October 2026
+**Last updated:** 24 October 2026
 
 ## What we collect
 
@@ -27,12 +27,12 @@ Your data is stored on Cloudflare's infrastructure (D1 database), encrypted at r
 ## Your rights
 
 - **Unsubscribe** at any time via the link in every email, or by contacting us
-- **Request deletion** of your data by emailing us
-- **Request export** of your data by emailing us
+- **Request deletion** of your data by contacting us
+- **Request export** of your data by contacting us
 
 ## Contact
 
-For any privacy-related questions: [GitHub Issues](https://github.com/AnastasiyaW/knowledge-space/issues)
+For any privacy-related questions: [GitHub Issues](https://github.com/AnastasiyaW/knowledge-space/issues) or the [Telegram channel](https://t.me/happyin_space). More ways are on the [contact page](contact.md). Please do not post personal data in a public issue; ask for a private channel instead.
 
 ## Anonymous usage counts
 
@@ -61,15 +61,23 @@ Page views in Web Analytics and the aggregate request statistics still apply. Sa
 
 <p class="ks-counter-switch"><span data-ks-counter-state>This switch needs JavaScript.</span> <button type="button" class="md-button" data-ks-counter-toggle>Turn it off</button></p>
 
-## Optional Google Analytics
+## Google Analytics and Google advertising
 
-Google Analytics is disabled unless the site owner has configured it and you choose **Allow analytics** in the site's own prompt. Until both happen, this site does not load Google's analytics tag or send Google Analytics events.
+When the site owner has configured them, pages load Google Analytics 4 and, on article pages, Google AdSense ads. Google's [How Google uses information from sites or apps that use our services](https://policies.google.com/technologies/partner-sites) explains what Google does with that data; [How Google uses cookies in advertising](https://policies.google.com/technologies/ads) describes its advertising cookies.
 
-If you opt in, we use Google Analytics 4 to understand aggregate use of the knowledge base: page and article views, search use and result opens, code copies, GitHub-star clicks, and successful newsletter subscriptions. We do **not** send search terms, prompts, email addresses, feedback text, URL query strings, or advertising identifiers in those events. Advertising storage, ad-user-data sharing, and ad-personalization signals remain denied.
+**Consent Mode.** Both use Google Consent Mode v2, set before any Google script loads:
 
-You can change the choice in this browser at any time; withdrawing it disables new analytics events and removes this site's accessible Google Analytics cookies. A browser Global Privacy Control or Do Not Track signal keeps Google Analytics off.
+- **In the EEA, the UK and Switzerland**, analytics and advertising storage are off by default (`analytics_storage`, `ad_storage`, `ad_user_data` and `ad_personalization` denied). You see a prompt, and Google Analytics cookies are used only if you choose **Allow**. Until then Google may still receive signals without cookies or advertising identifiers (for example, that a page was viewed). Consent to personalised advertising in these countries is collected by Google's certified consent message, shown by Google when ads are enabled; without it, ads there are not personalised.
+- **Elsewhere**, these settings are on by default, and Google may set analytics and advertising cookies. You can turn them off at any time.
+- **Global Privacy Control or Do Not Track** turns everything to denied: the Google Analytics tag is not loaded at all, and any ads are shown without cookie-based personalisation.
 
-<p class="ks-counter-switch"><span data-ks-analytics-state>Optional Google Analytics is not enabled for this release.</span> <button type="button" class="md-button" data-ks-analytics-preferences hidden>Manage analytics choices</button></p>
+**Your choice.** The **Privacy choices** link in the footer of every page, and the button below, reopen the prompt. Choosing **Decline** sets all four Consent Mode signals to denied in this browser, stops our analytics events and removes this site's Google cookies (`_ga`, `_ga_*`, `__gads`, `__gpi`, `__eoi`). Your choice is kept in this browser's local storage under `ks_consent_v2`. To decide where the prompt is needed, the page asks this site's `/api/consent-region`, which answers only "prompt needed: yes or no" from the country Cloudflare derives from your IP address; the country is not stored.
+
+**What we measure.** Aggregate use of the knowledge base: page and article views, search use and result opens, code copies, GitHub-star clicks and successful newsletter subscriptions, each with the site section and, for buttons, where the button was. We do **not** send search terms, prompts, email addresses, feedback text, URL query strings or advertising identifiers in these events, and Google signals and ad personalisation are turned off for our analytics.
+
+**Advertising.** Ads, when shown, come from Google AdSense and appear only on article pages (never on the home page, this page, or the about and contact pages). Google and its partners may use cookies to serve ads based on your visits to this and other sites; you can manage personalised advertising in [Google's My Ad Center](https://myadcenter.google.com/). Ads are marked "Advertisement" and do not influence what articles say.
+
+<p class="ks-counter-switch"><span data-ks-analytics-state>This switch needs JavaScript.</span> <button type="button" class="md-button" data-ks-analytics-preferences hidden>Privacy choices</button></p>
 
 ## Feedback reports
 
@@ -77,8 +85,10 @@ Anyone, including an AI assistant working for you, can send a report to `/api/fe
 
 ## Other services the pages load
 
-Pages load fonts from Google Fonts, the 3D graph library from jsDelivr, and star counts from GitHub's API. Each of those services receives your IP address and browser headers, as with any web request. When you opt into the optional analytics above, Google also receives the measurement events described there under its own privacy terms.
+Pages load fonts from Google Fonts, the 3D graph library from jsDelivr (home page only), and star counts from GitHub's API. Each of those services receives your IP address and browser headers, as with any web request. When Google Analytics or ads are enabled, Google also receives the requests described above under its own privacy terms.
 
 ## Cookies
 
-By default this site uses no analytics or advertising cookies. If you opt into optional Google Analytics, its analytics storage may be used for that measurement only; advertising and personalization storage remain denied. Cloudflare may set essential cookies for security purposes.
+- **Google Analytics** (`_ga`, `_ga_*`, up to 2 years) and **Google advertising** cookies (`__gads`, `__gpi`, `__eoi` on this domain, and Google's own cookies on Google domains), only as described under Consent Mode above: after your consent in the EEA, the UK and Switzerland; by default elsewhere, until you decline.
+- **Cloudflare** may set essential cookies for security.
+- **Local storage**, not cookies: the return counter, your consent choice, and whether the newsletter prompt was dismissed.

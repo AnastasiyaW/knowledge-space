@@ -45,6 +45,11 @@ jobs:
           # Measurement IDs are public identifiers. Keeping this a repository variable
           # makes the production setting apply to every language build without a source edit.
           HAPPYIN_GA4_MEASUREMENT_ID: ${{ vars.HAPPYIN_GA4_MEASUREMENT_ID }}
+          # AdSense publisher and ad-unit ids, also public. Empty = no ads, no ads.txt.
+          HAPPYIN_ADSENSE_CLIENT: ${{ vars.HAPPYIN_ADSENSE_CLIENT }}
+          HAPPYIN_ADSENSE_SLOT_ARTICLE_TOP: ${{ vars.HAPPYIN_ADSENSE_SLOT_ARTICLE_TOP }}
+          HAPPYIN_ADSENSE_SLOT_ARTICLE_END: ${{ vars.HAPPYIN_ADSENSE_SLOT_ARTICLE_END }}
+          HAPPYIN_ADSENSE_SLOT_SIDEBAR: ${{ vars.HAPPYIN_ADSENSE_SLOT_SIDEBAR }}
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3

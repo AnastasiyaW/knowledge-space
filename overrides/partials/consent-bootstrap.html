@@ -1,0 +1,48 @@
+{#- Google tag bootstrap: Consent Mode v2 defaults first, then the GA4 loader.
+    Rendered only when a GA4 Measurement ID or an AdSense client is configured.
+    Policy (happyin-sites-network docs/analytics-and-ads.md): storage denied by default in
+    the EEA, UK and Switzerland, granted elsewhere. The region parameter lets Google apply
+    the regional default from its own geolocation, so the defaults never wait for a request.
+    CONSENT_REGIONS must equal functions/_consent_regions.js (tests/test_ads_and_consent.py). -#}
+{%- set ga4_id = config.extra.ga4_measurement_id | default('', true) | string | trim -%}
+{%- set ads_cfg = config.extra.ads | default({}, true) -%}
+{%- set ads_client = ads_cfg.client | default('', true) | string | trim -%}
+{%- if ga4_id or ads_client.startswith('ca-pub-') %}
+<script>
+  (function (w) {
+    var CONSENT_REGIONS = ["AT","BE","BG","HR","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IS","IE","IT","LV","LI","LT","LU","MT","NL","NO","PL","PT","RO","SK","SI","ES","SE","GB","CH","AX","GF","GP","MQ","RE","YT","MF"];
+    w.dataLayer = w.dataLayer || [];
+    w.gtag = w.gtag || function () { w.dataLayer.push(arguments); };
+    var n = w.navigator || {};
+    var signal = n.globalPrivacyControl === true || n.doNotTrack === "1" || w.doNotTrack === "1";
+    var choice = null;
+    try { choice = w.localStorage.getItem("ks_consent_v2"); } catch (e) {}
+    function all(value) {
+      return { ad_storage: value, ad_user_data: value, ad_personalization: value, analytics_storage: value };
+    }
+    var regional = all("denied");
+    regional.region = CONSENT_REGIONS;
+    w.gtag("consent", "default", regional);
+    w.gtag("consent", "default", all(signal ? "denied" : "granted"));
+    if (!signal && choice === "denied") w.gtag("consent", "update", all("denied"));
+    // A stored "allow" grants analytics only: advertising consent in the consent regions
+    // belongs to Google's certified consent message, not to this site's prompt.
+    if (!signal && choice === "granted") w.gtag("consent", "update", { analytics_storage: "granted" });
+    w.gtag("set", "ads_data_redaction", true);
+    // Every hit carries the address without its query or fragment: search.highlight opens
+    // results as ?h=<search terms>, and those must never reach Google.
+    function clean(url) { return String(url || "").split("#")[0].split("?")[0]; }
+    w.gtag("set", { page_location: clean(w.location.href), page_referrer: clean(w.document.referrer) });
+    {%- if ga4_id %}
+    if (!signal) {
+      w.gtag("js", new Date());
+      w.gtag("config", {{ ga4_id | tojson }}, { send_page_view: false, allow_google_signals: false, allow_ad_personalization_signals: false });
+      var s = w.document.createElement("script");
+      s.async = true;
+      s.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent({{ ga4_id | tojson }});
+      w.document.head.appendChild(s);
+    }
+    {%- endif %}
+  })(window);
+</script>
+{%- endif %}
