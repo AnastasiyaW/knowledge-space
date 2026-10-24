@@ -298,7 +298,8 @@ SCRIPT_CHECK = {
 ENGLISH_WORDS = {"the", "and", "of", "to", "is", "that", "for", "with", "this", "are", "by", "you",
                  "should", "when", "not", "or", "which", "let", "need", "here", "was", "will"}
 COMMENTARY_RE = re.compile(r"\b(?:[Ll]et me\b|I need to\b|I will now\b|I'll\b|[Hh]ere is the (?:corrected|correct|translated|translation)|"
-                           r"[Oo]ops\b|[Hh]mm+\b|I hope this helps|[Tt]he translation (?:is|above|below)|[Aa]s requested\b)")
+                           r"[Oo]ops\b|[Hh]mm+\b|I hope this helps|[Tt]he translation (?:is|above|below)|[Aa]s requested\b|as instructed\b|"
+                           r"[Tt]ranslator'?s note|Anmerkung des Übersetzers|[Nn]ote du traducteur|[Nn]ota del traductor|역자 주|译者注)")
 CYRILLIC_RE = re.compile(r"[\u0400-\u04FF]")
 WORD_RE = re.compile(r"[^\W\d_]+", re.UNICODE)
 
@@ -315,18 +316,25 @@ def check_language(lang: str, prose: str, source: str = "") -> None:
         raise ValueError("prose reads as English")
     for block in re.split(r"\n[ \t]*\n", text):
         # Tables of sources, quotations and quoted phrases keep their English on purpose.
-        if block.lstrip()[:1] == "|" or re.search(r"(?m)^\s*>", block) or re.search(r"[\"“”«»„]", block):
+        # Headings and short lines of English technical terms ("Video-to-Audio mit
+        # Chain-of-Thought-Reasoning", Rust "if let") are skipped; commentary is caught above.
+        if block.lstrip()[:1] in ("|", "#") or re.search(r"(?m)^\s*>", block) or re.search(r"[\"“”«»„]", block):
             continue
         bw = [w.lower() for w in WORD_RE.findall(block)]
-        if len(bw) >= 15 and sum(w in ENGLISH_WORDS for w in bw) / len(bw) > 0.2:
+        if len(bw) >= 10 and sum(w in ENGLISH_WORDS for w in bw) / len(bw) > 0.2:
             raise ValueError(f"a paragraph reads as English: {block.strip()[:60]!r}")
     # A phrase the English page itself quotes ("let me explain" as an example) is not commentary.
     extra = Counter(m.lower() for m in COMMENTARY_RE.findall(text))
     extra.subtract(m.lower() for m in COMMENTARY_RE.findall(source))
     if any(n > 0 for n in extra.values()):
         raise ValueError(f"model commentary in the output: {[k for k, n in extra.items() if n > 0][:2]}")
-    if lang != "ru" and cyrillic_share(text) > cyrillic_share(source) + 0.01:
-        raise ValueError("Russian text in a non-Russian page")
+    if lang != "ru":
+        # A share allowance let single letters through ("rendерst", "де-facto"; review 2026-10-24):
+        # every word with a Cyrillic letter must be one the English page has.
+        allowed = {w for w in WORD_RE.findall(source) if CYRILLIC_RE.search(w)}
+        stray = [w for w in WORD_RE.findall(text) if CYRILLIC_RE.search(w) and w not in allowed]
+        if stray:
+            raise ValueError(f"Cyrillic not in the English page: {stray[:3]}")
     pattern = SCRIPT_CHECK.get(lang)
     if pattern is None:
         return
@@ -463,12 +471,13 @@ def verify_written(lang: str, paths: set[str] | None = None) -> list[tuple[str, 
         name = dest.relative_to(ROOT).as_posix()
         if not dest.is_file() or (paths is not None and name not in paths):
             continue
-        _, src_body = split_front_matter(p.read_text(encoding="utf-8").replace("\r\n", "\n"))
-        _, tr_body = split_front_matter(dest.read_text(encoding="utf-8"))
+        src_fm, src_body = split_front_matter(p.read_text(encoding="utf-8").replace("\r\n", "\n"))
+        tr_fm, tr_body = split_front_matter(dest.read_text(encoding="utf-8"))
         try:
             src_protected = protect(src_body)[0]
             tr_protected = re.sub(r"(?m)^(#{1,6} .*?)[ \t]*\{#[^}]*\}[ \t]*$", r"\1", protect(tr_body)[0])
-            check_language(lang, PLACEHOLDER_RE.sub("", tr_protected), src_protected)
+            heads = "\n".join(fm_value(tr_fm, k) for k in ("title", "description"))
+            check_language(lang, PLACEHOLDER_RE.sub("", heads + "\n\n" + tr_protected), src_fm + src_protected)
             check_structure(src_protected, tr_protected)
         except ValueError as e:
             bad.append((name, str(e)))
@@ -540,7 +549,7 @@ def cmd_collect(args) -> int:
             tr_fm, tr_body = split_front_matter(out)
             if src_fm and not tr_fm:
                 tr_fm = front_matter_from_heading(src_fm, tr_body)
-            check_language(lang, PLACEHOLDER_RE.sub("", tr_body), src_protected)
+            check_language(lang, PLACEHOLDER_RE.sub("", tr_fm + tr_body), src_fm + src_protected)
             check_structure(src_protected, tr_body)
             body = restore(tr_body, blocks, slugs, src_body)
             dest = target_path(lang, Path(rel))
