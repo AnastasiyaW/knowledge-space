@@ -3,6 +3,8 @@ title: Contact
 description: "How to reach the maintainers of Happyin Knowledge Space: GitHub issues for corrections and requests, Telegram for news and questions."
 ---
 
+# Contact
+
 ## Corrections, questions and article requests
 
 Open an issue in the public GitHub repository: [github.com/AnastasiyaW/knowledge-space/issues](https://github.com/AnastasiyaW/knowledge-space/issues). This is the fastest way to report a wrong or outdated page, ask for a topic, or raise a privacy question. Issues are public, so please do not include personal data; if you need to share something private, say so in the issue and we will arrange a private channel.

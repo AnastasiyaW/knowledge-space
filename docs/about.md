@@ -3,6 +3,8 @@ title: About
 description: "What Happyin Knowledge Space is, who maintains it, how articles are written and kept current, and how the site is funded."
 ---
 
+# About Happyin Knowledge Space
+
 Happyin Knowledge Space is a free, open technical reference for software engineers and the AI assistants they work with. It covers more than two dozen domains, from Kafka, PostgreSQL and Kubernetes to diffusion models, LLM agents and security, with one focused page per topic: how a tool behaves, which settings matter, what changed between versions, and the mistakes that are easy to make.
 
 ## Who makes it
