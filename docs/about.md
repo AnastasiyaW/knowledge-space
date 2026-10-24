@@ -23,7 +23,7 @@ AI assistants often state API flags, defaults and version-specific behaviour wit
 
 ## Languages
 
-The canonical articles are in English. Reviewed [Russian](https://happyin.space/ru/) and [Simplified Chinese](https://happyin.space/zh-CN/) branches are growing; a page appears in a language only after its translation has been reviewed.
+The canonical articles are in English. Machine translations are published in [French](https://happyin.space/fr/) and [German](https://happyin.space/de/); [Russian](https://happyin.space/ru/) and [Simplified Chinese](https://happyin.space/zh-CN/) have entry pages, and their articles follow. A translation is published only after an automatic check against the English page (code, commands, links and structure must match), and every translated page links to its original.
 
 ## Funding and independence
 

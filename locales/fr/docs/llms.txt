@@ -1,7 +1,8 @@
-# Happyin Knowledge Space — Point d'entrée russe
+# Espace de connaissances Happyin {#happyin-knowledge-space}
 
-> Point d'entrée russe de la base technique. Les articles techniques de référence sont pour l'instant majoritairement en anglais.
+> Base de connaissances technique destinée aux ingénieurs et aux agents IA. Les pages dans cette langue sont des traductions automatiques des articles canoniques en anglais.
 
-- [Démarrer avec une tâche](https://happyin.space/fr/start-here/)
-- [Comment utiliser la base avec un agent IA](https://happyin.space/fr/for-llm-agents/)
-- [Base en anglais](https://happyin.space/knowledge-base/)
+- [Commencer ici](https://happyin.space/fr/start-here/)
+- [Utiliser la base de connaissances avec un agent IA](https://happyin.space/fr/for-llm-agents/)
+- [Plan de la base de connaissances](https://happyin.space/fr/knowledge-base/)
+- [Original anglais](https://happyin.space/llms.txt)

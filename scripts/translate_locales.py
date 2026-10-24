@@ -222,7 +222,8 @@ def restore(translated: str, blocks: list[str], slugs: list[str], source_body: s
     return text
 
 
-URL_RE = re.compile(r"https?://[^\s)\]>\"'`]*[^\s)\]>\"'`.,;:!?]")  # sentence punctuation is not part of a URL
+# Sentence punctuation and typographic quotes („…“ in German) are not part of a URL.
+URL_RE = re.compile(r"https?://[^\s)\]>\"'`“”„«»]*[^\s)\]>\"'`“”„«».,;:!?]")
 ADMONITION_RE = re.compile(r"(?m)^[ \t]*(?:!!!|\?\?\?\+?)[ \t]+([\w-]+)")
 PLACEHOLDER_LINE_RE = re.compile(r"(?m)^([ \t]*)(@@CODE_\d+@@)[ \t]*$")
 INLINE_CODE_RE = re.compile(r"(`+)(?!`)(.+?)(?<!`)\1(?!`)")
@@ -292,18 +293,40 @@ SCRIPT_CHECK = {
 }
 
 
-ENGLISH_WORDS = {"the", "and", "of", "to", "is", "in", "that", "for", "with", "this", "are", "be",
-                 "it", "on", "as", "by", "you", "should", "when", "not", "or", "which", "i", "let", "me"}
+# Words common in English and absent from the target languages ("in", "on", "as" are left
+# out: German and French use them too).
+ENGLISH_WORDS = {"the", "and", "of", "to", "is", "that", "for", "with", "this", "are", "by", "you",
+                 "should", "when", "not", "or", "which", "let", "need", "here", "was", "will"}
+COMMENTARY_RE = re.compile(r"\b(?:[Ll]et me\b|I need to\b|I will now\b|I'll\b|[Hh]ere is the (?:corrected|correct|translated|translation)|"
+                           r"[Oo]ops\b|[Hh]mm+\b|I hope this helps|[Tt]he translation (?:is|above|below)|[Aa]s requested\b)")
+CYRILLIC_RE = re.compile(r"[\u0400-\u04FF]")
 WORD_RE = re.compile(r"[^\W\d_]+", re.UNICODE)
 
 
-def check_language(lang: str, prose: str) -> None:
+def cyrillic_share(text: str) -> float:
+    letters = [c for c in text if c.isalpha()]
+    return sum(1 for c in letters if CYRILLIC_RE.match(c)) / len(letters) if letters else 0.0
+
+
+def check_language(lang: str, prose: str, source: str = "") -> None:
     text = re.sub(r"\[\[[^\]]*\]\]|\]\([^)]*\)|https?://\S+", " ", INLINE_CODE_RE.sub(" ", prose))
     words = [w.lower() for w in WORD_RE.findall(text)]
     if len(words) >= 40 and sum(w in ENGLISH_WORDS for w in words) / len(words) > 0.08:
         raise ValueError("prose reads as English")
-    if re.search(r"(?im)^\s*(?:let me|i need to|i will|here is the|hmm\b|note: (?:i|the translation))", text):
-        raise ValueError("model commentary in the output")
+    for block in re.split(r"\n[ \t]*\n", text):
+        # Tables of sources, quotations and quoted phrases keep their English on purpose.
+        if block.lstrip()[:1] == "|" or re.search(r"(?m)^\s*>", block) or re.search(r"[\"“”«»„]", block):
+            continue
+        bw = [w.lower() for w in WORD_RE.findall(block)]
+        if len(bw) >= 15 and sum(w in ENGLISH_WORDS for w in bw) / len(bw) > 0.2:
+            raise ValueError(f"a paragraph reads as English: {block.strip()[:60]!r}")
+    # A phrase the English page itself quotes ("let me explain" as an example) is not commentary.
+    extra = Counter(m.lower() for m in COMMENTARY_RE.findall(text))
+    extra.subtract(m.lower() for m in COMMENTARY_RE.findall(source))
+    if any(n > 0 for n in extra.values()):
+        raise ValueError(f"model commentary in the output: {[k for k, n in extra.items() if n > 0][:2]}")
+    if lang != "ru" and cyrillic_share(text) > cyrillic_share(source) + 0.01:
+        raise ValueError("Russian text in a non-Russian page")
     pattern = SCRIPT_CHECK.get(lang)
     if pattern is None:
         return
@@ -445,7 +468,7 @@ def verify_written(lang: str, paths: set[str] | None = None) -> list[tuple[str, 
         try:
             src_protected = protect(src_body)[0]
             tr_protected = re.sub(r"(?m)^(#{1,6} .*?)[ \t]*\{#[^}]*\}[ \t]*$", r"\1", protect(tr_body)[0])
-            check_language(lang, PLACEHOLDER_RE.sub("", tr_protected))
+            check_language(lang, PLACEHOLDER_RE.sub("", tr_protected), src_protected)
             check_structure(src_protected, tr_protected)
         except ValueError as e:
             bad.append((name, str(e)))
@@ -517,7 +540,7 @@ def cmd_collect(args) -> int:
             tr_fm, tr_body = split_front_matter(out)
             if src_fm and not tr_fm:
                 tr_fm = front_matter_from_heading(src_fm, tr_body)
-            check_language(lang, PLACEHOLDER_RE.sub("", tr_body))
+            check_language(lang, PLACEHOLDER_RE.sub("", tr_body), src_protected)
             check_structure(src_protected, tr_body)
             body = restore(tr_body, blocks, slugs, src_body)
             dest = target_path(lang, Path(rel))

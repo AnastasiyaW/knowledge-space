@@ -1,11 +1,14 @@
 """Create a new language branch: mkdocs.<lang>.yml and the hand-written root pages.
 
-The Russian branch is the template: its config carries every interface string and its
-root pages (home, start here, privacy, about, contact, agent guide, llms.txt) are the
-reviewed set. They are translated once, synchronously, and checked like articles
-(scripts/translate_locales.py); the articles themselves go through translate_locales.py.
+The Russian config is the template for the interface strings. The entry pages are
+translated from English: docs/ for start here, privacy, about, contact and the agent guide,
+locales/_source/ for the language home and llms.txt (the English home is the graph page).
+Translating them from the Russian pages leaked Russian text and "the Russian branch" into
+French and German (review 2026-10-24), so they no longer come from there. Each page is
+checked like an article and retried up to three times.
 
-  py -3 scripts/add_locale.py fr        # writes mkdocs.fr.yml and locales/fr/docs/*.md
+  py -3 scripts/add_locale.py fr                # writes mkdocs.fr.yml and locales/fr/docs/*
+  py -3 scripts/add_locale.py fr --pages-only   # entry pages only
 Requires ANTHROPIC_API_KEY. Exit 0 written, 1 a check failed (nothing written), 2 not checked.
 """
 from __future__ import annotations
@@ -24,8 +27,8 @@ ROOT = tl.ROOT
 TEMPLATE = "ru"
 ROOT_PAGES = ("index.md", "start-here.md", "privacy.md", "about.md", "contact.md", "for-llm-agents.md", "llms.txt")
 SEARCH_LANG = {"zh-CN": "zh"}
-SOURCE_NOTE = ("The source text is Russian (not English). Translate it into {language}. "
-               "Where it says that articles are translated into Russian, say {language} instead.\n\n")
+SOURCES = {"index.md": ROOT / "locales" / "_source" / "index.md", "llms.txt": ROOT / "locales" / "_source" / "llms.txt"}
+ATTEMPTS = 3
 
 
 def complete(system: str, text: str) -> str:
@@ -74,16 +77,24 @@ def translate_config(lang: str, language: str) -> str:
 
 
 def translate_page(name: str, lang: str, language: str) -> str:
-    source = (ROOT / "locales" / TEMPLATE / "docs" / name).read_text(encoding="utf-8").replace("\r\n", "\n")
+    source_path = SOURCES.get(name, tl.DOCS / name)
+    source = source_path.read_text(encoding="utf-8").replace("\r\n", "\n").replace("{lang}", lang)
     fm, body = tl.split_front_matter(source)
     protected, blocks, slugs = tl.protect(body)
-    out = complete(SOURCE_NOTE.format(language=language) + tl.SYSTEM.format(language=language), fm + protected)
-    tr_fm, tr_body = tl.split_front_matter(out)
-    if fm and not tr_fm:
-        tr_fm = tl.front_matter_from_heading(fm, tr_body)
-    tl.check_structure(protected, tr_body)
-    restored = tl.restore(tr_body, blocks, slugs, body) if name.endswith(".md") else tr_body
-    return (tr_fm + restored.lstrip("\n")).replace(f"https://happyin.space/{TEMPLATE}/", f"https://happyin.space/{lang}/")
+    last = None
+    for _ in range(ATTEMPTS):
+        try:
+            out = complete(tl.SYSTEM.format(language=language), fm + protected)
+            tr_fm, tr_body = tl.split_front_matter(out)
+            if fm and not tr_fm:
+                raise ValueError("front matter dropped")
+            tl.check_language(lang, tl.PLACEHOLDER_RE.sub("", tr_fm + tr_body), fm + protected)
+            tl.check_structure(protected, tr_body)
+            restored = tl.restore(tr_body, blocks, slugs, body)
+            return tr_fm + restored.lstrip("\n")
+        except ValueError as e:
+            last = e
+    raise ValueError(f"{name}: {last}")
 
 
 def main() -> int:
@@ -91,7 +102,11 @@ def main() -> int:
     language = tl.LANGS[lang]
     files: dict[Path, str] = {}
     try:
-        files[ROOT / f"mkdocs.{lang}.yml"] = translate_config(lang, language)
+        if "--pages-only" not in sys.argv:
+            config = translate_config(lang, language)
+            if lang != "ru" and tl.CYRILLIC_RE.search(config.split("\nplugins:")[0].split("ui:", 1)[-1]):
+                raise ValueError("Russian left in the interface strings")
+            files[ROOT / f"mkdocs.{lang}.yml"] = config
         for name in ROOT_PAGES:
             files[ROOT / "locales" / lang / "docs" / name] = translate_page(name, lang, language)
     except ValueError as e:

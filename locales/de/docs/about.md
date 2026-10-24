@@ -1,27 +1,33 @@
 ---
-title: Über das Projekt
-description: "Was Happyin Knowledge Space ist, wer es betreut, wie Artikel geschrieben und aktualisiert werden und wovon die Seite finanziert wird."
+title: Über uns
+description: "Was der Happyin Knowledge Space ist, wer ihn pflegt, wie Artikel geschrieben und aktuell gehalten werden und wie sich die Seite finanziert."
 ---
-Happyin Knowledge Space ist ein kostenloses, offenes technisches Nachschlagewerk für Entwickler und die KI-Assistenten, mit denen sie arbeiten. Es umfasst mehr als zwei Dutzend Bereiche: von Kafka, PostgreSQL und Kubernetes bis zu Diffusionsmodellen, LLM-Agenten und Sicherheit. Zu jedem Thema gibt es eine kompakte Seite: wie sich das Werkzeug verhält, welche Einstellungen wichtig sind, was sich zwischen den Versionen geändert hat und wo man leicht Fehler macht.
+# Über den Happyin Knowledge Space {#about-happyin-knowledge-space}
 
-## Wer das Projekt macht {#_1}
+Der Happyin Knowledge Space ist eine kostenlose, offene technische Referenz für Softwareentwickler und die KI-Assistenten, mit denen sie arbeiten. Er deckt mehr als zwei Dutzend Fachgebiete ab, von Kafka, PostgreSQL und Kubernetes bis zu Diffusionsmodellen, LLM-Agenten und Sicherheit, wobei jedes Thema auf einer eigenen, fokussierten Seite behandelt wird: wie sich ein Werkzeug verhält, welche Einstellungen wichtig sind, was sich zwischen Versionen geändert hat und welche Fehler leicht passieren.
 
-Die Wissensdatenbank wird von **Anastasiia But** ([LinkedIn](https://www.linkedin.com/in/happyinhappy/)) betreut – Architektur, Auswahl der Materialien und die AI/ML-Pipeline – und von **Anastasia Iljuchina** ([LinkedIn](https://www.linkedin.com/in/anastasiya-ilukhina-09646a289/)) – Texte und Qualitätsprüfung. Jeder kann eine Korrektur oder einen neuen Artikel vorschlagen: [so wird mitgewirkt](https://happyin.space/contributing/).
+## Wer ihn erstellt {#who-makes-it}
 
-## Wie Artikel entstehen {#_2}
+Die Wissensdatenbank wird von **Anastasiia But** ([LinkedIn](https://www.linkedin.com/in/happyinhappy/)) gepflegt, verantwortlich für Architektur, Kuration und die KI/ML-Pipeline, sowie von **Anastasiya Ilukhina** ([LinkedIn](https://www.linkedin.com/in/anastasiya-ilukhina-09646a289/)), verantwortlich für Inhalte und Qualitätsprüfung. Jede Person kann eine Korrektur oder einen neuen Artikel vorschlagen; siehe [Wie man mitwirkt](contributing/index.md).
 
-- Jeder Artikel ist eine komprimierte Zusammenfassung von Primärquellen: offizieller Dokumentation, Release Notes, Fachartikeln und eigenen Messungen. Wenn das Verhalten von der Version oder dem Datum abhängt, wird das angegeben.
-- Bei der Erstellung von Entwürfen helfen KI-Werkzeuge; vor der Veröffentlichung durchläuft jeder Artikel eine automatische Prüfung (Struktur, Links, unzulässige Inhalte), und sich schnell ändernde Bereiche werden nach einem Zeitplan überprüft.
-- Leser und KI-Assistenten können eine veraltete oder fehlerhafte Seite über den Link am Ende jedes Artikels melden. Korrekturen sind im öffentlichen [GitHub-Repository](https://github.com/AnastasiyaW/knowledge-space) einsehbar.
+## Wie Artikel geschrieben werden {#how-articles-are-written}
 
-## Sprachen {#_3}
+- Jeder Artikel ist eine verdichtete Referenz, die auf Primärquellen beruht: offizielle Dokumentation, Versionshinweise, Fachartikel und gemessene Ergebnisse. Wo sich das Verhalten je nach Version oder Datum unterscheidet, werden Versionen und Daten genannt.
+- Das Verfassen wird durch KI-Werkzeuge unterstützt. Jeder Artikel durchläuft vor der Veröffentlichung eine automatisierte Prüfung (Struktur, Links, unzulässige Inhalte). Schnelllebige Fachgebiete werden nach einem Zeitplan überprüft (siehe die Aktualitätsrichtlinie auf der [Startseite](index.md)).
+- Leserinnen, Leser und KI-Assistenten können eine veraltete oder fehlerhafte Seite über den Feedback-Link am Ende jedes Artikels melden. Korrekturen werden im öffentlichen [GitHub-Repository](https://github.com/AnastasiyaW/knowledge-space) nachverfolgt.
 
-Die Hauptartikel sind auf Englisch verfasst. Die russischen und chinesischen Zweige wachsen schrittweise: Eine Seite erscheint in einer Sprache erst, nachdem die Übersetzung geprüft wurde.
+## Warum es ihn gibt {#why-it-exists}
 
-## Wovon die Seite lebt {#_4}
+KI-Assistenten nennen häufig API-Flags, Standardwerte und versionsspezifisches Verhalten mit großer Sicherheit und liegen dabei falsch. Eine dichte, quellengeprüfte Referenz gibt sowohl Menschen als auch Agenten etwas Verlässliches, womit sie Angaben abgleichen können. Dieselben Seiten sind so geschrieben, dass eine Person sie in wenigen Minuten lesen kann.
 
-Das Lesen ist kostenlos, ohne Registrierung und ohne Bezahlzugang. Die Kosten tragen die Autoren und, wo angezeigt, Werbung von Google AdSense auf den Artikelseiten. Werbung ist mit dem Wort „Reklame“ gekennzeichnet, erscheint nicht auf der Startseite und auf rechtlichen Seiten und beeinflusst nicht den Inhalt der Artikel. Welche Daten erhoben werden und wie man widerspricht, steht in der [Datenschutzerklärung](privacy.md).
+## Sprachen {#languages}
 
-## Kontakt {#_5}
+Die maßgeblichen Artikel sind auf Englisch verfasst. Maschinelle Übersetzungen werden auf [Französisch](https://happyin.space/fr/) und [Deutsch](https://happyin.space/de/) veröffentlicht; [Russisch](https://happyin.space/ru/) und [vereinfachtes Chinesisch](https://happyin.space/zh-CN/) haben Einstiegsseiten, die Artikel folgen dort. Eine Übersetzung wird erst veröffentlicht, nachdem eine automatische Prüfung gegen die englische Seite erfolgreich war (Code, Befehle, Links und Struktur müssen übereinstimmen), und jede übersetzte Seite verlinkt auf ihr Original.
 
-Siehe die Seite [„Kontakte“](contact.md).
+## Finanzierung und Unabhängigkeit {#funding-and-independence}
+
+Die Seite ist kostenlos lesbar, ohne Konto und ohne Bezahlschranke. Ihre Kosten übernehmen die Betreiber und, sofern angezeigt, Display-Werbung von Google AdSense auf Artikelseiten. Anzeigen sind als „Advertisement“ gekennzeichnet, erscheinen nie auf der Startseite oder auf rechtlichen Seiten und haben keinen Einfluss darauf, was in den Artikeln steht. Welche Daten erhoben werden und wie man widerspricht, ist in der [Datenschutzerklärung](privacy.md) beschrieben.
+
+## Kontakt {#contact}
+
+Siehe die [Kontaktseite](contact.md).

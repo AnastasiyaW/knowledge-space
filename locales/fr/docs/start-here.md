@@ -1,45 +1,49 @@
 ---
-title: Commencez par la tâche
-description: "Le chemin le plus court entre une tâche d'ingénierie et un contenu vérifiable de la base de connaissances."
+title: Commencer ici
+description: "Un parcours orienté tâches à travers Happyin Knowledge Space pour les personnes qui ont besoin d'une prochaine étape technique fiable."
 ---
-# Commencez par la tâche {#_1}
+# Commencer ici {#start-here}
 
-Cette page vous aide à trouver le chemin le plus court et fiable vers la base. Nul besoin de compte ni d'installation locale, seulement un objectif précis : trouvez la source, vérifiez la version et lisez les limites avant de copier la configuration.
+Utilisez cette page lorsque vous avez une tâche technique concrète et souhaitez le chemin le plus court et le plus fiable vers la base de connaissances. Vous n'avez besoin ni de compte ni d'une installation locale : effectuez une recherche, ouvrez une référence, puis vérifiez son contexte de version et ses pièges avant de l'appliquer.
 
-## 1. Formulez le résultat attendu {#1}
+## Avant de commencer {#before-you-start}
 
-Une bonne requête décrit le résultat attendu et l'environnement :
+Partez d'un résultat concret, et non d'une vaste étiquette technologique. De bonnes questions de départ sont :
 
-- « Déployer un service Python en toute sécurité avec retour arrière et contrôle de santé » ;
-- « Choisir une approche d'édition d'image contrôlée » ;
-- « Comprendre pourquoi un consumer Kafka crée des doublons après un rebalance » ;
-- « Fournir à un agent de codage un contexte technique vérifiable ».
+- « Comment déployer un service Python avec un chemin de déploiement sûr ? »
+- « Quelle approche de génération d'images convient à une retouche contrôlée ? »
+- « Pourquoi ce rééquilibrage de consommateur Kafka provoque-t-il des doublons ? »
+- « Comment fournir à mon agent de code un contexte fiable ? »
 
-Si le modèle, la bibliothèque, l'erreur ou la commande sont déjà connus, utilisez la recherche du site ou la [carte de la base](knowledge-base/index.md). Si seul le résultat est connu, commencez par l'itinéraire ci-dessous.
+Si vous connaissez déjà un outil, un modèle, une erreur ou une commande, utilisez d'abord la zone de recherche. Si vous ne connaissez que le résultat recherché, choisissez un parcours ci-dessous.
 
-## 2. Choisissez l'itinéraire le plus proche {#2}
+## 1. Choisir la tâche la plus proche {#1-choose-the-closest-task}
 
-| J'ai besoin de | Commencer ici | Puis |
+| Je dois… | Commencer ici | Puis aller à |
 |---|---|---|
-| Construire un workflow AI ou image | [Image Generation](image-generation/index.md) | modèle, édition, LoRA, workflow ou infrastructure |
-| Déployer un service ou un produit web | [Architecture](architecture/index.md) | [Python](python/index.md), [Web Frontend](web-frontend/index.md) et [DevOps](devops/index.md) |
-| Transférer, analyser ou interroger des données | [Data Engineering](data-engineering/index.md) | [BI & Analytics](bi-analytics/index.md), [SQL](sql-databases/index.md) ou [Data Science](data-science/index.md) |
-| Travailler avec des LLM ou des workflows autonomes | [LLM & Agents](llm-agents/index.md) | [LLM Memory](llm-memory/index.md) et [Security](security/index.md) |
-| Travailler avec la parole, la transcription ou la voix synthétique | [Audio & Voice](audio-voice/index.md) | modèle, latence et déploiement multilingue |
-| Déboguer, tester ou améliorer du code existant | [Testing & QA](testing-qa/index.md) | langage ou framework de votre projet |
+| Construire ou étendre un workflow IA/image | [Image Generation](image-generation/index.md) | les pages sur les modèles, l'édition, LoRA, les workflows ou l'infrastructure |
+| Construire un service ou un produit web | [Architecture](architecture/index.md) | [Python](python/index.md), [Web Frontend](web-frontend/index.md) et [DevOps](devops/index.md) |
+| Déplacer, analyser ou interroger des données | [Data Engineering](data-engineering/index.md) | [BI & Analytics](bi-analytics/index.md), [SQL & Databases](sql-databases/index.md) ou [Data Science](data-science/index.md) |
+| Travailler avec des modèles de langage ou des workflows autonomes | [LLM & Agents](llm-agents/index.md) | [LLM Memory](llm-memory/index.md) et [Security](security/index.md) |
+| Travailler avec la parole, la transcription ou la voix synthétique | [Audio & Voice](audio-voice/index.md) | la comparaison de modèles, la latence et les notes sur le déploiement multilingue |
+| Déboguer, tester ou améliorer du code existant | [Testing & QA](testing-qa/index.md) | la section sur le langage ou le framework de votre base de code |
 
-## 3. Lisez le contenu comme appui à la décision {#3}
+## 2. Lire une page comme une aide à la décision {#2-read-a-page-as-a-decision-aid}
 
-1. Vérifiez d'abord la version, la date et le périmètre.
-2. Repérez l'approche ou la configuration correspondant à votre environnement.
-3. Lisez la section **Gotchas** avant d'exécuter les commandes : elle recense les échecs non évidents du chemin nominal.
-4. Ouvrez les articles voisins uniquement s'ils sont nécessaires à la décision suivante.
+Chaque référence est volontairement dense. Lisez-la dans cet ordre :
 
-La page de la base sert de point de départ pour une décision, et ne remplace pas les tests de votre infrastructure.
+1. Vérifiez la version, la date et le périmètre. Une recommandation de modèle ou de framework de 2024 peut ne pas convenir à une installation de 2026.
+2. Repérez le motif d'implémentation ou le bloc de configuration qui correspond à votre environnement.
+3. Lisez **Gotchas** avant de copier des commandes. Ils décrivent les modes de défaillance que l'exemple du cas nominal ne peut pas montrer.
+4. Suivez **See also** uniquement lorsque vous avez besoin de la décision voisine ; n'ouvrez pas tout un domaine par défaut.
 
-## 4. Utilisez-la avec un agent IA {#4-ai-}
+La base de connaissances est un point de départ pour une décision, et non une autorité qui remplace les tests dans votre propre environnement.
 
-Donnez à l'agent le lien vers le contenu, le résultat visé et l'environnement. Le contrat complet pour les agents figure dans le [guide dédié](for-llm-agents.md).
+## 3. L'utiliser avec un assistant IA {#3-use-it-with-an-ai-assistant}
+
+Pour un agent, donnez-lui la page pertinente ou demandez-lui de chercher dans le dépôt avant de proposer une solution. Le [guide pour agents](for-llm-agents.md) contient un prompt court, des index lisibles par machine et le contrat de retour d'information.
+
+Lorsque vous demandez à un agent d'agir, indiquez le résultat attendu, votre environnement et la page source. Par exemple :
 
 ```text
 Read the relevant Happyin Knowledge Space page before proposing a change.
@@ -47,6 +51,12 @@ My outcome is: deploy a Python API with rollback and observable health checks.
 Use the version context and Gotchas from the source; tell me what must be verified locally.
 ```
 
-## Si le contenu est insuffisant {#_2}
+## 4. Garder la réponse utile pour le lecteur suivant {#4-keep-the-answer-useful-for-the-next-person}
 
-La base dispose d'un canal public de retour d'information (décrit dans le [guide pour les agents](for-llm-agents.md)). Le message doit indiquer la page ou le sujet, la version ou l'environnement, ainsi que la source publique. N'y envoyez ni code personnel, ni jetons, ni données utilisateur.
+Si un article est manquant, obsolète ou erroné, utilisez la voie de retour d'information de la page ou le [guide de contribution](contributing/index.md). Un signalement utile indique l'article ou le sujet, le problème observé, la version ou l'environnement, et une source publique qui étaie la correction. N'incluez pas de code privé, d'identifiants ni de données utilisateur.
+
+## La suite {#what-comes-next}
+
+- Parcourez la [carte complète des domaines](index.md#domains) lorsque la tâche traverse plusieurs domaines.
+- Lisez le [blog](blog/index.md) pour les contenus récemment ajoutés et les mises à jour du projet.
+- Utilisez [Pour les agents IA](for-llm-agents.md) lorsque le prochain lecteur est un assistant de code plutôt qu'une personne.

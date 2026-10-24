@@ -1,40 +1,40 @@
 ---
-title: База знаний Happyin
-description: "Техническая база знаний на французском языке: проверяемые решения, версии и типичные ошибки для инженеров и AI-агентов."
+title: Base de connaissances Happyin
+description: "Base de connaissances technique : solutions vérifiées, versions et erreurs courantes pour les ingénieurs et les agents IA."
 ---
-# База знаний Happyin {#happyin}
+# Base de connaissances Happyin {#happyin-knowledge-base}
 
-Техническая база для людей, которые принимают инженерные решения, и для AI-агентов, которым нужны проверяемые исходные материалы. Здесь не обещают универсальный ответ: у каждого материала есть версия, границы применимости и реальные ошибки, которые нужно проверить до внедрения.
+Une référence technique destinée aux personnes qui prennent des décisions d'ingénierie et aux agents IA qui ont besoin de sources vérifiables. Elle ne promet pas une réponse universelle : chaque page indique sa version, son périmètre d'application et les erreurs réelles à vérifier avant de l'adopter.
 
-## С чего начать {#_1}
+## Par où commencer {#where-to-start}
 
-1. Сформулируйте конкретный результат, а не только название технологии.
-2. Откройте [маршрут по задаче](start-here.md): он ведёт к ближайшему разделу и объясняет, что проверить первым.
-3. Или сразу откройте [карту базы](knowledge-base/index.md) и раздел, который вам нужен.
-4. Если работаете с помощником, передайте ему страницу, версию своего окружения и требуемый результат.
+1. Énoncez le résultat concret dont vous avez besoin, et pas seulement le nom d'une technologie.
+2. Ouvrez le [guide orienté tâches](start-here.md) : il vous mène à la section la plus proche et indique ce qu'il faut vérifier en premier.
+3. Ou ouvrez la [carte de la base de connaissances](knowledge-base/index.md) et la section qui vous intéresse.
+4. Si vous travaillez avec un assistant, donnez-lui la page, la version de votre environnement et le résultat que vous attendez.
 
-## Разделы {#_2}
+## Sections {#sections}
 
-| Разработка | Данные и ML | Инфраструктура и безопасность |
+| Développement | Données et ML | Infrastructure et sécurité |
 |---|---|---|
 | [Python](python/index.md) | [Data Engineering](data-engineering/index.md) | [DevOps](devops/index.md) |
-| [Web Frontend](web-frontend/index.md) | [Data Science](data-science/index.md) | [Linux и CLI](linux-cli/index.md) |
-| [Архитектура](architecture/index.md) | [SQL и базы данных](sql-databases/index.md) | [Безопасность](security/index.md) |
-| [Тестирование и QA](testing-qa/index.md) | [BI и аналитика](bi-analytics/index.md) | [Kafka](kafka/index.md) |
-| [Алгоритмы](algorithms/index.md) | [Генерация изображений](image-generation/index.md) | [iOS и мобильная разработка](ios-mobile/index.md) |
-| [C++](cpp/index.md), [Rust](rust/index.md), [Go](go/index.md) | [LLM и агенты](llm-agents/index.md) | [Java и Spring](java-spring/index.md) |
-| [Node.js](nodejs/index.md), [PHP](php/index.md) | [Память LLM](llm-memory/index.md), [Аудио и голос](audio-voice/index.md) | [SEO и маркетинг](seo-marketing/index.md), [Тексты](writing/index.md) |
+| [Web Frontend](web-frontend/index.md) | [Data Science](data-science/index.md) | [Linux et CLI](linux-cli/index.md) |
+| [Architecture](architecture/index.md) | [SQL et bases de données](sql-databases/index.md) | [Sécurité](security/index.md) |
+| [Tests et QA](testing-qa/index.md) | [BI et analytique](bi-analytics/index.md) | [Kafka](kafka/index.md) |
+| [Algorithmes](algorithms/index.md) | [Génération d'images](image-generation/index.md) | [iOS et mobile](ios-mobile/index.md) |
+| [C++](cpp/index.md), [Rust](rust/index.md), [Go](go/index.md) | [LLM et agents](llm-agents/index.md) | [Java et Spring](java-spring/index.md) |
+| [Node.js](nodejs/index.md), [PHP](php/index.md) | [Mémoire des LLM](llm-memory/index.md), [Audio et voix](audio-voice/index.md) | [SEO et marketing](seo-marketing/index.md), [Rédaction](writing/index.md) |
 
-Отдельно — [проекты](projects/index.md) и [компании](organizations/index.md), о которых пишет новостной конвейер.
+Il existe aussi des pages sur les [projets](projects/index.md) et les [organisations](organizations/index.md) suivis par le pipeline d'actualités.
 
-## Язык и источники {#_3}
+## Langue et sources {#language-and-sources}
 
-Статьи переведены на французский машинно и проверены автоматически: код, команды, ссылки и структура совпадают с оригиналом. Канонический текст — английский; на каждой переведённой странице есть ссылка на него. Перевод обновляется, когда меняется оригинал.
+Les articles dans cette langue sont des traductions automatiques, vérifiées automatiquement : le code, les commandes, les liens et la structure correspondent à l'original. Le texte anglais fait foi, et chaque page traduite renvoie vers lui. Une traduction est mise à jour lorsque l'original change.
 
-Переключатель языка в шапке ведёт на ту же страницу на другом языке.
+Le sélecteur de langue présent dans l'en-tête ouvre la même page dans une autre langue.
 
-## Дальше {#_4}
+## Suite {#next}
 
-- [Выбрать путь по задаче](start-here.md)
-- [Как пользоваться базой с AI-агентом](for-llm-agents.md)
-- [Открыть репозиторий](https://github.com/AnastasiyaW/knowledge-space)
+- [Choisir un parcours selon la tâche](start-here.md)
+- [Comment utiliser la base de connaissances avec un agent IA](for-llm-agents.md)
+- [Ouvrir le dépôt](https://github.com/AnastasiyaW/knowledge-space)

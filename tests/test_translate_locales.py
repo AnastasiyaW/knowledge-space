@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 sys.path.insert(0, str(ROOT / "hooks"))
 
+import add_locale  # noqa: E402
 import i18n  # noqa: E402
 import translate_locales as tl  # noqa: E402
 
@@ -108,6 +109,12 @@ class CommittedTranslations(unittest.TestCase):
                 continue
             with self.subTest(lang):
                 self.assertEqual(tl.verify_written(lang, tracked), [])
+            for page in sorted((ROOT / "locales" / lang / "docs").glob("*.md")):
+                with self.subTest(page=page.name, lang=lang):
+                    fm, body = tl.split_front_matter(page.read_text(encoding="utf-8"))
+                    source = add_locale.SOURCES.get(page.name, tl.DOCS / page.name)
+                    english = source.read_text(encoding="utf-8") if source.is_file() else ""
+                    tl.check_language(lang, tl.PLACEHOLDER_RE.sub("", fm + tl.protect(body)[0]), english)
 
 
 class LanguageLinks(unittest.TestCase):

@@ -1,21 +1,23 @@
 ---
 title: Kontakt
-description: "So erreichen Sie die Autoren von Happyin Knowledge Space: GitHub Issues für Korrekturen und Anfragen, Telegram für Neuigkeiten und Fragen."
+description: "So erreichen Sie die Betreuer der Happyin Knowledge Space: GitHub-Issues für Korrekturen und Anfragen, Telegram für Neuigkeiten und Fragen."
 ---
-## Korrekturen, Fragen und Artikelwünsche {#_1}
+# Kontakt {#contact}
 
-Erstellen Sie ein Issue im öffentlichen GitHub-Repository: [github.com/AnastasiyaW/knowledge-space/issues](https://github.com/AnastasiyaW/knowledge-space/issues). So lässt sich am schnellsten eine fehlerhafte oder veraltete Seite melden, ein neues Thema anfragen oder eine Frage zu den Daten stellen. Issues sind öffentlich, deshalb geben Sie dort keine persönlichen Daten an. Wenn Sie etwas Vertrauliches übermitteln müssen, schreiben Sie dies in einem Issue, und wir vereinbaren einen geschlossenen Kanal.
+## Korrekturen, Fragen und Artikelwünsche {#corrections-questions-and-article-requests}
 
-Pull Requests sind ebenfalls willkommen: [So können Sie mitwirken](https://happyin.space/contributing/).
+Eröffnen Sie ein Issue im öffentlichen GitHub-Repository: [github.com/AnastasiyaW/knowledge-space/issues](https://github.com/AnastasiyaW/knowledge-space/issues). Das ist der schnellste Weg, eine falsche oder veraltete Seite zu melden, ein Thema anzufragen oder eine Datenschutzfrage zu stellen. Issues sind öffentlich. Bitte nehmen Sie daher keine personenbezogenen Daten auf. Wenn Sie etwas Vertrauliches mitteilen möchten, schreiben Sie das im Issue, und wir richten einen privaten Kanal ein.
+
+Pull Requests sind ebenfalls willkommen: [Wie Sie beitragen können](contributing/index.md).
 
 ## Telegram {#telegram}
 
 Neuigkeiten zur Wissensdatenbank und ein Ort für Fragen: [t.me/happyin_space](https://t.me/happyin_space).
 
-## Meldungen von AI-Assistenten und Skripten {#ai-}
+## Meldungen von KI-Assistenten und Skripten {#reports-from-ai-assistants-and-scripts}
 
-Ein AI-Assistent oder ein Skript kann mit einer einzigen Anfrage und ohne Konto einen veralteten Artikel oder ein fehlendes Thema melden. Die Adresse steht am Ende jedes Artikels.
+Ein KI-Assistent oder ein Skript kann einen veralteten Artikel oder ein fehlendes Thema mit einer einzigen Anfrage melden, ohne Konto. Die Adresse steht am Ende jedes Artikels.
 
-## Werbung und Partnerschaft {#_2}
+## Werbung und Partnerschaften {#advertising-and-partnerships}
 
-Werbung auf der Website wird von Google AdSense ausgeliefert; Werbeplätze verkaufen wir nicht direkt. Bei sonstigen Partnerschaftsfragen wenden Sie sich bitte an ein Issue auf GitHub oder schreiben Sie uns auf Telegram.
+Anzeigen auf dieser Website werden über Google AdSense ausgespielt; Werbeplätze verkaufen wir nicht direkt. Für andere Partnerschaftsanfragen eröffnen Sie bitte ein GitHub-Issue oder schreiben Sie uns in Telegram.
