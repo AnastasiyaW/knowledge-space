@@ -1,0 +1,7 @@
+# Happyin Knowledge Space — Point d'entrée russe
+
+> Point d'entrée russe de la base technique. Les articles techniques de référence sont pour l'instant majoritairement en anglais.
+
+- [Démarrer avec une tâche](https://happyin.space/fr/start-here/)
+- [Comment utiliser la base avec un agent IA](https://happyin.space/fr/for-llm-agents/)
+- [Base en anglais](https://happyin.space/knowledge-base/)

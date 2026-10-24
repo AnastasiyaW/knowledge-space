@@ -14,7 +14,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIGS = ("mkdocs.yml", "mkdocs.ru.yml", "mkdocs.zh-CN.yml")
+CONFIGS = ("mkdocs.yml", "mkdocs.ru.yml", "mkdocs.zh-CN.yml", "mkdocs.fr.yml", "mkdocs.de.yml")
 REQUIRED_OUTPUTS = (
     "index.html",
     "ru/index.html",
@@ -23,6 +23,10 @@ REQUIRED_OUTPUTS = (
     "zh-CN/index.html",
     "zh-CN/start-here/index.html",
     "zh-CN/privacy/index.html",
+    "fr/index.html",
+    "fr/kafka/consumer-groups/index.html",
+    "de/index.html",
+    "de/kafka/consumer-groups/index.html",
 )
 
 
@@ -42,7 +46,7 @@ def main() -> int:
     if missing:
         raise RuntimeError(f"Localized build did not produce: {', '.join(missing)}")
 
-    print("PASS localized build: en, ru, zh-CN")
+    print("PASS localized build: en, ru, zh-CN, fr, de")
     return 0
 
 

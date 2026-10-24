@@ -47,6 +47,9 @@ API = "https://api.anthropic.com/v1/messages/batches"
 # Owner routing rule 2026-10-13: execution work runs on Claude Haiku 5.5.
 MODEL = "claude-haiku-5-5"
 MAX_TOKENS = 32000  # longest article is ~500 lines; Russian/German expand ~1.4x in tokens
+# A request carries at most this many characters; longer pages go in parts split at "## ".
+# Measured: the 107 KB knowledge-base map ran out of output tokens in one request.
+PART_CHARS = 30000
 
 LANGS = {
     "ru": "Russian",
@@ -58,7 +61,6 @@ LANGS = {
 }
 # Top-level docs/ entries that are not translated article content.
 SKIP_TOP = {"blog", "contributing", "assets", "javascripts", "stylesheets", "skills"}
-SKIP_FILES = {"index.md", "start-here.md", "privacy.md", "for-llm-agents.md", "about.md", "contact.md"}
 
 FENCE_RE = re.compile(r"^([ \t]*)(`{3,}|~{3,})")
 HEADING_RE = re.compile(r"^(#{1,6})[ \t]+(.+?)[ \t]*$")
@@ -313,6 +315,34 @@ def api(method: str, url: str, body: dict | None = None) -> dict | bytes:
             print(f"API unreachable: {e}"); sys.exit(2)
 
 
+def split_parts(text: str) -> list[str]:
+    """Whole sections per part, so every part is valid Markdown on its own: cut before a
+    heading, or between blocks when a section alone is too long (the map page is one list)."""
+    if len(text) <= PART_CHARS:
+        return [text]
+    parts, current, pieces = [], [], []
+    for section in re.split(r"(?m)^(?=#{2,3} )", text):
+        pieces += re.split(r"(?<=\n\n)(?=\S)", section) if len(section) > PART_CHARS else [section]
+    for section in pieces:
+        if current and sum(map(len, current)) + len(section) > PART_CHARS:
+            parts.append("".join(current))
+            current = []
+        current.append(section)
+    parts.append("".join(current))
+    return parts
+
+
+def front_matter_from_heading(source_fm: str, body: str) -> str:
+    """The model sometimes drops the YAML block. The translated H1 is the translated title;
+    a page whose description would be lost is refused instead."""
+    if fm_value(source_fm, "description"):
+        raise ValueError("front matter dropped")
+    h1 = next((m.group(2) for line in body.split("\n") if (m := HEADING_RE.match(line)) and m.group(1) == "#"), "")
+    if not h1:
+        raise ValueError("front matter dropped")
+    return f"---\ntitle: {json.dumps(ATTR_ID_RE.sub('', h1).strip(), ensure_ascii=False)}\n---\n"
+
+
 def cmd_plan(args) -> int:
     for lang in args.lang:
         p = plan(lang)
@@ -333,13 +363,16 @@ def cmd_submit(args) -> int:
             text = src.decode("utf-8").replace("\r\n", "\n")
             fm, body = split_front_matter(text)
             protected, blocks, _ = protect(body)
-            cid = f"{lang}-{sha256((lang + rel).encode())[:40]}"
-            manifest[cid] = {"lang": lang, "rel": rel, "sha": sha256(src)}
-            requests.append({"custom_id": cid, "params": {
-                "model": MODEL, "max_tokens": MAX_TOKENS,
-                "system": SYSTEM.format(language=LANGS[lang]),
-                "messages": [{"role": "user", "content": fm + protected}],
-            }})
+            base = f"{lang}-{sha256((lang + rel).encode())[:40]}"
+            parts = split_parts(fm + protected)
+            for n, part in enumerate(parts):
+                cid = base if len(parts) == 1 else f"{base}-p{n}"
+                manifest[cid] = {"lang": lang, "rel": rel, "sha": sha256(src), "base": base, "part": n, "parts": len(parts)}
+                requests.append({"custom_id": cid, "params": {
+                    "model": MODEL, "max_tokens": MAX_TOKENS,
+                    "system": SYSTEM.format(language=LANGS[lang]),
+                    "messages": [{"role": "user", "content": part}],
+                }})
     if not requests:
         print("nothing to translate"); return 0
     batch = api("POST", API, {"requests": requests})
@@ -360,7 +393,9 @@ def cmd_collect(args) -> int:
     if b["processing_status"] != "ended":
         print(f"batch {args.batch} is {b['processing_status']}: not collected"); return 2
     raw = api("GET", b["results_url"])
-    ok, failed = 0, []
+    texts: dict[str, dict[int, str]] = {}
+    errors: dict[str, str] = {}
+    pages: dict[str, dict] = {}
     for line in raw.decode("utf-8").splitlines():
         if not line.strip():
             continue
@@ -368,16 +403,27 @@ def cmd_collect(args) -> int:
         item = manifest.get(r["custom_id"])
         if item is None:
             continue
+        base = item.get("base", r["custom_id"])
+        pages[base] = item
+        res = r["result"]
+        if res["type"] != "succeeded":
+            errors[base] = f"request {res['type']}"
+        elif res["message"].get("stop_reason") != "end_turn":
+            errors[base] = f"stop_reason {res['message'].get('stop_reason')}"
+        else:
+            text = "".join(c.get("text", "") for c in res["message"]["content"]).replace("\r\n", "\n")
+            texts.setdefault(base, {})[item.get("part", 0)] = text.strip("\n") + "\n"
+    ok, failed = 0, []
+    for base, item in pages.items():
         lang, rel = item["lang"], item["rel"]
-        out = None
+        got = texts.get(base, {})
+        # Parts were cut at block boundaries, so a blank line goes back between them.
+        out = "\n\n".join(got[n].strip("\n") for n in sorted(got)) + "\n" if got else None
         try:
-            res = r["result"]
-            if res["type"] != "succeeded":
-                raise ValueError(f"request {res['type']}")
-            msg = res["message"]
-            if msg.get("stop_reason") != "end_turn":
-                raise ValueError(f"stop_reason {msg.get('stop_reason')}")
-            out = "".join(c.get("text", "") for c in msg["content"]).replace("\r\n", "\n").strip("\n") + "\n"
+            if base in errors:
+                raise ValueError(errors[base])
+            if len(got) != item.get("parts", 1):
+                raise ValueError(f"parts {len(got)}/{item.get('parts', 1)}")
             src_bytes = (DOCS / rel).read_bytes()
             if sha256(src_bytes) != item["sha"]:
                 raise ValueError("English source changed since submit")
@@ -385,7 +431,7 @@ def cmd_collect(args) -> int:
             src_protected, blocks, slugs = protect(src_body)
             tr_fm, tr_body = split_front_matter(out)
             if src_fm and not tr_fm:
-                raise ValueError("front matter dropped")
+                tr_fm = front_matter_from_heading(src_fm, tr_body)
             check_language(lang, PLACEHOLDER_RE.sub("", tr_body))
             check_structure(src_protected, tr_body)
             body = restore(tr_body, blocks, slugs, src_body)

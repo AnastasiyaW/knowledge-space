@@ -1,0 +1,7 @@
+# Happyin Knowledge Space — Einstieg auf Russisch
+
+> Russischer Einstieg in die technische Wissensbasis. Kanonische technische Artikel sind bislang überwiegend auf Englisch verfügbar.
+
+- [Mit einer Aufgabe beginnen](https://happyin.space/de/start-here/)
+- [So nutzen Sie die Wissensbasis mit einem KI-Agenten](https://happyin.space/de/for-llm-agents/)
+- [Englische Wissensbasis](https://happyin.space/knowledge-base/)

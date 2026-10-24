@@ -11,7 +11,9 @@ rest) over its own docs tree, listed in `extra.locales`. For each page this hook
 """
 from __future__ import annotations
 
-from pathlib import Path
+import posixpath
+import re
+from pathlib import Path, PurePosixPath
 
 _pages: dict[str, set[str]] = {}
 _root_alternate: list[dict] = []
@@ -40,7 +42,29 @@ def _translations(src_uri: str, config) -> list[dict]:
     return [loc for loc in config["extra"].get("locales", []) if src_uri in _pages.get(loc["lang"], ())]
 
 
+_MD_LINK = re.compile(r"\]\((?!https?:|mailto:|#)([^)\s#]+\.md)(#[^)\s]*)?\)")
+
+
+def _fallback_links(markdown: str, src_uri: str, config) -> str:
+    """A link to a page this language does not have yet goes to the English original
+    instead of breaking the strict build or the reader's click."""
+    lang = config["extra"].get("content_language")
+    english = next((loc for loc in config["extra"].get("locales", []) if loc["lang"] == "en"), None)
+    if not english or lang == "en" or lang not in _pages:
+        return markdown
+    here = PurePosixPath(src_uri).parent
+
+    def swap(m):
+        target = posixpath.normpath((here / m.group(1)).as_posix())
+        if target in _pages[lang] or target not in _pages.get("en", ()):
+            return m.group(0)
+        return f"]({english['base']}{_url(target)}{m.group(2) or ''})"
+
+    return _MD_LINK.sub(swap, markdown)
+
+
 def on_page_markdown(markdown, page, config, **kwargs):
+    markdown = _fallback_links(markdown, page.file.src_uri, config)
     if not (page.meta and page.meta.get("translation") == "machine"):
         return markdown
     english = next((loc for loc in config["extra"]["locales"] if loc["lang"] == "en"), None)

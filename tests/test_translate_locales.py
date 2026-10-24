@@ -104,6 +104,14 @@ class LanguageLinks(unittest.TestCase):
         self.assertEqual(i18n._url("kafka/index.md"), "kafka/")
         self.assertEqual(i18n._url("kafka/consumer-groups.md"), "kafka/consumer-groups/")
 
+    def test_link_to_an_untranslated_page_goes_to_the_english_original(self) -> None:
+        i18n._pages.clear()
+        i18n._pages.update({"en": {"kafka/a.md", "kafka/b.md"}, "fr": {"kafka/a.md"}})
+        config = {"extra": {"content_language": "fr", "locales": [
+            {"lang": "en", "base": "https://happyin.space/"}, {"lang": "fr", "base": "https://happyin.space/fr/"}]}}
+        out = i18n._fallback_links("[x](b.md#top) [y](a.md) [z](https://e.org/c.md)", "kafka/a.md", config)
+        self.assertEqual(out, "[x](https://happyin.space/kafka/b/#top) [y](a.md) [z](https://e.org/c.md)")
+
     def test_every_language_config_inherits_markdown_and_links_pages(self) -> None:
         for config in sorted(ROOT.glob("mkdocs.*.yml")):
             text = config.read_text(encoding="utf-8")
