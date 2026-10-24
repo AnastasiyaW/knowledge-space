@@ -6,10 +6,11 @@
   gave every page the default image while CI on Linux did not.
 -#}
 {%- macro og_image(page, config) -%}
+  {%- set base = config.extra.shared_asset_url | default(config.site_url, true) -%}
   {%- set parts = page.file.src_uri.split("/") if page and page.file else [] -%}
   {%- if parts | length > 1 and parts[0] in config.extra.og_domains -%}
-    {{ config.site_url }}assets/og-{{ parts[0] }}.png
+    {{ base }}assets/og-{{ parts[0] }}.png
   {%- else -%}
-    {{ config.site_url }}assets/og-image.png
+    {{ base }}assets/og-image.png
   {%- endif -%}
 {%- endmacro -%}

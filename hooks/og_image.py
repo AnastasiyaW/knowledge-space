@@ -9,6 +9,9 @@ only when it exists and og-image.png otherwise.
 
 from pathlib import Path
 
+# The images live only in the English docs/assets, which every language serves from the site root.
+ENGLISH_DOCS = Path(__file__).resolve().parents[1] / "docs"
+
 
 def og_domains(docs_dir: Path) -> list[str]:
     """Domains with docs/assets/og-<domain>.png; og-image.png is the site-wide default."""
@@ -20,5 +23,5 @@ def og_domains(docs_dir: Path) -> list[str]:
 
 
 def on_config(config, **kwargs):
-    config["extra"]["og_domains"] = og_domains(Path(config["docs_dir"]))
+    config["extra"]["og_domains"] = og_domains(ENGLISH_DOCS)
     return config

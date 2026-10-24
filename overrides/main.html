@@ -587,6 +587,7 @@
      llms-*.txt files: hreflang is for translated versions of the same page, and plain
      text files cannot link back, so search engines report all ~9,300 tags as errors. #}
   <link rel="alternate" type="text/plain" title="llms.txt" href="{{ config.site_url }}llms.txt" />
+  {% if i18n_x_default %}<link rel="alternate" hreflang="x-default" href="{{ i18n_x_default }}">{% endif %}
 
   {% if page %}
   {# Open Graph meta tags #}
@@ -625,9 +626,9 @@
     "description": {{ config.site_description | tojson }},
     "inLanguage": "{{ content_language }}",
     "availableLanguage": [
-      {"@type": "Language", "name": "English", "alternateName": "en"},
-      {"@type": "Language", "name": "Russian", "alternateName": "ru"},
-      {"@type": "Language", "name": "Chinese (Simplified)", "alternateName": "zh-CN"}
+      {%- for loc in config.extra.locales %}
+      {"@type": "Language", "name": {{ loc.name | tojson }}, "alternateName": "{{ loc.hreflang }}"}{{ "," if not loop.last }}
+      {%- endfor %}
     ],
     "author": [
       {

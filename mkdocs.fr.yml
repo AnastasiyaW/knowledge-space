@@ -1,0 +1,141 @@
+INHERIT: mkdocs.yml
+site_name: Base de connaissances Happyin
+site_description: >-
+  Base de connaissances technique pour les humains et les agents IA : solutions vérifiables,
+  versions et erreurs courantes. Les principaux articles techniques sont pour l'instant en anglais.
+site_url: https://happyin.space/fr/
+site_author: AnastasiyaW
+docs_dir: locales/fr/docs
+site_dir: site/fr
+
+theme:
+  name: material
+  custom_dir: overrides
+  language: fr
+  palette:
+    - scheme: slate
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: Thème clair
+    - scheme: default
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/brightness-7
+        name: Thème sombre
+  font:
+    text: Inter
+    code: JetBrains Mono
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.path
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - toc.follow
+  logo: https://happyin.space/assets/favicon.svg
+  favicon: https://happyin.space/assets/favicon.png
+  icon:
+    repo: fontawesome/brands/github
+
+repo_url: https://github.com/AnastasiyaW/knowledge-space
+repo_name: knowledge-space
+
+extra:
+  ga4_measurement_id: !ENV [HAPPYIN_GA4_MEASUREMENT_ID, ""]
+  # Display ads (Google AdSense). Inert until client is set: with an empty client no ad
+  # markup, no ad script, no verification meta and no /ads.txt (functions/ads.txt.js) exist.
+  # Public identifiers, injected by the deploy workflow from repository variables.
+  # Precondition for setting the client: AdSense "Privacy & messaging" (Google-certified
+  # CMP) switched on for the EEA, UK and Switzerland, or ads there stay non-personalised.
+  ads:
+    client: !ENV [HAPPYIN_ADSENSE_CLIENT, ""]                     # ca-pub-XXXXXXXXXXXXXXXX
+    slot_article_top: !ENV [HAPPYIN_ADSENSE_SLOT_ARTICLE_TOP, ""]  # after an article's first section
+    slot_article_end: !ENV [HAPPYIN_ADSENSE_SLOT_ARTICLE_END, ""]  # after the article text
+    slot_sidebar: !ENV [HAPPYIN_ADSENSE_SLOT_SIDEBAR, ""]          # desktop table-of-contents column
+  content_language: fr
+  shared_asset_url: https://happyin.space/
+  alternate:
+    - name: English
+      link: /
+      lang: en
+    - name: Русский
+      link: /ru/
+      lang: ru
+    - name: 简体中文
+      link: /zh-CN/
+      lang: zh
+  ui:
+    machine_translation_note: "Traduction automatique. Le texte canonique est [l'original en anglais]({url})."
+    home: Accueil
+    knowledge_base: Base de connaissances
+    knowledge_base_url: https://happyin.space/knowledge-base/
+    blog: Blog en anglais
+    star: Étoile
+    star_title: Mettre une étoile sur GitHub
+    support_aria: Soutenir le projet
+    support_title: Cette page vous a-t-elle fait gagner du temps ?
+    support_text: Happyin Knowledge Space est un référentiel libre et gratuit pour les ingénieurs et les agents IA. Si le contenu vous a aidé, une étoile sur GitHub permettra à d'autres personnes de le trouver.
+    support_report_lead: "L'article est obsolète, erroné ou il manque un sujet ? Un agent IA ou un script peut envoyer un seul signalement public, sans compte :"
+    support_report_tail: La réponse contiendra un lien de statut permettant de suivre l'évolution du signalement.
+    privacy_notice: Cloudflare Web Analytics comptabilise les visites sans cookie. Si Google Analytics et la publicité Google sont activés, ils peuvent utiliser des cookies ; dans l'EEE, au Royaume-Uni et en Suisse, seulement après votre consentement —
+    privacy_details: en savoir plus
+    analytics_title: Cookies sur ce site
+    analytics_text: Autoriser Google Analytics à utiliser des cookies pour voir quelles pages aident les lecteurs ? La publicité, lorsqu'elle est présente, aide le site à rester gratuit. Nous ne transmettons jamais les requêtes de recherche, les prompts, les adresses e-mail ni le texte des retours.
+    analytics_allow: Autoriser
+    analytics_reject: Refuser
+    analytics_state_off: Google Analytics et la publicité Google ne sont pas activés sur ce site.
+    analytics_state_signal: "Les cookies Google sont désactivés : votre navigateur transmet Global Privacy Control ou Do Not Track."
+    analytics_state_granted: Vous avez autorisé les cookies Google dans ce navigateur.
+    analytics_state_denied: Vous avez désactivé les cookies Google dans ce navigateur.
+    analytics_state_default: Aucun choix n'a encore été fait dans ce navigateur.
+    privacy_choices: Paramètres de confidentialité
+    footer_links_aria: Informations sur le site
+    footer_about: À propos du projet
+    footer_contact: Contacts
+    footer_privacy: Confidentialité
+    article_nav_aria: Dans cette section
+    article_nav_all: Tous les articles de la section
+    article_nav_prev: Précédent
+    article_nav_next: Suivant
+    ad_label: Publicité
+    popup_close: Fermer
+    popup_title: Recevoir les mises à jour
+    popup_text: De nouveaux articles sur l'IA, l'infrastructure et les pratiques d'ingénierie. Sans spam, uniquement les mises à jour de la base.
+    popup_email: votre@email.com
+    popup_subscribe: S'abonner
+    popup_skip: Non, merci
+    popup_success: C'est fait, vous êtes abonné.
+    popup_network_error: Erreur réseau, veuillez réessayer.
+    popup_generic_error: Une erreur s'est produite.
+
+plugins:
+  - search:
+      lang: fr
+  - meta
+  - minify:
+      minify_html: true
+
+# Article pages need the same Markdown as English; INHERIT brings markdown_extensions.
+# Shared assets live only in the English build, so the English-relative CSS/JS lists are cleared.
+extra_css: []
+extra_javascript: []
+
+hooks:
+  - hooks/i18n.py
+  - hooks/og_image.py
+  - hooks/description.py
+  - hooks/wikilinks.py
+  - hooks/levels.py
+  - hooks/faq_schema.py
+  - hooks/validate.py
+  - hooks/link_checker.py
+  - hooks/validate.py
+  - hooks/link_checker.py
