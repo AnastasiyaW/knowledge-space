@@ -217,9 +217,14 @@ def restore(translated: str, blocks: list[str], slugs: list[str], source_body: s
     text = "\n".join(lines)
     for i, block in enumerate(blocks):
         text = re.sub(rf"^([ \t]*){re.escape(PLACEHOLDER.format(i))}[ \t]*$", lambda _m, b=block: b, text, count=1, flags=re.M)
+    if PLACEHOLDER_RE.search(text):
+        raise ValueError("a code placeholder shares its line with text")
     return text
 
 
+URL_RE = re.compile(r"https?://[^\s)\]>\"'`]*[^\s)\]>\"'`.,;:!?]")  # sentence punctuation is not part of a URL
+ADMONITION_RE = re.compile(r"(?m)^[ \t]*(?:!!!|\?\?\?\+?)[ \t]+([\w-]+)")
+PLACEHOLDER_LINE_RE = re.compile(r"(?m)^([ \t]*)(@@CODE_\d+@@)[ \t]*$")
 INLINE_CODE_RE = re.compile(r"(`+)(?!`)(.+?)(?<!`)\1(?!`)")
 LIST_ITEM_RE = re.compile(r"^\s*(?:[-*+]|\d+[.)])\s")
 
@@ -237,6 +242,14 @@ def check_structure(source: str, translated: str) -> None:
         raise ValueError("wiki-link targets changed")
     if sorted(MDLINK_URL_RE.findall(source)) != sorted(MDLINK_URL_RE.findall(translated)):
         raise ValueError("markdown link targets changed")
+    if sorted(URL_RE.findall(source)) != sorted(URL_RE.findall(translated)):
+        raise ValueError("URLs changed (reference links, HTML href, bare links)")
+    if ADMONITION_RE.findall(source) != ADMONITION_RE.findall(translated):
+        raise ValueError("admonition types changed")
+    if PLACEHOLDER_LINE_RE.findall(source) != PLACEHOLDER_LINE_RE.findall(translated):
+        raise ValueError("a code placeholder moved (indentation or line)")
+    if first_line(source).startswith("#") and not first_line(translated).startswith("#"):
+        raise ValueError("text before the first heading")
     missing = Counter(m.group(0) for m in INLINE_CODE_RE.finditer(source))
     missing.subtract(m.group(0) for m in INLINE_CODE_RE.finditer(translated))
     lost = [code for code, n in missing.items() if n > 0]
@@ -246,14 +259,30 @@ def check_structure(source: str, translated: str) -> None:
         if translated.count(mark) % 2 and not source.count(mark) % 2:
             raise ValueError(f"unbalanced {mark!r}")
 
-    def shape(s: str) -> tuple[int, int, int]:
+    def shape(s: str) -> tuple[int, int, list[int]]:
         lines = s.split("\n")
         blocks = len([b for b in re.split(r"\n[ \t]*\n", s) if b.strip()])
         return (blocks, sum(1 for line in lines if LIST_ITEM_RE.match(line)),
-                sum(1 for line in lines if line.lstrip().startswith("|")))
+                [table_cells(line) for line in lines if line.lstrip().startswith("|")])
     (b1, i1, r1), (b2, i2, r2) = shape(source), shape(translated)
-    if i1 != i2 or r1 != r2 or b2 < b1:
-        raise ValueError(f"structure changed: blocks {b1}->{b2}, list items {i1}->{i2}, table rows {r1}->{r2}")
+    # Equal, not "at least": an extra paragraph is how model chatter got published (review 2026-10-24).
+    if i1 != i2 or r1 != r2 or b2 != b1:
+        raise ValueError(f"structure changed: blocks {b1}->{b2}, list items {i1}->{i2}, "
+                         f"table rows/cells {len(r1)}/{sum(r1)}->{len(r2)}/{sum(r2)}")
+    if len(prose_of(translated)) > 2.5 * max(len(prose_of(source)), 200):
+        raise ValueError("translation is far longer than the source")
+
+
+def table_cells(line: str) -> int:
+    return len(re.sub(r"`[^`]*`|\[\[[^\]]*\]\]", "", line.strip()).strip("|").split("|"))
+
+
+def first_line(s: str) -> str:
+    return next((line.strip() for line in s.split("\n") if line.strip()), "")
+
+
+def prose_of(s: str) -> str:
+    return INLINE_CODE_RE.sub("", PLACEHOLDER_RE.sub("", s))
 
 
 SCRIPT_CHECK = {
@@ -263,7 +292,18 @@ SCRIPT_CHECK = {
 }
 
 
+ENGLISH_WORDS = {"the", "and", "of", "to", "is", "in", "that", "for", "with", "this", "are", "be",
+                 "it", "on", "as", "by", "you", "should", "when", "not", "or", "which", "i", "let", "me"}
+WORD_RE = re.compile(r"[^\W\d_]+", re.UNICODE)
+
+
 def check_language(lang: str, prose: str) -> None:
+    text = re.sub(r"\[\[[^\]]*\]\]|\]\([^)]*\)|https?://\S+", " ", INLINE_CODE_RE.sub(" ", prose))
+    words = [w.lower() for w in WORD_RE.findall(text)]
+    if len(words) >= 40 and sum(w in ENGLISH_WORDS for w in words) / len(words) > 0.08:
+        raise ValueError("prose reads as English")
+    if re.search(r"(?im)^\s*(?:let me|i need to|i will|here is the|hmm\b|note: (?:i|the translation))", text):
+        raise ValueError("model commentary in the output")
     pattern = SCRIPT_CHECK.get(lang)
     if pattern is None:
         return
@@ -276,7 +316,17 @@ def fm_value(fm: str, key: str) -> str:
     """A one-line front-matter value. Read line by line: some English pages carry YAML that
     does not parse (an unquoted colon in a title), and MkDocs builds them anyway."""
     m = re.search(rf"^{key}:[ \t]*(.*)$", fm, re.M)
-    return m.group(1).strip().strip("'\"") if m else ""
+    if not m:
+        return ""
+    raw = m.group(1).strip()
+    if raw[:1] == "'" and raw[-1:] == "'":
+        return raw[1:-1].replace("''", "'")
+    if raw[:1] == '"' and raw[-1:] == '"':
+        try:
+            return json.loads(raw)
+        except ValueError:
+            return raw[1:-1]
+    return raw
 
 
 def build_front_matter(source_fm: str, translated_fm: str, src_sha: str, level: int) -> str:
@@ -381,6 +431,41 @@ def cmd_submit(args) -> int:
     return 0
 
 
+def verify_written(lang: str, paths: set[str] | None = None) -> list[tuple[str, str]]:
+    """Written translations that fail the current rules against their English source."""
+    bad = []
+    for p in source_files():
+        rel = p.relative_to(DOCS)
+        dest = target_path(lang, rel)
+        name = dest.relative_to(ROOT).as_posix()
+        if not dest.is_file() or (paths is not None and name not in paths):
+            continue
+        _, src_body = split_front_matter(p.read_text(encoding="utf-8").replace("\r\n", "\n"))
+        _, tr_body = split_front_matter(dest.read_text(encoding="utf-8"))
+        try:
+            src_protected = protect(src_body)[0]
+            tr_protected = re.sub(r"(?m)^(#{1,6} .*?)[ \t]*\{#[^}]*\}[ \t]*$", r"\1", protect(tr_body)[0])
+            check_language(lang, PLACEHOLDER_RE.sub("", tr_protected))
+            check_structure(src_protected, tr_protected)
+        except ValueError as e:
+            bad.append((name, str(e)))
+    return bad
+
+
+def cmd_verify(args) -> int:
+    """Print written translations that fail the current rules (move them out of locales/
+    and they are re-sent as missing)."""
+    bad = []
+    for lang in args.lang:
+        for name, reason in verify_written(lang):
+            bad.append(name)
+            print(f"FAIL {name}: {reason}")
+    if args.out:
+        Path(args.out).write_text("\n".join(bad) + ("\n" if bad else ""), encoding="utf-8")
+    print(f"{len(bad)} failing")
+    return 1 if bad else 0
+
+
 def cmd_status(args) -> int:
     b = api("GET", f"{API}/{args.batch}")
     print(json.dumps({k: b.get(k) for k in ("id", "processing_status", "request_counts", "ended_at")}))
@@ -464,11 +549,15 @@ def main() -> int:
         if name == "submit":
             s.add_argument("--limit", type=int)
             s.add_argument("--only", nargs="*")
+    v = sub.add_parser("verify")
+    v.add_argument("--lang", action="append", choices=sorted(LANGS), required=True)
+    v.add_argument("--out")
     for name in ("status", "collect"):
         s = sub.add_parser(name)
         s.add_argument("batch")
     args = ap.parse_args()
-    return {"plan": cmd_plan, "submit": cmd_submit, "status": cmd_status, "collect": cmd_collect}[args.cmd](args)
+    return {"plan": cmd_plan, "submit": cmd_submit, "verify": cmd_verify, "status": cmd_status,
+            "collect": cmd_collect}[args.cmd](args)
 
 
 if __name__ == "__main__":

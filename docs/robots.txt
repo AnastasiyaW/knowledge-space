@@ -137,6 +137,8 @@ Disallow: /ks/
 Sitemap: https://happyin.space/sitemap.xml
 Sitemap: https://happyin.space/ru/sitemap.xml
 Sitemap: https://happyin.space/zh-CN/sitemap.xml
+Sitemap: https://happyin.space/fr/sitemap.xml
+Sitemap: https://happyin.space/de/sitemap.xml
 
 # LLM agent discovery files (multilingual)
 # llms.txt: https://happyin.space/llms.txt

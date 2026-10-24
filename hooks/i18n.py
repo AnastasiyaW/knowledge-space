@@ -16,7 +16,6 @@ import re
 from pathlib import Path, PurePosixPath
 
 _pages: dict[str, set[str]] = {}
-_root_alternate: list[dict] = []
 
 
 def _url(src_uri: str) -> str:
@@ -34,7 +33,7 @@ def on_config(config, **kwargs):
     for loc in config["extra"].get("locales", []):
         docs = root / loc["docs"]
         _pages[loc["lang"]] = {p.relative_to(docs).as_posix() for p in docs.rglob("*.md")}
-    _root_alternate[:] = list(config["extra"].get("alternate") or [])
+    config["extra"]["alternate"] = []
     return config
 
 
@@ -91,6 +90,7 @@ def on_page_context(context, page, config, **kwargs):
 
 
 def on_post_page(output, page, config, **kwargs):
-    # 404 and other pages rendered outside on_page_context keep the plain locale list.
-    config["extra"]["alternate"] = list(_root_alternate)
+    # The 404 page is rendered without page context: it gets no language links rather than
+    # the static root list (relative hrefs, wrong codes; review 2026-10-24).
+    config["extra"]["alternate"] = []
     return output

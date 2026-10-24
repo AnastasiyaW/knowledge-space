@@ -98,6 +98,18 @@ class Translator(unittest.TestCase):
         self.assertEqual(tl.fm_value(front, "source_sha256"), "abc")
 
 
+class CommittedTranslations(unittest.TestCase):
+    def test_every_committed_translation_passes_the_current_checks(self) -> None:
+        import subprocess
+        tracked = set(subprocess.run(["git", "ls-files", "--", "locales"], cwd=ROOT,
+                                     capture_output=True, text=True, check=True).stdout.split())
+        for lang in sorted({p.split("/")[1] for p in tracked}):
+            if lang not in tl.LANGS:
+                continue
+            with self.subTest(lang):
+                self.assertEqual(tl.verify_written(lang, tracked), [])
+
+
 class LanguageLinks(unittest.TestCase):
     def test_source_files_map_to_directory_urls(self) -> None:
         self.assertEqual(i18n._url("index.md"), "")
@@ -111,6 +123,23 @@ class LanguageLinks(unittest.TestCase):
             {"lang": "en", "base": "https://happyin.space/"}, {"lang": "fr", "base": "https://happyin.space/fr/"}]}}
         out = i18n._fallback_links("[x](b.md#top) [y](a.md) [z](https://e.org/c.md)", "kafka/a.md", config)
         self.assertEqual(out, "[x](https://happyin.space/kafka/b/#top) [y](a.md) [z](https://e.org/c.md)")
+
+    def test_wiki_link_to_an_untranslated_page_goes_to_the_english_original(self) -> None:
+        import wikilinks
+        saved = (wikilinks._english_base, set(wikilinks._english_paths))
+        try:
+            wikilinks._english_base = "https://happyin.space/"
+            wikilinks._english_paths.clear()
+            wikilinks._english_paths.update({"algorithms/backtracking.md", "cpp/concurrency.md", "rust/concurrency.md"})
+            out = wikilinks._process_markdown("see [[backtracking]] and [[cpp/concurrency]] or [[concurrency]]",
+                                              "algorithms/index.md")
+            self.assertIn("(https://happyin.space/algorithms/backtracking/)", out)
+            self.assertIn("(https://happyin.space/cpp/concurrency/)", out)
+            self.assertIn("[[concurrency]]", out)  # ambiguous name stays as written
+        finally:
+            wikilinks._english_base = saved[0]
+            wikilinks._english_paths.clear()
+            wikilinks._english_paths.update(saved[1])
 
     def test_every_language_config_inherits_markdown_and_links_pages(self) -> None:
         for config in sorted(ROOT.glob("mkdocs.*.yml")):

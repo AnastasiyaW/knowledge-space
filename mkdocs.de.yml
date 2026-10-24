@@ -135,3 +135,5 @@ hooks:
   - hooks/wikilinks.py
   - hooks/levels.py
   - hooks/faq_schema.py
+  - hooks/validate.py
+  - hooks/link_checker.py

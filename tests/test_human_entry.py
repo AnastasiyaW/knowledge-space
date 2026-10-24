@@ -1,6 +1,7 @@
 """Causal checks for the human-facing entry route."""
 from __future__ import annotations
 
+import re
 import unittest
 from pathlib import Path
 
@@ -20,11 +21,17 @@ class HumanEntry(unittest.TestCase):
         self.assertIn("[For AI Agents](for-llm-agents.md)", guide)
 
     def test_schema_only_advertises_published_languages(self) -> None:
+        # The WebSite schema lists extra.locales, and every listed language must be a branch
+        # that is actually built (its config is in build_all_locales.py).
         template = (ROOT / "overrides" / "main.html").read_text(encoding="utf-8")
+        config = (ROOT / "mkdocs.yml").read_text(encoding="utf-8")
+        build = (ROOT / "scripts" / "build_all_locales.py").read_text(encoding="utf-8")
 
-        self.assertIn('"name": "English", "alternateName": "en"', template)
-        for unpublished_language in ("Chinese", "Korean", "Spanish", "German", "French"):
-            self.assertNotIn(f'"name": "{unpublished_language}"', template)
+        self.assertIn("{%- for loc in config.extra.locales %}", template)
+        self.assertNotIn('"name": "German"', template)
+        for lang in re.findall(r"\{lang: ([\w-]+),", config):
+            if lang != "en":
+                self.assertIn(f'"mkdocs.{lang}.yml"', build)
 
 
 if __name__ == "__main__":
