@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1341+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1342+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -826,6 +826,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Gemini](https://happyin.space/projects/gemini/): Gemini is Google's model family for chat, text, code, images, audio, video, and API integrations.
 - [GeneX](https://happyin.space/projects/genex/): GeneX is a research pipeline for embodied-AI and world-model prototyping. It creates a 360° panorama from one image, generates forward panoramic video, rotates the view, and exports exploration cli...
 - [GenMM](https://happyin.space/projects/genmm/): GenMM — a SIGGRAPH 2023 research codebase for technical animators who need new skeletal-motion sequences from one or a few example clips, not a text-to-motion model.
+- [Genxr Bench: genxr-bench-release — Genxr Bench Release](https://happyin.space/projects/genxr-bench/): GenXR-Bench is an open software engineering benchmark for coding agents that build interactive extended reality (XR) apps on consumer hardware. Its tasks are XR applications, not the usual 2D scrip...
 - [GitHub Store](https://happyin.space/projects/github-store/): Komi Store (formerly GitHub Store) is a Kotlin Multiplatform release browser and installer.
 - [Gitlab: gitlab-critical-vulnerability-patch-19-5-1 — Gitlab Critical Vulnerability Patch 19 5 1](https://happyin.space/projects/gitlab/): GitLab 19.5.1 is an emergency security release for self-managed GitLab, the code-collaboration and DevOps platform. It fixes an unauthenticated remote code execution flaw in the regular expression ...
 - [GLM-5.2-NVFP4](https://happyin.space/projects/glm-5-2-nvfp4/): GLM-5.2-NVFP4 is NVIDIA Model Optimizer’s NVFP4 checkpoint of Z.AI GLM-5.2 for self-hosting agents, chatbots, RAG, coding, and reasoning.
