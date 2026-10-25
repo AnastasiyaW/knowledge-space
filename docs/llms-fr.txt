@@ -1,6 +1,6 @@
 # Base de connaissances techniques complète - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1340+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1341+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1066,6 +1066,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Sol-Attn](https://happyin.space/projects/sol-attn/): Sol-Attn — NVIDIA’s inference-time block-sparse attention method for pretrained diffusion transformers.
 - [Sonilo](https://happyin.space/projects/sonilo/): Sonilo is an API-first audio tool for editors, creative-product teams, and developers who need music or sound tied to a cut.
 - [Sora](https://happyin.space/projects/sora/): Sora is OpenAI's model family for generating, extending and editing short video with audio from text or image prompts.
+- [Spark-X2.6-4B: spark-x-model-line — Spark X Model Line](https://happyin.space/projects/spark-x2-6-4b/): Spark-X2.6-4B is a 4-billion parameter open-weight language model for local and edge inference. It is an on-device alternative to Qwen2.5-3B or Gemma-2-2B. It is meant for on-device agent workflows...
 - [SpatialBoost](https://happyin.space/projects/spatialboost/): SpatialBoost — метод для исследователей, которые хотят повысить пространственное понимание готового vision encoder без обязательного перехода на 3D-датасет. Возможности: извлечение геометрических с...
 - [SpatialClaw](https://happyin.space/projects/spatialclaw/): SpatialClaw — training-free фреймворк NVIDIA и KAIST для команд, проверяющих VLM на 3D, multi-view, video и 4D пространственных задачах; агент пишет ячейки Python в persistent Jupyter kernel, вызыв...
 - [Omma](https://happyin.space/projects/spline-omma/): Omma is a Spline product for designers and developers who build interactive web experiences without separate 3D, code, and media workflows.
