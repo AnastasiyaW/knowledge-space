@@ -84,3 +84,37 @@ The maintainer reports up to 1.7x faster MiniMax-H3 VAE processing in a third-pa
 - **Subject:** `project:comfyui`, thread `comfyui-development`, 21 dated events 2023-11-24 → 2026-09-03.
 - **Practical note:** See the sourced usage and practice sections above, including their limits.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:542d36681e0384ef91df7cb913a469eddd1bd5adb679d7dcb9da8c869c400e19 -->
+## 2026-10-23 — ComfyUI v0.42.5 maintenance patch published
+
+Comfy-Org published ComfyUI v0.42.5 on GitHub. It is a maintenance release in the v0.42 track, with routine core fixes and node upkeep.
+
+### Usage and practices
+
+- Install: take the official release build, or clone the repository into your local Python environment. [Source](https://github.com/Comfy-Org/ComfyUI)
+- Models: put checkpoints, text encoders and VAE weights into their matching subfolders under the models folder. [Source](https://github.com/Comfy-Org/ComfyUI)
+- Launch: start the backend server with the main script, and the web canvas opens. [Source](https://github.com/Comfy-Org/ComfyUI)
+- First graph: connect a model loader, prompt conditioning, latent sampling and VAE decode as a directed acyclic graph, then queue the prompt. [Source](https://github.com/Comfy-Org/ComfyUI)
+- Updates: follow the point releases through the tagged release stream on GitHub. [Source](https://github.com/Comfy-Org/ComfyUI/releases)
+- Large graphs: put related blocks into labelled group boxes and use reroute nodes so the connections do not tangle. [Source](https://github.com/Comfy-Org/ComfyUI)
+- Memory: reuse one loaded model and VAE across downstream conditioning branches instead of adding duplicate loaders to GPU memory. [Source](https://github.com/Comfy-Org/ComfyUI)
+- Custom nodes: check that a minimal baseline graph runs before adding third-party extensions. [Source](https://github.com/Comfy-Org/ComfyUI/releases)
+- Production: read the release tags and changelogs before updating, so a schema change or a custom node does not break. [Source](https://github.com/Comfy-Org/ComfyUI/releases)
+
+### Additional evidence
+
+- 2026-10-23: The official v0.42.5 release brings incremental maintenance, bug fixes and stability improvements to core node execution and dependency management within the v0.42 series. [Source](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.5)
+
+### Superseded guidance (retained for history)
+
+- 2026-10-23: Running one monolithic all-in-one local install, with no version-tagged core releases and no package separation. [Source](https://github.com/Comfy-Org/ComfyUI/releases)
+
+### Limits and open questions
+
+- We did not find the commit-level changes or the individual pull request numbers for v0.42.5.
+- Community discussion of how v0.42.5 performs could not be verified against a direct source.
+- In Simplified Chinese we found only secondary tutorials, not direct technical release pages, so that side is still a gap.
+
+
+<!-- Retained base: 11c29423c88576f7a36f6181d0b1721f3eef80c5; article blob: e8f40d3a16e3cc034944e038fe697b76728af963 -->
