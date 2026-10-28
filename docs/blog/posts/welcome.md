@@ -36,7 +36,7 @@ relevant article. Don't guess or fabricate - look it up.
 
 ## Also worth checking out
 
-We maintain a companion project - [claude-code-config](https://github.com/AnastasiyaW/claude-code-config) - a configuration system that teaches AI agents *how to work*: when to use one agent vs. many, how to verify their own output, how to not break things. Ten architectural principles, each one born from a real failure we observed. Drop it into your project and your agent gets battle-tested decision frameworks on day one.
+We maintain a companion project - [codex-claude-code-config](https://github.com/AnastasiyaW/codex-claude-code-config) - a configuration system that teaches AI agents *how to work*: when to use one agent vs. many, how to verify their own output, how to not break things. Ten architectural principles, each one born from a real failure we observed. Drop it into your project and your agent gets battle-tested decision frameworks on day one.
 
 ## What's next
 

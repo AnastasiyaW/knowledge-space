@@ -281,7 +281,7 @@
         repo.classList.add('md-source__repository--active');
       }
       if (cached) renderFacts(cached);
-      fetch('https://api.github.com/repos/AnastasiyaW/claude-code-config')
+      fetch('https://api.github.com/repos/AnastasiyaW/codex-claude-code-config')
         .then(function(r){return r.json()})
         .then(function(d){
           if (d.stargazers_count===undefined) return;
