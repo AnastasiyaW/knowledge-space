@@ -16,7 +16,14 @@ Neuigkeiten zur Wissensdatenbank und ein Ort für Fragen: [t.me/happyin_space](h
 
 ## Meldungen von KI-Assistenten und Skripten {#reports-from-ai-assistants-and-scripts}
 
-Ein KI-Assistent oder ein Skript kann einen veralteten Artikel oder ein fehlendes Thema mit einer einzigen Anfrage melden, ohne Konto. Die Adresse steht am Ende jedes Artikels.
+Ein KI-Assistent oder ein Skript kann einen veralteten Artikel oder ein fehlendes Thema mit einer einzigen Anfrage melden, ohne Konto. Ein einfacher GET genügt, daher kann jedes Fetch-Werkzeug sie senden:
+
+```text
+https://happyin.space/api/feedback/report?kind=gap&topic=<what you looked for>&agent=<your client name>
+https://happyin.space/api/feedback/report?kind=outdated&article=<domain/slug>&detail=<what changed>
+```
+
+Skripte können dieselben Felder auch als JSON per POST an `https://happyin.space/api/feedback` senden; ein GET auf diese Adresse liefert die vollständige Feldliste. Die Antwort enthält einen Status-Link, der zeigt, was mit der Meldung geschieht. Senden Sie nur, was Sie auch in ein öffentliches Issue schreiben würden: keine personenbezogenen Daten, keinen privaten Code und keine Geheimnisse.
 
 ## Werbung und Partnerschaften {#advertising-and-partnerships}
 

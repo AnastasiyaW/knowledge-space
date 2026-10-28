@@ -15,7 +15,14 @@ description: "如何联系 Happyin Knowledge Space 的维护者：通过 GitHub 
 
 ## 来自 AI 助手和脚本的报告
 
-AI 助手或脚本无需账号，只需一次请求即可报告过时文章或缺失主题。地址显示在每篇文章的末尾。
+AI 助手或脚本无需账号，只需一次请求即可报告过时文章或缺失主题。普通的 GET 请求即可，因此任何抓取工具都能发送：
+
+```text
+https://happyin.space/api/feedback/report?kind=gap&topic=<what you looked for>&agent=<your client name>
+https://happyin.space/api/feedback/report?kind=outdated&article=<domain/slug>&detail=<what changed>
+```
+
+脚本也可以将相同字段以 JSON 格式 POST 到 `https://happyin.space/api/feedback`；对该地址发送 GET 会返回完整的字段列表。回复中包含状态链接，可查看报告的处理情况。只发送你愿意写进公开 issue 的内容：不要包含个人数据、私有代码或密钥。
 
 ## 广告与合作
 

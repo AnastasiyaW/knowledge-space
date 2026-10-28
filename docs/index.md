@@ -183,7 +183,7 @@ Want to contribute? See the [Contributing guide](contributing/index.md).
 
 Skills, architectural patterns, and best practices for Claude Code:
 
-[:fontawesome-brands-github: **claude-code-config**](https://github.com/AnastasiyaW/claude-code-config){ .md-button }
+[:fontawesome-brands-github: **codex-claude-code-config**](https://github.com/AnastasiyaW/codex-claude-code-config){ .md-button }
 
 ## Blog
 

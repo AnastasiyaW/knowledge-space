@@ -64,12 +64,23 @@ def query(sql: str, params: list | None = None) -> list[dict]:
     return payload["result"][0]["results"]
 
 
+def subject_of(row: dict) -> tuple[tuple, str]:
+    """Grouping key and display subject. A finding needs a topic but not an article, so it is keyed by both."""
+    topic = " ".join((row["topic"] or "").lower().split())
+    if row["kind"] == "gap":
+        return ("gap", topic), row["topic"]
+    if row["kind"] == "finding":
+        shown = f"{row['topic']} ({row['article']})" if row["article"] else row["topic"]
+        return ("finding", row["article"], topic), shown
+    return (row["kind"], row["article"]), row["article"]
+
+
 def group(rows: list[dict]) -> list[dict]:
-    """One queue item per subject: gaps by topic, the rest by (kind, article)."""
+    """One queue item per subject: gaps by topic, findings by (article, topic), the rest by (kind, article)."""
     items: dict[tuple, dict] = {}
     for row in rows:
-        key = ("gap", " ".join(row["topic"].lower().split())) if row["kind"] == "gap" else (row["kind"], row["article"])
-        item = items.setdefault(key, {"kind": row["kind"], "subject": row["topic"] if row["kind"] == "gap" else row["article"],
+        key, subject = subject_of(row)
+        item = items.setdefault(key, {"kind": row["kind"], "subject": subject,
                                       "ids": [], "clients": set(), "agents": set(), "details": [], "sources": []})
         item["ids"].append(row["id"])
         item["clients"].add(row["client_hash"])

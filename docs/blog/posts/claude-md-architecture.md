@@ -124,17 +124,17 @@ exclude-newer = "7 days"
 
 ## 37 papers behind the config
 
-Many of the rules came not from personal experience but from academic research. [37 arxiv papers](https://github.com/AnastasiyaW/claude-code-config/blob/main/principles/README.md), processed into engineering principles. Here are the ones that changed my workflow the most:
+Many of the rules came not from personal experience but from academic research. [37 arxiv papers](https://github.com/AnastasiyaW/codex-claude-code-config/blob/main/principles/README.md), processed into engineering principles. Here are the ones that changed my workflow the most:
 
-**[Proof Loop](https://github.com/AnastasiyaW/claude-code-config/blob/main/principles/02-proof-loop.md).** The agent says "tests passed" - you check, tests didn't pass. Proof Loop prohibits the agent from signing off its own work. You need artifact evidence: test output, a verdict from a verifier running in a fresh session that didn't see the build process. [Source](https://arxiv.org/abs/2603.10165).
+**[Proof Loop](https://github.com/AnastasiyaW/codex-claude-code-config/blob/main/principles/02-proof-loop.md).** The agent says "tests passed" - you check, tests didn't pass. Proof Loop prohibits the agent from signing off its own work. You need artifact evidence: test output, a verdict from a verifier running in a fresh session that didn't see the build process. [Source](https://arxiv.org/abs/2603.10165).
 
-**[Structured Reasoning](https://github.com/AnastasiyaW/claude-code-config/blob/main/principles/05-structured-reasoning.md).** Instead of free-form "well, maybe it's this, or maybe that" - a format: what we know for certain from code and logs → step-by-step trace → what follows → which hypotheses were tested and discarded. On real patches, accuracy went from 78% to 93%. [Source](https://arxiv.org/abs/2603.01896).
+**[Structured Reasoning](https://github.com/AnastasiyaW/codex-claude-code-config/blob/main/principles/05-structured-reasoning.md).** Instead of free-form "well, maybe it's this, or maybe that" - a format: what we know for certain from code and logs → step-by-step trace → what follows → which hypotheses were tested and discarded. On real patches, accuracy went from 78% to 93%. [Source](https://arxiv.org/abs/2603.01896).
 
-**[Deterministic Orchestration](https://github.com/AnastasiyaW/claude-code-config/blob/main/principles/04-deterministic-orchestration.md).** If a task is deterministic - tests, linters, formatters - it goes through a shell script. Models are bad at counting, lose loop counters, mix up conditions in branches. Scripts don't.
+**[Deterministic Orchestration](https://github.com/AnastasiyaW/codex-claude-code-config/blob/main/principles/04-deterministic-orchestration.md).** If a task is deterministic - tests, linters, formatters - it goes through a shell script. Models are bad at counting, lose loop counters, mix up conditions in branches. Scripts don't.
 
-**[Red Lines](https://github.com/AnastasiyaW/claude-code-config/blob/main/principles/15-red-lines.md).** Normal rules the agent can interpret "creatively." Red Lines are absolute prohibitions without exceptions. "No deletion without confirmation." "No changing production configs without understanding them." Each one is tied to an incident. Pattern from Chinese engineering culture (红线).
+**[Red Lines](https://github.com/AnastasiyaW/codex-claude-code-config/blob/main/principles/15-red-lines.md).** Normal rules the agent can interpret "creatively." Red Lines are absolute prohibitions without exceptions. "No deletion without confirmation." "No changing production configs without understanding them." Each one is tied to an incident. Pattern from Chinese engineering culture (红线).
 
-The other principles - [generator-evaluator](https://github.com/AnastasiyaW/claude-code-config/blob/main/principles/01-harness-design.md), [autoresearch](https://github.com/AnastasiyaW/claude-code-config/blob/main/principles/03-autoresearch.md), [multi-agent decomposition](https://github.com/AnastasiyaW/claude-code-config/blob/main/principles/06-multi-agent-decomposition.md), [codified context](https://github.com/AnastasiyaW/claude-code-config/blob/main/principles/07-codified-context.md), [agent security](https://github.com/AnastasiyaW/claude-code-config/blob/main/principles/10-agent-security.md), [documentation integrity](https://github.com/AnastasiyaW/claude-code-config/blob/main/principles/11-documentation-integrity.md), and 7 more - are documented in the [repo](https://github.com/AnastasiyaW/claude-code-config/blob/main/principles/README.md).
+The other principles - [generator-evaluator](https://github.com/AnastasiyaW/codex-claude-code-config/blob/main/principles/01-harness-design.md), [autoresearch](https://github.com/AnastasiyaW/codex-claude-code-config/blob/main/principles/03-autoresearch.md), [multi-agent decomposition](https://github.com/AnastasiyaW/codex-claude-code-config/blob/main/principles/06-multi-agent-decomposition.md), [codified context](https://github.com/AnastasiyaW/codex-claude-code-config/blob/main/principles/07-codified-context.md), [agent security](https://github.com/AnastasiyaW/codex-claude-code-config/blob/main/principles/10-agent-security.md), [documentation integrity](https://github.com/AnastasiyaW/codex-claude-code-config/blob/main/principles/11-documentation-integrity.md), and 7 more - are documented in the [repo](https://github.com/AnastasiyaW/codex-claude-code-config/blob/main/principles/README.md).
 
 ## The numbers
 
@@ -152,14 +152,44 @@ I'm not sure 6 layers is the minimum. Maybe I overengineered. But over a month, 
 
 One of the principles (Assumption Testing) states it directly: every component encodes an assumption about what the model can't do on its own. Models improve. Remove components and measure - maybe some layers are no longer needed.
 
+## What changed since April (updated 28 October 2026)
+
+The numbers above are from April. The config kept growing, and a few things are worth knowing before you copy it.
+
+**New name.** The repo is now [codex-claude-code-config](https://github.com/AnastasiyaW/codex-claude-code-config). It serves both Claude Code and Codex: one shared `AGENTS.md` per project instead of a separate file per tool, and the same hooks for both. Old links redirect, but please update your bookmarks.
+
+**Newest: tests that must prove they can fail (28 October).** Merged in [pull request #23](https://github.com/AnastasiyaW/codex-claude-code-config/pull/23).
+
+- A local copy into the temp folder no longer counts as a file transfer. The transfer guard used to stop a plain backup copy and ask for a transfer contract. Now it lets it through. A copy to a remote host, a move, or a path it cannot resolve is still checked.
+- The agent's own session scratchpad no longer needs a folder marker file. Look-alike folders outside it are still checked.
+- New `scripts/mutation_probe.py`, a small mutation tester of our own. It breaks the code one small step at a time: flips a comparison, swaps `and` and `or`, drops a `not`, makes a function return nothing. Then it runs the test. If the test still passes, the test proves less than it claims. The idea comes from [unclebob/mutator](https://github.com/unclebob/mutator); the code is written from scratch, not copied in.
+- Three habits from [unclebob/ub-mode](https://github.com/unclebob/ub-mode). **Attack the premise:** after two failed fixes that rest on the same assumption, stop fixing and test the assumption. **The null-return check:** if the function returned nothing, would the test notice? **Build the lever:** when repetitive work is not obvious at a glance, do one unit by hand first, then write the tool so its output matches that hand-made unit exactly.
+
+**Safety: from rules to guards.** In April most protection was written as rules. Now most of it runs as hooks that block the action:
+
+- separate guards for catastrophic shell commands, destructive git commands, and commands that would cut the agent off from its own server;
+- a second confirmation layer for any deletion, and a check afterwards that the thing is really gone;
+- a guard against writing secrets into world-readable temp files (October);
+- a billing-safety rule: a stray `ANTHROPIC_API_KEY` in the environment can silently move a subscription session to paid API usage.
+
+**Finishing the job.** Agents like to call a bug "pre-existing" or "out of scope" and stop. A rule and a Stop hook now allow only five named reasons to defer, and each needs a written ticket. Long projects get a `feature_list.json` with one feature in progress at a time. A feature is marked done only with evidence.
+
+**Checks that can fail.** A check that cannot go red proves nothing. Most newer scripts report three outcomes: passed, failed, and "not checked", each with its own exit code. Each ships a self-test with cases that must fail. Changes to the config itself go through a small pilot with frozen test cases: one change at a time, and it is kept only if it measurably helps.
+
+**Less always-on text.** The rule set went from 43 files to 24. Situational guidance moved into skills that load only when needed. A linter checks every skill description says when to use it and when not to. When I correct the agent, the session is queued, and the lessons become new rules only after I approve them. An early test showed why the detection is done by a model: a keyword detector found far fewer real corrections than the model did.
+
+**Readable output.** One idea keeps one word, and sentences stay short. A script checks agent output against a project glossary.
+
+The full list is in [UPDATES.md](https://github.com/AnastasiyaW/codex-claude-code-config/blob/main/UPDATES.md).
+
 ## Try it
 
 Paste into Claude Code:
 
 ```text
-https://github.com/AnastasiyaW/claude-code-config - look through everything, choose what fits my project, set it up
+https://github.com/AnastasiyaW/codex-claude-code-config - look through everything, choose what fits my project, set it up
 ```
 
 Start small: Supply Chain Defense (one line in `.npmrc`) + Deterministic Orchestration (tests through scripts) + Structured Reasoning (debug format). Add more as needed.
 
-All MIT licensed. [github.com/AnastasiyaW/claude-code-config](https://github.com/AnastasiyaW/claude-code-config)
+All MIT licensed. [github.com/AnastasiyaW/codex-claude-code-config](https://github.com/AnastasiyaW/codex-claude-code-config)
