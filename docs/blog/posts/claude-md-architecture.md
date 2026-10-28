@@ -158,12 +158,12 @@ The numbers above are from April. The config kept growing, and a few things are 
 
 **New name.** The repo is now [codex-claude-code-config](https://github.com/AnastasiyaW/codex-claude-code-config). It serves both Claude Code and Codex: one shared `AGENTS.md` per project instead of a separate file per tool, and the same hooks for both. Old links redirect, but please update your bookmarks.
 
-**Newest: tests that must prove they can fail (28 October, in review).** This change sits on the `fix/temp-backup-not-a-transfer-clean` branch and is not merged yet.
+**Newest: tests that must prove they can fail (28 October).** Merged in [pull request #23](https://github.com/AnastasiyaW/codex-claude-code-config/pull/23).
 
 - A local copy into the temp folder no longer counts as a file transfer. The transfer guard used to stop a plain backup copy and ask for a transfer contract. Now it lets it through. A copy to a remote host, a move, or a path it cannot resolve is still checked.
 - The agent's own session scratchpad no longer needs a folder marker file. Look-alike folders outside it are still checked.
 - New `scripts/mutation_probe.py`, a small mutation tester of our own. It breaks the code one small step at a time: flips a comparison, swaps `and` and `or`, drops a `not`, makes a function return nothing. Then it runs the test. If the test still passes, the test proves less than it claims. The idea comes from [unclebob/mutator](https://github.com/unclebob/mutator); the code is written from scratch, not copied in.
-- Three habits from [unclebob/ub-mode](https://github.com/unclebob/ub-mode). **Attack the premise:** after two failed fixes that rest on the same assumption, stop fixing and test the assumption. **The null-return check:** if the function returned nothing, would the test notice? **Build the lever:** when the same manual check keeps coming back, build a small tool that does it.
+- Three habits from [unclebob/ub-mode](https://github.com/unclebob/ub-mode). **Attack the premise:** after two failed fixes that rest on the same assumption, stop fixing and test the assumption. **The null-return check:** if the function returned nothing, would the test notice? **Build the lever:** when repetitive work is not obvious at a glance, do one unit by hand first, then write the tool so its output matches that hand-made unit exactly.
 
 **Safety: from rules to guards.** In April most protection was written as rules. Now most of it runs as hooks that block the action:
 
