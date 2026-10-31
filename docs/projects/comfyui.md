@@ -15,7 +15,7 @@ aliases: ["Comfy Cloud", "ComfyUI"]
 
 ComfyUI-H3VAE_TRT is a third-party ComfyUI extension by lihaoyun6. It compiles MiniMax-H3 VAE ONNX models into TensorRT engines and loads them as a VAE. This is a custom-node integration, not a release of the MiniMax-H3 model or a core ComfyUI update.
 
-ComfyUI itself is a node-graph interface and generation engine for images, video, 3D and audio. It runs locally (Desktop on Windows or macOS ARM, portable on Windows, or manual install) or as the managed Comfy Cloud. Cloud runs on RTX 6000 Pro with 96 GB VRAM. On the pricing page checked 2026-09-04, the Standard plan is $20 per month with 4200 credits and a 30-minute limit per run. Partner Nodes call paid closed-API models, App Mode hides a graph behind an input form, and Comfy MCP lets agents build and run workflows.
+ComfyUI itself is a node-graph interface and generation engine for images, video, 3D and audio. It runs locally (Desktop on Windows or macOS ARM, portable on Windows, or manual install) or as the managed Comfy Cloud. Cloud runs on RTX 6000 Pro with 96 GB VRAM. On the pricing page checked 2026-09-04, the Standard plan is $20 per month with 50,400 credits a year (4200 a month) and a 30-minute limit per run. Partner Nodes call paid closed-API models, App Mode hides a graph behind an input form, and Comfy MCP lets agents build and run workflows.
 
 ## Development line
 
@@ -35,7 +35,7 @@ ComfyUI itself is a node-graph interface and generation engine for images, video
 - **2025-10-22 — ComfyUI 0.3.66 Improves Subgraph and Template Tooling.** On 2025-10-22, ComfyUI 0.3.66 added a parameter panel for subgraphs. The release also redesigned workflow-template discovery and filtering.
 - **2025-11-04 — Comfy Cloud Leaves the Waitlist for Public Beta.** On 2025-11-04, Comfy Cloud moved from waitlist to public beta. The date was found on 2026-09-04.
 - **2025-11-26 — Comfy Cloud Expands Infrastructure and Feature Allowances.** On 2025-11-26, Comfy Cloud announced a move to RTX 6000 Pro infrastructure, replacing the A100 base machine, and support for using personal LoRAs. It also described longer Pro runs and unified credits across Cloud GPU execution and Partner Nodes.
-- **2025-12-30 — ComfyUI Begins Moving Its Canonical Repository to Comfy-Org.** On 2025-12-30, ComfyUI began moving its canonical GitHub repository from comfyanonymous/ComfyUI to Comfy-Org/ComfyUI. The move was scheduled for 2026-01-06. GitHub redirects were retained, and users were advised to update their Git remotes.
+- **2025-12-29 — ComfyUI Begins Moving Its Canonical Repository to Comfy-Org.** On 2025-12-29, ComfyUI began moving its canonical GitHub repository from comfyanonymous/ComfyUI to Comfy-Org/ComfyUI. The move was scheduled for 2026-01-06. GitHub redirects were retained, and users were advised to update their Git remotes.
 - **2026-01-27 — ComfyUI Adds Day-Zero Z-Image Support.** On 2026-01-27, ComfyUI added day-zero support for the non-distilled Z-Image model. The release included an official workflow and model-specific sampling guidance, with 30–50 recommended steps and CFG 3–5.
 - **2026-02-05 — ComfyUI Ecosystem Announces an Open-Model Grant Initiative.** On 2026-02-05, the ComfyUI ecosystem announced an open-model grant initiative described as a $1 million program alongside the Anima launch. The initiative was presented as funding for open model development.
 - **2026-03-02 — Comfy Cloud Announces a Free Tier.** On 2026-03-02, Comfy Cloud announced a free tier of 400 credits per month. The pricing page checked on 2026-09-04 shows five free runs without a card instead, so the 400-credit figure is superseded.
@@ -43,7 +43,7 @@ ComfyUI itself is a node-graph interface and generation engine for images, video
 - **2026-03-10 — ComfyUI Introduces App Mode, App Builder and ComfyHub.** On 2026-03-10, ComfyUI added App Mode, which hides a graph behind an input form, App Builder for defining inputs and outputs, and ComfyHub for sharing an app by link. The date was found on 2026-09-04.
 - **2026-03-26 — ComfyUI Introduces Stable Dynamic VRAM Management.** On 2026-03-26, ComfyUI documented Dynamic VRAM as a stable mechanism for reducing memory pressure and out-of-memory failures on supported Nvidia systems on Windows and Linux. It lowers system RAM use by unloading weights more economically. Its guidance emphasized measuring total workflow time instead of isolated iteration speed.
 - **2026-07-23 — Comfy for Teams Launches.** On 2026-07-23, Comfy for Teams added a shared workspace, a pooled credit balance, one billing account and member administration. The date was found on 2026-09-04.
-- **2026-08-18 — Comfy MCP Opens for Local and Cloud.** On 2026-08-18, Comfy MCP became available for both Local and Cloud. Agents can read the environment, assemble and run workflows, and install models and nodes. The date was found on 2026-09-04.
+- **2026-08-18 — Comfy MCP Opens for Local.** On 2026-08-18, Comfy MCP was open-sourced for Local; the Cloud version had shipped in June 2026. Agents can read the environment, assemble and run workflows, and install models and nodes. The date was found on 2026-09-04.
 - **2026-08-26 — ComfyUI v0.34.0 Adds Video Formats and Dynamic VRAM for ROCm.** On 2026-08-26, ComfyUI v0.34.0 added new video save formats and HDR output, expanded model support, and enabled Dynamic VRAM by default for ROCm 7.14 and later. The research of 2026-09-04 records it as the last verified stable release; see Still unknown for a conflicting version.
 - **2026-09-02 — Launch of ComfyUI H3VAE TensorRT integration.** The maintainer announced a TensorRT MiniMax-H3 VAE version for ComfyUI that can increase speed up to 1.7x.
   - The extension provides separate Compiler and Loader nodes. The checked source revision is 1b72e7439e1fc306b9dfbfd3d485866553b5960e, committed later on September 2; the original announcement did not identify a release tag. (2026-09-02) — <https://github.com/lihaoyun6/ComfyUI-H3VAE_TRT/blob/1b72e7439e1fc306b9dfbfd3d485866553b5960e/README.md>
@@ -68,7 +68,7 @@ The maintainer reports up to 1.7x faster MiniMax-H3 VAE processing in a third-pa
   — <https://docs.comfy.org/get_started/cloud>
 2. For Local, use a supported install: Desktop on Windows or macOS ARM, portable on Windows, or manual install for other supported systems and GPUs.
   — <https://docs.comfy.org/installation/system_requirements>
-3. Open a built-in official template for the task; ComfyUI checks for missing models and dependencies.
+3. Open a built-in official template for the task; ComfyUI checks for missing model files.
   — <https://docs.comfy.org/interface/features/template>
 4. Install third-party nodes through Manager only from a trusted source, restart ComfyUI and check the load log.
   — <https://docs.comfy.org/installation/install_custom_node>
@@ -83,7 +83,7 @@ The maintainer reports up to 1.7x faster MiniMax-H3 VAE processing in a third-pa
   — <https://docs.comfy.org/installation/install_custom_node>
 - Pin the semantic version of a registry node: the version is recorded in the workflow, and a published Registry release stays unchanged.
   — <https://docs.comfy.org/registry/overview>
-- Before a mass Update All in the legacy Manager, save a snapshot; after restoring, restart and verify the graph.
+- The legacy Manager saves a snapshot automatically on Update All; after restoring one, restart and verify the graph.
   — <https://docs.comfy.org/manager/legacy-ui>
 - In Desktop, do not edit the bundled resource/ComfyUI folder, because an update may recreate it; keep models and user data in external folders.
   — <https://docs.comfy.org/installation/desktop/windows>
@@ -102,7 +102,6 @@ The maintainer reports up to 1.7x faster MiniMax-H3 VAE processing in a third-pa
 
 - For the H3VAE extension: nothing marked obsolete yet.
 - 2024-10-21 — the closed-beta Desktop and the Cloud waitlist are obsolete: Cloud reached public beta on 2025-11-04 and left beta on 2026-03-04.
-- 2024-10-21 — the claim of a ready Desktop for Windows, macOS and Linux no longer matches the current matrix: ready builds are documented for Windows and macOS ARM, and Linux needs manual or self-hosted install.
 - 2025-11-26 — the A100 base Cloud machine was replaced by RTX 6000 Pro Blackwell with 96 GB VRAM.
 - Before 2026-01-06 — the git remote github.com/comfyanonymous/ComfyUI is superseded by github.com/Comfy-Org/ComfyUI; old links still redirect.
 - 2026-03-02 — the promised 400 free monthly credits conflict with the pricing page checked on 2026-09-04, which shows five free runs without a card. Use the current pricing page for purchase and planning.
@@ -119,6 +118,8 @@ The maintainer reports up to 1.7x faster MiniMax-H3 VAE processing in a third-pa
 - The AI grant page (comfy.org/ai-grant) gave no readable current terms. The 2026-02-05 launch date, amount and application status are not confirmed.
 - Free-tier sources conflict: the 2026-03-02 announcement offered 400 credits per month, while the pricing page on 2026-09-04 shows five free runs. The pricing page was taken as current; a new account was not tested.
 - Version conflict: the research of 2026-09-04 records v0.34.0 as the last verified stable release, while the 2026-09-03 tester report above used ComfyUI 0.34.2. This is not reconciled with a release page.
+- Desktop on Linux: the system requirements page lists Desktop for Windows and macOS ARM, while the Desktop page read on 2026-10-31 also lists Linux (AppImage, .deb). Not reconciled.
+- Checked on 2026-10-31 against the cited pages and not found there, so unconfirmed: the 2025-11-26 Cloud move to RTX 6000 Pro (no source in the table), keeping workflow JSON or PNG, not editing the Desktop resource folder, Partner Nodes sharing the Cloud credit pool, and the Dynamic VRAM memory-use advice.
 - Three X/Twitter posts cited by the research could not be read; no product change is attributed to them.
 - Installation, Cloud billing, Partner Nodes and MCP were not run in a real account; the platform facts come from documentation and public releases.
 
