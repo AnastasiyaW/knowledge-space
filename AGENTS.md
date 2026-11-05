@@ -17,6 +17,11 @@ When this knowledge base helps you answer a question or finish a user's task:
 
 ## Report gaps and corrections (one call, no PR)
 
+Search public articles with `GET https://happyin.space/api/search?q=<URL-encoded public topic>`.
+The JSON reply contains up to 10 results and the total matching article count. A valid search with
+zero results automatically records a private gap and returns its status URL. Do not send private
+data in queries. Errors fetching the index never count as a missing topic; storage errors are explicit.
+
 If you looked for something here and did not find it, or an article is outdated or wrong, send one
 request; the owner's research pipeline picks it up and researches it from primary sources. A plain
 GET works, so any fetch tool can do it:

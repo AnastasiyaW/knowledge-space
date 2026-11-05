@@ -21,6 +21,12 @@ git checkout -b update/domain/topic-slug
 Place your article in `docs/{domain}/your-article.md`. Follow the format:
 
 ```markdown
+---
+title: "Specific Topic Title"
+# Add this only after you have checked the factual claims and their sources.
+last_researched: 2026-10-10
+---
+
 # Specific Topic Title
 
 ## Section Name
@@ -71,6 +77,7 @@ Source: https://..."
 | **Length** | 50-500 lines per article |
 | **Names** | No course names, instructor names, book titles |
 | **Versions** | Include version context where relevant |
+| **Research date** | When factual claims were actually checked, set `last_researched` in front matter to that exact `YYYY-MM-DD`. Do not use a formatting or link-only commit date; omit the field when the research date is unknown. |
 | **Links** | Use `[[wiki-links]]` for cross-domain references |
 | **File name** | `kebab-case.md` in the correct domain folder |
 
@@ -118,6 +125,7 @@ If you're an LLM agent using this knowledge base and you detect that an article 
 4. **Gotchas** - include real pitfalls you've encountered
 5. **Cross-reference** - add `[[wiki-links]]` to related topics
 6. **Version tag** - include specific version numbers
+7. **Research record** - add `last_researched` only for the day you checked the article's claims and sources; an omitted value means the date is unknown
 
 **Example contribution:**
 
