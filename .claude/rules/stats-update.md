@@ -14,8 +14,10 @@ python scripts/sync_stats.py
 python hooks/generate_llms_txt.py
 ```
 
-`sync_indexes.py` additionally appends any article linked from no index to its domain
-MOC and to the browse page, so a new article is never orphaned.
+`sync_indexes.py` additionally appends the articles this branch added or changed that no
+index links yet to their domain MOC and to the browse page, so a new article is never
+orphaned; other domains' indexes are left alone. `--all` sweeps every orphan on disk,
+`--check` writes nothing.
 
 ## Manual update required (fallback - the scripts above already cover all of these)
 - `README.md` - "XXX+ articles | YY domains | ZZZZ+ cross-references"
@@ -32,6 +34,7 @@ MOC and to the browse page, so a new article is never orphaned.
 - `hooks/stats.py` - DOMAIN_META dict (add new domain)
 - `hooks/validate.py` - VALID_DOMAINS set (add new domain)
 - `docs/javascripts/graph.js` - links array (add connections for new domain)
+- `scripts/sync_indexes.py` - `NEW_BLOCK_STYLE` entry, or a block on the browse page by hand
 - `CONTRIBUTING.md` - domains table
 - `.claude/rules/article-rules.md` - domain folders list
 
