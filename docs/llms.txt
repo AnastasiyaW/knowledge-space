@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1346+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1347+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1040,6 +1040,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [RealityScan — Mobile Photogrammetry Launch and Release](https://happyin.space/projects/realityscan/): RealityScan — инструмент для создателей 3D-ассетов: мобильное приложение снимает объект серией фото и обрабатывает модель в облаке, настольная версия работает с фото и лазерными сканами. Мобильная ...
 - [RealRestorer](https://happyin.space/projects/realrestorer/): RealRestorer is a Step1X-Edit fine-tune for image restoration rather than general image generation.
 - [Reflection 70B](https://happyin.space/projects/reflection-70b/): Reflection 70B is a downloadable Llama 3.1 70B Instruct fine-tune, now hosted as Reflection Llama-3.1 70B.
+- [RelayVSR: relayvsr-release — RelayVSR Release](https://happyin.space/projects/relayvsr/): RelayVSR is an open-source framework for video super-resolution and enhancement. It is for researchers and video practitioners who want real-world restoration without the full latency of per-frame ...
 - [ResearchStudio](https://happyin.space/projects/researchstudio/): ResearchStudio is an MIT-licensed Claude Code and Codex skill suite for two research stages.
 - [Reve](https://happyin.space/projects/reve/): Reve is a direct alternative to Midjourney and Adobe Firefly for browser image generation and editing.
 - [RiGS — Repository reference](https://happyin.space/projects/rigs/): RiGS provides the codebase for Rigid-aware 4D Gaussian Splatting:
