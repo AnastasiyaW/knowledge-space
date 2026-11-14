@@ -148,3 +148,31 @@ As of 2026-02-25, practitioners assessing Google AI should evaluate its research
 - **Subject:** `organization:google`, thread `google-ai-development`, 9 dated events 2022-11-03 → 2026-02-25.
 - **Practical note:** As of 2026-02-25, practitioners assessing Google AI should evaluate its research, Workspace and Assistant integrations, Vertex AI model access, and Google Labs acquisitions as one evolving development line, while checking each contemporaneous primary source for actual availability before adopting a capability.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:bbd222d273ae459436fe82b7625c1faf9b309e906604b8cf7e282beb48ba4a25 -->
+## 2026-11-13 — Gemini 4 Hydrogen, Google's execution model for code
+
+Gemini 4 Hydrogen is Google's execution model for writing code and running agent tasks. It has configurable reasoning levels and works with other models through Antigravity orchestration.
+
+### Usage and practices
+
+- Model choice: pick Gemini 4 Hydrogen \(model ID gemini-4-hydrogen\) in Google AI Studio or the Gemini API for execution work. [Source](https://shareai.space/blog/2026/google-vypustila-gemini-4-hydrogen-bystruyu-model-dlya-koda)
+- Thinking level: set low, medium, high or xhigh, trading latency against reasoning depth. [Source](https://shareai.space/blog/2026/google-vypustila-gemini-4-hydrogen-bystruyu-model-dlya-koda)
+- Orchestrator mode: turn it on in Google Antigravity so Gemini 4 Carbon plans the architecture and Gemini 4 Hydrogen writes and tests the code in iterations. [Source](https://shareai.space/blog/2026/google-vypustila-gemini-4-hydrogen-bystruyu-model-dlya-koda)
+- Repository work: use Gemini 4 Hydrogen as a fast engine for boilerplate, unit tests and refactoring. Leave architectural decisions to frontier planning models. [Source](https://shareai.space/blog/2026/google-vypustila-gemini-4-hydrogen-bystruyu-model-dlya-koda)
+- Default depth: keep the default high thinking level for non-trivial coding, so reasoning quality holds while quota and speed are preserved. [Source](https://shareai.space/blog/2026/google-vypustila-gemini-4-hydrogen-bystruyu-model-dlya-koda)
+
+### Additional evidence
+
+- 2026-11-13: Gemini 4 Hydrogen ships as a dedicated execution model, model ID gemini-4-hydrogen. It has thinking levels \(low, medium, high, xhigh\) and a 1-million-token context window. It costs $1.50 per million input tokens and $7.50 per million output tokens in Google AI Studio, the Gemini API and Antigravity. [Source](https://shareai.space/blog/2026/google-vypustila-gemini-4-hydrogen-bystruyu-model-dlya-koda)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-13: Gemini 3.8 Flash was the recommended fast execution model for automated coding agents. [Source](https://shareai.space/blog/2026/google-vypustila-gemini-4-hydrogen-bystruyu-model-dlya-koda)
+
+### Limits and open questions
+
+- Google's own pages on blog.google, antigravity.google and google.com were not checked directly. Search returned grounding API redirect links instead of the pages themselves.
+- How well Gemini 4 Hydrogen recovers from errors in complex enterprise codebases is not yet measured by independent developers. The release is too recent.
+
+<!-- Retained base: 437e4c3dfc0859000903ae1628e045dcc8777d25; article blob: ebaa17d24d13387ddee98bd46f7badf20b5f70c0 -->
