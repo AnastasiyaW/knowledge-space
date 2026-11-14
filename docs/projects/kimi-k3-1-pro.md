@@ -88,3 +88,32 @@ Moonshot AI scaled post-training reinforcement learning across hundreds of speci
 - **Subject:** project:kimi-k3-1-pro, thread kimi-k2-development, 5 dated events 2025-07-13 → 2026-10-24.
 - **Practical note:** See the sourced usage and practice sections above, including their limits.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:48c530b3929b7caad0f982b611a702371e81a829c55ff767ba02727667334723 -->
+## 2026-11-13 — NVIDIA releases NVFP4 quantized weights for Moonshot AI Kimi K3.1 Pro
+
+NVIDIA published Moonshot AI's Kimi K3.1 Pro in NVFP4 on Hugging Face. It is a multimodal mixture-of-experts model, packaged with NVIDIA Model Optimizer for serving in vLLM and TensorRT-LLM.
+
+### Usage and practices
+
+- Weights: download the quantized repository from Hugging Face with huggingface-cli. [Source](https://huggingface.co/nvidia/Kimi-K3.1-Pro-NVFP4)
+- Engine: start a serving cluster on an engine that supports NVFP4, such as vLLM or TensorRT-LLM. [Source](https://huggingface.co/nvidia/Kimi-K3.1-Pro-NVFP4)
+- Input: send text prompts together with high-resolution images, within the one-million token context window. [Source](https://huggingface.co/nvidia/Kimi-K3.1-Pro-NVFP4)
+- Hardware: run it on multi-GPU nodes with high NVLink bandwidth, so they can carry active expert routing and a large distributed KV cache. [Source](https://huggingface.co/nvidia/Kimi-K3.1-Pro-NVFP4)
+- Speed: turn on native 4-bit floating point tensor core acceleration in engines that support it, such as vLLM or TensorRT-LLM. This gets the most throughput out of modern NVIDIA architectures. [Source](https://huggingface.co/nvidia/Kimi-K3.1-Pro-NVFP4)
+
+### Additional evidence
+
+- 2026-11-13: NVIDIA published the NVFP4 build, nvidia/Kimi-K3.1-Pro-NVFP4, prepared with NVIDIA Model Optimizer. The model is Moonshot AI's multimodal MoE: 2.8T parameters, 104B active. The build compresses multi-terabyte MXFP4 shards into a format for vLLM and TensorRT-LLM on modern GPU clusters. [Source](https://huggingface.co/nvidia/Kimi-K3.1-Pro-NVFP4)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-13: Without FP4 compression built for the hardware, serving the 3T-class Kimi K3.1 Pro needed multi-terabyte raw weight storage and prohibitive memory bandwidth. [Source](https://huggingface.co/nvidia/Kimi-K3.1-Pro-NVFP4)
+
+### Limits and open questions
+
+- Chinese tech news outlets covered Moonshot AI's earlier base model announcements, but the exact article URLs sat behind search redirects. They are left out of the sources, so no link here fails to resolve.
+- Independent enterprise benchmarks of latency and memory footprint, native MXFP4 against NVFP4 under full 1M context load, are not yet in verified primary documentation.
+
+
+<!-- Retained base: 2ad0de93905b418f27c881816721b53a60120d4b; article blob: 72dc82c72af6f0840e851f11abbb72a883fe88df -->
