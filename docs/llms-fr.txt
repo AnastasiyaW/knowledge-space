@@ -1,6 +1,6 @@
 # Base de connaissances techniques complète - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1345+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1346+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -781,6 +781,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [DeepSeek V4.1 Flash 1017: deepseek-v4-1-flash-line — Deepseek V4 1 Flash Line](https://happyin.space/projects/deepseek-v4-1-flash-1017/): DeepSeek-V4.1-Flash-1017 is an open-weight mixture-of-experts model built for agentic coding and terminal work. It is an alternative to closed commercial flagships for autonomous developer workflow...
 - [DeepSeek V4.1 Flash](https://happyin.space/projects/deepseek-v4-1-flash/): DeepSeek V4.1 Flash is a 552B-parameter MoE model for coding, agent tasks and image-text inputs. It is for developers who call it through an API or run the open weights themselves. It understands i...
 - [DeerFlow 2.0 — Agent Platforms](https://happyin.space/projects/deerflow/): DeerFlow 2.0 — an open-source runtime for teams that need an agent harness rather than a research-only framework.
+- [Déjà View \(DVLT\): open release](https://happyin.space/projects/deja-view-dvlt/): Déjà View \(DVLT\) is a multi-view 3D reconstruction model from NVIDIA Research, ETH Zurich and the University of Toronto. It takes unposed RGB images and predicts metric 3D scene geometry and came...
 - [DEMON](https://happyin.space/projects/demon/): DEMON turns ACE-Step v1.5 into a live music generator and transformer on GPU. It is an audio counterpart to StreamDiffusion for performers, creative-tool developers, and researchers.
 - [DICEPTION](https://happyin.space/projects/diception/): DICEPTION is an SD3-based diffusion model for practitioners who want one local model for visual-perception outputs.
 - [DiffGI](https://happyin.space/projects/diffgi/): DiffGI — исследовательский метод image-to-3D для одежды и каркасной мебели с тонкими, открытыми поверхностями. — заменяет бинарную occupancy-карту непрерывным 2D TSDF; — восстанавливает mesh через ...
