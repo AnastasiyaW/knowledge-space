@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1347+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1348+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -798,6 +798,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Echo LongVideo](https://happyin.space/projects/echo-longvideo/): Echo LongVideo is the long-video sub-project of JoyAI-Echo 1.5 for multi-shot audio and video with identity, voice, and scene transfer across editable shots.
 - [Pascal Editor](https://happyin.space/projects/editor/): Pascal Editor is an open-source 3D building editor with a semantic scene graph.
 - [EgoForce](https://happyin.space/projects/egoforce/): EgoForce estimates absolute camera-space 3D hand pose and mesh from one egocentric RGB camera.
+- [EquiSteer Cross-Attention Steering](https://happyin.space/projects/equisteer-cross-attention-steering/): EquiSteer steers cross-attention in text-to-image diffusion models without training. It is for researchers and practitioners who want to deploy these models without full fine-tuning.
 - [EU AI Act — Political agreement](https://happyin.space/projects/eu-ai-act/): EU AI Act is Regulation (EU) 2024/1689 for companies that build, sell, integrate or use AI in the EU. It covers prohibited practices, high-risk systems, transparency and general-purpose AI models. ...
 - [EVA](https://happyin.space/projects/eva/): EVA (Efficient Video Agent) is a video agent built on Qwen2.5-VL for researchers and engineers.
 - [EVIE-Preview-4.5B](https://happyin.space/projects/evie-preview-4-5b/): EVIE-Preview-4.5B — открытая 4,54B-модель для мультиязычного поиска по сканам, таблицам, графикам и документам. Возможности: текстовый запрос к изображениям страниц; MaxSim late-interaction retriev...
