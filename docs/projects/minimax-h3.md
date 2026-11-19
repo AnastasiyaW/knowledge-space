@@ -112,3 +112,36 @@ MiniMax H3 Semantic Bridge is a ComfyUI conditioning adapter for the standard Mi
 - We did not download or run the package. Runtime compatibility, artifact integrity beyond the named revision, license interpretation, and practical video gains remain unverified.
 
 <!-- Retained base: 10a35259638c923851e915e3b979bbd355ddaf2b; article blob: 3d4f380ad8d34d47f874ef8a5bfdcd7a04126e47 -->
+
+<!-- live-update:71f37afc1afa7b9771cd1a16db8d14948463f58af1f1b5584133448d4f1ef68b -->
+## 2026-11-18 — MiniMax H3 community tools add face-swap, sampling, and node optimizations
+
+Community releases for MiniMax H3 add a four-stage ComfyUI face-swap pipeline, Spectrum v0.2.30 integration, DenoMix tiled-sampler workflows and FastDerope rotary embedding patches.
+
+### Usage and practices
+
+- Clone the four-stage face-swap pipeline and install it as a custom node in the ComfyUI custom\_nodes directory. [Source](https://github.com/neohh/minimax-h3-faceswap-pipeline)
+- Install ComfyUI-Spectrum-MiniMax-H3 to get the spectrum schedule nodes and calibrate the attention layers. [Source](https://github.com/xmarre/ComfyUI-Spectrum-MiniMax-H3)
+- Load the DenoMix tiled-sampler workflow and checkpoints for high-resolution latent upscaling. [Source](https://hf.co/Deno2026/MiniMax-H3-DenoMix)
+- Apply the FastDerope node patch to the rotary positional embedding layer. It speeds up attention processing during frame generation. [Source](https://github.com/tazmannner/ComfyUI-H3-FastDerope)
+- Run subject tracking and facial mask generation as a first pass, before the latent composite replacement, so the boundary stays stable. [Source](https://github.com/neohh/minimax-h3-faceswap-pipeline)
+- In DenoMix, keep the overlap margins between tiles consistent on high-resolution video frames, so tile boundaries do not show breaks. [Source](https://hf.co/Deno2026/MiniMax-H3-DenoMix)
+- In FastDerope, check that the rotary embedding dimension parameters match the exact MiniMax H3 model variant, so attention does not diverge. [Source](https://github.com/tazmannner/ComfyUI-H3-FastDerope)
+
+### Additional evidence
+
+- 2026-11-18: The four-stage face-swap repository splits replacement into segmentation masking, reference feature extraction, latent blending and composite post-refinement. [Source](https://github.com/neohh/minimax-h3-faceswap-pipeline)
+- 2026-11-18: ComfyUI-Spectrum-MiniMax-H3 v0.2.30 adds adaptive noise scheduling and parameter sweeping, calibrated for MiniMax H3 attention maps. [Source](https://github.com/xmarre/ComfyUI-Spectrum-MiniMax-H3)
+- 2026-11-18: The DenoMix release ships tiled-sampler workflows built to remove seam artifacts in high-resolution latent diffusion passes. [Source](https://hf.co/Deno2026/MiniMax-H3-DenoMix)
+- 2026-11-18: The ComfyUI-H3-FastDerope node patches rotary positional embeddings to speed up inference and fix sequence distortion at extended frame counts. [Source](https://github.com/tazmannner/ComfyUI-H3-FastDerope)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-18: Unpatched rotary embedding implementations and un-tiled latent sampling, which caused frame seams and positional drift in long sequences. [Source](https://github.com/tazmannner/ComfyUI-H3-FastDerope)
+
+### Limits and open questions
+
+- Benchmarks for the Turbo multi-GPU execution and the audio retake studio could not be verified from the primary repository documentation.
+- Direct links to community discussions on Reddit and forums could not be verified.
+
+<!-- Retained base: 2b6b5eee14d533d859230f73d69fabb93305e572; article blob: c1148c23f3104a2f6a1590eda5a318d2fd4c8c8b -->
