@@ -79,3 +79,36 @@ As of 2022-06-06, practitioners tracking Snapchat work should include Lens URLs 
 - **Subject:** `project:snapchat`, thread `snapchat-lenses-and-filters`, 1 dated events 2022-06-06 → 2022-06-06.
 - **Practical note:** As of 2022-06-06, practitioners tracking Snapchat work should include Lens URLs as a concrete implementation or distribution surface, while keeping unsupported claims about a lens's behavior or status out of the record.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:1b873a14e8c26df11b6fa6ab8aade31bec1840b3201edf682a8ba3693e8f9990 -->
+## 2026-11-18 — Snapchat launches Easy Lens CLI and Lens Studio MCP for AI coding assistants
+
+Snap launched the Easy Lens CLI and a Model Context Protocol integration for Lens Studio. Developers can build, debug, preview and publish AR Lenses and Web Lens games from natural-language prompts in Claude Code, Cursor or Codex.
+
+### Usage and practices
+
+- Install the cross-platform Easy Lens CLI and sign in with a Snapchat developer account. [Source](https://techcrunch.com/2026/11/18/snapchat-now-lets-developers-build-ar-lenses-with-ai-coding-assistants-like-claude-code-and-cursor/)
+- Connect an AI coding assistant such as Claude Code, Cursor or Codex to the workspace through the Lens Studio Model Context Protocol (MCP) server. [Source](https://techcrunch.com/2026/11/18/snapchat-now-lets-developers-build-ar-lenses-with-ai-coding-assistants-like-claude-code-and-cursor/)
+- Describe the AR effect, face filter or Web Lens game mechanics in plain language. The agent assembles components from AR building blocks and AI asset generators. [Source](https://techcrunch.com/2026/11/18/snapchat-now-lets-developers-build-ar-lenses-with-ai-coding-assistants-like-claude-code-and-cursor/)
+- Stream live preview builds to a paired mobile phone to test camera tracking and debug at runtime. [Source](https://techcrunch.com/2026/11/18/snapchat-now-lets-developers-build-ar-lenses-with-ai-coding-assistants-like-claude-code-and-cursor/)
+- Publish the finished Lens through the automated CLI or the Lens Studio flow. It goes to platform moderation review, and monetization is set up there. [Source](https://techcrunch.com/2026/11/18/snapchat-now-lets-developers-build-ar-lenses-with-ai-coding-assistants-like-claude-code-and-cursor/)
+- Write structured prompts that name the tracking targets, the interaction physics and the leaderboard states, so the agent has less room to drift. [Source](https://techcrunch.com/2026/11/18/snapchat-now-lets-developers-build-ar-lenses-with-ai-coding-assistants-like-claude-code-and-cursor/)
+- Check generated 3D assets and scripts against mobile performance budgets on paired physical devices before platform review. [Source](https://techcrunch.com/2026/11/18/snapchat-now-lets-developers-build-ar-lenses-with-ai-coding-assistants-like-claude-code-and-cursor/)
+- Build complex scenes from the existing modular AR building blocks. Do not prompt custom shader code from scratch. [Source](https://techcrunch.com/2026/11/18/snapchat-now-lets-developers-build-ar-lenses-with-ai-coding-assistants-like-claude-code-and-cursor/)
+
+### Additional evidence
+
+- 2026-11-18: The release adds the Easy Lens CLI, available on macOS, Windows and Linux, and native MCP server support in Lens Studio. Agents such as Claude Code, Cursor and Codex can inspect scenes, manage project assets and write TypeScript/JavaScript scripts directly. [Source](https://techcrunch.com/2026/11/18/snapchat-now-lets-developers-build-ar-lenses-with-ai-coding-assistants-like-claude-code-and-cursor/)
+- 2026-11-18: Agents connect to more than 100 AR building blocks and over 50 AI asset generators. They cover the work end to end: asset synthesis, error correction, on-device streaming previews and enrollment in the Lens+ Payouts program for monetization. [Source](https://techcrunch.com/2026/11/18/snapchat-now-lets-developers-build-ar-lenses-with-ai-coding-assistants-like-claude-code-and-cursor/)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-18: Before this, AR Lens creation meant assembling the project by hand in the IDE and writing scripts in Lens Studio. There was no terminal agent automation and no MCP workspace control. [Source](https://techcrunch.com/2026/11/18/snapchat-now-lets-developers-build-ar-lenses-with-ai-coding-assistants-like-claude-code-and-cursor/)
+
+### Limits and open questions
+
+- Direct links to the Chinese tech coverage (Sohu and TechNews Taiwan) could not be resolved, so they are not listed.
+- Direct documentation links on lensstudio.com and snap.com for Easy Lens CLI configuration could not be resolved either, so they are not cited.
+
+
+<!-- Retained base: 0fd8999e9214ce9f42a7aa048a739e9c9ddc5cc0; article blob: 0cacd2d104185d274aa4f2a3e628741fd1e26c19 -->
