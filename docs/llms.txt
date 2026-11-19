@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1352+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1353+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1085,6 +1085,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Stable Diffusion 3](https://happyin.space/projects/stable-diffusion-3/): Stable Diffusion 3 — семейство MMDiT text-to-image моделей Stability AI для ComfyUI, Diffusers и API. Возможности: генерация по тексту, сложные композиции, типографика, image-to-image через поддерж...
 - [Stable Diffusion](https://happyin.space/projects/stable-diffusion/): Stable Diffusion is a family of generative image models for artists and developers who need a choice between self-hosting and an API instead of a closed service like Midjourney.
 - [Starchild-1](https://happyin.space/projects/starchild-1/): Starchild-1 is a research causal world model by Odyssey for teams needing interactive world simulation rather than pre-rendered video.
+- [Steprefine: steprefine-mdlm-denoising-refinement — Steprefine Mdlm Denoising Refinement](https://happyin.space/projects/steprefine/): StepRefine is a training-free decoding method for multimodal diffusion language models, aimed at stopping hallucinations during iterative token generation.
 - [Stream.FM](https://happyin.space/projects/stream-fm/): Stream.FM is an AGPL-3.0 PyTorch research codebase for audio ML engineers building frame-by-frame speech restoration.
 - [StreamingT2V](https://happyin.space/projects/streamingt2v/): StreamingT2V is an autoregressive long-video method for researchers and GPU-equipped practitioners.
 - [StudioRecon](https://happyin.space/projects/studiorecon/): StudioRecon reconstructs dynamic 4D scenes from sparse low-overlap video captures.
