@@ -1,6 +1,6 @@
 # 综合技术知识库 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1354+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1355+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -670,6 +670,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [neural.love — AI creation and model training](https://happyin.space/organizations/neural-love/): neural.love is a browser and API platform for creators who need AI image generation, image enhancement or restoration, video-related tools, and photo transformations.
 - [OpenAI](https://happyin.space/organizations/openai/): OpenAI — поставщик ChatGPT, ChatGPT Work, Codex и API для частных пользователей, команд и разработчиков; по охвату это конкурент связкам Anthropic Claude + API и Google Gemini + Vertex AI, а не оди...
 - [Pika](https://happyin.space/organizations/pika/): Pika is an unresearched product development line. We have not run present-state research yet, so this page carries only the dated events and the practical note below.
+- [Q.ANT: llm-inference-on-photonic-hardware — Llm Inference On Photonic Hardware](https://happyin.space/organizations/q-ant/): Q.ANT NPU Gen 2\+ is a PCIe photonic co-processor that runs Fourier transforms next to a GPU for hybrid LLM inference.
 - [Resemble AI](https://happyin.space/organizations/resemble-ai/): Resemble AI is an API platform for teams that generate speech, edit recordings, and investigate synthetic media.
 - [Roblox](https://happyin.space/organizations/roblox/): Roblox — игровая платформа и Roblox Studio для разработчиков; в этой линии Cube даёт: — локальный Cube 3D v0.5 для генерации OBJ по тексту; — GenerationService для статического Body1 или составного...
 - [Runway](https://happyin.space/organizations/runway/): Runway is a cloud platform for filmmakers, creative teams and developers, competing with Adobe Firefly/Premiere on the creative side and Replicate on the API side.
