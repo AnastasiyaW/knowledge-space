@@ -1,6 +1,6 @@
 # Umfassende technische Wissensbasis - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1358+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1359+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -976,6 +976,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [NeumaTex](https://happyin.space/projects/neumatex/): NeuMatEx — a research pipeline for graphics and 3D-asset teams that turns a known 3D model plus multi-view images into a relightable neural material rather than PBR texture maps.
 - [neural.love](https://happyin.space/projects/neural-love/): neural.love is a browser and API platform for creators who need AI image generation, image processing, and media workflows.
 - [NexVid — Browser extension distribution](https://happyin.space/projects/nexvid/): NexVid is a browser extension for people who watch anime, cartoons, and web video in Chrome or Firefox.
+- [Nginx: nginx-http2-vulnerability-disclosure — Nginx Http2 Vulnerability Disclosure](https://happyin.space/projects/nginx/): Nginx HTTP/2 vulnerability disclosure covers two memory-corruption flaws in NGINX, fixed in 1.30.7 and 1.31.9, for admins running HTTP/2.
 - [NIGHTBORNE](https://happyin.space/projects/nightborne/): NIGHTBORNE is a 13-minute science-fiction horror short for filmmakers assessing an AI-video pipeline: Seedance 2.0-generated shots, licensed human faces and voices, and conventional concept-art and...
 - [NotebookLM](https://happyin.space/projects/notebooklm/): NotebookLM, now called Gemini Notebook, is Google’s workspace for students, analysts and teams working strictly from selected documents.
 - [Nunchaku — Model integration expansion](https://happyin.space/projects/nunchaku/): Nunchaku is an SVDQuant 4-bit inference engine for Diffusers and ComfyUI users who need lower-precision FLUX or Qwen Image transformers rather than another base model.
