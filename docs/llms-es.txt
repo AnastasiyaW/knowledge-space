@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1355+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1356+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -748,6 +748,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Cohere Transcribe](https://happyin.space/projects/cohere-transcribe/): Cohere Transcribe is an Apache-2.0 Conformer encoder-decoder ASR model for audio-to-text workflows.
 - [Comfy Desktop — ComfyUI](https://happyin.space/projects/comfy-desktop/): Comfy Desktop is an official launcher and multi-instance manager for people who want local ComfyUI without separately maintaining each Python environment.
 - [Comfy-MSS](https://happyin.space/projects/comfy-mss/): Comfy-MSS — набор custom nodes ComfyUI поверх pymss для разделения AUDIO на вокал и инструментальные стемы.
+- [Comfy Cloud — Cloud access](https://happyin.space/projects/comfy/): Comfy Cloud is a hosted runtime for ComfyUI node graphs, an alternative to self-hosted RunPod or a local desktop install.
 - [ComfyUI-3D-Pack](https://happyin.space/projects/comfyui-3d-pack/): ComfyUI-3D-Pack is an unresearched project with a published roadmap. We have not run present-state research yet, so this page carries only the dated milestone and practical guidance.
 - [ComfyUI Cloud — Hosted access and billing](https://happyin.space/projects/comfyui-cloud/): ComfyUI Cloud is hosted access to ComfyUI with cloud billing. We have not run the present-state research yet, so this page keeps only the dated line and the practical note.
 - [ComfyUI Desktop](https://happyin.space/projects/comfyui-desktop/): ComfyUI Desktop, now succeeded by Comfy Desktop, is a local launcher for practitioners who need separate ComfyUI environments instead of maintaining one manual Python installation.
