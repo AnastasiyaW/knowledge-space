@@ -1,6 +1,6 @@
 # 종합 기술 지식 베이스 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1361+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1362+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -944,6 +944,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [MaskVidExperiments](https://happyin.space/projects/maskvidexperiments/): MaskVidExperiments — набор узлов ComfyUI для тех, у кого уже есть покадровая маска объекта и нужно инпейнтить или стилизовать его в видео без дрожащего crop. — Subject Crop/Uncrop строит стабильный...
 - [MatrAIx](https://happyin.space/projects/matraix/): MatrAIx runs LLM agents with user profiles across Survey, AI Chatbot, Web, and App tasks.
 - [MeshAnything](https://happyin.space/projects/meshanything/): MeshAnything V2 is a local post-processing model for technical artists and 3D-pipeline engineers who need a compact triangle mesh from a dense 3D shape, rather than a prompt-to-3D asset generator.
+- [Muse](https://happyin.space/projects/meta-muse-ai-agent/): Meta Muse is a personal AI agent that runs tasks across apps, automates device workflows and handles messages in third-party services. It competes with Apple Intelligence and Google Assistant. It can:
 - [MetaHuman](https://happyin.space/projects/metahuman/): MetaHuman is an Unreal Engine framework for character artists, virtual-production teams, and game developers.
 - [Microsoft Copilot](https://happyin.space/projects/microsoft-copilot/): We track Microsoft Copilot as a project. We have not run present-state research yet, so this page keeps only the dated timeline and the practical note below.
 - [MicroZoom](https://happyin.space/projects/microzoom/): MicroZoom is an unresearched development project. We have not run the present-state research yet, so we keep only the dated line and the practical note below.
