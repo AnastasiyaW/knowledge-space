@@ -193,3 +193,36 @@ Comfy-Org published ComfyUI v0.42.5 on GitHub. It is a maintenance release in th
 
 
 <!-- Retained base: 11c29423c88576f7a36f6181d0b1721f3eef80c5; article blob: e8f40d3a16e3cc034944e038fe697b76728af963 -->
+
+<!-- live-update:64b41adbbf2e209bebc9958f740cd9ea2c7961301490b4babbbaeb1dc2e95633 -->
+## 2026-11-19 — ComfyUI v0.46.1 published on GitHub
+
+Comfy-Org released ComfyUI v0.46.1, a patch release with stability fixes. It follows v0.46.0, which added partner nodes and removed DirectML support.
+
+### Usage and practices
+
+- Install ComfyUI, or update an existing install with git pull from the official repository or through the desktop launcher. [Source](https://github.com/Comfy-Org/ComfyUI/releases)
+- Put diffusion checkpoint weights and text encoder models in the models directory. [Source](https://github.com/Comfy-Org/ComfyUI/releases)
+- Build a workflow graph from a checkpoint loader, CLIP text encode, KSampler and VAE decode nodes. [Source](https://github.com/Comfy-Org/ComfyUI/releases)
+- Queue the prompt to run generation, and write the images with save image nodes. [Source](https://github.com/Comfy-Org/ComfyUI/releases)
+- Use CUDA or Apple Silicon backends. DirectML acceleration was removed from core releases. [Source](https://github.com/Comfy-Org/ComfyUI/releases)
+- Test custom node packages and dependency updates in a separate staging install, so a bad update does not break node graph execution. [Source](https://github.com/Comfy-Org/ComfyUI/releases)
+
+### Additional evidence
+
+- 2026-11-19: v0.46.1 carries patch-level stability fixes. The v0.46.0 cycle before it added LTX partner nodes, MiniMax H3 Image support, single-channel PNG export and image channel splitting. It also removed DirectML backend support. [Source](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.46.1)
+
+### Subsequent developments
+
+- 2026-11-18: ComfyUI published v0.46.0. It added LTX partner nodes, MiniMax H3 Image integration, channel splitting nodes and single-channel PNG saving in advanced nodes. It also removed DirectML backend support. [Source](https://github.com/Comfy-Org/ComfyUI/releases)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-18: DirectML backend support for Windows hardware acceleration in ComfyUI core. [Source](https://github.com/Comfy-Org/ComfyUI/releases)
+
+### Limits and open questions
+
+- The exact commit diff of v0.46.1 could not be separated from the v0.46.0 release notes.
+- No third-party community discussion of v0.46.1 specifically turned up in searches, apart from generic aggregation.
+
+<!-- Retained base: d1ba02224df643e158ed1088f6b68943915278d1; article blob: 04ee99388b8ac5a55c2576dcf967ea59c1368c51 -->
