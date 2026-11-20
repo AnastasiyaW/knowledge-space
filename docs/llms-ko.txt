@@ -1,6 +1,6 @@
 # 종합 기술 지식 베이스 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1372+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1373+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -678,6 +678,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Stability AI](https://happyin.space/organizations/stability-ai/): We track Stability AI as a development line. We have not run present-state research yet, so this page carries only the dated events and the practical note.
 - [Suno — Product development and industry relationships](https://happyin.space/organizations/suno/): Suno is an AI music generator expanding into professional songwriting and music production. We have not run present-state research yet, so this page carries only the dated events and practical guid...
 - [Tencent](https://happyin.space/organizations/tencent/): Tencent sells consumer platforms, cloud, marketing, payments and digital services to consumers and enterprises.
+- [Topaz Labs: topaz-labs-wonder-4-image-hdr-2026 — Topaz Labs Wonder 4 Image Hdr 2026](https://happyin.space/organizations/topaz-labs/): Topaz Wonder 4 and Image HDR are image restoration and HDR models, an alternative to multi-pass Adobe Photoshop and Magnific AI workflows.
 - [Unitree](https://happyin.space/organizations/unitree/): Unitree builds hardware and software for hands-on work with the G1 humanoid, quadruped robots, and robotic arms.
 - [xAI — Grok model development](https://happyin.space/organizations/xai/): xAI makes Grok and provides an API for teams building chat, coding, and agent workflows.
 - [XLabs AI — FLUX conditioning and ComfyUI integrations](https://happyin.space/organizations/xlabs-ai/): XLabs AI publishes FLUX.1-dev add-ons for ComfyUI. They provide structural and image-reference control when prompting alone is not enough.
