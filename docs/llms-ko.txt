@@ -1,6 +1,6 @@
 # 종합 기술 지식 베이스 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1364+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1365+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -878,6 +878,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Hunyuan3D-WorldClaw](https://happyin.space/projects/hunyuan3d-worldclaw/): Hunyuan3D-WorldClaw is a research framework for technical artists and world-building teams who need editable 3D terrain and object meshes rather than one rendered scene.
 - [HunyuanVideo-I2V — Public project availability](https://happyin.space/projects/hunyuanvideo-i2v/): HunyuanVideo-I2V is Tencent’s 2025 local image-to-video stack for teams that need first-frame-guided generation rather than a hosted API.
 - [HY-WU — Tencent Hunyuan](https://happyin.space/projects/hy-wu/): HY-WU — a local research stack for teams with multi-GPU hardware that need image-to-image edits without training an edit-specific LoRA.
+- [Hy4 Flash: hy4-flash-release — Hy4 Flash Release](https://happyin.space/projects/hy4-flash/): Hy4 Flash is Tencent's open-weights multimodal mixture-of-experts model for document processing, visual analysis and agent workflows.
 - [Hyper-SD](https://happyin.space/projects/hyper-sd/): Hyper-SD — дистиллированные LoRA и один SDXL UNet для генерации за меньшее число шагов вместо обычного многосшагового сэмплинга. — N-step LoRA для SDXL, SD1.5, SD3 и FLUX.1-dev. — Unified LoRA на 1...
 - [ID-LoRA](https://happyin.space/projects/id-lora/): ID-LoRA is a zero-shot identity-conditioning method for LTX audio-video diffusion, built for creators who need talking-person video without training on each speaker.
 - [ID-V2V — Public project resources](https://happyin.space/projects/id-v2v/): ID-V2V is an open-source research pipeline built on Wan2.1 I2V-14B-720P and VACE for video editors. It transforms source video, a stylized first frame, optional keyframes, and a text prompt into a ...
