@@ -1,6 +1,6 @@
 # Base de connaissances techniques complète - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1369+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1370+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1149,6 +1149,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [WAN](https://happyin.space/projects/wan/): WAN — a video-generation family for creators and developers: text-to-video, image-to-video, speech/reference-driven video, character animation and replacement. Wan2.2 remains an Apache-2.0 local mo...
 - [Wan2.2-NVFP4-Sparse](https://happyin.space/projects/wan2-2-nvfp4-sparse/): Wan2.2-NVFP4-Sparse, с 27 июля в карточке именуемый LightWan2.2-A14B, — версия Wan2.2-T2V/I2V-A14B для владельцев Blackwell, которым нужен четырёхшаговый локальный видеогенератор. Возможности: T2V;...
 - [WavTTS](https://happyin.space/projects/wavtts/): WavTTS is an open-source zero-shot text-to-speech system that conditions on a short reference recording and its transcript. Abilities: direct raw-waveform generation; CLI and script inference; 16 k...
+- [Weight-Space Programming: weight-space-programming-research — Weight Space Programming Research](https://happyin.space/projects/weight-space-programming/): Weight-Space Programming is a POSTECH Efficient Learning Lab framework for building model weights without backpropagation or training loops.
 - [What to Edit Next — Public site reference](https://happyin.space/projects/what-to-edit-next/): What to Edit Next is a Qwen App method that suggests the next edit from the latest image, current query, and editing intent.
 - [WhatModels — Public website](https://happyin.space/projects/whatmodels/): WhatModels is a model selector for users of Ollama, llama.cpp and other local runtimes to pick models by GPU or manual VRAM, estimating maximum context and generation speed.
 - [Windows-Copilot-API](https://happyin.space/projects/windows-copilot-api/): Windows-Copilot-API is an unofficial cross-platform bridge. It turns a signed-in consumer Copilot session into Python calls or a local OpenAI-compatible chat endpoint.
