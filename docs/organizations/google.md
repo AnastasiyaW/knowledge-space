@@ -176,3 +176,33 @@ Gemini 4 Hydrogen is Google's execution model for writing code and running agent
 - How well Gemini 4 Hydrogen recovers from errors in complex enterprise codebases is not yet measured by independent developers. The release is too recent.
 
 <!-- Retained base: 437e4c3dfc0859000903ae1628e045dcc8777d25; article blob: ebaa17d24d13387ddee98bd46f7badf20b5f70c0 -->
+
+<!-- live-update:a6cc55b49e9862cb2c0dd9c5b1cfe7f7c90d144823299e390e56ef512e1917a3 -->
+## 2026-11-19 — Google releases Gemini 4 Neon
+
+Google released Gemini 4 Neon. It takes text, code, audio, video and PDF as input. The context window is one million tokens. It costs $3 per million input tokens and $15 per million output tokens.
+
+## 2026-11-19 — Gemini 4 Neon release
+
+Google added Gemini 4 Neon to its model lineup.
+
+### Usage and practices
+
+- Get API credentials for the Gemini API and set up client access to the multimodal endpoint. [Source](https://shareai.space/blog/2026/google-vypustila-gemini-4-neon-samuyu-doroguyu-model-novoy-l)
+- Send text, code, audio, video or PDF data in the request, inside the one-million token context limit. [Source](https://shareai.space/blog/2026/google-vypustila-gemini-4-neon-samuyu-doroguyu-model-novoy-l)
+- Watch token usage when you send dense payloads such as video or large PDF files, so input costs at $3 per million tokens stay in check. [Source](https://shareai.space/blog/2026/google-vypustila-gemini-4-neon-samuyu-doroguyu-model-novoy-l)
+- Send whole code repositories and reference documents in one prompt, so the context is not split across several. [Source](https://shareai.space/blog/2026/google-vypustila-gemini-4-neon-samuyu-doroguyu-model-novoy-l)
+
+### Additional evidence
+
+- 2026-11-19: Gemini 4 Neon is the fourth model in the lineup within four weeks. Pricing is $3 per million input tokens and $15 per million output tokens. It accepts multimodal input and has a context window of up to one million tokens. [Source](https://shareai.space/blog/2026/google-vypustila-gemini-4-neon-samuyu-doroguyu-model-novoy-l)
+
+### Limits and open questions
+
+- Web search returned Vertex AI Search grounding redirects, not canonical URLs, for vendor and reporting sites. First-party documentation URLs could not be checked automatically.
+- Source live-ee296d77e438 calls Gemini 4 Neon the most expensive in the lineup. Search summaries place it between Gemini 4 Hydrogen and Gemini 4 Carbon.
+- Event live-590707fece96 has no extracted URL. Its independent benchmarks and vendor reliability comments are not confirmed by a primary public record.
+- No public community threads with stable URLs could be verified, so practitioner reception and bug reports are unknown.
+
+
+<!-- Retained base: d1ba02224df643e158ed1088f6b68943915278d1; article blob: a6e5e93872b609d72346438864058a1d853e77ac -->
