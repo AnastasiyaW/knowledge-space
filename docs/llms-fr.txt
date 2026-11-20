@@ -1,6 +1,6 @@
 # Base de connaissances techniques complète - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1359+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1360+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -703,6 +703,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 ## Projects
 - [3DGS-PLY-3DTiles-Converter](https://happyin.space/projects/3dgs-ply-3dtiles-converter/): 3DGS-PLY-3DTiles-Converter is a Node.js CLI, library, and ESM browser API for converting GraphDECO or KHR-native Gaussian Splatting PLY files into an explicit 3D Tiles tileset.
 - [3DreamBooth](https://happyin.space/projects/3dreambooth/): 3DreamBooth is a research codebase for adapting HunyuanVideo-1.5 to a subject captured from multiple viewpoints.
+- [AADD \(Automatic Audio Degradation Detection\): aadd-audio-degradation-detector-release — Aadd Audio Degradation Detector Release](https://happyin.space/projects/aadd-audio-degradation-detector/): AADD (Automatic Audio Degradation Detection) is an open-source toolkit that tags 12 types of speech degradation for dataset curators.
 - [ACE Studio Video Composer — ACE Studio development](https://happyin.space/projects/ace-studio/): ACE Studio Video Composer analyzes a video on the ACE Studio timeline and generates music or sound-effect clips. It works across the full video or a selected range.
 - [ACTI](https://happyin.space/projects/acti/): ACTI — мобильная клавиатура для людей, которым нужны поиск, перевод, ссылки на встречи и подключённые сервисы без переключения приложений. Возможности: удержание Acti Bar для действия, привязка Ski...
 - [Firefly Graph](https://happyin.space/projects/adobe-firefly-graph/): Firefly Graph is Adobe's visual canvas for building, running and sharing creative AI workflows from connected nodes.
