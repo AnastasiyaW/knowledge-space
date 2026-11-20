@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1370+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1371+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1032,6 +1032,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [PowerPaint](https://happyin.space/projects/powerpaint/): PowerPaint is an inpainting system based on Stable Diffusion for editing masked image areas.
 - [Practical ML Conf](https://happyin.space/projects/practical-ml-conf/): Practical ML Conf is a Yandex conference for ML engineers, researchers and infrastructure practitioners. It is about running models in production, not academic theory.
 - [Proactor — Public launch and access](https://happyin.space/projects/proactor/): Proactor is an alternative to Otter and Fireflies for meetings, calls, interviews, and classes.
+- [Project Genie: project-genie-genie-4-rollout — Project Genie Genie 4 Rollout](https://happyin.space/projects/project-genie/): Project Genie is Google DeepMind's tool that builds real-time 3D worlds from text or images, for researchers, game designers and AI developers.
 - [Project Starlight](https://happyin.space/projects/project-starlight/): Topaz's original generative diffusion model for restorers of archival video and low-resolution GenAI clips.
 - [ProxyPose](https://happyin.space/projects/proxypose/): ProxyPose — метод и открытая реализация для исследователей компьютерного зрения, которым нужна 6-DoF-траектория локальной поверхности или объекта из монокулярного видео. Возможности: RGB-видео и од...
 - [QuerySplat](https://happyin.space/projects/querysplat/): QuerySplat is a feed-forward 3D Gaussian Splatting framework for people who need a renderable scene and novel views from multi-view images without pre-supplied camera poses.
