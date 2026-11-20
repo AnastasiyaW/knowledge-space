@@ -1,6 +1,6 @@
 # 综合技术知识库 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1362+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1363+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -865,6 +865,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Haiper — Public launch and iOS availability](https://happyin.space/projects/haiper/): Haiper was a cloud video platform for creators and integrators, competing directly with Runway in text-to-video and image-to-video.
 - [Harness^2: harness2-open-source-release — Harness2 Open Source Release](https://happyin.space/projects/harness2/): Harness² is a research framework for engineers testing whether an agent’s surrounding system can improve without changing model weights. It edits and evaluates prompts, guardrails, memory, tool gui...
 - [HATCHA — Public repository reference](https://happyin.space/projects/hatcha/): HATCHA is an open-source reverse CAPTCHA from monday.com for Next.js and Express. It issues a computational challenge, stores the answer only on the server, signs the hash and expiry with an HMAC t...
+- [HeyGen Avatar 6: heygen-avatar-6-launch — Heygen Avatar 6 Launch](https://happyin.space/projects/heygen-avatar-6/): HeyGen Avatar 6 is a video generation neural network that turns text and audio into automated presenter avatars. It competes directly with Synthesia and D-ID.
 - [hf-mount](https://happyin.space/projects/hf-mount/): hf-mount is a Rust CLI for developers and ML infrastructure to mount Hugging Face storage to local filesystems.
 - [Hi3D](https://happyin.space/projects/hi3d/): Hi3D: сервис image-/multi-view-to-3D с текстурированием, разбиением модели для печати, подготовкой цветов и API/плагинами для ComfyUI. Текущая модель v3.0 предлагает режимы 2048³ Quality и Master, ...
 - [Holi-Spatial](https://happyin.space/projects/holi-spatial/): Holi-Spatial is a public data-preparation pipeline for research teams that need 3D Gaussian Splatting, masks, 3D boxes, and spatial QA from ScanNet, ScanNet++, or DL3DV scenes.
