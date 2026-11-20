@@ -1,6 +1,6 @@
 # 종합 기술 지식 베이스 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1371+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1372+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1122,6 +1122,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [UEmbed](https://happyin.space/projects/uembed/): UEmbed is a Qwen3.5-based decoder-only embedding family for teams that would otherwise operate separate dense and sparse retrievers.
 - [Ultra Real - Klein 9b — Klein 9b](https://happyin.space/projects/ultra-real-klein-9b/): Ultra Real - Klein 9b is a LoRA for FLUX.2 Klein 9B users in ComfyUI.
 - [UltraPixel](https://happyin.space/projects/ultrapixel/): UltraPixel — a NeurIPS 2024 research implementation built on Stable Cascade for text-to-image generation at multiple high resolutions.
+- [Ultratex: ultratex-release-line — Ultratex Release Line](https://happyin.space/projects/ultratex/): UltraTex generates 4K PBR textures for 3D meshes from a reference image, an alternative to TEXTure and Paint3D.
 - [UMO](https://happyin.space/projects/umo/): UMO is a research framework for teams building 3D human-motion pipelines. It fine-tunes HY-Motion-Lite instead of shipping a downloadable motion tool.
 - [Unitree GD01](https://happyin.space/projects/unitree/): Unitree GD01 is a heavy electric robotic platform with an open seated cabin for an operator who needs a piloted civilian robot rather than an SDK-compatible research machine.
 - [Unity CLI](https://happyin.space/projects/unity-cli/): Unity CLI — автономный бинарник `unity` для Unity 6.0 LTS+ и CI. — устанавливает Editor и модули; — открывает и обслуживает проекты, лицензии и авторизацию; — с `com.unity.pipeline` управляет локал...
