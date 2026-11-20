@@ -96,3 +96,30 @@ From 2022-10-26 onward, Microsoft’s generative-image capabilities should be tr
 - **Subject:** `organization:microsoft`, thread `microsoft-generative-ai-rollout-and-adoption`, 4 dated events 2022-10-22 → 2025-05-04.
 - **Practical note:** From 2022-10-26 onward, Microsoft’s generative-image capabilities should be treated as a staged, region-limited rollout. Practitioners should verify current product and regional availability before relying on them.
 - **Confidence:** medium. The dated items under Superseded by this show what is obsolete.
+
+<!-- live-update:c245ff060b3d4d7e2721a2a082bb10901388830999d78a8d65eede84179f11e3 -->
+## 2026-11-19 — Nadella clarifies voluntary buyout program amid shift to agent-driven development
+
+Microsoft offered voluntary exit options to eligible employees while software development moves to compact teams that manage AI agents. Nadella says the offer gives people a choice during restructuring. It is not a forced mass layoff.
+
+### Usage and practices
+
+- Build engineering groups as compact teams that direct and check agents, not as a larger manual programming headcount. [Source](https://techcrunch.com/2026/11/18/microsoft-ceo-satya-nadella-explains-why-he-asked-60k-employees-to-quit/)
+- Developers move from writing code line by line to managing, orchestrating and evaluating what AI agents produce. [Source](https://techcrunch.com/2026/11/18/microsoft-ceo-satya-nadella-explains-why-he-asked-60k-employees-to-quit/)
+
+### Additional evidence
+
+- 2026-11-19: Nadella clarified that the sixty thousand figure is the number of eligible employees who were offered a voluntary buyout during the AI restructuring. It is not a mandatory layoff. Leadership expects departures below five percent. Software development shifts to small teams that direct AI agents. [Source](https://techcrunch.com/2026/11/18/microsoft-ceo-satya-nadella-explains-why-he-asked-60k-employees-to-quit/)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-18: The older approach scaled software engineering capacity only by adding headcount in proportion. [Source](https://techcrunch.com/2026/11/18/microsoft-ceo-satya-nadella-explains-why-he-asked-60k-employees-to-quit/)
+
+### Limits and open questions
+
+- Adoption metrics and the actual share of the sixty thousand eligible employees who accept the buyout are not verified. The only figure is the executive estimate of under five percent.
+- The details of the exit offer and the internal team transition timelines could not be checked against a primary document.
+- Community discussion and regional tech coverage had no stable links, so they are not cited.
+
+
+<!-- Retained base: af7458929f9dfaf6c693e5f0a3138b1fc52eda69; article blob: d93a68cb1117a7c18bc82716caec9a120564a410 -->
