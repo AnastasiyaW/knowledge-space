@@ -113,3 +113,35 @@ Track Gemini by product surface as of 2026-08-14. Use AI Studio's Live interface
 - **Subject:** `project:gemini`, thread `gemini-development`, 6 dated events 2024-02-16 → 2026-08-14.
 - **Practical note:** As of 2026-08-14, practitioners should track Gemini by product surface: use AI Studio's Live interface for live workflows (2024-12-12), evaluate and price Gemini 3.1 Flash-Lite Preview before adoption (2026-03-03), and select Gemini 3.7 Flash in AI Studio where available (2026-08-14), while treating Gemini app and Mac features as separate product surfaces.
 - **Confidence:** high. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:398dd2f32a452ed7eca648c3d1a5190ce4b2b3fbb900ced2b7568b314a146b3e -->
+## 2026-11-19 — Google adds background computer use agent to Gemini macOS client
+
+Gemini for macOS now has a computer use agent. It runs multi-step desktop and application workflows in an isolated background window, on Apple Silicon Macs only.
+
+### Usage and practices
+
+- Install the Gemini for macOS desktop client on an Apple Silicon Mac. Sign in with an account that has a paid Google AI subscription. [Source](https://techcrunch.com/2026/11/19/google-gives-gemini-the-ability-to-use-your-mac-for-you/)
+- Grant Accessibility and screen control permissions in macOS System Settings. Whitelist the target desktop applications in the Gemini settings. [Source](https://techcrunch.com/2026/11/19/google-gives-gemini-the-ability-to-use-your-mac-for-you/)
+- Describe the local file, form or application workflow as a multi-step prompt in the chat panel. [Source](https://techcrunch.com/2026/11/19/google-gives-gemini-the-ability-to-use-your-mac-for-you/)
+- Watch the run in the isolated live preview window. Confirm any sensitive login or transaction prompt. [Source](https://techcrunch.com/2026/11/19/google-gives-gemini-the-ability-to-use-your-mac-for-you/)
+- Grant access to specific applications one by one, not to the whole system. [Source](https://techcrunch.com/2026/11/19/google-gives-gemini-the-ability-to-use-your-mac-for-you/)
+- Keep the live preview panel open during complex tasks to follow how the agent navigates. Pause at once if it takes a wrong step. [Source](https://techcrunch.com/2026/11/19/google-gives-gemini-the-ability-to-use-your-mac-for-you/)
+- Leave manual approval on for authentication checkpoints, credential submission and financial transactions. [Source](https://techcrunch.com/2026/11/19/google-gives-gemini-the-ability-to-use-your-mac-for-you/)
+
+### Additional evidence
+
+- 2026-11-19: The automation runs in an isolated background window with a live preview in the chat. The main desktop and the mouse cursor stay free to use. [Source](https://techcrunch.com/2026/11/19/google-gives-gemini-the-ability-to-use-your-mac-for-you/)
+- 2026-11-19: It needs Apple Silicon hardware with macOS and a paid Google AI Plus, Pro or Ultra subscription. Permissions are set per application, and sensitive transactions need manual approval. [Source](https://techcrunch.com/2026/11/19/google-gives-gemini-the-ability-to-use-your-mac-for-you/)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-19: Gemini on macOS was limited to text and code generation in the chat window. It could not interact with native desktop applications or run filesystem workflows. [Source](https://techcrunch.com/2026/11/19/google-gives-gemini-the-ability-to-use-your-mac-for-you/)
+
+### Limits and open questions
+
+- Permalinks to the official Google blog post and to secondary technical reports are not available yet.
+- No community benchmarks compare the isolated background window with foreground desktop agents across third-party Mac applications.
+
+
+<!-- Retained base: af7458929f9dfaf6c693e5f0a3138b1fc52eda69; article blob: 39fcc5b32b83f09a151039b030917bf294dd3917 -->
