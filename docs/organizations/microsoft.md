@@ -123,3 +123,45 @@ Microsoft offered voluntary exit options to eligible employees while software de
 
 
 <!-- Retained base: af7458929f9dfaf6c693e5f0a3138b1fc52eda69; article blob: d93a68cb1117a7c18bc82716caec9a120564a410 -->
+
+<!-- live-update:dedd1fd01ebb2ebcd4968d658a9e1ffee0762dec1a4832a08be098d9762703d1 -->
+## 2026-11-20 — Microsoft previews Windows Baseline Protection to verify PC security for applications
+
+Windows Baseline Protection is in preview in Windows 11. It gives developers a platform attestation API that checks eight core hardware and kernel security standards, so an app can restrict launch on non-compliant PCs.
+
+### Usage and practices
+
+- Open Settings in Windows 11, go to Privacy & security, then Baseline protection, to see the compliance status of the system. [Source](https://4pda.to/2026/11/19/463488/microsoft_pozvolit_prilozheniyam_blokirovat_zapusk_na_nebezopasnykh_pk/)
+- Enable TPM 2.0 and Secure Boot in the device UEFI firmware, so the hardware root-of-trust requirements are met. [Source](https://4pda.to/2026/11/19/463488/microsoft_pozvolit_prilozheniyam_blokirovat_zapusk_na_nebezopasnykh_pk/)
+- Turn on Core Isolation and Memory Integrity (HVCI) in Windows Security, so the kernel memory protection checks pass. [Source](https://4pda.to/2026/11/19/463488/microsoft_pozvolit_prilozheniyam_blokirovat_zapusk_na_nebezopasnykh_pk/)
+- Call the platform attestation API from application code to query the compliance tokens and enforce the launch policy. [Source](https://4pda.to/2026/11/19/463488/microsoft_pozvolit_prilozheniyam_blokirovat_zapusk_na_nebezopasnykh_pk/)
+- Keep Core Isolation and Memory Integrity on, so the hardware-enforced baseline posture checks do not fail. [Source](https://4pda.to/2026/11/19/463488/microsoft_pozvolit_prilozheniyam_blokirovat_zapusk_na_nebezopasnykh_pk/)
+- Use only WHQL-certified kernel drivers and keep the vulnerable driver blocklists active, so driver-signing attestation does not reject the PC. [Source](https://4pda.to/2026/11/19/463488/microsoft_pozvolit_prilozheniyam_blokirovat_zapusk_na_nebezopasnykh_pk/)
+- During rollout, use staged notification policies instead of closing the application at once. Dual-boot and development setups are special cases. [Source](https://4pda.to/2026/11/19/463488/microsoft_pozvolit_prilozheniyam_blokirovat_zapusk_na_nebezopasnykh_pk/)
+
+### Additional evidence
+
+- 2026-11-20: Windows Baseline Protection in Windows 11 evaluates eight security controls:
+  - TPM 2.0
+  - Secure Boot
+  - Virtualization-Based Security (VBS)
+  - Memory Integrity (HVCI)
+  - driver signing
+  - certified drivers
+  - kernel debugger protection
+  - vulnerable driver blocklists
+
+  An application gets a standard pass-fail status or a hardware token. It can then show a warning, gate features, or block launch completely. [Source](https://4pda.to/2026/11/19/463488/microsoft_pozvolit_prilozheniyam_blokirovat_zapusk_na_nebezopasnykh_pk/)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-20: Third-party applications and game anti-cheat systems had to build their own kernel-level integrity checkers to judge the host posture on their own. [Source](https://4pda.to/2026/11/19/463488/microsoft_pozvolit_prilozheniyam_blokirovat_zapusk_na_nebezopasnykh_pk/)
+
+### Limits and open questions
+
+- Topic mismatch: the thread was filed under 'Microsoft generative AI rollout and adoption'. The event and its main reporting cover only Windows 11 baseline security and hardware attestation (Windows Baseline Protection).
+- Missing references: searches returned only redirect links, with no canonical URLs, for Windows Latest, IT Home and Reddit. Redirects and guessed paths are not allowed as citations, so those references are left out.
+- Schedule: the move from Windows Insider preview to mandatory enforcement across consumer and commercial Windows 11 editions is not confirmed yet.
+
+
+<!-- Retained base: 1ff9770000fb565deaf10f760149bceea1a08343; article blob: 3d85f4535df1312e325c8e0a0e12491ef171f58d -->
