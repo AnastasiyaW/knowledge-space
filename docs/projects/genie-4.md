@@ -82,3 +82,40 @@ The Genie line started as passive video-token generation trained on gameplay foo
 - **Subject:** project:genie-4, thread genie-world-model-line, 1 dated events 2026-11-18 → 2026-11-18.
 - **Practical note:** See the sourced usage and practice sections above, including their limits.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:d6d01e48ae82645e1a1580f19a18c3cd4ce901c6570b4f414a832a71d2cfbd5d -->
+## 2026-11-20 — Google DeepMind releases Genie 4 interactive world model API
+
+Genie 4 is an interactive world model for developers, available in Google AI Studio and the Gemini v1beta Interactions API. It takes keyboard steering in real time and text conditioning while it runs. It outputs 720p at 24 fps with synchronized 48 kHz stereo audio. Generation streams over WebRTC and WebSockets, carries SynthID watermarking, and every session must be closed with a completion call. Interactive world simulation is now sold as a developer API.
+
+## 2026-11-20 — Google launches Genie 4 API with streaming token billing
+
+Genie 4 is an interactive generative simulation endpoint, open only to paid Gemini API accounts. Output uses about 240 video tokens per frame, or 5,760 tokens per second at 24 fps with stereo sound. It costs about $0.10 per second ($6.05 per minute), and billing must be enabled in Google AI Studio. Interactive video streaming now has its own tariff for developer apps.
+
+### Usage and practices
+
+- Enable paid billing on a Google AI Studio account and create a Gemini API key. [Source](https://aistudio.google.com/)
+- Start an interactive session with client.interactions.create and set the model to genie-4. [Source](https://aistudio.google.com/)
+- Connect to the streaming session over WebRTC or WebSocket and send a world_setup event with a seed prompt or a 16:9 image. [Source](https://aistudio.google.com/)
+- Stream the user's steering live, such as WASD navigation and text prompts mid-session, to move through the environment and change it. [Source](https://aistudio.google.com/)
+- Call complete() on the interaction object when done, so the server stops generating and billing ends. [Source](https://aistudio.google.com/)
+- Call interaction.complete() in every termination and error-handling block, so the stream closes and video output tokens stop being billed. [Source](https://aistudio.google.com/)
+- For web clients on WebRTC, create single-use session tokens with interactions.authTokens.create, so the long-term Gemini API key stays private. [Source](https://aistudio.google.com/)
+- Place client sessions and backend proxies near serving regions in North America, Western Europe or East Asia, so round-trip latency stays under 150 milliseconds and steering stays responsive. [Source](https://aistudio.google.com/)
+
+### Additional evidence
+
+- 2026-11-20: The model identifier is genie-4 under the v1beta Interactions API. It runs as a bi-directional streaming loop over WebRTC and WebSockets, with SynthID watermarking, and server-side billing stops only after an explicit complete() call. [Source](https://aistudio.google.com/)
+- 2026-11-20: Output uses about 240 video tokens per frame (~5,760 tokens per second at 24 fps, including 48 kHz stereo audio). It is billed at about $0.10 per second ($6.05 per minute), on paid-tier Gemini API accounts only. [Source](https://aistudio.google.com/)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-20: Earlier generative video models made pre-rendered clips. They had no real-time control, no mid-stream text conditioning and no synchronized multi-modal audio. [Source](https://aistudio.google.com/)
+
+### Limits and open questions
+
+- The canonical blog and technical paper URLs are not verified. The search results gave grounding redirects, not direct article paths.
+- Long-term feedback from practitioners on latency overhead and real-world billing cost is not yet established in public forum threads.
+
+
+<!-- Retained base: ba59150ff6af8d3245658020d86e3463aab13771; article blob: 16c1e46841a3526e6e17d9121c9cf5d1d3a5c139 -->
