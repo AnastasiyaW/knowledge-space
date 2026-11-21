@@ -64,5 +64,22 @@ class Navigation(unittest.TestCase):
         self.assertIn("fetch-depth: 0", workflow)
 
 
+
+class LlmsTxt(unittest.TestCase):
+    def test_llms_txt_is_a_short_index_and_the_full_listing_is_separate(self) -> None:
+        llms = load("generate_llms_txt")
+        articles = llms.collect_articles()
+        index = llms.generate_llms_index(articles)
+        full = llms.generate_llms_txt(articles)
+        total = sum(len(v) for v in articles.values())
+        self.assertLess(len(index.encode()), 10_000)
+        self.assertIn("https://happyin.space/llms-full.txt", index)
+        self.assertEqual(full.count("https://happyin.space/"), total)
+        for domain in articles:
+            self.assertIn(f"](https://happyin.space/{domain}/)", index)
+
+    def test_the_full_listing_is_copied_into_the_site(self) -> None:
+        self.assertIn('"llms-full.txt"', (ROOT / "hooks/copy_extras.py").read_text(encoding="utf-8"))
+
 if __name__ == "__main__":
     unittest.main()
