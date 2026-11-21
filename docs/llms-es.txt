@@ -1,6 +1,6 @@
 # Base de conocimientos técnicos integral - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1374+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1375+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -860,6 +860,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [GPT-5.5](https://happyin.space/projects/gpt-5-5/): GPT-5.5 — an OpenAI API model for teams building coding, tool-using, and professional-work agents.
 - [GPT-5.6 Sol Ultra](https://happyin.space/projects/gpt-5-6-sol-ultra/): GPT-5.6 Sol Ultra is a mode of GPT-5.6 Sol for engineers who need parallel agents.
 - [GPT-5.6 Sol — External evaluation](https://happyin.space/projects/gpt-5-6-sol/): GPT-5.6 Sol — OpenAI’s flagship GPT-5.6 model for practitioners who need stronger reasoning than Terra or Luna. It supports text and image input, a 1,050,000-token context window, 128,000 output to...
+- [Graft: graft-execution-guided-agent-design — Graft Execution Guided Agent Design](https://happyin.space/projects/graft/): GRAFT is an agent design framework for ML researchers and agent developers, an alternative to standard evolutionary search and prompt-based meta-agents.
 - [Grok Build](https://happyin.space/projects/grok-build/): Grok Build is a terminal AI coding agent for software work.
 - [Grok Imagine Image 2.0 — Grok Imagine image generation](https://happyin.space/projects/grok-imagine-image-2-0/): Grok Imagine Image 2.0 — модель xAI для генерации и редактирования изображений в Grok и API. Возможности: текст-в-изображение, редактирование по инструкции, до пяти референсов, 1K/2K и пакетная обр...
 - [GUSH3R](https://happyin.space/projects/gush3r/): GUSH3R is research code for novel-view rendering of people moving in a scene from monocular video, replacing a separate AnySplat background plus LHM human pipeline.
