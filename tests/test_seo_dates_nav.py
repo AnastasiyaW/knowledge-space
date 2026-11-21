@@ -49,6 +49,15 @@ class Descriptions(unittest.TestCase):
         self.assertTrue(out.endswith("..."))
         self.assertLessEqual(len(out), description.MAX_LEN + 3)
 
+    def test_a_short_opening_borrows_the_bullets_that_follow_it(self) -> None:
+        page = ("# Tripo\n\n**Development line:** `project:tripo`\n\n## What it is\n\n"
+                "Tripo is a 3D asset generation suite.\n\n"
+                "- Studio: one web workspace for generation and rigging\n"
+                "- API: queues text-to-model jobs.\n\n## Development line\n\n- **2024** event.\n")
+        self.assertEqual(description._extract_first_paragraph(page),
+                         "Tripo is a 3D asset generation suite. Studio: one web workspace for "
+                         "generation and rigging. API: queues text-to-model jobs.")
+
 
 class Navigation(unittest.TestCase):
     def test_every_language_prunes_the_nav_and_dates_pages_from_git(self) -> None:

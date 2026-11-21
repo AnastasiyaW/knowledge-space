@@ -101,8 +101,9 @@ def _extract_first_paragraph(markdown: str) -> str | None:
     found_h1 = False
     in_code = False
     paragraph_lines: list[str] = []
+    end = len(lines)
 
-    for line in lines:
+    for i, line in enumerate(lines):
         stripped = line.strip()
 
         if not found_h1:
@@ -112,6 +113,7 @@ def _extract_first_paragraph(markdown: str) -> str | None:
 
         if stripped.startswith('```') or stripped.startswith('~~~'):
             if paragraph_lines:
+                end = i
                 break
             in_code = not in_code
             continue
@@ -119,10 +121,12 @@ def _extract_first_paragraph(markdown: str) -> str | None:
             continue
         if not stripped:
             if paragraph_lines:
+                end = i
                 break
             continue
         if _is_structure(stripped):
             if paragraph_lines:
+                end = i
                 break
             continue
 
@@ -137,7 +141,30 @@ def _extract_first_paragraph(markdown: str) -> str | None:
     if len(text) < 30:
         return None
 
+    if len(text) < SHORT_LEN:
+        text = ' '.join([text, *_following_sentences(lines[end:])])
     return _attribute_safe(_truncate(text))
+
+
+# Project pages open with one short sentence and continue in bullets ("Tripo is a 3D asset
+# generation suite ..." = 82 characters, SEO audit 2026-11-21); such a description borrows the
+# sentences that follow it in the same section, still cut at whole sentences.
+SHORT_LEN = 110
+
+
+def _following_sentences(lines: list[str]) -> list[str]:
+    """Prose and list items after the first paragraph, up to the next heading or code block."""
+    out: list[str] = []
+    for line in lines:
+        stripped = line.strip()
+        if stripped.startswith(('#', '```', '~~~', '|', '<', '!!!', '???')) or stripped == '---':
+            break
+        stripped = re.sub(r'^(?:[-*]|\d+\.)\s+', '', stripped)
+        if not stripped or _METADATA_LINE.match(stripped):
+            continue
+        sentence = _clean_markdown(stripped)
+        out.append(sentence if sentence.endswith(('.', '!', '?')) else sentence + '.')
+    return out
 
 
 # Hub sections that say nothing about the topic.
