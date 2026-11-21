@@ -32,8 +32,8 @@ theme:
     - navigation.instant
     - navigation.tracking
     - navigation.path
-    - navigation.sections
-    - navigation.expand
+    # navigation.prune: every page rendered the whole 1,400-article nav (1,450 links, 2026-11-21)
+    - navigation.prune
     - navigation.top
     - search.suggest
     - search.highlight
@@ -132,6 +132,7 @@ hooks:
   - hooks/i18n.py
   - hooks/og_image.py
   - hooks/description.py
+  - hooks/git_dates.py
   - hooks/wikilinks.py
   - hooks/levels.py
   - hooks/faq_schema.py
