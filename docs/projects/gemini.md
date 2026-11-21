@@ -145,3 +145,32 @@ Gemini for macOS now has a computer use agent. It runs multi-step desktop and ap
 
 
 <!-- Retained base: af7458929f9dfaf6c693e5f0a3138b1fc52eda69; article blob: 39fcc5b32b83f09a151039b030917bf294dd3917 -->
+
+<!-- live-update:a8a80a7efc6106eeceac6cd761607b1dea80f0272c00a7f934a11ea7aeebb7b7 -->
+## 2026-11-20 — Google adds background Computer Use to Gemini for Mac
+
+The Gemini app on macOS now has Computer Use. It runs multi-step desktop tasks in an isolated background window, so it does not take over the user's cursor.
+
+### Usage and practices
+
+- Install and open the Gemini desktop app on an Apple Silicon Mac running macOS, with an active Google AI subscription. [Source](https://the-decoder.com/googles-gemini-can-now-run-mac-apps-and-finish-desktop-chores-in-the-background-while-you-keep-working/)
+- Start a task by typing @Computer use, then the multi-step request, in the Gemini chat input. [Source](https://the-decoder.com/googles-gemini-can-now-run-mac-apps-and-finish-desktop-chores-in-the-background-while-you-keep-working/)
+- Grant permissions per application, for the local software and directories the task needs. [Source](https://the-decoder.com/googles-gemini-can-now-run-mac-apps-and-finish-desktop-chores-in-the-background-while-you-keep-working/)
+- Watch the run in the background window's preview stream, and confirm the prompts for sensitive actions when they appear. [Source](https://the-decoder.com/googles-gemini-can-now-run-mac-apps-and-finish-desktop-chores-in-the-background-while-you-keep-working/)
+- Give access to desktop apps selectively, so sensitive local files and unrelated software stay out of reach. [Source](https://the-decoder.com/googles-gemini-can-now-run-mac-apps-and-finish-desktop-chores-in-the-background-while-you-keep-working/)
+- Keep the live preview in view during automation you do not know well, so you can catch anomalies before a critical step asks for approval. [Source](https://the-decoder.com/googles-gemini-can-now-run-mac-apps-and-finish-desktop-chores-in-the-background-while-you-keep-working/)
+
+### Additional evidence
+
+- 2026-11-20: Google added Computer Use to the Gemini desktop app for Mac through the @Computer use command. Actions run in an isolated background window with a live stream preview, not on the user's cursor. It needs Apple Silicon and a paid Google AI Plus, Pro, or Ultra subscription. [Source](https://the-decoder.com/googles-gemini-can-now-run-mac-apps-and-finish-desktop-chores-in-the-background-while-you-keep-working/)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-20: Before this, Gemini on desktop handled text and multimodal chat queries only. It had no direct control over native macOS apps or local file workflows. [Source](https://the-decoder.com/googles-gemini-can-now-run-mac-apps-and-finish-desktop-chores-in-the-background-while-you-keep-working/)
+
+### Limits and open questions
+
+- Latency and error rates across different macOS software setups have not been measured.
+
+
+<!-- Retained base: ba59150ff6af8d3245658020d86e3463aab13771; article blob: 72c9f27b214614f42e7c88afed3791669ce09c95 -->
