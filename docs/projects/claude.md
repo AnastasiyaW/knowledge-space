@@ -93,3 +93,48 @@ From 2023-05-12, practitioners could consider Claude for workflows requiring up 
 - **Subject:** `project:claude`, thread `claude-product-development`, 2 dated events 2023-05-12 → 2023-11-22.
 - **Practical note:** From 2023-05-12, practitioners could consider Claude for workflows requiring up to 100K tokens of context; from 2023-11-22, Claude 2.1 extended that planning envelope to 200K tokens.
 - **Confidence:** high. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:91d9b0daa139e136fe3860add9ae3f5f5dacab3f8de4cb3b973ecb69396e5c13 -->
+## 2026-11-20 — Claude multi-agent setup applied to theoretical black hole physics
+
+Anthropic said its multi-copy Claude workflow investigated holographic duality and anti-de Sitter space. Two separate methods validated the calculations, and the proof components were encoded in Lean.
+
+## 2026-11-20 — Levent Alpöge announces Claude-assisted Riemann Hypothesis formalization claim
+
+Mathematician Levent Alpöge announced a Claude-assisted formalization claim for the Riemann Hypothesis and Generalized Riemann Hypothesis. It is written in Lean 4 and spread across 14 code archives. The community is still reviewing it.
+
+## 2026-11-20 — Unverified Claude-assisted Riemann Hypothesis proof claim circulating
+
+Mathematicians are still evaluating reports of a Claude-assisted proof of the Riemann Hypothesis. Confirming it requires independent compilation by the Lean 4 kernel.
+
+### Usage and practices
+
+- Formulate mathematical conjectures or theoretical physics questions, then translate the problems into a formal specification framework such as Lean 4. [Source](https://simonwillison.net/2026/Nov/20/levent-alpoge/)
+- Run multi-copy or agentic Claude workflows to explore proof trees, do symbolic expansions and generate formal code modules. [Source](https://habr.com/ru/articles/1110482/)
+- Verify independently with a formal theorem prover kernel such as Lean 4, and with alternative cross-checked derivations, so the AI-generated arguments get audited. [Source](https://alpo.ge/remark.pdf)
+- Check AI-generated mathematical claims mechanically in an interactive theorem prover such as Lean 4, not by reading natural-language prose. [Source](https://alpo.ge/remark.pdf)
+- Use multi-agent verification, where separate model copies compute intermediate mathematical and physical derivations on their own and cross-check each other. [Source](https://habr.com/ru/articles/1110482/)
+
+### What practitioners say
+
+- Machine-checked proofs spare humans the fatigue of reading. Even so, a very large set of AI-generated Lean archives needs independent kernel compilation and auditing before anyone accepts a historic claim. (2026-11-20) [Source](https://simonwillison.net/2026/Nov/20/levent-alpoge/)
+- Community commentators are skeptical of unreviewed AI proof claims. An extraordinary mathematical claim has to be confirmed by the formal system maintainers and the mathematical community before it counts as valid. (2026-11-20) [Source](https://habr.com/ru/articles/1110558/)
+
+### Additional evidence
+
+- 2026-11-20: Anthropic said the multi-copy Claude workflow investigated holographic duality and anti-de Sitter space. Two separate methods validated the calculations, and proof components were encoded in Lean. [Source](https://habr.com/ru/articles/1110482/)
+- 2026-11-20: Alpöge and Claude formalized the claimed proof for the Riemann Hypothesis and Generalized Riemann Hypothesis in Lean 4, with no narrative paper alongside. The result is roughly 175,000 modules across 14 archive segments, built for machine verification. [Source](https://simonwillison.net/2026/Nov/20/levent-alpoge/)
+- 2026-11-20: External researchers and formal mathematics communities began auditing the 175,000 Lean modules. Full validation depends on complete compilation through the Lean 4 kernel. [Source](https://habr.com/ru/articles/1110558/)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-20: Rely on traditional human-written mathematical preprints, with no interactive theorem prover formalization, for complex AI-derived proofs. [Source](https://alpo.ge/remark.pdf)
+
+### Limits and open questions
+
+- Does the Lean 4 formalization of the Riemann Hypothesis proof pass complete independent kernel verification, with no hidden axiomatic inconsistencies?
+- What internal multi-agent architecture and prompting pipeline did Anthropic use for the black hole physics and Riemann Hypothesis workflows? This is not known.
+- Permanent URLs for the intermediate research checkpoints before November 2026 are missing. The search result links for them went through search-engine redirect wrappers.
+
+
+<!-- Retained base: 920dbb58535f380ce6f504f4bf46e46819eaeaee; article blob: 59c3f03ee16daa0d1a0a66a66ef4cfc0793233eb -->
