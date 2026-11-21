@@ -15,6 +15,9 @@ python -m mkdocs build --strict
   - the news pipeline's metadata lines: `**Development line:**`, `**Last event:**`,
     `**Events:**`, `**Last researched:**`, `**Freshness check:**`;
   - the `**Scope checked: …**` label.
+- A first paragraph under 110 characters borrows the prose and list items that follow it in the
+  same section. The text is then cut at whole sentences to 155 characters. Project pages open
+  with one short sentence and continue in bullets (SEO audit 2026-11-21).
 - Hub `index.md` pages without prose get "Title: N articles on Section, Section, …".
 - `"` becomes `'`. Templates render without autoescape, and one double quote cut 15
   descriptions short, leaving stray attributes behind.
