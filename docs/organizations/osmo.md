@@ -73,3 +73,33 @@ The system started in digital olfaction research at Google Brain. That work mapp
 - **Subject:** organization:osmo, thread osmo-ai-smell-model-development, 1 dated events 2026-11-19 → 2026-11-19.
 - **Practical note:** see the usage and practice sections above, with their limits.
 - **Confidence:** medium. The dated supersedes above decide what is obsolete.
+
+<!-- live-update:83b5ca876e3f4901de4aacfa04643132efc7382fbc899ffe85a9af41c0547475 -->
+## 2026-11-20 — Osmo applies neural network odor mapping to fragrance molecule screening
+
+Osmo built an artificial olfaction platform. Graph neural networks predict human odor descriptors from molecular structure. Early evaluations indicate performance comparable to human panels for classifying the scent of a single molecule. It is meant to help screen fragrance and chemical candidates, not to replace biological sensory testing.
+
+### Usage and practices
+
+- Feed molecular structure data into the graph neural network pipeline, as chemical graphs or atomic connectivity representations. [Source](https://www.technologyreview.com/2026/11/18/1148816/smell-startup-osmo-ai-nose-good-as-humans/)
+- Find the predicted odor coordinates on the principal odor map, so they point to the matching human descriptor clusters. [Source](https://www.technologyreview.com/2026/11/18/1148816/smell-startup-osmo-ai-nose-good-as-humans/)
+- Filter candidate formulations by target olfactory profile, so synthetic candidates are prioritized before physical bench testing. [Source](https://www.technologyreview.com/2026/11/18/1148816/smell-startup-osmo-ai-nose-good-as-humans/)
+- Cross-validate predicted scent profiles against calibrated human sensory panels, so perceptual anomalies and complex odor mixture interactions are caught. [Source](https://www.technologyreview.com/2026/11/18/1148816/smell-startup-osmo-ai-nose-good-as-humans/)
+- Check regulatory compliance, allergen potential and chemical stability before a model-selected synthetic aroma candidate goes to production. [Source](https://www.technologyreview.com/2026/11/18/1148816/smell-startup-osmo-ai-nose-good-as-humans/)
+
+### Additional evidence
+
+- 2026-11-20: Technology Review describes how Osmo's graph neural networks and principal odor map link chemical graph inputs to human panel descriptors for commercial aroma screening. Internal benchmarks reach human panel parity on selected odor categories. They do not show a universal replacement for human smell. [Source](https://www.technologyreview.com/2026/11/18/1148816/smell-startup-osmo-ai-nose-good-as-humans/)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-18: Human panels must smell the physical syntheses directly for the initial screening of single-molecule odor profiles. [Source](https://www.technologyreview.com/2026/11/18/1148816/smell-startup-osmo-ai-nose-good-as-humans/)
+
+### Limits and open questions
+
+- Osmo has not disclosed public API endpoints or self-service developer access terms, so independent reproduction is limited.
+- Third-party reporting could not be cited directly. The search returned opaque redirect identifiers, not article URLs.
+- Public technical disclosures do not document performance on multi-component volatile mixtures, or on raw ambient air versus purified single molecules.
+
+
+<!-- Retained base: 290c6d93da7441fc749edeb29bd2d8899c2b138a; article blob: aad961c766e81eef7a18b97d8629e8fbb19fd50f -->
