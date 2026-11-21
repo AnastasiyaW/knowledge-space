@@ -88,3 +88,34 @@ Google put the upgraded world model into the Project Genie web research prototyp
 - **Subject:** project:project-genie, thread project-genie-genie-4-rollout, 2 dated events 2026-11-19 → 2026-11-19.
 - **Practical note:** See the usage and practice sections above, with their limits.
 - **Confidence:** high. The dated supersedes above decide what is obsolete.
+
+<!-- live-update:8ed441801c0bb3264b190605012593762aa7c2b9e78ea809d19c3a2e9dc723e9 -->
+## 2026-11-20 — Google opens early Project Genie access powered by Genie 4
+
+Google has opened an experimental preview of Project Genie to Google AI Ultra subscribers in the United States. It runs on the Genie 4 world model and generates short-lived, interactive 720p environments with synchronized audio from text and image prompts.
+
+### Usage and practices
+
+- Open Project Genie in a desktop web browser, signed in to a Google AI Ultra account. It works only in supported jurisdictions (US, 18+). [Source](https://blog.google/innovation-and-ai/models-and-research/google-deepmind/genie-4-now-available-project-genie/)
+- Type a description or upload a reference image. It sets the scene layout, the look and the playable character. [Source](https://blog.google/innovation-and-ai/models-and-research/google-deepmind/genie-4-now-available-project-genie/)
+- Move around the generated 3D environment in real time with a standard keyboard and mouse. [Source](https://blog.google/innovation-and-ai/models-and-research/google-deepmind/genie-4-now-available-project-genie/)
+- Change the running simulation by typing or speaking a prompt. It can adjust lighting and weather or add new entities. [Source](https://blog.google/innovation-and-ai/models-and-research/google-deepmind/genie-4-now-available-project-genie/)
+- Describe the environment and the character precisely, or use clean framing images, so the visuals stay coherent once navigation starts. [Source](https://blog.google/innovation-and-ai/models-and-research/google-deepmind/genie-4-now-available-project-genie/)
+- Change the prompt in small steps during a session, not in drastic scene swaps, so physics drift and spatial artifacts stay low. [Source](https://blog.google/innovation-and-ai/models-and-research/google-deepmind/genie-4-now-available-project-genie/)
+- Keep sessions short and use them for concept prototyping. Long runs accumulate drift and break the continuity of the environment. [Source](https://blog.google/innovation-and-ai/models-and-research/google-deepmind/genie-4-now-available-project-genie/)
+
+### Additional evidence
+
+- 2026-11-20: Genie 4 in Project Genie generates navigable worlds in real time at 720p and up to 24 frames per second. It adds native audio for ambient sound and character dialogue, accepts live prompt changes mid-session, and embeds SynthID watermarks in its outputs. [Source](https://blog.google/innovation-and-ai/models-and-research/google-deepmind/genie-4-now-available-project-genie/)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-20: Generative world models used to render only passive, non-interactive video. They had no real-time character steering and no native synchronized audio. [Source](https://blog.google/innovation-and-ai/models-and-research/google-deepmind/genie-4-now-available-project-genie/)
+
+### Limits and open questions
+
+- Pricing, standalone API token rate limits in Google AI Studio, and plans for expansion beyond the initial US tier have not been published.
+- Drift tolerances, the maximum duration before spatial decoherence, and the client-side bandwidth needed for 720p streaming are not measured in public documentation.
+
+
+<!-- Retained base: ba59150ff6af8d3245658020d86e3463aab13771; article blob: 634adf6a4b97ba86138414b2458be79df98f6a2f -->
