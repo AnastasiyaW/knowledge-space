@@ -1,0 +1,44 @@
+{#- Language on arrival. Every build remembers a choice made in the language selector
+    (localStorage "hs.lang"). The English (root) build also sends a reader who arrives from
+    outside the site to the same page in their language: the stored choice, else the first
+    browser language the site has. It moves only to a page that exists in that language
+    (its hreflang alternate). Crawlers and link previews stay on the address they asked for,
+    so every language stays indexed. -#}
+<script>
+  (function () {
+    var KEY = "hs.lang";
+    var TARGET = { en: "en", ru: "ru", be: "ru", kk: "ru", zh: "zh-CN", fr: "fr", de: "de" };
+    function store(code) { try { localStorage.setItem(KEY, code); } catch (e) {} }
+    function stored() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+    document.addEventListener("click", function (event) {
+      var link = event.target && event.target.closest && event.target.closest(".md-select a[hreflang]");
+      if (link) store(link.getAttribute("hreflang"));
+    }, true);
+    {%- if is_root_language %}
+    var agent = navigator.userAgent || "";
+    if (navigator.webdriver || /bot|crawl|spider|slurp|yandex|baidu|lighthouse|headless|preview|facebookexternalhit|embedly|whatsapp|telegram/i.test(agent)) return;
+    try {
+      if (document.referrer && new URL(document.referrer).host === location.host) return;
+    } catch (e) {}
+    function fromBrowser() {
+      var list = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ""];
+      for (var i = 0; i < list.length; i++) {
+        var tag = String(list[i]).toLowerCase();
+        if (tag.indexOf("zh") === 0 && /-(tw|hk|mo|hant)\b/.test(tag)) continue;
+        var hit = TARGET[tag.split(/[-_]/)[0]];
+        if (hit) return hit;
+      }
+      return "en";
+    }
+    var want = stored() || fromBrowser();
+    if (!want || want.toLowerCase() === "en") return;
+    var links = document.querySelectorAll('link[rel="alternate"][hreflang]');
+    for (var j = 0; j < links.length; j++) {
+      if (links[j].getAttribute("hreflang").toLowerCase() === want.toLowerCase()) {
+        location.replace(links[j].href + location.search + location.hash);
+        return;
+      }
+    }
+    {%- endif %}
+  })();
+</script>

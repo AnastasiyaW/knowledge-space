@@ -53,6 +53,7 @@
   {% set ga4_measurement_id = config.extra.ga4_measurement_id | default('', true) %}
   {% set ads_client = ads.client() | trim %}
   {% include "partials/consent-bootstrap.html" %}
+  {% with is_root_language = (content_language == "en") %}{% include "partials/lang-redirect.html" %}{% endwith %}
   <meta name="happyin-ga4-id" content="{{ ga4_measurement_id }}">
   {% if ads_client %}
   {# AdSense site verification (meta-tag method); functions/ads.txt.js reads it too. #}
