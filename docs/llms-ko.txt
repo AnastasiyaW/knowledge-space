@@ -1,6 +1,6 @@
 # 종합 기술 지식 베이스 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1375+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1376+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1039,6 +1039,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [ProxyPose](https://happyin.space/projects/proxypose/): ProxyPose — метод и открытая реализация для исследователей компьютерного зрения, которым нужна 6-DoF-траектория локальной поверхности или объекта из монокулярного видео. Возможности: RGB-видео и од...
 - [QuerySplat](https://happyin.space/projects/querysplat/): QuerySplat is a feed-forward 3D Gaussian Splatting framework for people who need a renderable scene and novel views from multi-view images without pre-supplied camera poses.
 - [Qwen 3.6 Plus Preview — Public model availability](https://happyin.space/projects/qwen-3-6-plus-preview/): Qwen 3.6 Plus Preview is a Qwen-hosted preview model available as `qwen/qwen3.6-plus-preview:free` on OpenRouter.
+- [Qwen](https://happyin.space/projects/qwen-3-8-122b/): Qwen 3.8 122B can be fine-tuned locally in Strata on a 16 GB VRAM GPU with 64 GB RAM, without a multi-GPU cloud cluster.
 - [Qwen-Image-Edit-Rapid-AIO](https://happyin.space/projects/qwen-image-edit-rapid-aio/): Qwen-Image-Edit-Rapid-AIO merges speed accelerators, VAE, and CLIP for Qwen-Image-Edit into one checkpoint for ComfyUI users.
 - [MCNL v1 for Qwen-Image-Edit-2511](https://happyin.space/projects/qwen-image-edit/): MCNL v1 is a community LoRA for `Qwen-Image-Edit-2511` from the ScottzillaSystems repository. The card labels it as a duplicate of `aiunivers/qwen-image-edit-plus-nsfw-lora`. [Distributor model car...
 - [Qwen-Image-Flash](https://happyin.space/projects/qwen-image-flash/): Qwen-Image-Flash is a four-network-function-evaluation Qwen-Image-2.0 student for fast text-to-image generation and instruction-guided editing.
