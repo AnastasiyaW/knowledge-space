@@ -23,6 +23,8 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0  # hooks/git_dates.py reads page dates from history
 
       - uses: actions/setup-python@v5
         with:

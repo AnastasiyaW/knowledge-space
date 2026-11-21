@@ -41,9 +41,19 @@ def _clean_markdown(text: str) -> str:
 
 
 def _truncate(text: str, max_len: int = MAX_LEN) -> str:
-    """Truncate text at word boundary."""
+    """Whole sentences up to max_len; a word-boundary cut with '...' only when the first is longer."""
     if len(text) <= max_len:
         return text
+    # A stop ends a sentence only before a space, so "v1.5" and "FLUX.2" stay whole (37 of 50
+    # sampled descriptions ended in "..." on 2026-11-21).
+    whole = ""
+    for sentence in re.split(r'(?<=[.!?])\s+', text):
+        candidate = f"{whole} {sentence}" if whole else sentence
+        if len(candidate) > max_len:
+            break
+        whole = candidate
+    if whole:
+        return whole
     truncated = text[:max_len]
     # Find last space to avoid cutting mid-word
     last_space = truncated.rfind(' ')
