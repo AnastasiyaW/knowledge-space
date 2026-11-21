@@ -226,3 +226,32 @@ Comfy-Org released ComfyUI v0.46.1, a patch release with stability fixes. It fol
 - No third-party community discussion of v0.46.1 specifically turned up in searches, apart from generic aggregation.
 
 <!-- Retained base: d1ba02224df643e158ed1088f6b68943915278d1; article blob: 04ee99388b8ac5a55c2576dcf967ea59c1368c51 -->
+
+<!-- live-update:fac61c8da0ab4ebef0b1cac7929d927e9fe979a366bf6cea06f571523ffb8d77 -->
+## 2026-11-20 — ComfyUI v0.46.2 maintenance release fixes memory management and config crashes
+
+ComfyUI v0.46.2 frees memory correctly after a model unload, accepts empty or commented paths in the YAML config, adjusts VAE slicing and adds a partner node.
+
+### Usage and practices
+
+- Clone the repository with Git, or unpack the official portable package into a local folder. [Source](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.46.2)
+- Install the dependencies with pip install -r requirements.txt in the active environment. [Source](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.46.2)
+- Start the backend with python main.py, then open the graph interface in a browser to build and queue node workflows. [Source](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.46.2)
+- Set checkpoint, VAE and LoRA paths in extra\_model\_paths.yaml so environments share one storage location and large model weights are not duplicated. [Source](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.46.2)
+- Update custom nodes and dependencies through ComfyUI Manager so their schemas stay compatible with recent core and partner node releases. [Source](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.46.2)
+
+### Additional evidence
+
+- 2026-11-20: v0.46.2 is a maintenance and backport release. It fixes a memory bug where free\_memory pointed at stale indices after a model unload. Startup no longer crashes when extra\_model\_paths.yaml contains empty lines or comments. SeedVR2 VAE dynamic slicing now follows the available VRAM. Choosing an invalid pixel-space VAE gives a clearer error. The release adds the HeyGen Voice 1.0 Instant Clone text-to-speech node, and the UI asset directory responds faster. [Source](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.46.2)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-20: Earlier versions crashed at startup on blank or comment-only YAML configs in extra\_model\_paths. They also kept stale index references during memory deallocation after a model unload. [Source](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.46.2)
+
+### Limits and open questions
+
+- No community discussion or user reports on how v0.46.2 performs across operating systems were found.
+- Release dates and changelogs for the minor versions just before v0.46.2 were not captured in the two searches run.
+
+
+<!-- Retained base: 920dbb58535f380ce6f504f4bf46e46819eaeaee; article blob: 4fad8c869d812b7ba0fcc24388a7905b84c6f44e -->
