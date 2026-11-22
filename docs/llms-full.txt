@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1396+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1397+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -660,6 +660,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Ideogram](https://happyin.space/organizations/ideogram/): Ideogram is an image-generation platform for designers, content teams, and developers who need legible text, composition control, and iterative edits.
 - [Krea AI — Video generation](https://happyin.space/organizations/krea-ai/): Krea AI is a browser-based toolkit for designers and video teams that generates, edits, enhances, and animates images and video, and trains reusable styles.
 - [Luma AI](https://happyin.space/organizations/luma-ai/): Luma AI is an organization under tracking. We have not run present-state research yet, so this page carries only the dated line and the practical note below.
+- [Mailchimp: mailchimp-sale-to-bending-spoons — Mailchimp Sale To Bending Spoons](https://happyin.space/organizations/mailchimp/): Mailchimp is an email marketing and automation platform for small and mid-sized businesses, a competitor to Klaviyo and Brevo. It does three things:
 - [Meta AI — Generative AI models](https://happyin.space/organizations/meta-ai/): Meta AI is Meta's assistant for people using WhatsApp, Instagram, Facebook, Messenger, the Meta AI app, and meta.ai.
 - [Meta](https://happyin.space/organizations/meta/): Meta embeds Meta AI across WhatsApp, Instagram, Facebook, and Messenger to compete directly with ChatGPT.
 - [Microsoft](https://happyin.space/organizations/microsoft/): Microsoft is a company whose current practitioner-facing AI products in this line are Microsoft 365 Copilot for document work and Microsoft Designer for personal visual work.
