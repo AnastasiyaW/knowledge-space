@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1393+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1394+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -669,6 +669,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Mistral AI — Product and model releases](https://happyin.space/organizations/mistral-ai/): Mistral AI is a hosted model platform for developers, with Vibe as its interactive Work, Code and Chat surface.
 - [Netflix](https://happyin.space/organizations/netflix/): Netflix — подписной сервис и заказчик/дистрибьютор экранного контента, конкурент Disney+ для зрителей, студий и рекламодателей. Возможности: фильмы и сериалы, игры, персонализированные рекомендации...
 - [neural.love — AI creation and model training](https://happyin.space/organizations/neural-love/): neural.love is a browser and API platform for creators who need AI image generation, image enhancement or restoration, video-related tools, and photo transformations.
+- [NVIDIA — AI and Accelerated Computing Platform](https://happyin.space/organizations/nvidia/): NVIDIA is an AI and accelerated computing platform, an alternative to AMD ROCm and Google Cloud TPUs for training and serving large models.
 - [OpenAI](https://happyin.space/organizations/openai/): OpenAI — поставщик ChatGPT, ChatGPT Work, Codex и API для частных пользователей, команд и разработчиков; по охвату это конкурент связкам Anthropic Claude + API и Google Gemini + Vertex AI, а не оди...
 - [Osmo: osmo-ai-smell-model-development — Osmo Ai Smell Model Development](https://happyin.space/organizations/osmo/): Osmo is a digital olfaction and scent-generation platform for industrial fragrance designers, materials authenticators and sensory researchers.
 - [Pika](https://happyin.space/organizations/pika/): Pika is an unresearched product development line. We have not run present-state research yet, so this page carries only the dated events and the practical note below.
