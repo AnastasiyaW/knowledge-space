@@ -188,3 +188,34 @@ Anthropic pledged 5% of its shares to create the Anthropic Public Benefit Fund L
 - Direct links to Anthropic's own announcement and to secondary Chinese news coverage could not be verified, because the search returned redirects with no destination paths.
 
 <!-- Retained base: 3f975269bd62511173d758323b4801b7522156b5; article blob: 14f94cf359159a904a66651a7c7572c0e3318246 -->
+
+<!-- live-update:05f5f01b2996ab70168f973e7610087810f36a3ecca61c2bd4ddb6a06af0e9ef -->
+## 2026-11-20 — Claude agent swarms solve two theoretical black hole physics problems
+
+Anthropic researchers ran 22 parallel Claude agents for six weeks and resolved two open mathematical problems in theoretical black hole physics. The agents proved that the Hawking-Page phase transition remains sharp in quantum regimes. They also derived an exact modular bootstrap bound, verified in Lean.
+
+### Usage and practices
+
+- Split a hard theoretical physics or mathematics problem into modular bootstrap or algebraic sub-problems, each with clear boundary conditions. [Source](https://www.anthropic.com/research/claude-black-hole-physics)
+- Run autonomous parallel Claude agents to explore candidate solution paths, derive symbolic equations and verify each algebraic step in two independent threads. [Source](https://www.anthropic.com/research/claude-black-hole-physics)
+- Formalize the resulting limits and proofs in an interactive theorem prover such as Lean, so validity is checked mechanically. [Source](https://www.anthropic.com/research/claude-black-hole-physics)
+- Require dual-thread derivation: a separate agent instance replicates each symbolic calculation before an intermediate lemma is accepted. [Source](https://www.anthropic.com/research/claude-black-hole-physics)
+- Pair agent derivations with a formal proof checker like Lean, so subtle algebraic errors do not slip through. [Source](https://www.anthropic.com/research/claude-black-hole-physics)
+- Keep agent exploration inside well-characterized theoretical model universes before extending the methods to general physical systems. [Source](https://www.anthropic.com/research/claude-black-hole-physics)
+
+### Additional evidence
+
+- 2026-11-20: Anthropic says the research was led by Hongbin Chen and used Claude agent swarms under the Claude 5.2/Opus architecture. The first problem was the Hawking-Page phase transition in anti-de Sitter space. The agents confirmed that the transition stays sharp even under strong quantum gravity fluctuations, where spacetime has no definite geometry. The second problem was modular bootstrap bounds in two-dimensional conformal field theory. The agents established an exact analytical upper mass bound of central charge divided by 9.1266, which was then verified in Lean. [Source](https://www.anthropic.com/research/claude-black-hole-physics)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-20: Heuristic and purely numerical estimates for modular bootstrap bounds in two-dimensional conformal field theory are superseded by an exact analytical ceiling. [Source](https://www.anthropic.com/research/claude-black-hole-physics)
+
+### Limits and open questions
+
+- The published research does not disclose the pricing or compute used (API tokens or GPU hours) to run 22 parallel agents for six weeks.
+- Community discussion threads on Reddit and Hacker News could not be verified with direct, non-redirect URLs.
+- How much humans intervened during the six-week run (prompt restarts, manual pruning of dead ends) is not quantified.
+
+
+<!-- Retained base: dfcdf6c20c5ed10b7d8ace017b5484557b5674ba; article blob: 139b111e818acf57fa9acdd2b6a88365e2da67b6 -->
