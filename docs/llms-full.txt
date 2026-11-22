@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1401+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1402+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1145,6 +1145,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [ToonComposer](https://happyin.space/projects/tooncomposer/): ToonComposer is a TencentARC post-keyframing model built on Wan2.1-I2V-14B-480P. It takes a colored reference frame, a text prompt, and one or more sketches at chosen frames. It generates an animat...
 - [Tripo](https://happyin.space/projects/tripo/): Tripo is a 3D asset generation suite for artists, game studios, and product teams.
 - [TSANTSALIZE — Public model availability](https://happyin.space/projects/tsantsalize/): TSANTSALIZE is an LTX-2.3 video-to-video IC-LoRA for ComfyUI users who want a deliberate small-head effect on a speaking performer.
+- [Tufazip: tufazip-lossless-neural-compressor — Tufazip Lossless Neural Compressor](https://happyin.space/projects/tufazip/): TufaZip is an open-source lossless text compressor for machine learning practitioners and compression researchers. It uses neural sequence modeling alone, with no hybrid heuristic compressor like PPM.
 - [Tutu MCP](https://happyin.space/projects/tutu-mcp/): Tutu MCP is a Streamable HTTP MCP endpoint for Claude, Claude Code, ChatGPT, OpenCode, and compatible agents.
 - [UEmbed](https://happyin.space/projects/uembed/): UEmbed is a Qwen3.5-based decoder-only embedding family for teams that would otherwise operate separate dense and sparse retrievers.
 - [Ultra Real - Klein 9b — Klein 9b](https://happyin.space/projects/ultra-real-klein-9b/): Ultra Real - Klein 9b is a LoRA for FLUX.2 Klein 9B users in ComfyUI.
