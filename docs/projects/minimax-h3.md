@@ -145,3 +145,31 @@ Community releases for MiniMax H3 add a four-stage ComfyUI face-swap pipeline, S
 - Direct links to community discussions on Reddit and forums could not be verified.
 
 <!-- Retained base: 2b6b5eee14d533d859230f73d69fabb93305e572; article blob: c1148c23f3104a2f6a1590eda5a318d2fd4c8c8b -->
+
+<!-- live-update:4946e4366fd8dc73bb2e2865c7f67c91751e9bd6735b3f9a57834850637995ac -->
+## 2026-11-21 — MiniMax-H3 ref2va pruned INT8 checkpoint released
+
+Comfy-Org published the pruned INT8 convrot ref2va diffusion model for MiniMax-H3. It generates synchronized video and stereo audio.
+
+### Usage and practices
+
+- Download minimax\_h3\_ref2va\_pruned\_int8\_convrot.safetensors from the Comfy-Org/MiniMax-H3 repository into the ComfyUI models/diffusion\_models directory. [Source](https://huggingface.co/Comfy-Org/MiniMax-H3/blob/main/diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors)
+- Put the MiniMax-H3 text encoder and the dual video and audio VAE checkpoints into their own ComfyUI model directories. [Source](https://huggingface.co/Comfy-Org/MiniMax-H3)
+- In ComfyUI, import the reference-to-video workflow JSON, connect the ref2va diffusion loader node, set the sampler steps and resolution, then queue the generation. [Source](https://huggingface.co/Comfy-Org/MiniMax-H3)
+- Use the pruned INT8 convrot variant to keep the diffusion model's memory footprint workable on consumer GPUs. The audio stays synchronized. [Source](https://huggingface.co/Comfy-Org/MiniMax-H3/blob/main/diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors)
+- Map both the video VAE node and the stereo audio VAE node in the ComfyUI pipeline, so the output does not come out silent or corrupted. [Source](https://huggingface.co/Comfy-Org/MiniMax-H3)
+
+### Additional evidence
+
+- 2026-11-21: The Comfy-Org MiniMax-H3 repository holds the exact ref2va checkpoint, minimax\_h3\_ref2va\_pruned\_int8\_convrot.safetensors, under diffusion\_models. It uses pruned INT8 convolution-rotation quantization and is packaged for synchronized reference-to-video-audio generation. [Source](https://huggingface.co/Comfy-Org/MiniMax-H3/blob/main/diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-21: Direct reference-to-video generation needed full-precision weights until the pruned INT8 convolution-rotation checkpoints became available. [Source](https://huggingface.co/Comfy-Org/MiniMax-H3/blob/main/diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors)
+
+### Limits and open questions
+
+- The upstream primary training repository and the complete training logs from MiniMax/Hailuo remain proprietary. Open weights and quantization wrappers are mainly maintained and repackaged by Comfy-Org and community repositories on Hugging Face.
+
+
+<!-- Retained base: 220fcf56fb877799e9f79a6a0605e627689377dc; article blob: 788ff9bfb1a78451e5b5c9ba0f2b627eb87d5e88 -->
