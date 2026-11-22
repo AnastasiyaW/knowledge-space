@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1398+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1399+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -679,6 +679,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Roblox](https://happyin.space/organizations/roblox/): Roblox — игровая платформа и Roblox Studio для разработчиков; в этой линии Cube даёт: — локальный Cube 3D v0.5 для генерации OBJ по тексту; — GenerationService для статического Body1 или составного...
 - [Runway](https://happyin.space/organizations/runway/): Runway is a cloud platform for filmmakers, creative teams and developers, competing with Adobe Firefly/Premiere on the creative side and Replicate on the API side.
 - [Semantica AI: semantica-ai-frii-investment — Semantica Ai Frii Investment](https://happyin.space/organizations/semantica-ai/): Semantica AI is a GEO platform that tracks brand mentions in ChatGPT, Perplexity, Claude and Gemini for marketing teams.
+- [Spotta: spotta-bed-pod-ai-bed-bug-monitoring — Spotta Bed Pod Ai Bed Bug Monitoring](https://happyin.space/organizations/spotta/): Spotta Bed Pod is a bed-mounted bed-bug trap with a camera and AI alerts, for hotel operators and pest control contractors.
 - [Stability AI](https://happyin.space/organizations/stability-ai/): We track Stability AI as a development line. We have not run present-state research yet, so this page carries only the dated events and the practical note.
 - [Suno — Product development and industry relationships](https://happyin.space/organizations/suno/): Suno is an AI music generator expanding into professional songwriting and music production. We have not run present-state research yet, so this page carries only the dated events and practical guid...
 - [Tencent](https://happyin.space/organizations/tencent/): Tencent sells consumer platforms, cloud, marketing, payments and digital services to consumers and enterprises.
