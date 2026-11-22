@@ -65,3 +65,30 @@ Early versions used hand-coded heuristics and polygons for recognized object cla
 - **Subject:** organization:tesla, thread tesla-optimus-worker-resistance, 1 dated events 2026-11-21 → 2026-11-21.
 - **Practical note:** See the sourced usage and practice sections above, including their limits.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:5db3d0a2dfbd06d38b2a71bd585311e77871b83c6dc8ab2e0ab36f61d5889df2 -->
+## 2026-11-21 — Tesla introduces Reality View third-person neural visualization in FSD v15
+
+Tesla introduced Reality View in Full Self-Driving (FSD) v15. It uses end-to-end neural network video generation on AI4 hardware to show a real-time third-person view and what the vehicle intends to do.
+
+### Usage and practices
+
+- Run FSD v15 on an AI4 vehicle and turn on autonomous driving visualization in the vehicle controls. [Source](https://x.com/Tesla/status/2124222447855743019)
+- Watch the center console while driving. It shows a real-time generated third-person view and the planned trajectory paths. [Source](https://x.com/Tesla/status/2124222447855743019)
+- Use that view to check what the car is aware of and where it intends to go. Keep watching the physical road yourself. [Source](https://x.com/Tesla/status/2124222447855743019)
+
+### Additional evidence
+
+- 2026-11-21: Reality View in FSD v15 runs on an end-to-end generative neural network of approximately 10 billion parameters. It synthesizes a photorealistic third-person driving view on AI4 hardware, using half of one TRIP accelerator. [Source](https://x.com/Tesla/status/2124222447855743019)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-21: The cabin display used to rely on 3D vector space polygon meshes and wireframe bounding boxes to show autonomous driving. [Source](https://x.com/Tesla/status/2124222447855743019)
+
+### Limits and open questions
+
+- The topic label ties this item to humanoid robot workforce resistance (Optimus worker resistance). The public announcements and technical documentation for this event are about vehicle FSD neural video generation (Reality View), not Optimus. Independent evidence of workplace actions or resistance over Optimus deployment has not been established in available public sources.
+- Secondary technical reports mention third-party analysis sites, but search redirects gave no verifiable direct article URLs. That leaves the official announcement channel as the only cited public source.
+
+
+<!-- Retained base: 220fcf56fb877799e9f79a6a0605e627689377dc; article blob: dd97f1f24750e3787687fe431b40393e09c34ef1 -->
