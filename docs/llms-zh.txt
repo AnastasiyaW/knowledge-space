@@ -1,6 +1,6 @@
 # 综合技术知识库 - Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1394+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1395+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -24,7 +24,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [LLM & Agents](https://happyin.space/llm-agents/): 72 articles
 - [LLM Memory](https://happyin.space/llm-memory/): 13 articles
 - [Node.js](https://happyin.space/nodejs/): 16 articles
-- [Organizations](https://happyin.space/organizations/): 53 articles
+- [Organizations](https://happyin.space/organizations/): 54 articles
 - [PHP](https://happyin.space/php/): 15 articles
 - [Projects](https://happyin.space/projects/): 484 articles
 - [Python](https://happyin.space/python/): 33 articles
