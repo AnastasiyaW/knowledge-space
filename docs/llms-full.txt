@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1404+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1405+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1026,6 +1026,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [OpenBot — Project development](https://happyin.space/projects/openbot/): OpenBot is a template teams clone to run governed AG-UI coworkers on our own infrastructure instead of using a hosted agent.
 - [Opencode](https://happyin.space/projects/opencode/): OpenCode is an open-source terminal AI coding agent for developers, an alternative to Claude Code or Cursor, with a mobile companion app.
 - [OpenCut](https://happyin.space/projects/opencut/): OpenCut is an MIT-licensed video editor for creators who want a CapCut workflow.
+- [Openjdk: openjdk-java4shell-vulnerability — Openjdk Java4Shell Vulnerability](https://happyin.space/projects/openjdk/): OpenJDK Java4Shell is a heap memory-corruption vulnerability in the HotSpot virtual machine Base64 decoder. It matters to operators of Java application servers on modern x86-64 hardware.
 - [OpenMAIC](https://happyin.space/projects/openmaic/): OpenMAIC is an open-source classroom generator for educators and learners: slides, quizzes, interactive HTML scenes, project-based learning, AI teacher/peer discussion, whiteboard, TTS, and exports...
 - [OpenMontage](https://happyin.space/projects/openmontage/): OpenMontage is an automated video pipeline where an AI coding assistant runs research, scripting, assets, editing, and rendering.
 - [Openmotion: openmotion-open-source-release — Openmotion Open Source Release](https://happyin.space/projects/openmotion/): OpenMotion is an open-source video and animation studio for developers and motion designers, an alternative to Claude Motion and CapCut.
