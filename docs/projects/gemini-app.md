@@ -86,3 +86,32 @@ Desktop AI assistants used to need dedicated API environments, or total takeover
 - **Subject:** project:gemini-app, thread gemini-development, 7 dated events 2024-02-16 → 2026-11-20.
 - **Practical note:** See the sourced usage and practice sections above, including their limits.
 - **Confidence:** high. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:cc2946c5b90c68890caa3127a438ee1221da72f8712c59b618fd7ccdcedfd0d4 -->
+## 2026-11-18 — Gemini app extends support to Android Go devices with 2GB RAM
+
+Google rebuilt the Gemini mobile app to run on Android Go edition and entry-level devices with at least 2GB of RAM. These devices now get conversational Gemini Live, camera visual assistance and custom image generation.
+
+### Usage and practices
+
+- Download or update the Gemini app from the Google Play Store on a supported Android device with 2GB or more RAM. [Source](https://blog.google/innovation-and-ai/products/gemini-app/gemini-lower-memory-devices/)
+- Set Gemini as the default digital assistant. Start it with the power button shortcut or the home screen icon. [Source](https://blog.google/innovation-and-ai/products/gemini-app/gemini-lower-memory-devices/)
+- Use Gemini Live for voice dialogue. Use the camera tool for visual scanning, translation and image creation. [Source](https://blog.google/innovation-and-ai/products/gemini-app/gemini-lower-memory-devices/)
+- Check that entry-level Android devices meet the 2GB RAM threshold before deploying the Gemini app as the primary assistant. [Source](https://blog.google/innovation-and-ai/products/gemini-app/gemini-lower-memory-devices/)
+- Limit background apps on memory-constrained hardware, so real-time voice and visual sessions stay responsive. [Source](https://blog.google/innovation-and-ai/products/gemini-app/gemini-lower-memory-devices/)
+
+### Additional evidence
+
+- 2026-11-18: The release names Android Go edition devices with at least 2GB of RAM. It includes OEM pre-installation partnerships such as Transsion. Gemini Live runs in over 45 languages. Camera-based visual assistance and on-device image generation are available on entry-level hardware. [Source](https://blog.google/innovation-and-ai/products/gemini-app/gemini-lower-memory-devices/)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-18: The Gemini mobile app required higher-tier Android hardware and was unavailable on Android Go edition devices. [Source](https://blog.google/innovation-and-ai/products/gemini-app/gemini-lower-memory-devices/)
+
+### Limits and open questions
+
+- This release covers Android Go lower-memory device support only. No desktop Mac features, and no Mac background computer use, were announced.
+- Community discussion on Reddit or Hacker News could not be confirmed with a stable direct page URL.
+
+
+<!-- Retained base: 74d51581bdc97c192860167427f67f2de57f5130; article blob: 866bdc3ea0593edfa962355ebea6f5d701e6ae1c -->
