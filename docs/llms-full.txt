@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1406+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1407+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -801,6 +801,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [DeerFlow 2.0 — Agent Platforms](https://happyin.space/projects/deerflow/): DeerFlow 2.0 — an open-source runtime for teams that need an agent harness rather than a research-only framework.
 - [Déjà View \(DVLT\): open release](https://happyin.space/projects/deja-view-dvlt/): Déjà View \(DVLT\) is a multi-view 3D reconstruction model from NVIDIA Research, ETH Zurich and the University of Toronto. It takes unposed RGB images and predicts metric 3D scene geometry and came...
 - [DEMON](https://happyin.space/projects/demon/): DEMON turns ACE-Step v1.5 into a live music generator and transformer on GPU. It is an audio counterpart to StreamDiffusion for performers, creative-tool developers, and researchers.
+- [Dettato: dettato-audio-to-midi-model — Dettato Audio To Midi Model](https://happyin.space/projects/dettato/): Dettato is an open-source multi-instrument audio-to-MIDI transcription pipeline for music producers and developers.
 - [DICEPTION](https://happyin.space/projects/diception/): DICEPTION is an SD3-based diffusion model for practitioners who want one local model for visual-perception outputs.
 - [DiffGI](https://happyin.space/projects/diffgi/): DiffGI — исследовательский метод image-to-3D для одежды и каркасной мебели с тонкими, открытыми поверхностями. — заменяет бинарную occupancy-карту непрерывным 2D TSDF; — восстанавливает mesh через ...
 - [DiffIR2VR-Zero](https://happyin.space/projects/diffir2vr-zero/): DiffIR2VR-Zero — research code that adapts pretrained image-restoration diffusion models to temporally consistent video restoration. — Blind denoising (`dn`) and super-resolution (`sr`). — Claimed ...
