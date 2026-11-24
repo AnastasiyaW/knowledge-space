@@ -91,3 +91,103 @@ NVIDIA moved from GPU hardware acceleration toward system-level optimization. Ru
 - **Subject:** organization:nvidia, thread ai-and-accelerated-computing-platform, 15 dated events 2022-03-28 → 2026-11-21.
 - **Practical note:** See the sourced usage and practice sections above, including their limits.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:6e6a4db5a782f8f3f87e12c1822b67f673d7e7b9b0fd1c3fb2d4d3fce6726d08 -->
+## 2026-11-23 — Nvidia faces criminal liability risk over China chip smuggling reports
+
+Reports point to possible criminal liability and revenue forfeiture for Nvidia over illicit diversion of accelerated computing hardware into China.
+
+## 2026-11-23 — Nvidia board reinstates Jensen Huang as CEO
+
+Nvidia's board of directors voted to restore Jensen Huang as chief executive after an eleven-day absence.
+
+## 2026-11-23 — Jensen Huang returns as Nvidia CEO
+
+Jensen Huang is back at the head of Nvidia. The board of directors agreed to reinstate him as president and chief executive.
+
+## 2026-11-23 — Nvidia board restores Jensen Huang as president, CEO, and director
+
+Nvidia's board of directors voted unanimously to reinstate Jensen Huang as president, CEO, and board member. It did so after consulting federal officials.
+
+## 2026-11-23 — Nvidia board announces reinstatement of Jensen Huang
+
+An official announcement confirmed the unanimous board vote that returns Jensen Huang to the presidency, the CEO office, and the board of directors.
+
+## 2026-11-23 — Jensen Huang reinstated as Nvidia CEO
+
+Nvidia announced that its board of directors reinstated Jensen Huang as President and CEO. This ends Colette Kress's interim leadership.
+
+## 2026-11-23 — Nvidia confirms return of Jensen Huang as chief executive
+
+Nvidia confirmed that Jensen Huang is reappointed as chief executive after eleven days under interim management.
+
+## 2026-11-23 — Nvidia reinstates Jensen Huang as president and CEO
+
+Nvidia's board restored Jensen Huang to his executive and board positions. Colette Kress went back to her role as CFO.
+
+## 2026-11-23 — Jensen Huang reinstated as CEO amid ongoing inquiry
+
+Nvidia's board unanimously reinstated Jensen Huang as CEO. An independent investigation into external contacts continues.
+
+## 2026-11-23 — Nvidia board restores Jensen Huang to leadership roles
+
+Nvidia's board voted unanimously to reinstate Jensen Huang as president, CEO, and director. The inquiries go on separately.
+
+## 2026-11-23 — Nvidia board reinstates Jensen Huang to executive posts
+
+Jensen Huang is again Nvidia's president, CEO, and board director, less than two weeks after his resignation.
+
+## 2026-11-23 — Nvidia board reinstates Jensen Huang after federal consultation
+
+Nvidia's board voted unanimously to reinstate Jensen Huang as CEO. Government officials had assured the board that his return poses no national security risk.
+
+## 2026-11-23 — Nvidia board reinstates Jensen Huang after brief hiatus
+
+Jensen Huang resumed his positions as president, CEO, and board director. His departure lasted eleven days.
+
+## 2026-11-23 — Nvidia board returns Jensen Huang to CEO post
+
+Nvidia's board unanimously returned Jensen Huang to the CEO role after consulting US authorities. That ended the external search.
+
+## 2026-11-23 — Jensen Huang returns as Nvidia CEO as interim term concludes
+
+Nvidia reinstated Jensen Huang as president, CEO, and director. Interim CEO Colette Kress returned to her CFO role, and the independent inquiries continue.
+
+## 2026-11-23 — Nvidia board reinstates Jensen Huang as President and CEO
+
+Nvidia's board reinstated Jensen Huang as President and CEO. It found that his return presents no national security threat, and the stock valuation rebounded.
+
+## 2026-11-23 — Nvidia shares rebound following CEO reinstatement
+
+Nvidia's market capitalization recovered sharply. Shares rose substantially after the board decided to reinstate Jensen Huang.
+
+### Usage and practices
+
+- Check the official company newsroom and SEC filings for leadership stability and compliance disclosures before signing multi-year enterprise platform contracts. [Source](https://nvidianews.nvidia.com/news/nvidia-board-reinstates-jensen-huang-as-president-ceo-and-board-director)
+- Set up multi-vendor contingency plans and audit export compliance documents across hardware supply chains, so regulatory enforcement does not disrupt operations. [Source](https://3dnews.ru/1151665/nvidia-grozit-ugolovka-u-kompanii-mogut-otnyat-viruchku-ot-kontrabandi-chipov-v-kitay)
+
+### Additional evidence
+
+- 2026-11-23: The official announcement confirms the board voted unanimously to restore Huang to all executive and director roles. Senior federal authorities were consulted and concluded his return presents no national security concern. Interim leader Colette Kress resumes CFO duties full-time. [Source](https://nvidianews.nvidia.com/news/nvidia-board-reinstates-jensen-huang-as-president-ceo-and-board-director)
+- 2026-11-23: The board concluded that reinstating Huang served the best interests of shareholders and key partners. This ended Colette Kress's interim CEO appointment after eleven days. [Source](https://nvidianews.nvidia.com/news/nvidia-board-reinstates-jensen-huang-as-president-ceo-and-board-director)
+- 2026-11-23: Huang's absence lasted eleven days after his initial departure. In that time the board briefly considered an external executive search before moving to reinstate him. [Source](https://the-decoder.com/nvidia-tried-life-without-jensen-huang-and-it-lasted-about-two-weeks/)
+- 2026-11-23: The reversal followed direct engagement with federal authorities. It overturned a search mandate that had been started with an executive recruitment firm. [Source](https://mltimes.ai/sovet-direktorov-nvidia-vernul-dzhensena-huanga-na-post-ceo/)
+- 2026-11-23: The independent inquiry into external intelligence contacts will run alongside Huang's restored executive duties. Market capitalization rebounded quickly. [Source](https://www.ft.com/content/08914b05-bbfa-478d-b38a-549acfc1aae6)
+- 2026-11-23: Federal scrutiny focuses on proceeds from illicit grey-market diversion and transshipment of restricted computing hardware into China. [Source](https://3dnews.ru/1151665/nvidia-grozit-ugolovka-u-kompanii-mogut-otnyat-viruchku-ot-kontrabandi-chipov-v-kitay)
+
+### Subsequent developments
+
+- 2026-11-12: Jensen Huang resigned as President, CEO, and board director of Nvidia after disclosures about personal conduct and foreign intelligence inquiries. The board named CFO Colette Kress interim CEO. [Source](https://www.ft.com/content/08914b05-bbfa-478d-b38a-549acfc1aae6)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-23: Interim leadership under CFO Colette Kress, with an active external search for a new chief executive officer. [Source](https://nvidianews.nvidia.com/news/nvidia-board-reinstates-jensen-huang-as-president-ceo-and-board-director)
+
+### Limits and open questions
+
+- This page covers NVIDIA leadership governance and export compliance events together with datacenter computing platform architecture.
+- The full scope and final legal conclusions of the independent inquiry into foreign intelligence contacts and China chip smuggling criminal liability are still pending.
+- Searches in Simplified Chinese returned only redirect endpoints from financial aggregators, with no verified canonical article URLs. There is no verified primary Chinese citation.
+
+
+<!-- Retained base: 6f83c700e23f64ccaea079756d0c8701f03eb3ec; article blob: 466c38ab3ea804ad919e519d730ab57bfaa8bb87 -->
