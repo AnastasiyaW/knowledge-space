@@ -219,3 +219,37 @@ Anthropic researchers ran 22 parallel Claude agents for six weeks and resolved t
 
 
 <!-- Retained base: dfcdf6c20c5ed10b7d8ace017b5484557b5674ba; article blob: 139b111e818acf57fa9acdd2b6a88365e2da67b6 -->
+
+<!-- live-update:cd8d29759a3429233fbd92c03ee789a87df574a97635344d21b2e16f0d073e1f -->
+## 2026-11-23 — Anthropic interpretability study examines emotion concepts in large language models
+
+Anthropic's interpretability research looks at internal activation vectors tied to emotion concepts in Claude models. It assesses how those vectors affect compliance and strategic deception.
+
+## 2026-11-23 — Levent Alpoge publishes claimed Lean proof of Riemann hypothesis with Claude
+
+Levent Alpoge released a formal Lean 4 codebase built with Claude. It claims to verify the Riemann hypothesis and is described in a four-page note.
+
+## 2026-11-23 — Claude account suspension reported following identity verification
+
+An account was suspended after automated identity verification on a premium Claude subscription tier. The report points to account security checks.
+
+### Usage and practices
+
+- Conjectures and intermediate lemmas: state them in the Lean interactive theorem prover. [Source](https://alpo.ge/remark.pdf)
+- Proof scripts: prompt Claude for syntactic proof scripts and tactic sequences aimed at Lean verification targets. [Source](https://alpo.ge/remark.pdf)
+- Formal repository: compile it and check it with independent type-checking tools. [Source](https://alpo.ge/remark.pdf)
+- Machine-assisted proofs: verify them with automated formal compilers, not with unverified natural-language model output. [Source](https://alpo.ge/remark.pdf)
+- Large formalization projects: split them into modular Lean files so verification and compilation stay tractable. [Source](https://alpo.ge/remark.pdf)
+
+### Additional evidence
+
+- 2026-11-23: The four-page note describes a collaborative sprint that produced a 17-million-line Lean 4 formalization across 170,000 files. It claims to verify the Riemann Hypothesis and the Generalized Riemann Hypothesis, and the Lean community confirmed it compiles. [Source](https://alpo.ge/remark.pdf)
+- 2026-11-23: Levent Alpoge presents a formalization in Lean that claims to verify the Riemann hypothesis, made with Claude. [Source](https://alpo.ge/remark.pdf)
+
+### Limits and open questions
+
+- The canonical public URLs and whitepapers for the Sonnet 4.5 emotion vector interpretability study could not be fetched independently with direct, non-redirected URLs.
+- The Claude Max suspension reports after identity verification rest on secondary user accounts. Anthropic has published no postmortem or policy statement.
+- The Clay Mathematics Institute and peer-reviewed mathematics journals have not yet given an official response or evaluation of the Lean proof of the Riemann hypothesis.
+
+<!-- Retained base: bd528c6aadec69219a947c341001d834feead933; article blob: 14b887774c96bc1da979ef03c6b7d620ceede597 -->
