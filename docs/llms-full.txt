@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1416+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1417+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -882,6 +882,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [GPT-5.6 Sol Ultra](https://happyin.space/projects/gpt-5-6-sol-ultra/): GPT-5.6 Sol Ultra is a mode of GPT-5.6 Sol for engineers who need parallel agents.
 - [GPT-5.6 Sol — External evaluation](https://happyin.space/projects/gpt-5-6-sol/): GPT-5.6 Sol — OpenAI’s flagship GPT-5.6 model for practitioners who need stronger reasoning than Terra or Luna. It supports text and image input, a 1,050,000-token context window, 128,000 output to...
 - [GPT-6.2 Astra and GPT-6.2 Sol: gpt-6-2-astra-sol-release — Gpt 6 2 Astra Sol Release](https://happyin.space/projects/gpt-6-2-astra-and-sol/): GPT-6.2 Astra and GPT-6.2 Sol are OpenAI's frontier and high-throughput models, an alternative to Claude for coding, research and automation.
+- [GPT-6.2 Astra: gpt-6-2-astra-release — Gpt 6 2 Astra Release](https://happyin.space/projects/gpt-6-2-astra/): GPT-6.2 Astra is an OpenAI reasoning model that proves theorems automatically. It is for mathematicians and formal verification engineers who work in interactive proof assistants.
 - [GPT-6.2: gpt-6-2-release — Gpt 6 2 Release](https://happyin.space/projects/gpt-6-2/): GPT-6.2 is an OpenAI model family for software engineering teams and automated development pipelines. It competes with Anthropic Claude and Google Gemini in agentic execution.
 - [Graft: graft-execution-guided-agent-design — Graft Execution Guided Agent Design](https://happyin.space/projects/graft/): GRAFT is an agent design framework for ML researchers and agent developers, an alternative to standard evolutionary search and prompt-based meta-agents.
 - [Grok Build](https://happyin.space/projects/grok-build/): Grok Build is a terminal AI coding agent for software work.
