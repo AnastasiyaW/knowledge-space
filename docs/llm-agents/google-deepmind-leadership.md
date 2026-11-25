@@ -114,3 +114,34 @@ All read on 2026-09-02T18:32Z unless dated otherwise.
 - **Nothing technical changed.** Consult the Gemini API changelog and deprecation table for anything actionable; do not change integrations on the strength of this news.
 - **Stale-page warning:** Google's own careers and author pages lagged this change for at least four weeks; trust the dated announcement.
 - **Provenance:** researched by Codex (`gpt-5.6-sol`) from a brief on 2026-09-02; brief sha256 `7cf2cfc1…4515dc`, answer sha256 `6e277c7a…1716`; every claim above carries its source.
+
+<!-- live-update:e42348bfe097ee24b72f12d616fda178656ded63d306a05717e55a6dc44b6e75 -->
+## 2026-07-03 — Google DeepMind and A24 research partnership
+
+Google DeepMind and A24 announced a multi-project research partnership on filmmaker workflows. The announcement names no model or product release and establishes no leadership change.
+
+### Usage and practices
+
+- Treat the SVP role as the operational owner for daily work with Google DeepMind, because the chairman does not run unit operations. [Source](https://www.investing.com/news/stock-market-news/google-shakes-up-ai-leadership-as-deepmind-chief-shifts-role-4838716)
+- Distinguish Alphabet Chief Scientist and Google DeepMind chairman responsibilities from product or operational ownership when reviewing research strategy. [Source](https://www.investing.com/news/stock-market-news/google-shakes-up-ai-leadership-as-deepmind-chief-shifts-role-4838716)
+- Record leadership claims with a source date and title: the August 2026 reorganization changed CEO-era attribution, so older biographies are stale. [Source](https://www.investing.com/news/stock-market-news/google-shakes-up-ai-leadership-as-deepmind-chief-shifts-role-4838716)
+- Do not infer organizational ownership from a partnership announcement; the A24 release defines collaboration scope without any leadership change. [Source](https://blog.google/innovation-and-ai/models-and-research/google-deepmind/deepmind-a24-research-partnership/)
+
+### Additional evidence
+
+- 2026-07-03: The first-party announcement is dated 2026-06-22, not 2026-07-03. It covers a multi-project research-and-development collaboration with A24 and notes that Google invested in A24. It leaves technical outputs and milestones to evolve, and announces no model, product release, or leadership change. [Source](https://blog.google/innovation-and-ai/models-and-research/google-deepmind/deepmind-a24-research-partnership/)
+
+### Subsequent developments
+
+- 2026-08-05: Alphabet reorganized Google DeepMind leadership. Demis Hassabis moved from CEO to chairman of Google DeepMind and Alphabet Chief Scientist; Koray Kavukcuoglu became the senior vice president leading Google DeepMind’s daily operations. [Source](https://www.investing.com/news/stock-market-news/google-shakes-up-ai-leadership-as-deepmind-chief-shifts-role-4838716)
+
+### Superseded guidance (retained for history)
+
+- 2026-08-05: “Demis Hassabis is CEO of Google DeepMind” is obsolete as an account of the unit’s operating leadership. [Source](https://www.investing.com/news/stock-market-news/google-shakes-up-ai-leadership-as-deepmind-chief-shifts-role-4838716)
+
+### Limits and open questions
+
+- No public source examined here establishes an external practitioner-support or escalation path for any leadership role.
+- The supplied 2026-07-03 event date differs from the first-party announcement date of 2026-06-22; the reviewed event date remains immutable in the feed.
+
+<!-- Retained base: e985509e0739467b0c11635990ce35f023891306; article blob: a1fcdb4c2ec161f553e7459bed445d4864c41b47 -->
