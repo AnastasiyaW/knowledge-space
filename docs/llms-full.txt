@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1471+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1472+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1055,6 +1055,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Odysseus](https://happyin.space/projects/odysseus/): Odysseus is a self-hosted workspace for users wanting a ChatGPT- or Claude-style interface with local or API-backed models.
 - [Odyssey](https://happyin.space/projects/odyssey/): Odyssey — AI-лаборатория, которая делает причинные world models вместо обычных video generators; возможности: интерактивная генерация следующего состояния, общая многопользовательская симуляция, си...
 - [Ollama — Product development](https://happyin.space/projects/ollama/): Ollama is a local runtime for developers running language, vision, and embedding models on their own hardware or through a compatible API.
+- [Omni Cam: omnicam — Omnicam](https://happyin.space/projects/omni-cam/): OmniCam is a ComfyUI extension for practitioners who need to reconstruct, author, preview, and adapt camera motion for video workflows.
 - [Omni-Diffusion](https://happyin.space/projects/omni-diffusion/): Omni-Diffusion is an any-to-any multimodal model using masked discrete diffusion. It gives researchers and engineers one open stack instead of separate autoregressive models.
 - [OmniAvatar — Public release and demo availability](https://happyin.space/projects/omniavatar/): OmniAvatar is an open research system for talking avatar video generation from an image, audio, and text prompt.
 - [OmniRoute](https://happyin.space/projects/omniroute/): OmniRoute is an MIT-licensed gateway connecting Claude Code, Codex, Cursor, Cline and other clients to model providers through one endpoint.
