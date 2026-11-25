@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1453+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1454+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -845,6 +845,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [FLOAT](https://happyin.space/projects/float/): FLOAT is a PyTorch research implementation that animates a single, mostly frontal portrait from speech audio.
 - [FLUX.2 [Klein] KV - 9B — Model release and local inference](https://happyin.space/projects/flux-2-klein-9b-kv/): FLUX.2 [klein] 9B-KV — 9B flow-модель для локального или API-редактирования, когда обычный FLUX.2 [klein] 9B тратит время на повторную обработку тех же референсов. — text-to-image; — редактирование...
 - [FLUX.2 Klein 9B Manga Colorization LoRA — Manga Colorization by Reference LoRA](https://happyin.space/projects/flux-2-klein-9b-manga-colorization-by-reference-lora/): FLUX.2 Klein 9B Manga Colorization LoRA is a LoRA adapter for artists and ComfyUI or Diffusers users who transfer character palettes from a color reference onto line art or grayscale panels.
+- [FLUX.2](https://happyin.space/projects/flux-2-klein-9b-refmods/): FLUX.2 RefMods (Reference Latent Adapters) are personalization adapters for Klein 9B using 2D RoPE reference latent injection.
 - [FLUX 3](https://happyin.space/projects/flux-3/): FLUX 3 is a BFL preview video model for creators and API teams who make short audiovisual shots.
 - [FLUX Video Upscale — Black Forest Labs](https://happyin.space/projects/flux-video-upscale/): FLUX Video Upscale is a FLUX 3 video super-resolution endpoint for API users.
 - [FLUX.2](https://happyin.space/projects/flux/): FLUX.2 is Black Forest Labs' model family for API teams, local developers, and ComfyUI pipelines running generation and editing through one pipeline.
