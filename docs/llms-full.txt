@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1447+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1448+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -905,6 +905,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [HeyGen Avatar 6: heygen-avatar-6-launch — Heygen Avatar 6 Launch](https://happyin.space/projects/heygen-avatar-6/): HeyGen Avatar 6 is a video generation neural network that turns text and audio into automated presenter avatars. It competes directly with Synthesia and D-ID.
 - [hf-mount](https://happyin.space/projects/hf-mount/): hf-mount is a Rust CLI for developers and ML infrastructure to mount Hugging Face storage to local filesystems.
 - [Hi3D](https://happyin.space/projects/hi3d/): Hi3D: сервис image-/multi-view-to-3D с текстурированием, разбиением модели для печати, подготовкой цветов и API/плагинами для ComfyUI. Текущая модель v3.0 предлагает режимы 2048³ Quality и Master, ...
+- [HiDream-O1-Video-1.0: hidream-o1-video — Hidream O1 Video](https://happyin.space/projects/hidream-o1-video/): HiDream-O1-Video-1.0 is a video generation model from HiDream for generating synchronized audio-video clips from text, images or video.
 - [Holi-Spatial](https://happyin.space/projects/holi-spatial/): Holi-Spatial is a public data-preparation pipeline for research teams that need 3D Gaussian Splatting, masks, 3D boxes, and spatial QA from ScanNet, ScanNet++, or DL3DV scenes.
 - [HOMIE](https://happyin.space/projects/homie/): HOMIE is an open-source local video generation pipeline driven by reference images of people, products, logos, OCR maps, and multi-view shots.
 - [Hugging Bay](https://happyin.space/projects/hugging-bay/): Hugging Bay is for teams selecting open model artifacts: it offers catalog search, provenance and license signals, hosted-or-mirror download paths, and MCP tools for resolving artifacts and produci...
