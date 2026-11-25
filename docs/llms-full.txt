@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1443+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1444+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1018,6 +1018,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Nano Banana Pro](https://happyin.space/projects/nano-banana-pro/): Nano Banana Pro is Google's Gemini 3 Pro Image model for creators and developers making complex visual assets.
 - [NanoVDR](https://happyin.space/projects/nanovdr/): NanoVDR is a visual-document retrieval system for teams searching PDF pages, reports, and page images. It acts as a query-side replacement rather than a standalone document indexer.
 - [NAVA](https://happyin.space/projects/nava/): NAVA is a local joint audio-video model for text-to-audio-video, first-frame image continuation, audio-only generation, and reference-timbre speech.
+- [Needle 3](https://happyin.space/projects/needle-automation-model/): Needle 3 is a foundation model from Cactus Compute for mobile, wearables, robots, smart home, automotive and microcontrollers.
 - [Nemotron 3 Super](https://happyin.space/projects/nemotron-3-super/): Nemotron 3 Super — открытая гибридная Mamba-Transformer MoE-модель NVIDIA для команд, строящих агентные системы, программирование и длинный контекст. Способности: reasoning, tool calling, код, конт...
 - [NeumaTex](https://happyin.space/projects/neumatex/): NeuMatEx — a research pipeline for graphics and 3D-asset teams that turns a known 3D model plus multi-view images into a relightable neural material rather than PBR texture maps.
 - [neural.love](https://happyin.space/projects/neural-love/): neural.love is a browser and API platform for creators who need AI image generation, image processing, and media workflows.
