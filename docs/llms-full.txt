@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1435+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1436+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1025,6 +1025,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Nirjala: nirjala-underwater-gaussian-splatting — Nirjala Underwater Gaussian Splatting](https://happyin.space/projects/nirjala/): NIRJALA is a 3D Gaussian Splatting framework that recovers water-free appearance and geometry for underwater scenes.
 - [NotebookLM](https://happyin.space/projects/notebooklm/): NotebookLM, now called Gemini Notebook, is Google’s workspace for students, analysts and teams working strictly from selected documents.
 - [Nunchaku — Model integration expansion](https://happyin.space/projects/nunchaku/): Nunchaku is an SVDQuant 4-bit inference engine for Diffusers and ComfyUI users who need lower-precision FLUX or Qwen Image transformers rather than another base model.
+- [Nunchux Attention Optimization: vc-attention-optimization — Vc Attention Optimization](https://happyin.space/projects/nunchux-attention-optimization/): VC-Attention is a training-free low-bit attention kernel for diffusion-transformer video models, from Nunchux AI.
 - [Context-Matched Distillation](https://happyin.space/projects/nvidia-cmd/): Context-Matched Distillation (CMD) is NVIDIA’s causal distribution-matching distillation method and checkpoint release for autoregressive image-to-video generation.
 - [Cosmos 3 Edge](https://happyin.space/projects/nvidia-cosmos-3-edge/): Cosmos 3 Edge is a 4B open-weight multimodal world model for robotics, autonomous-driving, and smart-space teams.
 - [Cosmos-1.0-Diffusion: nvidia-cosmos-world-model-platform — Nvidia Cosmos World Model Platform](https://happyin.space/projects/nvidia-cosmos/): NVIDIA Cosmos is an open-weight world foundation model platform. It is built for robotics, embodied AI and autonomous vehicle developers.
