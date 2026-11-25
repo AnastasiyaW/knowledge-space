@@ -1,0 +1,8 @@
+# Happyin Knowledge Space {#happyin-knowledge-space}
+
+> Technische Wissensdatenbank für Ingenieure und KI-Agenten. Die Seiten in dieser Sprache sind maschinelle Übersetzungen der kanonischen englischen Artikel.
+
+- [Hier beginnen](https://happyin.space/de/start-here/)
+- [Die Wissensdatenbank mit einem KI-Agenten nutzen](https://happyin.space/de/for-llm-agents/)
+- [Übersicht der Wissensdatenbank](https://happyin.space/de/knowledge-base/)
+- [Englisches Original](https://happyin.space/llms.txt)

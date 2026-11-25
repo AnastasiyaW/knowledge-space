@@ -98,3 +98,35 @@ As of 2025-07-31, practitioners should check Ideogram's current Character workfl
 - **Subject:** `project:ideogram`, thread `model-and-product-releases`, 3 dated events 2024-03-01 → 2025-07-31.
 - **Practical note:** As of 2025-07-31, practitioners should check Ideogram's current Character workflow when evaluating its image-generation options; the supplied dated links establish version milestones and a Character product area, but not implementation details.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:b014a941be06f1657741056b695143aca9d2092ef72e5743fcb645e71a0fc917 -->
+## 2026-11-20 — Ideogram 4.6 adds native 4K rendering and multi-step editing
+
+Ideogram 4.6 renders natively at up to 4096 x 4096 pixels, with no upscaling pass. It edits over several turns with up to five reference images, and it drifts less on targeted changes.
+
+### Usage and practices
+
+- Pick Ideogram 4.6 in the model picker of the web interface, or call the 4.6 model endpoint in the Ideogram API. [Source](https://ideogram.ai/models/4.6)
+- Set the resolution to native 4K (up to 4096 x 4096) to get full detail without upscaling. [Source](https://ideogram.ai/models/4.6)
+- Write a prompt with explicit layout, typography or style constraints. Attach up to five image references for multi-step composition. [Source](https://ideogram.ai/models/4.6)
+- Use the Precise Edit tool for iterative local changes. It adjusts the targeted area and keeps the surrounding character and background pixels. [Source](https://ideogram.ai/models/4.6)
+- Use native 4K directly for commercial print, packaging and fine typography, so a separate upscaling pass does not add distortion. [Source](https://ideogram.ai/models/4.6)
+- Supply up to five reference images for complex brand or product edits, so style, identity and color palette hold across consecutive iterations. [Source](https://ideogram.ai/models/4.6)
+- Confine each instruction to one region with Precise Edit masks, so the edit stays accurate and global pixel drift stays low. [Source](https://ideogram.ai/models/4.6)
+
+### Additional evidence
+
+- 2026-11-20: The release documentation lists native 4K up to 4096 x 4096 pixels. It describes drift mitigation across multi-turn edits that preserves facial features. It names API endpoints for Generate and Precise Edit. It also plans an open-weight model release for version 4.6. [Source](https://ideogram.ai/models/4.6)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-20: Relying on secondary upscalers or post-processing upscaling pipelines to produce 4K images. [Source](https://ideogram.ai/models/4.6)
+- 2026-11-20: Assuming significant background pixel drift or facial degradation during multi-turn image edits. [Source](https://ideogram.ai/models/4.6)
+
+### Limits and open questions
+
+- Release dates for earlier minor versions could not be confirmed against a verified primary source.
+- Redirects hid the destination URLs of third-party articles and community threads, so none are linked here.
+
+
+<!-- Retained base: 2554a875fef5517115b9aaeba4140d81b6570628; article blob: a7f6bc0ed0ee157d06f2bebaedb6622b397e0f6b -->

@@ -148,3 +148,61 @@ As of 2026-02-25, practitioners assessing Google AI should evaluate its research
 - **Subject:** `organization:google`, thread `google-ai-development`, 9 dated events 2022-11-03 → 2026-02-25.
 - **Practical note:** As of 2026-02-25, practitioners assessing Google AI should evaluate its research, Workspace and Assistant integrations, Vertex AI model access, and Google Labs acquisitions as one evolving development line, while checking each contemporaneous primary source for actual availability before adopting a capability.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:bbd222d273ae459436fe82b7625c1faf9b309e906604b8cf7e282beb48ba4a25 -->
+## 2026-11-13 — Gemini 4 Hydrogen, Google's execution model for code
+
+Gemini 4 Hydrogen is Google's execution model for writing code and running agent tasks. It has configurable reasoning levels and works with other models through Antigravity orchestration.
+
+### Usage and practices
+
+- Model choice: pick Gemini 4 Hydrogen \(model ID gemini-4-hydrogen\) in Google AI Studio or the Gemini API for execution work. [Source](https://shareai.space/blog/2026/google-vypustila-gemini-4-hydrogen-bystruyu-model-dlya-koda)
+- Thinking level: set low, medium, high or xhigh, trading latency against reasoning depth. [Source](https://shareai.space/blog/2026/google-vypustila-gemini-4-hydrogen-bystruyu-model-dlya-koda)
+- Orchestrator mode: turn it on in Google Antigravity so Gemini 4 Carbon plans the architecture and Gemini 4 Hydrogen writes and tests the code in iterations. [Source](https://shareai.space/blog/2026/google-vypustila-gemini-4-hydrogen-bystruyu-model-dlya-koda)
+- Repository work: use Gemini 4 Hydrogen as a fast engine for boilerplate, unit tests and refactoring. Leave architectural decisions to frontier planning models. [Source](https://shareai.space/blog/2026/google-vypustila-gemini-4-hydrogen-bystruyu-model-dlya-koda)
+- Default depth: keep the default high thinking level for non-trivial coding, so reasoning quality holds while quota and speed are preserved. [Source](https://shareai.space/blog/2026/google-vypustila-gemini-4-hydrogen-bystruyu-model-dlya-koda)
+
+### Additional evidence
+
+- 2026-11-13: Gemini 4 Hydrogen ships as a dedicated execution model, model ID gemini-4-hydrogen. It has thinking levels \(low, medium, high, xhigh\) and a 1-million-token context window. It costs $1.50 per million input tokens and $7.50 per million output tokens in Google AI Studio, the Gemini API and Antigravity. [Source](https://shareai.space/blog/2026/google-vypustila-gemini-4-hydrogen-bystruyu-model-dlya-koda)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-13: Gemini 3.8 Flash was the recommended fast execution model for automated coding agents. [Source](https://shareai.space/blog/2026/google-vypustila-gemini-4-hydrogen-bystruyu-model-dlya-koda)
+
+### Limits and open questions
+
+- Google's own pages on blog.google, antigravity.google and google.com were not checked directly. Search returned grounding API redirect links instead of the pages themselves.
+- How well Gemini 4 Hydrogen recovers from errors in complex enterprise codebases is not yet measured by independent developers. The release is too recent.
+
+<!-- Retained base: 437e4c3dfc0859000903ae1628e045dcc8777d25; article blob: ebaa17d24d13387ddee98bd46f7badf20b5f70c0 -->
+
+<!-- live-update:a6cc55b49e9862cb2c0dd9c5b1cfe7f7c90d144823299e390e56ef512e1917a3 -->
+## 2026-11-19 — Google releases Gemini 4 Neon
+
+Google released Gemini 4 Neon. It takes text, code, audio, video and PDF as input. The context window is one million tokens. It costs $3 per million input tokens and $15 per million output tokens.
+
+## 2026-11-19 — Gemini 4 Neon release
+
+Google added Gemini 4 Neon to its model lineup.
+
+### Usage and practices
+
+- Get API credentials for the Gemini API and set up client access to the multimodal endpoint. [Source](https://shareai.space/blog/2026/google-vypustila-gemini-4-neon-samuyu-doroguyu-model-novoy-l)
+- Send text, code, audio, video or PDF data in the request, inside the one-million token context limit. [Source](https://shareai.space/blog/2026/google-vypustila-gemini-4-neon-samuyu-doroguyu-model-novoy-l)
+- Watch token usage when you send dense payloads such as video or large PDF files, so input costs at $3 per million tokens stay in check. [Source](https://shareai.space/blog/2026/google-vypustila-gemini-4-neon-samuyu-doroguyu-model-novoy-l)
+- Send whole code repositories and reference documents in one prompt, so the context is not split across several. [Source](https://shareai.space/blog/2026/google-vypustila-gemini-4-neon-samuyu-doroguyu-model-novoy-l)
+
+### Additional evidence
+
+- 2026-11-19: Gemini 4 Neon is the fourth model in the lineup within four weeks. Pricing is $3 per million input tokens and $15 per million output tokens. It accepts multimodal input and has a context window of up to one million tokens. [Source](https://shareai.space/blog/2026/google-vypustila-gemini-4-neon-samuyu-doroguyu-model-novoy-l)
+
+### Limits and open questions
+
+- Web search returned Vertex AI Search grounding redirects, not canonical URLs, for vendor and reporting sites. First-party documentation URLs could not be checked automatically.
+- Source live-ee296d77e438 calls Gemini 4 Neon the most expensive in the lineup. Search summaries place it between Gemini 4 Hydrogen and Gemini 4 Carbon.
+- Event live-590707fece96 has no extracted URL. Its independent benchmarks and vendor reliability comments are not confirmed by a primary public record.
+- No public community threads with stable URLs could be verified, so practitioner reception and bug reports are unknown.
+
+
+<!-- Retained base: d1ba02224df643e158ed1088f6b68943915278d1; article blob: a6e5e93872b609d72346438864058a1d853e77ac -->

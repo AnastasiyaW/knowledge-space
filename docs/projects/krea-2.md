@@ -94,3 +94,44 @@ From 2026-06-24, practitioners should begin Krea 2 evaluation with the linked of
 - **Subject:** `project:krea-2`, thread `open-source-release`, 2 dated events 2026-06-23 → 2026-06-24.
 - **Practical note:** From 2026-06-24, practitioners should begin Krea 2 evaluation with the linked official Raw or Turbo resources and the named ComfyUI Turbo workflow, while treating the 2026-06-23 community artifacts as unverified alternatives.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
+
+<!-- authored-live-update:bf52587c12cd0fb788672535d3ae6ab873df031c4d2c724e5db6ec3ff4b3e322 -->
+# Krea 2 Turbo SDA Diversity LoRA
+
+The public artifact is [F16/krea2-turbo-sda](https://huggingface.co/F16/krea2-turbo-sda), titled **Krea 2 Turbo — SDA Diversity LoRA (v1.0)**. It is a community adapter for `krea/Krea-2-Turbo`, not a new Krea model and not a general Krea 2 setting.
+
+Its author, F16, calls SDA “Semantic Directional Alignment”. The stated goal is to make different seeds produce more different images from the same prompt. The author reports a fixed evaluation panel of 10 prompts by 16 seeds: pairwise CLIP cosine distance rose from 0.0296 to 0.0548 with the adapter at gate 2, while HPSv2.1 changed from 0.2990 to 0.2987. Those are creator-reported numbers, not an independent benchmark. [English card](https://huggingface.co/F16/krea2-turbo-sda) · [Simplified-Chinese card](https://huggingface.co/F16/krea2-turbo-sda/blob/main/README.zh.md)
+
+## The gate is the workflow
+
+The card documents this LoRA for the first two denoise steps of Krea 2 Turbo’s eight-step schedule, then says to disable it. In the author’s panel, “gate 2” is the intended configuration. Keeping it active for all eight steps is reported to cause blur or quality collapse.
+
+An always-on LoRA loader won't do. The author says stock ComfyUI applies a LoRA at every step, so the ComfyUI path needs a per-step hook or scheduling node that removes the adapter after step 2. The card doesn't name a canonical node or workflow JSON. Don't call a random ComfyUI graph the official SDA workflow.
+
+The repository has two files:
+
+- `krea2_turbo_sda_v1.0_comfy.safetensors` for ComfyUI.
+- `krea2_turbo_sda_v1.0_diffusers.safetensors` for Diffusers.
+
+For the documented Diffusers route, the card calls for a `Krea2Pipeline` build merged after `0.39.0.dev0`, bf16, eight steps, guidance 1.0, and a callback that disables the LoRA after the second step. This is the creator’s recipe, not a locally reproduced one.
+
+## What it does not prove
+
+The author reports more variation from seed to seed. That does not show the adapter repairs a defect in Krea 2. The card also doesn't say whether it works with Raw or other Turbo variants.
+
+The card also gives a trade-off: more diversity can reduce stability and make anatomy errors more likely. Keep the base checkpoint, adapter file, framework revision, seed range, resolution, steps, guidance, shift, and gate in every comparison.
+
+A public [Hugging Face demo Space](https://huggingface.co/spaces/hugging-apps/krea2-turbo-sda-demo) exists. The listing shows that a demo is available, but this research did not obtain its workflow export, runtime lockfile, hardware profile, or an independently rerun result.
+
+## Sources
+
+- [F16/krea2-turbo-sda](https://huggingface.co/F16/krea2-turbo-sda) — creator’s English artifact card, reported evaluation, setup, and limits.
+- [README.zh.md](https://huggingface.co/F16/krea2-turbo-sda/blob/main/README.zh.md) — creator’s Simplified-Chinese card; English paraphrase above retains its provenance.
+- [Krea 2 Turbo SDA demo](https://huggingface.co/spaces/hugging-apps/krea2-turbo-sda-demo) — public demo listing only.
+
+## Agent Brief
+
+Resolve the artifact as `F16/krea2-turbo-sda` before discussing it. Use only with `krea/Krea-2-Turbo`; use the matching ComfyUI or Diffusers file; schedule it for the first two of eight steps and turn it off afterwards. Label every diversity figure as creator-reported. Do not treat the demo listing as a verified workflow, and do not extend compatibility beyond the exact base and schedule without a versioned run.
+
+
+<!-- Retained base: 10a1a74b58eb65fd5b18c6a04e3d1b0dcadb09ea; article blob: 54c78b9447b4e8550edc01d54cf7c2babe34f352 -->

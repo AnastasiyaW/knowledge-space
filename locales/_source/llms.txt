@@ -1,0 +1,8 @@
+# Happyin Knowledge Space
+
+> Technical knowledge base for engineers and AI agents. Pages in this language are machine translations of the canonical English articles.
+
+- [Start here](https://happyin.space/{lang}/start-here/)
+- [Using the knowledge base with an AI agent](https://happyin.space/{lang}/for-llm-agents/)
+- [Map of the knowledge base](https://happyin.space/{lang}/knowledge-base/)
+- [English original](https://happyin.space/llms.txt)
