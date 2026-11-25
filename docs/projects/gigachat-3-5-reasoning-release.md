@@ -74,3 +74,43 @@ GigaChat 3.5 Reasoning is a dedicated thinking variant of the GigaChat 3.5 archi
 - **Subject:** project:gigachat-3-5-reasoning-release, thread gigachat-development, 2 dated events 2026-09-14 → 2026-09-14.
 - **Practical note:** See the sourced usage and practice sections above, including their limits.
 - **Confidence:** high. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:99eff90331534eb7a05520b7b681c68ed9e5d422263284b1f910bf0cb25525d6 -->
+## 2026-09-11 — GigaChat 3.5 Reasoning open weights released under MIT
+
+GigaChat 3.5 Reasoning is an open-weight reasoning checkpoint under the MIT license. The training used online reinforcement learning and specialized expert models.
+
+## 2026-09-11 — GigaChat 3.5 Reasoning checkpoint published for self-hosting
+
+The GigaChat3.5-432B-A28B-Reasoning checkpoint is out for self-hosting. It has 432B total parameters, 28B active parameters, and a 262K-token context limit. Documented serving paths cover SGLang and vLLM.
+
+### Usage and practices
+
+- Choose the FP8 checkpoint for inference, and the BF16 variant for fine-tuning or custom quantization. [Source](https://huggingface.co/ai-sage/GigaChat3.5-432B-A28B-Reasoning)
+- Install the SGLang or vLLM revision named in the model card so the launch path picks up GigaChat 3.5 support from the upstream pull requests. [Source](https://huggingface.co/ai-sage/GigaChat3.5-432B-A28B-Reasoning)
+- Launch on the documented eight-H100 setup with tensor and expert parallelism, and enable the GigaChat reasoning and tool-call parsers. [Source](https://huggingface.co/ai-sage/GigaChat3.5-432B-A28B-Reasoning)
+- Call the OpenAI-compatible chat-completions endpoint. Read the parsed reasoning field separately from the final content when the reasoning parser is on. [Source](https://huggingface.co/ai-sage/GigaChat3.5-432B-A28B-Reasoning)
+- Serve from the FP8 weights and tune or quantize from the separate BF16 weights. Do not use the inference checkpoint for fine-tuning. [Source](https://huggingface.co/ai-sage/GigaChat3.5-432B-A28B-Reasoning)
+- Turn on the documented reasoning and tool-call parsers so hidden reasoning and the final answer land in separate response fields. [Source](https://huggingface.co/ai-sage/GigaChat3.5-432B-A28B-Reasoning)
+- Treat published benchmark comparisons as vendor measurements. The model card documents benchmark-specific judges, corrected scoring, and agent timeouts. [Source](https://huggingface.co/ai-sage/GigaChat3.5-432B-A28B-Reasoning)
+
+### What practitioners say
+
+- One practitioner advises self-hosting on rented compute or a dedicated server instead of home GPUs. The released checkpoint handles text generation, not image inputs. (2026-09-14) [Source](https://blog.fillikam.com/guides/gigachat-3-5-reasoning-rassuzhdeniya/)
+
+### Additional evidence
+
+- 2026-09-11: Release notes identify this as the first GigaChat model trained for full reasoning with online RL. Six domain experts—STEM, code, code agent, general agent, dialogue and instruction following—are combined through on-policy distillation. The post reports an IFBench score of 77.00 versus 43.66 for GigaChat 3.5 Ultra Instruct. [Source](https://giga.chat/blog/en/posts/gigachat-3-5-reasoning)
+- 2026-09-11: The checkpoint is named ai-sage/GigaChat3.5-432B-A28B-Reasoning. The model card lists MIT licensing, 432B total and 28B active parameters, a 262K-token context limit, FP8 inference weights, and a separate BF16 checkpoint for fine-tuning or custom quantization. [Source](https://huggingface.co/ai-sage/GigaChat3.5-432B-A28B-Reasoning)
+
+### Subsequent developments
+
+- 2026-07-06: GigaChat 3.5 Ultra established the 432B GigaChat 3.5 base family. It open-sourced the hybrid MLA-plus-GatedDeltaNet architecture that the Reasoning checkpoint builds on. [Source](https://giga.chat/blog/en/posts/gigachat-3-5)
+
+### Limits and open questions
+
+- The two reviewed entries share their title and sources. Public evidence supports one release announcement, not two separate product changes.
+- No independent benchmark replication was found. Performance figures in the model card remain vendor-reported.
+- The model card's SGLang and vLLM installation instructions point to named upstream pull requests. Verify upstream compatibility before deploying to production.
+
+<!-- Retained base: b499a7b71aef3b3ef3cc25a3ac6fd5795b6ae5d4; article blob: fe3036a0b6f222b1b7ecf77ef59dffdd2d5b7033 -->
