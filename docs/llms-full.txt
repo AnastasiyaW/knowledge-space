@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1450+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1451+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1167,6 +1167,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Stable Diffusion](https://happyin.space/projects/stable-diffusion/): Stable Diffusion is a family of generative image models for artists and developers who need a choice between self-hosting and an API instead of a closed service like Midjourney.
 - [Stablegrasp: stablegrasp-physically-stable-hand-grasp-reconstruction — Stablegrasp Physically Stable Hand Grasp Reconstruction](https://happyin.space/projects/stablegrasp/): StableGrasp refines single-image hand grasps so they stay stable in a physics simulator, for robotics and interactive simulation.
 - [Starchild-1](https://happyin.space/projects/starchild-1/): Starchild-1 is a research causal world model by Odyssey for teams needing interactive world simulation rather than pre-rendered video.
+- [StepAudio 3: stepaudio-3-realtime-music-voice-design — Stepaudio 3 Realtime Music Voice Design](https://happyin.space/projects/stepaudio-3-realtime-music-voice-design/): StepAudio 3 is StepFun's audio model family for realtime speech, full-song generation, and voice design.
 - [Steppe-Wan2.1: steppe-wan2-1-latent-upscaler-release — Steppe Wan2 1 Latent Upscaler Release](https://happyin.space/projects/steppe-wan2-1/): Steppe-Wan2.1 is a latent-space upscaler from TensorForger for people who run diffusion pipelines in the Wan 2.1 VAE latent space. It does four things:
 - [Steprefine: steprefine-mdlm-denoising-refinement — Steprefine Mdlm Denoising Refinement](https://happyin.space/projects/steprefine/): StepRefine is a training-free decoding method for multimodal diffusion language models, aimed at stopping hallucinations during iterative token generation.
 - [Strata engine: strata-inference-engine — Strata Inference Engine](https://happyin.space/projects/strata/): Strata is a C\+\+ inference engine that runs large Mixture-of-Experts models on consumer hardware, an alternative to vLLM and llama.cpp.
