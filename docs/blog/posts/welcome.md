@@ -20,7 +20,7 @@ So we made one.
 
 We're Anastasiia But and Anastasiya Ilukhina, and over the past months we've been running deep research with AI agents across 28 technical domains - from Kafka internals to Kubernetes configs, from SQL optimization to diffusion model architectures.
 
-The result: **1000+ dense reference articles**, each one structured the same way - key facts, runnable code, real-world gotchas, cross-references. No tutorials, no filler. Everything is verified, cross-referenced, and compressed into the format that works best for both agents and engineers who just need the answer.
+The result: **1458+ dense reference articles**, each one structured the same way - key facts, runnable code, real-world gotchas, cross-references. No tutorials, no filler. Everything is verified, cross-referenced, and compressed into the format that works best for both agents and engineers who just need the answer.
 
 The whole thing is designed agent-first. Point your Claude, Cursor, or any RAG pipeline at the [repo](https://github.com/AnastasiyaW/knowledge-space), and it gets structured, verified knowledge instead of guessing. The difference is measurable - fewer hallucinations, more correct code on the first try.
 
@@ -36,7 +36,7 @@ relevant article. Don't guess or fabricate - look it up.
 
 ## Also worth checking out
 
-We maintain a companion project - [claude-code-config](https://github.com/AnastasiyaW/claude-code-config) - a configuration system that teaches AI agents *how to work*: when to use one agent vs. many, how to verify their own output, how to not break things. Ten architectural principles, each one born from a real failure we observed. Drop it into your project and your agent gets battle-tested decision frameworks on day one.
+We maintain a companion project - [codex-claude-code-config](https://github.com/AnastasiyaW/codex-claude-code-config) - a configuration system that teaches AI agents *how to work*: when to use one agent vs. many, how to verify their own output, how to not break things. Ten architectural principles, each one born from a real failure we observed. Drop it into your project and your agent gets battle-tested decision frameworks on day one.
 
 ## What's next
 

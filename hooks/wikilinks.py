@@ -11,6 +11,10 @@ from pathlib import Path
 # Cache: slug -> relative path from docs root (with .md)
 _slug_map: dict[str, str] = {}
 _built = False
+# A language build links a page it has not translated yet to the English original.
+ENGLISH_DOCS = Path(__file__).resolve().parents[1] / "docs"
+_english_paths: set[str] = set()
+_english_base = ""
 
 
 def _build_slug_map(docs_dir: Path):
@@ -66,6 +70,9 @@ def _make_replacer(current_page_path: str):
             if target_path is None:
                 # It named a domain and no page answers to that domain: say nothing rather
                 # than sending the reader to another domain's page of the same name.
+                english = _english_target(qualified) if _english_base else None
+                if english:
+                    return f"[{slug.replace('-', ' ').replace('_', ' ')}]({_english_base}{english})"
                 return match.group(0)
         elif _ambiguous.get(slug):
             # A bare name several domains answer to. Guessing one is how wrong evidence
@@ -74,6 +81,11 @@ def _make_replacer(current_page_path: str):
 
         if target_path is None and slug in _slug_map:
             target_path = _slug_map[slug]
+        if target_path is None and _english_base:
+            english = _english_target(match.group(1).strip())
+            if english:
+                display = slug.replace("-", " ").replace("_", " ")
+                return f"[{display}]({_english_base}{english})"
         if target_path:
             # Compute relative path from current page directory
             if current_dir:
@@ -122,10 +134,27 @@ def _process_markdown(content: str, page_path: str) -> str:
     return "\n".join(result)
 
 
+def _english_target(name: str) -> str | None:
+    """Directory URL of the English page an unresolved [[name]] or [[domain/name]] means;
+    None when no single English page answers."""
+    name = name.strip("/")
+    hits = sorted(p for p in _english_paths
+                  if p == f"{name}.md" or p.endswith(f"/{name}.md") or ("/" not in name and p.endswith(f"/{name}/index.md")))
+    if len(hits) != 1:
+        return None
+    path = hits[0]
+    return path[: -len("index.md")] if path.endswith("index.md") else path[: -len(".md")] + "/"
+
+
 def on_pre_build(config, **kwargs):
     """Build slug map before MkDocs starts."""
+    global _english_base
     docs_dir = Path(config["docs_dir"])
     _build_slug_map(docs_dir)
+    english = next((loc for loc in config["extra"].get("locales", []) if loc.get("lang") == "en"), None)
+    if english and docs_dir.resolve() != ENGLISH_DOCS:
+        _english_base = english["base"]
+        _english_paths.update(f.relative_to(ENGLISH_DOCS).as_posix() for f in ENGLISH_DOCS.rglob("*.md"))
     print(f"[wikilinks] {len(_slug_map)} article slugs indexed")
 
 

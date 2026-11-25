@@ -14,7 +14,7 @@ LinkedIn иконка в .ks-contributor__avatar (синий фон #0a66c2, б�
 НЕ голый SVG напрямую.
 
 ## Header
-Две кнопки GitHub в ряд (knowledge-space + claude-code-config).
+Две кнопки GitHub в ряд (knowledge-space + codex-claude-code-config).
 Логотип = animated favicon SVG, не дефолтная иконка книги.
 
 ## Общее

@@ -10,9 +10,13 @@
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
 
-/*.txt
+/llms*.txt
   Cache-Control: public, max-age=86400
   Content-Type: text/plain; charset=utf-8
+
+/ks/hi/*
+  Cache-Control: no-store
+  X-Robots-Tag: noindex
 
 /robots.txt
   Cache-Control: public, max-age=3600

@@ -1,7 +1,10 @@
 site_name: Happyin Knowledge Space
+# The home page's meta description. scripts/sync_stats.py rewrites "<N>+ curated articles"
+# and "across <N> domains" with the real counts; "21 more domains" was outside its reach and
+# had gone stale.
 site_description: >-
-  Comprehensive technical knowledge base with 1000+ curated articles
-  covering Kafka, Python, SQL, DevOps, Security, and 21 more domains.
+  Comprehensive technical knowledge base with 1458+ curated articles
+  across 28 domains: Kafka, Python, SQL, DevOps, Security and more.
   Built for software engineers and LLM agents.
 site_url: https://happyin.space/
 site_author: AnastasiyaW
@@ -28,12 +31,13 @@ theme:
     code: JetBrains Mono
   features:
     - navigation.instant
-    - navigation.instant.prefetch
+    # navigation.instant.prefetch removed: it refetched and re-parsed the 174 KB sitemap.xml
+    # up to 8 times per page load (measured 2026-09-23)
     - navigation.tracking
     - navigation.path
     - navigation.indexes
-    - navigation.sections
-    - navigation.expand
+    # navigation.prune: every page rendered the whole 1,400-article nav (1,450 links, 2026-11-21)
+    - navigation.prune
     - navigation.top
     - search.suggest
     - search.highlight
@@ -49,13 +53,53 @@ repo_url: https://github.com/AnastasiyaW/knowledge-space
 repo_name: knowledge-space
 
 extra:
+  # A GA4 Measurement ID is public configuration, not a secret. It is injected by
+  # GitHub Actions from the repository variable only after the GA4 Web stream exists.
+  # The empty fallback keeps every release telemetry-free until that point.
+  ga4_measurement_id: !ENV [HAPPYIN_GA4_MEASUREMENT_ID, ""]
+  # Display ads (Google AdSense). Inert until client is set: with an empty client no ad
+  # markup, no ad script, no verification meta and no /ads.txt (functions/ads.txt.js) exist.
+  # Public identifiers, injected by the deploy workflow from repository variables.
+  # Precondition for setting the client: AdSense "Privacy & messaging" (Google-certified
+  # CMP) switched on for the EEA, UK and Switzerland, or ads there stay non-personalised.
+  ads:
+    client: !ENV [HAPPYIN_ADSENSE_CLIENT, ""]                     # ca-pub-XXXXXXXXXXXXXXXX
+    slot_article_top: !ENV [HAPPYIN_ADSENSE_SLOT_ARTICLE_TOP, ""]  # after an article's first section
+    slot_article_end: !ENV [HAPPYIN_ADSENSE_SLOT_ARTICLE_END, ""]  # after the article text
+    slot_sidebar: !ENV [HAPPYIN_ADSENSE_SLOT_SIDEBAR, ""]          # desktop table-of-contents column
+  content_language: en
+  shared_asset_url: https://happyin.space/
+  alternate:
+    - name: English
+      link: /
+      lang: en
+    - name: Русский
+      link: /ru/
+      lang: ru
+    - name: 简体中文
+      link: /zh-CN/
+      lang: zh
+    - name: Français
+      link: /fr/
+      lang: fr
+    - name: Deutsch
+      link: /de/
+      lang: de
+  # Every language branch: hooks/i18n.py links each page to the same page in the others.
+  # The order is the order of the language selector.
+  locales:
+    - {lang: en, hreflang: en, name: English, base: "https://happyin.space/", docs: docs}
+    - {lang: ru, hreflang: ru, name: Русский, base: "https://happyin.space/ru/", docs: locales/ru/docs}
+    - {lang: zh-CN, hreflang: zh-CN, name: 简体中文, base: "https://happyin.space/zh-CN/", docs: locales/zh-CN/docs}
+    - {lang: fr, hreflang: fr, name: Français, base: "https://happyin.space/fr/", docs: locales/fr/docs}
+    - {lang: de, hreflang: de, name: Deutsch, base: "https://happyin.space/de/", docs: locales/de/docs}
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/AnastasiyaW/knowledge-space
       name: Knowledge Space
     - icon: fontawesome/brands/github
-      link: https://github.com/AnastasiyaW/claude-code-config
-      name: Claude Code Config
+      link: https://github.com/AnastasiyaW/codex-claude-code-config
+      name: Codex + Claude Code Config
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/in/happyinhappy/
     - icon: fontawesome/brands/linkedin
@@ -69,14 +113,17 @@ extra_css:
 
 extra_javascript:
   - javascripts/stats.js
-  - https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js
+  # three.js is loaded by graph.js only on pages that show the graph (the home page)
   - javascripts/graph.js
 
 hooks:
+  - hooks/i18n.py
   - hooks/stats.py
+  - hooks/og_image.py
   - hooks/validate.py
   - hooks/link_checker.py
   - hooks/description.py
+  - hooks/git_dates.py
   - hooks/wikilinks.py
   - hooks/copy_extras.py
   - hooks/public_check.py
@@ -120,4 +167,4 @@ plugins:
   - redirects:
       redirect_maps: {}
 
-# nav: auto-generated from docs/ structure (1039 articles across 28 domains)
+# nav: auto-generated from docs/ structure (1458 articles across 28 domains)

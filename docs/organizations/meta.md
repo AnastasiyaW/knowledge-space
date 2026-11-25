@@ -97,3 +97,31 @@ From 2023-09-28, we evaluate Meta AI inside the messaging and social apps rather
 - **Subject:** `organization:meta`, thread `meta-ai`, 1 dated events 2023-09-28 → 2023-09-28.
 - **Practical note:** From 2023-09-28, test Meta AI as an in-app feature across Meta's social products rather than as a standalone assistant.
 - **Confidence:** medium. Dated supersedes above govern what is obsolete.
+
+<!-- live-update:a44e045edba33bc0ebea6d347cc136d4b553045d91c676dcb81768d5fb53152a -->
+## 2026-10-17 — Meta removes AI training language from business terms
+
+Meta revised its updated commercial terms of service. The new text drops explicit references to training AI models on web content scraped from business account sites. Data use is now narrowed to advertising and business products.
+
+### Usage and practices
+
+- robots.txt on public web domains: set explicit crawl permissions for Meta web crawlers. [Source](https://techcrunch.com/2026/10/17/meta-removes-language-that-raised-scraping-and-ai-training-concerns/)
+- Commercial terms in Meta Business Manager: review them before linking enterprise domains or publishing business assets. [Source](https://techcrunch.com/2026/10/17/meta-removes-language-that-raised-scraping-and-ai-training-concerns/)
+- Crawler allowlists and disallow directives: keep them at the web server boundary, so content protection does not depend on default contract terms. [Source](https://techcrunch.com/2026/10/17/meta-removes-language-that-raised-scraping-and-ai-training-concerns/)
+- Commercial account permissions: audit them regularly, so business URLs stay limited to advertising operations without a broad content extraction licence. [Source](https://techcrunch.com/2026/10/17/meta-removes-language-that-raised-scraping-and-ai-training-concerns/)
+
+### Additional evidence
+
+- 2026-10-17: The revised commercial terms removed the word 'train'. They limit scraped domain data to advertising and business products. The change responds to publisher concerns about mandatory AI training data harvesting. [Source](https://techcrunch.com/2026/10/17/meta-removes-language-that-raised-scraping-and-ai-training-concerns/)
+
+### Superseded guidance (retained for history)
+
+- 2026-10-17: Meta commercial terms permit using scraped web content from connected business account URLs to train generative AI models. [Source](https://techcrunch.com/2026/10/17/meta-removes-language-that-raised-scraping-and-ai-training-concerns/)
+
+### Limits and open questions
+
+- Exact URLs for individual practitioner discussions on forums such as Reddit and Hacker News could not be confirmed. Search redirects alone were not enough to verify them.
+- No further dated milestones beyond this event could be confirmed with verified URLs that load directly.
+- The revised terms do not specify changes to crawler User-Agent tokens or how an opt-out is verified.
+
+<!-- Retained base: a28e9e097245f8e26e90b10b7aed72bddb3aad2d; article blob: fbda3c3ed8bbe3bd1904c4f43afcc740ac5c22a5 -->

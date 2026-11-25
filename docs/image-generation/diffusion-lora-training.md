@@ -61,6 +61,24 @@ as appropriate starting points for fine-tuning; that does not certify a
 community trainer, rank, optimizer, or adapter as compatible without an
 artifact-level test.
 
+## Bind precision and data loading separately
+
+PyTorch 2.14 documentation distinguishes autocast from gradient scaling.
+Scaling addresses FP16 gradient underflow; it is not a generic switch for every
+reduced-precision run. For a trainer's supported CUDA path, enable its scaler
+for FP16, not automatically for BF16. A full-precision CPU fallback must not
+enter a CUDA autocast context. CPU BF16 is a separate supported-op choice,
+not an assumption made when CUDA is absent.
+[AMP reference](https://docs.pytorch.org/docs/2.14/amp.html).
+
+Start an unverified iterable input pipeline with `num_workers=0`. Before adding
+workers, prove that replicas partition the intended samples and that throughput
+improves without unacceptable host-memory growth. Record sample IDs/counts as
+well as batches: a faster duplicated stream is not a training improvement.
+Use worker-aware partitioning through `get_worker_info()` or `worker_init_fn`
+where appropriate; configure prefetching and persistent workers only for a
+multi-process loader. [DataLoader reference](https://docs.pytorch.org/docs/2.14/data.html).
+
 ## Evaluate the requested change and preservation
 
 Use source-disjoint prompts/images that were not used to choose parameters.
@@ -83,6 +101,16 @@ adapter/configuration files, evaluation receipt, known failure modes, and
 license/distribution evidence. If compatibility, rights, or preservation
 cannot be shown, keep it private for evaluation or mark it as a reviewed
 visual experiment rather than a reusable production adapter.
+
+## Gotchas
+
+- **A green CPU smoke test is called a GPU training result:** retain its CPU-only
+  boundary; verify the selected accelerator, dtype and optimizer path in the
+  actual training run before making that claim.
+- **More loader workers repeat examples:** check per-worker sample ownership
+  before interpreting throughput or epoch counters.
+- **BF16 inherited an FP16 scaler setting:** bind the scaler to the trainer's
+  actual dtype contract rather than copying a mixed-precision recipe.
 
 ## Related pages
 
