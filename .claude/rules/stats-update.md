@@ -23,8 +23,9 @@ MOC and to the browse page, so a new article is never orphaned.
 - `docs/index.md` - "across YY domains" (3 places: description, engineer line, snippet text)
 - `docs/blog/posts/welcome.md` - "XXX+ dense reference articles" and "across YY domains"
 - `AGENTS.md` - "XXX+ articles, YY domains"
-- `mkdocs.yml` - site_description "XXX+ curated articles" and comment at bottom
-- `mkdocs.yml` - site_description "17 more domains" count
+- `mkdocs.yml` - site_description "XXX+ curated articles across YY domains" and comment at bottom
+  (keep exactly this wording: `sync_stats.py` rewrites both numbers only in this form; no
+  thousands separator, "1,287+" would become "1,1287+")
 - GitHub repo description: `gh repo edit --description "... XXX+ articles across YY domains ..."`
 
 ## Also check after adding NEW domains

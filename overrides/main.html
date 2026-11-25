@@ -1,11 +1,17 @@
 {% extends "base.html" %}
 
+{% set ui = config.extra.ui | default({}, true) %}
+{% set content_language = config.extra.content_language | default('en', true) %}
+{% set shared_asset_url = config.extra.shared_asset_url | default(config.site_url, true) %}
+{% import "partials/ads.html" as ads with context %}
+
 {% block tabs %}
   {{ super() }}
   <nav class="ks-topnav">
-    <a href="{{ config.site_url }}" class="ks-topnav__link">Home</a>
-    <a href="{{ config.site_url }}knowledge-base/" class="ks-topnav__link">Knowledge Base</a>
-    <a href="{{ config.site_url }}blog/" class="ks-topnav__link">Blog</a>
+    <a href="{{ config.site_url }}" class="ks-topnav__link">{{ ui.get('home', 'Home') }}</a>
+    <a href="{{ ui.get('knowledge_base_url', config.site_url ~ 'knowledge-base/') }}" class="ks-topnav__link">{{ ui.get('knowledge_base', 'Knowledge Base') }}</a>
+    <a href="{{ shared_asset_url }}blog/" class="ks-topnav__link">{{ ui.get('blog', 'Blog') }}</a>
+    <a href="https://github.com/AnastasiyaW/knowledge-space" target="_blank" rel="noopener" class="ks-topnav__link ks-topnav__link--star" title="{{ ui.get('star_title', 'Star on GitHub') }}" data-ks-star="topnav" data-ks-analytics="github_star" data-ks-placement="topnav">⭐️ {{ ui.get('star', 'Star') }}</a>
   </nav>
   <button class="ks-scroll-top" id="ks-scroll-top" title="Scroll to top">
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
@@ -34,17 +40,46 @@
   </script>
 {% endblock %}
 
+{# Material preconnects only to fonts.gstatic.com, but the render-blocking font CSS comes
+   from fonts.googleapis.com. The hint has to come before that stylesheet link to help, so
+   it goes in the fonts block, not in extrahead (which renders after it). #}
+{% block fonts %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  {{ super() }}
+{% endblock %}
+
 {% block extrahead %}
   {{ super() }}
-  <link rel="icon" href="{{ config.site_url }}assets/favicon.png" type="image/png" sizes="32x32">
-  <!-- Cloudflare Web Analytics — SRI not used: Cloudflare updates beacon.min.js in-place -->
-  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f25c967baa8f46e9883f279471fee824"}'></script>
-  <link rel="icon" href="{{ config.site_url }}assets/favicon-16.png" type="image/png" sizes="16x16">
+  {% set ga4_measurement_id = config.extra.ga4_measurement_id | default('', true) %}
+  {% set ads_client = ads.client() | trim %}
+  {% include "partials/consent-bootstrap.html" %}
+  {% with is_root_language = (content_language == "en") %}{% include "partials/lang-redirect.html" %}{% endwith %}
+  <meta name="happyin-ga4-id" content="{{ ga4_measurement_id }}">
+  {% if ads_client %}
+  {# AdSense site verification (meta-tag method); functions/ads.txt.js reads it too. #}
+  <meta name="google-adsense-account" content="{{ ads_client }}">
+  {% endif %}
+  {% if ga4_measurement_id or ads_client %}
+  <link rel="stylesheet" href="{{ shared_asset_url }}stylesheets/analytics.css">
+  <script src="{{ shared_asset_url }}javascripts/analytics.js" defer></script>
+  {% endif %}
+  <link rel="stylesheet" href="{{ shared_asset_url }}stylesheets/reading.css">
+  <link rel="icon" href="{{ shared_asset_url }}assets/favicon.png" type="image/png" sizes="32x32">
+  {# Web Analytics is injected at the edge (automatic setup for this zone, SPA mode on).
+     A second copy of the beacon here made every report from article pages fail with a
+     CORS error, so Web Analytics recorded only 404 pages (measured 2026-09-22: one
+     beacon -> HTTP 204, two beacons -> blocked). Do not add the snippet back. #}
+  <link rel="icon" href="{{ shared_asset_url }}assets/favicon-16.png" type="image/png" sizes="16x16">
   <style>
     .md-search { max-width: 14rem; }
-    .md-header__source { display: flex; gap: 0; max-width: none; width: auto; align-items: stretch; }
-    .md-header__source .md-source { min-width: 0; width: 12rem; }
-    .md-header__source .md-source--secondary { border-left: 1px solid rgba(255,255,255,0.15); }
+    /* Two repo buttons side by side, only where Material shows the header source (60em+).
+       Unscoped, this display:flex overrode Material's phone rule and widened the page to
+       704px at a 375px viewport: sideways scrolling and dialogs pushed off-screen. */
+    @media screen and (min-width: 60em) {
+      .md-header__source { display: flex; gap: 0; max-width: none; width: auto; align-items: stretch; }
+      .md-header__source .md-source { min-width: 0; width: 12rem; }
+      .md-header__source .md-source--secondary { border-left: 1px solid rgba(255,255,255,0.15); }
+    }
 
     /* Top nav bar — lives inside md-header (block tabs), stays sticky with header */
     .ks-topnav {
@@ -106,6 +141,118 @@
       border-color: rgba(187, 134, 252, 0.4) !important;
       color: #bb86fc !important;
     }
+    .ks-topnav__link--star {
+      border-color: rgba(255, 193, 7, 0.45);
+      color: #ffd740 !important;
+    }
+    .ks-topnav__link--star:hover {
+      box-shadow: 0 4px 14px rgba(255, 215, 64, 0.35);
+    }
+    /* The dark theme's #ffd740 on the light bar is about 1.4:1; this amber is about 5.9:1 (WCAG AA). */
+    [data-md-color-scheme="default"] .ks-topnav__link--star {
+      color: #7a5200 !important;
+    }
+
+    /* Article Support & Star CTA */
+    .ks-article-support {
+      margin-top: 2.5rem;
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(35, 22, 60, 0.95) 0%, rgba(20, 12, 40, 0.98) 100%);
+      border: 1px solid rgba(187, 134, 252, 0.25);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+    [data-md-color-scheme="default"] .ks-article-support {
+      background: linear-gradient(135deg, rgba(248, 243, 255, 0.95) 0%, rgba(238, 230, 252, 0.98) 100%);
+      border-color: rgba(140, 100, 200, 0.25);
+      box-shadow: 0 4px 16px rgba(100, 50, 160, 0.08);
+    }
+    .ks-article-support__header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.5rem;
+    }
+    /* A paragraph, not a heading: an h4 after the article's h2s skipped a level. */
+    .ks-article-support__title {
+      margin: 0 !important;
+      font-size: 1.05rem !important;
+      font-weight: 700 !important;
+      color: #ffd740 !important;
+    }
+    [data-md-color-scheme="default"] .ks-article-support__title {
+      color: #7b1fa2 !important;
+    }
+    .ks-article-support__text {
+      font-size: 0.88rem !important;
+      line-height: 1.5 !important;
+      margin: 0 0 1rem 0 !important;
+      color: rgba(220, 210, 240, 0.85) !important;
+    }
+    [data-md-color-scheme="default"] .ks-article-support__text {
+      color: rgba(60, 40, 90, 0.85) !important;
+    }
+    .ks-article-support__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+    .ks-article-support__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 1rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-decoration: none !important;
+      transition: all 0.2s ease;
+    }
+    .ks-article-support__btn--star {
+      background: linear-gradient(180deg, #ffc107 0%, #ff9800 100%);
+      color: #1a0f00 !important;
+      border: 1px solid #ffb300;
+      box-shadow: 0 2px 8px rgba(255, 179, 0, 0.25);
+    }
+    .ks-article-support__btn--star:hover {
+      background: linear-gradient(180deg, #ffd54f 0%, #ffa726 100%);
+      box-shadow: 0 4px 14px rgba(255, 179, 0, 0.45);
+      transform: translateY(-1px);
+    }
+
+    /* Star notice after a code copy. It appears once Material's own "Copied to clipboard"
+       notice is gone (both sit bottom-right), and while hidden it is visibility:hidden so
+       its link cannot take keyboard focus. */
+    .ks-copy-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 100;
+      padding: 0.7rem 1.2rem;
+      background: rgba(26, 16, 45, 0.96);
+      border: 1px solid rgba(255, 215, 64, 0.4);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 0.84rem;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+      transform: translateY(100px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0.3s;
+    }
+    .ks-copy-toast a {
+      color: #ffd740 !important;
+      font-weight: 700;
+      text-decoration: underline !important;
+    }
+    .ks-copy-toast--visible {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition-delay: 0s;
+    }
   </style>
   <script>
     document.addEventListener('DOMContentLoaded', function(){
@@ -135,7 +282,7 @@
         repo.classList.add('md-source__repository--active');
       }
       if (cached) renderFacts(cached);
-      fetch('https://api.github.com/repos/AnastasiyaW/claude-code-config')
+      fetch('https://api.github.com/repos/AnastasiyaW/codex-claude-code-config')
         .then(function(r){return r.json()})
         .then(function(d){
           if (d.stargazers_count===undefined) return;
@@ -143,7 +290,6 @@
           try{sessionStorage.setItem('__source_secondary',JSON.stringify(data))}catch(e){}
           if(!cached) renderFacts(data);
         }).catch(function(){});
-
 
       // ── Reorder sidebar by text content ──
       setTimeout(function() {
@@ -158,6 +304,14 @@
           { match: 'for ai agents',            rank: 1, style: 'secondary' },
           { match: 'contributing',            rank: 2, style: 'secondary', rename: 'How to Contribute' },
           { match: 'privacy',                 rank: 3, style: 'secondary', sep: true },
+          // About and Contact are linked from every footer; in the sidebar they would
+          // push the domain list further down.
+          { match: 'about',                   rank: 0, hide: true },
+          { match: 'contact',                 rank: 0, hide: true },
+          { match: 'о проекте',               rank: 0, hide: true },
+          { match: 'контакты',                rank: 0, hide: true },
+          { match: '关于',                     rank: 0, hide: true },
+          { match: '联系',                     rank: 0, hide: true },
           { match: 'happyin knowledge space', rank: 0, hide: true },
         ];
 
@@ -286,75 +440,180 @@
       }, 50);
     });
   </script>
+  <script>
+    /* Star buttons and the anonymous return counter; /privacy/ describes both for readers.
+       Counting is a GET of one of a fixed set of tiny files under /ks/hi/ (the list lives in
+       hooks/copy_extras.py). The request carries no cookie, no referrer and no identifier, so
+       its file name is all our counts use; like any request it still reaches the edge with the
+       usual IP address and browser headers. */
+    (function () {
+      var HI = '/ks/hi/';
+      var COUNTER = 'ks_counter', OFF = 'ks_counter_off', STARRED = 'ks_star_clicked', TOAST_AT = 'ks_star_toast_at';
+      var DAY = 86400000;
+      var LIFETIME_DAYS = 395;       // ~13 months from the first visit, never extended (CNIL guidance)
+      var TOAST_EVERY = 7 * DAY;     // the copy notice asks for a star at most once a week
+      var TOAST_DELAY = 2500;        // after Material's own "Copied to clipboard" notice has gone
+      var PLACEMENTS = { topnav: 1, article: 1, toast: 1 };
+      var storable = null;
 
-  {# hreflang for multilingual llms.txt discovery #}
-  <link rel="alternate" hreflang="en" href="{{ config.site_url }}llms.txt" />
-  <link rel="alternate" hreflang="zh" href="{{ config.site_url }}llms-zh.txt" />
-  <link rel="alternate" hreflang="ko" href="{{ config.site_url }}llms-ko.txt" />
-  <link rel="alternate" hreflang="es" href="{{ config.site_url }}llms-es.txt" />
-  <link rel="alternate" hreflang="de" href="{{ config.site_url }}llms-de.txt" />
-  <link rel="alternate" hreflang="fr" href="{{ config.site_url }}llms-fr.txt" />
-  <link rel="alternate" hreflang="x-default" href="{{ config.site_url }}llms.txt" />
+      function read(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+      function write(k, v) {
+        try { if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); return true; }
+        catch (e) { return false; }
+      }
+      // Without storage the off switch cannot be kept and a return looks like a first visit,
+      // so such a browser is not counted at all.
+      function storageWorks() {
+        if (storable === null) storable = write('ks_probe', '1') && write('ks_probe', null);
+        return storable;
+      }
+      // The visitor's own calendar day, so one evening is one day wherever they live.
+      function localDay() {
+        var d = new Date();
+        var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+        return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+      }
+      function daysBetween(a, b) { return Math.round((Date.parse(b) - Date.parse(a)) / DAY); }
+
+      function offReason() {
+        if (!storageWorks()) return 'storage';
+        if (read(OFF) === '1') return 'switch';
+        if (navigator.globalPrivacyControl === true || navigator.doNotTrack === '1' || window.doNotTrack === '1') return 'signal';
+        if (navigator.webdriver === true) return 'automation';
+        return '';
+      }
+      function counting() { return offReason() === ''; }
+      function hi(name) {
+        if (!counting()) return;
+        try {
+          fetch(HI + name + '.txt', { cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer', keepalive: true })
+            .catch(function () {});
+        } catch (e) {}
+      }
+
+      // One request per browser per day: "new", or returning after 1 / 2-7 / 8-30 / 31+ days.
+      // "reg-" instead of "ret-" once the browser has been here on 5 or more different days.
+      function countVisit() {
+        if (!counting()) { write(COUNTER, null); return; }
+        var now = localDay(), rec = null;
+        try { rec = JSON.parse(read(COUNTER) || 'null'); } catch (e) { rec = null; }
+        if (rec && !(typeof rec.f === 'string' && typeof rec.l === 'string' && daysBetween(rec.f, now) <= LIFETIME_DAYS)) rec = null;
+        if (!rec) {
+          if (write(COUNTER, JSON.stringify({ f: now, l: now, n: 1 }))) hi('new');
+          return;
+        }
+        var gap = daysBetween(rec.l, now);
+        if (!(gap >= 1)) return;     // same day, or the clock moved backwards
+        rec.n = (rec.n || 1) + 1;
+        rec.l = now;
+        if (!write(COUNTER, JSON.stringify(rec))) return;
+        var bucket = gap === 1 ? '1d' : gap <= 7 ? '2-7d' : gap <= 30 ? '8-30d' : '31d-plus';
+        hi((rec.n >= 5 ? 'reg-' : 'ret-') + bucket);
+      }
+      countVisit();
+
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest) return;
+        var star = e.target.closest('[data-ks-star]');
+        if (star) {
+          var where = star.getAttribute('data-ks-star');
+          write(STARRED, localDay());
+          if (Object.prototype.hasOwnProperty.call(PLACEMENTS, where)) hi('star-' + where);
+          return;
+        }
+        // Material 9.7 renders copy buttons as .md-code__button, older releases as .md-clipboard;
+        // both carry data-clipboard-target.
+        if (e.target.closest('[data-clipboard-target]')) scheduleStarToast();
+        if (e.target.closest('[data-ks-counter-toggle]')) {
+          if (read(OFF) === '1') write(OFF, null);
+          else if (write(OFF, '1')) write(COUNTER, null);
+          renderCounterState();
+        }
+      }, true);
+
+      // After a code copy, ask for a star: at most once a week, never after a star click, and
+      // not at all when the browser cannot remember that it already asked.
+      function scheduleStarToast() {
+        if (read(STARRED)) return;
+        var last = parseInt(read(TOAST_AT) || '0', 10);
+        if (Date.now() - last < TOAST_EVERY) return;
+        if (!write(TOAST_AT, String(Date.now()))) return;
+        var toast = document.getElementById('ks-copy-toast');
+        if (!toast) {
+          // The live region enters the page empty; screen readers announce the text set later.
+          toast = document.createElement('div');
+          toast.id = 'ks-copy-toast';
+          toast.className = 'ks-copy-toast';
+          toast.setAttribute('role', 'status');
+          document.body.appendChild(toast);
+        }
+        setTimeout(function () {
+          if (read(STARRED)) return;   // a star click during the wait cancels the notice
+          // Visible first, text on the next frame: a live region should not appear already filled.
+          toast.classList.add('ks-copy-toast--visible');
+          setTimeout(function () {
+            toast.innerHTML = '⭐️ If this page helped, its author would be glad of a <a href="https://github.com/AnastasiyaW/knowledge-space" target="_blank" rel="noopener" data-ks-star="toast">star on GitHub</a>';
+          }, 50);
+          clearTimeout(toast._timeout);
+          toast._timeout = setTimeout(function () { toast.classList.remove('ks-copy-toast--visible'); }, 6000);
+          hi('toast-shown');
+        }, TOAST_DELAY);
+      }
+
+      // The switch on the privacy page shows and flips this browser's own setting.
+      var STATE_TEXT = {
+        '': 'The return counter is on in this browser.',
+        switch: 'You turned the return counter off in this browser.',
+        signal: 'The return counter is off: your browser sends Global Privacy Control or Do Not Track.',
+        automation: 'The return counter is off: this browser is run by automation software.',
+        storage: 'This browser does not let the site store anything, so nothing is counted here.'
+      };
+      function renderCounterState() {
+        var state = document.querySelector('[data-ks-counter-state]');
+        var toggle = document.querySelector('[data-ks-counter-toggle]');
+        if (!state || !toggle) return;
+        var reason = offReason();
+        state.textContent = STATE_TEXT[reason];
+        toggle.disabled = reason === 'storage';
+        toggle.textContent = reason === 'switch' ? 'Turn it back on' : 'Turn it off';
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        if (window.document$ && window.document$.subscribe) window.document$.subscribe(renderCounterState);
+        else renderCounterState();
+      });
+    })();
+  </script>
+
+  {# One plain link to llms.txt. The former hreflang set pointed every page at six
+     llms-*.txt files: hreflang is for translated versions of the same page, and plain
+     text files cannot link back, so search engines report all ~9,300 tags as errors. #}
+  <link rel="alternate" type="text/plain" title="llms.txt" href="{{ config.site_url }}llms.txt" />
+  {% if i18n_x_default %}<link rel="alternate" hreflang="x-default" href="{{ i18n_x_default }}">{% endif %}
 
   {% if page %}
   {# Open Graph meta tags #}
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="{{ page.title }} - {{ config.site_name }}" />
+  <meta property="og:title" content="{{ page.title | e }} - {{ config.site_name }}" />
   <meta property="og:description" content="{{ (page.meta.description if page.meta and page.meta.description) | default(config.site_description) }}" />
   <meta property="og:url" content="{{ page.canonical_url }}" />
   <meta property="og:site_name" content="{{ config.site_name }}" />
 
-  {# Per-domain OG image: /assets/og-{domain}.png, fallback to og-image.png #}
-  {% set og_img = config.site_url ~ "assets/og-image.png" %}
-  {% if page.file and page.file.src_path %}
-    {% set parts = page.file.src_path.split("/") %}
-    {% if parts | length > 1 %}
-      {% set og_img = config.site_url ~ "assets/og-" ~ parts[0] ~ ".png" %}
-    {% endif %}
-  {% endif %}
+  {% from "partials/og-image.html" import og_image %}
+  {% set og_img = og_image(page, config) | trim %}
   <meta property="og:image" content="{{ og_img }}" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
 
   {# Twitter Card #}
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="{{ page.title }} - {{ config.site_name }}" />
+  <meta name="twitter:title" content="{{ page.title | e }} - {{ config.site_name }}" />
   <meta name="twitter:description" content="{{ (page.meta.description if page.meta and page.meta.description) | default(config.site_description) }}" />
   <meta name="twitter:image" content="{{ og_img }}" />
   {% endif %}
 
   {# BreadcrumbList JSON-LD - helps Google show path in SERP #}
   {% if page and not page.is_homepage %}
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "{{ config.site_name }}",
-        "item": "{{ config.site_url }}"
-      }{% if page.parent %},
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "{{ page.parent.title }}",
-        "item": "{{ config.site_url }}{{ page.parent.url }}"
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "name": "{{ page.title }}"
-      }{% else %},
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "{{ page.title }}"
-      }{% endif %}
-    ]
-  }
-  </script>
+  {% include "partials/breadcrumb-jsonld.html" %}
   {% endif %}
 
   {# WebSite JSON-LD with availableLanguage - on homepage only #}
@@ -366,14 +625,11 @@
     "name": "{{ config.site_name }}",
     "url": "{{ config.site_url }}",
     "description": {{ config.site_description | tojson }},
-    "inLanguage": "en",
+    "inLanguage": "{{ content_language }}",
     "availableLanguage": [
-      {"@type": "Language", "name": "English", "alternateName": "en"},
-      {"@type": "Language", "name": "Chinese", "alternateName": "zh"},
-      {"@type": "Language", "name": "Korean", "alternateName": "ko"},
-      {"@type": "Language", "name": "Spanish", "alternateName": "es"},
-      {"@type": "Language", "name": "German", "alternateName": "de"},
-      {"@type": "Language", "name": "French", "alternateName": "fr"}
+      {%- for loc in config.extra.locales %}
+      {"@type": "Language", "name": {{ loc.name | tojson }}, "alternateName": "{{ loc.hreflang }}"}{{ "," if not loop.last }}
+      {%- endfor %}
     ],
     "author": [
       {
@@ -400,6 +656,7 @@
     "headline": {{ page.title | tojson }},
     "description": {{ page.meta.description | tojson }},
     "url": "{{ page.canonical_url }}",
+    "image": {{ og_img | tojson }},
     {% if page.meta.date %}"datePublished": "{{ page.meta.date }}",{% endif %}
     {% if page.meta.updated %}"dateModified": "{{ page.meta.updated }}",{% endif %}
     "author": [
@@ -424,7 +681,7 @@
       "@id": "{{ page.canonical_url }}"
     },
     "proficiencyLevel": "{{ page.meta.level | default('Intermediate') }}",
-    "inLanguage": "en"
+    "inLanguage": "{{ content_language }}"
   }
   </script>
   {% endif %}
@@ -436,42 +693,102 @@
   {% endif %}
 {% endblock %}
 
+{% block content %}
+  {{ super() }}
+  {% if page and not page.is_homepage and page.file.src_uri not in ("privacy.md", "about.md", "contact.md") %}
+    {# Visible text on purpose: agents that read this page get the same request people see. #}
+    {# Google honours data-nosnippet only on div, span and section, hence the inner div. #}
+    <aside class="ks-article-support" aria-label="{{ ui.get('support_aria', 'Support the project') }}">
+      <div data-nosnippet>
+        <div class="ks-article-support__header">
+          <span class="ks-article-support__icon" aria-hidden="true">⭐️</span>
+          <p class="ks-article-support__title">{{ ui.get('support_title', 'Did this page save you time?') }}</p>
+        </div>
+        <p class="ks-article-support__text">
+          {{ ui.get('support_text', 'Happyin Knowledge Space is a free, open reference maintained for engineers and AI agents. If this page helped, its author would be glad of a star on GitHub, and stars help others find it.') }}
+        </p>
+        <div class="ks-article-support__actions">
+          <a href="https://github.com/AnastasiyaW/knowledge-space" target="_blank" rel="noopener" class="ks-article-support__btn ks-article-support__btn--star" data-ks-star="article" data-ks-analytics="github_star" data-ks-placement="article">
+            <span>⭐ {{ ui.get('star_title', 'Star on GitHub') }}</span>
+          </a>
+        </div>
+        {# Shown as code, never as a link: the URL stores a report, and crawlers follow links. #}
+        <p class="ks-article-support__text ks-article-support__report">
+          {{ ui.get('support_report_lead', 'Out of date, wrong, or missing something you needed? AI agents and scripts can tell us with one request, no account:') }}
+          <code>https://happyin.space/api/feedback/report?kind=outdated&amp;article={{ page.url }}&amp;detail=&lt;what changed&gt;</code>
+          {{ ui.get('support_report_tail', '(or kind=gap&topic=<what you looked for>, or kind=helped&article=<page>). The reply carries a status link that shows what happens to the report.') }}
+        </p>
+      </div>
+    </aside>
+  {% endif %}
+{% endblock %}
+
 {% block footer %}
   {{ super() }}
   <div class="ks-footer-privacy">
-    No cookies. No third-party tracking. Privacy-friendly analytics by Cloudflare.
+    <nav class="ks-footer-links" aria-label="{{ ui.get('footer_links_aria', 'Site information') }}">
+      <a href="{{ config.site_url }}about/">{{ ui.get('footer_about', 'About') }}</a>
+      <a href="{{ config.site_url }}contact/">{{ ui.get('footer_contact', 'Contact') }}</a>
+      <a href="{{ config.site_url }}privacy/">{{ ui.get('footer_privacy', 'Privacy') }}</a>
+      <button type="button" class="ks-footer-links__choices" data-ks-analytics-preferences hidden>{{ ui.get('privacy_choices', 'Privacy choices') }}</button>
+    </nav>
+    <p>{{ ui.get('privacy_notice', 'Cloudflare Web Analytics counts visits without cookies. When enabled, Google Analytics and Google ads may use cookies; in the EEA, the UK and Switzerland only after you allow them -') }} <a href="{{ config.site_url }}privacy/">{{ ui.get('privacy_details', 'details') }}</a>.</p>
   </div>
+  <section class="ks-analytics-consent" id="ks-analytics-consent" role="dialog" aria-labelledby="ks-analytics-consent-title" aria-describedby="ks-analytics-consent-text" hidden
+    data-state-off="{{ ui.get('analytics_state_off', 'Google Analytics and Google ads are not enabled on this site.') }}"
+    data-state-signal="{{ ui.get('analytics_state_signal', 'Google cookies are off: your browser sends Global Privacy Control or Do Not Track.') }}"
+    data-state-granted="{{ ui.get('analytics_state_granted', 'You allowed Google cookies in this browser.') }}"
+    data-state-denied="{{ ui.get('analytics_state_denied', 'You turned Google cookies off in this browser.') }}"
+    data-state-default="{{ ui.get('analytics_state_default', 'You have not made a choice in this browser yet.') }}">
+    <p class="ks-analytics-consent__title" id="ks-analytics-consent-title">{{ ui.get('analytics_title', 'Cookies on this site') }}</p>
+    <p class="ks-analytics-consent__text" id="ks-analytics-consent-text">{{ ui.get('analytics_text', 'May Google Analytics use cookies to measure which pages help readers? Ads, where shown, help keep the site free. We never send search terms, prompts, email addresses or feedback text.') }} <a href="{{ config.site_url }}privacy/">{{ ui.get('privacy_details', 'details') }}</a></p>
+    <div class="ks-analytics-consent__actions">
+      <button type="button" class="md-button md-button--primary" data-ks-analytics-accept>{{ ui.get('analytics_allow', 'Allow') }}</button>
+      <button type="button" class="md-button" data-ks-analytics-reject>{{ ui.get('analytics_reject', 'Decline') }}</button>
+    </div>
+  </section>
 
-  {# Newsletter popup - article pages only, new visitors, 14-day cooldown #}
+  {# Newsletter popup - article pages only, never on a browser's first page view, never
+     while the cookie prompt is open, 14-day cooldown #}
   {% if page and not page.is_homepage %}
   <div class="ks-popup-overlay" id="ks-popup-overlay" style="display:none">
     <div class="ks-popup">
-      <button class="ks-popup__close" id="ks-popup-close" aria-label="Close">&times;</button>
+      <button class="ks-popup__close" id="ks-popup-close" aria-label="{{ ui.get('popup_close', 'Close') }}">&times;</button>
       <div class="ks-popup__icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
       </div>
-      <h3 class="ks-popup__title">Stay updated</h3>
-      <p class="ks-popup__text">New articles on AI, infrastructure, and engineering. No spam - just knowledge drops.</p>
+      <h3 class="ks-popup__title">{{ ui.get('popup_title', 'Stay updated') }}</h3>
+      <p class="ks-popup__text">{{ ui.get('popup_text', 'New articles on AI, infrastructure, and engineering. No spam - just knowledge drops.') }}</p>
       <form class="ks-popup__form" id="ks-popup-form">
-        <input type="email" class="ks-popup__email" id="ks-popup-email" placeholder="your@email.com" required autocomplete="email">
-        <button type="submit" class="ks-popup__btn" id="ks-popup-btn">Subscribe</button>
+        <input type="email" class="ks-popup__email" id="ks-popup-email" placeholder="{{ ui.get('popup_email', 'your@email.com') }}" required autocomplete="email">
+        <button type="submit" class="ks-popup__btn" id="ks-popup-btn">{{ ui.get('popup_subscribe', 'Subscribe') }}</button>
       </form>
-      <div class="ks-popup__msg" id="ks-popup-msg"></div>
-      <button class="ks-popup__skip" id="ks-popup-skip">No thanks</button>
+      <div class="ks-popup__msg" id="ks-popup-msg" data-success="{{ ui.get('popup_success', 'Subscribed! Welcome aboard.') }}" data-network-error="{{ ui.get('popup_network_error', 'Network error - try again') }}" data-generic-error="{{ ui.get('popup_generic_error', 'Something went wrong') }}"></div>
+      <button class="ks-popup__skip" id="ks-popup-skip">{{ ui.get('popup_skip', 'No thanks') }}</button>
     </div>
   </div>
   <script>
   (function(){
-    var KEY='ks_popup_seen', COOLDOWN=14*86400*1000;
-    var last=localStorage.getItem(KEY);
+    var KEY='ks_popup_seen', VIEWS='ks_popup_views', COOLDOWN=14*86400*1000;
+    function get(k){ try { return localStorage.getItem(k); } catch(e) { return null; } }
+    function put(k,v){ try { localStorage.setItem(k,v); return true; } catch(e) { return false; } }
+    var views=parseInt(get(VIEWS)||'0',10)+1;
+    // Without storage the first view cannot be told apart from later ones: never show.
+    if(!put(VIEWS, String(views)) || views<2) return;
+    var last=get(KEY);
     if(last && Date.now()-parseInt(last,10)<COOLDOWN) return;
 
     var overlay=document.getElementById('ks-popup-overlay');
     if(!overlay) return;
 
     var shown=false;
+    function consentOpen(){
+      return !!(window.HappyinAnalytics && window.HappyinAnalytics.promptVisible && window.HappyinAnalytics.promptVisible());
+    }
     function show(){
-      if(shown) return; shown=true;
+      if(shown) return;
+      if(consentOpen()){ clearTimeout(timer); timer=setTimeout(show, 15000); return; }
+      shown=true;
       overlay.style.display='flex';
       overlay.offsetHeight; // force reflow
       overlay.classList.add('ks-popup--visible');
@@ -485,7 +802,7 @@
     });
 
     function dismiss(){
-      localStorage.setItem(KEY, String(Date.now()));
+      put(KEY, String(Date.now()));
       clearTimeout(timer);
       overlay.classList.remove('ks-popup--visible');
       setTimeout(function(){ overlay.style.display='none'; },300);
@@ -507,21 +824,59 @@
         .then(function(r){return r.json()})
         .then(function(d){
           if(d.ok){
-            msg.textContent='Subscribed! Welcome aboard.';
+            msg.textContent=msg.dataset.success;
             msg.className='ks-popup__msg ks-popup__msg--ok';
+            if(window.HappyinAnalytics) window.HappyinAnalytics.track('newsletter_subscribe');
             setTimeout(dismiss, 2000);
           } else {
-            msg.textContent=d.error||'Something went wrong';
+            msg.textContent=d.error||msg.dataset.genericError;
             msg.className='ks-popup__msg ks-popup__msg--err';
             btn.disabled=false; btn.textContent='Subscribe';
           }
         })
         .catch(function(){
-          msg.textContent='Network error - try again';
+          msg.textContent=msg.dataset.networkError;
           msg.className='ks-popup__msg ks-popup__msg--err';
           btn.disabled=false; btn.textContent='Subscribe';
         });
     });
+  })();
+  </script>
+  {% endif %}
+
+  {# AdSense loader: rendered only when extra.ads.client is set. The library is requested
+     the first time a page actually has a visible slot (articles), after the Consent Mode
+     defaults in <head>; slots hidden by CSS (the desktop sidebar on phones) are skipped,
+     because AdSense cannot fill a zero-width slot. #}
+  {% set ads_client = ads.client() | trim %}
+  {% if ads_client %}
+  <script>
+  (function(){
+    if (window.__ksAds) return;
+    window.__ksAds = true;
+    var CLIENT = {{ ads_client | tojson }};
+    var loaded = false;
+    function fill(){
+      var slots = document.querySelectorAll('ins.adsbygoogle:not([data-adsbygoogle-status]):not([data-ks-queued])');
+      var visible = [];
+      for (var i = 0; i < slots.length; i++) if (slots[i].offsetWidth > 0) visible.push(slots[i]);
+      if (!visible.length) return;
+      if (!loaded) {
+        loaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.crossOrigin = 'anonymous';
+        s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + encodeURIComponent(CLIENT);
+        document.head.appendChild(s);
+      }
+      visible.forEach(function(slot){
+        slot.setAttribute('data-ks-queued', '1');
+        try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+      });
+    }
+    if (window.document$ && window.document$.subscribe) window.document$.subscribe(fill);
+    else if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fill);
+    else fill();
   })();
   </script>
   {% endif %}

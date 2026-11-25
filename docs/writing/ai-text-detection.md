@@ -1,114 +1,104 @@
 ---
 title: AI Text Detection
+description: Distinguish corpus-level language research, individual detection, provenance, and editorial quality.
 category: concepts
-tags: [writing, ai-detection, nlp, research]
+tags: [writing, ai-detection, nlp, research, evaluation]
 ---
 
 # AI Text Detection
 
-Methods and research for identifying AI-generated text. Detection relies on statistical markers (word frequency shifts), structural patterns (low burstiness), and stylistic tells (hedge-heavy, opinion-free prose). No single method is foolproof - but combining signals yields high accuracy.
+Text-origin detection, factual verification, and editorial quality answer
+different questions. A clear, accurate article may be AI-assisted; a human-written
+article may be false. Scope checked 2026-09-06 against the primary sources below.
 
-## Key Research: Liang et al. (2024)
+Do not turn a word list, a rhythm heuristic, or an uncalibrated product score
+into a confident claim about an individual author's process.
 
-Study: "Delving into LLM-assisted writing in biomedical publications through excess vocabulary" (arxiv 2406.07016). Analyzed 15M+ PubMed abstracts.
+## Separate the Questions
 
-**Findings:**
-- 280 excess style words identified in 2024 publications
-- 10-13.5% of abstracts showed LLM processing markers, up to 40% in some subfields
-- The excess was almost entirely **style words** (verbs, adjectives) - not content nouns
-- Previous vocabulary shifts (e.g., COVID-related) were content nouns - this shift is qualitatively different
-- Makes detection feasible because style words are content-independent
+| Question | Relevant evidence | What does not answer it |
+|---|---|---|
+| Did language usage change across a corpus? | Corpus design, time comparison, measured vocabulary shifts | One suspicious word in one document |
+| Does a detector discriminate in a defined setting? | Labeled held-out samples, fixed threshold, error rates | A vendor ranking or an unversioned accuracy claim |
+| How was this particular document produced? | Available source/draft history and trustworthy provenance | Regular grammar or absence of anecdotes |
+| Is this document correct and useful? | Sources, runnable examples where relevant, reader task | A low “AI probability” score |
 
-**The 10 most effective marker words** (Liang et al.): across, additionally, comprehensive, crucial, enhancing, exhibited, insights, notably, particularly, within.
+## What the Cited Research Establishes
 
-**Top excess ratios:**
+[Delving into LLM-assisted writing in biomedical publications through excess vocabulary](https://arxiv.org/abs/2406.07016)
+studies vocabulary changes across biomedical abstracts. Its corpus-level
+estimates are not an individual-document classifier or an editorial blacklist.
+Use the paper's stated population and revision when discussing its estimates;
+do not transplant a percentage into another language, genre, or time period.
 
-| Word | Excess ratio |
-|------|-------------|
-| delves | 25.2x |
-| showcasing | 9.2x |
-| underscores | 9.1x |
-| crucial | high delta |
-| comprehensive | high delta |
-| notably | high delta |
+[GPT detectors are biased against non-native English writers](https://arxiv.org/abs/2304.02819)
+reports false-positive and robustness problems for the detectors and samples it
+evaluated. It supports caution about those measurements, not the claim that
+every current detector is equally inaccurate.
 
-## Detection Dimensions
+The [NIST synthetic-content transparency report](https://doi.org/10.6028/NIST.AI.100-4)
+covers provenance, labeling, detection and evaluation as different technical
+approaches. Provenance can add information about origin and changes; it is not
+a guarantee that a statement is true or presented in context.
 
-### 1. Vocabulary Analysis
+Source versions: arXiv 2406.07016 v5 (2025-07-03), arXiv 2304.02819 v3
+(2023-07-10), and NIST AI 100-4 (2024-11-20). These dates identify the evidence,
+not a benchmark of every model or detector available in September 2026.
 
-Count frequency of known AI marker words per 1000 words. Compare against pre-2023 baselines for the same genre. High concentration of Tier 1 markers (see [[overused-words-phrases]]) is the strongest single signal.
+## Evaluate a Detector Before Using Its Score
 
-**Key finding from Liang et al.:** 66% of excess vocabulary were verbs. Adjectives were the second largest category. This is because LLMs default to the statistically safest word choices, which tend to be formal, Latinate verbs and superlative adjectives.
+For an actual detection task, define the intended population and decision cost.
+Keep training or threshold-selection material separate from held-out evaluation.
 
-### 2. Burstiness (Sentence Length Variation)
+Record at least the following in the evaluation you already use:
 
-**Burstiness** = variation in sentence length and complexity across a text.
+- Detector version, preprocessing, threshold, and available score definition.
+- Human and generated source groups, language, genre and document length.
+- Generator identity and settings when known; mark unknown provenance explicitly.
+- Counts of false positives and false negatives, with their denominators.
+- Behavior on permitted editing, translation and mixed-authorship cases relevant
+  to the task.
 
-- **Human writing**: naturally mixes short punchy sentences (5 words) with long complex ones (40+ words). Rhythm changes based on emotion, emphasis, pacing
-- **AI writing**: sentences cluster around medium length (15-25 words). Monotonous tempo throughout
+Report results for the measured groups rather than only a pooled accuracy
+number. Decide whether the observed errors are tolerable for the intended use.
+An unexplained score must not become proof of misconduct.
 
-Measure: standard deviation of sentence word counts. Human text: high SD. AI text: low SD.
+## Keep Detection Out of the Editing Objective
 
-### 3. Perplexity (Word Predictability)
+Edit for supported meaning, useful structure and the requested voice.
+Preserve dates, numbers, versions, uncertainty and attribution.
 
-**Perplexity** = how unpredictable word choices are when measured against a language model.
+A fixed demand for opinions, personal failure stories, unusual words or uneven
+paragraph lengths can damage a factual reference. Conversely, formal prose and
+parallel list items may be appropriate for contracts and instructions.
+These are editorial choices, not measured authorship verdicts.
 
-- **Human writing**: spikes of high perplexity (creative, unexpected choices) mixed with low perplexity (common phrases)
-- **AI writing**: consistently low perplexity. Every word is the "safest statistical choice." Technically correct but flat
+If a style flag identifies a real problem, state it directly: an ambiguous
+condition, a redundant paragraph, an unsupported guarantee, or a missing source.
+Do not add intentional mistakes or invented testimony to lower a detector score.
 
-Tools like GPTZero use perplexity and burstiness together as primary signals.
+## Decision Boundaries
 
-### 4. Structural Fingerprinting
+Use detection only for the task it was evaluated to support. If the available
+evidence cannot establish origin, keep that conclusion unresolved rather than
+replacing it with stylistic confidence.
 
-AI text has a recognizable "shape" (see [[structural-antipatterns]]):
-- Symmetrical paragraph lengths
-- Predictable transition words opening each paragraph
-- Every section follows introduction-body-conclusion
-- Lists with uniform item lengths
-
-### 5. Voice and Tone Markers
-
-- No personal opinions or first-person experience
-- Excessive hedging ("It's worth noting that...")
-- Balanced-to-a-fault ("On one hand... on the other hand...")
-- Perfect grammar throughout (humans make strategic informal choices)
-- Generic enthusiasm without specific cause
-
-## Detection Tools
-
-| Tool | Method | Notes |
-|------|--------|-------|
-| GPTZero | Perplexity + burstiness | Most widely used, per-sentence scoring |
-| Originality.ai | ML classifier | Subscription, batch scanning |
-| Turnitin AI | Integrated with plagiarism check | Academic institutions |
-| Binoculars | Zero-shot, cross-model perplexity | Research tool, no fine-tuning needed |
-| Sber GigaCheck | Russian-focused, 94.7% accuracy | Best for Russian text |
-
-## Co-Evolution Effect
-
-From arxiv 2502.09606: "delve" dropped sharply in LLM output after being publicly called out as an AI marker. LLMs and humans co-evolve - as detection patterns are identified, model outputs shift. Detection must track moving targets.
-
-**Implication:** Static word lists decay in effectiveness. Structural and statistical methods (burstiness, perplexity) are more durable than vocabulary lists.
-
-## Practical Detection Workflow
-
-1. **Scan vocabulary** - count Tier 1/2 marker words per 1000 words (see [[overused-words-phrases]])
-2. **Measure burstiness** - calculate SD of sentence lengths. SD < 5 words is suspicious
-3. **Check structure** - uniform paragraph lengths, predictable transitions, list-heavy
-4. **Read for specificity** - AI text lacks names, dates, exact numbers, personal anecdotes
-5. **Verify tone** - no opinions, no humor, no self-correction, no emotional shifts
-
-**Threshold heuristic:** 3+ signals from different dimensions = high confidence AI-generated.
+For a publication-quality task, a source check and a bounded editorial review
+can finish the work without solving authorship detection. For an authorship
+investigation, clean prose alone is not the terminal evidence.
 
 ## Gotchas
 
-- **Issue:** Heavily edited AI text passes vocabulary checks because marker words are replaced. **Fix:** Structural analysis (burstiness, paragraph symmetry) survives surface editing. A text can have zero "delves" and still read as AI due to uniform rhythm.
-- **Issue:** Non-native English speakers sometimes trigger false positives because their writing has low burstiness and formal vocabulary. **Fix:** Look for specificity - non-native human writers include personal details, opinions, and domain knowledge that AI text lacks.
-- **Issue:** Detection tools give confidence scores, not binary verdicts - a 60% score is not meaningful. **Fix:** Use tools as one input among several. Manual structural + vocabulary analysis is more reliable than any single automated score.
+- **Corpus-to-document leap:** a population shift is treated as proof against
+  one writer. Keep the population estimate and individual claim separate.
+- **Unmeasured threshold:** “three warning signs” becomes high confidence.
+  Use an evaluated decision rule or state that no calibrated rule is available.
+- **Detector optimization harms facts:** dates, numbers or uncertainty are
+  altered to sound less synthetic. Preserve the claim before changing style.
+- **Provenance is confused with truth:** authentic history is used to endorse
+  a false statement. Verify the statement and its context independently.
 
 ## See Also
 
-- [[overused-words-phrases]]
-- [[structural-antipatterns]]
-- [[natural-writing-style]]
 - [[editing-checklist]]
+- [[agent-evaluation]]

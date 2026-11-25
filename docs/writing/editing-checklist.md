@@ -1,129 +1,114 @@
 ---
 title: Editing Checklist for Text Quality
+description: Preserve facts and technical meaning while improving clarity, structure, and publication readiness.
 category: tools
-tags: [writing, editing, checklist, ai-detection, quality]
+tags: [writing, editing, checklist, verification, quality]
 ---
 
 # Editing Checklist for Text Quality
 
-Practical checklist for reviewing text before publication. Covers AI marker detection, structural quality, style, and readability. Use sequentially - fix earlier items first because they affect later ones.
+Use this checklist to improve a document without changing what its evidence
+supports. Scope checked 2026-09-06: technical references, tutorials, analyses,
+and incident narratives, including AI-assisted drafts.
 
-## Phase 1: AI Marker Scan
+An unfamiliar word or an even sentence rhythm is not a factual defect.
+Prioritize correctness and the reader's task over detector scores or style quotas.
 
-Run through these first. If multiple items fail, consider rewriting from scratch rather than patching.
+## Preserve the Claim Before Editing Its Wording
 
-- [ ] **No Tier 1 words**: delve, showcase, underscore, crucial, comprehensive, notably, enhancing, Additionally, insights, particularly (see [[overused-words-phrases]])
-- [ ] **Max 2 transition openers per page**: Moreover, Furthermore, Additionally, Notably, In conclusion
-- [ ] **No filler phrases**: "It's important to note," "A testament to," "In the realm of," "Let's dive in"
-- [ ] **No generic metaphors**: tapestry, landscape, realm, journey, beacon, symphony
-- [ ] **No unearned superlatives**: transformative, unprecedented, revolutionary, game-changing (unless backed by specific evidence)
+Keep the original source and draft available during revision. For material
+claims, identify the evidence and the exact boundary of the statement.
 
-### Quick Word Frequency Check
+| Protected element | Unsafe edit | Required check |
+|---|---|---|
+| Count and denominator | Turn 12 of 40 checked records into 12 successful records | Preserve what was counted and what remains unchecked |
+| Historical date | Replace a dated observation with “currently” | Retain the date unless new evidence supports an update |
+| Modality | Turn “may recover” into “will recover” | Preserve uncertainty and conditions |
+| Negation | Drop “not” while shortening a sentence | Compare the proposition, not only matching keywords |
+| Units and versions | Remove a unit or version as visual clutter | Keep the conditions needed to interpret the result |
+| Quotation or personal experience | Invent “we tested” to make prose sound authentic | Use only supplied testimony, clearly attributed |
+| Technical identifier | Rename an API or flag for smoother prose | Check the exact spelling against the relevant source |
 
-Count per 1000 words:
-- Tier 1 markers: **0 is ideal**, 1 is acceptable in long text
-- Tier 2 markers: **< 3** total across the piece
-- Transition words opening paragraphs: **< 20%** of paragraphs
+Unknown quantities remain unknown. A labeled hypothetical example is acceptable
+when it serves the reader, but it must not masquerade as an observed result.
 
-## Phase 2: Structure Check
+## Choose the Structure for the Reader's Task
 
-- [ ] **Paragraph lengths vary**: at least one 1-2 sentence paragraph AND one 5+ sentence paragraph per 500 words
-- [ ] **Sentence lengths vary**: shortest sentence < 8 words, longest > 30 words (measure by counting)
-- [ ] **No sandwich pattern**: paragraphs don't follow claim-detail-restatement structure repeatedly
-- [ ] **Headers are specific**: no "Understanding X," "The Role of Y," "Why Z Matters" templates
-- [ ] **Lists are justified**: bulleted items are genuinely parallel (not prose forced into list format)
-- [ ] **Sections are unequal**: the most important section is noticeably longer than others
-- [ ] **No symmetric bullet points**: list items vary in length (not all 10-15 words)
+| Document | What must be easy to find | What is not compulsory |
+|---|---|---|
+| Reference | Contract, parameters, constraints, version, failure modes | Anecdote, dramatic opening, personal opinion |
+| Tutorial | Prerequisites, runnable sequence, expected result, recovery | A benchmark or invented project history |
+| Analysis | Question, evidence, comparison criteria, limitations | Equal-sized sections or a predetermined verdict |
+| Incident narrative | Observed failure, cause, intervention, verification | A tidy success story when recovery is incomplete |
 
-## Phase 3: Voice and Authenticity
+Remove repetition when it obscures these elements. Do not stretch a paragraph
+or add a rhetorical question merely to make the document appear less regular.
+The [Google developer documentation tone guide](https://developers.google.com/style/tone)
+supports clear, direct prose suited to the reader; it does not prescribe such quotas.
 
-- [ ] **At least one opinion per 500 words**: the author takes a position, not just presents "both sides"
-- [ ] **At least one specific example**: names, numbers, dates, tool versions (not "consider a scenario")
-- [ ] **At least one admission**: uncertainty, limitation, something the author doesn't know or got wrong
-- [ ] **No hedge stacking**: "It should be noted that while some might argue" = 3 hedges in one sentence
-- [ ] **Register is consistent but not uniform**: occasional informal touches in technical writing
-- [ ] **Enthusiasm is earned**: superlatives attached to specific evidence, not sprinkled on every topic
-- [ ] **No generic conclusions**: "In conclusion, X is important for Y" -> delete or replace with specific next steps
+## Review in Order of Consequence
 
-## Phase 4: Content Quality
+1. Check unsupported or contradictory claims and material omissions.
+2. Check whether the reader can carry out the intended task.
+3. Check examples, identifiers, links and relevant version conditions.
+4. Improve ambiguous wording and unnecessary repetition.
+5. Apply the requested house style without altering the first four results.
 
-- [ ] **First paragraph hooks**: reader learns what the article delivers in the first 3 sentences
-- [ ] **Code appears early**: first code example within the first 1/3 of the article
-- [ ] **Code is complete**: at least one code example is copy-paste runnable (not pseudocode)
-- [ ] **Code blocks are language-tagged**: every fence has a language identifier
-- [ ] **Links are specific**: point to exact resources, not "learn more about X"
-- [ ] **No orphan sections**: every section has >= 2 sentences of content
-- [ ] **No redundant summary**: conclusion adds information, doesn't restate the introduction
+A useful editorial finding identifies the passage, explains its consequence,
+and gives a correction consistent with the available evidence. “Sounds like AI”
+does not specify an actionable technical defect.
 
-## Phase 5: Readability
+## Verify Examples and Completion Claims
 
-- [ ] **Read aloud**: does it sound like something you'd say to a colleague?
-- [ ] **Contractions present**: "it's," "don't," "won't" (unless formal context requires otherwise)
-- [ ] **No noun stacking**: "the machine learning model training pipeline optimization process" -> break it up
-- [ ] **Active voice dominates**: "We measured" not "Measurements were taken"
-- [ ] **Paragraph breaks at topic changes**: no paragraph covers two unrelated points
-- [ ] **Subheads every 200-400 words**: a reader skimming can follow the structure
+If a document includes code, test the stated runnable boundary with the named
+runtime and dependencies. Label an illustrative fragment as such; do not imply
+that an omitted service, fixture, credential or model has been exercised.
 
-## Automated Checks
+Keep these different claims separate:
 
-Tools that can catch some of these mechanically:
+- Source inspection: a recommendation or code path was reviewed.
+- Fixture check: the supplied example passed a bounded test.
+- Installation check: the intended files or configuration reached the target.
+- Consumer check: the intended tool or reader loaded the delivered result.
+- Product result: the requested real workflow completed under its actual conditions.
 
-| Check | Tool | What it catches |
-|-------|------|----------------|
-| AI markers | Custom script / regex | Tier 1-2 word presence |
-| Sentence variation | Hemingway Editor | Long/complex sentences, passive voice |
-| Readability score | Flesch-Kincaid | Grade level, sentence length average |
-| AI detection | GPTZero | Perplexity + burstiness scores |
-| Word frequency | Custom script | Repeated words, AI markers per 1000 words |
+A green fixture does not upgrade the final item. Likewise, a valid article
+source or successful Git push is not proof that readers can see the new page.
 
-### Minimal Regex Check
+## Use Automation for Narrow Assertions
 
-```python
-import re
+Automated checks can identify broken links, malformed markup, changed numbers,
+or missing protected identifiers. Their result is limited to those assertions.
 
-TIER1_MARKERS = [
-    r'\bdelves?\b', r'\bshowcas(?:e|ing|es|ed)\b', r'\bunderscore[sd]?\b',
-    r'\bcrucial\b', r'\bcomprehensive\b', r'\bnotably\b',
-    r'\benhancing\b', r'\badditionally\b', r'\binsights?\b',
-    r'\bparticularly\b'
-]
+A number comparison cannot detect every change of meaning: “12 failed” and
+“12 passed” share a number. Retain a semantic review of the claim and its source.
+A prose linter's flag should prompt inspection, not automatic word replacement.
 
-FILLER_PHRASES = [
-    r"it'?s important to note",
-    r"a testament to",
-    r"in the realm of",
-    r"let'?s dive in",
-    r"in today'?s (?:rapidly )?\w+ (?:landscape|world)"]
+Do not use a detector score as an editorial acceptance condition. The primary
+study on [non-native English detector bias](https://arxiv.org/abs/2304.02819)
+documents limitations in its evaluated detectors and samples; it does not
+establish a universal test of current authorship.
 
-def scan_text(text: str) -> list[str]:
-    findings = []
-    for pattern in TIER1_MARKERS:
-        matches = re.findall(pattern, text, re.IGNORECASE)
-        if matches:
-            findings.append(f"Tier 1 marker: {matches[0]} ({len(matches)}x)")
-    for pattern in FILLER_PHRASES:
-        if re.search(pattern, text, re.IGNORECASE):
-            findings.append(f"Filler phrase: {pattern}")
-    return findings
-```
+## Stop When the Requested Document Is Ready
 
-## Priority by Impact
-
-If you can only do 3 things:
-
-1. **Remove Tier 1 marker words** - highest single-item impact on AI detection scores
-2. **Vary sentence length** - strongest structural signal. Read aloud and break monotony
-3. **Add one specific example** - a real number, name, or date transforms a paragraph from generic to authentic
+Once material defects are resolved and the requested checks pass, stop
+cosmetic revision. Record a no-change review when appropriate. Continue any
+remaining requested publication or delivery step; reviewing the text alone
+does not finish a request to publish it.
 
 ## Gotchas
 
-- **Issue:** Running through the checklist mechanically produces "checklist-optimized" text that passes all checks but reads as artificial because the changes are superficial patches. **Fix:** Use the checklist to identify problems, then rewrite the flagged sections from scratch. The checklist diagnoses; you fix by rewriting, not by search-and-replace.
-- **Issue:** Editing someone else's text (or your own AI-assisted draft) for authenticity markers while preserving their voice is much harder than writing from scratch. **Fix:** Keep the structure and key points from the draft, but rewrite each section in your own words from memory. If you can't rewrite it from memory, you don't understand it well enough to publish it.
-- **Issue:** Checklist fatigue - checking 25+ items per article becomes a chore and items get skipped. **Fix:** Do Phase 1 (AI markers) on every piece. Phases 2-5 only on important publications. Phase 1 alone catches 80% of obvious AI tells.
+- **Invented specificity:** a quota for numbers or anecdotes creates pressure to
+  supply unsupported facts. Remove the quota, not the uncertainty.
+- **Historical claims become current:** replacing a date with “now” silently
+  changes its truth conditions. Retain the source date or obtain new evidence.
+- **Endless editorial passes:** each pass finds a new personal preference.
+  Reopen only a material defect or a changed acceptance condition.
+- **Rewriting from memory:** source conditions disappear during a fluent rewrite.
+  Compare the edited claim with the actual source, not recollection.
 
 ## See Also
 
 - [[ai-text-detection]]
-- [[overused-words-phrases]]
-- [[structural-antipatterns]]
-- [[natural-writing-style]]
+- [[technical-article-structure]]
+- [[agent-evaluation]]

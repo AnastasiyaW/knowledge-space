@@ -17,6 +17,9 @@ type: MOC
 - [[raii-resource-management]] - RAII and resource management
 - [[move-semantics]] - Move semantics and perfect forwarding
 
+## Qt and QML
+- [[qt-qobject-lifetime-and-qml-context-properties]] - QObject affinity, deferred deletion, and bounded QML context exposure
+
 ## Modern C++ (17/20/23)
 - [[modern-cpp-features]] - Modern C++ features overview
 - [[lambda-expressions]] - Lambda expressions

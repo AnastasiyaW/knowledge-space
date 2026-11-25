@@ -96,3 +96,72 @@ From 2022-10-26 onward, Microsoft’s generative-image capabilities should be tr
 - **Subject:** `organization:microsoft`, thread `microsoft-generative-ai-rollout-and-adoption`, 4 dated events 2022-10-22 → 2025-05-04.
 - **Practical note:** From 2022-10-26 onward, Microsoft’s generative-image capabilities should be treated as a staged, region-limited rollout. Practitioners should verify current product and regional availability before relying on them.
 - **Confidence:** medium. The dated items under Superseded by this show what is obsolete.
+
+<!-- live-update:c245ff060b3d4d7e2721a2a082bb10901388830999d78a8d65eede84179f11e3 -->
+## 2026-11-19 — Nadella clarifies voluntary buyout program amid shift to agent-driven development
+
+Microsoft offered voluntary exit options to eligible employees while software development moves to compact teams that manage AI agents. Nadella says the offer gives people a choice during restructuring. It is not a forced mass layoff.
+
+### Usage and practices
+
+- Build engineering groups as compact teams that direct and check agents, not as a larger manual programming headcount. [Source](https://techcrunch.com/2026/11/18/microsoft-ceo-satya-nadella-explains-why-he-asked-60k-employees-to-quit/)
+- Developers move from writing code line by line to managing, orchestrating and evaluating what AI agents produce. [Source](https://techcrunch.com/2026/11/18/microsoft-ceo-satya-nadella-explains-why-he-asked-60k-employees-to-quit/)
+
+### Additional evidence
+
+- 2026-11-19: Nadella clarified that the sixty thousand figure is the number of eligible employees who were offered a voluntary buyout during the AI restructuring. It is not a mandatory layoff. Leadership expects departures below five percent. Software development shifts to small teams that direct AI agents. [Source](https://techcrunch.com/2026/11/18/microsoft-ceo-satya-nadella-explains-why-he-asked-60k-employees-to-quit/)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-18: The older approach scaled software engineering capacity only by adding headcount in proportion. [Source](https://techcrunch.com/2026/11/18/microsoft-ceo-satya-nadella-explains-why-he-asked-60k-employees-to-quit/)
+
+### Limits and open questions
+
+- Adoption metrics and the actual share of the sixty thousand eligible employees who accept the buyout are not verified. The only figure is the executive estimate of under five percent.
+- The details of the exit offer and the internal team transition timelines could not be checked against a primary document.
+- Community discussion and regional tech coverage had no stable links, so they are not cited.
+
+
+<!-- Retained base: af7458929f9dfaf6c693e5f0a3138b1fc52eda69; article blob: d93a68cb1117a7c18bc82716caec9a120564a410 -->
+
+<!-- live-update:dedd1fd01ebb2ebcd4968d658a9e1ffee0762dec1a4832a08be098d9762703d1 -->
+## 2026-11-20 — Microsoft previews Windows Baseline Protection to verify PC security for applications
+
+Windows Baseline Protection is in preview in Windows 11. It gives developers a platform attestation API that checks eight core hardware and kernel security standards, so an app can restrict launch on non-compliant PCs.
+
+### Usage and practices
+
+- Open Settings in Windows 11, go to Privacy & security, then Baseline protection, to see the compliance status of the system. [Source](https://4pda.to/2026/11/19/463488/microsoft_pozvolit_prilozheniyam_blokirovat_zapusk_na_nebezopasnykh_pk/)
+- Enable TPM 2.0 and Secure Boot in the device UEFI firmware, so the hardware root-of-trust requirements are met. [Source](https://4pda.to/2026/11/19/463488/microsoft_pozvolit_prilozheniyam_blokirovat_zapusk_na_nebezopasnykh_pk/)
+- Turn on Core Isolation and Memory Integrity (HVCI) in Windows Security, so the kernel memory protection checks pass. [Source](https://4pda.to/2026/11/19/463488/microsoft_pozvolit_prilozheniyam_blokirovat_zapusk_na_nebezopasnykh_pk/)
+- Call the platform attestation API from application code to query the compliance tokens and enforce the launch policy. [Source](https://4pda.to/2026/11/19/463488/microsoft_pozvolit_prilozheniyam_blokirovat_zapusk_na_nebezopasnykh_pk/)
+- Keep Core Isolation and Memory Integrity on, so the hardware-enforced baseline posture checks do not fail. [Source](https://4pda.to/2026/11/19/463488/microsoft_pozvolit_prilozheniyam_blokirovat_zapusk_na_nebezopasnykh_pk/)
+- Use only WHQL-certified kernel drivers and keep the vulnerable driver blocklists active, so driver-signing attestation does not reject the PC. [Source](https://4pda.to/2026/11/19/463488/microsoft_pozvolit_prilozheniyam_blokirovat_zapusk_na_nebezopasnykh_pk/)
+- During rollout, use staged notification policies instead of closing the application at once. Dual-boot and development setups are special cases. [Source](https://4pda.to/2026/11/19/463488/microsoft_pozvolit_prilozheniyam_blokirovat_zapusk_na_nebezopasnykh_pk/)
+
+### Additional evidence
+
+- 2026-11-20: Windows Baseline Protection in Windows 11 evaluates eight security controls:
+  - TPM 2.0
+  - Secure Boot
+  - Virtualization-Based Security (VBS)
+  - Memory Integrity (HVCI)
+  - driver signing
+  - certified drivers
+  - kernel debugger protection
+  - vulnerable driver blocklists
+
+  An application gets a standard pass-fail status or a hardware token. It can then show a warning, gate features, or block launch completely. [Source](https://4pda.to/2026/11/19/463488/microsoft_pozvolit_prilozheniyam_blokirovat_zapusk_na_nebezopasnykh_pk/)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-20: Third-party applications and game anti-cheat systems had to build their own kernel-level integrity checkers to judge the host posture on their own. [Source](https://4pda.to/2026/11/19/463488/microsoft_pozvolit_prilozheniyam_blokirovat_zapusk_na_nebezopasnykh_pk/)
+
+### Limits and open questions
+
+- Topic mismatch: the thread was filed under 'Microsoft generative AI rollout and adoption'. The event and its main reporting cover only Windows 11 baseline security and hardware attestation (Windows Baseline Protection).
+- Missing references: searches returned only redirect links, with no canonical URLs, for Windows Latest, IT Home and Reddit. Redirects and guessed paths are not allowed as citations, so those references are left out.
+- Schedule: the move from Windows Insider preview to mandatory enforcement across consumer and commercial Windows 11 editions is not confirmed yet.
+
+
+<!-- Retained base: 1ff9770000fb565deaf10f760149bceea1a08343; article blob: 3d85f4535df1312e325c8e0a0e12491ef171f58d -->
