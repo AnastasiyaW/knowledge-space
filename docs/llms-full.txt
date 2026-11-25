@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1456+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1457+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1093,6 +1093,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Project Genie: project-genie-genie-4-rollout — Project Genie Genie 4 Rollout](https://happyin.space/projects/project-genie/): Project Genie is Google DeepMind's tool that builds real-time 3D worlds from text or images, for researchers, game designers and AI developers.
 - [Project Starlight](https://happyin.space/projects/project-starlight/): Topaz's original generative diffusion model for restorers of archival video and low-resolution GenAI clips.
 - [ProxyPose](https://happyin.space/projects/proxypose/): ProxyPose — метод и открытая реализация для исследователей компьютерного зрения, которым нужна 6-DoF-траектория локальной поверхности или объекта из монокулярного видео. Возможности: RGB-видео и од...
+- [PrunaVAED — LTX Video](https://happyin.space/projects/prunavaed/): PrunaVAED is a pruned decoder video VAE for LTX-2.3 that replaces only the decoding of existing LTX-2.3 latents. It keeps the LTX-2.3 encoder and latent format, works with distilled and two-stage L...
 - [Alaya Lab: Programmable World Model (PWM)](https://happyin.space/projects/pwm-world-model/): Alaya Lab's Programmable World Model (PWM) is an explicit-state framework for generative worlds that separates world state from video rendering.
 - [QuerySplat](https://happyin.space/projects/querysplat/): QuerySplat is a feed-forward 3D Gaussian Splatting framework for people who need a renderable scene and novel views from multi-view images without pre-supplied camera poses.
 - [Qwen 3.6 Plus Preview — Public model availability](https://happyin.space/projects/qwen-3-6-plus-preview/): Qwen 3.6 Plus Preview is a Qwen-hosted preview model available as `qwen/qwen3.6-plus-preview:free` on OpenRouter.
