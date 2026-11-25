@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1427+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1428+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -782,6 +782,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [ComfyUI-NKD-VFX-Tools](https://happyin.space/projects/comfyui-nkd-vfx-tools/): ComfyUI-NKD-VFX-Tools provides interactive VFX-oriented nodes rather than a model: Relight, Lens Blur, Preview 3D, fSpy Camera, Camera Delta Prompt, Perspective Unwarp/Rewarp, Lens Distort, and Mas...
 - [OpenPose Studio for ComfyUI — Project development](https://happyin.space/projects/comfyui-openpose-studio/): OpenPose Studio for ComfyUI — редактор поз внутри ComfyUI для художника, который хочет поправить скелет, руки или JSON, а не принимать результат pose-estimator как есть. Возможности: COCO-18 тело, ...
 - [OrbitSheets](https://happyin.space/projects/comfyui-orbitsheets/): OrbitSheets is a ComfyUI node pack for character turnarounds and location sheets. It builds them from one MiniMax-H3 video take instead of separate image prompts.
+- [ComfyUI](https://happyin.space/projects/comfyui-outpainting-mask-editor/): ComfyUI-OutpaintMask is a custom ComfyUI node published on GitHub by zaum for creating outpaint masks interactively.
 - [ComfyUI-PuLID-Flux2 — PuLID-Flux2 ComfyUI integration](https://happyin.space/projects/comfyui-pulid-flux2/): ComfyUI-PuLID-Flux2 — адаптация PuLID для ComfyUI и FLUX.2: загружает InsightFace AntelopeV2, EVA-CLIP и PuLID-веса, затем применяет идентичность к модели перед семплингом. Возможности: Klein 4B/9B...
 - [ComfyUI Setup Manager](https://happyin.space/projects/comfyui-setup-manager/): ComfyUI Setup Manager is a terminal TUI and CLI for managing isolated ComfyUI installations.
 - [ComfyUI Skill Public — Public repository](https://happyin.space/projects/comfyui-skill-public/): comfyui-skill-public: a portable ComfyUI skill for agents and operators working across unfamiliar local, remote, or cloud installs.
