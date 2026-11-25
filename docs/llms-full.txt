@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1476+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1477+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1029,6 +1029,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [MOSS-Video-Preview](https://happyin.space/projects/moss-video-preview/): MOSS-Video-Preview is an Apache-2.0, custom-code video-language model family built on gated image-video cross-attention: Base for pretraining, SFT for offline instruction following, and Real-Time-S...
 - [Mozart AI](https://happyin.space/projects/mozart-ai/): Mozart AI is a music platform on web and iOS in the Suno category. It turns a prompt or lyrics into a finished song, edits it in Studio, and generates a music video.
 - [MTVCrafter](https://happyin.space/projects/mtvcrafter/): MTVCrafter is a local human-image animation pipeline for GPU users who supply a reference image and a driving video with recoverable SMPL motion.
+- [Mulacover: mulacover-model-release — Mulacover Model Release](https://happyin.space/projects/mulacover/): MuLaCover is an open-source cover and remix model for audio engineers and AI music developers who need an alternative to Suno.
 - [MuScriptor — Public project availability](https://happyin.space/projects/muscriptor/): MuScriptor is an open-weight music transcription model from Mirelo and Kyutai. It turns multi-instrument recordings into MIDI note events.
 - [Muse](https://happyin.space/projects/muse/): Muse is a model family from Meta Superintelligence Labs. Muse Image generates and edits images, while Muse Video remains a preview.
 - [MUSIKA](https://happyin.space/projects/musika/): MUSIKA is an open TensorFlow GAN pipeline for generating arbitrary-length waveform music in a trained domain with tempo and note-density controls instead of text prompts.
