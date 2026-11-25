@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1436+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1437+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1127,6 +1127,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [SCoPE](https://happyin.space/projects/scope/): SCoPE — an image-to-video research release for teams that need camera-path control on Wan2.2-I2V-A14B.
 - [SDXL](https://happyin.space/projects/sdxl/): SDXL: a Stable Diffusion model for practitioners who need prompt-driven image generation.
 - [Seamless-Equirectangular LTX-2.3 LoRA — Seamless-Equirectangular LoRA release](https://happyin.space/projects/seamless-equirectangular-lora/): Seamless-Equirectangular LTX-2.3 LoRA — rank-128 адаптер для создания 360° equirectangular видео в LTX-2.3 через ComfyUI.
+- [Security Audit: security-audit — Security Audit](https://happyin.space/projects/security-audit/): security-audit is a coding-agent skill from Cloudflare that turns an agent into a security auditor.
 - [See-through](https://happyin.space/projects/see-through/): See-through is an Apache-2.0 research project that splits one anime character illustration into up to 23 layers and exports a layered PSD.
 - [SeedRealtime](https://happyin.space/projects/seedrealtime/): SeedRealtime is a native audio-visual full-duplex LLM for real-time conversation across continuous audio, video, and text.
 - [SeedVR2](https://happyin.space/projects/seedvr2/): SeedVR2 — наследник SeedVR для prompt-free восстановления видео и изображений: одноступенчатый апскейл, адаптивное оконное внимание, модели 3B и 7B, а также сторонняя 1.44B-дистилляция для менее ём...
