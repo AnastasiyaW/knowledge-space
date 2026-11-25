@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1464+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1465+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1089,6 +1089,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Pika](https://happyin.space/projects/pika/): Pika: облачная платформа для авторов коротких роликов, конкурирующая с Runway в text-to-video, image-to-video и video-to-video. Возможности: Pika 2.5, Pikaframes, Pikascenes, Pikadditions, Pikaswap...
 - [PixVerse CLI — Terminal generation](https://happyin.space/projects/pixverse-cli/): PixVerse CLI is a command-line interface for PixVerse subscribers to generate video, images, and audio from prompts or references.
 - [PixVerse — Public availability](https://happyin.space/projects/pixverse/): PixVerse is a proprietary video generation platform for creators and teams.
+- [Player 1: player-1-framework-release — Player 1 Framework Release](https://happyin.space/projects/player-1/): Player-1 is a post-training framework for developers building general game-control agents.
 - [Playtime AI celebrity lora library: playtime-ai-celebrity-lora-release — Playtime Ai Celebrity Lora Release](https://happyin.space/projects/playtime-ai-celebrity-lora-release/): Playtime-AI is a Hugging Face account with 86 public models, mostly LoRA-style add-ons. Most names use the Minimax_H3 or MM-H3 prefix.
 - [Laguna S 2.1 — Laguna](https://happyin.space/projects/poolside-laguna-s-2-1/): Laguna S 2.1 is Poolside's open-weight text-to-text Mixture-of-Experts coding model for teams building long-horizon software agents.
 - [Popit Music](https://happyin.space/projects/popit-music/): Popit Music is a service for AI music creators to generate tracks, enter listener selection, and publish the result.
