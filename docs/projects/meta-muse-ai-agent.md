@@ -71,3 +71,48 @@ Development moved from isolated conversational assistant prototypes to an autono
 - **Subject:** project:meta-muse-ai-agent, thread muse-image-video-msl, 2 dated events 2026-07-08 → 2026-11-19.
 - **Practical note:** see the usage and practice sections above, with their limits.
 - **Confidence:** medium. The dated supersedes above decide what is obsolete.
+
+<!-- live-update:ff798f3ff58c9c5da779122c8b23a44d918d5a28e3dfeb1f8a636f5e6c8d9990 -->
+## 2026-09-09 — Meta launches Muse personal AI agent
+
+Meta introduced Muse, a personal AI agent powered by Muse Spark. It can plan work, use a cloud browser, and fill forms. The official launch described an initial US rollout.
+
+## 2026-09-09 — Meta details Muse controls for browser tasks
+
+Muse can handle browser and form tasks. Meta says users approve sensitive actions and choose the access granted to connected services.
+
+### Usage and practices
+
+- Confirm that Muse is available in your country, create or open the Muse experience, and state a bounded task or goal in chat. [Source](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/)
+- Connect only the services needed for that task and choose the permitted access level. Revoke a connection when it is no longer needed. [Source](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/)
+- Use the shared browser for research, appointments, forms or price monitoring. Take control when needed. [Source](https://www.meta.com/en-gb/help/superintelligence/2124746764949121/)
+- Review approval prompts before purchases, email sending or other consequential actions. Inspect the activity trail afterward. [Source](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/)
+- Start with a public-web task. Take over at login or another sensitive interaction instead of granting broad account access immediately. [Source](https://www.techradar.com/ai-platforms-assistants/i-tried-metas-new-muse-ai-agent-its-incredibly-useful-but-handing-it-my-digital-life-felt-deeply-uncomfortable)
+- Keep approval friction enabled for consequential actions. Grant each connected service only the scope required for the task. [Source](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/)
+
+### What practitioners say
+
+- A hands-on reviewer found shopping delegation useful, but recommends beginning with public-web tasks and retaining human control at logins and sensitive steps. (2026-09-14) [Source](https://www.techradar.com/ai-platforms-assistants/i-tried-metas-new-muse-ai-agent-its-incredibly-useful-but-handing-it-my-digital-life-felt-deeply-uncomfortable)
+
+### Additional evidence
+
+- 2026-09-09: The public launch documentation identifies the underlying model family as Muse Spark. It describes a dedicated Muse Secure VM with its own browser, and says the initial rollout was in the US on iOS, Android and muse.ai; it does not substantiate a “Muse Spark 1.3” launch-model designation. [Source](https://about.fb.com/ja/news/2026/09/introducing-muse-personal-ai-agent/)
+- 2026-09-09: Meta says sensitive actions require confirmation, credentials are stored separately from the agent, and users can select or revoke connected-service permissions. The English launch page is dated 2026-09-08, one day earlier than this recorded event date. [Source](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/)
+
+### Subsequent developments
+
+- 2026-10-12: Meta introduced Muse Wonder and Muse Wonder Full for developers and Muse Code subscribers, and said Muse Wonder would soon power Muse experiences, first for subscribers. [Source](https://about.fb.com/news/2026/10/introducing-muse-wonder-models/)
+- 2026-10-23: Muse became available in Japan on iOS, Android and muse.ai, which Meta described as its first availability outside North America. [Source](https://about.fb.com/ja/news/2026/10/muse-personal-ai-agent-launches-in-japan/)
+- 2026-11-23: Muse became available to UK adults through iOS, Android, muse.ai and WhatsApp, with free use and optional subscription plans. [Source](https://about.fb.com/news/2026/11/muse-now-available-in-the-uk-muse-does-the-work-you-stay-in-control/)
+
+### Superseded guidance (retained for history)
+
+- 2026-10-23: The launch-era expectation that Muse would remain limited to its initial US rollout is obsolete: Meta subsequently announced availability in Japan and the UK. [Source](https://about.fb.com/ja/news/2026/10/muse-personal-ai-agent-launches-in-japan/)
+- 2026-10-12: Treating Muse Spark as the only announced model path for Muse is outdated: Meta announced that Muse Wonder would begin powering Muse experiences for subscribers. [Source](https://about.fb.com/news/2026/10/introducing-muse-wonder-models/)
+
+### Limits and open questions
+
+- The accessible official launch announcement names Muse Spark, but does not identify the consumer agent’s launch model as “Muse Spark 1.3.”
+- Current availability, quotas and subscription limits vary by country and may change after the dated regional announcements.
+
+<!-- Retained base: fd92264f7cc8086bb18b1dce8dc62956ef6d5d27; article blob: 3d121dc407d12dcec20b31c85f036865077c5242 -->
