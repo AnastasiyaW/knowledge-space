@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1473+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1474+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -999,6 +999,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [MagicQuill](https://happyin.space/projects/magicquill/): MagicQuill is a research image editor for artists who need local control beyond prompt-only inpainting.
 - [Marionette — Public project release](https://happyin.space/projects/marionette/): Marionette: пайплайн Alaya Lab для исследователей world models: ActionGPT и PoseGPT предсказывают 276-мерное артикулированное состояние, детерминированный bridge рендерит геометрию, а дообученный W...
 - [Marlin-2B](https://happyin.space/projects/marlin-2b/): Marlin-2B is a 2B video VLM for developers who need timestamped visual indexing.
+- [Mask Forcing](https://happyin.space/projects/mask-forcing/): Mask Forcing is a dual-noise masking method for teams distilling bidirectional video diffusion models into causal autoregressive generators.
 - [MaskVidExperiments](https://happyin.space/projects/maskvidexperiments/): MaskVidExperiments — набор узлов ComfyUI для тех, у кого уже есть покадровая маска объекта и нужно инпейнтить или стилизовать его в видео без дрожащего crop. — Subject Crop/Uncrop строит стабильный...
 - [MatrAIx](https://happyin.space/projects/matraix/): MatrAIx runs LLM agents with user profiles across Survey, AI Chatbot, Web, and App tasks.
 - [Qwen](https://happyin.space/projects/mcml-v1-multi-concept-nsfw-lora-for-qwen-image-edit/): MCNL v1 (Multi Concept NSFW LoRA) is a community LoRA adapter for the Qwen Image Edit image-editing model, aimed at users of the 2511 version (QIE2511).
