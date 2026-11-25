@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1468+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1469+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -868,6 +868,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Gabi](https://happyin.space/projects/gabi-robot/): Gabi — Unitree G1 высотой 1,32 м, которому 6 мая 2026 года дали дхармическое имя и приняли пять адаптированных обетов мирянина; его функции в проекте — жесты, ходьба и участие в публичных буддийски...
 - [GAE (Geometry-Native Autoencoder)](https://happyin.space/projects/gae-geometric-autoencoder/): GAE (Geometry-Native Autoencoder) is a 3D world generation model from HKUST and Tencent ARC Lab.
 - [GalaxyAce LoRA](https://happyin.space/projects/galaxyace-lora/): GalaxyAce LoRA — это отдельные style-LoRA для автора фото и видео, которому нужна съёмка с признаками недорогой Android-камеры начала 2010-х. — цветопередача, экспозиция и мягкость объектива; — для...
+- [Gander Omni Interaction Agent](https://happyin.space/projects/gander-omni-interaction-agent/): Gander Omni Interaction Agent is an Apache-2.0 interaction stack for developers building browser assistants that speak, listen, and see.
 - [Gaussian Light Transport](https://happyin.space/projects/gaussian-light-transport/): Gaussian Light Transport is a view-independent global illumination method for graphics engines and offline renderers. It stores scene radiance as a mixture of multidimensional Gaussians instead of ...
 - [GaussianGPT](https://happyin.space/projects/gaussiangpt/): GaussianGPT is a transformer that generates 3D Gaussian Splatting scenes autoregressively, token by token, instead of with diffusion or flow matching.
 - [Gemini 3.5 Live Translate — Gemini Live Translation](https://happyin.space/projects/gemini-3-5-live-translate/): Gemini 3.5 Live Translate is Google’s low-latency audio-to-audio translation model for real-time spoken conversations.
