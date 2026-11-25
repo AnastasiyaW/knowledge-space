@@ -19,6 +19,7 @@ The structured approach from business requirements to technology choices, and th
 
 - [[solution-architecture-process]] - Requirements pipeline, stakeholder analysis, NFRs, trade-offs, data volume estimation
 - [[architecture-documentation]] - C4 model, ADRs, 4+1 views, UML, ADD method, delivery sequence
+- [[boundary-driven-refactoring]] - Ownership and consumer boundaries, justified abstractions, migration evidence, and sufficient verification
 - [[tech-lead-role]] - Role boundaries (senior/lead/architect), authority model, career growth, soft skills
 - [[system-design-interviews]] - 7-step process, estimation tables, practice exercises, three-option rule
 

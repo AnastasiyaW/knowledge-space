@@ -1,53 +1,66 @@
-# FlowInOne: Unified Multimodal Generation via Image Flow
+---
+title: FlowInOne: Release-Bound Research Contract
+description: "FlowInOne is a research release for visual-prompt image-in/image-out flow matching; bind the exact paper, checkpoint, code/runtime, license, task and input rendering contract, and source-disjoint task/preservation evaluation, and do not generalize paper benchmarks into production capability or commercial-use claims."
+category: reference
+tags: [flow-matching, multimodal, visual-prompts, image-to-image, evaluation]
+aliases: ["FlowInOne", "Unified Multimodal Generation via Image Flow"]
+---
 
-FlowInOne is a multimodal generation framework that treats all inputs—text, classes, bounding boxes, or doodles—as visual prompts. It operates on an image-in/image-out paradigm using flow matching instead of traditional diffusion denoising. The model contains 1.2B parameters and is built upon the CrossFlow architecture.
+# FlowInOne: Release-Bound Research Contract
 
-## Core Architecture
-The system bypasses typical cross-modal alignment issues by encoding all conditional inputs into a unified visual representation.
+[FlowInOne](https://arxiv.org/abs/2604.06757) is a research framework that
+recasts multimodal generation as a visual flow: inputs such as text,
+layouts, and editing instructions are rendered as visual prompts, then handled
+by an image-in/image-out flow-matching model. The paper establishes a
+research direction and named evaluation results. It does not by itself provide
+a production service, a stable runtime interface, or blanket commercial-use
+permission.
 
-- **Visual Encoding:** Uses Janus-Pro-1B as the primary visual encoder for all prompts.
-- **Image Coding:** Employs a frozen Stable Diffusion VAE for encoding target images into latent space.
-- **Dual-Path Spatially-Adaptive Modulation:** A dynamic routing mechanism that adjusts processing based on the specific task type (e.g., editing vs. generation).
-- **Flow Matching:** Unlike diffusion-based models, FlowInOne learns a velocity field to transform noise into the target image, which can improve sampling efficiency and path straightness.
+## Bind the release and task
 
-## Capabilities and Task Modalities
-FlowInOne supports diverse generative and editing tasks within a single weights-set:
+For an experiment or integration, retain:
 
-- **Generative Tasks:** Standard Text-to-Image (T2I) and Class-to-Image generation.
-- **Conditional Editing:** 
-    - **Instruction-based:** Text-driven modifications.
-    - **Spatial Control:** Bounding box-guided editing and visual marker placement.
-    - **Sketch-based:** Doodle-to-image synthesis.
-- **Physics and Motion:** 
-    - **Force Dynamics:** Physics-aware generation based on "force" inputs.
-    - **Trajectory Prediction:** Generating frames or sequences based on motion paths.
+- paper version, code revision, checkpoint/artifact identifier, license terms,
+  access conditions, and model-card evidence;
+- task definition, expected output, known unsupported inputs, and the
+  acceptance decision this output may inform;
+- renderer/version that turns text, boxes, labels, sketches, or other inputs
+  into the visual prompt, including fonts, layout, resolution, colors, and
+  rasterization policy;
+- input and output asset digests, preprocessing/postprocessing, seed or
+  deterministic controls, and runtime/device version; and
+- source-disjoint evaluation data, task-quality result, preservation result,
+  reviewer decision, and failure examples.
 
-### Sampling Configuration
-The model typically requires a high guidance scale and significant sampling steps to achieve quality results at its current scale.
+Because the approach uses rendered visual prompts, that rendering path is part
+of the model interface. Altering a font, layout, crop, coordinate convention,
+or image scale can alter the experiment; it is not a harmless presentation
+change.
 
-```text
-Sampling Steps: 50
-CFG Guidance: 7.0
-Resolution: 256x256
-Base Framework: CrossFlow
-```
+## Evaluate the requested outcome separately
 
-## Performance and Constraints
-While architecturally elegant, FlowInOne 1.2B currently serves as a research proof-of-concept (PoC).
+Use a held-out source split that prevents the same asset or its near
+derivatives from appearing in tuning and evaluation. Measure the requested
+task separately from preservation of non-target regions, source facts, text,
+geometry, and protected attributes. Human review may complement a defined
+criterion, but a paper-level preference result is not proof of reliability for
+another subject, workflow, or delivery requirement.
 
-- **Spatial Resolution:** Native output is limited to 256x256 pixels, which limits practical utility in production environments without upscaling.
-- **Competitive Metrics:** Achieves a human pass rate of 44.9%, outperforming similar small-scale models like Nano Banana (40.6%) in multimodal consistency.
-- **Efficiency:** The 1.2B parameter count makes it lightweight enough for local deployment, though its flow-matching inference speed is balanced by the requirement for 50 sampling steps.
+Generated outputs are candidates. They require task-appropriate review before
+publication, dataset inclusion, commercial use, or any decision that assumes
+the image is faithful to source evidence.
 
-## Gotchas
-- **Issue: Low Native Resolution** → **Fix:** Output is strictly 256x256; use a separate super-resolution model or latent upscaler for high-resolution requirements.
-- **Issue: License Ambiguity** → **Fix:** GitHub lists MIT while HuggingFace specifies Apache-2.0. Both are permissive for commercial use, but verify legal compliance if redistributing modified weights.
-- **Issue: Inference Cost** → **Fix:** Despite the small parameter count, the 50-step sampling requirement means it is not inherently faster than larger distilled diffusion models (like FLUX.1 [schnell]) which run in 1-4 steps.
+## Failure boundary
 
-## See Also
+If the release, license, checkpoint, renderer, input mapping, or evaluation
+split is unknown, keep the result in research/review state. Do not fill in a
+missing artifact with a similarly named model, copy paper sampling values into
+another runtime, or infer support for an untested modality from the family
+name.
+
+## Related pages
+
 - [[flow-matching]]
 - [[MMDiT]]
-- [[flux-kontext]]
-- [[Step1X-Edit]]
-- [[DC-AE]]
-
+- [[paired-training-for-restoration]]
+- [[in-context-segmentation]]

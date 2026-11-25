@@ -6,17 +6,17 @@ type: MOC
 
 # Writing
 
-Strong technical writing is the opposite of generic AI prose: specific, structured, and built for scanning. Articles here cover how to write in a voice that does not trip detectors, what structural anti-patterns to avoid (boilerplate intros, filler summaries, bullet soup), how to organize a long-form technical article so the reader hits value in the first 200 words, and how to optimize for both search engines and LLM retrieval. Style guides, editing checklists, and platform-specific publishing notes are included.
+Technical writing should preserve supported facts and help its intended reader complete a task. This collection covers structure, clarity, editorial verification and publication. Style flags are prompts for inspection, not authorship verdicts; the detection reference separates corpus research from individual-document evidence.
 
 ## Style & Quality
 - [[natural-writing-style]] - Natural writing patterns, avoiding AI-like prose
 - [[overused-words-phrases]] - Overused AI words and phrases to avoid
 - [[structural-antipatterns]] - Structural anti-patterns in AI-generated text
-- [[ai-text-detection]] - AI text detection methods and evasion
+- [[ai-text-detection]] - Detection evidence, corpus-to-document limits, and evaluated decision boundaries
 
 ## Technical Writing
 - [[technical-article-structure]] - Technical article structure and formatting
-- [[editing-checklist]] - Editing checklist for text quality
+- [[editing-checklist]] - Fact-preserving editing, bounded checks, and publication readiness
 
 ## Publishing
 - [[publishing-platforms]] - Publishing platforms for technical content

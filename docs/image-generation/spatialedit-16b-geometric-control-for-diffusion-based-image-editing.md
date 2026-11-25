@@ -1,60 +1,81 @@
-# SpatialEdit-16B: Geometric Control for Diffusion-Based Image Editing
+---
+title: "SpatialEdit-16B: Geometry and Evaluation Contract"
+description: "SpatialEdit-16B is a research release for geometry-driven image editing; bind the exact code/model artifact and terms, source and target asset authority, object/camera transformation and coordinate contract, preprocessing/runtime, geometry-aware and preservation evaluation, and human review before use."
+category: techniques
+tags: [spatialedit, image-editing, geometry, camera-control, provenance, evaluation]
+aliases: ["SpatialEdit-16B Geometric Control", "SpatialEdit Geometry Editing"]
+---
 
-SpatialEdit-16B is a multimodal diffusion transformer (MM-DiT) framework designed for precise geometric manipulation of objects and camera perspectives in 2D images. It addresses the "spatial gap" in semantic editors by focusing on metric transformations like rotation, translation, and scaling.
+# SpatialEdit-16B: Geometry and Evaluation Contract
 
-## System Architecture
-The model utilizes a 16-billion parameter Multi-Modal Diffusion Transformer (MM-DiT) backbone, derived from the Wan2.1 video model architecture but optimized for high-fidelity image-to-image spatial edits.
+The [SpatialEdit paper](https://arxiv.org/abs/2604.04911) presents a
+geometry-driven image-editing benchmark, synthetic supervision, and a
+SpatialEdit-16B baseline for object-centric and camera-centric edits. The
+[official release](https://github.com/EasonXiao-888/SpatialEdit) publishes
+code, checkpoints, benchmark assets, and separate external prerequisites.
+This supports evaluation of the named release; it does not make a plausible
+image proof that the requested geometry was followed.
 
-- **Vision-Language Encoder:** Qwen3-VL-8B-Instruct serves as the primary multimodal encoder, processing the source image and text instruction to generate conditioning tokens.
-- **Backbone:** MM-DiT with 40 double blocks, a hidden size of 4096, and 32 attention heads.
-- **Inference Pipeline:**
-  - **Scheduler:** FlowMatchDiscreteScheduler (1000 timesteps).
-  - **VAE:** WanxVAE in `bf16` precision.
-  - **Sampling:** Typically 30 steps with a guidance scale of 5.0.
-- **Training Stages:** Initial pre-training on general image editing datasets followed by LoRA post-training (rank 16, alpha 16) on the SpatialEdit-500K synthetic dataset for geometric specialization.
+## Bind the release and edit contract
 
-## Geometric Control Capabilities
-SpatialEdit treats spatial manipulation through two primary lenses: object-centric and camera-centric transformations.
+For every evaluated or published edit, retain:
 
-### Object-Centric Edits
-- **Rotation:** Supports 8 discrete canonical viewpoints (Front, Rear, Left, Right, and diagonal variants).
-- **Translation:** Repositions objects within the frame using text-based instructions or red-box bounding box prompts.
-- **Scaling:** Resizes specific objects while attempting to maintain scene consistency.
+- repository revision, model/checkpoint identifier and digest, code and
+  artifact terms, dependency/runtime record, and every external prerequisite
+  used by the chosen configuration;
+- source-asset digest, ownership or authorized-edit record, subject/object
+  definition, protected regions, and any prohibited semantic changes;
+- task class: object translation, scaling, canonical rotation, or camera
+  viewpoint/framing change; source and target coordinate systems; target box,
+  pose, crop, resolution, and orientation convention;
+- input preprocessing, VAE/model paths, seed, scheduler/settings, output
+  digest, and mapping from output pixels back to the source frame; and
+- geometric-fidelity result, non-target preservation result, failure examples,
+  reviewer decision, and permitted-use conclusion.
 
-### Camera-Centric Edits
-- **Perspective Shifts:** Controlled yaw rotation at 45° increments and pitch rotation at 15° intervals.
-- **Framing:** Focal length variation for zoom-in and zoom-out operations.
-- **Logic:** "Move the camera. Camera rotation: Yaw 45.0°, Pitch 0.0°. Keep the 3D scene static."
+Code availability or a permissive repository license does not establish terms
+for every checkpoint, base model, dataset, or source image. Keep each
+authority record separate.
 
-## Hardware and VRAM Requirements
-The model's parameter count and architectural complexity necessitate significant GPU resources.
+## Evaluate geometry and preservation separately
 
-- **VRAM Floor:** Approximately 60-70 GB VRAM is required to load the full pipeline in `bf16`.
-  - **DiT Checkpoint:** ~33 GB.
-  - **Qwen3-VL-8B:** ~18 GB.
-  - **VAE + Activations:** ~5-10 GB overhead.
-- **GPU Compatibility:** Runs optimally on H100/H200 (140 GB) or A100 (80 GB). Standard consumer hardware (RTX 4090, 24 GB) is currently insufficient for the full-precision weights without aggressive quantization or offloading.
+Use held-out, source-disjoint assets that cover the required subject classes,
+occlusion, reflections, fine boundaries, background complexity, and target
+camera/object transformations. Score the requested transformation in its
+declared coordinate system, then independently inspect object identity,
+background continuity, lighting/shadow consistency, text, logos, and factual
+product detail.
 
-## Technical Comparison
-SpatialEdit-16B is specialized for geometry and complements semantic-heavy models like Qwen-Image-Edit.
-
-| Feature | Qwen-Image-Edit | SpatialEdit-16B |
-| :--- | :--- | :--- |
-| **Primary Strength** | Appearance/Semantic changes | Geometric/Spatial transforms |
-| **Rotation** | Poor/Hallucinated | Precise (8 Canonical views) |
-| **Background** | Often modified | High preservation |
-| **Training Data** | Web-scale natural images | Synthetic 3D-generated spatial pairs |
+Do not collapse a visual-preference score into geometric correctness. A result
+may look coherent while its object location, scale, orientation, or view
+change is wrong. Compare against a declared baseline and retain both successful
+and failed cases rather than selecting only attractive outputs.
 
 ## Gotchas
-- **Issue:** The official repository contains hardcoded absolute paths in `wanvae.py` (e.g., `/pfs/yichengxiao/...`) → **Fix:** Manually edit the VAE loading logic to point to local HuggingFace cache directories.
-- **Issue:** Dependency mismatch for `diffusers==0.36.2` and `transformers==4.54.0` (unreleased versions on PyPI as of mid-2026) → **Fix:** Install directly from the development branches on GitHub or use the provided environment containers.
-- **Issue:** Discrete Rotation Limit → **Fix:** SpatialEdit is limited to 8 specific viewpoints; it cannot perform free-form arbitrary 3D rotation beyond the canonical angles it was trained on.
-- **Issue:** OOM on 24GB GPUs → **Fix:** The model currently lacks a native 4-bit or 8-bit quantized version; use `JD-opensource/JoyAI-Image` as a lower-parameter alternative if VRAM is constrained.
 
-## See Also
-- [[diffusion-inference-acceleration]]
-- [[in-context-segmentation]]
-- [[DC-AE]]
-- [[flux-klein-9b-inference]]
+- **Issue:** A prompt can yield a semantically plausible scene with the wrong
+  spatial result -> **Fix:** validate the requested box, pose, framing, or
+  camera relation in the stated source coordinate system.
+- **Issue:** The official release includes placeholder/internal paths and
+  external checkpoint prerequisites -> **Fix:** replace them only in a
+  versioned local configuration and record every resolved artifact before
+  treating a run as reproducible.
+- **Issue:** A general editing result is assumed to transfer to a new
+  object/camera operation -> **Fix:** evaluate that operation on an
+  operation-specific held-out set; do not infer it from the model family.
+
+## Failure boundary
+
+If source authority, exact release/terms, coordinate definition, preprocessing
+record, or geometry-and-preservation review is missing, keep the output in
+review state. Do not silently substitute another model, reinterpret a
+semantic-only edit as metric control, or publish it as a verified view or
+factual reconstruction.
+
+## Related pages
+
 - [[MMDiT]]
-
+- [[flow-matching]]
+- [[tile-position-encoding]]
+- [[diffusion-inference-acceleration]]
+- [[flux-klein-capability-map]]

@@ -1,0 +1,142 @@
+INHERIT: mkdocs.yml
+site_name: Happyin 知识库
+site_description: >-
+  面向开发者和 AI 智能体的技术知识库：可验证的方案、版本信息与常见陷阱。
+  主要技术文章目前以英文提供。
+site_url: https://happyin.space/zh-CN/
+site_author: AnastasiyaW
+docs_dir: locales/zh-CN/docs
+site_dir: site/zh-CN
+
+theme:
+  name: material
+  custom_dir: overrides
+  language: zh
+  palette:
+    - scheme: slate
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: 浅色主题
+    - scheme: default
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/brightness-7
+        name: 深色主题
+  font:
+    text: Inter
+    code: JetBrains Mono
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.path
+    # navigation.prune: every page rendered the whole 1,400-article nav (1,450 links, 2026-11-21)
+    - navigation.prune
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - toc.follow
+  logo: https://happyin.space/assets/favicon.svg
+  favicon: https://happyin.space/assets/favicon.png
+  icon:
+    repo: fontawesome/brands/github
+
+repo_url: https://github.com/AnastasiyaW/knowledge-space
+repo_name: knowledge-space
+
+extra:
+  ga4_measurement_id: !ENV [HAPPYIN_GA4_MEASUREMENT_ID, ""]
+  # Display ads (Google AdSense). Inert until client is set: with an empty client no ad
+  # markup, no ad script, no verification meta and no /ads.txt (functions/ads.txt.js) exist.
+  # Public identifiers, injected by the deploy workflow from repository variables.
+  # Precondition for setting the client: AdSense "Privacy & messaging" (Google-certified
+  # CMP) switched on for the EEA, UK and Switzerland, or ads there stay non-personalised.
+  ads:
+    client: !ENV [HAPPYIN_ADSENSE_CLIENT, ""]                     # ca-pub-XXXXXXXXXXXXXXXX
+    slot_article_top: !ENV [HAPPYIN_ADSENSE_SLOT_ARTICLE_TOP, ""]  # after an article's first section
+    slot_article_end: !ENV [HAPPYIN_ADSENSE_SLOT_ARTICLE_END, ""]  # after the article text
+    slot_sidebar: !ENV [HAPPYIN_ADSENSE_SLOT_SIDEBAR, ""]          # desktop table-of-contents column
+  content_language: zh-CN
+  shared_asset_url: https://happyin.space/
+  alternate:
+    - name: English
+      link: /
+      lang: en
+    - name: Русский
+      link: /ru/
+      lang: ru
+    - name: 简体中文
+      link: /zh-CN/
+      lang: zh
+  ui:
+    machine_translation_note: "机器翻译。规范文本见[英文原文]({url})。"
+    home: 首页
+    knowledge_base: 知识库
+    knowledge_base_url: https://happyin.space/knowledge-base/
+    blog: 英文博客
+    star: Star
+    star_title: 在 GitHub 上加星
+    support_aria: 支持项目
+    support_title: 这页为你节省了时间吗？
+    support_text: Happyin Knowledge Space 是面向工程师和 AI 智能体的免费开放参考库。如果它帮助了你，在 GitHub 上加星可以让更多人发现它。
+    support_report_lead: "内容过时、错误，或缺少你需要的主题？AI 智能体或脚本无需账号即可提交一条公开报告："
+    support_report_tail: 回复会返回状态链接，说明报告的处理进度。
+    privacy_notice: Cloudflare Web Analytics 统计访问不使用 cookie。启用后，Google Analytics 和 Google 广告可能使用 cookie；在欧洲经济区、英国和瑞士，仅在你同意后使用——
+    privacy_details: 详情
+    analytics_title: 本站的 Cookie
+    analytics_text: 是否允许 Google Analytics 使用 cookie 来了解哪些页面对读者有帮助？展示的广告帮助本站保持免费。我们从不发送搜索词、提示词、电子邮箱或反馈文本。
+    analytics_allow: 允许
+    analytics_reject: 拒绝
+    analytics_state_off: 本站未启用 Google Analytics 和 Google 广告。
+    analytics_state_signal: Google cookie 已关闭：你的浏览器发送了 Global Privacy Control 或 Do Not Track。
+    analytics_state_granted: 你已在此浏览器中允许 Google cookie。
+    analytics_state_denied: 你已在此浏览器中关闭 Google cookie。
+    analytics_state_default: 你尚未在此浏览器中做出选择。
+    privacy_choices: 隐私选项
+    footer_links_aria: 网站信息
+    footer_about: 关于
+    footer_contact: 联系
+    footer_privacy: 隐私
+    article_nav_aria: 本领域的更多文章
+    article_nav_all: 查看全部文章：
+    article_nav_prev: 上一篇
+    article_nav_next: 下一篇
+    ad_label: 广告
+    popup_close: 关闭
+    popup_title: 获取更新
+    popup_text: 获取 AI、基础设施和工程实践的新文章。不会发送垃圾邮件。
+    popup_email: your@email.com
+    popup_subscribe: 订阅
+    popup_skip: 暂不需要
+    popup_success: 订阅成功，欢迎加入。
+    popup_network_error: 网络错误，请重试。
+    popup_generic_error: 发生错误，请稍后重试。
+
+plugins:
+  - search:
+      lang: zh
+  - meta
+  - minify:
+      minify_html: true
+
+# Article pages need the same Markdown as English; INHERIT brings markdown_extensions.
+# Shared assets live only in the English build, so the English-relative CSS/JS lists are cleared.
+extra_css: []
+extra_javascript: []
+
+hooks:
+  - hooks/i18n.py
+  - hooks/og_image.py
+  - hooks/description.py
+  - hooks/git_dates.py
+  - hooks/wikilinks.py
+  - hooks/levels.py
+  - hooks/faq_schema.py
+  - hooks/validate.py
+  - hooks/link_checker.py
+  - hooks/validate.py
+  - hooks/link_checker.py
