@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1426+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1427+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -811,6 +811,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [DICEPTION](https://happyin.space/projects/diception/): DICEPTION is an SD3-based diffusion model for practitioners who want one local model for visual-perception outputs.
 - [DiffGI](https://happyin.space/projects/diffgi/): DiffGI — исследовательский метод image-to-3D для одежды и каркасной мебели с тонкими, открытыми поверхностями. — заменяет бинарную occupancy-карту непрерывным 2D TSDF; — восстанавливает mesh через ...
 - [DiffIR2VR-Zero](https://happyin.space/projects/diffir2vr-zero/): DiffIR2VR-Zero — research code that adapts pretrained image-restoration diffusion models to temporally consistent video restoration. — Blind denoising (`dn`) and super-resolution (`sr`). — Claimed ...
+- [Diffusers ControlNet SDXL: v0-35-1](https://happyin.space/projects/diffusers/): Diffusers ControlNet SDXL is a Stable Diffusion XL pipeline for practitioners guiding generation with depth maps, edge maps, or poses.
 - [DIRECT](https://happyin.space/projects/direct/): DIRECT is a pose-controllable object-insertion system for compositors placing a reference object into a background.
 - [DisCO](https://happyin.space/projects/disco/): DisCO covers three task-specific research implementations for image practitioners rather than one deployable tool.
 - [DLSS 4.5 — Graphics technology](https://happyin.space/projects/dlss/): DLSS 4.5 is the version of NVIDIA's AI upscaling and frame generation suite named in NVIDIA's March 2026 GeForce RTX announcement for GDC 2026.
