@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1475+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1476+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -862,6 +862,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [FLUX.2](https://happyin.space/projects/flux/): FLUX.2 is Black Forest Labs' model family for API teams, local developers, and ComfyUI pipelines running generation and editing through one pipeline.
 - [Flux2-Klein-9B-Consistency](https://happyin.space/projects/flux2-klein-9b-consistency/): Flux2-Klein-9B-Consistency is an image-to-image LoRA for base model black-forest-labs/FLUX.2-klein-9B.
 - [Fooocus](https://happyin.space/projects/fooocus/): Fooocus is a local, offline SDXL image generator for creators who want a simpler prompt-first workflow than ComfyUI.
+- [Foundation 1: foundation-1 — Foundation 1](https://happyin.space/projects/foundation-1/): Foundation-1 is a music generation model family for producers who need structured samples, loops and instruments.
 - [Frame Extractor](https://happyin.space/projects/frame-extractor/): Frame Extractor — локальный GUI и CLI для превращения видео в последовательность кадров для SfM и Gaussian Splatting. — адаптирует плотность кадров к движению камеры; — поддерживает фиксированный и...
 - [FramePack Studio](https://happyin.space/projects/framepack-studio/): FramePack Studio is a local application built on FramePack for creators who need Original and F1 image-to-video generation and video extension without assembling a separate workflow.
 - [Freepik — Seedance 2.0 integrations](https://happyin.space/projects/freepik-seedance/): Freepik, now Magnific, is a browser creative suite for creators who need Seedance alongside other video-model providers in one AI Video Generator. — Text, image, video, and audio references. — Came...
