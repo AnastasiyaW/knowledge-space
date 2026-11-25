@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1446+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1447+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1149,6 +1149,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [SIQ-1-35B — Public model and demo](https://happyin.space/projects/siq-1-35b/): SIQ-1-35B — an Apache-2.0 finetune of Qwen/Qwen3.6-35B-A3B for local coding, reasoning, and tool use.
 - [Skein: skein-agent-task-graph-tracker — Skein Agent Task Graph Tracker](https://happyin.space/projects/skein/): Skein is an experimental coding agent runtime that edits its own context through event logs, instead of the append-only ReAct history.
 - [SketchVideo](https://happyin.space/projects/sketchvideo/): SketchVideo — не единый инструмент для работы сегодня, а коллизия имён. — Sketch Video Synthesis (2023): оптимизирует Bézier-кривые поверх входного видео и экспортирует векторные SVG для стилизации...
+- [Smartsave: comfyui-smartsave — Comfyui Smartsave](https://happyin.space/projects/smartsave/): SmartSave is a free, open-source ComfyUI custom node that sorts generated images and videos into subject folders using local Ollama (default llama3.2:3b).
 - [Snapchat](https://happyin.space/projects/snapchat/): Snapchat is a camera app and the Lens Studio AR platform for users, creators, and developers: Face Lenses, World Lenses, templates, scripting, SnapML, and publishing to Snapchat, Camera Kit, and Sp...
 - [Sol-Attn](https://happyin.space/projects/sol-attn/): Sol-Attn — NVIDIA’s inference-time block-sparse attention method for pretrained diffusion transformers.
 - [Sonilo](https://happyin.space/projects/sonilo/): Sonilo is an API-first audio tool for editors, creative-product teams, and developers who need music or sound tied to a cut.
