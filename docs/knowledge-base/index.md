@@ -765,88 +765,90 @@ Each domain below is collapsible - expand to see the article list. Articles are 
 
 <div id="image-generation"></div>
 
-??? note "<span class="ks-planet" style="background:radial-gradient(circle at 35% 35%,rgba(255,255,255,0.4),transparent 60%),radial-gradient(circle at 50% 50%,#c8a058,#785018);box-shadow:0 0 8px rgba(200,160,88,0.5),inset 0 -2px 4px rgba(0,0,0,0.3)"></span>Image Generation · 77 articles"
+??? note "<span class="ks-planet" style="background:radial-gradient(circle at 35% 35%,rgba(255,255,255,0.4),transparent 60%),radial-gradient(circle at 50% 50%,#c8a058,#785018);box-shadow:0 0 8px rgba(200,160,88,0.5),inset 0 -2px 4px rgba(0,0,0,0.3)"></span>Image Generation · 79 articles"
 
     - [ACE++](../image-generation/ACE++.md) - ACE++ provides reference-driven image creation and editing through task-specific LoRA workflows and a general FFT model; use the published base-model pairing and verify its terms.
     - [[ATI]] - ATI adds trajectory-conditioned object, local, and camera motion control to its Wan2.1-based image-to-video workflow; preserve the published model, checkpoint, and localhost editor boundaries.
-    - [[flow-matching]] - Flow-based generative models
+    - [[flow-matching]] - Flow matching trains a continuous vector field along a chosen probability path; scheduler, path, and inference settings are checkpoint-specific rather than universal diffusion defaults.
     - [[flux-kontext]] - Context-aware image generation
-    - [[LaMa]] - Large mask inpainting
-    - [[lora-fine-tuning-for-editing-models]] - LoRA training for image editing
-    - [[MARBLE]] - Multi-aspect image restoration
-    - [[MMDiT]] - Multi-modal diffusion transformer
+    - [[LaMa]] - LaMa is a Fourier-convolution inpainting model for large masks and resolution generalization; use it with a compatible checkpoint and test texture continuity separately from semantic object restoration.
+    - [[lora-fine-tuning-for-editing-models]] - An editing LoRA is compatible only with its exact base checkpoint, architecture, runtime, and adapter format; train from authorized paired evidence, sweep capacity and schedule on held-out edits, and prove both requested change and preservation before release.
+    - [[MARBLE]] - MARBLE performs material transfer, blending, and parametric material edits through CLIP-space controls over a pretrained image generator; validate object geometry, illumination, and artifact licenses for each workflow.
+    - [[MMDiT]] - MMDiT is the Stable Diffusion 3 multimodal transformer pattern: modality-specific representations participate in joint attention; implementation APIs and LoRA target names vary by model revision.
     - [[SANA]] - Efficient text-to-image architecture
-    - [[tiled-inference]] - Memory-efficient large image generation
-    - [[transformers-v5]] - HuggingFace Transformers for image gen
+    - [[tiled-inference]] - Tiled inference is a model-bound high-resolution strategy; partitioning, overlap, blending, global context, coordinate mapping, and output review must be evaluated together on the pinned pipeline, while detection tiles and generative or retouch tiles remain separate contracts.
+    - [[transformers-v5]] - Transformers v5 moves checkpoint conversion into the loader, but every integration must be pinned to an installed release, runtime contract, checkpoint, and adapter test; current main-branch APIs are not universal compatibility.
 
     **More**
 
-    - [[anatomy-correction-diffusion]] - Comprehensive guide to detecting and fixing anatomy mutations (hands, fingers, limbs) in FLUX Klein
-    - [[block-causal-linear-attention]] - Temporal extension of SANA's linear attention for sequential processing (video frames or image
+    - [[anatomy-correction-diffusion]] - Anatomy correction is a diagnose-mask-condition-inpaint workflow; use geometry-aware research methods and model-matched editing tools, then visually verify every edited hand or limb against the source.
+    - [[block-causal-linear-attention]] - Block causal linear attention is SANA-Video's trained long-video mechanism with a fixed-size cumulative attention state; it is not a generic plug-in for arbitrary image tiling or DiTs.
     - [[Calligrapher]] - Calligrapher customizes text imagery from style references through FLUX.1-Fill-dev, SigLIP, masks, and project weights; treat typography accuracy and licensing as separate acceptance checks.
-    - [[color-checker-and-white-balance]] - Automated color calibration using color checker cards and white balance correction models
-    - [[color-correction-by-numbers]] - Deterministic color correction using measurable channel targets rather than perceptual judgment
-    - [[color-space-and-gamma-reference]] - Practical reference for color management in video/photo processing pipelines
-    - [[color-theory-for-ml]] - Applied color theory for diffusion model training, color correction, and palette control
+    - [[color-checker-and-white-balance]] - Color checker and white-balance correction requires a measured physical chart or a separately validated estimator; detector output and a generated checker are not colorimetric ground truth.
+    - [[color-correction-by-numbers]] - Color correction is valid only against a declared measurement target, illuminant, camera or profile, working space, and viewing transform; neutral samples and chart patches are evidence when their provenance is known, while scene averages and skin-color ratios are not universal ground truth.
+    - [[color-space-and-gamma-reference]] - Color management is a versioned chain of input interpretation, working space, creative transforms, display or view transform, and output encoding; camera or container labels and generic gamma rules are insufficient without the exact profile, transform version, metadata policy, and validation display.
+    - [[color-theory-for-ml]] - Color guidance for ML is a task-specific representation and evidence contract: name the source encoding, illuminant or viewing assumptions, target transform, palette intent, and human-review purpose; artistic harmony, spectral labels, and psychological associations are hypotheses, not universal labels or model controls.
     - [[comfyui-flux2klein-enhancer]] - Pinned-workflow reference for reference conditioning and identity/detail enhancement with FLUX.2
     - [[comfyui-sensenova-u1]] - Boundary-aware reference for official SenseNova U1/U1.5 artifacts, official ComfyUI nodes, and the
-    - [[comfyui-wan-vace-video-joiner]] - The Wan VACE Video Joiner is a node suite designed for assembling disparate video segments into a
+    - [[comfyui-wan-vace-video-joiner]] - A ComfyUI Wan VACE video join is a release-bound community workflow, not a generic transition node; pin its workflow revision, ComfyUI/custom-node/model dependencies, input frame/timestamp/color contracts, generated bridge and loop policy, intermediate artifacts, and visual/audio review before publishing a joined clip.
     - [[DC-AE]] - Use DC-AE only with a diffusion model and latent contract it was trained for; high compression reduces latent-token work but does not make it a drop-in VAE replacement.
-    - [[defect-detection-small-objects]] - Reference for detecting defects (scratches, dust, surface anomalies) and small objects in
-    - [[denoise-architectures-2026]] - 2025-2026 landscape of image denoising architectures: NTIRE 2025 winners, SSM/Mamba-based models
-    - [[diffusion-distillation-cdm]] - flow-matching distillation to 4 NFE without GAN or reward model
-    - [[diffusion-inference-acceleration]] - Techniques for accelerating diffusion model inference without quality loss
-    - [[diffusion-lora-training]] - Practical patterns for LoRA fine-tuning of diffusion models (FLUX Klein 9B, SANA, SDXL)
+    - [[defect-detection-small-objects]] - Defect and small-object detection produces reviewable candidates, not automatic quality truth; bind the model, capture protocol, annotation or normal-reference policy, slicing or merge mapping, thresholds, and source-disjoint evaluation before any inspection or workflow decision.
+    - [[denoise-architectures-2026]] - A denoising architecture is selected against a declared degradation and fidelity target, not a leaderboard or family name; bind capture/noise assumptions, model and checkpoint, preprocessing/tiling/color path, authorized train/evaluation splits, task and preservation metrics, and visual review before accepting generated or restored detail.
+    - [[diffusion-distillation-cdm]] - Continuous-Time Distribution Matching (CDM) is a research method for few-step diffusion distillation, not a drop-in speed switch; bind the paper/code/checkpoint and license, teacher/student parameterization and schedule, training/distributed runtime, source-disjoint quality/diversity/preservation evaluation, and rollback-ready serving evidence before use.
+    - [[diffusion-inference-acceleration]] - Diffusion acceleration is a model-and-runtime-specific trade-off; measure warm and steady-state latency, memory, output fidelity, and reproducibility for the exact checkpoint and workflow.
+    - [[diffusion-lora-training]] - Diffusion LoRA training is a version-bound adapter experiment; bind the exact base checkpoint, architecture, runtime, adapter format, authorized data, and evaluation split, and select rank, schedule, targets, and optimizer only from measured held-out behavior rather than copied recipes.
     - [[edge-softness-and-compositing]] - Measure the edge instead of choosing it: 10-90 transition width, robust outline fitting
-    - [[face-beautify-edit-lora]] - Training before/after edit LoRAs on FLUX Klein 9B and Qwen-Image-Edit for facial correction
-    - [[face-detection-filtering-pipeline]] - Reusable pipeline for filtering image collections by face presence, quality, and type using YOLO
-    - [[FLAIR]] - Training-free variational posterior sampling framework for image restoration
-    - [[flowinone-unified-multimodal-generation-via-image-flow]] - FlowInOne is a multimodal generation framework that treats all inputs—text, classes, bounding
-    - [[flux-attention-manipulation]] - Techniques for manipulating, analyzing, and exploiting the joint self-attention mechanism in
-    - [[flux-klein-9b-architecture]] - Deep reference for the FLUX.2 Klein 9B model internals: transformer structure, text encoding, VAE
-    - [[flux-klein-9b-inference]] - Practical reference for FLUX.2 Klein 9B image generation
-    - [[flux-klein-capability-map]] - Reference for what FLUX.2 Klein 9B can do natively, via official LoRAs, via fal.ai LoRAs, and via
-    - [[flux-klein-character-lora]] - Training LoRAs to preserve a specific person's identity with FLUX.2 Klein 9B
-    - [[flux-klein-jewelry-photography]] - Production pipeline for generating and compositing jewelry product photography using FLUX.2 Klein 9B
-    - [[flux-klein-style-lora-system]] - Architecture and empirical findings for a user-facing style LoRA system on FLUX.2 Klein Base 9B
-    - [[fp8-quantization-optimization-for-e4m3]] - FP8 (E4M3) quantization is used to accelerate inference and training on NVIDIA Hopper architecture
-    - [[frequency-decomposition-editing]] - Methods for separating images into low-frequency (LF) and high-frequency (HF) components, editing
-    - [[grayscale-overlay-nn-architectures]] - Predicting single-channel grayscale overlay maps for Photoshop Soft Light blending - a
-    - [[image-restoration-survey]] - Overview of image restoration approaches: from classical to diffusion-based
-    - [[in-context-segmentation]] - Segmenting images by example: provide one or more (image, mask) pairs and the model segments the
-    - [[in-context-segmentation-with-insid3-and-dinov3]] - INSID3 is a training-free framework for one-shot in-context segmentation that leverages dense
-    - [[intrinsic-decomposition]] - Separating an image into intrinsic components (reflectance/albedo vs
-    - [[lora-auxiliary-losses]] - Additional loss terms beyond standard diffusion denoising loss
-    - [[lora-identity-disentanglement-in-flux2-klein-9b]] - Identity LoRA training often suffers from concept bleeding, where environmental factors (lighting
-    - [[low-vram-inference-strategies]] - Techniques for running image generation and processing models on GPUs with limited VRAM (2-8 GB)
+    - [[face-beautify-edit-lora]] - A face edit LoRA is a paired, consent-aware local-edit training task; bind the adapter to its exact base model and validate the requested correction separately from identity preservation.
+    - [[face-detection-filtering-pipeline]] - Face filtering is a provenance-preserving candidate-selection pipeline; detector boxes and landmarks support review, but they do not establish identity, consent, image realism, or training suitability.
+    - [[FLAIR]] - FLAIR is a training-free flow-based posterior-sampling framework for inverse imaging; use its published configuration and verify fidelity, observed-data consistency, and base-model terms on the target task.
+    - [[flowinone-unified-multimodal-generation-via-image-flow]] - FlowInOne is a research release for visual-prompt image-in/image-out flow matching; bind the exact paper, checkpoint, code/runtime, license, task and input rendering contract, and source-disjoint task/preservation evaluation, and do not generalize paper benchmarks into production capability or commercial-use claims.
+    - [[flux-attention-manipulation]] - Attention interventions in FLUX-family DiTs are research- and implementation-specific; use the exact model's exposed attention path, preserve its conditioning contract, and validate composition rather than treating maps as causal proof.
+    - [[flux-klein-9b-architecture]] - FLUX.2 [klein] architecture claims must be tied to the named official release and artifact; the public family supports text-to-image and reference editing, but internal block layouts, encoder wiring, quantization, and adapter compatibility are not safe to infer across variants or runtimes.
+    - [[flux-klein-9b-inference]] - FLUX.2 [klein] 9B inference must follow the published model variant, checkpoint, scheduler, and license; benchmark the exact text or edit workflow instead of copying generic sampler, VRAM, or LoRA rules.
+    - [[flux-klein-capability-map]] - A FLUX.2 [klein] capability is usable only when the exact variant, checkpoint, license, runtime or provider endpoint, input contract, and output review are attested at execution time; family-level generation and editing support does not authorize every adapter, service, commercial use, or editing result.
+    - [[flux-klein-character-lora]] - An identity LoRA is a sensitive, version-bound adapter trained only from authorized images under a defined purpose; bind consent, base checkpoint and adapter format, data and deletion policy, and source-disjoint likeness and preservation review, and never treat a generated identity match as verified identity.
+    - [[flux-klein-jewelry-photography]] - Jewelry imagery is a source-controlled product workflow: preserve the approved asset, material and geometry evidence, color pipeline, and rights boundary, then release only after visual and factual QA.
+    - [[flux-klein-style-lora-system]] - A FLUX.2 [klein] style LoRA is a version-bound data-and-evaluation workflow; separate style from subject data, preserve rights and provenance, and validate transfer on held-out content.
+    - [[fp8-quantization-optimization-for-e4m3]] - FP8 E4M3 quantization is a release- and backend-specific numerical contract; bind the tensor format, scaling recipe, supported operations and hardware, calibration or amax evidence, serialization/runtime path, and quality/latency/memory measurements, and never substitute clipping or another format silently.
+    - [[frequency-decomposition-editing]] - Frequency decomposition is a declared transform, not a semantic edit map; record color domain, transform or filter, boundary and reconstruction policy, edit masks, and output review, and distinguish mathematically reconstructed signal from generated or visually plausible detail.
+    - [[grayscale-overlay-nn-architectures]] - Grayscale overlay prediction is a paired, pixel-aligned retouching task; preserve the blend contract and no-op baseline, bind every source/target pair and mask, and evaluate the composited image plus the map before releasing an automated adjustment.
+    - [[image-restoration-survey]] - Image restoration must declare the degradation and fidelity target; choose a task-compatible deterministic or diffusion method, then validate measured recovery separately from plausible but invented detail.
+    - [[in-context-segmentation]] - In-context segmentation transfers a supplied reference mask through a named vision model; its output is a candidate mask, not ground truth, and requires reference provenance, target review, uncertainty handling, and source-disjoint validation.
+    - [[in-context-segmentation-with-insid3-and-dinov3]] - INSID3 with DINOv3 transfers a supplied reference mask through a named frozen-backbone release as a candidate segmentation, not ground truth; bind the repository and model revisions, license and access, reference/mask provenance, preprocessing and resolution, positional-bias configuration, uncertainty policy, and source-disjoint review before use.
+    - [[intrinsic-decomposition]] - Intrinsic decomposition is an ambiguity-bound estimate of reflectance and illumination, not ground truth; bind the image-formation assumptions, model and version, color domain, residual policy, source evidence, and task-specific review before using its albedo or shading outputs for editing or relighting.
+    - [[krea-2-anygles]] - Krea 2 Anygles re-renders one clear person from a new camera yaw, elevation or distance through a Control-LoRA driven by a SAM 3D Body normal map; it needs its own loader and an isolated, gated preparation step.
+    - [[krea-2-prompting]] - Krea 2 open weights read one English paragraph with the medium early and the light described; convert guidance (ComfyUI cfg = 1 + Krea g), expect no negative prompt on Turbo, stay under 507 tokens, and use adapter-specific prompts for edits and box layouts.
+    - [[lora-auxiliary-losses]] - LoRA auxiliary losses are experiment-specific objectives, not a portable recipe; bind the base model, adapter format, data rights, loss implementation, weighting search range, validation split, and task/preservation evaluation, and treat identity or mask losses as sensitive controls rather than proof of likeness.
+    - [[lora-identity-disentanglement-in-flux2-klein-9b]] - A FLUX.2 [klein] 9B identity LoRA is a version-, data-, and rights-bound adapter experiment; bind the official base release and terms, adapter/runtime format, authorized identity references, label/caption and preservation policy, source-disjoint identity and non-target evaluation, and review before any use.
+    - [[low-vram-inference-strategies]] - Low-VRAM inference is a measured runtime configuration, not a hardware-tier promise; pin the model and backend, select only documented quantization, offload, or tiling paths, and record peak memory, latency, output fidelity, and failure behavior on the actual device.
     - [[MACRO]] - MACRO is a structured multi-reference dataset, benchmark, and set of model-specific fine-tuning assets; validate the compatible base model and artifact terms before deployment.
-    - [[megastyle-flux-style-transfer]] - MegaStyle is a single-reference style transfer framework developed by Tencent for FLUX.1-dev
-    - [[object-removal-inpainting]] - Comparative reference for object removal/erasure models (2024-2026)
-    - [[paired-training-for-restoration]] - How to train a diffusion model for image-to-image restoration (not text-to-image)
+    - [[megastyle-flux-style-transfer]] - MegaStyle is a research code, model, and dataset release for image style transfer; bind the exact repository/artifact revision and license, base-model/runtime dependency, reference and prompt provenance, rendering and output contract, source-disjoint style/content/preservation evaluation, and human review before publishing or training on results.
+    - [[object-removal-inpainting]] - Object removal is a constrained edit: bind the source asset, permitted object, mask, model contract, and protected regions, then validate scene continuity and factual preservation before release.
+    - [[paired-training-for-restoration]] - Paired restoration training learns a declared degraded-to-target mapping; it needs source-aligned and rights-cleared pairs, a model-compatible conditioning path, holdouts separated by source, and evaluation that distinguishes measured recovery from plausible invention.
     - [[perspective-calibration-for-compositing]] - A local decision framework for estimating camera geometry, validating it with scene evidence, and
-    - [[pixel-art-generation]] - Algorithms and models for converting raster images to pixel art, generating pixel art via diffusion
-    - [[PixelSmile]] - LoRA adapter for Step1X-Edit that enables fine-grained facial expression editing with continuous
-    - [[plugin-inference-ux]] - Patterns for making slow ML inference (10-30s per operation) feel fast inside desktop creative
+    - [[pixel-art-generation]] - Pixel-art generation is a constrained asset workflow, not a style prompt; bind the logical grid, palette, alpha and animation/sprite contract, source and training rights, model or raster tool release, deterministic export path, and human review of readability, geometry, and factual detail before delivery.
+    - [[PixelSmile]] - PixelSmile is a release-bound facial-expression editing project; pin its published human preview, base model, patched runtime, consented source image, and expression review rather than treating benchmark numbers or adapters as general guarantees.
+    - [[plugin-inference-ux]] - ML plugin inference UX is an explicit host-and-job-state contract: pin the host API, document snapshot and model versions, cancellation and progress behavior, cache and invalidation keys, preview provenance, non-destructive commit, and measured latency rather than promising universal responsiveness.
     - [[qwen-image]] - Version-aware reference for Qwen-Image generation, editing, 2511/2512 checkpoints, and the separate
-    - [[RealRestorer]] - Image restoration model built on Step1X-Edit
-    - [[recurrent-depth-transformer]] - Looped transformer architecture that reuses a single block T times to simulate multi-step reasoning
+    - [[RealRestorer]] - RealRestorer is a large image-editing-model restoration workflow for nine documented degradation types; use the repository's patched local runtime and evaluate fidelity separately from benchmark scores.
+    - [[recurrent-depth-transformer]] - Recurrent-depth transformers reuse a version-specific shared block across iterations; bind the published architecture, checkpoint and runtime, recurrence budget, cache and termination behavior, and measured quality/cost, and do not infer latent reasoning, early exit, stability, or deployability from the family name.
     - [[retouch-patch-harmonization]] - A training-data design for defect inpainting that preserves the clean target image colour domain
     - [[rights-first-text-to-mask-training]] - A lineage-controlled training and evaluation contract for Russian text requests, visual grounding
-    - [[sana-denoiser-architecture]] - Repurposing SANA 1.6B DiT as an image restoration model
-    - [[segmentation-dataset-preparation]] - Reference for binary semantic segmentation datasets with 0.1-5% positive-pixel coverage (small
-    - [[skin-retouch-pipeline]] - Automated blemish detection and removal pipeline for photos
-    - [[spatialedit-16b-geometric-control-for-diffusion-based-image-editing]] - SpatialEdit-16B is a multimodal diffusion transformer (MM-DiT) framework designed for precise
-    - [[Step1X-Edit]] - Open-source image editing foundation model by StepFun (Shanghai)
-    - [[style-reference-ux]] - Comparative analysis of style reference workflows across major AI image generation products
-    - [[synthetic-dataset-pipeline]] - Pipeline for building high-quality annotated datasets for YOLO + SAM fine-tuning from raw image
-    - [[temporal-tiling]] - The idea: instead of processing tiles independently (standard tiling), treat them as a temporal
-    - [[Text-to-LoRA]] - Hypernetwork that generates LoRA adapter weights from a natural language task description in a
-    - [[textual-latent-interpolation]] - Technique for continuous attribute control in diffusion models by interpolating between text
-    - [[tile-position-encoding]] - Methods for injecting spatial position information into patch/tile-based image models, with
-    - [[upscaler-evaluation]] - Practical comparison of image upscalers for LoRA training data preparation and production pipelines
-    - [[videomama-diffusion-based-video-matting]] - VideoMaMa is a video matting framework that converts coarse segmentation masks into pixel-perfect
-    - [[watermark-removal]] - Removing visible logos, text overlays, and branding from images
-    - [[X-Dub]] - Visual dubbing model that edits lip movements in video to match new audio, preserving identity and
+    - [[sana-denoiser-architecture]] - A SANA-based restorer is a research proposal, not an implemented pipeline; it requires model-compatible conditioning, paired-data baselines, fidelity evaluation, and separate high-resolution tests before deployment.
+    - [[segmentation-dataset-preparation]] - Segmentation dataset preparation is a lineage and supervision contract: bind source/rights, annotation policy and mask semantics, group-disjoint splits, augmentation and interpolation behavior, class coverage, and release metrics, and fail closed on leakage, unreviewed labels, or incompatible targets.
+    - [[skin-retouch-pipeline]] - Skin retouching is a consent-aware, scope-limited correction workflow; preserve identity, texture, and protected traits, keep every mask and edit auditable, and require review of all changed skin.
+    - [[spatialedit-16b-geometric-control-for-diffusion-based-image-editing]] - SpatialEdit-16B is a research release for geometry-driven image editing; bind the exact code/model artifact and terms, source and target asset authority, object/camera transformation and coordinate contract, preprocessing/runtime, geometry-aware and preservation evaluation, and human review before use.
+    - [[Step1X-Edit]] - Step1X-Edit is a StepFun multimodal image-editing family with release-specific pipelines; pair each checkpoint with its documented Diffusers branch and verify model and artifact terms independently.
+    - [[style-reference-ux]] - Style-reference UX must separate temporary influence from saved training, style from content/structure, and local data from third-party processing, while making strength and provenance visible to the user.
+    - [[synthetic-dataset-pipeline]] - Synthetic detection data is a labeled candidate corpus, not automatic ground truth; preserve generator and source provenance, review annotations, prevent split leakage, and validate on real held-out data.
+    - [[temporal-tiling]] - Temporal tiling is a model-specific research experiment for cross-tile consistency, not a direct reuse of video memory; bind the tile plan and runtime state, compare against an overlap baseline, and validate seams, composition, and cost on held-out images.
+    - [[Text-to-LoRA]] - Text-to-LoRA is a Sakana AI hypernetwork that creates task adapters for documented LLM target families from textual task descriptions; it is not a drop-in generator for diffusion-model LoRAs.
+    - [[textual-latent-interpolation]] - Textual latent interpolation is a model-specific conditioning experiment: preserve non-target inputs, bind it to an exact encoder and adapter, sweep the requested range, and prove controllability and preservation instead of assuming semantic linearity.
+    - [[tile-position-encoding]] - Tile position encoding is a model-specific spatial contract, not a universal channel recipe; bind the full-image coordinate frame, crop/overlap and padding policy, encoding family and injection point, model release and training distribution, and seam/geometry evaluation before treating tiled outputs as globally coherent.
+    - [[upscaler-evaluation]] - Choose an upscaler by measured fidelity on the actual source class, not benchmark labels or a universal default; preserve source/output provenance, evaluate artifacts and factual detail, and keep generative outputs out of factual training targets.
+    - [[videomama-diffusion-based-video-matting]] - VideoMaMa is a mask-guided video-matting research release; bind the exact code, checkpoint, base-video-model and license terms, authorized source video and coarse-mask provenance, frame/alpha/export contract, source-disjoint temporal and boundary evaluation, and human review before publishing or compositing outputs.
+    - [[watermark-removal]] - Visible-watermark restoration is permitted only for assets the operator is authorized to modify; bind ownership or written authorization, source asset and overlay type, detection/mask and restoration releases, protected regions and provenance handling, output disclosure, and human review, and never treat a plausible reconstruction as recovered original content.
+    - [[X-Dub]] - X-Dub is a public Wan2.2-TI2V-5B-based visual-dubbing release; validate single-person cropping, identity, temporal stability, audio rights, and model terms on every target video.
 
 ---
 

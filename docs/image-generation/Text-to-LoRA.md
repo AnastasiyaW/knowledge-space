@@ -1,76 +1,55 @@
 ---
-title: Text-to-LoRA
+title: "Text-to-LoRA: Hypernetwork-Generated LLM Adapters"
+description: "Text-to-LoRA is a Sakana AI hypernetwork that creates task adapters for documented LLM target families from textual task descriptions; it is not a drop-in generator for diffusion-model LoRAs."
 category: models
-tags: [hypernetwork, lora-generation, zero-shot, sakana-ai, llm-adaptation, meta-learning, apache-2.0]
-aliases: ["T2L", "Doc-to-LoRA"]
+tags: [hypernetwork, lora-generation, sakana-ai, llm-adaptation, meta-learning, evaluation]
+aliases: ["T2L", "Text-to-Lora"]
 ---
 
-# Text-to-LoRA (Sakana AI)
+# Text-to-LoRA: Hypernetwork-Generated LLM Adapters
 
-Hypernetwork that generates LoRA adapter weights from a natural language task description in a **single forward pass**. No training data needed for downstream tasks. Sub-second adapter generation.
+**Scope checked: 2026-09-04.** Text-to-LoRA (T2L) is Sakana AI's research system for creating task-specific LoRA adapters for language models from a textual task description. A trained hypernetwork produces an adapter for a known target model family; it does not make arbitrary LoRA files interchangeable.
 
-Paper: arXiv:2506.06105 (June 2025, ICML 2025). Follow-up: Doc-to-LoRA (arXiv:2602.15902, Feb 2026). Authors: Sakana AI, Tokyo (Google Brain alumni).
+## What It Does
 
-> **Note:** company is **Sakana AI**, not "Cakana". Founded by David Ha and Llion Jones.
+The published method replaces a per-task adapter-training loop with a learned mapping from a task description to LoRA weights. The official reference implementation includes generated-adapter demos and evaluation scripts for documented target families such as Mistral, Llama, and Gemma.
 
-## Architecture
+This is useful when the target model, target-module layout, T2L checkpoint, and evaluation harness are all known. It is not evidence that an adapter will transfer to a different base revision, tokenizer, serving runtime, or modality.
 
-```bash
-Task description (text) → Text encoder → embedding
-                                            ↓
-Concat with: module-type embedding (q_proj, v_proj, etc.)
-           + layer-index embedding (which transformer layer)
-                                            ↓
-MLP blocks → LoRA matrices A and B
-             (repeated for all target modules/layers)
-```
+## Practical Boundary
 
-Generated LoRAs: **q_proj and v_proj, rank 8, ~3.4M adapter params**.
+Text-to-LoRA currently concerns LLM adapters. It does not supply a validated adapter generator for diffusion image or video models, MMDiT variants, or image-editing pipelines. A similar idea may be research-relevant to [[lora-fine-tuning-for-editing-models|editing-model LoRAs]], but that is not an implementation promise.
 
-### Hypernetwork Sizes
+Doc-to-LoRA is a related Sakana AI project for converting documents into adapters. Treat it as a separate method, checkpoint set, and evaluation task rather than as a command-line mode of T2L.
 
-| Size | Parameters |
-|------|-----------|
-| Large | 55M |
-| Medium | 34M |
-| Small | 5M |
+## Reproducible Use
 
-Doc-to-LoRA extension: Perceiver-based (~309M params), consumes variable-length documents.
+1. Select a published T2L checkpoint and its matching supported base-model family.
+2. Follow the repository's current environment and artifact instructions; keep the model revision and downloaded adapter checkpoint immutable.
+3. Generate an adapter from a clear, bounded task description.
+4. Load it only with the target base model and adapter interface documented for that checkpoint.
+5. Run the supplied evaluation path plus a held-out task fixture that matches the intended deployment.
 
-## Training
+The upstream project notes that package combinations and serving runtimes can affect reproducibility. Record the complete environment and compare repeated runs before treating a generated adapter as a durable artifact.
 
-Two approaches:
-1. **LoRA Reconstruction:** train T2L to reconstruct pre-trained oracle LoRAs from task descriptions
-2. **SFT:** end-to-end optimization through downstream task loss (better generalization)
+## Acceptance Criteria
 
-Training data: 479 diverse tasks from Lots-of-LoRAs dataset. Scaling 16→479 tasks substantially improved zero-shot.
+| Question | Evidence |
+|---|---|
+| Does the adapter load into the intended target? | explicit load receipt for the exact base revision |
+| Does it improve the declared task? | held-out task evaluation versus the unchanged base model |
+| Does it preserve unrelated behaviour? | negative/control prompts and regression fixtures |
+| Can another run reproduce it? | task description, T2L checkpoint, base revision, environment, and generated-file digest |
 
-## Supported Base Models
+Do not publish a generated adapter merely because it loads or produces a plausible first response.
 
-Mistral-7B (67%), Llama-3.1-8B (77%), Gemma-2-2b (66%).
+## Licensing and Data Boundary
 
-## Key Innovation
+The upstream code repository is Apache-2.0, but an actual deployment also depends on the current terms of the T2L checkpoint, target base model, datasets, evaluation data, and generated adapter. Verify each artifact and the intended use separately.
 
-Eliminates training data + compute bottleneck for LoRA fine-tuning. Describe task in text → get working adapter instantly.
+## References
 
-Even with random/meaningless descriptions, SFT-trained T2L generates "reasonable" LoRAs — it learns task patterns beyond just text.
-
-## Limitations
-
-- **LLM only** — does NOT generate LoRAs for image/video diffusion models
-- Fixed rank-8 LoRAs (bottleneck for complex tasks)
-- Meta-training expensive (days on multi-GPU), inference is sub-second
-- Out-of-distribution tasks remain difficult
-
-## License
-
-**Apache 2.0** — fully commercial.
-
-## Relevance for [[lora-fine-tuning-for-editing-models|Editing Model LoRAs]]
-
-Currently LLM-only, but the principle of hypernetwork-generated LoRAs could extend to diffusion models. If adapted for [[MMDiT]], could enable instant task-specific editing adapters from text descriptions — e.g., "remove jewelry scratches" → LoRA weights.
-
-## Key Links
-
-- GitHub: github.com/SakanaAI/text-to-lora
-- GitHub (D2L): github.com/SakanaAI/doc-to-lora
+- [Text-to-LoRA official project page](https://sakana.ai/text-to-lora/)
+- [Text-to-LoRA official repository](https://github.com/SakanaAI/text-to-lora)
+- [Text-to-LoRA paper](https://arxiv.org/abs/2506.06105)
+- [Doc-to-LoRA official project page](https://sakana.ai/doc-to-lora/)

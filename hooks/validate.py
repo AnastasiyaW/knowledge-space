@@ -49,9 +49,14 @@ AUTHOR_REFERENCE_PATTERNS = [
     # Single-initial ("R. Hunt") skipped because enumerated lists (A. Foo, B. Bar)
     # collide with it; instead we rely on the Author-byline pattern below to catch
     # them in real attribution contexts.
-    (r'\b[A-Z]\.\s*[A-Z]\.(?:\s*[A-Z]\.)?\s+[A-Z][a-z]{2,}\b', "Latin multi-initial+surname", 0),
-    # Explicit author byline with colon: "Автор: Иван Иванов", "Author: John Smith"
-    (r'(?:Автор|Переводчик|Перевод|Редактор|Author|Translator|Editor)\s*:\s+[A-ZА-Я]\.?[A-Za-zА-Яа-яё]*(?:\s+[A-ZА-Я]\.?)?\s+[A-ZА-Я][A-Za-zА-Яа-яё]+', "author byline (colon)", re.IGNORECASE),
+    # Country and union abbreviations ("U.S. Google Labs") are not initials.
+    (r'\b(?!(?:U\.S|U\.K|U\.N|E\.U)\.)[A-Z]\.\s*[A-Z]\.(?:\s*[A-Z]\.)?\s+[A-Z][a-z]{2,}\b', "Latin multi-initial+surname", 0),
+    # Explicit author byline with colon: "Автор: Иван Иванов", "Author: John Smith".
+    # Only the keyword ignores case: a global IGNORECASE let "[A-ZА-Я]" match lowercase words,
+    # and a keyword right after another word is part of a title ("Video Editor: Create
+    # Videos", "Workflow editor: builds..."), not a byline. Measured 2026-09-22: 5 errors, all
+    # of these two kinds, in projects/capcut, google-opal, notebooklm, unity-cli.
+    (r'(?<!\w)(?<!\w )(?i:Автор|Переводчик|Перевод|Редактор|Author|Translator|Editor)\s*:\s+[A-ZА-Я]\.?[A-Za-zА-Яа-яё]*(?:\s+[A-ZА-Я]\.?)?\s+[A-ZА-Я][A-Za-zА-Яа-яё]+', "author byline (colon)", 0),
     # "Written by Full Name" / "Translated by Full Name" - TWO capitalized tokens after "by"
     # avoids catching "by default", "by reference", "by value".
     (r'\b(?:Written|Translated|Edited|Authored|Created|Developed|Taught|Co-authored)\s+by\s+[A-ZА-Я][A-Za-zА-Яа-яё]+\s+[A-ZА-Я][A-Za-zА-Яа-яё]+\b', "written-by pattern", 0),

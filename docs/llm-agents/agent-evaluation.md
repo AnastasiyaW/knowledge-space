@@ -6,7 +6,7 @@ tags: [llm-agents, evaluation, testing, benchmarks, evidence, swe-bench]
 
 # Agent Evaluation and Evidence
 
-**Scope checked: 2026-09-04.** An agent run combines a model with instructions, tools, state, data, permissions, and an execution environment. A benchmark result can be useful evidence about one defined harness; it does not prove that a production integration is safe, current, or suitable for a different task.
+**Scope checked: 2026-09-06.** An agent run combines a model with instructions, tools, state, data, permissions, and an execution environment. A benchmark result can be useful evidence about one defined harness; it does not prove that a production integration is safe, current, or suitable for a different task.
 
 ## Define the Evaluation Object
 
@@ -85,7 +85,40 @@ A release decision should name the evidence required for its risk level:
 
 A single aggregate score is a dashboard signal, not a replacement for the individual gate that protects a user, database, payment, deployment, or published claim.
 
-## Common Failure Modes
+## Match the Completion Claim to the Evidence
+
+Use separate proof levels instead of one undifferentiated `PASS`. The following is an engineering reporting convention, not an SDK status taxonomy.
+
+| Observed level | What it establishes | What remains unproven |
+|---|---|---|
+| source review | the inspected revision contains the intended instruction or implementation | whether any active system loads it |
+| focused fixture | the named inputs and assertions passed in the recorded environment | behavior outside those cases or in another runtime |
+| installation and registration | expected bytes are installed and the active entry point selects them | whether a real invocation reaches the changed branch |
+| consuming workflow | the requested user path produced its specified result in the named environment | unrelated paths, versions, workloads, and quality dimensions |
+
+The required level follows the request. Reviewing an instruction file may complete a source audit. It does not complete a request to install that instruction and demonstrate its effect. A test double can prove a local interaction contract; it cannot establish that the real service accepted a request. Retain the input, revision, assertion, actual observation, and supported claim together.
+
+Registration itself can hide reachability gaps. In the OpenAI Agents SDK for TypeScript, input guardrails apply to the first agent, output guardrails to the final output, and tool guardrails to supported function-tool calls. Input checks can run concurrently with the agent. Consequently, seeing a guardrail in configuration does not establish that it ran before every side effect. Verify the actual path and execution mode. [SDK guardrail scope and execution](https://openai.github.io/openai-agents-js/guides/guardrails/)
+
+## Continue Until the Accepted Outcome, Not Until the Next Report
+
+A useful completion contract connects the requested result to the next executable action and its acceptance evidence. A finding, review, handoff, or failed attempt changes that state; it does not automatically close the task.
+
+| Current observation | Action within the existing task and authority | Terminal evidence |
+|---|---|---|
+| reproducible local implementation defect | make a causal correction, then re-run the affected check | corrected behavior on the failing case and relevant controls |
+| work completed in a branch but not installed | finish the requested delivery through the established route | source revision, installation result, and required consumer check |
+| process exited without a final result | reconcile partial effects before an idempotent repair or resume | complete output or an evidenced boundary that prevents continuation |
+| required approval or external dependency is genuinely unavailable | preserve partial work and identify the exact pending decision or recheck | observed refusal, pending approval, or dependency response |
+| all accepted criteria have sufficient evidence | close the task | criterion-to-evidence mapping, with proof limits stated |
+
+This is an operating policy derived from separating task state from agent messages. It is not a mandate to retry indefinitely or expand authority. A failed local test is not, by itself, an external blocker. Conversely, a completion objective does not authorize deletion, a new publication destination, or an unapproved production mutation.
+
+The SDK supports both model-directed orchestration and explicit code control flow. A deterministic state transition is appropriate when the next action follows a known condition; language-model judgment is still useful for diagnosis. When a tool really requires approval, the human-in-the-loop mechanism preserves the interrupted run for an explicit approval or rejection rather than treating the tool as executed. [Agent orchestration](https://openai.github.io/openai-agents-js/guides/multi-agent/), [approval and resume](https://openai.github.io/openai-agents-js/guides/human-in-the-loop/)
+
+Do not compensate for premature stopping with compulsory extra review rounds. Repeat checks because a failed criterion, changed dependency, or newly observed material risk invalidates their earlier evidence. Preserve still-valid results for unchanged areas. Stop expanding once the entire accepted scope is satisfied; optional polishing is a separate decision. For concurrent work, bind each result to its owner and revision: [[multi-session-coordination]], [[swarm-based-review-and-multisampling-in-agentic-workflows]].
+
+## Gotchas
 
 - **Benchmark substitution:** treating a score as proof of an unrelated production workflow.
 - **Mutable fixtures:** results cannot be compared because the task data changed silently.
@@ -93,6 +126,13 @@ A single aggregate score is a dashboard signal, not a replacement for the indivi
 - **Judge-only acceptance:** a model declares success without deterministic or external evidence.
 - **Unsafe evaluation:** generated code receives network, credential, or production access without a bounded test target.
 - **Average-only reporting:** rare failures and costly outliers disappear behind a summary number.
+- **Report-as-result:** a finding or successful review is recorded as terminal even though the requested installation or user workflow is still missing.
+- **Installation-as-execution:** matching installed hashes is presented as proof that a live request exercised the changed behavior.
+- **Review self-feed:** a passed review triggers another generic review without a changed risk, leaving the accepted delivery unfinished.
+
+## Limitations
+
+These conventions organize evidence; they do not prove that an acceptance criterion is sufficient or that an automated judge is correct. Visual quality, domain validity, and infrequent failures can require different measurements. A bounded observation cannot establish universal absence of failures. Keep untested conditions explicit rather than turning either uncertainty or a local green check into a claim about the whole product.
 
 ## References
 

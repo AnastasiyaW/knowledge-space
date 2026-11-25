@@ -1,52 +1,81 @@
-# VideoMaMa: Diffusion-Based Video Matting
+---
+title: "VideoMaMa: Mask-Guided Matting Contract"
+description: "VideoMaMa is a mask-guided video-matting research release; bind the exact code, checkpoint, base-video-model and license terms, authorized source video and coarse-mask provenance, frame/alpha/export contract, source-disjoint temporal and boundary evaluation, and human review before publishing or compositing outputs."
+category: techniques
+tags: [videomama, video-matting, alpha-matte, masks, temporal-consistency, evaluation]
+aliases: ["VideoMaMa Diffusion Video Matting", "Mask-Guided Video Matting"]
+---
 
-VideoMaMa is a video matting framework that converts coarse segmentation masks into pixel-perfect alpha mattes using generative priors. It generalizes to real-world video without fine-tuning by leveraging large-scale synthetic training.
+# VideoMaMa: Mask-Guided Matting Contract
 
-## Core Architecture
-The system is built upon **Stable Video Diffusion (SVD)**, utilizing its temporal consistency and high-fidelity generation capabilities to solve the matting problem as a refinement task.
+[VideoMaMa](https://arxiv.org/abs/2601.14255) is a mask-guided video-matting
+research method that turns a supplied coarse segmentation mask into an alpha
+matte using a pretrained video-generative prior. The
+[official repository](https://github.com/cvlab-kaist/VideoMaMa) publishes
+the code and identifies separate terms for its code and checkpoint artifacts.
+That establishes a release-specific experiment, not a general guarantee that
+every supplied mask becomes a correct or production-ready matte.
 
-- **Feature Extraction:** Employs a **DINOv3** backbone for robust visual feature representation.
-- **Temporal Stability:** Inherits SVD's motion priors, ensuring that alpha mattes remain consistent across frames without the flickering common in frame-by-frame models.
-- **Input-Output Flow:** Accepts a coarse mask (e.g., from an initial segmenter) and outputs a precise alpha matte suitable for background replacement or professional compositing.
+## Bind the input, release, and output
 
-### SAM2-Matte Variant
-A secondary, lightweight architecture called **SAM2-Matte** is derived by fine-tuning SAM2 on specialized matting datasets. This version provides a faster, lower-VRAM alternative for environments where the full diffusion-based SVD model is computationally prohibitive.
+For every run, retain:
 
-## Training Strategy and Datasets
-The model's performance relies on the **MA-V (Matting Anything in Video)** dataset, which consists of over 50,000 pseudo-labeled videos.
+- repository revision, inference/training entry point, VideoMaMa checkpoint
+  identifier and digest, base video-model identifier, environment/dependency
+  record, and the terms/access status for each artifact;
+- source-video digest, owner or authorized-use record, intended compositing
+  purpose, retention policy, and a sequence identifier that keeps related
+  frames together;
+- coarse-mask source, producing model or annotation revision, subject/class
+  definition, mask semantics, frame alignment, resolution, color/orientation
+  policy, and reviewer correction history;
+- input frame range, cadence, crop/resize/padding, alpha representation,
+  premultiplication convention, export codec/container, and output digest; and
+- held-out temporal/boundary evidence, failures, reviewer decision, and the
+  allowed downstream use.
 
-- **Synthetic-to-Real Transfer:** By training exclusively on high-quality synthetic data, the model avoids the noise present in manual real-world annotations.
-- **Generalization:** The diversity of the MA-V dataset allows VideoMaMa to handle diverse textures, transparencies, and lighting conditions in real-world product photography and cinematic footage.
+The source mask is conditioning information, not truth. Preserve its
+provenance and make any human correction visible rather than attributing it to
+the model.
 
-## Integration in Production Pipelines
-VideoMaMa is typically deployed as a refinement stage in complex image-processing workflows.
+## Evaluate a sequence, not isolated frames
 
-### Refinement Pipeline Example
-```text
-1. Input: Raw Video Frame + Coarse Mask (e.g., from SAM2)
-2. Process: VideoMaMa Refiner (SVD + DINOv3)
-3. Result: Pixel-perfect Alpha Matte
-4. Application: Compositing or Inpainting (e.g., via LaMa)
-```
+Keep source-adjacent clips, near-duplicate frames, and the same subject or
+scene on one side of a split. Measure or inspect the full temporal sequence
+for boundary adherence, hair/fur/transparency, motion blur, occlusion,
+reflection, shadows, alpha stability, and foreground/background leakage.
+Evaluate compositing in the target color and alpha convention, then separately
+review whether the operation changes identity, protected regions, logos, or
+factual detail.
 
-### Hardware Specifications
-| Component | Requirement |
-| :--- | :--- |
-| **Model Base** | SVD |
-| **VRAM (Inference)** | 12GB - 24GB |
-| **Backbone** | DINOv3 |
-| **Optimization** | FP16/BF16 recommended |
+Use a baseline matte path on the same held-out material. Report temporal
+behavior, boundary behavior, and failure detection separately; an attractive
+single frame cannot establish video stability.
 
 ## Gotchas
-- **VRAM Overhead:** The SVD-based architecture is extremely heavy. It is unsuitable for edge devices or systems with less than 12GB of dedicated VRAM.
-- **Small Feature Overkill:** For fine details or defects smaller than 25px, using a full diffusion pass is often inefficient compared to standard morphological operations or lightweight refiners.
-- **Coarse Mask Dependency:** If the initial segmentation mask completely misses an object, the diffusion refiner cannot "invent" the missing data; the output is strictly limited by the coverage of the input hint.
-- **Processing Latency:** Due to the iterative nature of diffusion, real-time processing (30+ FPS) is currently unattainable on standard server hardware without extreme quantization.
 
-## See Also
+- **Issue:** An omitted or semantically wrong area in the coarse mask is
+  treated as a model failure -> **Fix:** review the conditioning mask and its
+  alignment before evaluating the generated alpha output.
+- **Issue:** Frame-local scores hide flicker or temporal leakage -> **Fix:**
+  inspect contiguous clips and retain sequence-level evidence, not selected
+  stills.
+- **Issue:** Code availability is mistaken for commercial permission ->
+  **Fix:** verify the repository code terms, checkpoint terms, base-model
+  terms, and source-video authority independently for the intended use.
+
+## Failure boundary
+
+If artifact terms, source-video authority, mask provenance, frame alignment,
+alpha/export contract, or temporal review is incomplete, keep the output out
+of publishing and compositing. Do not replace a missing mask with an inferred
+one, present a generated alpha as ground truth, or claim real-time,
+cross-domain, or commercial suitability without separate evidence.
+
+## Related pages
+
 - [[in-context-segmentation]]
-- [[LaMa]]
-- [[RealRestorer]]
-- [[defect-detection-small-objects]]
+- [[temporal-tiling]]
+- [[paired-training-for-restoration]]
+- [[segmentation-dataset-preparation]]
 - [[diffusion-inference-acceleration]]
-

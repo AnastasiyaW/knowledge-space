@@ -1,60 +1,55 @@
 ---
-title: FLAIR
+title: "FLAIR: Flow-Based Latent Alignment for Image Restoration"
+description: "FLAIR is a training-free flow-based posterior-sampling framework for inverse imaging; use its published configuration and verify fidelity, observed-data consistency, and base-model terms on the target task."
 category: models
-tags: [image-restoration, flow-matching, variational, training-free, super-resolution, deblur, inpainting, sd3.5]
+tags: [image-restoration, flow-matching, inverse-problems, posterior-sampling, inpainting, super-resolution]
 aliases: ["Flow-Based Latent Alignment for Image Restoration"]
 ---
 
-# FLAIR (Flow-Based Latent Alignment for Image Restoration)
+# FLAIR: Flow-Based Latent Alignment for Image Restoration
 
-Training-free variational posterior sampling framework for image restoration. Uses SD 3.5 Medium as flow-matching prior. No training/fine-tuning needed — works out of the box for SR, inpainting, deblurring.
+**Scope checked: 2026-09-04.** FLAIR is a training-free variational framework for solving inverse imaging problems with a flow-based latent generative prior. It is not a replacement image-restoration checkpoint: an operator supplies a degradation model, a compatible prior, a configuration, and task inputs so the result can balance observed data with the prior's generated detail.
 
-Paper: arXiv:2506.02680 (2025). Authors: ETH Zurich + Max Planck Institute.
+## What the Framework Changes
 
-## Architecture
+The FLAIR paper describes three linked ideas:
 
-**Not a new model** — a framework that wraps an existing flow-matching generative model:
+- a variational objective designed for flow matching and inverse problems;
+- deterministic trajectory adjustment for difficult or atypical reconstruction modes;
+- decoupled data-fidelity and regularization optimization, with time-dependent calibration.
 
-```text
-Degraded image (y) → Forward model A → Variational posterior sampling:
-    Prior: SD 3.5 Medium velocity field v(x_t, t)
-    Likelihood: consistency with observed pixels
-    → DTA + HDC + CRW mechanisms
-    → Restored image (x)
-```
+These mechanisms are intended to make a generated reconstruction consistent with what was observed. They do not make an unknown corruption automatically identifiable: if the forward degradation model is wrong, a visually plausible output can still invent or remove important detail.
 
-### Three Mechanisms
+## Start From a Published Configuration
 
-1. **DTA (Deterministic Trajectory Adjustment):** Reparameterizes variational distribution to recover atypical modes that pure sampling would miss
-2. **HDC (Hard Data Consistency):** Exact pixel-level consistency with observed (non-degraded) regions
-3. **CRW (Calibrated Regularizer Weights):** Time-dependent weighting calibrated by offline accuracy estimates
+The official repository provides a Python package, example scripts, and configurations for tasks such as masked inpainting and super-resolution. Treat those configurations as a coupled experiment rather than copying a sampler setting into another pipeline:
 
-### vs Diffusion-Based Restoration ([[RealRestorer]])
+1. identify the input degradation and the forward model being assumed;
+2. use the repository revision, requirements, compatible prior, and supplied config together;
+3. declare which pixels or regions are observed, including the mask convention;
+4. retain prompt, configuration, input, output, and source revisions with each result;
+5. run a small fixture with known ground truth before applying the workflow to irreplaceable images.
 
-| Aspect | RealRestorer | FLAIR |
-|--------|-------------|-------|
-| Approach | Fine-tuned editing model | Training-free posterior sampling |
-| Base model | Step1X-Edit (40 GB) | SD 3.5 Medium (2B) |
-| Training | Requires fine-tuning | Zero training |
-| Tasks | 9 degradation types (prompted) | SR, inpainting, deblur (mathematical) |
-| Speed | 28 steps, fast | Full SD3.5 loop + optimization, slow |
+The project examples use prompt conditioning and task configuration. A prompt is not a factual restoration target, so it must not be allowed to override a required observed feature without an explicit human review.
 
-## Tasks
+## Validate Restoration, Not Just Appearance
 
-- Super-resolution (tested up to 12× upscaling)
-- Inpainting (with mask)
-- Motion blur removal
-- Text-guided editing (via prompt during inpainting)
+Use task-specific evidence:
 
-## VRAM
+| Question | Useful evidence |
+|---|---|
+| Did observed regions remain consistent? | pixel/region comparison outside the mask or known measurement targets |
+| Did the intended degradation improve? | paired fixture, domain metric, and visual inspection at delivery size |
+| Did the model invent semantic content? | side-by-side review with the original and a conservative baseline |
+| Can the run be reproduced? | immutable config, prior revision, prompt, input digest, seed where applicable, and output receipt |
 
-**~24 GB** (RTX 4090). Inherits SD 3.5 Medium requirements.
+For medical, forensic, product-identification, or other evidence-sensitive images, a generative restoration is a candidate visualization, not a replacement for the original artifact.
 
-## License
+## Runtime and Terms Boundary
 
-**Unclear** — no LICENSE file. SD 3.5 Medium uses Stability AI Community License (non-commercial or revenue < $1M).
+FLAIR's training-free claim means it does not require a new task-specific fine-tune. It still requires the published software environment, a compatible flow-based prior, model artifacts, compute, and an authorized input. Check the current terms for the repository, base model, and any demo or hosted service separately before production or commercial use.
 
-## Key Links
+## References
 
-- GitHub: github.com/prs-eth/FLAIR
-- Demo: huggingface.co/spaces/prs-eth/FLAIR
+- [FLAIR official repository](https://github.com/prs-eth/FLAIR)
+- [FLAIR paper: Solving Inverse Problems with FLAIR](https://arxiv.org/abs/2506.02680)

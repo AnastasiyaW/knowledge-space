@@ -1,87 +1,54 @@
 ---
-title: RealRestorer
+title: "RealRestorer: Generalizable Real-World Image Restoration"
+description: "RealRestorer is a large image-editing-model restoration workflow for nine documented degradation types; use the repository's patched local runtime and evaluate fidelity separately from benchmark scores."
 category: models
-tags: [image-restoration, step1x-edit, deblur, denoise, dehaze, derain, compression-artifacts, low-light, moire, flare, reflection, non-commercial]
+tags: [image-restoration, deblur, denoise, dehaze, derain, compression-artifacts, low-light, moire, flare, reflection]
+aliases: ["RealRestorer", "RealIR-Bench"]
 ---
 
-# RealRestorer
+# RealRestorer: Generalizable Real-World Image Restoration
 
-Image restoration model built on [[Step1X-Edit]]. Handles 9 degradation types via text-prompted editing. Ranks 1st among open-source restoration models, 3rd overall (behind Nano Banana Pro and GPT-Image-1.5).
+**Scope checked: 2026-09-04.** RealRestorer is a released image-restoration workflow built around a large image-editing model. The project combines a model, synthetic degradation pipeline, and RealIR-Bench evaluation material to address nine documented real-world degradation categories. It is a research and engineering stack, not a generic `pip install` restoration API.
 
-Paper: arXiv:2603.25502 (March 2026). Authors: Southern University of Science and Technology + StepFun + Shenzhen Institutes of Advanced Technology.
+## Supported Task Classes
 
-## Architecture
+The current repository documents prompt-guided workflows for blur, compression artifacts, lens flare, moiré, haze, low-light images, noise, rain, and reflection. Select one task category deliberately and retain the task prompt with the run; vague instructions can encourage an image-editing model to change content beyond the degradation.
 
-Inherits [[Step1X-Edit]] architecture with custom modifications:
+For every output, distinguish:
 
-| Component | Class | Notes |
-|-----------|-------|-------|
-| Text Encoder | Qwen2_5_VLForConditionalGeneration | Standard **Qwen 2.5 VL** |
-| Transformer | RealRestorerTransformer2DModel | Modified Step1X-Edit transformer |
-| VAE | RealRestorerAutoencoderKL | Custom autoencoder |
-| Scheduler | RealRestorerFlowMatchScheduler | [[flow-matching]] |
+- removal of the requested degradation;
+- preservation of identity, geometry, text, and small product details;
+- newly invented detail, smoothing, or unwanted semantic changes;
+- visual plausibility versus source-faithful recovery.
 
-Key insight: large-scale editing models already have strong generalization for restoration tasks — they understand "fix this" instructions. RealRestorer fine-tunes specifically for degradation removal.
+For documents, evidence, product identity, or measurements, keep the original image as the authority. A generated restoration should be marked as derived output and reviewed against the original.
 
-## Supported Degradation Types
+## Published Runtime Boundary
 
-Prompt-driven — specify degradation type in text:
+The official quick start currently requires the patched local `diffusers/` checkout included in the RealRestorer repository. It installs that checkout in editable mode and verifies that `RealRestorerPipeline` can be imported before inference. A generic installed Diffusers wheel is not assumed to provide the same pipeline.
 
-| Type | English Prompt | Chinese Prompt |
-|------|---------------|----------------|
-| Blur | "Remove blur" | "去除模糊" |
-| Compression | "Remove compression artifacts" | "去除压缩伪影" |
-| Moire | "Remove moire patterns" | "去除摩尔纹" |
-| Low-light | "Enhance low-light image" | "增强低光照图像" |
-| Noise | "Remove noise" | "去除噪点" |
-| Flare | "Remove lens flare" | "去除镜头光晕" |
-| Reflection | "Remove reflections" | "去除反射" |
-| Haze | "Remove haze" | "去除雾霾" |
-| Rain | "Remove rain" | "去除雨滴" |
+Start with the current repository and retain:
 
-## Benchmark (RealIR-Bench)
+1. repository commit, local patched-Diffusers revision, Python environment, and all model artifact digests;
+2. input image, selected degradation category, prompt, seed, precision, and inference settings;
+3. output image and an explicit comparison against the source;
+4. failure logs and a rollback to the untouched source image.
 
-464 real-world degraded images. Metric: `FS = 0.2 * VLM_Score_Diff * (1 - LPIPS)`.
+The repository also supplies a synthetic degradation pipeline and benchmark-evaluation code. Keep synthetic test data separate from real production images so a benchmark fixture is never mistaken for live proof.
 
-| Model | Open Source | Final Score |
-|-------|-----------|-------------|
-| Nano Banana Pro | No | 0.153 |
-| GPT-Image-1.5 | No | 0.150 |
-| **RealRestorer** | **Yes** | **0.146** |
-| Qwen-Image-Edit-2511 | Yes | 0.127 |
-| FLUX.1-Kontext-dev | Yes | 0.056 |
+## Benchmarks Are Evidence, Not a Release Certificate
 
-## Inference
+RealIR-Bench combines a perceptual distance measure with VLM-based scoring into its reported score. That can support a repeatable comparison inside the declared benchmark harness, but it cannot prove source fidelity for a different image, license compliance, or correctness of a published retouch.
 
-```python
-# Requires patched diffusers fork (not PyPI)
-pipe = RealRestorerPipeline.from_pretrained("RealRestorer/RealRestorer", torch_dtype=torch.bfloat16)
-pipe.enable_model_cpu_offload()
-result = pipe(prompt="Remove blur from this image", image=degraded, num_inference_steps=28, guidance_scale=3.0)
-```
+Use a task-specific review set with hard preservation checks alongside any benchmark result. If an acceptance criterion is “do not alter a logo, face, stone, document text, or measurement,” include it as an explicit fixture and inspect it at delivery resolution.
 
-**VRAM**: ~34 GB at 1024x1024 in bf16. Requires flash-attn 2.7.2.
+## Licensing and Deployment
 
-## Gotchas
+Code, patched dependencies, model weights, benchmark data, hosted demos, and base-model artifacts can have distinct current terms. Verify the exact repository and model-card license, access restrictions, redistribution conditions, and input-image rights before commercial or hosted deployment. Do not derive a commercial-use decision from a single metadata tag.
 
-- Requires their **forked diffusers** — not pip-installable. Must clone and install locally.
-- Checkpoint versions v1.0 and v1.1 exist — use latest.
-- Qwen-Image-Edit-2511 variant (without RealRestorer fine-tune) already scores 0.127 on same benchmark — the delta from fine-tuning is +15%.
-- Upcoming: Qwen-Image-Edit-2511 version (different from current Step1X-Edit base).
+## References
 
-## License
-
-| Component | License |
-|-----------|---------|
-| Code | Apache 2.0 |
-| Weights (~41.8 GB) | **Non-commercial academic research only** |
-| RealIR-Bench | Academic |
-
-> HuggingFace metadata says apache-2.0 but README explicitly restricts weights to non-commercial. **Cannot use commercially.**
-
-## Key Links
-
-- GitHub: github.com/yfyang007/RealRestorer
-- HF weights: huggingface.co/RealRestorer/RealRestorer
-- HF benchmark: huggingface.co/datasets/RealRestorer/RealIR-Bench
-- Demo: huggingface.co/spaces/dericky286/RealRestorer-Demo
+- [RealRestorer official repository](https://github.com/yfyang007/RealRestorer)
+- [RealRestorer paper](https://arxiv.org/abs/2603.25502)
+- [RealRestorer model collection](https://huggingface.co/RealRestorer/RealRestorer)
+- [RealIR-Bench dataset](https://huggingface.co/datasets/RealRestorer/RealIR-Bench)

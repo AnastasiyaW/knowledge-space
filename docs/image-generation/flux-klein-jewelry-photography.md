@@ -1,229 +1,92 @@
 ---
-title: FLUX Klein Jewelry Photography Pipeline
-category: pipelines
-tags: [jewelry, product-photography, klein, ic-light, delight, birefnet, compositing, pipeline]
+title: FLUX.2 [klein] Jewelry Imagery Workflow
+description: Jewelry imagery is a source-controlled product workflow: preserve the approved asset, material and geometry evidence, color pipeline, and rights boundary, then release only after visual and factual QA.
+category: workflows
+tags: [flux, flux2, klein, jewelry, product-photography, compositing, color-management, quality-control]
+aliases: ["FLUX Klein Jewelry Photography", "Jewelry Product Imagery"]
 ---
 
-# FLUX Klein Jewelry Photography Pipeline
+# FLUX.2 [klein] Jewelry Imagery Workflow
 
-Production pipeline for generating and compositing jewelry product photography using FLUX.2 Klein 9B. Covers cutout extraction, lighting manipulation, scene generation, and compositing.
+Jewelry imagery is a product-fidelity task, not merely a photorealism task. An
+image can look convincing while changing a stone count, prong layout, metal
+finish, engraving, logo, or product geometry. Treat the approved asset and
+product record as the authority throughout the workflow.
 
-## Full 7-Step Pipeline
+## Source and rights gate
 
-```ruby
-1. Original jewelry photo (client)
-2. BiRefNet cutout → transparent PNG
-3. IC-Light V2 Delight LoRA → remove original lighting
-4. Klein 9B scene generation → background scene
-5. Manual composite in Photoshop/Figma → rough placement
-6. Klein 9B inpaint + Consistency LoRA → seamless blend
-7. IC-Light V2 → final relighting to match scene
-```
+Create a source packet before any generation or edit:
 
-## Step 1-2: BiRefNet Cutout
+- approved product image/3D asset and a content digest;
+- product identifier, approved views, material/stone/finish facts, and
+  prohibited claims;
+- color reference, capture/rendering space, and any physical-chart receipt;
+- rights to use the source, references, marks, and derivative output; and
+- a declared allowed-use scope for the final image.
 
-BiRefNet provides state-of-art transparent background extraction for jewelry. Handles thin chains, prongs, and edge detail better than older U^2Net.
+No model output can establish missing product facts or rights. If the product
+record is incomplete, route it to review rather than asking a generative model
+to fill the gap.
 
-```python
-from transformers import AutoModelForImageSegmentation
-import torch
+## Choose an evidence-preserving route
 
-model = AutoModelForImageSegmentation.from_pretrained("ZhengPeng7/BiRefNet", trust_remote_code=True)
-model.eval()
+Use the least generative route that can satisfy the brief:
 
-# Returns RGBA with alpha = foreground mask
-```
+1. **Source-preserving cleanup:** remove an allowed background defect or
+   presentation artifact while protecting the product mask.
+2. **Controlled composite:** place an approved product asset into a separately
+   approved scene with declared geometry, contact-shadow, reflection, and
+   color constraints.
+3. **Reference-guided edit:** when using FLUX.2 image editing, bind the exact
+   model/API route and every input reference to the job receipt. The
+   [official editing guide](https://docs.bfl.ai/flux_2/flux2_image_editing)
+   describes reference-based editing, but the output still requires
+   product-fidelity review.
+4. **Concept illustration:** label this separately from catalog imagery. It
+   must not be used to imply an existing product feature or SKU.
 
-**Jewelry-specific challenges:**
-- Thin chains: use highest resolution model variant
-- Diamond prongs: edges are sub-pixel thin at normal viewing distance
-- White gold on white background: pre-enhance contrast before segmentation
+Keep the original asset, mask, prompt/edit instruction, and output connected
+in the job record. Never silently flatten an AI-edited product into a new
+source of truth.
 
-## Step 3: IC-Light V2 Delight
+## Color and material controls
 
-Remove existing lighting to get a diffuse/ambient-only version before recompositing.
+Apply a declared color-management workflow before creative grading. For a
+physical capture, a measured chart can support calibration; a learned or
+generated color estimate cannot replace that measurement. See
+[[color-checker-and-white-balance]].
 
-**IC-Light V2 (ICLR 2025):**
-- Flux-based relighting model (not SD 1.5 original)
-- Uses 16-channel VAE for light-aware latents
-- Non-commercial license (research and personal use only)
-- VRAM: ~18 GB for full-quality inference
+Review metal hue, gemstone color, edge highlights, specular reflections,
+shadow direction, and contact support at the final delivery size. Reject an
+image if its material appearance conflicts with the approved product evidence,
+even when it is aesthetically stronger.
 
-```python
-from diffusers import FluxControlPipeline
-from ic_light_v2 import ICLightV2Processor
+## Product-fidelity QA
 
-# Delight mode: use fg-only model
-pipe = FluxControlPipeline.from_pretrained("lllyasviel/ic-light-v2-fg")
-delighted = pipe(
-    prompt="product photo, neutral lighting",
-    image=jewelry_cutout,
-    num_inference_steps=20
-).images[0]
-```
+Every candidate needs a human or deterministic comparison against approved
+references. Check at least:
 
-**API alternative (production):**
-```python
-import fal_client
-result = fal_client.run(
-    "fal-ai/iclight-v2",
-    arguments={
-        "image_url": jewelry_cutout_url,
-        "prompt": "product jewelry photo, uniform soft studio lighting",
-        "lighting_preference": "neutral"
-    }
-)
-```
+- silhouette, proportions, chain/link count, stone count, setting/prong shape,
+  engraving, and readable marks;
+- metal and gemstone appearance under the declared color pipeline;
+- physically plausible support, reflections, occlusion, and shadow direction;
+- background, crop, typography, and claims allowed by the brief; and
+- model, adapter, prompt/reference, and output provenance.
 
-## Step 4: Klein 9B Scene Generation
+Record a reason for rejection. Re-running an image with a different seed is
+not a correction unless the factual acceptance checks pass.
 
-Generate background scene matching jewelry style and brand mood.
+## Model and license boundary
 
-**Prompt structure for jewelry scenes:**
-```sql
-[Surface material] with [texture detail], [lighting type] from [direction],
-[depth of field], [atmosphere], shot on [camera/film type]
-```
+The [official FLUX.2 repository](https://github.com/black-forest-labs/flux2)
+lists FLUX.2 [klein] 9B under non-commercial terms. Do not use those weights
+for commercial product imagery without a separate current license decision.
+Hosted API terms, third-party adapters, source assets, and product marks each
+need their own review.
 
-**Example prompts by jewelry type:**
-```bash
-# Fine jewelry:
-"dark velvet surface with subtle fabric texture, soft diffused studio lighting
- from above left, shallow depth of field with bokeh background, luxury editorial
- atmosphere, shot on medium format"
+## Related pages
 
-# Fashion/statement:
-"rustic marble surface with grey veining, dramatic single-source rim lighting,
- deep black background gradient, high-contrast editorial, 35mm film grain"
-
-# Bridal:
-"white silk fabric draped softly, natural window light from right, cream tones,
- ethereal out-of-focus floral background, romantic editorial"
-```
-
-## Step 5-6: Compositing + Inpaint Blend
-
-After rough Photoshop composite:
-
-**Klein 9B inpainting settings for seamless blend:**
-```yaml
-Model: FLUX.2 Klein 9B (base or distilled)
-LoRA: Consistency LoRA (consistency-edit-lora)
-Denoise: 0.5-0.7 (higher = more creative blend)
-Mask: expanded 20-30px around jewelry edges
-Prompt: describe the shadow and reflection that should appear
-```
-
-**Why Consistency LoRA**: maintains the jewelry's original appearance while harmonizing its integration with the generated scene. Without it, Klein sometimes "redesigns" the jewelry during the inpainting pass.
-
-**VAE color shift warning**: FLUX Klein's VAE decoder sometimes shifts jewelry metal colors (gold → slightly greenish, silver → slightly blue). Correct in Photoshop after compositing: use Curves on affected channel, +5-10 on warm tones for gold.
-
-## Step 7: IC-Light V2 Relighting
-
-Remap lighting to match the scene's light source.
-
-```python
-# Use fg+bg model for relighting with scene background
-pipe = FluxControlPipeline.from_pretrained("lllyasviel/ic-light-v2-fg-bg")
-result = pipe(
-    prompt="jewelry product photo with [scene lighting description]",
-    fg_image=composited_jewelry,   # jewelry on background
-    bg_image=background_scene,     # reference for light direction
-    num_inference_steps=20
-).images[0]
-```
-
-**Lighting prompts that work well:**
-- "Soft window light from left, warm afternoon sun, slight shadows"
-- "Studio three-point lighting, soft fill, cool-toned background light"
-- "Candlelight from below, warm orange rim light, dark romantic"
-
-## Jewelry-Specific Challenges
-
-| Challenge | Solution |
-|-----------|---------|
-| Specular highlights (diamonds, metals) | IC-Light V2 handles naturally; don't over-inpaint over sparkle areas |
-| VAE color shift on gold/silver | Correct via Curves after pipeline; +channel adjustment for metal tones |
-| Thin chain detail loss | Use BiRefNet at 2048px+; don't downscale before cutout |
-| Stone color accuracy | Include stone color in generation prompts; VAE tends to desaturate subtle gemstone colors |
-| Shadow plausibility | Use real jewelry shadow reference; Klein 9B generates implausible shadows without guidance |
-
-## Official FLUX.2 Klein LoRAs for Jewelry
-
-| LoRA | Type | Use in Pipeline |
-|------|------|----------------|
-| IC-Light V2 Relight LoRA | Relighting | Step 7 relighting |
-| IC-Light V2 Delight LoRA | Delighting | Step 3 original lighting removal |
-| Consistency Edit LoRA | Style preservation | Step 6 seamless blend |
-| Background Remove LoRA | Background removal | Alternative to BiRefNet |
-| Object Remove LoRA | Object erasure | Cleanup of unwanted elements |
-| Face Swap LoRA | Reference conditioning | N/A for jewelry |
-
-These are BFL official LoRAs. Load via standard ComfyUI LoRA loader or via fal.ai API.
-
-## fal.ai API Endpoints
-
-For production use without self-hosting:
-
-```python
-import fal_client
-
-# Background removal
-result = fal_client.subscribe("fal-ai/background-remove", {
-    "image_url": "https://...",
-})
-
-# Object removal
-result = fal_client.subscribe("fal-ai/object-remove-flux", {
-    "image_url": "https://...",
-    "mask_url": "https://...",  # binary mask of area to remove
-})
-
-# Virtual try-on (for wearable jewelry concepts)
-result = fal_client.subscribe("fal-ai/virtual-try-on-flux", {
-    "model_image_url": "https://...",
-    "garment_image_url": "https://...",  # jewelry piece
-})
-```
-
-**Note**: Virtual Try-On LoRA works for apparel; for jewelry (rings, necklaces), accuracy requires a custom-trained jewelry-specific LoRA due to specular surface challenges.
-
-## Dataset Considerations
-
-For training a domain-specific jewelry generation LoRA:
-
-| Dataset Size | Quality | Training |
-|-------------|---------|---------|
-| <10 images | Too small | LoRA fails to generalize |
-| 15-30 images | Minimal viable | rank32, 1000 steps |
-| 50-100 images | Sweet spot | rank32, 1500 steps |
-| 100-200 images | Diminishing returns | rank32-64, 2000 steps |
-| >500 images | Rarely helps | Potential content leakage |
-
-**Caption strategy for jewelry**: trigger word + scene description + material description. NEVER include lighting or style descriptors (those go into LoRA weights).
-
-## Comparison with SaaS Tools
-
-| Tool | Quality | Speed | Cost | Custom Style |
-|------|---------|-------|------|-------------|
-| Klein 9B Pipeline | High | Slow (7 steps) | Self-hosted | Full control |
-| Freepik/Magnific | High | Fast | $/image | Limited |
-| Adobe Firefly | Medium | Fast | Subscription | Limited |
-| Picsart AI | Medium | Fast | $/image | None |
-| Canva AI | Low-medium | Fast | Subscription | None |
-
-## Gotchas
-
-- **IC-Light V2 is non-commercial**: the model weights are research-use only. For commercial product photography pipelines, use via fal.ai API which handles licensing.
-- **BiRefNet requires minimum 512px input**: at lower resolutions, edge quality degrades significantly for thin jewelry elements. Upscale input if needed before running BiRefNet.
-- **Klein 9B edit model vs generation model**: for Steps 4 and 6, use the BASE (non-distilled) Klein 9B. Distilled performs poorly for scene generation at the quality level needed for product photography.
-- **Consistency LoRA scale**: the Consistency Edit LoRA is calibrated for scale 0.7-0.9. At 1.0, it over-constrains and prevents the model from adapting the jewelry to the scene.
-- **Manual composite is not optional**: automated placement in Step 5 produces unnatural positioning 40-60% of the time. Human judgment for placement angle and position is still required.
-
-## See Also
-
-- [[flux-klein-9b-inference]] - Klein settings and LoRA stacking
-- [[skin-retouch-pipeline]] - frequency separation for texture preservation
-- [[object-removal-inpainting]] - background cleanup
-- [[tiled-inference]] - high-res output for product photography
-- [[synthetic-dataset-pipeline]] - building training datasets for domain LoRAs
+- [[flux-klein-9b-inference]]
+- [[color-checker-and-white-balance]]
+- [[perspective-calibration-for-compositing]]
+- [[retouch-patch-harmonization]]

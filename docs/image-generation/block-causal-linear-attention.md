@@ -1,111 +1,58 @@
 ---
-title: Block Causal Linear Attention
+title: "Block Causal Linear Attention"
+description: "Block causal linear attention is SANA-Video's trained long-video mechanism with a fixed-size cumulative attention state; it is not a generic plug-in for arbitrary image tiling or DiTs."
 category: architectures
-tags: [sana-video, causal, kv-cache, temporal, linear-attention, constant-memory, tiling]
+tags: [sana-video, causal, kv-cache, temporal, linear-attention, long-video, diffusion-transformer]
 aliases: ["BCLA", "Causal Linear Attention", "SANA-Video Attention"]
 ---
 
 # Block Causal Linear Attention
 
-Temporal extension of [[SANA]]'s linear attention for sequential processing (video frames or image tiles). Enables constant-memory O(D^2) processing regardless of sequence length.
+**Scope checked: 2026-09-04.** Block causal linear attention is the long-context mechanism described for SANA-Video. It turns a video into causally ordered blocks and carries a fixed-size cumulative linear-attention state from earlier blocks to later ones. It is a trained architecture component, not a post-processing recipe for arbitrary image tiles.
 
-## How Standard Linear Attention Works
+## What SANA-Video Actually Uses
 
-SANA uses ReLU kernel linear attention:
-```yaml
-O_i = phi(Q_i) * S / (phi(Q_i) * Z)
-where:
-  S = sum_j phi(K_j)^T * V_j   # running sum, shape [D x D]
-  Z = sum_j phi(K_j)^T          # normalizer, shape [D x 1]
-  phi(x) = ReLU(x)
-```
+SANA-Video extends the [[SANA]] linear-DiT family for video with temporal position handling and a causal Mix-FFN. For long-video generation, the paper reformulates causal linear attention so that a block needs cumulative attention-state and key summaries from earlier blocks rather than a growing per-token KV cache.
 
-Key insight: S and Z are **cumulative sums** shared across all queries. Computed once = O(N*D^2) instead of O(N^2*D).
+The constant-size cache is part of a larger coupled design:
 
-## Extension to Causal (Temporal) Processing
+- an ordered block-wise autoregressive diffusion objective;
+- a causal linear-attention state accumulated across previous blocks;
+- temporal positional handling inside the model;
+- a causal Mix-FFN that also retains the previous block's last frame for temporal convolution;
+- training and post-training procedures that teach the model to operate with that state.
 
-For video or tile-sequence, enforce causality - frame/tile N can only attend to frames/tiles 0..N:
+The fixed cache size reduces the memory growth associated with a conventional long token cache. It does not by itself prove temporal quality, make a generic DiT causal, or remove the need for block-boundary evaluation.
 
-```text
-For tile t:
-  S_t = S_{t-1} + sum_{j in tile_t} phi(K_j)^T * V_j
-  Z_t = Z_{t-1} + sum_{j in tile_t} phi(K_j)^T
+## Do Not Generalize It to Image Tiling Without Evidence
 
-  O_i = phi(Q_i) * S_t / (phi(Q_i) * Z_t)   # for queries in tile t
-```
+The source material concerns long-video generation. It does not validate a raster-scanned image-tile workflow, seam-free high-resolution image synthesis, or a generic causal-state argument for arbitrary diffusion models.
 
-### Memory: O(D^2) Constant
+An implementation that feeds cumulative state into an unmodified image model is a new research experiment. It needs its own training and compatibility evidence, positional scheme, block ordering, and visual validation; it must not be presented as SANA-Video behavior.
 
-- S is a D x D matrix (~2240 x 2240 = 5M params for SANA 1.6B)
-- Z is a D x 1 vector
-- Does NOT grow with number of tiles/frames
-- Compare: standard KV cache is O(N * D) and grows linearly
+## Integration Contract
 
-## Application to [[temporal-tiling]]
+1. Choose an official SANA release and read the matching model/configuration documentation.
+2. Use the implementation's declared model, VAE, attention kernel, block ordering, and checkpoint together.
+3. Keep state isolation explicit: one generation stream must not reuse a cache from another prompt, seed, or video.
+4. Retain model/config revisions, prompt, seed, block schedule, state-handling policy, output, and logs.
+5. Test short clips before increasing duration, then inspect block boundaries, motion continuity, subject identity, and prompt adherence.
 
-Instead of video frames, treat image tiles as the temporal sequence:
+The SANA family evolves rapidly. Later releases introduce hybrid linear/softmax attention and attention-residual designs, so their performance or API must not be projected backwards onto the original block-causal mechanism.
 
-1. **Raster-scan order** - top-left to bottom-right
-2. Each tile: encode via [[DC-AE]] → 32x32x32 latent (for 1024px tile)
-3. Process tile through SANA DiT with causal linear attention
-4. Update running sums S and Z
-5. Next tile inherits global context from all previous tiles
+## Acceptance Checks
 
-### Overlap Handling
+| Question | Evidence |
+|---|---|
+| Is the intended architecture actually active? | matching official config, checkpoint, and runtime trace |
+| Is the cache isolated and ordered correctly? | per-run state receipt and deterministic replay |
+| Are transitions stable? | sequential review around every generated block boundary |
+| Is the claimed efficiency real for this build? | measured memory and latency on the declared hardware and duration |
+| Does it beat a simpler baseline? | same-prompt comparison against a non-causal or shorter-context baseline |
 
-For overlapping tiles:
-- Tokens from overlap zone appear in both tile latents
-- Use position encoding to distinguish: RoPE with `(tile_row, tile_col, local_h, local_w)`
-- Blend overlap latents with linear weights before VAE decode
+## References
 
-## From SANA-Video Implementation
-
-SANA-Video specs:
-- 2B params, 720p, up to 1 minute, 16 FPS
-- **36s latency** for 5s 720p (vs 1897s for Wan-2.1-14B = 52x faster)
-- **Causal Mix-FFN**: caches last frame for temporal convolution causality
-- LTX-VAE for video encoding
-
-The same mechanism applied to tiles enables:
-- Process 4K image (4096x4096) as ~16 tiles of 1024x1024
-- Each tile sees context from all previous tiles
-- No seam artifacts on smooth gradients (metal, skin)
-- Memory: same as single tile + small S, Z cache
-
-## Comparison with Other Temporal Approaches
-
-| Approach | Memory | Quality | Speed |
-|----------|--------|---------|-------|
-| Independent tiles + overlap avg | O(1) | Poor (seams) | Fast (parallel) |
-| Full self-attention across tiles | O(N^2) | Best | Very slow |
-| AnimateDiff temporal modules | O(N) KV cache | Good | Medium |
-| **Block Causal Linear Attention** | **O(D^2) constant** | **Good** | **Fast (linear)** |
-| SyncDiffusion (gradient sync) | O(1) + grad cost | Good | Slow |
-
-## Implementation Notes
-
-```python
-# Pseudocode for causal tile processing
-S = torch.zeros(D, D)  # running KV sum
-Z = torch.zeros(D, 1)  # running K sum
-
-for tile in raster_scan(image):
-    tile_latent = dc_ae.encode(tile)          # [1, 32, 32, 32]
-    noise = torch.randn_like(tile_latent)
-
-    # Denoise with causal context
-    for step in scheduler.timesteps:
-        x_t = scheduler.add_noise(tile_latent, noise, step)
-        # Linear attention uses S, Z as accumulated context
-        pred = model(x_t, step, text, causal_state=(S, Z))
-
-    # Update running sums with this tile's K, V
-    S += phi(K_tile).T @ V_tile
-    Z += phi(K_tile).T.sum(dim=-1, keepdim=True)
-
-    denoised_tiles.append(pred)
-
-# Stitch and decode
-full_latent = stitch_with_blending(denoised_tiles)
-output = dc_ae.decode(full_latent)
-```
+- [SANA official repository](https://github.com/NVlabs/Sana)
+- [SANA-Video paper](https://arxiv.org/abs/2509.24695)
+- [SANA-Video documentation](https://nvlabs.github.io/Sana/docs/sana_video/)
+- [SANA-Video 2.0 documentation](https://nvlabs.github.io/Sana/docs/sana_video2/)

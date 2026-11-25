@@ -80,3 +80,30 @@ From 2023-06-14, practitioners should evaluate AMD’s Instinct MI300X and assoc
 - **Subject:** `organization:amd`, thread `amd-ai-compute-platform`, 2 dated events 2023-06-14 → 2025-08-13.
 - **Practical note:** From 2023-06-14, practitioners should evaluate AMD’s Instinct MI300X and associated PyTorch ecosystem as an AI-compute platform option; from 2025-08-13, they can use AMD’s GPT-OSS-120B Space as a deployment/demo reference, while independently verifying current technical and service details.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:3f7011c0e6f9898ecb13948bd1a50b53c65f337d05be45f34f10868f502ad81e -->
+## 2026-11-19 — AI models achieve 14% PPA improvements on AMD flagship GPU IP
+
+AI models achieved up to 14% improvements in power, performance and area (PPA) through circuit optimizations. They did it by rewriting RTL code for AMD's flagship GPU IP over five months. Anthropic migrated low-level kernels to the Instinct MI355X in three days, where manual kernel porting takes 6 to 12 months of engineering effort. These figures come from one news report. They were not confirmed against first-party releases from AMD, OpenAI or Anthropic.
+
+### Usage and practices
+
+- Port and compile low-level compute kernels for prompt processing with automated model agents, so AI workloads run on AMD Instinct MI355X accelerators. [Source](https://mltimes.ai/ii-za-pyat-mesyatsev-uluchshil-uzhe-optimizirovannyy-gpu-amd/)
+- Check AI-written RTL changes on the GPU architecture against functional testbenches in automated EDA simulation workflows. Do it before committing layouts to silicon production. [Source](https://mltimes.ai/ii-za-pyat-mesyatsev-uluchshil-uzhe-optimizirovannyy-gpu-amd/)
+
+### Additional evidence
+
+- 2026-11-19: The 14% figure refers to PPA circuit optimizations from AI models rewriting RTL code for AMD's flagship GPU IP over five months. Anthropic showed a three-day low-level kernel migration on the Instinct MI355X platform. [Source](https://mltimes.ai/ii-za-pyat-mesyatsev-uluchshil-uzhe-optimizirovannyy-gpu-amd/)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-19: Manual low-level GPU kernel porting for AMD Instinct accelerators took 6 to 12 months of engineering effort. [Source](https://mltimes.ai/ii-za-pyat-mesyatsev-uluchshil-uzhe-optimizirovannyy-gpu-amd/)
+
+### Limits and open questions
+
+- Searches in English and Chinese returned only news summaries. The primary URLs sat behind redirect links (vertexaisearch.cloud.google.com/grounding-api-redirect/...), so first-party press releases from AMD, OpenAI or Anthropic could not be checked.
+- Detailed technical benchmarks and tape-out silicon revision numbers for the AI-modified GPU circuits are not disclosed in public technical documentation.
+- Independent community reception and post-deployment benchmarks on production MI355X clusters could not be confirmed, because no direct discussion forum links turned up.
+
+
+<!-- Retained base: a4df61122c0d8fe5203baa69b245f4159085aada; article blob: af3d2729c6b1313a74183a0c94bdf01a30855133 -->

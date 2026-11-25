@@ -1,72 +1,58 @@
 ---
-title: MARBLE
+title: "MARBLE: Material Recomposition and Blending"
+description: "MARBLE performs material transfer, blending, and parametric material edits through CLIP-space controls over a pretrained image generator; validate object geometry, illumination, and artifact licenses for each workflow."
 category: models
 tags: [material-editing, clip-space, stability-ai, sdxl, ip-adapter, roughness, metallic, transparency, pbr]
 aliases: ["Material Recomposition and Blending"]
 ---
 
-# MARBLE (Material Recomposition and Blending in CLIP-Space)
+# MARBLE: Material Recomposition and Blending
 
-Material property editing via CLIP embedding manipulation on SDXL. Controls roughness, metallic, transparency, glow independently with continuous intensity. Very relevant for jewelry/product photography.
+**Scope checked: 2026-09-04.** MARBLE is Stability AI's published material-editing method. It derives material representations in CLIP space and uses them to guide a pretrained text-to-image system for three related operations: exemplar material transfer, blending between material references, and parametric adjustment of selected material attributes.
 
-Paper: CVPR 2025. Authors: Oxford + MIT CSAIL + Stability AI. arXiv:2506.05313.
+## What It Can Express
 
-## Architecture
+The paper demonstrates control over properties such as roughness, metallic appearance, transparency, and glow. The public implementation provides:
 
-Built on SDXL + IP-Adapter + InstantStyle:
+- a material-blending notebook;
+- a parametric-control notebook;
+- a Gradio demo;
+- a ComfyUI extension and example workflow.
 
-```bash
-Material exemplar → CLIP encoder (ViT-bigG-14) → CLS token embedding z_m
-                                                        ↓
-z_m injected into single UNet block: up_blocks.0.attentions.1 (material block)
-                                                        ↓
-Source image → grayscale init → SDXL denoising → output with new material
-```
+The method's goal is visual material editing, not a physically calibrated PBR solver. A result that looks more metallic or transparent may still have inconsistent reflections, altered geometry, or implausible illumination. Treat the output as an image-generation result that needs task-specific review.
 
-### Key Innovation: Single-Block Injection
+## Architecture and Dependency Boundary
 
-InstantStyle identified `up_blocks.0.attentions.1` as responsible for style/material. MARBLE injects ONLY into this block (vs ZeST which injects into all blocks). Result: material changes while preserving geometry, shading, identity.
+MARBLE builds its material blocks from the InstantStyle codebase and uses a pretrained image generator plus associated image-conditioning artifacts. Keep the full chain explicit:
 
-### Material Operations
+1. MARBLE repository revision and its dependency lock;
+2. selected base generator, image encoder, adapter, and checkpoint revisions;
+3. source object image and material reference(s), with permission to process them;
+4. operation type — transfer, blend, or parametric control — and every control value;
+5. output and acceptance receipt.
 
-**Transfer:** inject CLIP features from exemplar material
-**Blending:** `alpha * z_m1 + (1-alpha) * z_m2` — smooth interpolation between materials
-**Parametric control:** 2-layer MLP predicts CLIP-space direction offsets:
-```python
-z_edited = CLIP(material_image) + MLP(material_image, delta)
-# delta controls intensity, multiple attributes can be summed
-```
+Do not assume that a control tuned for one base model, object category, or lighting setup will transfer to another. The upstream code's tested Python version and notebook settings are compatibility evidence for that release, not a stable API contract.
 
-MLPs trained on synthetic data: 300 Objaverse objects rendered in Blender with PBR shaders. **As few as 16 training objects** suffice.
+## Acceptance Checks for Product Images
 
-## Results
+For product or jewelry use, review separately:
 
-| Attribute | PSNR | LPIPS | CLIP Score |
-|-----------|------|-------|------------|
-| Roughness | 26.56 | 0.056 | 0.931 |
-| Metallic | 26.82 | 0.053 | 0.928 |
-| Transparency | 26.99 | 0.070 | 0.905 |
-| Glow | 19.73 | 0.111 | 0.890 |
+| Requirement | Check |
+|---|---|
+| object identity and silhouette | overlay or side-by-side comparison with the original |
+| material appearance | inspect highlights, roughness, transparency, and edge behavior under the intended crop |
+| color and exposure | compare against calibrated source targets where available |
+| edit scope | confirm background, branding, and unrelated regions did not change |
+| publication rights | retain authorization for the object photo and material exemplar |
 
-Glow is hardest to control. User study: 87.5% preferred over Concept Sliders.
+Use physically based rendering or measured color-management workflows when a material attribute must be numerically true rather than visually plausible.
 
-## VRAM
+## Licensing
 
-~10-12 GB (SDXL + IP-Adapter). ComfyUI workflow provided.
+MARBLE, InstantStyle, the selected base generator, adapters, and any example assets can have different licenses and access terms. Read the current terms for every artifact before hosted, commercial, or redistributed use; the presence of a public repository does not grant a blanket right to the complete assembled workflow.
 
-## Relevance for Jewelry
+## References
 
-- Metallic property control → standardize metal appearance
-- Roughness → polish vs matte surfaces
-- Transparency → gemstone appearance
-- Works across styles (photos, renders) without fine-tuning
-- Color-agnostic grayscale init preserves illumination geometry
-
-## License
-
-**Stability AI Community License** — non-commercial free; commercial <$1M with registration; >$1M requires enterprise.
-
-## Key Links
-
-- GitHub: github.com/Stability-AI/marble
-- Demo: stabilityai-marble.hf.space
+- [MARBLE official repository](https://github.com/Stability-AI/marble)
+- [MARBLE paper](https://arxiv.org/abs/2506.05313)
+- [MARBLE project page](https://marblecontrol.github.io/)

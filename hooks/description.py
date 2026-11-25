@@ -41,9 +41,19 @@ def _clean_markdown(text: str) -> str:
 
 
 def _truncate(text: str, max_len: int = MAX_LEN) -> str:
-    """Truncate text at word boundary."""
+    """Whole sentences up to max_len; a word-boundary cut with '...' only when the first is longer."""
     if len(text) <= max_len:
         return text
+    # A stop ends a sentence only before a space, so "v1.5" and "FLUX.2" stay whole (37 of 50
+    # sampled descriptions ended in "..." on 2026-11-21).
+    whole = ""
+    for sentence in re.split(r'(?<=[.!?])\s+', text):
+        candidate = f"{whole} {sentence}" if whole else sentence
+        if len(candidate) > max_len:
+            break
+        whole = candidate
+    if whole:
+        return whole
     truncated = text[:max_len]
     # Find last space to avoid cutting mid-word
     last_space = truncated.rfind(' ')
@@ -52,79 +62,164 @@ def _truncate(text: str, max_len: int = MAX_LEN) -> str:
     return truncated.rstrip('.,;:') + '...'
 
 
+# The news pipeline opens every projects/ and organizations/ page with a metadata block
+# ("**Development line:** `project:x` · thread ...", "**Events:** 9 dated ...", "**Last
+# researched:** ...", "**Freshness check:** ..."), and some reference pages open with
+# "**Scope checked: 2026-09-04.** <prose>". The first is not a description at all; the
+# second is a label in front of one (434 pages, 2026-09-23 audit).
+_METADATA_LINE = re.compile(
+    r'^\*\*(Development line|Last event|Events|Researched|Last researched|Freshness check):\*\*')
+_SCOPE_PREFIX = re.compile(r'^\*\*Scope checked:[^*]*\*\*\s*')
+
+
+def _is_structure(stripped: str) -> bool:
+    """A line that is not paragraph prose: heading, list, quote, table, rule, HTML,
+    admonition, or a pipeline metadata line."""
+    return (
+        stripped.startswith(('#', '- ', '* ', '> ', '|', '<', '!!!', '???'))
+        or stripped == '---'
+        or bool(re.match(r'^\d+\.\s', stripped))
+        or bool(_METADATA_LINE.match(stripped))
+    )
+
+
+def _attribute_safe(text: str) -> str:
+    """The description goes into content="..." attributes unescaped (MkDocs renders
+    without autoescape), so a double quote ended the attribute early: 15 pages shipped a
+    truncated description plus stray attributes (measured 2026-09-23)."""
+    return text.replace('"', "'")
+
+
 def _extract_first_paragraph(markdown: str) -> str | None:
-    """Extract first meaningful paragraph after H1 heading."""
+    """Extract the first prose paragraph after the H1.
+
+    Structure before the first paragraph (a heading, list, table, admonition, code
+    block) is skipped rather than collected: a hub page that opened with "## Topics"
+    used to get "## Topics ..." as its description.
+    """
     lines = markdown.split('\n')
     found_h1 = False
-    paragraph_lines = []
+    in_code = False
+    paragraph_lines: list[str] = []
+    end = len(lines)
 
-    for line in lines:
+    for i, line in enumerate(lines):
         stripped = line.strip()
 
-        # Find H1
         if not found_h1:
             if stripped.startswith('# ') and not stripped.startswith('## '):
                 found_h1 = True
             continue
 
-        # Skip empty lines between H1 and first paragraph
-        if not paragraph_lines and not stripped:
+        if stripped.startswith('```') or stripped.startswith('~~~'):
+            if paragraph_lines:
+                end = i
+                break
+            in_code = not in_code
             continue
-
-        # Stop at: empty line after paragraph, heading, code block, list, hr, HTML
-        if paragraph_lines and (
-            not stripped
-            or stripped.startswith('#')
-            or stripped.startswith('```')
-            or stripped.startswith('- ')
-            or stripped.startswith('* ')
-            or stripped.startswith('> ')
-            or stripped.startswith('|')
-            or stripped == '---'
-            or stripped.startswith('<')
-            or re.match(r'^\d+\.\s', stripped)
-        ):
-            break
-
-        # Skip admonition markers, badges, and metadata-like lines
-        if stripped.startswith('!!!') or stripped.startswith('???'):
-            break
+        if in_code:
+            continue
+        if not stripped:
+            if paragraph_lines:
+                end = i
+                break
+            continue
+        if _is_structure(stripped):
+            if paragraph_lines:
+                end = i
+                break
+            continue
 
         paragraph_lines.append(stripped)
 
     if not paragraph_lines:
         return None
 
-    text = ' '.join(paragraph_lines)
-    text = _clean_markdown(text)
+    text = _clean_markdown(_SCOPE_PREFIX.sub('', ' '.join(paragraph_lines)))
 
     # Skip if too short to be meaningful
     if len(text) < 30:
         return None
 
-    return _truncate(text)
+    if len(text) < SHORT_LEN:
+        text = ' '.join([text, *_following_sentences(lines[end:])])
+    return _attribute_safe(_truncate(text))
+
+
+# Project pages open with one short sentence and continue in bullets ("Tripo is a 3D asset
+# generation suite ..." = 82 characters, SEO audit 2026-11-21); such a description borrows the
+# sentences that follow it in the same section, still cut at whole sentences.
+SHORT_LEN = 110
+
+
+def _following_sentences(lines: list[str]) -> list[str]:
+    """Prose and list items after the first paragraph, up to the next heading or code block."""
+    out: list[str] = []
+    for line in lines:
+        stripped = line.strip()
+        if stripped.startswith(('#', '```', '~~~', '|', '<', '!!!', '???')) or stripped == '---':
+            break
+        stripped = re.sub(r'^(?:[-*]|\d+\.)\s+', '', stripped)
+        if not stripped or _METADATA_LINE.match(stripped):
+            continue
+        sentence = _clean_markdown(stripped)
+        out.append(sentence if sentence.endswith(('.', '!', '?')) else sentence + '.')
+    return out
+
+
+# Hub sections that say nothing about the topic.
+_GENERIC_SECTIONS = frozenset({"additional references", "see also", "related", "other"})
+
+
+def _hub_description(markdown: str) -> str | None:
+    """Describe a hub page by its article count and section names.
+
+    13 of 29 domain hubs are only headings and link lists (no prose paragraph), so they
+    kept the one site-wide default description (measured 2026-09-23). Their sections are
+    an accurate, self-updating summary: "Kafka & Message Queues: 43 articles on Core
+    Concepts, Stream Processing, ...".
+    """
+    h1 = re.search(r'^# +(.+)$', markdown, re.M)
+    articles = set(re.findall(r'^\s*[-*] +\[\[?([^\]|#)]+)', markdown, re.M))
+    sections = [_clean_markdown(s) for s in re.findall(r'^## +(.+)$', markdown, re.M)]
+    sections = [s for s in sections if s.lower() not in _GENERIC_SECTIONS]
+    if not h1 or not articles or not sections:
+        return None
+
+    head = f"{_clean_markdown(h1.group(1))}: {len(articles)} articles on "
+    picked: list[str] = []
+    for section in sections:
+        if len(head + ", ".join(picked + [section]) + ", and more.") > MAX_LEN:
+            break
+        picked.append(section)
+    if not picked:
+        return None
+    tail = "." if len(picked) == len(sections) else ", and more."
+    return _attribute_safe(head + ", ".join(picked) + tail)
 
 
 def on_page_markdown(markdown: str, page, config, files, **kwargs) -> str:
     """Set page.meta['description'] from first paragraph if not already set."""
-    src = page.file.src_path
+    src = page.file.src_uri   # always "/"-separated; src_path uses "\" on Windows
 
-    # Skip non-article pages
+    # A description written in frontmatter is kept, made safe for the attribute.
+    if page.meta and page.meta.get("description"):
+        page.meta["description"] = _attribute_safe(str(page.meta["description"]))
+        return markdown
+
+    # Skip non-article pages. Domain hub pages (<domain>/index.md) are articles for this
+    # purpose: skipping them gave 13 hubs the one site-wide default description.
     if src in _SKIP_PATHS:
         return markdown
     if src.startswith("blog/"):
         return markdown
     if src.startswith("contributing/"):
         return markdown
-    if src.endswith("/index.md"):
-        return markdown
-
-    # Skip if description already set in frontmatter
-    if page.meta and page.meta.get("description"):
-        return markdown
 
     # Extract and set description
     desc = _extract_first_paragraph(markdown)
+    if not desc and src.endswith("index.md"):
+        desc = _hub_description(markdown)
     if desc:
         if not page.meta:
             page.meta = {}
