@@ -174,3 +174,69 @@ The Gemini app on macOS now has Computer Use. It runs multi-step desktop tasks i
 
 
 <!-- Retained base: ba59150ff6af8d3245658020d86e3463aab13771; article blob: 72c9f27b214614f42e7c88afed3791669ce09c95 -->
+
+<!-- live-update:6b3b632666e141a3bab9c9d772a080bf0676bb3b1ee674f8666476e5d7d268d8 -->
+## 2026-07-07 — Managed Agents adds asynchronous execution and remote MCP support
+
+Managed Agents in the Gemini API runs agent work inside a remote sandbox. It adds background execution, remote MCP integration, custom functions, and credential refresh.
+
+## 2026-07-17 — Gemini 3.5 Flash Cyber is limited to CodeMender pilot access
+
+Gemini 3.5 Flash Cyber is a cybersecurity model built on 3.5 Flash. It finds, validates, and patches vulnerabilities. Access is restricted to governments and trusted partners through CodeMender.
+
+## 2026-07-21 — Gemini adds 3.6 Flash, 3.5 Flash-Lite, and Flash Cyber
+
+Gemini introduces separate Flash-family options for specific workloads: general agent work, high-throughput lower-latency workflows, and CodeMender security remediation.
+
+## 2026-07-28 — Gemini Robotics 2 separates motor control, reasoning, and local deployment
+
+Gemini Robotics 2 is a vision-language-action model for whole-body robot control. It runs alongside ER 2 for high-level reasoning and On-Device 2 for local use.
+
+## 2026-07-28 — Managed Agents adds 3.6 Flash defaults and sandbox hooks
+
+Managed Agents defaults to Gemini 3.6 Flash. The update adds model selection, environment hooks, budget controls, scheduled triggers, and free-tier access.
+
+## 2026-07-30 — Gemini Robotics ER 2 adds video-based task tracking
+
+Gemini Robotics ER 2 plans multi-step robot tasks. It tracks progress and recovery through continuous video, and coordinates multiple robots.
+
+### Usage and practices
+
+- Create a Managed Agent interaction for remote-sandbox work. Set background: true so work continues after the initial request. Keep the returned interaction ID to poll, stream, or reconnect. [Source](https://blog.google/innovation-and-ai/technology/developers-tools/expanding-managed-agents-gemini-api/)
+- Attach only the remote MCP servers and built-in tools required for the task. Use custom functions when local business logic must run on the client. [Source](https://blog.google/innovation-and-ai/technology/developers-tools/expanding-managed-agents-gemini-api/)
+- Pin the Managed Agent model explicitly when reproducibility, latency, or cost matters. The July default is Gemini 3.6 Flash, while Flash-Lite is the lower-cost option. [Source](https://blog.google/innovation-and-ai/technology/developers-tools/expanding-managed-agents-gemini-api-3-6-flash-hooks/)
+- For robots, pair a lower-level VLA for motor control with Gemini Robotics ER 2. ER 2 handles instruction understanding, task planning, video-based progress tracking, and tool use. [Source](https://deepmind.google/blog/gemini-robotics-er-2-powering-robotics-with-video-understanding-task-orchestration-and-multi-robot-collaboration/)
+- Use background execution for long-running interactions instead of holding an HTTP connection open. Retain the interaction ID and handle terminal statuses explicitly. [Source](https://blog.google/innovation-and-ai/technology/developers-tools/expanding-managed-agents-gemini-api/)
+- Use environment hooks to enforce controls before or after sandbox tool calls. They can block, lint, or audit actions. [Source](https://blog.google/innovation-and-ai/technology/developers-tools/expanding-managed-agents-gemini-api-3-6-flash-hooks/)
+- Treat Flash Cyber as a restricted security workflow through CodeMender, not a general patching endpoint. Initial deployment is limited to governments and trusted partners. [Source](https://deepmind.google/blog/introducing-gemini-3-5-flash-cyber/)
+- Use Flash-Lite for throughput-sensitive tasks. Compare its pricing against prior Flash-Lite versions rather than assuming the Lite name makes it cheaper. [Source](https://www.reddit.com/r/Bard/comments/1v2lk1l/introducing_gemini_36_flash_35_flashlite_and_35/)
+
+### What practitioners say
+
+- One practitioner argued that 3.5 Flash-Lite's higher listed price undermines the Lite label. Check actual input and output pricing instead of trusting the name. (2026-07-21) [Source](https://www.reddit.com/r/Bard/comments/1v2lk1l/introducing_gemini_36_flash_35_flashlite_and_35/)
+
+### Additional evidence
+
+- 2026-07-07: Managed Agents run in an isolated cloud sandbox. Background interactions return an ID to poll, stream, or reconnect. Remote MCP servers work alongside built-in tools. Custom functions shift execution to the client via a requires\_action state. [Source](https://blog.google/innovation-and-ai/technology/developers-tools/expanding-managed-agents-gemini-api/)
+- 2026-07-17: The linked first-party announcement is dated 2026-07-21, not 2026-07-17. It describes Gemini 3.5 Flash Cyber as built on 3.5 Flash for finding, validating, and patching vulnerabilities. Initial access is limited to governments and trusted partners via CodeMender. [Source](https://deepmind.google/blog/introducing-gemini-3-5-flash-cyber/)
+- 2026-07-21: Gemini 3.6 Flash costs $1.50 per million input tokens and $7.50 per million output tokens. Gemini 3.5 Flash-Lite targets high-throughput workloads at $0.30 per million input tokens and $2.50 per million output tokens. Cyber pairs with CodeMender rather than serving as a general API model. [Source](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-6-flash-3-5-flash-lite-3-5-flash-cyber/)
+- 2026-07-28: The linked Robotics 2 announcement is dated 2026-07-30, not 2026-07-28. It lists Robotics 2 as the vision-language-action model for humanoids and bi-arm robots. Robotics ER 2 handles high-level reasoning, and Robotics On-Device 2 runs locally on device. [Source](https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/)
+- 2026-07-28: Managed Agents defaults to Gemini 3.6 Flash. Developers can pin a model via agent\_config.model. Environment hooks run before or after sandbox tool calls to block, lint, or audit them. [Source](https://blog.google/innovation-and-ai/technology/developers-tools/expanding-managed-agents-gemini-api-3-6-flash-hooks/)
+- 2026-07-30: Gemini Robotics ER 2 handles high-level embodied reasoning, handing motor execution to a lower-level VLA. It adds continuous-video progress tracking, failure recovery, native tool and user-function calling, and multi-robot collaboration in shared spaces. [Source](https://deepmind.google/blog/gemini-robotics-er-2-powering-robotics-with-video-understanding-task-orchestration-and-multi-robot-collaboration/)
+
+### Subsequent developments
+
+- 2026-11-10: Gemini Robotics 2.5 introduced a later vision-language-action model. It focuses on broader robot skills and faster skill acquisition in unstructured real-world environments. [Source](https://deepmind.google/blog/gemini-robotics-2-5-accelerates-real-world-physical-intelligence/)
+
+### Superseded guidance (retained for history)
+
+- 2026-07-28: For Managed Agents on antigravity-preview-05-2026, Gemini 3.6 Flash supersedes the earlier default model. Developers can still pin 3.5 Flash or 3.5 Flash-Lite explicitly. [Source](https://blog.google/innovation-and-ai/technology/developers-tools/expanding-managed-agents-gemini-api-3-6-flash-hooks/)
+- 2026-07-30: Gemini Robotics ER 2 supersedes Gemini Robotics ER 1.6 for embodied reasoning. The new generation adds continuous-video progress tracking and multi-robot collaboration. [Source](https://deepmind.google/blog/gemini-robotics-er-2-powering-robotics-with-video-understanding-task-orchestration-and-multi-robot-collaboration/)
+
+### Limits and open questions
+
+- The reviewed 2026-07-17 Cyber event points to a first-party page dated 2026-07-21.
+- The reviewed 2026-07-28 Robotics 2 event points to a first-party page dated 2026-07-30.
+- The subject combines distinct products: Managed Agents, general Flash models, a restricted cyber model, and robotics models. Their availability and operating assumptions are not interchangeable.
+
+<!-- Retained base: 4ed654b1b2077d990cd62c178eaaaa33977aa715; article blob: ef7f6dae0339f7e6e2d2948b037932df2afc569f -->
