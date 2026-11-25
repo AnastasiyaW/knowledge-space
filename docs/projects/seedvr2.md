@@ -80,3 +80,47 @@ As of 2026-07-30, practitioners should treat SeedVR2 as a versioned deployment p
 - **Subject:** `project:seedvr2`, thread `seedvr2-development-and-distribution`, 3 dated events 2025-06-09 → 2026-07-30.
 - **Practical note:** As of 2026-07-30, practitioners should treat SeedVR2 as a versioned deployment path: consult the official project and repository references first, then independently assess the linked 1.4B ComfyUI package before using it in a workflow.
 - **Confidence:** high. Dated supersedes above are the authority for what is obsolete.
+
+<!-- authored-live-update:8c58cec247991662f3b16a987bbace4205f20ba435517274aa6d2da0aaa171bb -->
+# SeedVR2 TensorRT Studio
+
+VRGDG SeedVR2 TensorRT Studio is a Windows application around SeedVR2, not an official ByteDance release. Its public home is the [creator repository](https://github.com/vrgamegirl19/VRGDG-SeedVR2-TensorRT-Studio). The GitHub Releases page had no release when checked, so install and updates come from the repository's `main` path. [Releases](https://github.com/vrgamegirl19/VRGDG-SeedVR2-TensorRT-Studio/releases)
+
+The Studio uses a compatible SeedVR2 integration derived from NumZ's ComfyUI project. The creator says its own additions include TensorRT encoder handoff, latent capture, and a fast path that stops before VAE decoding. This is a wrapper and integration layer. [Third-party notices](https://github.com/vrgamegirl19/VRGDG-SeedVR2-TensorRT-Studio/blob/main/THIRD_PARTY_NOTICES.md)
+
+## What the workflow adds
+
+- A short preview before a full render.
+- Original, restored, wipe comparison, and side-by-side views.
+- Local TensorRT VAE decoding on supported NVIDIA RTX hardware.
+- Per-job output folders with media, manifests, and logs.
+- Resumable chunks for one long video.
+
+The intended order is simple: load one clip, choose the target, render a representative preview, use the wipe or side-by-side view, and inspect faces, freckles, moles, and other permanent marks before the full render. [Workflow](https://github.com/vrgamegirl19/VRGDG-SeedVR2-TensorRT-Studio/blob/main/README.md)
+
+The TensorRT path exposes temporal batches 5 and 21. Those are frame-group choices inside one render. They do not prove that the Studio has a multi-file batch queue. An open 2 September issue requested processing several files one after another, so call multi-file batching unverified for now. [Issues](https://github.com/vrgamegirl19/VRGDG-SeedVR2-TensorRT-Studio/issues)
+
+## Installation boundary
+
+The packaged setup targets Windows 11, a current NVIDIA RTX driver, and at least 35 GB of free space. It builds TensorRT engine plans locally for the installed GPU and TensorRT runtime. Do not copy TensorRT plan files from another GPU or runtime. [Installation guide](https://github.com/vrgamegirl19/VRGDG-SeedVR2-TensorRT-Studio/blob/main/docs/INSTALLATION.md)
+
+If TensorRT decoding fails after the restoration pass, the Studio says it can retry saved latents with its Stable decoder. That avoids repeating restoration, but it is a fallback path, not evidence of the same speed or output as the accelerated decode. [Workflow](https://github.com/vrgamegirl19/VRGDG-SeedVR2-TensorRT-Studio/blob/main/README.md)
+
+## Chunking needs an output check
+
+The documentation offers automatic chunk choice or manual chunks from 30 seconds to 30 minutes. Completed chunks are meant to survive an interruption, and retry resumes at the first unfinished section.
+
+That recovery behavior does not prove that the assembled file is usable. An open issue describes a 60-second input split into two chunks: both chunk files played, while the assembled video froze halfway through. The reporter says this was before file-size fixes and did not know whether the fix was related. Treat the fault as unresolved for current `main`. Our delivery caution is to check the final duration, audio duration, every join, and a full decode. [Issue #30](https://github.com/vrgamegirl19/VRGDG-SeedVR2-TensorRT-Studio/issues/30)
+
+## The RTX 5090 example
+
+The creator reports one run: an 8-second 360p clip to 2K in about 8 minutes on an RTX 5090 with 7B Sharp FP16. Treat it as one published scenario, not a benchmark. The source does not give enough detail about frame rate, temporal batch, driver, TensorRT version, source degradation, or output validation to predict another job. [README](https://github.com/vrgamegirl19/VRGDG-SeedVR2-TensorRT-Studio/blob/main/README.md)
+
+There are early setup risks too. One issue records CUDA ONNX-export OOM while allocating 38,050,725,888 bytes on a GPU with 25,756,696,576 bytes total memory, then a CPU-export fallback. A Reddit commenter also reports flicker after adding extra filters. Both are reports from named configurations or users, not a universal limit or preset. [Issue #26](https://github.com/vrgamegirl19/VRGDG-SeedVR2-TensorRT-Studio/issues/26) · [Community report](https://www.reddit.com/r/comfyui_elite/comments/1w6muu7/seedvr2_video_upscaler_suite_github_linked_in_post/)
+
+## Still unknown
+
+No packaged Studio release was found. No independent Studio benchmark or verified multi-file queue was found. The Simplified-Chinese evidence is still incomplete: the bounded research found only directory and aggregation pages, not a creator-maintained Chinese document or reproducible Chinese operating report.
+
+
+<!-- Retained base: 10a1a74b58eb65fd5b18c6a04e3d1b0dcadb09ea; article blob: 19e5cf206339f2bebe4cc872fb877cca05957b85 -->

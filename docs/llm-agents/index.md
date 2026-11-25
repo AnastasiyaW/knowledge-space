@@ -70,6 +70,7 @@ type: MOC
 - [[claude-desktop-session-management]] - Use supported export, account, and extension controls rather than relying on unversioned local cache internals for conversation recovery or cross-device synchronization.
 - [[claude-managed-agents]] - Define organization-managed Claude Code subagents with explicit scope, precedence, tool limits, and verification rather than treating managed configuration as a cloud execution runtime.
 - [[context-engineering]] - Treat model context as a bounded working input and preserve task state, evidence, authority, and retrieval provenance in versioned artifacts rather than fixed token allocations.
+- [[cross-language-seam-checks]] - Guard values hand-copied between languages and components (routes, versions, DTO fields, env vars) with a mechanical check that tells the agent which file on the other side to fix; worked through with Crossweft 0.4.0.
 - [[gradio-llm-interfaces]] - Rapid prototyping of chat UIs with streaming, markdown rendering, and multi-model comparison
 - [[handoff-rollup-pattern]] - How to create a bounded, auditable rollup of long-running agent work without pretending that a summary is lossless.
 - [[kv-cache-compression]] - Reducing KV cache memory during LLM inference to enable longer contexts and more concurrent

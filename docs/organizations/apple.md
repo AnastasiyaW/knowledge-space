@@ -75,3 +75,56 @@ As of 2026-06-09, practitioners tracking Apple should distinguish its public mac
 - **Subject:** `organization:apple`, thread `apple-ai-research-to-product`, 3 dated events 2022-08-05 → 2026-06-09.
 - **Practical note:** As of 2026-06-09, practitioners tracking Apple should distinguish its public machine-learning research releases from its product-facing Apple Intelligence announcements, while following both as connected evidence of the company’s AI development.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:47f0e07b0d6f50f6ccb333c3d764b2fd10077b1bacb32948e75de7b355f16fbb -->
+## 2026-11-20 — Apple reportedly developing native Mac AI agent
+
+Apple is reportedly building an autonomous AI agent that operates Mac devices and apps. It would compete with the computer-use models from OpenAI, Anthropic, and Meta.
+
+## 2026-11-20 — Apple opens engineering manager role for autonomous computer-use AI
+
+A job listing shows Apple hiring a senior engineering manager to lead autonomous agent systems. The agents would navigate software, browse websites, and generate code.
+
+## 2026-11-20 — macOS 27.3 beta expands third-party agent permission steps as Apple plans native agent
+
+The macOS 27.3 beta reportedly raises the authorization steps for third-party device-control tools from 4 to 14. Reports that Apple is developing a native autonomous agent came out alongside it.
+
+## 2026-11-20 — Apple tightens macOS agent permissions while developing proprietary assistant
+
+Recent macOS beta builds put a 14-step setup on third-party AI automation tools. Apple, meanwhile, is working on its own agentic system for app and device control.
+
+## 2026-11-20 — Apple job listing details agentic AI leadership for cross-app automation
+
+A Senior Engineering Manager, Agentic AI listing indicates Apple is building assistants that run multi-step workflows across terminal commands, APIs, and web tools.
+
+## 2026-11-20 — Apple pairs native agent development with stricter macOS automation barriers
+
+Reporting confirms Apple is developing device-control AI agents. It is also tightening OS-level permission limits for competing external automation services.
+
+### Usage and practices
+
+- To run external computer-use tools on a macOS beta, set accessibility, full-disk access, and automation permissions through the multi-step prompts. [Source](https://the-decoder.com/apple-joins-the-race-for-ai-agents-that-control-your-device-while-raising-new-barriers-for-competitors/)
+- Build automation scripts on standard terminal utilities, supported APIs, and app scripting dictionaries, not raw UI capture, until Apple releases native agent APIs. [Source](https://www.bloomberg.com/news/articles/2026-11-19/apple-is-working-on-ai-agent-for-device-control-apps-browsing-and-coding)
+- Expect more security authorization dialogs in upcoming macOS versions when designing desktop workflows. [Source](https://the-decoder.com/apple-joins-the-race-for-ai-agents-that-control-your-device-while-raising-new-barriers-for-competitors/)
+- Build agentic tools on explicit sandboxed API calls and CLI endpoints, so they do not depend on fragile synthetic UI events. [Source](https://www.bloomberg.com/news/articles/2026-11-19/apple-is-working-on-ai-agent-for-device-control-apps-browsing-and-coding)
+
+### Additional evidence
+
+- 2026-11-20: Reporting names Apple's Mac agent as an executive priority under Craig Federighi. It aims at native desktop automation and competes directly with Meta Muse, Anthropic Computer Use, and OpenAI operator agents. [Source](https://techcrunch.com/2026/11/19/apple-may-be-developing-its-own-ai-agent-that-runs-your-mac/)
+- 2026-11-20: The job description covers building autonomous agentic workflows for multi-app orchestration, command line execution, web navigation, and automated programming. [Source](https://habr.com/ru/articles/1110310/)
+- 2026-11-20: The macOS 27.3 beta raises the authorization requirement for external agentic control tools like ChatGPT from 4 confirmation steps to 14. It enforces granular sandboxing and permission prompts. [Source](https://habr.com/ru/companies/selectel/articles/1110360/)
+- 2026-11-20: The 14 steps target accessibility and screen-control interfaces on Mac. They restrict third-party AI agents while Apple prepares its native alternative. [Source](https://habr.com/ru/companies/selectel/articles/1110360/)
+- 2026-11-20: Bloomberg gives the position as Senior Engineering Manager, Agentic AI. It reports an internal target launch window as early as late 2027 for bringing the autonomous agent into Apple Intelligence. [Source](https://www.bloomberg.com/news/articles/2026-11-19/apple-is-working-on-ai-agent-for-device-control-apps-browsing-and-coding)
+- 2026-11-20: The Decoder reports that Apple's own agent is designed to work across hardware and OS layers. At the same time it adds defensive permission hurdles for competing agents. [Source](https://the-decoder.com/apple-joins-the-race-for-ai-agents-that-control-your-device-while-raising-new-barriers-for-competitors/)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-20: The 4-step macOS authorization procedure for third-party automated device-control tools. [Source](https://the-decoder.com/apple-joins-the-race-for-ai-agents-that-control-your-device-while-raising-new-barriers-for-competitors/)
+
+### Limits and open questions
+
+- Public runtime APIs, exact model weights, and official developer SDKs for Apple's autonomous agent are not released.
+- Chinese search results returned search engine redirect URLs instead of the original pages. Unique mainland Chinese reporting could not be verified.
+- Apple has not officially confirmed whether the agent will run entirely on-device or use Private Cloud Compute for complex multi-step reasoning.
+
+<!-- Retained base: 96c1049d6df8930aad7b6c8b8174e662759aaf3d; article blob: 57f4a2933b65d05f48a1b4747d6dd1747d54cc2d -->

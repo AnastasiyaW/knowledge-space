@@ -68,6 +68,21 @@ than assuming an arbitrary scheduler is compatible. Cache schemes are often
 architecture- and implementation-specific; verify their memory cost,
 invalidation behavior, and output effect on the target pipeline.
 
+## Control the random stream, not just the seed label
+
+For reproducibility-sensitive Diffusers comparisons, use a CPU
+`torch.Generator(device="cpu")` and seed it explicitly. A generator is mutable:
+reusing an already-consumed object advances its random stream. Recreate it with
+the same seed for each controlled comparison, or save and restore its state.
+This does not promise identical images across releases, platforms or numerical
+backends. [Diffusers reproducibility guide](https://huggingface.co/docs/diffusers/using-diffusers/reusing_seeds).
+
+Bind the result to the recorded model/runtime/hardware tuple. When a benchmark
+changes an attention backend, precision, scheduler or step count, compare the
+output as well as speed; a matching integer seed does not isolate those changes.
+Use checkpoint-supported guidance settings, not a universal CFG range copied
+from another model family.
+
 ## Measurement protocol
 
 1. Run a fixed baseline after sufficient warm-up and keep the raw receipt.
@@ -82,6 +97,15 @@ invalidation behavior, and output effect on the target pipeline.
 For a public workflow, publish the compatible version tuple and the benchmark
 fixture, not a generic performance claim. Do not combine percentage savings
 from separate experiments as if they multiply.
+
+## Gotchas
+
+- **Same generator object, different result:** its state was consumed; recreate
+  or restore it for the controlled comparison.
+- **Faster inference is declared equivalent from latency alone:** retain the
+  output and task-fidelity comparison for the exact changed runtime.
+- **Offloading is called an unconditional speed-up:** measure host transfer and
+  steady-state latency separately from the memory-capacity benefit.
 
 ## Related pages
 
