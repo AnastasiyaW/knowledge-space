@@ -95,3 +95,26 @@ As of 2026-04-04, treat the Google Vids documentation link as a lead for investi
 - **Subject:** `project:google-vids`, thread `google-vids-veo-integration`, 0 dated events - → -.
 - **Practical note:** As of 2026-04-04, treat the Google Vids documentation link as a lead for investigating a possible Veo integration; do not rely on it as evidence of a specific product change until the original post and dated documentation are reviewed.
 - **Confidence:** high. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:eb5ef9942eb0689bdd4b7341610d93633f854dd0221a105f7aa7722322734fa9 -->
+## 2026-07-16 — Google Vids adds Gemini Omni and personal avatars
+
+Google says Gemini Omni can create and edit video in Google Vids from instructions, while personal avatars provide a digital presenter option for video creation.
+
+### Usage and practices
+
+- Open Google Vids in a browser, then start a video from a template, an existing document, or a blank canvas. [Source](https://support.google.com/docs/answer/15571761)
+- Add scenes, text, images, Drive media, or screen and camera recordings, then edit the timeline. [Source](https://support.google.com/docs/answer/15571761)
+- Share the video with colleagues for joint editing, or present and export the finished cut under organization settings. [Source](https://support.google.com/docs/answer/15571761)
+- Pick the audience and goal before starting, then use short scenes and a clear script so team review stays simple. [Source](https://support.google.com/docs/answer/15571761)
+
+### Additional evidence
+
+- 2026-07-16: Google describes Gemini Omni as a model that creates and edits video in Google Vids from instructions, and personal avatars as a digital presenter option; check the active announcement for rollout and subscription terms. [Source](https://blog.google/products-and-platforms/products/workspace/gemini-omni-personal-avatars/)
+
+### Limits and open questions
+
+- Open sources do not independently confirm exact availability terms for Gemini Omni and personal avatars across all plans and regions on the reading date.
+- No verified practitioner feedback meeting source and date requirements was found.
+
+<!-- Retained base: e7069886ef3adac67e90fe350947cd43cdb92113; article blob: d24e553f82a37468e8ad9f23215c5779b3534d40 -->
