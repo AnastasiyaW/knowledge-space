@@ -193,3 +193,65 @@ Comfy-Org published ComfyUI v0.42.5 on GitHub. It is a maintenance release in th
 
 
 <!-- Retained base: 11c29423c88576f7a36f6181d0b1721f3eef80c5; article blob: e8f40d3a16e3cc034944e038fe697b76728af963 -->
+
+<!-- live-update:64b41adbbf2e209bebc9958f740cd9ea2c7961301490b4babbbaeb1dc2e95633 -->
+## 2026-11-19 — ComfyUI v0.46.1 published on GitHub
+
+Comfy-Org released ComfyUI v0.46.1, a patch release with stability fixes. It follows v0.46.0, which added partner nodes and removed DirectML support.
+
+### Usage and practices
+
+- Install ComfyUI, or update an existing install with git pull from the official repository or through the desktop launcher. [Source](https://github.com/Comfy-Org/ComfyUI/releases)
+- Put diffusion checkpoint weights and text encoder models in the models directory. [Source](https://github.com/Comfy-Org/ComfyUI/releases)
+- Build a workflow graph from a checkpoint loader, CLIP text encode, KSampler and VAE decode nodes. [Source](https://github.com/Comfy-Org/ComfyUI/releases)
+- Queue the prompt to run generation, and write the images with save image nodes. [Source](https://github.com/Comfy-Org/ComfyUI/releases)
+- Use CUDA or Apple Silicon backends. DirectML acceleration was removed from core releases. [Source](https://github.com/Comfy-Org/ComfyUI/releases)
+- Test custom node packages and dependency updates in a separate staging install, so a bad update does not break node graph execution. [Source](https://github.com/Comfy-Org/ComfyUI/releases)
+
+### Additional evidence
+
+- 2026-11-19: v0.46.1 carries patch-level stability fixes. The v0.46.0 cycle before it added LTX partner nodes, MiniMax H3 Image support, single-channel PNG export and image channel splitting. It also removed DirectML backend support. [Source](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.46.1)
+
+### Subsequent developments
+
+- 2026-11-18: ComfyUI published v0.46.0. It added LTX partner nodes, MiniMax H3 Image integration, channel splitting nodes and single-channel PNG saving in advanced nodes. It also removed DirectML backend support. [Source](https://github.com/Comfy-Org/ComfyUI/releases)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-18: DirectML backend support for Windows hardware acceleration in ComfyUI core. [Source](https://github.com/Comfy-Org/ComfyUI/releases)
+
+### Limits and open questions
+
+- The exact commit diff of v0.46.1 could not be separated from the v0.46.0 release notes.
+- No third-party community discussion of v0.46.1 specifically turned up in searches, apart from generic aggregation.
+
+<!-- Retained base: d1ba02224df643e158ed1088f6b68943915278d1; article blob: 04ee99388b8ac5a55c2576dcf967ea59c1368c51 -->
+
+<!-- live-update:fac61c8da0ab4ebef0b1cac7929d927e9fe979a366bf6cea06f571523ffb8d77 -->
+## 2026-11-20 — ComfyUI v0.46.2 maintenance release fixes memory management and config crashes
+
+ComfyUI v0.46.2 frees memory correctly after a model unload, accepts empty or commented paths in the YAML config, adjusts VAE slicing and adds a partner node.
+
+### Usage and practices
+
+- Clone the repository with Git, or unpack the official portable package into a local folder. [Source](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.46.2)
+- Install the dependencies with pip install -r requirements.txt in the active environment. [Source](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.46.2)
+- Start the backend with python main.py, then open the graph interface in a browser to build and queue node workflows. [Source](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.46.2)
+- Set checkpoint, VAE and LoRA paths in extra\_model\_paths.yaml so environments share one storage location and large model weights are not duplicated. [Source](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.46.2)
+- Update custom nodes and dependencies through ComfyUI Manager so their schemas stay compatible with recent core and partner node releases. [Source](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.46.2)
+
+### Additional evidence
+
+- 2026-11-20: v0.46.2 is a maintenance and backport release. It fixes a memory bug where free\_memory pointed at stale indices after a model unload. Startup no longer crashes when extra\_model\_paths.yaml contains empty lines or comments. SeedVR2 VAE dynamic slicing now follows the available VRAM. Choosing an invalid pixel-space VAE gives a clearer error. The release adds the HeyGen Voice 1.0 Instant Clone text-to-speech node, and the UI asset directory responds faster. [Source](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.46.2)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-20: Earlier versions crashed at startup on blank or comment-only YAML configs in extra\_model\_paths. They also kept stale index references during memory deallocation after a model unload. [Source](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.46.2)
+
+### Limits and open questions
+
+- No community discussion or user reports on how v0.46.2 performs across operating systems were found.
+- Release dates and changelogs for the minor versions just before v0.46.2 were not captured in the two searches run.
+
+
+<!-- Retained base: 920dbb58535f380ce6f504f4bf46e46819eaeaee; article blob: 4fad8c869d812b7ba0fcc24388a7905b84c6f44e -->

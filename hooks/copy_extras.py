@@ -31,6 +31,7 @@ def on_post_build(config, **kwargs):
     extras = [
         "robots.txt",
         "llms.txt",
+        "llms-full.txt",
         "llms-zh.txt",
         "llms-ko.txt",
         "llms-es.txt",

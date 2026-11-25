@@ -110,3 +110,31 @@ Since 2025-05-07, evaluate the MCP server documentation and repository alongside
 - **Subject:** `organization:heygen`, thread `avatar-platform-and-developer-integration`, 2 dated events 2024-07-12 → 2025-05-07.
 - **Practical note:** From 2025-05-07, evaluate the published MCP server documentation and repository alongside the browser app rather than assuming browser-only workflows; capability and production readiness still require separate verification.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:04fb4765f783887ef87441bdd7351fa3c968380865fe1b739feef01fee60bdfe -->
+## 2026-11-18 — HeyGen releases Avatar 6 neural digital twin model
+
+HeyGen Avatar 6 builds a digital twin from approximately 30 seconds of video, reference photos and audio. It renders at 1080p and 2K, plans dynamic gestures from the script, accepts motion prompts, and is available through the API in standard and Turbo inference tiers.
+
+### Usage and practices
+
+- Upload approximately 30 seconds of reference video, high-resolution portrait photos and a clear voice sample to set up the digital twin profile. [Source](https://www.heygen.com/models/heygen-avatar-6)
+- Set the model tier (heygen-avatar-6 or heygen-avatar-6-turbo) and the resolution (1080p or 2K). Add motion_prompt text if you want specific gestures. [Source](https://www.heygen.com/models/heygen-avatar-6)
+- Submit the spoken script or a synchronized audio track through the web studio or the Application/Model API endpoints, with engine.type set to 'heygen-avatar-6', and the final video is rendered. [Source](https://www.heygen.com/models/heygen-avatar-6)
+- Use text motion prompts to set the tone of the gestures, so formal or technical presentations do not get excessive motion. [Source](https://www.heygen.com/models/heygen-avatar-6)
+- Pick Turbo for real-time interactive use or high-volume batch rendering, where latency and cost matter more than the small detail gain of 2K. [Source](https://www.heygen.com/models/heygen-avatar-6)
+
+### Additional evidence
+
+- 2026-11-18: HeyGen shipped the Avatar 6 architecture in two tiers, standard heygen-avatar-6 and heygen-avatar-6-turbo. It adds native 1080p and 2K rendering, an 84.4% score in human side-by-side indistinguishability tests, script-aware motion planning for dynamic hand gestures, and a 1,200-character motion_prompt API parameter for explicit avatar direction. [Source](https://www.heygen.com/models/heygen-avatar-6)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-18: Older avatar generation needed repetitive looped gestures and training datasets that ran to several minutes. That is superseded by enrollment from one short video and photos, with gestures driven by the script. [Source](https://www.heygen.com/models/heygen-avatar-6)
+
+### Limits and open questions
+
+- Secondary technical benchmarks and third-party API documentation could not be fetched and checked independently. Pricing for legacy models and API rate limits for Avatar 6 were not fully disclosed in the initial release overview.
+
+
+<!-- Retained base: 088fe1e532d0e5218dc5dbfa737de9360a91c8a7; article blob: e98409cec575af82fee2ba3982d9e48653d79b80 -->

@@ -15,6 +15,9 @@ python -m mkdocs build --strict
   - the news pipeline's metadata lines: `**Development line:**`, `**Last event:**`,
     `**Events:**`, `**Last researched:**`, `**Freshness check:**`;
   - the `**Scope checked: …**` label.
+- A first paragraph under 110 characters borrows the prose and list items that follow it in the
+  same section. The text is then cut at whole sentences to 155 characters. Project pages open
+  with one short sentence and continue in bullets (SEO audit 2026-11-21).
 - Hub `index.md` pages without prose get "Title: N articles on Section, Section, …".
 - `"` becomes `'`. Templates render without autoescape, and one double quote cut 15
   descriptions short, leaving stray attributes behind.
@@ -38,6 +41,7 @@ python -m mkdocs build --strict
   - It uses `og-<domain>.png` only for domains where `hooks/og_image.py` found that file; every other page uses `og-image.png`.
   - To give a domain its own image, add `docs/assets/og-<domain>.png`.
   - `TechArticle.image` uses the same URL.
+- **llms.txt is the short index, llms-full.txt the listing.** `hooks/generate_llms_txt.py` writes both: llms.txt links each domain hub, the language sites and llms-full.txt (every article with its description, the file `freshness_check.py` counts). The single 360 KB llms.txt was split on 2026-11-21 (SEO audit).
 - **No `hreflang`.** The `llms-*.txt` files are not translations of a page. llms.txt is advertised by the `Link` header in `_headers` and by one `<link rel="alternate" type="text/plain">`.
 
 ## Page weight
