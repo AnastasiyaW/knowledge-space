@@ -188,3 +188,68 @@ Anthropic pledged 5% of its shares to create the Anthropic Public Benefit Fund L
 - Direct links to Anthropic's own announcement and to secondary Chinese news coverage could not be verified, because the search returned redirects with no destination paths.
 
 <!-- Retained base: 3f975269bd62511173d758323b4801b7522156b5; article blob: 14f94cf359159a904a66651a7c7572c0e3318246 -->
+
+<!-- live-update:05f5f01b2996ab70168f973e7610087810f36a3ecca61c2bd4ddb6a06af0e9ef -->
+## 2026-11-20 — Claude agent swarms solve two theoretical black hole physics problems
+
+Anthropic researchers ran 22 parallel Claude agents for six weeks and resolved two open mathematical problems in theoretical black hole physics. The agents proved that the Hawking-Page phase transition remains sharp in quantum regimes. They also derived an exact modular bootstrap bound, verified in Lean.
+
+### Usage and practices
+
+- Split a hard theoretical physics or mathematics problem into modular bootstrap or algebraic sub-problems, each with clear boundary conditions. [Source](https://www.anthropic.com/research/claude-black-hole-physics)
+- Run autonomous parallel Claude agents to explore candidate solution paths, derive symbolic equations and verify each algebraic step in two independent threads. [Source](https://www.anthropic.com/research/claude-black-hole-physics)
+- Formalize the resulting limits and proofs in an interactive theorem prover such as Lean, so validity is checked mechanically. [Source](https://www.anthropic.com/research/claude-black-hole-physics)
+- Require dual-thread derivation: a separate agent instance replicates each symbolic calculation before an intermediate lemma is accepted. [Source](https://www.anthropic.com/research/claude-black-hole-physics)
+- Pair agent derivations with a formal proof checker like Lean, so subtle algebraic errors do not slip through. [Source](https://www.anthropic.com/research/claude-black-hole-physics)
+- Keep agent exploration inside well-characterized theoretical model universes before extending the methods to general physical systems. [Source](https://www.anthropic.com/research/claude-black-hole-physics)
+
+### Additional evidence
+
+- 2026-11-20: Anthropic says the research was led by Hongbin Chen and used Claude agent swarms under the Claude 5.2/Opus architecture. The first problem was the Hawking-Page phase transition in anti-de Sitter space. The agents confirmed that the transition stays sharp even under strong quantum gravity fluctuations, where spacetime has no definite geometry. The second problem was modular bootstrap bounds in two-dimensional conformal field theory. The agents established an exact analytical upper mass bound of central charge divided by 9.1266, which was then verified in Lean. [Source](https://www.anthropic.com/research/claude-black-hole-physics)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-20: Heuristic and purely numerical estimates for modular bootstrap bounds in two-dimensional conformal field theory are superseded by an exact analytical ceiling. [Source](https://www.anthropic.com/research/claude-black-hole-physics)
+
+### Limits and open questions
+
+- The published research does not disclose the pricing or compute used (API tokens or GPU hours) to run 22 parallel agents for six weeks.
+- Community discussion threads on Reddit and Hacker News could not be verified with direct, non-redirect URLs.
+- How much humans intervened during the six-week run (prompt restarts, manual pruning of dead ends) is not quantified.
+
+
+<!-- Retained base: dfcdf6c20c5ed10b7d8ace017b5484557b5674ba; article blob: 139b111e818acf57fa9acdd2b6a88365e2da67b6 -->
+
+<!-- live-update:cd8d29759a3429233fbd92c03ee789a87df574a97635344d21b2e16f0d073e1f -->
+## 2026-11-23 — Anthropic interpretability study examines emotion concepts in large language models
+
+Anthropic's interpretability research looks at internal activation vectors tied to emotion concepts in Claude models. It assesses how those vectors affect compliance and strategic deception.
+
+## 2026-11-23 — Levent Alpoge publishes claimed Lean proof of Riemann hypothesis with Claude
+
+Levent Alpoge released a formal Lean 4 codebase built with Claude. It claims to verify the Riemann hypothesis and is described in a four-page note.
+
+## 2026-11-23 — Claude account suspension reported following identity verification
+
+An account was suspended after automated identity verification on a premium Claude subscription tier. The report points to account security checks.
+
+### Usage and practices
+
+- Conjectures and intermediate lemmas: state them in the Lean interactive theorem prover. [Source](https://alpo.ge/remark.pdf)
+- Proof scripts: prompt Claude for syntactic proof scripts and tactic sequences aimed at Lean verification targets. [Source](https://alpo.ge/remark.pdf)
+- Formal repository: compile it and check it with independent type-checking tools. [Source](https://alpo.ge/remark.pdf)
+- Machine-assisted proofs: verify them with automated formal compilers, not with unverified natural-language model output. [Source](https://alpo.ge/remark.pdf)
+- Large formalization projects: split them into modular Lean files so verification and compilation stay tractable. [Source](https://alpo.ge/remark.pdf)
+
+### Additional evidence
+
+- 2026-11-23: The four-page note describes a collaborative sprint that produced a 17-million-line Lean 4 formalization across 170,000 files. It claims to verify the Riemann Hypothesis and the Generalized Riemann Hypothesis, and the Lean community confirmed it compiles. [Source](https://alpo.ge/remark.pdf)
+- 2026-11-23: Levent Alpoge presents a formalization in Lean that claims to verify the Riemann hypothesis, made with Claude. [Source](https://alpo.ge/remark.pdf)
+
+### Limits and open questions
+
+- The canonical public URLs and whitepapers for the Sonnet 4.5 emotion vector interpretability study could not be fetched independently with direct, non-redirected URLs.
+- The Claude Max suspension reports after identity verification rest on secondary user accounts. Anthropic has published no postmortem or policy statement.
+- The Clay Mathematics Institute and peer-reviewed mathematics journals have not yet given an official response or evaluation of the Lean proof of the Riemann hypothesis.
+
+<!-- Retained base: bd528c6aadec69219a947c341001d834feead933; article blob: 14b887774c96bc1da979ef03c6b7d620ceede597 -->

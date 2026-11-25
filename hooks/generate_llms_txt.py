@@ -1,6 +1,9 @@
 """
-Generate llms.txt and multilingual variants from docs/ articles.
-Reads each article's H1 and first paragraph as description.
+Generate llms.txt (a short index: domains, languages), llms-full.txt (every article with its
+description) and the multilingual variants of the index from docs/ articles.
+
+The single file was 359,515 bytes with 1,396 links (SEO audit 2026-11-21); llmstxt.org expects
+llms.txt to be a concise entry point and the full listing in llms-full.txt, which answered 404.
 
 Usage:
     python hooks/generate_llms_txt.py
@@ -114,8 +117,7 @@ def extract_article_info(path: Path) -> tuple[str, str]:
     return title, desc
 
 
-def generate_llms_txt() -> str:
-    """Generate llms.txt content."""
+def collect_articles() -> dict[str, list[tuple[str, str, str]]]:
     articles_by_domain = {}
 
     # Sort by the POSIX string, not the Path: Windows paths compare case-insensitively, so a
@@ -136,11 +138,13 @@ def generate_llms_txt() -> str:
             domain_articles.append((title, url, desc))
         if domain_articles:
             articles_by_domain[d.name] = domain_articles
+    return articles_by_domain
 
+
+def _header(articles_by_domain: dict[str, list[tuple[str, str, str]]]) -> list[str]:
     total = sum(len(v) for v in articles_by_domain.values())
     domains = len(articles_by_domain)
-
-    lines = [
+    return [
         "# Happyin Knowledge Space",
         "",
         f"> A comprehensive technical knowledge base with {total}+ curated articles across {domains} domains. "
@@ -154,6 +158,31 @@ def generate_llms_txt() -> str:
         AGENT_NOTE,
         "",
     ]
+
+
+# Language builds with their own sitemaps (mkdocs.<lang>.yml); English is the site root.
+LANGUAGE_SITES = {"ru": "Русский", "zh-CN": "中文", "fr": "Français", "de": "Deutsch"}
+
+
+def generate_llms_index(articles_by_domain: dict[str, list[tuple[str, str, str]]]) -> str:
+    """llms.txt: one link per domain hub, the language sites, and the full listing as optional."""
+    lines = _header(articles_by_domain)
+    lines.append("## Domains")
+    for domain in sorted(articles_by_domain.keys()):
+        display_name = DOMAIN_NAMES.get(domain, domain.replace("-", " ").title())
+        lines.append(f"- [{display_name}]({BASE_URL}/{domain}/): {len(articles_by_domain[domain])} articles")
+    lines += ["", "## Languages"]
+    for code, name in LANGUAGE_SITES.items():
+        lines.append(f"- [{name}]({BASE_URL}/{code}/): translated articles, sitemap {BASE_URL}/{code}/sitemap.xml")
+    lines += ["", "## Optional", f"- [Every article with its description]({BASE_URL}/llms-full.txt)", ""]
+    return "\n".join(lines)
+
+
+def generate_llms_txt(articles_by_domain: dict[str, list[tuple[str, str, str]]] | None = None) -> str:
+    """llms-full.txt: every article, grouped by domain."""
+    if articles_by_domain is None:
+        articles_by_domain = collect_articles()
+    lines = _header(articles_by_domain)
 
     for domain in sorted(articles_by_domain.keys()):
         display_name = DOMAIN_NAMES.get(domain, domain.replace("-", " ").title())
@@ -170,15 +199,17 @@ def generate_llms_txt() -> str:
 
 def main():
     dry_run = "--dry-run" in sys.argv
-    content = generate_llms_txt()
+    articles = collect_articles()
+    full = generate_llms_txt(articles)
+    content = generate_llms_index(articles)
 
     if dry_run:
         print(content)
         return
 
-    # Write EN version
+    (DOCS_DIR / "llms-full.txt").write_text(full, encoding="utf-8")
     (DOCS_DIR / "llms.txt").write_text(content, encoding="utf-8")
-    print(f"Generated llms.txt")
+    print("Generated llms.txt and llms-full.txt")
 
     # Write multilingual variants (same content, different header language)
     langs = {
@@ -195,7 +226,7 @@ def main():
         print(f"Generated llms-{lang}.txt")
 
     # Count articles
-    url_count = content.count(f"{BASE_URL}/")
+    url_count = full.count(f"{BASE_URL}/")
     print(f"\nTotal: {url_count} article URLs")
 
 

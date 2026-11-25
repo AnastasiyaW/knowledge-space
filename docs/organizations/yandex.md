@@ -99,3 +99,33 @@ Treat Shedevrum’s site and mobile listings dated 2023-04-05 as Yandex public-p
 - **Subject:** `organization:yandex`, thread `yandex-ai-products`, 1 dated events 2023-04-05 → 2023-04-05.
 - **Practical note:** Treat Shedevrum’s site and mobile listings dated 2023-04-05 as Yandex public-product touchpoints. Verify current availability and capabilities separately.
 - **Confidence:** medium. The dated items under “Superseded by this” determine what is obsolete.
+
+<!-- live-update:5d264264a8f871607864b777556369a479ec84202171388fc80250dbc91f0f9e -->
+## 2026-11-19 — Yandex suspends turnkey data-labeling service on Yandex Tasks for external clients
+
+Yandex suspended full-service turnkey data annotation on Yandex Tasks for external commercial clients. The resources go to internal AI development. External clients keep self-service access, where they manage tasks and workers themselves.
+
+### Usage and practices
+
+- Create a commercial customer account on the Yandex Tasks platform to get the self-service data labeling tools. [Source](https://habr.com/ru/articles/1109730/)
+- Set up task templates, annotation guidelines and acceptance rules in the self-service interface, with no vendor help. [Source](https://habr.com/ru/articles/1109730/)
+- Assign tasks to independent freelance crowd workers, then validate their work and pay them directly. [Source](https://habr.com/ru/articles/1109730/)
+- Add automated honeypots and consensus-based validation rules to your own task templates. They replace the vendor quality assurance that was discontinued. [Source](https://habr.com/ru/articles/1109730/)
+- Pre-label with synthetic data and validate with targeted human-in-the-loop checks, so you rely less on external crowd annotation capacity. [Source](https://habr.com/ru/articles/1109730/)
+
+### Additional evidence
+
+- 2026-11-19: Turnkey managed labeling, with vendor-run quality control, project design and validation, was halted for external clients. The infrastructure goes to internal foundation models. This directly affects external AI units, including MTS MWS AI and VisionLabs. Yandex maintained that external clients can still use the Yandex Tasks platform in a self-service model, managing freelance annotators directly without an agency in between. It also stated that overall data-labeling operations continue expanding internally. [Source](https://habr.com/ru/articles/1109730/)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-19: External commercial clients could order turnkey managed data labeling on Yandex Tasks, with vendor project management and guaranteed quality control. [Source](https://habr.com/ru/articles/1109730/)
+
+### Limits and open questions
+
+- Yandex did not disclose when turnkey labeling for external clients might resume.
+- The impact on external machine learning teams beyond MTS MWS AI and VisionLabs is not quantified.
+- Direct unredirected URLs for secondary coverage on spark.ru, sostav.ru and mozgi.io could not be verified, so they are excluded from sources.
+
+
+<!-- Retained base: 761e66767ffd15a9dfe1ea242121d31ccdf7343c; article blob: c61ded0fa5205059ef44d1779be80cfd05f9a084 -->
