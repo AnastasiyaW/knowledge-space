@@ -78,3 +78,28 @@ Quantum circuits used to be composed by hand by experts and compiled with unveri
 - **Subject:** organization:deepmind, thread multi-agent-ai-safety-research, 1 dated events 2026-11-23 → 2026-11-23.
 - **Practical note:** See the sourced usage and practice sections above, including their limits.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:370562b6d90b04099ee49dbfc52d54ea3a9f3c393c70178744efe8051fd2c98b -->
+## 2026-07-16 — Google DeepMind and Isomorphic Labs detail a bioresilience program for AI models
+
+Google DeepMind and Isomorphic Labs detail a bioresilience program for AI models. It aims to prevent biological misuse and helps trusted partners detect outbreaks and research medical countermeasures.
+
+### Usage and practices
+
+- Join as a trusted partner if eligible: access is collaborative, not open self-service. [Source](https://deepmind.google/blog/our-approach-to-bioresilience/)
+- Scope collaborations to the three stated operational areas: prevention, outbreak detection or response. [Source](https://storage.googleapis.com/deepmind-media/DeepMind.com/Blog/our-approach-to-bioresilience/isomorphic-labs-our-approach-to-bioresilience.pdf)
+- In prevention work, run threat modelling, capability evaluation, mitigations and monitoring before using models in sensitive biological contexts. [Source](https://storage.googleapis.com/deepmind-media/DeepMind.com/Blog/our-approach-to-bioresilience/isomorphic-labs-our-approach-to-bioresilience.pdf)
+- Use expert red-teaming and other evaluation methods to check whether a model materially reduces a threat actor’s biological bottlenecks. [Source](https://storage.googleapis.com/deepmind-media/DeepMind.com/Blog/our-approach-to-bioresilience/isomorphic-labs-our-approach-to-bioresilience.pdf)
+- Combine model refusals with activity detection, targeted log analysis, security infrastructure and privacy controls. Do not rely on one safeguard alone. [Source](https://storage.googleapis.com/deepmind-media/DeepMind.com/Blog/our-approach-to-bioresilience/isomorphic-labs-our-approach-to-bioresilience.pdf)
+- Treat novel-sequence screening as an open technical problem. Similarity to known pathogens alone may be inadequate when AI can design functionally similar sequences. [Source](https://storage.googleapis.com/deepmind-media/DeepMind.com/Blog/our-approach-to-bioresilience/isomorphic-labs-our-approach-to-bioresilience.pdf)
+
+### Additional evidence
+
+- 2026-07-16: The update sets out three pillars: preventing misuse, detecting outbreaks and responding with countermeasures. It reports more than 15 partnerships in the preceding 12 months, describes Gemini’s four-part safety process, and identifies targeted access to Co-Scientist for leading scientists. AlphaFold has been cited in more than 10,000 infectious-disease publications, and Isomorphic Labs created a focused unit for rapid countermeasure design. [Source](https://storage.googleapis.com/deepmind-media/DeepMind.com/Blog/our-approach-to-bioresilience/isomorphic-labs-our-approach-to-bioresilience.pdf)
+
+### Limits and open questions
+
+- The topic relates to multi-agent AI safety research, but the dated material covers a bioresilience program. Available sources do not establish a separate public multi-agent product or framework with that name.
+- We found no practitioner discussion on an identifiable public community page. Citing vendor material as user experience would overstate it.
+
+<!-- Retained base: bbe0763fcf1dd6e59a6e9a28158fb80456ca6175; article blob: 2e1b5fa25c7025173b6c52968a4aedcd65f32afc -->

@@ -92,3 +92,32 @@ Tesla introduced Reality View in Full Self-Driving (FSD) v15. It uses end-to-end
 
 
 <!-- Retained base: 220fcf56fb877799e9f79a6a0605e627689377dc; article blob: dd97f1f24750e3787687fe431b40393e09c34ef1 -->
+
+<!-- live-update:32d6f43db93af21fe905ed83c915200ad51e343c947ac14a19cfe9317fdde897 -->
+## 2026-11-22 — Tesla introduces Reality View third-person driving visualization in FSD v15
+
+Tesla Reality View is a real-time third-person view of the car and its surroundings in Full Self-Driving (Supervised) v15 on AI4 vehicles. An on-device neural world model generates it.
+
+### Usage and practices
+
+- Run Full Self-Driving (Supervised) v15 on a Tesla with AI4. [Source](https://x.com/Tesla/status/2124222447855743019)
+- Turn on Reality View in the driving visualization settings on the center console. [Source](https://x.com/Tesla/status/2124222447855743019)
+- Switch between full-screen visualization, split-screen map navigation and Quiet Mode while driving. [Source](https://x.com/Tesla/status/2124222447855743019)
+- Keep watching the real road, not the virtual view, because FSD v15 is still a Level 2 supervised system. [Source](https://x.com/Tesla/status/2124222447855743019)
+- Read the third-person path projection on the center display to see what the car intends before lane changes and intersections. [Source](https://x.com/Tesla/status/2124222447855743019)
+
+### Additional evidence
+
+- 2026-11-22: Tesla Reality View is part of Full Self-Driving (Supervised) v15. On-device diffusion and world models on AI4 hardware render a continuous third-person driving view. [Source](https://x.com/Tesla/status/2124222447855743019)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-22: Traditional vector bounding boxes and 2D heuristic occupancy representations for driving visualization. [Source](https://x.com/Tesla/status/2124222447855743019)
+
+### Limits and open questions
+
+- The topic identifier 'tesla-optimus-worker-resistance' does not match the reviewed event or the official announcement. Both are only about Tesla FSD Supervised v15 Reality View. No verified worker resistance events were found for this ref.
+- Exact canonical URLs for secondary media coverage could not be fetched without risk of a 404, because searches returned only transient redirect identifiers.
+
+
+<!-- Retained base: 334a38d410834ee22372638afd4e803b614ae2b4; article blob: 8db8e0891d82f3ff14b5068f993405acec534b83 -->
