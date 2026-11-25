@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1441+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1442+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -854,6 +854,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Freepik — Seedance 2.0 integrations](https://happyin.space/projects/freepik-seedance/): Freepik, now Magnific, is a browser creative suite for creators who need Seedance alongside other video-model providers in one AI Video Generator. — Text, image, video, and audio references. — Came...
 - [FreeToken](https://happyin.space/projects/freetoken/): FreeToken is an open-source inference server for running large Mixture-of-Experts models on consumer PCs as an alternative to vLLM and SGLang.
 - [Gabi](https://happyin.space/projects/gabi-robot/): Gabi — Unitree G1 высотой 1,32 м, которому 6 мая 2026 года дали дхармическое имя и приняли пять адаптированных обетов мирянина; его функции в проекте — жесты, ходьба и участие в публичных буддийски...
+- [GAE (Geometry-Native Autoencoder)](https://happyin.space/projects/gae-geometric-autoencoder/): GAE (Geometry-Native Autoencoder) is a 3D world generation model from HKUST and Tencent ARC Lab.
 - [GalaxyAce LoRA](https://happyin.space/projects/galaxyace-lora/): GalaxyAce LoRA — это отдельные style-LoRA для автора фото и видео, которому нужна съёмка с признаками недорогой Android-камеры начала 2010-х. — цветопередача, экспозиция и мягкость объектива; — для...
 - [Gaussian Light Transport](https://happyin.space/projects/gaussian-light-transport/): Gaussian Light Transport is a view-independent global illumination method for graphics engines and offline renderers. It stores scene radiance as a mixture of multidimensional Gaussians instead of ...
 - [GaussianGPT](https://happyin.space/projects/gaussiangpt/): GaussianGPT is a transformer that generates 3D Gaussian Splatting scenes autoregressively, token by token, instead of with diffusion or flow matching.
