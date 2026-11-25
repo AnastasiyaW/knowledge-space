@@ -81,3 +81,37 @@ The first goal was few-step distillation of MiniMax H3, to remove the delay of i
 - **Subject:** project:pi-h3, thread pi-h3-acceleration, 3 dated events 2026-11-22 → 2026-11-22.
 - **Practical note:** See the usage and best-practice sections above, including their limits.
 - **Confidence:** high. The dated "Superseded by this" entries are the authority for what is obsolete.
+
+<!-- live-update:165fba503e7739d4c772b7d0d72a0b0fa9eeadccbd7918858f9a0d133a80d956 -->
+## 2026-11-23 — Lakonik releases open pi-H3 distilled video model
+
+Lakonik published pi-H3, an open project that distills MiniMax H3 into a fast 768p video generator. It samples in 2 to 4 steps. Its Decoding Without a Decoder \(DWD\) skips video VAE decoding by predicting pixels directly at the final step. The release ships adapter weights on Hugging Face, code in LakonLab, custom nodes in ComfyUI-piFlow, and an interactive Hugging Face Space demo.
+
+### Usage and practices
+
+- Install the custom nodes by cloning ComfyUI-piFlow into the ComfyUI custom\_nodes directory, or through ComfyUI-Manager. It needs ComfyUI v0.45.0 or later. [Source](https://github.com/Lakonik/ComfyUI-piFlow)
+- Download the pi-H3 distilled adapters from Hugging Face, for example the 2-step or 4-step DWD checkpoints with int8\_convrot. Put them in the ComfyUI models directory next to the base MiniMax H3 weights. [Source](https://huggingface.co/Lakonik/pi-H3)
+- Load a bundled workflow template from ComfyUI-piFlow/workflows/ onto the canvas, such as pi-H3.json or pi-H3-DWD.json. [Source](https://github.com/Lakonik/ComfyUI-piFlow)
+- Set the text prompt, the resolution (up to 768p) and, if needed, a first or last frame image. Then sample at 2 to 4 steps to get video with synchronized audio. [Source](https://huggingface.co/Lakonik/pi-H3)
+- To try the model without a local setup, use the official Hugging Face Space. [Source](https://huggingface.co/spaces/Lakonik/pi-H3)
+- Pick the DWD \(Decoding Without a Decoder\) checkpoint when speed matters most, since it removes the video VAE decoding step. [Source](https://huggingface.co/Lakonik/pi-H3)
+- Pick the int8\_convrot adapters in ComfyUI to use less memory while keeping 768p fidelity. [Source](https://huggingface.co/Lakonik/pi-H3)
+- Update ComfyUI to v0.45.0 or higher before running the ComfyUI-piFlow workflows, so the custom nodes do not break. [Source](https://github.com/Lakonik/ComfyUI-piFlow)
+- Use 2-step sampling for quick prototypes and draft reviews. Switch to 4-step when you need better motion coherence and temporal detail. [Source](https://huggingface.co/Lakonik/pi-H3)
+
+### Additional evidence
+
+- 2026-11-23: The release adds Decoding Without a Decoder \(DWD\), which predicts pixels directly at the final step. It provides 2-step and 4-step adapters with int8\_convrot quantization, and keeps standard MiniMax H3 conditioning for synchronized stereo audio. [Source](https://huggingface.co/Lakonik/pi-H3)
+- 2026-11-23: The ComfyUI-piFlow node suite packages the official workflows, including pi-H3.json and pi-H3-DWD.json. Running the 2-step and 4-step pipelines requires ComfyUI v0.45.0 or higher. [Source](https://github.com/Lakonik/ComfyUI-piFlow)
+- 2026-11-23: LakonLab holds the few-step flow-matching distillation code. It was developed by researchers from Stanford University and Luma AI using the pi-Flow v2 method. [Source](https://github.com/Lakonik/LakonLab)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-23: Running MiniMax H3 required full multi-step diffusion sampling and a heavy video VAE decode after generation. [Source](https://huggingface.co/Lakonik/pi-H3)
+
+### Limits and open questions
+
+- No third-party benchmarks or community discussion are linked, because no direct URLs could be verified.
+- The repository documentation does not give the training compute budget or the dataset used for the MiniMax H3 distillation.
+
+<!-- Retained base: bd528c6aadec69219a947c341001d834feead933; article blob: aca1af4815abb806d55aff017b88753218e40b30 -->
