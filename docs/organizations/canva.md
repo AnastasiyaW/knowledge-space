@@ -71,3 +71,33 @@ As of 2026-03-13, practitioners tracking Canva should evaluate Magic Layers as a
 - **Subject:** `organization:canva`, thread `magic-layers`, 1 dated events 2026-03-13 → 2026-03-13.
 - **Practical note:** As of 2026-03-13, practitioners tracking Canva should evaluate Magic Layers as a current Canva product-development line and consult the official newsroom item for its confirmed capabilities before changing workflows.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:24f0c076b2bae4d11e077cf242bdac763a12c994cda289e2a4267b34690d19d6 -->
+## 2026-10-22 — Canva releases Dream Lab and first in-house image generation model Craft
+
+Canva rolled out Dream Lab across its platform. It runs on technology from Leonardo.ai and on Craft, Canva's own foundation model tuned for template layouts and 2K rendering.
+
+### Usage and practices
+
+- Open a project in the Canva editor and pick Dream Lab from the side panel tools. [Source](https://techcrunch.com/2026/10/22/canva-releases-its-first-image-generation-model/)
+- Write a prompt that describes the subject, the composition and the visual style. [Source](https://techcrunch.com/2026/10/22/canva-releases-its-first-image-generation-model/)
+- Optionally, upload a style reference image or apply an aesthetic preset to steer the output. [Source](https://techcrunch.com/2026/10/22/canva-releases-its-first-image-generation-model/)
+- Generate candidates and place the chosen image on the canvas as an editable layout element. [Source](https://techcrunch.com/2026/10/22/canva-releases-its-first-image-generation-model/)
+- Add reference images to the text prompt to pin down brand palettes and layout structure. [Source](https://techcrunch.com/2026/10/22/canva-releases-its-first-image-generation-model/)
+- Use the template-trained native models for structured commercial layouts, where spatial hierarchy and text placement matter more than photorealistic stock photos. [Source](https://techcrunch.com/2026/10/22/canva-releases-its-first-image-generation-model/)
+
+### Additional evidence
+
+- 2026-10-22: Dream Lab is built on Leonardo.ai technology, which Canva acquired, and on its in-house foundation model Craft. Generation runs in two stages: a spatial planning pass, then a 2K render pass trained on template layouts. [Source](https://techcrunch.com/2026/10/22/canva-releases-its-first-image-generation-model/)
+
+### Superseded guidance (retained for history)
+
+- 2026-10-22: Relying on external third-party image generation APIs that lack native template spatial hierarchy and multi-layer canvas integration. [Source](https://techcrunch.com/2026/10/22/canva-releases-its-first-image-generation-model/)
+
+### Limits and open questions
+
+- The available public report did not give pricing tiers or credit use per generation with Craft, compared with the older third-party generators.
+- Rollout schedules for Leonardo.ai fine-tuning controls in enterprise brand kits are unverified without first-party documentation.
+- Search results for technical publications (aiweekly.co, superpowerdaily.com) and Chinese design aggregators (molypix.ai, unite.ai) came back as redirect URLs with no stable deep links, so they are not cited.
+
+<!-- Retained base: dfb3de9ab54eb4b0ebd0dce739bcda6b6bd59c78; article blob: 39e8abda0d9d432bf3a121ac5346b384cb13fd5a -->

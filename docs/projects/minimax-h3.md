@@ -112,3 +112,64 @@ MiniMax H3 Semantic Bridge is a ComfyUI conditioning adapter for the standard Mi
 - We did not download or run the package. Runtime compatibility, artifact integrity beyond the named revision, license interpretation, and practical video gains remain unverified.
 
 <!-- Retained base: 10a35259638c923851e915e3b979bbd355ddaf2b; article blob: 3d4f380ad8d34d47f874ef8a5bfdcd7a04126e47 -->
+
+<!-- live-update:71f37afc1afa7b9771cd1a16db8d14948463f58af1f1b5584133448d4f1ef68b -->
+## 2026-11-18 — MiniMax H3 community tools add face-swap, sampling, and node optimizations
+
+Community releases for MiniMax H3 add a four-stage ComfyUI face-swap pipeline, Spectrum v0.2.30 integration, DenoMix tiled-sampler workflows and FastDerope rotary embedding patches.
+
+### Usage and practices
+
+- Clone the four-stage face-swap pipeline and install it as a custom node in the ComfyUI custom\_nodes directory. [Source](https://github.com/neohh/minimax-h3-faceswap-pipeline)
+- Install ComfyUI-Spectrum-MiniMax-H3 to get the spectrum schedule nodes and calibrate the attention layers. [Source](https://github.com/xmarre/ComfyUI-Spectrum-MiniMax-H3)
+- Load the DenoMix tiled-sampler workflow and checkpoints for high-resolution latent upscaling. [Source](https://hf.co/Deno2026/MiniMax-H3-DenoMix)
+- Apply the FastDerope node patch to the rotary positional embedding layer. It speeds up attention processing during frame generation. [Source](https://github.com/tazmannner/ComfyUI-H3-FastDerope)
+- Run subject tracking and facial mask generation as a first pass, before the latent composite replacement, so the boundary stays stable. [Source](https://github.com/neohh/minimax-h3-faceswap-pipeline)
+- In DenoMix, keep the overlap margins between tiles consistent on high-resolution video frames, so tile boundaries do not show breaks. [Source](https://hf.co/Deno2026/MiniMax-H3-DenoMix)
+- In FastDerope, check that the rotary embedding dimension parameters match the exact MiniMax H3 model variant, so attention does not diverge. [Source](https://github.com/tazmannner/ComfyUI-H3-FastDerope)
+
+### Additional evidence
+
+- 2026-11-18: The four-stage face-swap repository splits replacement into segmentation masking, reference feature extraction, latent blending and composite post-refinement. [Source](https://github.com/neohh/minimax-h3-faceswap-pipeline)
+- 2026-11-18: ComfyUI-Spectrum-MiniMax-H3 v0.2.30 adds adaptive noise scheduling and parameter sweeping, calibrated for MiniMax H3 attention maps. [Source](https://github.com/xmarre/ComfyUI-Spectrum-MiniMax-H3)
+- 2026-11-18: The DenoMix release ships tiled-sampler workflows built to remove seam artifacts in high-resolution latent diffusion passes. [Source](https://hf.co/Deno2026/MiniMax-H3-DenoMix)
+- 2026-11-18: The ComfyUI-H3-FastDerope node patches rotary positional embeddings to speed up inference and fix sequence distortion at extended frame counts. [Source](https://github.com/tazmannner/ComfyUI-H3-FastDerope)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-18: Unpatched rotary embedding implementations and un-tiled latent sampling, which caused frame seams and positional drift in long sequences. [Source](https://github.com/tazmannner/ComfyUI-H3-FastDerope)
+
+### Limits and open questions
+
+- Benchmarks for the Turbo multi-GPU execution and the audio retake studio could not be verified from the primary repository documentation.
+- Direct links to community discussions on Reddit and forums could not be verified.
+
+<!-- Retained base: 2b6b5eee14d533d859230f73d69fabb93305e572; article blob: c1148c23f3104a2f6a1590eda5a318d2fd4c8c8b -->
+
+<!-- live-update:4946e4366fd8dc73bb2e2865c7f67c91751e9bd6735b3f9a57834850637995ac -->
+## 2026-11-21 — MiniMax-H3 ref2va pruned INT8 checkpoint released
+
+Comfy-Org published the pruned INT8 convrot ref2va diffusion model for MiniMax-H3. It generates synchronized video and stereo audio.
+
+### Usage and practices
+
+- Download minimax\_h3\_ref2va\_pruned\_int8\_convrot.safetensors from the Comfy-Org/MiniMax-H3 repository into the ComfyUI models/diffusion\_models directory. [Source](https://huggingface.co/Comfy-Org/MiniMax-H3/blob/main/diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors)
+- Put the MiniMax-H3 text encoder and the dual video and audio VAE checkpoints into their own ComfyUI model directories. [Source](https://huggingface.co/Comfy-Org/MiniMax-H3)
+- In ComfyUI, import the reference-to-video workflow JSON, connect the ref2va diffusion loader node, set the sampler steps and resolution, then queue the generation. [Source](https://huggingface.co/Comfy-Org/MiniMax-H3)
+- Use the pruned INT8 convrot variant to keep the diffusion model's memory footprint workable on consumer GPUs. The audio stays synchronized. [Source](https://huggingface.co/Comfy-Org/MiniMax-H3/blob/main/diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors)
+- Map both the video VAE node and the stereo audio VAE node in the ComfyUI pipeline, so the output does not come out silent or corrupted. [Source](https://huggingface.co/Comfy-Org/MiniMax-H3)
+
+### Additional evidence
+
+- 2026-11-21: The Comfy-Org MiniMax-H3 repository holds the exact ref2va checkpoint, minimax\_h3\_ref2va\_pruned\_int8\_convrot.safetensors, under diffusion\_models. It uses pruned INT8 convolution-rotation quantization and is packaged for synchronized reference-to-video-audio generation. [Source](https://huggingface.co/Comfy-Org/MiniMax-H3/blob/main/diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-21: Direct reference-to-video generation needed full-precision weights until the pruned INT8 convolution-rotation checkpoints became available. [Source](https://huggingface.co/Comfy-Org/MiniMax-H3/blob/main/diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors)
+
+### Limits and open questions
+
+- The upstream primary training repository and the complete training logs from MiniMax/Hailuo remain proprietary. Open weights and quantization wrappers are mainly maintained and repackaged by Comfy-Org and community repositories on Hugging Face.
+
+
+<!-- Retained base: 220fcf56fb877799e9f79a6a0605e627689377dc; article blob: 788ff9bfb1a78451e5b5c9ba0f2b627eb87d5e88 -->

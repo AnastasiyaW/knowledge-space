@@ -51,7 +51,6 @@ SynthID-Bypass is a community ComfyUI workflow for authorized robustness tests o
 ## Still unknown
 
 - No immutable Git revision, release tag, or dated primary note was found for 2026-03-13. Current main-branch contents cannot prove the exact state on that day.
-- The supplied https://hf.ru/linkd4c82 short link could not be safely resolved, so it is not evidence here.
 - No independent test discloses detector version, input source, resolution, before/after artifacts, and reproducible settings. Available repository and secondary examples do not establish a bypass rate.
 - The Simplified-Chinese source produced a secondary synopsis with only a relative publication label. No first-party Chinese material or independently reproducible Chinese test was found.
 

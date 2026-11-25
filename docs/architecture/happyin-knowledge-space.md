@@ -16,7 +16,7 @@ tags: [knowledge-base, llm-agents, mkdocs, cloudflare-pages, project-history]
 | Source format | Markdown rendered by MkDocs Material |
 | Deployment path | GitHub Actions builds, then deploys to Cloudflare Pages with Wrangler |
 | Baseline deployment audited before this release | [`a99e8c6`](https://github.com/AnastasiyaW/knowledge-space/commit/a99e8c6), 2026-06-19 |
-| Observed service state | `https://happyin.space/` returned HTTP 200 on 2026-08-21 |
+| Historical service observation | `https://happyin.space/` returned HTTP 200 on 2026-08-21; this is not a claim about a later deployment |
 
 Happyin Knowledge Space is a public technical reference. Markdown in Git is the
 content source and historical record; the static site is its rendered delivery
@@ -26,7 +26,7 @@ workflow and live-page checks.
 
 ## Content and Navigation Model
 
-The build-time registry in `hooks/stats.py` defines 26 accepted content
+The build-time registry in `hooks/stats.py` defines 28 accepted content
 domains. It recursively counts Markdown below those domain directories while
 excluding each `index.md`; tags remain free-form discovery metadata.
 
@@ -86,14 +86,31 @@ These are Git-backed milestones, not a reconstructed marketing timeline. A
 commit proves the repository state it contains; it does not by itself prove a
 later live-site state.
 
+## Current Public-Surface Snapshot (2026-10-10)
+
+| Boundary | Current, source-backed status | Proof boundary |
+|---|---|---|
+| Content registry | The current `hooks/stats.py` registry counts **1,321 articles across 28 domains**. This is the build-time article count: it excludes domain `index.md` files and must not be substituted with a Markdown-file total. | Current source snapshot; a future deployment can contain a different revision. |
+| Public site | [happyin.space](https://happyin.space/) remains the configured public delivery URL. Qualifying pushes to `master` trigger the strict build and Cloudflare Pages deployment; the workflow also supports manual dispatch. | Configuration and workflow source prove the intended publication path, not a particular live response. |
+| Public MCP | [`io.github.AnastasiyaW/diffusion-love-knowledge` v0.1.0](https://registry.modelcontextprotocol.io/v0.1/servers/io.github.AnastasiyaW%2Fdiffusion-love-knowledge/versions/0.1.0) is active in the official MCP Registry; its public endpoint is [https://diffusion.love/mcp](https://diffusion.love/mcp). The registry record was published at `2026-10-10T11:01:27.866718Z`. | The registry record establishes public discovery/status at readback; endpoint behaviour requires its own protocol check. |
+| Search and research-date work | **As checked on 2026-10-10**, PR [#564](https://github.com/AnastasiyaW/knowledge-space/pull/564) contained public search and per-article research-date support that had not yet been deployed. This is a dated deployment observation, not a permanent status. | PR source and deployment readback at the check time; no later deployment claim is inferred. |
+
+The 851-article milestone and news-feed schema 1.3 release remain dated historical
+records. They are intentionally not rewritten to match this current snapshot.
+
 ## Separate News Data Repository: Boundary
 
 [`AnastasiyaW/diffusion-love-news`](https://github.com/AnastasiyaW/diffusion-love-news)
-is a separate public repository. Its published `main` branch now contains a
-[version 1.3 JSON feed](https://raw.githubusercontent.com/AnastasiyaW/diffusion-love-news/main/news/_meta.json)
-with 329 canonical items and 264 derived project records. The release at
+is a separate public repository. On 2026-10-10, `main` resolved to
+[`4f631f2`](https://github.com/AnastasiyaW/diffusion-love-news/commit/4f631f2b0fe8ba4ed105bb19bf0beca523da416a).
+Its commit-pinned [feed metadata](https://raw.githubusercontent.com/AnastasiyaW/diffusion-love-news/4f631f2b0fe8ba4ed105bb19bf0beca523da416a/news/_meta.json)
+declares schema **1.4**, **917 items**, **794 projects**, and **5 organizations**;
+the generation timestamp is `2026-09-12T11:16:33Z`. The observation date is not
+the generation date and does not prove that every consumer serves that revision.
+
+The earlier schema 1.3 release at
 [`730f7cf`](https://github.com/AnastasiyaW/diffusion-love-news/commit/730f7cf5a47a52e6d0ba75c90dceab15ce6e3b95)
-adds evidence-bearing lifecycle events and claims, explicit domain references,
+added evidence-bearing lifecycle events and claims, explicit domain references,
 deterministic project timelines, and schema/build checks.
 
 [`AnastasiyaW/diffusion-love-web`](https://github.com/AnastasiyaW/diffusion-love-web)
@@ -103,11 +120,11 @@ validates feed versions 1.2 and 1.3, resolves producer `main` to one full commit
 SHA per browser bootstrap, and renders project passports at
 `/project/{family_slug}`. That immutable commit proves the consumer source;
 this article does not infer a current deployment or traffic state from source
-history. Inspect [the portal](https://app.diffusion.love/) separately when live
+history. Inspect [the reader portal](https://diffusion.love/) separately when live
 deployment evidence is required.
 
 No tracked file in `knowledge-space` consumes the JSON feed. The open data
-contract, Access-protected portal, and this public technical reference remain
+contract, news portal, and this public technical reference remain
 separate delivery surfaces joined by explicit repository and project IDs.
 
 ## Evidence Rules
@@ -144,8 +161,8 @@ has completed that workflow.
 - **Equating a successful content validation job with deployment:** those are
   separate workflows. **Fix:** inspect the Cloudflare deployment run for the
   relevant commit.
-- **Treating the D1 binding as a project-history backend:** it only declares a
-  subscriber database binding. **Fix:** require implemented handlers and
+- **Treating the D1 binding as a project-history backend:** a binding declaration
+  alone does not establish that API. **Fix:** require implemented handlers and
   consumer tests before documenting an API.
 - **Assuming a branch-addressed CDN updates atomically:** jsDelivr may continue
   serving the previous compatible feed after `main` changes. **Fix:** verify the

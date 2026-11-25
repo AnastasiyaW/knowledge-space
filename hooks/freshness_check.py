@@ -117,9 +117,10 @@ def check_wiki_links() -> list[str]:
 def check_llms_txt() -> list[str]:
     """Check if llms.txt article count matches actual count."""
     errors = []
-    llms_path = DOCS_DIR / "llms.txt"
+    # The full listing carries one URL per article; llms.txt itself is the short index.
+    llms_path = DOCS_DIR / "llms-full.txt"
     if not llms_path.exists():
-        errors.append("  MISSING: docs/llms.txt not found")
+        errors.append("  MISSING: docs/llms-full.txt not found")
         return errors
 
     content = llms_path.read_text(encoding="utf-8")

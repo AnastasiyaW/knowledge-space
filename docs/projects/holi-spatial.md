@@ -69,7 +69,6 @@ From 2026-03-10, practitioners should use the linked project page, repository, a
 
 ## Still unknown
 
-- https://hf.ru/linkd4c82 failed to open during verification; its destination URL, date, and contents are unconfirmed and unused.
 - The March/April dates on the Hugging Face organization page are last-update dates rather than confirmed initial release dates: commit history pages were unavailable.
 - The project page still lists data and benchmark as 'coming soon', while the README and Hugging Face show available artifacts. Whether this note refers to the full Holi-Spatial-4M or is simply outdated remains unclear.
 - The checkpoint lacks a model card and a hosted inference provider; the exact prompt template, supported inputs, and recommended runtime remain unconfirmed.

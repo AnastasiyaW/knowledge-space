@@ -1,0 +1,23 @@
+{#- End-of-article navigation for readers: the domain this article belongs to and its
+    neighbours in the same domain. Only on article pages inside a domain section. -#}
+{%- set ui = config.extra.ui | default({}, true) -%}
+{%- if page and not page.is_homepage and not page.is_index and page.parent -%}
+  {%- set domain_index = (page.parent.children | selectattr('is_index') | list | first) if page.parent.children else none -%}
+  {%- set prev = page.previous_page if page.previous_page and page.previous_page.parent == page.parent and not page.previous_page.is_index else none -%}
+  {%- set next = page.next_page if page.next_page and page.next_page.parent == page.parent and not page.next_page.is_index else none -%}
+  {%- if domain_index or prev or next %}
+<nav class="ks-article-nav" aria-label="{{ ui.get('article_nav_aria', 'More in this domain') }}">
+  {%- if domain_index %}
+  <a class="ks-article-nav__domain" href="{{ domain_index.url | url }}">{{ ui.get('article_nav_all', 'All articles in') }} {{ page.parent.title }}</a>
+  {%- endif %}
+  <div class="ks-article-nav__pair">
+    {%- if prev %}
+    <a class="ks-article-nav__link ks-article-nav__link--prev" href="{{ prev.url | url }}" rel="prev"><span class="ks-article-nav__hint">{{ ui.get('article_nav_prev', 'Previous') }}</span>{{ prev.title }}</a>
+    {%- endif %}
+    {%- if next %}
+    <a class="ks-article-nav__link ks-article-nav__link--next" href="{{ next.url | url }}" rel="next"><span class="ks-article-nav__hint">{{ ui.get('article_nav_next', 'Next') }}</span>{{ next.title }}</a>
+    {%- endif %}
+  </div>
+</nav>
+  {%- endif -%}
+{%- endif -%}

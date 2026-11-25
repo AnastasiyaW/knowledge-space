@@ -57,7 +57,6 @@ As of 2026-03-18, we use the linked GitHub repository as the primary project sou
 
 ## Still unknown
 
-- The linked hf.ru URL returned an error during verification, so we do not treat it as an official model-weight release.
 - The repository documents code, data preparation, and inference, but does not identify a downloadable ViFeEdit checkpoint or a supported production deployment target.
 - No post-2026-03-18 first-party release note exists in the sources used here.
 

@@ -57,7 +57,6 @@ As of 2026-03-14, use the ShotVerse website and GitHub repository as the startin
 - We found no primary archival proof that the current site or repository existed on 2026-03-14.
 - We found no independent reproducible run, model license, checkpoints, public dataset, or verified user practices.
 - Chinese search queries returned aggregator summaries rather than primary documentation or practical reports.
-- The short link https://hf.ru/linkd4c82 did not resolve during verification, so we did not use it as a source.
 
 ## Sources
 
