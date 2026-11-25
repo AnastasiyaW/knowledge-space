@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1458+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1459+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -802,6 +802,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Cream Typer](https://happyin.space/projects/cream-typer/): Cream Typer is an MIT-licensed macOS menu-bar app that dictates speech with local whisper.cpp transcription and pastes the text at the cursor.
 - [Cursor — Product development](https://happyin.space/projects/cursor/): Cursor is a coding editor and agent for developers who need to understand a repository, delegate edits, and merge changes.
 - [CutLER](https://happyin.space/projects/cutler/): CutLER is a pseudo-mask-to-detector pipeline for unsupervised object detection and instance segmentation.
+- [d-OPSD — Research paper and code release](https://happyin.space/projects/d-opsd/): d-OPSD is a research framework for post-training diffusion language models. It builds a self-teacher from the model's own answer as suffix conditioning, moves supervision from tokens to denoising s...
 - [DALL-E 2 — Commercial adoption](https://happyin.space/projects/dalle-2/): DALL-E 2 — OpenAI’s 2022 prompt-to-image model, now a legacy dependency rather than a usable API product.
 - [DanceOPD](https://happyin.space/projects/danceopd/): DanceOPD is a training framework for teams that already have compatible flow-matching checkpoints or LoRAs and need one student to combine text-to-image and image-editing behaviors.
 - [Danio Rerio Connectome: connectome-mapping-danio-rerio — Connectome Mapping Danio Rerio](https://happyin.space/projects/danio-rerio-connectome/): Danio Rerio Connectome maps zebrafish neurons and synapses as a vertebrate baseline for autonomous systems research.
