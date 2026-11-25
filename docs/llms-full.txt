@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1434+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1435+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -763,6 +763,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Claude](https://happyin.space/projects/claude/): Claude is Anthropic’s model family for chat users, application developers, and software teams.
 - [CLI-Anything](https://happyin.space/projects/cli-anything/): CLI-Anything is an HKUDS project for two tasks: install an existing CLI via CLI-Hub, or generate a Python/Click harness for open-source software.
 - [Clipdrop](https://happyin.space/projects/clipdrop/): Clipdrop is a browser image toolkit for creators combining Photoshop retouching with separate web generators.
+- [Cocktailasr 1: cocktailasr-1 — Cocktailasr 1](https://happyin.space/projects/cocktailasr-1/): Xiaomi-CocktailASR-1 is a target-speaker speech recognition model from Xiaomi for transcribing one speaker from mixed audio.
 - [CoCo](https://happyin.space/projects/coco/): CoCo is a research workflow that turns text prompts into executable Python and Matplotlib scene code. It renders a draft in a sandbox, checks the layout against the prompt, and refines the draft in...
 - [North](https://happyin.space/projects/cohere-north/): Cohere North Mini Code is a text sparse-MoE model for engineers who need a local alternative to small agentic code models.
 - [Cohere Transcribe](https://happyin.space/projects/cohere-transcribe/): Cohere Transcribe is an Apache-2.0 Conformer encoder-decoder ASR model for audio-to-text workflows.
