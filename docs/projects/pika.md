@@ -80,3 +80,54 @@ From 2023-09-12 and 2025-02-07, practitioners should track camera control and Pi
 - **Subject:** `project:pika`, thread `pika-product-development`, 2 dated events 2023-09-12 → 2025-02-07.
 - **Practical note:** From 2023-09-12 and 2025-02-07, practitioners should track camera control and Pika Additions as separate Pika capability areas, and verify current behavior and access before relying on either in a production workflow.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:06c7c10844b7ed72ed62dccaa822bdae7f792ba53f257a054730ad1d38182839 -->
+## 2026-09-17 — Pika introduces a new multi-model creative platform
+
+Pika launched a creative platform. The pricing covers Pika and partner models through pooled credits.
+
+## 2026-09-19 — Pika’s relaunch adds third-party video models
+
+Archived pricing shows third-party video models in Pika’s September relaunch, including Wan 3.0 and Seedance 2.5. Nobody verified the intake label’s full model list independently.
+
+## 2026-09-19 — Pika’s relaunch updates Fancy-plan credits
+
+Archived pricing puts the Fancy plan at 8,550 monthly credits after the September relaunch, under a wider multi-model system.
+
+### Usage and practices
+
+- Check the plan table and credit burn per run for your chosen model, resolution, and duration. [Source](https://pika.art/pricing?interval=month&plan=standard)
+- Pick a model and generate or edit in Pika Create. Use a paid plan if you need commercial rights. [Source](https://pika.art/pricing?interval=month&plan=standard)
+- Attach the source image and describe the exact change for image edits. Keep only essential references and name each reference’s role. [Source](https://create.pika.art/apps/nano-banana?tab=all-apps)
+- Pick the output format after generation in Nano Banana. PNG is default, while JPEG and WEBP are available. [Source](https://create.pika.art/apps/nano-banana?tab=all-apps)
+- Budget by finished clips, not credits. Per-model burn rates mean more credits can yield fewer finished outputs. [Source](https://www.strategyoffinance.com/essays/pika-repriced-without-changing-its-prices/)
+- Limit reference images and state the role of each one so composition stays consistent. [Source](https://create.pika.art/apps/nano-banana?tab=all-apps)
+- Pass exact target text for translated image copy, then check the spelling yourself. [Source](https://create.pika.art/apps/nano-banana?tab=all-apps)
+
+### What practitioners say
+
+- One independent pricing analyst noted on 2026-10-13 that September’s credit boost did not lower final video costs, because partner models burned more credits than earlier baselines. [Source](https://www.strategyoffinance.com/essays/pika-repriced-without-changing-its-prices/)
+
+### Additional evidence
+
+- 2026-09-17: Pika’s official launch video introduces a new creative platform. Current pricing confirms all plans include every model, covering Google, OpenAI, Kling, Pika, Grok, and Seedance. [Source](https://www.youtube.com/watch?v=zIyjTj2dk10)
+- 2026-09-19: An analysis of archived pricing dates the relaunch between September 13 and 21. It documents third-party video models like Wan 3.0 and Seedance 2.5 in the credit table, but does not verify MiniMax H3 or GPT Image 2.5 for that September record. [Source](https://www.strategyoffinance.com/essays/pika-repriced-without-changing-its-prices/)
+- 2026-09-19: Archived pricing records Fancy at 8,550 monthly credits after relaunch, not 8,500. It notes a slider up to $880 monthly; official pricing now lists Fancy from 8,550 credits at $95 per month. [Source](https://www.strategyoffinance.com/essays/pika-repriced-without-changing-its-prices/)
+
+### Subsequent developments
+
+- 2026-10-16: Pika announced an official ChatGPT extension to bring its tools and library into ChatGPT, offering a 250-credit trial. [Source](https://www.youtube.com/watch?v=HU_AfpToV_E)
+
+### Superseded guidance (retained for history)
+
+- 2026-09-21: The September 2026 pricing structure replaced previous plans: Standard had 700 credits, Pro had 2,300, and Fancy had 6,000. [Source](https://www.strategyoffinance.com/essays/pika-repriced-without-changing-its-prices/)
+- 2026-09-21: A free tier requiring credit packs replaced the older free tier with monthly video credits. [Source](https://www.strategyoffinance.com/essays/pika-repriced-without-changing-its-prices/)
+
+### Limits and open questions
+
+- No dated first-party source confirms the claimed 8,500-credit giveaway; archived pricing records Fancy at 8,550 monthly credits instead.
+- No public dated source verifies MiniMax H3 in the September 2026 launch roster.
+- The two September 19 records overlap heavily, and public research did not clarify whether they cover separate announcements.
+- Live product changes can alter current model availability and credit pricing.
+
+<!-- Retained base: 13a85a61e6ba4f53f96a9c36f253b66b2e90e6d8; article blob: 5f5f05a66640753fe54645cae30dd235bbafc836 -->
