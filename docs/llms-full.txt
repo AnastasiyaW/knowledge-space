@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1480+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1481+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1269,6 +1269,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [DIRECT](https://happyin.space/projects/yandex-direct-skill/): yandex-direct is a Claude Code skill for Yandex Direct statistics and campaign management in the open-source (MIT) polyakov-claude-skills repository.
 - [YouTube](https://happyin.space/projects/youtube/): YouTube is a video platform for viewers and creators.
 - [YuE2 GGUF audio model: yu-e2-gguf-integration — Yu E2 Gguf Integration](https://happyin.space/projects/yu-e2-gguf-integration/): YuE2 GGUF audio model runs YuE2-3B text-to-music inside audio.cpp for pure C++ inference without Python.
+- [Yumina: yumina-open-source-engine-releases — Yumina Open Source Engine Releases](https://happyin.space/projects/yumina/): Yumina is an open-source world engine and web player for interactive fiction, visual novels and roleplay, for authors who have outgrown SillyTavern.
 - [Z-Image-Turbo-Fun-Controlnet-Union](https://happyin.space/projects/z-image-turbo-fun-controlnet-union/): Z-Image-Turbo-Fun-Controlnet-Union — семейство весов ControlNet для Z-Image-Turbo в VideoX-Fun. Возможности: направлять генерацию по контурам, глубине, позе, линиям, Scribble и Gray; использовать i...
 - [Z-Image Turbo++ — Research reference](https://happyin.space/projects/z-image-turbo-plus-plus/): Z-Image Turbo++ — исследовательская text-to-image модель для команд, проверяющих двухшаговую генерацию вместо восьмишагового Z-Image Turbo. — Distribution-Aligned Adversarial Learning: использует и...
 - [z-image-turbo-sda — Hugging Face model release](https://happyin.space/projects/z-image-turbo-sda/): Z-Image-Turbo-SDA is a third-party LoKr/LyCORIS adapter for people running Tongyi-MAI/Z-Image-Turbo, not a standalone Z-Image checkpoint.
