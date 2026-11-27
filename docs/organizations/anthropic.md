@@ -253,3 +253,55 @@ An account was suspended after automated identity verification on a premium Clau
 - The Clay Mathematics Institute and peer-reviewed mathematics journals have not yet given an official response or evaluation of the Lean proof of the Riemann hypothesis.
 
 <!-- Retained base: bd528c6aadec69219a947c341001d834feead933; article blob: 14b887774c96bc1da979ef03c6b7d620ceede597 -->
+
+<!-- live-update:c15d1d1de3c06591411669e8f27feddb86ca88281c4e7d2b992800cd5820633e -->
+## 2026-11-26 — Epic Games CEO reports Claude account suspension during set theory research
+
+Tim Sweeney reported that Anthropic's automated anti-distillation safeguards suspended his account. The sessions were interactive and covered mathematical set theory and logic.
+
+## 2026-11-26 — Anthropic launches public beta of Skills over Model Context Protocol
+
+Skills over MCP lets an MCP server hand structured agent skills straight to Claude and Claude Code clients. The client needs no separate manual install.
+
+## 2026-11-26 — Claude Desktop adds native app installation for interactive Artifacts
+
+Claude Desktop on macOS and Windows can install a chat artifact as a standalone desktop app. It has tiered system permissions, and the app code syncs automatically.
+
+### Usage and practices
+
+- Open Claude Desktop on macOS or Windows with an active account. Generate an interactive interface or tool as an Artifact. [Source](https://support.claude.com/en/articles/18516354-install-an-artifact-as-an-app)
+- Pick 'Install as app' in the Artifact options menu. It compiles the artifact into an independent desktop app with a native window. [Source](https://support.claude.com/en/articles/18516354-install-an-artifact-as-an-app)
+- Set the app permissions. The choices are the default browser sandbox, app permissions for the system tray and shortcuts, or full computer access for local execution. [Source](https://support.claude.com/en/articles/18516354-install-an-artifact-as-an-app)
+- Keep installed artifacts in the default sandbox unless they need the local filesystem or global keyboard shortcuts. [Source](https://support.claude.com/en/articles/18516354-install-an-artifact-as-an-app)
+- On Team and Enterprise tiers, have administrators vet and authorize internally built artifact apps before they get elevated local execution permissions. [Source](https://support.claude.com/en/articles/18516354-install-an-artifact-as-an-app)
+- Expose procedural workflows or domain tools through an MCP server. Claude Code then discovers and runs them as skills, with no manual client install. [Source](https://habr.com/ru/articles/1112776/)
+- Give MCP server endpoints discoverable capability schemas, so skill negotiation on the client side stays reliable in Claude Code. [Source](https://habr.com/ru/articles/1112776/)
+- Avoid automated high-volume synthetic prompt loops and repetitive formal mathematical transformations on interactive accounts, so they do not trip anti-distillation flags. [Source](https://habr.com/ru/articles/1112660/)
+
+### What practitioners say
+
+- One practitioner migrated two servers to the Skills over MCP protocol. Before the official beta announcement, they saw approximately 4,400 server discovery requests rejected. (2026-11-26) [Source](https://habr.com/ru/articles/1112776/)
+- Users report that aggressive anti-distillation safeguards can flag legitimate academic set theory and compiler logic research as unauthorized model distillation. (2026-11-26) [Source](https://habr.com/ru/articles/1112660/)
+
+### Additional evidence
+
+- 2026-11-26: The official documentation says installing an artifact as a desktop app requires Claude Desktop version 6.28899.0 or higher on macOS or Windows. It defines three permission tiers: Default, App Permissions and Full Computer Access. The app state syncs automatically when the artifact code is updated. [Source](https://support.claude.com/en/articles/18516354-install-an-artifact-as-an-app)
+- 2026-11-26: The public beta of November 24 lets MCP servers package and serve procedural agent skills dynamically to Claude and Claude Code clients. It removes manual local client-side configuration. Testing in November before the announcement showed approximately 4,400 rejected server discovery attempts. [Source](https://habr.com/ru/articles/1112776/)
+- 2026-11-26: Anti-distillation heuristic filters triggered the automated ban. They read questions about axiomatic set theory and formal programming languages as an attempt to generate synthetic training data for competing models. [Source](https://habr.com/ru/articles/1112660/)
+
+### Subsequent developments
+
+- 2026-11-24: Anthropic started the public beta rollout of Skills distribution over Model Context Protocol in Claude and Claude Code. [Source](https://habr.com/ru/articles/1112776/)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-24: Adding custom agent skills to Claude Code required manual client-side installation and local file registration. [Source](https://habr.com/ru/articles/1112776/)
+- 2026-11-26: Claude Artifacts ran only in a web browser iframe or in the main chat feed, with no desktop window integration. [Source](https://support.claude.com/en/articles/18516354-install-an-artifact-as-an-app)
+
+### Limits and open questions
+
+- Anthropic has not published the thresholds and heuristics of its automated anti-distillation monitoring.
+- The schedule for General Availability of Skills over MCP after the public beta has not been specified.
+
+
+<!-- Retained base: 3daad3afd6fa48f99114fcfc13a515a50eb6bff5; article blob: 478244c13fb9eca970def90b7f258752c97ffb97 -->
