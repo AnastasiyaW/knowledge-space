@@ -82,3 +82,36 @@ Early work in weight-space manipulation had language models inspect and adjust w
 - **Subject:** project:weight-space-programming, thread weight-space-programming-research, 2 dated events 2026-11-19 → 2026-11-19.
 - **Practical note:** See the usage and practice sections above, including their limits.
 - **Confidence:** medium. The dated supersedes above decide what is obsolete.
+
+<!-- live-update:53fa6a358b9271e06b9e00e75747df6cf6b9b586806654c07c56fd6b404479e6 -->
+## 2026-11-26 — MIT CSAIL introduces weight-space programming for direct neural parameter editing
+
+MIT CSAIL published 'Sparks of Weight-Space Programming'. It shows that frontier reasoning models can read raw parameter tensors and write working weights without gradient descent. In Qwen3.5-0.8B they isolated 0.016% of the weights (approximately 130,000 parameters) to stop repetitive reasoning loops on MATH-500.
+
+### Usage and practices
+
+- Find the failure mode and the candidate layer weights first, by looking at activation patterns or at reasoning loops that persist during a task. [Source](https://habr.com/ru/articles/1108982/)
+- Write the weight change as a linear programming problem, so the number of edited coordinates stays bounded while the task constraints are met. [Source](https://habr.com/ru/articles/1108982/)
+- Apply the computed tensor edits straight to the weights, with no backward pass and no optimizer loop. Then check task accuracy. [Source](https://habr.com/ru/articles/1108982/)
+- Keep each edit surgical: set the linear programming constraints to minimize the fraction of altered weights, so capabilities do not regress. [Source](https://habr.com/ru/articles/1108982/)
+- Aim at isolated failure loops in compact language models. Do not try unconstrained overwrites across broad multi-task objectives. [Source](https://habr.com/ru/articles/1108982/)
+
+### What practitioners say
+
+- Practitioners note that framing the intervention as a linear programming problem alters eight times fewer weights than heuristic editing, and the benchmark gains hold. (2026-11-26) [Source](https://habr.com/ru/articles/1108982/)
+
+### Additional evidence
+
+- 2026-11-26: In 'Sparks of Weight-Space Programming', MIT CSAIL showed that frontier reasoning models can read raw parameter tensors and synthesize functional micro-architectures matching PPO policies. They isolated 0.016% of the weights (approximately 130,000 parameters) in Qwen3.5-0.8B to resolve repetitive reasoning loops on MATH-500. Linear programming cut the required parameter edits eightfold. [Source](https://habr.com/ru/articles/1108982/)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-26: Changing a network's behavior and repairing its defects strictly requires gradient-based backpropagation or reinforcement learning training loops. [Source](https://habr.com/ru/articles/1108982/)
+
+### Limits and open questions
+
+- The canonical preprint page and the official repository could not be confirmed. The only paths found were opaque redirect URLs, not direct ones that can be checked.
+- Whether linear-programming weight edits work on multi-billion parameter foundation models across broad multi-domain benchmarks is unverified.
+
+
+<!-- Retained base: 3daad3afd6fa48f99114fcfc13a515a50eb6bff5; article blob: 722ea482db3cef369b0b0dc700be53bfc61ff102 -->
