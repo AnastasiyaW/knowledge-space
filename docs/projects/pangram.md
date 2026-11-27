@@ -66,3 +66,30 @@ Pangram started as a statistical text-classification research tool. It is now co
 - **Subject:** project:pangram, thread pangram-attack-dog-shaming-campaign, 1 dated events 2026-11-18 → 2026-11-18.
 - **Practical note:** See the sourced usage and practice sections above, including their limits.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:3c416531fed9179b9ef0cee6b3abc2dce67416aaa95f108cdeae6591a49039a9 -->
+## 2026-09-03 — Pangram's score-based public callouts raised attribution concerns
+
+A contractor helped Pangram publicly call out suspected AI users. The company later parted ways with him. Coverage stressed that a detector score measures probable AI involvement, not authorship or misconduct.
+
+### Usage and practices
+
+- Scan text in Pangram and check both the document result and the segment assessment. [Source](https://www.pangram.com/zh)
+- Separate AI-assisted text from AI-generated text before deciding on follow-up steps. [Source](https://www.pangram.com/zh)
+- Use the score as the start of an investigation. Keep drafts, edit history and contextual evidence before making any consequential decision. [Source](https://www.theatlantic.com/technology/2026/05/pangram-ai-detection-accuracy/687381/)
+- Never treat Pangram as a final arbiter. Check the writing process and supporting evidence before acting on a result. [Source](https://www.theatlantic.com/technology/2026/05/pangram-ai-detection-accuracy/687381/)
+
+### Additional evidence
+
+- 2026-09-03: Reporting published the day before identified the contractor as journalist Rod Breslau. His work covered social-media strategy and public callouts of suspected AI users. Pangram later separated from him when it shifted strategy. [Source](https://www.wired.com/story/pangram-has-emerged-as-the-gold-standard-of-ai-detection/)
+
+### Subsequent developments
+
+- 2026-02-27: Pangram released version 3.2. The company stated that it improved detection of humanized text and Claude Opus 4.6. It also cut the minimum input for short social posts from 75 to 50 words. [Source](https://www.pangram.com/zh/blog/introducing-pangram-3-2)
+
+### Limits and open questions
+
+- Pangram's public materials describe product features and vendor benchmarks. They do not independently prove accuracy across every language, writing context or version.
+- Community discussions show relative timestamps instead of page-specific publication dates, so no dated, attributable practitioner feedback was retained.
+
+<!-- Retained base: 13a85a61e6ba4f53f96a9c36f253b66b2e90e6d8; article blob: 143cb5ba87170b212672fb5bf299654c0964b456 -->
