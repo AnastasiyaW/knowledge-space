@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1487+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1488+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1241,6 +1241,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Velorn](https://happyin.space/projects/velorn/): Velorn is a GPL-3.0 open-source AI video workstation for ComfyUI users. It covers generation, timeline editing and export in one desktop app.
 - [Veo](https://happyin.space/projects/veo/): Veo is Google DeepMind’s video-generation model family for filmmakers, creators, and API users.
 - [Vibe Coding XR](https://happyin.space/projects/vibe-coding-xr/): Vibe Coding XR is a Gemini-assisted workflow for designers and developers who need a WebXR prototype before committing to Unity or Unreal. It pairs the hosted XR Blocks Gem with the open-source XR ...
+- [Vibe: vibe-max-subscription-tier — Vibe Max Subscription Tier](https://happyin.space/projects/vibe/): Vibe is an AI copilot for dating conversations and date planning. It is for people on dating apps such as Tinder, Bumble and Hinge.
 - [VibeVoice-ASR-BitNet — Public availability](https://happyin.space/projects/vibevoice-asr-bitnet/): VibeVoice-ASR-BitNet is Microsoft's MIT-licensed, compressed speech recognition model for CPU inference, run through the VibeASR.cpp runtime.
 - [Video-DeepResearch](https://happyin.space/projects/video-deepresearch/): Video-DeepResearch is an open research stack and two models for questions grounded in video objects and events before checking external sources.
 - [video_to_world](https://happyin.space/projects/video-to-world/): video_to_world is local ECCV 2026 research code for people reconstructing a generated video sequence as an explorable 2DGS or 3DGS scene, not a video generator or hosted service.
