@@ -75,3 +75,40 @@ GigaChat is Sber's family of open-weights mixture-of-experts foundation language
 - **Subject:** project:gigachat, thread gigachat-development, 2 dated events 2026-09-13 → 2026-09-13.
 - **Practical note:** See the sourced usage and practice sections above, including their limits.
 - **Confidence:** medium. The dated supersedes above decide what is obsolete.
+
+<!-- live-update:cd02f99a435cccd5a8a06019d9c27913457ba19b147bb1462586019eee372044 -->
+## 2026-11-26 — Sber launches GigaChat 4 with 708B MoE architecture and 1M context window
+
+Sber released GigaChat 4, a hybrid Mixture-of-Experts model with 708 billion parameters. It comes with an on-premise 37B dense variant and a 1-million-token context window through sparse attention. It has two modes, Instant and Reasoning, and native Model Context Protocol tooling for agents.
+
+## 2026-11-26 — Sber introduces Kandinsky 6.5 with KandiShop identity preservation and 2K video
+
+Sber updated its image and video generation with Kandinsky 6.5. It adds KandiShop, which keeps a face the same across generations. It also adds 10-second 2K video with keyframe control over transitions, and composition of characters and objects from several sources.
+
+### Usage and practices
+
+- Open the GigaChat web interface, or register for Sber AI Studio developer API credentials. [Source](https://giga.chat/)
+- Select the GigaChat 4 checkpoint and set the mode: Instant for quick queries, Reasoning for complex multi-step tasks. [Source](https://giga.chat/)
+- Connect external tools, file repositories or agent harnesses through Model Context Protocol (MCP) endpoints, so the model can run multi-step tasks on its own. [Source](https://giga.chat/)
+- Call the Kandinsky 6.5 endpoints for multimodal generation. Give reference portraits for KandiShop identity preservation, or initial and terminal keyframes for video clips. [Source](https://giga.chat/)
+- Use Reasoning mode for code synthesis, large-document analysis and multi-hop data extraction. Keep Instant mode for dialogue where latency matters. [Source](https://giga.chat/)
+- Deploy the 37B on-premise GigaChat 4 variant in air-gapped enterprise environments that need strict data residency and perimeter security. [Source](https://giga.chat/)
+- For Kandinsky 6.5 Video, provide clear reference keyframes and distinct character source images, so the scene stays continuous across transitions. [Source](https://giga.chat/)
+
+### Additional evidence
+
+- 2026-11-26: Sber described GigaChat 4 as a hybrid Mixture-of-Experts model with 708 billion total parameters and 41 billion active. A 37 billion parameter dense variant is meant for on-premise deployment. Sparse attention gives a native 1-million-token context window. Native Model Context Protocol (MCP) integrations support long-running autonomous tasks with tools. Instant and Reasoning modes sit in one unified checkpoint. [Source](https://giga.chat/)
+- 2026-11-26: Kandinsky 6.5 includes the KandiShop identity preservation system, built with the AIRI Institute, which keeps exact facial features across generations. Video now runs up to 10 seconds at 2K resolution, with control over start and end keyframes. Characters and assets can be composed from distinct reference images. [Source](https://giga.chat/)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-26: GigaChat 3.5 is the primary flagship model for complex enterprise tasks. [Source](https://giga.chat/)
+- 2026-11-26: Kandinsky video generations are limited to short lower-resolution clips, with no multi-character blending and no keyframe constraints. [Source](https://giga.chat/)
+
+### Limits and open questions
+
+- Direct article links from Russian tech press (Habr, Forbes Russia, IXBT) could not be confirmed.
+- Pricing tiers, API token limits and open-source weight repositories for the GigaChat 4 37B weights (for example on Hugging Face or Gitverse) are not confirmed with direct public paths.
+- Independent benchmarks and accuracy comparisons against other frontier models are still pending, until the model is used in practice.
+
+<!-- Retained base: 24e47c487718c6d5e8a3eb5e549a30b2eafa082d; article blob: f255efec0ef879346797ceb0d7028417945922c7 -->
