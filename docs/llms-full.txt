@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1490+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1492+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1121,6 +1121,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [QuerySplat](https://happyin.space/projects/querysplat/): QuerySplat is a feed-forward 3D Gaussian Splatting framework for people who need a renderable scene and novel views from multi-view images without pre-supplied camera poses.
 - [Qwen 3.6 Plus Preview — Public model availability](https://happyin.space/projects/qwen-3-6-plus-preview/): Qwen 3.6 Plus Preview is a Qwen-hosted preview model available as `qwen/qwen3.6-plus-preview:free` on OpenRouter.
 - [Qwen](https://happyin.space/projects/qwen-3-8-122b/): Qwen 3.8 122B can be fine-tuned locally in Strata on a 16 GB VRAM GPU with 64 GB RAM, without a multi-GPU cloud cluster.
+- [Qwen](https://happyin.space/projects/qwen-image-21/): Qwen Image 2.1 is an image-generation base model for practitioners using Diffusers, VideoX-Fun, llama.cpp, or ComfyUI. Its ecosystem includes text-to-image and image editing, few-step LoRAs, struct...
 - [Qwen-Image-Edit-Rapid-AIO](https://happyin.space/projects/qwen-image-edit-rapid-aio/): Qwen-Image-Edit-Rapid-AIO merges speed accelerators, VAE, and CLIP for Qwen-Image-Edit into one checkpoint for ComfyUI users.
 - [MCNL v1 for Qwen-Image-Edit-2511](https://happyin.space/projects/qwen-image-edit/): MCNL v1 is a community LoRA for `Qwen-Image-Edit-2511` from the ScottzillaSystems repository. The card labels it as a duplicate of `aiunivers/qwen-image-edit-plus-nsfw-lora`. [Distributor model car...
 - [Qwen-Image-Flash](https://happyin.space/projects/qwen-image-flash/): Qwen-Image-Flash is a four-network-function-evaluation Qwen-Image-2.0 student for fast text-to-image generation and instruction-guided editing.
@@ -1156,6 +1157,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [RiGS — Repository reference](https://happyin.space/projects/rigs/): RiGS provides the codebase for Rigid-aware 4D Gaussian Splatting:
 - [Rollback world-model RL \(GE-Sim 2.0\): rollback-world-model-rl-research — Rollback World Model Rl Research](https://happyin.space/projects/rollback-world-model-rl/): Rollback is a robotic reinforcement learning method from AgiBot Research.
 - [Cursor Router](https://happyin.space/projects/router/): Cursor Router routes each Agent request across Cursor’s changing model pool instead of making a developer choose a model per request. It offers Cost, Balance, and Intelligence modes for Teams and E...
+- [Rtx 30 Bf16 Unlock: rtx-30-bf16-unlock-gpu-selector-kernel-module — Rtx 30 Bf16 Unlock Gpu Selector Kernel Module](https://happyin.space/projects/rtx-30-bf16-unlock/): A GPL-2.0 Linux kernel module that sets the speed selectors on GA102 and GA104 \(RTX 3000 series\) GPUs before the NVIDIA driver loads. The method grew out of unlockers for CMP cards. The report is...
 - [Aleph 2.0 — Runway Aleph](https://happyin.space/projects/runway-aleph-2/): Aleph 2.0 is Runway’s in-context editor for existing footage, built for teams that need to change a product, background, lighting, or style without rebuilding the shot.
 - [Runway Gen-1](https://happyin.space/projects/runway-gen-1/): Runway Gen-1 was a video-to-video model for creators who needed to keep a source clip's structure while altering its appearance with a prompt or reference image.
 - [Runway Gen-3 Alpha](https://happyin.space/projects/runway-gen-3-alpha/): Runway Gen-3 Alpha was Runway’s 2024 text-to-video and image-to-video model for creators making short controlled shots from prompts or a source image. It is retired. Gen-4.5 is the current replacem...
