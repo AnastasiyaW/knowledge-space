@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1495+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1496+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1101,6 +1101,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [PhotoQuilt](https://happyin.space/projects/photoquilt/): PhotoQuilt is a training-free photomosaic pipeline for diffusion users who need a coherent large scene built from independent image tiles.
 - [Photoshop — Product updates](https://happyin.space/projects/photoshop/): Adobe Photoshop is Adobe's desktop image editor. This page tracks its product updates from dated Adobe announcements and their stated availability.
 - [PhysAg3D: physag3d-release-announcement — PhysAg3D Release Announcement](https://happyin.space/projects/physag3d/): PhysAg3D is a research framework from Peking University, Huawei and collaborators for generating interactive 3D assets from single images.
+- [Pi Agent Harness: pi-agent-harness-1-0-release — Pi Agent Harness 1 0 Release](https://happyin.space/projects/pi-agent-harness/): Pi is a minimal, extensible agent harness from Earendil that users can make their own. It is used as a coding agent and as a base for building agentic applications. Earendil says hundreds of thousa...
 - [Pi H3: pi-h3-acceleration — Pi H3 Acceleration](https://happyin.space/projects/pi-h3/): pi-H3 is an open-source distilled adapter and inference pipeline for MiniMax H3 video generation. It is for researchers and creative practitioners who run video generation locally or on a cluster.
 - [PiD — Research release](https://happyin.space/projects/pid/): PiD is a pixel diffusion decoder for generative image pipelines that replaces standard VAE and RAE decoders.
 - [Pika](https://happyin.space/projects/pika/): Pika: облачная платформа для авторов коротких роликов, конкурирующая с Runway в text-to-video, image-to-video и video-to-video. Возможности: Pika 2.5, Pikaframes, Pikascenes, Pikadditions, Pikaswap...
