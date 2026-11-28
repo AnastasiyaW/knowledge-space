@@ -4,6 +4,13 @@ Append-only log of changes. Updated on every ingest/edit/delete.
 
 ---
 
+## 2026-10-01
+
+- **FIX**: `scripts/sync_indexes.py` no longer edits indexes and then crashes.
+  - It stops before writing anything when a domain has no browse-page block and no `NEW_BLOCK_STYLE` entry (it used to raise `KeyError: 'organizations'` after editing 12 MOCs).
+  - By default it syncs only the articles the branch changed. `--all` keeps the full sweep, and `--check` now works.
+  - A second run finds nothing to do, also for slugs shared by two domains.
+
 ## 2026-09-23
 
 - **SEO**: fixes from the site audit.
