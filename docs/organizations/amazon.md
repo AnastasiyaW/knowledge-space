@@ -92,3 +92,38 @@ Since 2023-04-13, practitioners evaluating Amazon's AI stack should treat Bedroc
 - **Subject:** `organization:amazon`, thread `amazon-generative-ai-platform-and-models`, 2 dated events 2023-04-13 → 2024-12-04.
 - **Practical note:** Since 2023-04-13, practitioners evaluating Amazon's AI stack should treat Bedrock as a core platform option; since 2024-12-04, they should also assess Amazon Nova alongside third-party Bedrock models for relevant workloads.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:627d9e6baa7ed2ef7bec03037cf411be6e595f805bf8b8250d766eedc307e302 -->
+## 2026-11-26 — Amazon Trainium3 UltraServer benchmarked on AgentX with vLLM Neuron backend
+
+The AgentX benchmark ran a 744B-parameter model in FP4 precision on Trainium3 UltraServer clusters. The vLLM Neuron integration worked directly over the NeuronLink-v4 and NeuronSwitch-v1 fabric.
+
+## 2026-11-26 — Trainium3 UltraServer achieves 2.28x inference perf-per-dollar in SemiAnalysis model
+
+SemiAnalysis modeling reported 2.28x more throughput per dollar for a 112-chip Trainium3 cluster than for NVIDIA GB300 NVL72. The workload was long-context and agentic, priced at $1.05 per chip-hour. The trade-off is worse P90 time-to-first-token latency.
+
+### Usage and practices
+
+- Provision an EC2 Trainium3 UltraServer cluster with the NeuronLink interconnect fabric. [Source](https://x.com/SemiAnalysis_/status/2125658708357128703)
+- Deploy mixture-of-experts models on the native vLLM Neuron backend, so no custom serving wrapper is needed. [Source](https://x.com/SemiAnalysis_/status/2125658708357128703)
+- Set wide expert parallelism and FP4 precision to get the most throughput out of the UltraServer chips. [Source](https://x.com/SemiAnalysis_/status/2125658708357128703)
+- Aim at high-throughput, multi-turn agentic workloads with long input context and prefix caching, where cost per token dominates. [Source](https://x.com/SemiAnalysis_/status/2125658708357128703)
+- Buffer or prefetch requests when P90 time-to-first-token matters, because the latency profile is asymmetric. [Source](https://x.com/SemiAnalysis_/status/2125658708357128703)
+- Use the standard vLLM serving interfaces, so the model stays portable between AWS custom silicon and GPUs. [Source](https://x.com/SemiAnalysis_/status/2125658708357128703)
+
+### Additional evidence
+
+- 2026-11-26: The AgentX benchmark ran a 744B-parameter model (GLM-5.2/5.3) in FP4 precision. The traces were multi-turn agentic coding, with a median prompt length of 142,000 tokens and heavy prefix caching. The vLLM Neuron integration removed the custom proprietary wrappers and ran directly over the NeuronLink-v4 and NeuronSwitch-v1 fabric. [Source](https://x.com/SemiAnalysis_/status/2125658708357128703)
+- 2026-11-26: The 2.28x performance-per-dollar figure was measured at a P90 interaction speed of 246 tokens/s/user on a 112-chip Trainium3 cluster. Latency is asymmetric: P90 time-to-first-token (TTFT) was 4.5 seconds on Trainium3 and 1.8 seconds on NVIDIA GB300 NVL72. [Source](https://x.com/SemiAnalysis_/status/2125658708357128703)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-26: AWS Neuron hardware requires proprietary serving wrappers and custom runtime glue, so it cannot be a drop-in match for standard open-source engines. [Source](https://x.com/SemiAnalysis_/status/2125658708357128703)
+
+### Limits and open questions
+
+- Public search results from third-party sites (supercomputing.news, cryptobriefing.com, officechai.com, amazon.com) came back only as temporary search-engine redirects. There were no direct permanent article URLs, so they cannot be cited as secondary sources.
+- General availability dates for EC2 Trn3 UltraServer instances are not announced. Neither are commercial on-demand prices beyond the modeled $1.05 per chip-hour hyperscaler TCO estimate.
+- The benchmark release does not say how well FP4 quantization holds accuracy on broader production evaluation suites. Only the tested 744B MoE checkpoint was covered.
+
+<!-- Retained base: 24e47c487718c6d5e8a3eb5e549a30b2eafa082d; article blob: fa4e0fedbdeb62150b3b249ceb0419c4e31768a8 -->
