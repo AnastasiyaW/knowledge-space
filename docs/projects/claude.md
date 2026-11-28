@@ -168,3 +168,35 @@ Anthropic's automated anti-distillation filter cut off a corporate user's sessio
 - English and Chinese secondary reports could not be cited. The search results from external tech media led only to opaque redirects, with no direct URLs that can be checked.
 
 <!-- Retained base: 0087738ff12f312118dba38382b3529e33c51018; article blob: 23639ca6bbed76ac1477e411f4d409d035d0d955 -->
+
+<!-- live-update:3eaf634df2e81989f8fc352f0f21cc3d6d5170582c3e103fecf5392e2d295bc9 -->
+## 2026-11-27 — Study Evaluates Reasoning Effort in Claude 5.5 Models on Plausible-but-Wrong Django Patches
+
+The study ran Claude Opus 5.5, Sonnet 5.5 and Haiku 5.5 at low, medium and high reasoning effort on ninety AI-generated Django patches. Higher effort cut false success rates from 67% to 45% on Opus 5.5, from 65% to 49% on Sonnet 5.5, and from 78% to 51% on Haiku 5.5.
+
+### Usage and practices
+
+- Set the reasoning effort by how critical the code is. Use higher effort on non-trivial patches. [Source](https://arxiv.org/abs/2611.33639)
+- Run automated patch reviews in an isolated environment, against the repository-level test suites. [Source](https://arxiv.org/abs/2611.33639)
+- Before merging, cross-check AI approvals with an independent hardened test suite such as SWE-ABS. [Source](https://arxiv.org/abs/2611.33639)
+- For code review with Haiku or Sonnet, set maximum reasoning effort. Defect detection dropped sharply at low effort. [Source](https://arxiv.org/abs/2611.33639)
+- Treat model approvals as a first filter, not as the merge gate. Keep the hardened regression suites and human review. [Source](https://arxiv.org/abs/2611.33639)
+
+### Additional evidence
+
+- 2026-11-27: Zax Shen, Hanling Zhang and Zixu Wang ran Claude Opus 5.5, Sonnet 5.5 and Haiku 5.5 at low, medium and high reasoning effort on ninety AI-generated Django patches from SWE-bench Verified. Against the SWE-ABS hardened test suite, fifty-five patches were plausible but wrong. Higher effort cut false success rates from 67% to 45% on Opus 5.5, from 65% to 49% on Sonnet 5.5, and from 78% to 51% on Haiku 5.5. Even at peak effort, all models approved at least 45% of the broken patches. [Source](https://arxiv.org/abs/2611.33639)
+- 2026-11-27: On ninety AI-generated Django patches, higher reasoning effort cut false success rates from 67% to 45% on Claude Opus 5.5, from 65% to 49% on Sonnet 5.5, and from 78% to 51% on Haiku 5.5. [Source](https://arxiv.org/abs/2611.33639)
+- 2026-11-27: The study tested Claude Opus 5.5, Sonnet 5.5 and Haiku 5.5 on ninety AI-generated Django patches. Higher reasoning effort cut false success rates from 67% to 45% on Opus 5.5, from 65% to 49% on Sonnet 5.5, and from 78% to 51% on Haiku 5.5. [Source](https://arxiv.org/abs/2611.33639)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-27: Assumed that low reasoning effort or a single-pass LLM review reliably finds regression bugs in AI-generated pull requests. [Source](https://arxiv.org/abs/2611.33639)
+- 2026-11-27: Treated a pass on standard SWE-bench Verified tests as enough to certify a patch, without hardened test coverage. [Source](https://arxiv.org/abs/2611.33639)
+
+### Limits and open questions
+
+- Community forum threads and practitioner blog posts could not be cited. The search redirects carried no verified direct URLs.
+- Searches returned no Simplified-Chinese technical publications or discussions that evaluate arXiv:2611.33639.
+
+
+<!-- Retained base: 3622a7af3e107e3ac36acf1afac8396af5242178; article blob: 1a7e6f66c104a97afe3417f638498a8f3a9f229f -->
