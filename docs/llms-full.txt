@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1488+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1489+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -817,6 +817,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Data2Story — Agentic Data Storytelling](https://happyin.space/projects/data2story/): Data2Story turns a CSV, data folder, paper, or an idea in Pro into a self-contained HTML story. It generates charts and media alongside an evidence viewer.
 - [DataLens Platform: datalens-platform-ai-agents — Datalens Platform Ai Agents](https://happyin.space/projects/datalens-platform/): DataLens Platform is Yandex B2B Tech's BI and analytics service, a competitor to Apache Superset and Microsoft Power BI.
 - [DDColor](https://happyin.space/projects/ddcolor/): DDColor is a PyTorch model from ICCV 2023 for automatic photo colorization.
+- [DeepSeek Harness: deepseek-harness-agent-teams — Deepseek Harness Agent Teams](https://happyin.space/projects/deepseek-harness/): DeepSeek Harness is an open-source agent runtime and benchmarking framework on the Cordis plugin architecture, for running and evaluating language models.
 - [DeepSeek V4.1 Flash 1017: deepseek-v4-1-flash-line — Deepseek V4 1 Flash Line](https://happyin.space/projects/deepseek-v4-1-flash-1017/): DeepSeek-V4.1-Flash-1017 is an open-weight mixture-of-experts model built for agentic coding and terminal work. It is an alternative to closed commercial flagships for autonomous developer workflow...
 - [DeepSeek V4.1 Flash](https://happyin.space/projects/deepseek-v4-1-flash/): DeepSeek V4.1 Flash is a 552B-parameter MoE model for coding, agent tasks and image-text inputs. It is for developers who call it through an API or run the open weights themselves. It understands i...
 - [DeerFlow 2.0 — Agent Platforms](https://happyin.space/projects/deerflow/): DeerFlow 2.0 — an open-source runtime for teams that need an agent harness rather than a research-only framework.
