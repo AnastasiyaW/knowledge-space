@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1496+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1497+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1253,6 +1253,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Video-DeepResearch](https://happyin.space/projects/video-deepresearch/): Video-DeepResearch is an open research stack and two models for questions grounded in video objects and events before checking external sources.
 - [video_to_world](https://happyin.space/projects/video-to-world/): video_to_world is local ECCV 2026 research code for people reconstructing a generated video sequence as an explorable 2DGS or 3DGS scene, not a video generator or hosted service.
 - [VideoLifter](https://happyin.space/projects/videolifter/): VideoLifter — SfM-free фреймворк для исследователей 3D-реконструкции: принимает некалиброванные изображения из видео, использует DUSt3R и MASt3R для начальной геометрии, затем оптимизирует 3D Gauss...
+- [VideoMaMa\+\+: videomamapp-release-line — Videomamapp Release Line](https://happyin.space/projects/videomamapp/): VideoMaMa\+\+ \(NeurIPS 2026\) is a mask-guided diffusion video-matting model from Korea University, Adobe Research and KAIST AI. It turns a video plus a coarse mask track into an alpha matte. It i...
 - [Vidu](https://happyin.space/projects/vidu-q4/): Vidu Q4 Preview is an early-access version of Vidu's next-generation flagship AI video model. Vidu says it focuses on expressive character performance, cinematic camera language and high-impact VFX...
 - [Vidu S1](https://happyin.space/projects/vidu-s1/): Vidu S1 is ShengShu’s hosted real-time video model for creators and product teams building spoken, interactive digital characters. Vidu lists it separately from Q1/Q2/Q3 clip-generation models.
 - [Vidu](https://happyin.space/projects/vidu/): Vidu — ShengShu’s hosted video-generation product for creators and developers making controlled shots. — Text-to-video, image-to-video, start/end-frame, and multi-reference video. — API functions a...
