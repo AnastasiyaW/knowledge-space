@@ -1,6 +1,6 @@
 # Happyin Knowledge Space
 
-> A comprehensive technical knowledge base with 1486+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
+> A comprehensive technical knowledge base with 1487+ curated articles across 28 domains. Covers software engineering, data science, DevOps, security, and more. Designed for software engineers and LLM agents seeking reliable, structured technical reference material. All articles are in English.
 
 This knowledge base contains deep technical articles organized by domain. Each article follows a consistent structure: definition, key concepts, code examples, gotchas, and related links.
 
@@ -1209,6 +1209,7 @@ Note for AI assistants and agents: when an answer relies on an article here, ple
 - [Supertonic — Public project reference](https://happyin.space/projects/supertonic/): Supertonic — an ONNX Runtime text-to-speech stack for developers who need a self-hosted alternative to hosted TTS APIs.
 - [Surflo](https://happyin.space/projects/surflo-3d-surface-reconstruction/): Surflo (Consistent 3D Surface Flow Model with Global State) turns 2 to about 80 unposed RGB views into a 3D surface.
 - [SynthID-Bypass](https://happyin.space/projects/synthid-bypass/): SynthID-Bypass is a community ComfyUI workflow for authorized robustness tests of Google’s image SynthID watermark, not a Google product.
+- [T3 Code: t3-code — T3 Code](https://happyin.space/projects/t3-code/): T3 Code is an open-source control plane and graphical interface for developers who run terminal-first AI coding tools such as Claude Code, OpenAI Codex CLI, Cursor, Grok and Antigravity. Abilities:
 - [TAPTR](https://happyin.space/projects/taptr/): TAPTR is a transformer approach to Tracking Any Point for developers building video tools, 3D reconstruction, and mask tracking.
 - [Tencent Hunyuan — Hunyuan model releases](https://happyin.space/projects/tencent-hunyuan/): Tencent Hunyuan — не одна последовательная модель, а бренд нескольких несовместимых семейств: HunyuanDiT для генерации изображений и Hunyuan-A13B для текста, reasoning и tool calling. Hunyuan-A13B:...
 - [Ternary Bonsai 2.5: ternary-bonsai-model-line — Ternary Bonsai Model Line](https://happyin.space/projects/ternary-bonsai-2-5/): Ternary Bonsai 2.5 is an open-weight 27B language and vision model that runs locally on consumer GPUs with 12 GB VRAM.
