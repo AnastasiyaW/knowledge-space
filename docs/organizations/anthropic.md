@@ -305,3 +305,36 @@ Claude Desktop on macOS and Windows can install a chat artifact as a standalone 
 
 
 <!-- Retained base: 3daad3afd6fa48f99114fcfc13a515a50eb6bff5; article blob: 478244c13fb9eca970def90b7f258752c97ffb97 -->
+
+<!-- live-update:45d3801d4b976aa599efe2ec7ba2a828d17a2bc6a867b4750687f34f3d819645 -->
+## 2026-11-27 — Anthropic Restructures Engineering Promotions and Interviews for Developer Agent Era
+
+Anthropic has changed its internal engineering evaluation and interview loops. Engineers are now judged on latency reduction, incident mitigation and human-agent coordination, not on project duration or volume of code written. The change follows large-scale adoption of agent-written code in core services.
+
+### Usage and practices
+
+- Set architectural constraints, domain boundaries and target metrics before assigning a task to a developer agent. [Source](https://www.businessinsider.com/ai-changing-engineering-promotions-anthropic-2026-11)
+- Hand large code implementations and language migrations to AI coding agents, with a developer supervising. [Source](https://www.businessinsider.com/ai-changing-engineering-promotions-anthropic-2026-11)
+- Review agent-written code by hand, so regressions, security flaws and subtle logic failures get caught. [Source](https://www.businessinsider.com/ai-changing-engineering-promotions-anthropic-2026-11)
+- Judge a deployment by operational metrics: latency reduction, CPU consumption and production incident mitigation. [Source](https://www.businessinsider.com/ai-changing-engineering-promotions-anthropic-2026-11)
+- Judge engineers by system-level outcomes such as incident prevention, latency reduction and resource efficiency, not by lines of code or calendar duration. [Source](https://www.businessinsider.com/ai-changing-engineering-promotions-anthropic-2026-11)
+- When coding agents work in production repositories, put verification, edge-case analysis and architectural guardrails ahead of drafting syntax by hand. [Source](https://www.businessinsider.com/ai-changing-engineering-promotions-anthropic-2026-11)
+- Add AI agent orchestration and code-review simulations to technical interviews, to see how well a candidate handles developer tools. [Source](https://www.businessinsider.com/ai-changing-engineering-promotions-anthropic-2026-11)
+
+### Additional evidence
+
+- 2026-11-27: Internal disclosures by Katelyn Lesse, head of Anthropic Platform Engineering, indicate that developer agents such as Claude Code wrote over eighty percent of the code in the core Messages API migration from Python to Rust. Multi-year timelines shrank to months. Promotion criteria now replace project elapsed time and code volume with measured CPU savings, latency reduction and incident prevention. Technical interview loops now include practical coding-agent coordination and verification. [Source](https://www.businessinsider.com/ai-changing-engineering-promotions-anthropic-2026-11)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-27: Engineering performance and seniority were measured mainly by the calendar duration of projects and the total lines of code written. [Source](https://www.businessinsider.com/ai-changing-engineering-promotions-anthropic-2026-11)
+- 2026-11-27: Technical interviews consisted only of isolated manual syntax writing and whiteboard algorithm exercises, with no AI tools. [Source](https://www.businessinsider.com/ai-changing-engineering-promotions-anthropic-2026-11)
+
+### Limits and open questions
+
+- The full internal leveling rubrics and the role-specific promotion weighting documents are proprietary and not public.
+- The operational scoring thresholds used across the technical interview stages are not public.
+- Direct primary reporting on Anthropic's internal promotion criteria was not available in Chinese sources, which were only syndicated reprints behind redirects.
+
+
+<!-- Retained base: 0087738ff12f312118dba38382b3529e33c51018; article blob: 9421286517402ff1e76f5275ba9d408f265f0aec -->
