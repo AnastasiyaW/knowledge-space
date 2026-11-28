@@ -13,6 +13,8 @@ const mod = await load("api/feedback.js");
 const report = await load("api/feedback/report.js");
 const status = await load("api/feedback/status.js");
 const wanted = await load("api/wanted.js");
+const search = await load("api/search.js");
+const mcpGap = await load("api/feedback/internal/mcp-gap.js");
 
 function d1() {
   const sqlite = new DatabaseSync(":memory:");
@@ -219,4 +221,91 @@ for (let i = 0; i < 30; i++) assert.equal((await post(flood, { kind: "gap", topi
 assert.equal((await post(flood, { kind: "gap", topic: "one more" })).status, 429);
 assert.equal((await post(flood, { kind: "gap", topic: "other client" }, "198.51.100.9")).status, 201);
 
-console.log("agent contact endpoints: all checks passed");
+// Search uses deployed assets; only a successful zero-result search records a gap.
+{
+  const index = { docs: [
+    { location: "kafka/groups/", title: "Kafka groups", text: "Consumer coordination" },
+    { location: "kafka/groups/#share", title: "Share groups", text: "Kafka consumer coordination" },
+    { location: "https://evil.example/a/b/", title: "Kafka", text: "coordination" },
+    { location: "security/cwe/CWE-79/", title: "CWE nested", text: "Scripting prevention" },
+    { location: "code/C++/", title: "Compiler guide", text: "templates" },
+    { location: "models/split/#first", title: "First", text: "quantization" },
+    { location: "models/split/#second", title: "Second", text: "deployment" },
+  ] };
+  let indexReads = 0;
+  const e = { DB: d1(), FEEDBACK_SALT: "s", ASSETS: { async fetch(url) {
+    indexReads++;
+    assert.equal(new URL(url).pathname, "/search/search_index.json");
+    return Response.json(index);
+  } } };
+  let found = await get(search, e, "q=Kafka+coordination");
+  assert.equal(found.status, 200);
+  assert.equal(found.body.total, 1);
+  for (const q of ["CWE scripting", "compiler templates", "quantization deployment"]) {
+    const covered = await get(search, e, "q=" + encodeURIComponent(q));
+    assert.equal(covered.status, 200);
+    assert.equal(covered.body.total, 1, q);
+    assert.equal(covered.body.gap, undefined, q);
+  }
+  assert.equal(e.DB.sqlite.prepare("SELECT count(*) AS n FROM reports").get().n, 0);
+  for (const q of ["", "q=+++", "q=%21%21", "q=" + "a".repeat(201)]) {
+    assert.equal((await get(search, e, q)).status, 400);
+  }
+  found = await get(search, e, "q=missing+topic&channel=mcp-search");
+  assert.equal(found.status, 200);
+  assert.equal(found.body.gap.recorded, true);
+  const id = found.body.gap.id;
+  assert.equal(e.DB.sqlite.prepare("SELECT channel FROM reports WHERE id=?").get(id).channel, "search");
+  assert.equal((await get(search, e, "q=missing+topic")).body.gap.id, id);
+  assert.equal(e.DB.sqlite.prepare("SELECT count(*) AS n FROM reports").get().n, 1);
+  assert.equal((await get(search, { ...e, FEEDBACK_SALT: undefined }, "q=another+gap")).status, 503);
+  const broken = { ...e, ASSETS: { async fetch() { return new Response("missing", { status: 404 }); } } };
+  assert.equal((await get(search, broken, "q=unavailable")).status, 503);
+  broken.ASSETS.fetch = async () => Response.json({ docs: [] });
+  assert.equal((await get(search, broken, "q=unavailable")).status, 503);
+  assert.equal(e.DB.sqlite.prepare("SELECT count(*) AS n FROM reports").get().n, 1);
+  assert.equal(indexReads, 1, "one immutable index parse per asset binding");
+}
+
+// Widening channel CHECK preserves all fields, indexes and deleted-ID high water.
+for (const empty of [false, true]) {
+  const m = new DatabaseSync(":memory:");
+  for (const file of ["0001_feedback.sql", "0002_reports.sql", "0003_wanted_topics.sql"]) {
+    m.exec(readFileSync(root + "migrations/" + file, "utf8"));
+  }
+  m.exec("INSERT INTO reports(id,created_at,day,kind,topic,client_hash,status,public_title,result_url) VALUES(91,'t','d','gap','topic','hash','done','Reviewed','https://happyin.space/kafka/groups/'); INSERT INTO reports(id,created_at,day,kind,client_hash) VALUES(100,'t','d','gap','h'); DELETE FROM reports WHERE id=100;");
+  if (empty) m.exec("DELETE FROM reports");
+  const before = m.prepare("SELECT * FROM reports").all();
+  m.exec(readFileSync(root + "migrations/0004_search_channels.sql", "utf8"));
+  assert.deepEqual(m.prepare("SELECT * FROM reports").all(), before);
+  assert.deepEqual(m.prepare("SELECT name FROM sqlite_master WHERE type='index' AND tbl_name='reports' ORDER BY name").all().map(r => r.name), ["reports_client_day", "reports_day", "reports_status"]);
+  const insert = m.prepare("INSERT INTO reports(created_at,day,kind,client_hash,channel) VALUES('t','d','gap','h',?)");
+  assert.ok(Number(insert.run("search").lastInsertRowid) > 100);
+  insert.run("mcp-search");
+  assert.throws(() => insert.run("untrusted"));
+}
+
+// MCP provenance is authenticated and cannot be selected by a public caller.
+{
+  const e = { DB: d1(), FEEDBACK_SALT: "s", MCP_GAP_INGEST_SECRET: "test-only-secret" };
+  const send = async (auth, body, target = e) => mcpGap.onRequestPost({ env: target, request: new Request(
+    "https://happyin.space/api/feedback/internal/mcp-gap", { method: "POST",
+      headers: { Authorization: auth, "Content-Type": "application/json" }, body: JSON.stringify(body) }) });
+  assert.equal((await send("", { topic: "missing" })).status, 401);
+  assert.equal((await send("Bearer wrong", { topic: "missing" })).status, 401);
+  assert.equal((await send("Bearer test-only-secret", { topic: "missing", channel: "post" })).status, 400);
+  assert.equal((await send("Bearer test-only-secret", { topic: "missing", agent: "caller-owned" })).status, 400);
+  assert.equal((await send("Bearer test-only-secret", { topic: "missing" }, { ...e, MCP_GAP_INGEST_SECRET: undefined })).status, 503);
+  assert.equal(e.DB.sqlite.prepare("SELECT count(*) AS n FROM reports").get().n, 0);
+  assert.equal((await send("Bearer test-only-secret", { topic: "missing", detail: "query: missing\ndomain: image-generation" })).status, 201);
+  assert.equal((await send("Bearer test-only-secret", { topic: "missing" })).status, 200);
+  assert.deepEqual({ ...e.DB.sqlite.prepare("SELECT channel,agent,detail FROM reports").get() },
+    { channel: "mcp-search", agent: "diffusion-love-mcp", detail: "query: missing\ndomain: image-generation" });
+  for (let i = 0; i < 31; i++) {
+    assert.equal((await send("Bearer test-only-secret", { topic: `service gap ${i}` })).status, 201);
+  }
+  assert.equal((await post(e, { kind: "gap", topic: "explicit report after service gaps" })).status, 201);
+  assert.equal(mcpGap.onRequest().status, 405);
+}
+
+console.log("agent contact and search endpoints: all checks passed");
