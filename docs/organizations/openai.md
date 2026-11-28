@@ -192,3 +192,31 @@ As of 2026-06-26, practitioners should choose OpenAI models and platform feature
 - **Subject:** `organization:openai`, thread `openai-development`, 17 dated events 2022-04-07 → 2026-06-26.
 - **Practical note:** As of 2026-06-26, practitioners should choose OpenAI models and platform features by the exact documented release and API capability, and revalidate access, pricing, safety-testing status, and compatibility before deployment instead of assuming behavior carries across generations.
 - **Confidence:** medium. Dated supersedes above are the authority for what is obsolete.
+
+<!-- live-update:f6aa8be7e87e95614b9ebfb5734d663ec7554599c08b4e5ac03c653829a44bd7 -->
+## 2026-11-27 — OpenAI countersues Apple over device trade secrets and supplier access
+
+OpenAI filed twelve counterclaims in the U.S. District Court for the Northern District of California in San Jose. It alleges that a former employee, who worked at OpenAI for six months, transferred hundreds of confidential files before rejoining Apple. The files covered unreleased AI hardware designs, test data and supplier specifications. OpenAI also alleges that Apple pressured shared component vendors with threats of contract termination. Suppliers had to reschedule meetings or move production to overnight shifts.
+
+### Usage and practices
+
+- Write confidentiality limits into supplier and integration agreements, so they hold when several vendors work on the same hardware. [Source](https://the-decoder.com/openai-countersues-apple-over-trade-secret-theft-and-alleged-coercion-of-shared-suppliers/)
+- Keep engineering and prototype manufacturing shifts apart, so competing consumer device projects do not cross-contaminate. [Source](https://the-decoder.com/openai-countersues-apple-over-trade-secret-theft-and-alleged-coercion-of-shared-suppliers/)
+- Keep personal device accounts separate from proprietary device design files when engineers change employers. [Source](https://the-decoder.com/openai-countersues-apple-over-trade-secret-theft-and-alleged-coercion-of-shared-suppliers/)
+- Dual-source hardware components, so vendor retaliation or production rescheduling by a dominant ecosystem platform does not stop the build. [Source](https://the-decoder.com/openai-countersues-apple-over-trade-secret-theft-and-alleged-coercion-of-shared-suppliers/)
+
+### Additional evidence
+
+- 2026-11-27: OpenAI filed twelve counterclaims in the U.S. District Court for the Northern District of California in San Jose. It alleges that a former employee, who worked at OpenAI for six months, transferred hundreds of confidential files covering unreleased AI hardware designs, test data and supplier specifications before rejoining Apple. It also alleges that Apple pressured shared component vendors with threats of contract termination, forcing suppliers to reschedule meetings or move production to overnight shifts. [Source](https://the-decoder.com/openai-countersues-apple-over-trade-secret-theft-and-alleged-coercion-of-shared-suppliers/)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-27: OpenAI relies solely on platform partnerships, such as Apple system-level integration, and does not compete directly in proprietary consumer hardware. [Source](https://the-decoder.com/openai-countersues-apple-over-trade-secret-theft-and-alleged-coercion-of-shared-suppliers/)
+
+### Limits and open questions
+
+- Product specifications, release dates and branding of OpenAI's unreleased consumer hardware stay undisclosed under court protective orders.
+- The primary filing documents and direct Chinese-language tech journalism URLs could not be verified without redirection tokens. The Chinese-language coverage is therefore unconfirmed.
+- The final outcome of the reciprocal trade-secret claims between Apple and OpenAI in the Northern District of California is still pending.
+
+<!-- Retained base: 3622a7af3e107e3ac36acf1afac8396af5242178; article blob: 7b2d9c8878f0fcd68ebd1a41764a381f4853cbaf -->
