@@ -137,3 +137,34 @@ Reports of a Claude-assisted proof of the Riemann Hypothesis are still under for
 - Permanent URLs for the intermediate research checkpoints before November 2026 are missing. The search results linked through search-engine redirect wrappers.
 
 <!-- Retained base: 1ff9770000fb565deaf10f760149bceea1a08343; article blob: 59c3f03ee16daa0d1a0a66a66ef4cfc0793233eb -->
+
+<!-- live-update:bb4bf5ca2f86fa1a916e73890ba80258803faf7a89c73c2bee51a6bdcb88ce3a -->
+## 2026-11-27 — Claude Anti-Distillation Safeguard Triggers False Positive on Set Theory Queries
+
+Anthropic's automated anti-distillation filter cut off a corporate user's session during research on set theory and programming. It shows how sensitive the heuristic filter is on commercial accounts.
+
+### Usage and practices
+
+- Use an enterprise account or the Anthropic Console for programming and formal reasoning. [Source](https://habr.com/ru/companies/speshu_ai/articles/1113148/)
+- Send targeted math and logic prompts interactively. Avoid high-volume repetitive formatting that looks like dataset extraction. [Source](https://habr.com/ru/companies/speshu_ai/articles/1113148/)
+- Describe the problem around each intensive set theory or math query, so interactive exploration is not mistaken for distillation. [Source](https://habr.com/ru/companies/speshu_ai/articles/1113148/)
+- Keep automated pipeline tests and interactive research in separate development environments on commercial tiers. [Source](https://habr.com/ru/companies/speshu_ai/articles/1113148/)
+
+### What practitioners say
+
+- Practitioners report false positives and session terminations from the automated anti-distillation heuristics. These hit legitimate complex tasks in mathematics and logic programming. (2026-11-27) [Source](https://habr.com/ru/companies/speshu_ai/articles/1113148/)
+
+### Additional evidence
+
+- 2026-11-27: The safeguard triggered during set theory and programming research on a corporate account used one to two hours daily. It flagged the task as an attempt to extract model capabilities for training a competitor. The account owner called the filter counterproductive for legitimate customer research. He still holds that Claude frontier models perform well overall. [Source](https://habr.com/ru/companies/speshu_ai/articles/1113148/)
+
+### Superseded guidance (retained for history)
+
+- 2026-11-27: Corporate and paid subscription tiers run without automated heuristic terminations during intensive algorithmic and mathematical workloads. [Source](https://habr.com/ru/companies/speshu_ai/articles/1113148/)
+
+### Limits and open questions
+
+- Anthropic has not disclosed the exact classification criteria or thresholds of the anti-distillation filter. They remain proprietary heuristics.
+- English and Chinese secondary reports could not be cited. The search results from external tech media led only to opaque redirects, with no direct URLs that can be checked.
+
+<!-- Retained base: 0087738ff12f312118dba38382b3529e33c51018; article blob: 23639ca6bbed76ac1477e411f4d409d035d0d955 -->
